@@ -5991,6 +5991,42 @@ function homeGauntletCard(){const wk=isoWeek(),g=(S.gauntlet||{})[wk];
 @media (prefers-reduced-motion:reduce){.hl-land,.hl-proof div,.hl-step,.hcard,.hc-bar i{animation:none}}`;document.head.appendChild(st)})();
 try{renderHome()}catch(e){}
 
+/* ---------- Network: quick-add friends ---------- */
+let crmPid=null;
+function crmFriendList(){if(typeof PLAYERS==="undefined"||!myId)return[];
+  const fol=new Set(S.profile.follows||[]),club=new Set((typeof clubMembers==="function"?clubMembers():[]).map(p=>p.id));
+  const have=new Set(S.contacts.map(c=>c.pid).filter(Boolean)),haveN=new Set(S.contacts.map(c=>(c.name||"").toLowerCase()));
+  return PLAYERS.filter(p=>p.id!==myId).map(p=>{const iF=fol.has(p.id),fB=(p.follows||[]).includes(myId),inC=club.has(p.id);
+      const tag=iF&&fB?"Friend":iF?"Following":fB?"Follows you":inC?"Clubmate":"";return {p,tag,score:(iF&&fB?4:0)+(iF?2:0)+(fB?1:0)+(inC?1:0)}})
+    .filter(x=>x.tag&&!have.has(x.p.id)&&!haveN.has(realName(x.p.id).toLowerCase())).sort((a,b)=>b.score-a.score).slice(0,12)}
+function renderCrmFriends(){const f=$("#crmForm");if(!f)return;let box=$("#crmFriends");
+  if(!box){box=document.createElement("div");box.id="crmFriends";box.className="crm-fr";f.insertBefore(box,f.firstChild)}
+  const list=crmFriendList();
+  if(!list.length){box.innerHTML=(dbState==="on")?`<p class="note crm-fr-tip">Tip: people you follow or share a club with show up here for one-tap adding.</p>`:"";return}
+  box.innerHTML=`<div class="label">Quick add from your network</div><div class="crm-fr-row">${list.map(({p,tag},i)=>{const nm=realName(p.id),ex=(p.exp||[]).find(e=>e&&(e.t||e.o));
+     return `<button type="button" class="crm-fr-c${crmPid===p.id?" on":""}" data-pid="${esc(p.id)}" style="--i:${i}">${avatar(p.id,nm,28)}<span><b>${esc(nm)}</b><small>${esc(tag)}${p.school?" · "+esc(p.school):ex&&ex.o?" · "+esc(ex.o):""}</small></span></button>`}).join("")}</div>`;
+  box.querySelectorAll(".crm-fr-c").forEach(b=>b.onclick=()=>{const p=PLAYERS.find(x=>x.id===b.dataset.pid);if(!p)return;const nm=realName(p.id),ex=(p.exp||[]).find(e=>e&&(e.t||e.o))||{};
+    const tag=(list.find(x=>x.p.id===p.id)||{}).tag||"";const club=p.club&&S.club&&p.club===S.club.code?(S.club.name||"Club"):"";
+    $("#cName").value=nm;$("#cFirm").value=ex.o||p.school||"";$("#cRole").value=ex.t||(p.headline||"").slice(0,40)||"Student";
+    $("#cConn").value=club?`${club} clubmate`:tag==="Friend"?"Friend on M&A":tag==="Follows you"?"Follows me on M&A":"Following on M&A";
+    $("#cStatus").value="To contact";crmPid=p.id;box.querySelectorAll(".crm-fr-c").forEach(x=>x.classList.toggle("on",x===b));
+    const sv=$("#cSave");sv.classList.add("pulse-once");setTimeout(()=>sv.classList.remove("pulse-once"),700);$("#cNotes").focus()})}
+{const _rc=renderCRM;renderCRM=function(){_rc.apply(this,arguments);try{renderCrmFriends()}catch(e){}}}
+$("#crmForm").addEventListener("submit",()=>{const pid=crmPid;crmPid=null;if(!pid)return;setTimeout(()=>{const c=S.contacts[S.contacts.length-1];if(c&&!c.pid){c.pid=pid;save()}try{renderCrmFriends()}catch(e){}},0)},true);
+{const tg=$("#crmToggle"),_o=tg.onclick;tg.onclick=function(){_o.apply(this,arguments);try{renderCrmFriends()}catch(e){}}}
+(function(){const st=document.createElement("style");st.textContent=`
+.crm-fr{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.crm-fr:empty{display:none}
+.crm-fr-tip{margin:0}
+.crm-fr-row{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px}
+.crm-fr-c{flex:none;display:flex;align-items:center;gap:8px;background:var(--sheet);border:1px solid var(--rule);border-radius:999px;padding:4px 12px 4px 4px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;animation:plIn .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*40ms);transition:border-color .2s,transform .2s,background .2s}
+.crm-fr-c:hover{border-color:var(--ink);transform:translateY(-1px)}
+.crm-fr-c.on{border-color:var(--cobalt);background:var(--cobalt-soft)}
+.crm-fr-c b{display:block;font-size:13px;font-weight:600;line-height:1.2}
+.crm-fr-c small{display:block;font-size:11px;color:var(--ink-2);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pulse-once{animation:pulseOnce .6s ease}
+@keyframes pulseOnce{40%{transform:scale(1.06)}}`;document.head.appendChild(st)})();
+
 try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 /* ---------- boot ---------- */
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();

@@ -12,6 +12,9 @@
 <title>M&amp;A</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,500;600;700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>.pe-nmf{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-2);margin:0 0 6px;max-width:320px}
+.pe-nmf input{font-size:15px;font-weight:600;color:var(--ink)}
+</style>
 </head><body>
 <style>
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */
@@ -5123,7 +5126,7 @@ function editProfile(){
       <div class="pe-form">
         <nav class="pe-nav">${secs.map(([k,n],i)=>`<button type="button" data-go="${k}" ${i===0?'aria-current="true"':""}>${n}</button>`).join("")}<button type="button" class="pe-prevbtn" id="pePrevBtn">Preview</button></nav>
         <section class="pe-sec" id="pe-basics"><h3>Basics</h3>
-          <div class="pe-name"><div id="peAv"></div><div class="pe-name-t"><b>${esc(name)}</b><small> Add a photo so people recognize you.</small><div class="pe-ph-btns"><label class="ghost outline sm pe-up"><input type="file" id="pePhoto" accept="image/png,image/jpeg,image/webp" hidden>${P.photo?"Change photo":"Upload photo"}</label><button type="button" class="ghost sm" id="pePhotoX" ${P.photo?"":"hidden"}>Remove</button></div></div></div>
+          <div class="pe-name"><div id="peAv"></div><div class="pe-name-t"><label class="pe-nmf"><span>Your name</span><input id="peName" maxlength="40" autocomplete="name" placeholder="First and last name" value="${esc(S.profile.name||myName||"")}"></label><small>Add a photo so people recognize you.</small><div class="pe-ph-btns"><label class="ghost outline sm pe-up"><input type="file" id="pePhoto" accept="image/png,image/jpeg,image/webp" hidden>${P.photo?"Change photo":"Upload photo"}</label><button type="button" class="ghost sm" id="pePhotoX" ${P.photo?"":"hidden"}>Remove</button></div></div></div>
           <div class="pe-import full"><div><b>Import from LinkedIn or Handshake</b><small>Paste your profile and Claude fills in the fields for you to review.</small></div><button type="button" class="btn sm" id="peImp">Import</button></div>
           <div class="pe-impbox full" id="peImpBox" hidden></div>
           ${field("pHead","Headline",P.headline,{max:100,cls:"full",ph:"Finance student · Aspiring M&A analyst",hint:"The one line people see first, next to your name on leaderboards."})}
@@ -5258,8 +5261,10 @@ Return JSON: {"line":"..."}`;
   const doSave=()=>{if(!validate()){toast("Fix the highlighted fields first");return}clearTimeout(dT);const exp=readExpSafe().slice(0,5).map(({cur,...e})=>e);
     const nsChk=$p("#pNoSchool").checked,hdChk=$p("#pHidden").checked;S.settings.noSchool=nsChk;S.settings.hidden=hdChk;
     S.profile={...S.profile,banner:isPro()?(P.banner??null):(S.profile.banner??null),headline:(P.headline||"").trim(),school:(P.school||"").trim(),grad:P.grad||"",major:(P.major||"").trim(),location:(P.location||"").trim(),target:P.target||"",open:P.open||"",about:(P.about||"").trim(),linkedin:(P.linkedin||"").trim(),handshake:(P.handshake||"").trim(),photo:P.photo||"",exp,skills:P.skills.slice(0,10),_t:Date.now()};
-    delete S.profileDraft;save();syncProfile();syncPhoto();dirty=false;sfx("ok");toast(dbState==="on"?"Profile saved and posted":"Profile saved on this device");showPlayer({id:myId||"me",...myStats()});renderCompete()};
+    {const nmv=(($p("#peName")||{}).value||"").trim().slice(0,40);S.profile.name=nmv;myName=nmv;}
+    delete S.profileDraft;save();syncProfile();syncPhoto();dirty=false;sfx("ok");toast(dbState==="on"?"Profile saved and posted":"Profile saved on this device");showPlayer({id:myId||"me",...myStats()});renderCompete();try{render()}catch(e){}};
   $p("#pSave").onclick=doSave;
+  if($p("#peName"))$p("#peName").addEventListener("input",()=>{try{changed()}catch(e){}});
   $p("#pCancel").onclick=()=>{closePanel();if(dirty)toast("Your unsaved changes are kept as a draft")};
   panel.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="s"){e.preventDefault();doSave()}});
   if($p("#peDiscard"))$p("#peDiscard").onclick=()=>{delete S.profileDraft;save();editProfile()};
@@ -5986,6 +5991,7 @@ function homeGauntletCard(){const wk=isoWeek(),g=(S.gauntlet||{})[wk];
 @media (prefers-reduced-motion:reduce){.hl-land,.hl-proof div,.hl-step,.hcard,.hc-bar i{animation:none}}`;document.head.appendChild(st)})();
 try{renderHome()}catch(e){}
 
+try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 /* ---------- boot ---------- */
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
 const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);

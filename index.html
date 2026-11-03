@@ -16,7 +16,16 @@
 <title>M&amp;A Prep: Free Investment Banking &amp; Private Equity Interview Training</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,500;600;700&family=Manrope:wght@400;500;600;700&display=swap">
-<style>.panel .q-meta{padding-right:46px}
+<style>.pe-res{display:flex;flex-direction:column;gap:10px}
+.pe-drop{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;border:1.5px dashed var(--rule);border-radius:14px;padding:20px 14px;cursor:pointer;background:var(--paper);color:var(--ink);transition:border-color .2s,background .2s}
+.pe-drop:hover,.pe-drop.on{border-color:var(--cobalt);background:var(--cobalt-soft)}
+.pe-drop svg{color:var(--cobalt)}.pe-drop b{font-size:15px}.pe-drop small{font-size:12.5px;color:var(--ink-2)}
+.pe-res-on{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:10px;padding:8px 12px;font-size:14px}
+.pe-res-on[hidden]{display:none}.pe-res-on small{display:block;font-size:12px;color:var(--ink-2)}
+.pe-res-tip{font-size:13px;color:var(--ink-2);line-height:1.5}
+.pe-res-paste summary{cursor:pointer;font-size:13.5px;color:var(--cobalt);margin-bottom:6px}
+.pe-res-paste textarea{width:100%}
+.panel .q-meta{padding-right:46px}
 .pe-nmf{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-2);margin:0 0 6px;max-width:320px}
 .pe-nmf input{font-size:15px;font-weight:600;color:var(--ink)}
 </style>
@@ -5127,7 +5136,7 @@ function editProfile(){
   const P={...base,exp:(base.exp&&base.exp.length?base.exp:[]).map(e=>({...e})),skills:[...(base.skills||[])]};
   const name=myName||"Your name";
   const field=(id,label,val,opts={})=>`<label class="pe-f ${opts.cls||""}"><span class="pe-l">${label}${opts.max?`<em class="pe-c" data-for="${id}">${String(val||"").length}/${opts.max}</em>`:""}</span>${opts.select?`<select id="${id}">${opts.select.map(o=>`<option value="${esc(o)}" ${o===(val||"")?"selected":""}>${esc(o||opts.none||"Choose…")}</option>`).join("")}</select>`:opts.area?`<textarea id="${id}" ${opts.max?`maxlength="${opts.max}"`:""} rows="${opts.rows||4}" placeholder="${esc(opts.ph||"")}">${esc(val||"")}</textarea>`:`<input id="${id}" ${opts.max?`maxlength="${opts.max}"`:""} ${opts.type?`type="${opts.type}"`:""} ${opts.im?`inputmode="${opts.im}"`:""} placeholder="${esc(opts.ph||"")}" value="${esc(val||"")}" autocomplete="off">`}${opts.hint||opts.hintId?`<small class="pe-h" ${opts.hintId?`id="${opts.hintId}"`:""}>${opts.hint||""}</small>`:""}</label>`;
-  const secs=[["basics","Basics"],["about","About"],["exp","Experience"],["skills","Skills"],["look","Look & privacy"]];
+  const secs=[["basics","Basics"],["resume","Resume"],["about","About"],["exp","Experience"],["skills","Skills"],["look","Look & privacy"]];
   openPanel(`<div class="pe">
     <div class="pe-top"><div><div class="label">Public profile</div><h2>Edit profile</h2></div>
       <div class="pe-meter" id="peMeter"></div></div>
@@ -5137,7 +5146,7 @@ function editProfile(){
         <nav class="pe-nav">${secs.map(([k,n],i)=>`<button type="button" data-go="${k}" ${i===0?'aria-current="true"':""}>${n}</button>`).join("")}<button type="button" class="pe-prevbtn" id="pePrevBtn">Preview</button></nav>
         <section class="pe-sec" id="pe-basics"><h3>Basics</h3>
           <div class="pe-name"><div id="peAv"></div><div class="pe-name-t"><label class="pe-nmf"><span>Your name</span><input id="peName" maxlength="40" autocomplete="name" placeholder="First and last name" value="${esc(S.profile.name||myName||"")}"></label><small>Add a photo so people recognize you.</small><div class="pe-ph-btns"><label class="ghost outline sm pe-up"><input type="file" id="pePhoto" accept="image/png,image/jpeg,image/webp" hidden>${P.photo?"Change photo":"Upload photo"}</label><button type="button" class="ghost sm" id="pePhotoX" ${P.photo?"":"hidden"}>Remove</button></div></div></div>
-          <div class="pe-import full"><div><b>Import from LinkedIn or Handshake</b><small>Paste your profile and Claude fills in the fields for you to review.</small></div><button type="button" class="btn sm" id="peImp">Import</button></div>
+          <div class="pe-import full"><div><b>Fill this in from your resume</b><small>Upload your resume or LinkedIn PDF and we'll organize it into your profile.</small></div><button type="button" class="btn sm" id="peToRes">Start</button><button type="button" id="peImp" hidden></button></div>
           <div class="pe-impbox full" id="peImpBox" hidden></div>
           ${field("pHead","Headline",P.headline,{max:100,cls:"full",ph:"Finance student · Aspiring M&A analyst",hint:"The one line people see first, next to your name on leaderboards."})}
           <div class="pe-sugg full" id="peSugg"></div>
@@ -5147,6 +5156,18 @@ function editProfile(){
           ${field("pLoc","Location",P.location,{max:40,ph:"Columbus, OH"})}
           ${field("pTarget","Target career",P.target,{select:PE_TARGETS})}
           ${field("pOpen","Open to",P.open,{select:OPEN_TO,none:"Not right now"})}
+        </section>
+        <section class="pe-sec" id="pe-resume"><h3>Resume</h3>
+          <div class="full pe-res">
+            <label class="pe-drop" id="peDrop"><input type="file" id="peResFile" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6m-3 3 3-3 3 3"/></svg>
+              <b id="peDropT">${P.resume&&P.resume.text?"Replace your resume":"Upload your resume"}</b><small>PDF, Word (.docx) or text · or drop it here</small></label>
+            <div class="pe-res-on" id="peResOn" ${P.resume&&P.resume.text?"":"hidden"}><span>📄 <b id="peResName">${esc((P.resume&&P.resume.name)||"Resume")}</b><small id="peResWhen">${P.resume&&P.resume.at?"Saved "+new Date(P.resume.at).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):""}</small></span><button type="button" class="ghost sm danger" id="peResX">Remove</button></div>
+            <div class="pe-res-tip"><b>Using LinkedIn?</b> Open your profile, click <b>More</b> (or <b>Resources</b>) → <b>Save to PDF</b>, then upload that file here.</div>
+            <details class="pe-res-paste" ${P.resume&&P.resume.text?"":""}><summary>Or paste the text</summary><textarea id="peResTxt" rows="7" maxlength="15000" placeholder="Paste your resume here">${esc((P.resume&&P.resume.text)||"")}</textarea></details>
+            <div class="pe-ai"><button type="button" class="btn sm" id="peResGo">Fill my profile from it</button>${isPro()?`<button type="button" class="ghost outline sm" id="peResAi">✦ Read it with AI</button>`:""}<span class="note" id="peResNote">Your resume stays private. Only you can see it.</span></div>
+            <div id="peResOut"></div>
+          </div>
         </section>
         <section class="pe-sec" id="pe-about"><h3>About</h3>
           ${field("pAbout","About you",P.about,{area:true,rows:6,max:600,cls:"full",ph:"What pulled you into finance, what you're working on now, and what you're looking for.",hint:"Aim for 3 or 4 sentences: your hook, your proof, your goal."})}
@@ -5270,7 +5291,7 @@ Return JSON: {"line":"..."}`;
   /* save */
   const doSave=()=>{if(!validate()){toast("Fix the highlighted fields first");return}clearTimeout(dT);const exp=readExpSafe().slice(0,5).map(({cur,...e})=>e);
     const nsChk=$p("#pNoSchool").checked,hdChk=$p("#pHidden").checked;S.settings.noSchool=nsChk;S.settings.hidden=hdChk;
-    S.profile={...S.profile,banner:isPro()?(P.banner??null):(S.profile.banner??null),headline:(P.headline||"").trim(),school:(P.school||"").trim(),grad:P.grad||"",major:(P.major||"").trim(),location:(P.location||"").trim(),target:P.target||"",open:P.open||"",about:(P.about||"").trim(),linkedin:(P.linkedin||"").trim(),handshake:(P.handshake||"").trim(),photo:P.photo||"",exp,skills:P.skills.slice(0,10),_t:Date.now()};
+    S.profile={...S.profile,banner:isPro()?(P.banner??null):(S.profile.banner??null),headline:(P.headline||"").trim(),school:(P.school||"").trim(),grad:P.grad||"",major:(P.major||"").trim(),location:(P.location||"").trim(),target:P.target||"",open:P.open||"",about:(P.about||"").trim(),linkedin:(P.linkedin||"").trim(),handshake:(P.handshake||"").trim(),photo:P.photo||"",resume:P.resume&&P.resume.text?P.resume:null,exp,skills:P.skills.slice(0,10),_t:Date.now()};
     {const nmv=(($p("#peName")||{}).value||"").trim().slice(0,40);S.profile.name=nmv;myName=nmv;}
     delete S.profileDraft;save();syncProfile();syncPhoto();dirty=false;sfx("ok");toast(dbState==="on"?"Profile saved and posted":"Profile saved on this device");showPlayer({id:myId||"me",...myStats()});renderCompete();try{render()}catch(e){}};
   $p("#pSave").onclick=doSave;
@@ -5282,6 +5303,43 @@ Return JSON: {"line":"..."}`;
   $p("#pePhoto").addEventListener("change",async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;if(!/^image\/(png|jpe?g|webp)$/.test(f.type)){toast("Use a JPG, PNG or WebP image");return}if(f.size>15e6){toast("That image is too large");return}
     try{P.photo=await squarePhoto(f);drawAv();changed();toast("Photo added. Save to post it.")}catch(err){toast("Couldn't read that image. Try another.")}});
   $p("#pePhotoX").onclick=()=>{P.photo="";drawAv();changed()};
+  const peReview=(r,out,title,done)=>{
+      const cand=[["name","Name",r.name&&!(($p("#peName")||{}).value||"").trim()?r.name:""],["headline","Headline",r.headline],["school","School",r.school],["grad","Class year",String(r.grad||"").replace(/\D/g,"").slice(0,4)],["major","Major",r.major],["location","Location",r.location],["about","About",String(r.about||"").slice(0,600)],["linkedin","LinkedIn",r.linkedin&&peLinkOk(r.linkedin)?r.linkedin:""],["handshake","Handshake",r.handshake&&peHsOk(r.handshake)?r.handshake:""]].filter(x=>x[2]&&String(x[2]).trim()&&String(x[2]).trim()!==String(P[x[0]]||"").trim());
+      const ex=(Array.isArray(r.exp)?r.exp:[]).filter(e=>e&&(e.t||e.o)).slice(0,5).map(e=>({t:String(e.t||"").slice(0,60),o:String(e.o||"").slice(0,60),s:String(e.s||"").slice(0,20),e:String(e.e||"").slice(0,20),d:String(e.d||"").slice(0,300)}));
+      const sk=(Array.isArray(r.skills)?r.skills:[]).map(x=>String(x).slice(0,30)).filter(x=>x&&!P.skills.some(y=>y.toLowerCase()===x.toLowerCase())).slice(0,10);
+      if(!cand.length&&!ex.length&&!sk.length){out.innerHTML=`<p class="note">Nothing new to add. Your profile already matches.</p>`;return}
+      out.innerHTML=`<div class="pe-imp-res"><div class="label">${esc(title)}</div><p class="note" style="margin:2px 0 8px">Untick anything that's wrong. You can edit everything after.</p>
+        ${cand.map(([k,l,v])=>`<label class="pe-imp-row"><input type="checkbox" data-ik="${k}" checked><span><b>${l}</b><em>${esc(String(v))}</em></span></label>`).join("")}
+        ${ex.map((e,i)=>`<label class="pe-imp-row"><input type="checkbox" data-ie="${i}" checked><span><b>Experience</b><em>${esc(e.t)}${e.o?` · ${esc(e.o)}`:""}${e.s?` · ${esc(e.s)} – ${esc(e.e||"Present")}`:""}</em></span></label>`).join("")}
+        ${sk.length?`<label class="pe-imp-row"><input type="checkbox" data-isk checked><span><b>Skills</b><em>${sk.map(esc).join(", ")}</em></span></label>`:""}
+        <div class="pe-ai"><button type="button" class="btn sm" id="peImpApply">Add selected to my profile</button></div></div>`;
+      out.querySelector("#peImpApply").onclick=()=>{out.querySelectorAll("[data-ik]:checked").forEach(c=>{const k=c.dataset.ik,v=cand.find(x=>x[0]===k)[2];P[k]=String(v).trim();const id={name:"peName",headline:"pHead",school:"pSchool",grad:"pGrad",major:"pMajor",location:"pLoc",about:"pAbout",linkedin:"pLink",handshake:"pHs"}[k];const el=$p("#"+id);if(el){el.value=P[k];el.dispatchEvent(new Event("input"))}});
+        P.exp=readExpSafe();const add=[...out.querySelectorAll("[data-ie]:checked")].map(c=>ex[+c.dataset.ie]).filter(e=>!P.exp.some(x=>x.t===e.t&&x.o===e.o));P.exp=[...P.exp,...add].slice(0,5);drawExp();
+        if(out.querySelector("[data-isk]:checked"))P.skills=[...P.skills,...sk].slice(0,10);drawSkills();drawSugg();changed();if(done)done();sfx("ok");toast("Added to your profile. Look it over, then press Save.")}};
+  /* resume */
+  const impPrompt=txt=>`Extract profile fields from this pasted LinkedIn profile, Handshake profile or resume for a college student. Use only what's in the text; leave a field empty if it isn't there. Keep wording close to the original, trimmed to fit.
+Limits: name as written; headline 100 chars; about 600 chars; up to 5 experiences (most recent first) with title, organization, start and end as "Mon YYYY" (end empty if current) and a one-line description under 300 chars; up to 10 skills; grad is a 4-digit graduation year; linkedin as a full URL if present.
+Text: """${txt.slice(0,12000)}"""
+Return JSON: {"name":"","headline":"","school":"","grad":"","major":"","location":"","about":"","linkedin":"","exp":[{"t":"","o":"","s":"","e":"","d":""}],"skills":[]}`;
+  let resParsed=null;
+  const resSet=(text,name)=>{P.resume=text?{text:String(text).slice(0,15000),name:(name||"Resume").slice(0,80),at:Date.now()}:null;resParsed=null;$p("#peResTxt").value=P.resume?P.resume.text:"";$p("#peResOn").hidden=!P.resume;if(P.resume){$p("#peResName").textContent=P.resume.name;$p("#peResWhen").textContent="Added just now"}$p("#peDropT").textContent=P.resume?"Replace your resume":"Upload your resume";changed()};
+  const resRead=async f=>{const note=$p("#peResNote");note.textContent="Reading your resume…";$p("#peResOut").innerHTML="";
+    try{if(!window.maResume)throw new Error("The resume reader didn't load. Refresh and try again.");const x=await maResume.readFile(f);resSet(x.text,f.name);resParsed=x;note.textContent="Got it. Now press Fill my profile from it.";const g=$p("#peResGo");if(g){g.focus();resFill()}}
+    catch(e){note.textContent=e.message||"Couldn't read that file. Try a PDF, or paste the text."}};
+  const resFill=()=>{const txt=($p("#peResTxt").value||"").trim();if(txt.length<60){$p("#peResNote").textContent="Upload your resume or paste a bit more text first.";return}
+    if(!P.resume||P.resume.text!==txt)resSet(txt,(P.resume&&P.resume.name)||"Pasted resume");
+    let r;try{r=maResume.parse(resParsed&&resParsed.text===txt?resParsed:{text:txt})}catch(e){$p("#peResNote").textContent="Couldn't organize that one automatically. You can still copy parts in by hand.";return}
+    peReview(r,$p("#peResOut"),"Here's what we found",()=>{$p("#peResOut").innerHTML=`<p class="note">Added. Scroll down to check each section, then press Save.</p>`});
+    $p("#peResNote").textContent="Your resume stays private. Only you can see it.";
+    const o=$p("#peResOut");if(o)o.scrollIntoView({block:"nearest",behavior:fxCalm()?"auto":"smooth"})};
+  $p("#peResFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)resRead(f)});
+  {const dz=$p("#peDrop");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("on")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("on")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)resRead(f)})}
+  $p("#peResGo").onclick=resFill;
+  $p("#peResTxt").addEventListener("input",()=>{resParsed=null});
+  $p("#peResX").onclick=()=>{resSet("");$p("#peResOut").innerHTML="";$p("#peResNote").textContent="Removed. Press Save to keep this change."};
+  if($p("#peResAi"))$p("#peResAi").onclick=async()=>{const txt=($p("#peResTxt").value||"").trim();if(txt.length<60){$p("#peResNote").textContent="Upload your resume or paste a bit more text first.";return}if(!P.resume||P.resume.text!==txt)resSet(txt,(P.resume&&P.resume.name)||"Pasted resume");
+    const r=await aiCall(impPrompt(txt),$p("#peResNote"));if(r)peReview(r,$p("#peResOut"),"Here's what AI found",()=>{$p("#peResOut").innerHTML=`<p class="note">Added. Scroll down to check each section, then press Save.</p>`})};
+  $p("#peToRes").onclick=()=>goSec("resume");
   $p("#peImp").onclick=()=>{const box=$p("#peImpBox");if(!box.hidden){box.hidden=true;return}box.hidden=false;
     box.innerHTML=`<div class="pe-imp-how"><b>How to copy your profile</b><ol><li><b>LinkedIn:</b> open your profile, select everything from your name down to Skills, and copy it.</li><li><b>Handshake:</b> open your profile, select it all, and copy it. Your resume text works too.</li></ol></div>
       <textarea id="peImpTxt" rows="7" maxlength="15000" placeholder="Paste your LinkedIn or Handshake profile, or your resume, here"></textarea>
@@ -5293,18 +5351,7 @@ Limits: headline 100 chars; about 600 chars; up to 5 experiences (most recent fi
 Text: """${txt.slice(0,12000)}"""
 Return JSON: {"headline":"","school":"","grad":"","major":"","location":"","about":"","exp":[{"t":"","o":"","s":"","e":"","d":""}],"skills":[]}`;
       const r=await aiCall(prompt,$p("#peImpNote"));if(!r)return;
-      const cand=[["headline","Headline",r.headline],["school","School",r.school],["grad","Class year",String(r.grad||"").replace(/\D/g,"").slice(0,4)],["major","Major",r.major],["location","Location",r.location],["about","About",String(r.about||"").slice(0,600)]].filter(x=>x[2]&&String(x[2]).trim()&&String(x[2]).trim()!==String(P[x[0]]||"").trim());
-      const ex=(Array.isArray(r.exp)?r.exp:[]).filter(e=>e&&(e.t||e.o)).slice(0,5).map(e=>({t:String(e.t||"").slice(0,60),o:String(e.o||"").slice(0,60),s:String(e.s||"").slice(0,20),e:String(e.e||"").slice(0,20),d:String(e.d||"").slice(0,300)}));
-      const sk=(Array.isArray(r.skills)?r.skills:[]).map(x=>String(x).slice(0,30)).filter(x=>x&&!P.skills.some(y=>y.toLowerCase()===x.toLowerCase())).slice(0,10);
-      if(!cand.length&&!ex.length&&!sk.length){$p("#peImpOut").innerHTML=`<p class="note">Nothing new to add. Your profile already matches.</p>`;return}
-      $p("#peImpOut").innerHTML=`<div class="pe-imp-res"><div class="label">Review what Claude found</div>
-        ${cand.map(([k,l,v])=>`<label class="pe-imp-row"><input type="checkbox" data-ik="${k}" checked><span><b>${l}</b><em>${esc(String(v))}</em></span></label>`).join("")}
-        ${ex.map((e,i)=>`<label class="pe-imp-row"><input type="checkbox" data-ie="${i}" checked><span><b>Experience</b><em>${esc(e.t)}${e.o?` · ${esc(e.o)}`:""}${e.s?` · ${esc(e.s)} – ${esc(e.e||"Present")}`:""}</em></span></label>`).join("")}
-        ${sk.length?`<label class="pe-imp-row"><input type="checkbox" data-isk checked><span><b>Skills</b><em>${sk.map(esc).join(", ")}</em></span></label>`:""}
-        <div class="pe-ai"><button type="button" class="btn sm" id="peImpApply">Add selected to my profile</button></div></div>`;
-      $p("#peImpApply").onclick=()=>{panel.querySelectorAll("[data-ik]:checked").forEach(c=>{const k=c.dataset.ik,v=cand.find(x=>x[0]===k)[2];P[k]=String(v).trim();const id={headline:"pHead",school:"pSchool",grad:"pGrad",major:"pMajor",location:"pLoc",about:"pAbout"}[k];const el=$p("#"+id);if(el){el.value=P[k];el.dispatchEvent(new Event("input"))}});
-        P.exp=readExpSafe();const add=[...panel.querySelectorAll("[data-ie]:checked")].map(c=>ex[+c.dataset.ie]).filter(e=>!P.exp.some(x=>x.t===e.t&&x.o===e.o));P.exp=[...P.exp,...add].slice(0,5);drawExp();
-        if(panel.querySelector("[data-isk]:checked"))P.skills=[...P.skills,...sk].slice(0,10);drawSkills();drawSugg();changed();box.hidden=true;sfx("ok");toast("Imported. Look it over, then press Save.")}}};
+      peReview(r,$p("#peImpOut"),"Review what Claude found",()=>{box.hidden=true})}};
   drawExp();drawSkills();drawSugg();drawPreview();validate();
   setTimeout(()=>{const h=$p("#pHead");if(h)h.focus({preventScroll:true})},60)}
 
@@ -6196,4 +6243,5 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 <script src="js/clubinv.js"></script>
 <script src="js/rewards.js"></script>
 <script src="js/feedback.js"></script>
+<script src="js/resume.js"></script>
 </body></html>

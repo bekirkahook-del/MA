@@ -6162,7 +6162,7 @@ function renderFriends(){const el=$("#friendsPage");if(!el)return;
   if(!on){body=`<div class="fr-empty"><b>Friends turn on when accounts are live.</b><span>You'll see your friends' progress, a weekly friends leaderboard and what everyone's working on.</span></div>`}
   else if(!fr.length){body=`<div class="fr-empty"><b>No friends yet</b><span>Connect with classmates below. Once they connect back, you'll see their progress, a friends leaderboard and their activity here.</span></div>`}
   else{
-    const board=[me,...fr].map(p=>({p,v:p.weekXP||0})).sort((a,b)=>b.v-a.v),mx=Math.max(1,...board.map(x=>x.v));
+    const board=[me,...fr].map(p=>({p,v:(p.wk===isoWeek()?(p.wkXP||0):0)||p.weekXP||0})).sort((a,b)=>b.v-a.v),mx=Math.max(1,...board.map(x=>x.v));
     const myPos=board.findIndex(x=>x.p.id===me.id)+1;
     const evs=[];fr.forEach(p=>(p.events||[]).forEach(e=>{if(e&&e.t&&Date.now()-(e.at||0)<7*864e5)evs.push({id:p.id,...e})}));evs.sort((a,b)=>(b.at||0)-(a.at||0));
     body=`<div class="fr-grid">

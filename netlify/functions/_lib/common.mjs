@@ -23,7 +23,7 @@ function enc(obj, prefix, out = []) {
 export async function stripe(method, path, params) {
   const r = await fetch(`https://api.stripe.com/v1/${path}`, {
     method,
-    headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`, "Content-Type": "application/x-www-form-urlencoded" },
+    headers: { Authorization: `Bearer ${(process.env.STRIPE_SECRET_KEY || process.env.STripeSecretKey)}`, "Content-Type": "application/x-www-form-urlencoded" },
     body: params ? enc(params).join("&") : undefined,
   });
   const j = await r.json();
@@ -33,7 +33,7 @@ export async function stripe(method, path, params) {
 
 // Service-role writes to the docs table (only the server can write billing)
 // Works with both the new secret key (sb_secret_...) and the legacy service_role JWT (eyJ...)
-const svcH = () => { const k = process.env.SUPABASE_SERVICE_ROLE_KEY || ""; return { apikey: k, "Content-Type": "application/json", ...(k.startsWith("eyJ") ? { Authorization: `Bearer ${k}` } : {}) }; };
+const svcH = () => { const k = (process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY) || ""; return { apikey: k, "Content-Type": "application/json", ...(k.startsWith("eyJ") ? { Authorization: `Bearer ${k}` } : {}) }; };
 export async function getBilling(uid) {
   const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.billing&id=eq.${uid}&select=data`, { headers: svcH() });
   const rows = r.ok ? await r.json() : [];

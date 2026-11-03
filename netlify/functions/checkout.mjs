@@ -10,7 +10,7 @@ const PLANS = {
 
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
-  if (!process.env.STRIPE_SECRET_KEY || !process.env.SUPABASE_SERVICE_ROLE_KEY) return json(503, { error: "Payments aren't set up yet", code: "no_key" });
+  if (!(process.env.STRIPE_SECRET_KEY || process.env.STripeSecretKey) || !(process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY)) return json(503, { error: "Payments aren't set up yet", code: "no_key" });
   const user = await getUser(req);
   if (!user || !user.id) return json(401, { error: "Sign in first", code: "not_granted" });
   const { plan } = await req.json().catch(() => ({}));

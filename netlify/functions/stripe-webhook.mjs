@@ -13,7 +13,7 @@ function verify(raw, header, secret) {
 
 export default async (req) => {
   const raw = await req.text();
-  if (!verify(raw, req.headers.get("stripe-signature"), process.env.STRIPE_WEBHOOK_SECRET || "")) return json(400, { error: "bad signature" });
+  if (!verify(raw, req.headers.get("stripe-signature"), (process.env.STRIPE_WEBHOOK_SECRET || process.env.STRIPESECRETWEBHOOKMNA) || "")) return json(400, { error: "bad signature" });
   const ev = JSON.parse(raw);
   const o = ev.data.object;
   try {

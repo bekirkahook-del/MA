@@ -17,7 +17,7 @@ async function getUser(token) {
 }
 
 async function underLimit(uid) {
-  const svc = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const svc = (process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!svc) return true;
   const limit = Number(process.env.AI_DAILY_LIMIT || 60);
   const id = `${uid}_${new Date().toISOString().slice(0, 10)}`;
@@ -44,7 +44,7 @@ function parseJSON(text) {
 
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
-  if (!process.env.ANTHROPIC_API_KEY) return json(503, { error: "AI isn't set up yet", code: "no_key" });
+  if (!(process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA)) return json(503, { error: "AI isn't set up yet", code: "no_key" });
   const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
   const user = await getUser(token);
   if (!user || !user.id) return json(401, { error: "Sign in to use AI features", code: "not_granted" });
@@ -57,7 +57,7 @@ export default async (req) => {
   const model = MODELS[body.tier] || MODELS.default;
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: { "x-api-key": process.env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+    headers: { "x-api-key": (process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA), "anthropic-version": "2023-06-01", "content-type": "application/json" },
     body: JSON.stringify({
       model,
       max_tokens: 4000,

@@ -2,7 +2,7 @@
 import { json, getUser, stripe, getBilling, SITE } from "./_lib/common.mjs";
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
-  if (!process.env.STRIPE_SECRET_KEY) return json(503, { error: "Payments aren't set up yet" });
+  if (!(process.env.STRIPE_SECRET_KEY || process.env.STripeSecretKey)) return json(503, { error: "Payments aren't set up yet" });
   const user = await getUser(req);
   if (!user) return json(401, { error: "Sign in first" });
   const bill = await getBilling(user.id);

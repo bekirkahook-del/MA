@@ -6027,6 +6027,74 @@ $("#crmForm").addEventListener("submit",()=>{const pid=crmPid;crmPid=null;if(!pi
 .pulse-once{animation:pulseOnce .6s ease}
 @keyframes pulseOnce{40%{transform:scale(1.06)}}`;document.head.appendChild(st)})();
 
+/* ---------- Network: find people + connect (LinkedIn-style, built on follows) ---------- */
+let pplQ="",pplTab="suggest";
+const pplFollows=()=>new Set(S.profile.follows||[]);
+const pplRel=p=>{const f=pplFollows(),iF=f.has(p.id),fB=(p.follows||[]).includes(myId);return iF&&fB?"connected":iF?"requested":fB?"incoming":"none"};
+function pplMutual(p){const mine=pplFollows();return (p.follows||[]).filter(id=>id!==myId&&mine.has(id)).length}
+function pplToggle(id,on){const f=pplFollows();on?f.add(id):f.delete(id);S.profile.follows=[...f];save();try{syncProfile()}catch(e){}renderPeople();try{renderCrmFriends()}catch(e){}}
+function pplMatch(p,q){if(!q)return true;const nm=realName(p.id).toLowerCase(),ex=(p.exp||[]).map(e=>(e.t||"")+" "+(e.o||"")).join(" ");
+  return [nm,p.headline,p.school,p.major,p.location,p.clubName,ex].join(" ").toLowerCase().includes(q.toLowerCase())}
+function pplSuggest(){const me=S.profile||{},mine=pplFollows(),club=S.club&&S.club.code;
+  return PLAYERS.filter(p=>p.id!==myId&&pplRel(p)==="none"&&!p.hidden).map(p=>{let s=0,why=[];const m=pplMutual(p);
+    if(club&&p.club===club){s+=5;why.push("In your club")}
+    if(me.school&&p.school&&p.school.toLowerCase()===me.school.toLowerCase()){s+=4;why.push(p.school)}
+    if(m){s+=m*2;why.push(`${m} mutual`)}
+    if(me.target&&p.target&&p.target===me.target){s+=1;why.push(p.target)}
+    if(p.path&&S.path&&p.path.g===S.path.goal){s+=1}
+    return {p,s:s+(p.xp||0)/1e5,why:why.join(" · ")}}).sort((a,b)=>b.s-a.s).slice(0,12)}
+function pplCard(p,why){const nm=realName(p.id),rel=pplRel(p),ex=(p.exp||[]).find(e=>e&&(e.t||e.o)),m=pplMutual(p);
+  const sub=p.headline||(ex?[ex.t,ex.o].filter(Boolean).join(" at "):"")||[p.school,p.grad?"'"+String(p.grad).slice(-2):""].filter(Boolean).join(" ")||RANKS[p.rank||0][0];
+  const btn=rel==="connected"?`<button class="ghost outline sm ppl-b on" data-un="${esc(p.id)}" title="Remove connection">✓ Connected</button>`
+    :rel==="requested"?`<button class="ghost outline sm ppl-b" data-un="${esc(p.id)}" title="Cancel request">Requested</button>`
+    :rel==="incoming"?`<button class="btn sm ppl-b" data-fo="${esc(p.id)}">Accept</button>`
+    :`<button class="btn sm ppl-b" data-fo="${esc(p.id)}">+ Connect</button>`;
+  return `<div class="ppl-c"><button class="ppl-who" data-open="${esc(p.id)}">${avatar(p.id,nm,44)}<span><b>${esc(nm)}</b><small>${esc(sub)}</small><em>${esc(why||(m?`${m} mutual connection${m===1?"":"s"}`:""))}</em></span></button>${btn}</div>`}
+function renderPeople(){const el=$("#people");if(!el)return;
+  if(dbState!=="on"||!myId){el.innerHTML=`<div class="ppl-head"><div><span class="label">Find people</span><h3>Grow your network</h3></div></div><p class="note">Searching and connecting with other students turns on when accounts are live.</p>`;return}
+  const all=PLAYERS.filter(p=>p.id!==myId&&!p.hidden),inc=all.filter(p=>pplRel(p)==="incoming"),conn=all.filter(p=>pplRel(p)==="connected"),req=all.filter(p=>pplRel(p)==="requested");
+  const tabs=[["suggest","People you may know"],["inv",`Invitations${inc.length?` (${inc.length})`:""}`],["conn",`Connections (${conn.length})`],["sent",`Sent (${req.length})`]];
+  let list;if(pplQ.trim())list=all.filter(p=>pplMatch(p,pplQ.trim())).slice(0,30).map(p=>({p}));
+  else list=pplTab==="inv"?inc.map(p=>({p,why:"Wants to connect"})):pplTab==="conn"?conn.map(p=>({p})):pplTab==="sent"?req.map(p=>({p,why:"Waiting for them to accept"})):pplSuggest();
+  const empty=pplQ.trim()?`No one matches "${esc(pplQ.trim())}". Try a school, firm or first name.`:pplTab==="inv"?"No invitations right now.":pplTab==="conn"?"No connections yet. Connect with someone below or search above.":pplTab==="sent"?"No pending requests.":"No suggestions yet. Add your school in Edit profile to find classmates.";
+  el.innerHTML=`<div class="ppl-head"><div><span class="label">Find people</span><h3>Grow your network</h3></div><span class="note">${conn.length} connection${conn.length===1?"":"s"}</span></div>
+   <div class="ppl-search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pplQ" type="search" placeholder="Search by name, school, firm or club" value="${esc(pplQ)}" aria-label="Search people"></div>
+   ${pplQ.trim()?`<p class="note ppl-n">${list.length} result${list.length===1?"":"s"}</p>`:`<nav class="seg ppl-tabs">${tabs.map(([k,l])=>`<button data-pt="${k}" aria-pressed="${pplTab===k}">${l}</button>`).join("")}</nav>`}
+   <div class="ppl-grid">${list.length?list.map(x=>pplCard(x.p,x.why)).join(""):`<p class="note">${empty}</p>`}</div>`;
+  const q=$("#pplQ");q.oninput=()=>{pplQ=q.value;const pos=q.selectionStart;renderPeople();const n=$("#pplQ");n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}};
+  el.querySelectorAll("[data-pt]").forEach(b=>b.onclick=()=>{pplTab=b.dataset.pt;renderPeople()});
+  el.querySelectorAll("[data-fo]").forEach(b=>b.onclick=()=>{pplToggle(b.dataset.fo,true);const p=PLAYERS.find(x=>x.id===b.dataset.fo);toast(p&&pplRel(p)==="connected"?`You're now connected with ${realName(p.id).split(" ")[0]}`:"Request sent")});
+  el.querySelectorAll("[data-un]").forEach(b=>b.onclick=()=>pplToggle(b.dataset.un,false));
+  el.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const p=PLAYERS.find(x=>x.id===b.dataset.open);if(p)showPlayer(p)});
+  {const need=all.map(p=>p.id).filter(i=>!(i in NAMES));if(need.length){const r=loadNames(need);if(r&&r.then)r.then(()=>{need.forEach(i=>{if(!(i in NAMES))NAMES[i]=""});renderPeople()})}}}
+(function(){const pane=document.querySelector('[data-pane="net"]');if(pane&&!$("#people")){const d=document.createElement("section");d.id="people";d.className="ppl";pane.insertBefore(d,pane.firstChild)}
+  {const _rc=renderCompete;renderCompete=function(){_rc.apply(this,arguments);try{renderPeople()}catch(e){}}}
+  {const _rcrm=renderCRM;renderCRM=function(){_rcrm.apply(this,arguments);try{if(!document.activeElement||document.activeElement.id!=="pplQ")renderPeople()}catch(e){}}}
+  try{renderPeople()}catch(e){}
+  const st=document.createElement("style");st.textContent=`
+.ppl{display:flex;flex-direction:column;gap:12px;padding-bottom:22px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.ppl-head{display:flex;justify-content:space-between;align-items:end;gap:12px}
+.ppl-head h3{font-family:var(--body);font-size:20px;font-weight:650;margin:2px 0 0;text-transform:none}
+.ppl-search{display:flex;align-items:center;gap:8px;border:1px solid var(--rule);border-radius:10px;padding:0 12px;background:var(--sheet);transition:border-color .2s,box-shadow .2s}
+.ppl-search:focus-within{border-color:var(--cobalt);box-shadow:0 0 0 3px var(--cobalt-soft)}
+.ppl-search svg{color:var(--ink-2);flex:none}
+.ppl-search input{border:0!important;background:none;padding:11px 0;font-size:15px;outline:none;box-shadow:none}
+.ppl-tabs{flex-wrap:wrap}
+.ppl-n{margin:0}
+.ppl-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ppl-grid>.note{grid-column:1/-1;margin:4px 0}
+.ppl-c{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--rule);border-radius:12px;padding:10px 12px;background:var(--sheet);min-width:0;animation:plIn .35s cubic-bezier(.2,.8,.2,1) both;transition:border-color .2s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.ppl-c:hover{border-color:var(--ink-2);transform:translateY(-1px)}
+.ppl-who{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;min-width:0;cursor:pointer}
+.ppl-who span{display:flex;flex-direction:column;min-width:0}
+.ppl-who b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ppl-who small{font-size:12.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ppl-who em{font-style:normal;font-size:11.5px;color:var(--cobalt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ppl-who:hover b{text-decoration:underline;text-underline-offset:3px}
+.ppl-b{flex:none;white-space:nowrap}
+.ppl-b.on{color:var(--good)!important;border-color:var(--good)!important}
+@media (max-width:620px){.ppl-grid{grid-template-columns:1fr}}`;document.head.appendChild(st)})();
+
 try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 /* ---------- boot ---------- */
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();

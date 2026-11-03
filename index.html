@@ -2860,7 +2860,7 @@ const VERIFIED=[["f","Valuation","Cleared the Foundations track"],["ib","Investm
 const OPEN_TO=["","Junior-summer internships","Sophomore programs","Full-time analyst roles","PE associate roles","Coffee chats"];
 const hueOf=id=>{let h=0;for(const c of String(id))h=(h*33+c.charCodeAt(0))%360;return h};
 const initials=n=>(n||"?").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("")||"?";
-const avatar=(id,name,size)=>{const ph=typeof photoFor==="function"?photoFor(id):"";return ph?`<span class="av av-img" style="width:${size}px;height:${size}px" aria-hidden="true"><img src="${ph}" alt="" loading="lazy" decoding="async"></span>`:`<span class="av" style="--h:${hueOf(id)};width:${size}px;height:${size}px;font-size:${Math.round(size*.38)}px" aria-hidden="true">${esc(initials(name))}</span>`};
+let avatar=(id,name,size)=>{const ph=typeof photoFor==="function"?photoFor(id):"";return ph?`<span class="av av-img" style="width:${size}px;height:${size}px" aria-hidden="true"><img src="${ph}" alt="" loading="lazy" decoding="async"></span>`:`<span class="av" style="--h:${hueOf(id)};width:${size}px;height:${size}px;font-size:${Math.round(size*.38)}px" aria-hidden="true">${esc(initials(name))}</span>`};
 let myName="";
 function verifiedFor(p){return VERIFIED.filter(([t])=>T(t)&&((p.tracks||{})[t]||0)===T(t).levels.length)}
 const followersOf=id=>PLAYERS.filter(p=>p.id!==id&&(p.follows||[]).includes(id)).length;
@@ -3327,7 +3327,7 @@ $("#proBtn").onclick=()=>showTab("pro");
 $("#avBtn").onclick=()=>showPlayer({id:myId||"me",...myStats()});$("#setBtn").onclick=()=>showTab("settings");
 
 /* ---------- M&A Pro (preview: payments not live) ---------- */
-const FREE_GRADES=3;
+let FREE_GRADES=3;
 function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return (Date.now()-p.start)<7*864e5;return true}
 function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,7-Math.floor((Date.now()-p.start)/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
 const gradesToday=()=>(S.grades||{})[today()]||0;
@@ -6189,4 +6189,5 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 <script src="js/auth.js"></script>
 <script src="js/notify.js"></script>
 <script src="js/clubinv.js"></script>
+<script src="js/rewards.js"></script>
 </body></html>

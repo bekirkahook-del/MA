@@ -15,6 +15,8 @@
 <style>.pe-nmf{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-2);margin:0 0 6px;max-width:320px}
 .pe-nmf input{font-size:15px;font-weight:600;color:var(--ink)}
 </style>
+<script src="vendor/supabase.js"></script>
+<script src="js/backend.js"></script>
 </head><body>
 <style>
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */
@@ -2610,7 +2612,7 @@ async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();retur
     cloudOn=true;if(!adopt&&(!snap.exists||!remote||(S._t||0)>((snap.data()||{}).t||0)))await cloudPush();else if(!adopt){cloudState="synced";cloudAt=Date.now()}
   }catch(e){cloudState="error"}renderSyncRow()}
 function renderSyncRow(){const el=document.getElementById("syncStat");if(!el)return;
-  el.textContent=cloudState==="synced"?`On · last synced ${new Date(cloudAt||Date.now()).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}`:cloudState==="error"?"Couldn't sync just now. Your progress is still saved on this device.":cloudState==="toobig"?"Too much data to sync. Try clearing old contacts.":"Sync across devices is coming soon. Your progress saves in this browser."}
+  el.textContent=cloudState==="synced"?`On · last synced ${new Date(cloudAt||Date.now()).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}`:cloudState==="error"?"Couldn't sync just now. Your progress is still saved on this device.":cloudState==="toobig"?"Too much data to sync. Try clearing old contacts.":"Sync across devices is available when you sign in. Your progress saves in this browser."}
 if(!S.seeded){S.contacts=[
   {id:"ex1",ex:true,name:"Jordan Lee",firm:"Houlihan Lokey",role:"Analyst",conn:"Alum, finance club",status:"Chatted",last:addDays(-9),next:addDays(-2),notes:"Suggested I talk to their restructuring group"},
   {id:"ex2",ex:true,name:"Priya Shah",firm:"William Blair",role:"Associate",conn:"Alum",status:"Emailed",last:addDays(-3),next:addDays(4),notes:"Waiting on reply"}];S.seeded=true;save()}
@@ -2801,7 +2803,7 @@ function renderCompete(){
   const pk=profKey();const onPath=x=>boardPath==="all"||pk==="all"||x.p.id===myId||(boardMetric==="gauntlet"?(x.p.gPath||"all")===pk:x.p.path===pk);
   const ranked=players.map(p=>({p,v:mVal(p)})).filter(x=>x.v>=0&&(boardMetric!=="xp"||x.v>0||x.p.id===myId)&&onPath(x)).sort((a,b)=>b.v-a.v);
   const myPos=ranked.findIndex(x=>x.p.id===myId);
-  const status=dbState==="off"?"Rankings are coming soon. Your progress saves on this device.":dbState==="error"?"Rankings couldn't load right now.":dbState==="readonly"?"You can view the rankings. Posting your stats needs contributor access to this page.":dbState==="loading"?"Loading rankings…":`${players.length} player${players.length===1?"":"s"} on this page.`;
+  const status=dbState==="off"?"Rankings are available when you sign in. Your progress saves on this device.":dbState==="error"?"Rankings couldn't load right now.":dbState==="readonly"?"You can view the rankings. Posting your stats needs contributor access to this page.":dbState==="loading"?"Loading rankings…":`${players.length} player${players.length===1?"":"s"} on this page.`;
   $("#cmpMe").innerHTML=`<div class="me-row"><div class="me-id">${avatar(myId||"me",myName||"You",64)}<div><div class="label">Your profile · ${RANKS[r][0]}</div><div class="me-name">${esc(myName||"You")}${S.profile.headline?`<small>${esc(S.profile.headline)}</small>`:""}</div>
      <div class="note">${[S.profile.school,S.profile.grad&&("Class of "+S.profile.grad),S.profile.target&&("Targeting "+S.profile.target)].filter(Boolean).map(esc).join(" · ")||"Add your school, experience and skills so others know who they're up against."}</div></div></div>
      <div class="actions" style="margin:0"><button class="ghost" id="viewsBtn">${viewersOf(myId).length} profile view${viewersOf(myId).length===1?"":"s"}</button><button class="ghost" id="shareBtn">Share card</button><button class="ghost" id="viewMe">View public profile</button><button class="btn sm" id="editMe">Edit profile</button></div></div>
@@ -3138,7 +3140,7 @@ async function grade(){const ans=$("#mockAns").value.trim();const out=$("#mockOu
   if(q.c==="Brain Teasers"?!ans:ans.split(/\s+/).length<15){out.innerHTML=`<p class="note" style="color:var(--warn)">${q.c==="Brain Teasers"?"Type an answer first, even just a number.":"Write a bit more so there's something to grade."}</p>`;return}
   if(!isPro()&&gradesToday()>=FREE_GRADES){out.innerHTML=`<div class="upsell"><b>You've used today's ${FREE_GRADES} free grades.</b><span>They reset tomorrow. Pro members get unlimited grading.</span><div class="actions" style="margin-top:8px"><button class="btn sm" id="upG">Start free trial</button><button class="ghost" id="upK">See key points instead</button></div></div>`;$("#upG").onclick=()=>startPlan("trial");$("#upK").onclick=()=>{out.innerHTML=keysHTML()};return}
   clearInterval(mockClock);const deliv=speakMode?deliveryStats(ans,mockT0?Math.round((Date.now()-mockT0)/1000):0):null;await samplePromise;
-  if(!SAMPLE){out.innerHTML=`<p class="note">AI grading: coming soon. Compare your answer against the key points:</p>`+keysHTML();return}
+  if(!SAMPLE){out.innerHTML=`<p class="note">AI grading: sign in to use this. Compare your answer against the key points:</p>`+keysHTML();return}
   const btn=$("#gradeBtn");btn.disabled=true;btn.textContent="Grading…";
   const prompt=`${q.c==="Consulting"?"You are a consulting interviewer at a top strategy firm (like McKinsey, BCG or Bain) running a case or fit interview with a college student applying for a business analyst internship.":"You are a senior investment banker interviewing a college student for a junior-summer analyst internship."} Grade their answer honestly and directly, like a demanding but fair interviewer. This is a ${DIFF[q.d]}-difficulty ${q.c} question. ${({gentle:"Be encouraging and lead with what went well, but stay honest. ",tough:"Grade like the toughest interviewer on a superday: no credit for vague answers. "})[S.settings.strict]||""}${deliv?`This answer was spoken aloud and dictated, so judge it as speech: ignore transcription typos, but note rambling or weak structure. `:""}${q.f?`This question is in the style of a ${q.f.replace("-style"," ")} interview. `:""}${q.c==="Brain Teasers"?"This is a brain teaser: always grade it, even if the answer is only a number or a few words. Score mainly on whether the final answer is correct; a correct bare answer can still score 7+, and shown reasoning earns the top scores. If it is wrong, say what the right answer is and why. ":""}Calibrate: 5 = weak, 7 = would pass a first round, 9+ = exceptional. Hold Advanced questions to a high bar.
 
@@ -3380,7 +3382,7 @@ function runSuperday(){const r=seeded("sd"+Date.now());const pick=(f)=>{const p=
     if($("#sdPrev"))$("#sdPrev").onclick=()=>{ans[n]=$("#sdA").value;n--;draw()};
     $("#sdNext").onclick=()=>{ans[n]=$("#sdA").value.trim();if((qs[n]&&qs[n].c==="Brain Teasers")?!ans[n]:ans[n].split(/\s+/).length<5){toast(qs[n]&&qs[n].c==="Brain Teasers"?"Type an answer first":"Give each interviewer a real answer");return}if(n<3){n++;draw()}else debrief()}};
   const debrief=async()=>{clearInterval(timerH);await samplePromise;
-    if(!SAMPLE){panel.innerHTML=`<button class="close" aria-label="Close">×</button><h2>Round complete</h2><p class="note">AI debriefs: coming soon. Compare each answer against the key points:</p>${qs.map(q=>`<div class="keysbox"><b>${esc(q.q)}</b><ul class="keys">${q.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>`).join("")}`;bindClose();return}
+    if(!SAMPLE){panel.innerHTML=`<button class="close" aria-label="Close">×</button><h2>Round complete</h2><p class="note">AI debriefs: sign in to use this. Compare each answer against the key points:</p>${qs.map(q=>`<div class="keysbox"><b>${esc(q.q)}</b><ul class="keys">${q.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>`).join("")}`;bindClose();return}
     panel.innerHTML=`<button class="close" aria-label="Close">×</button><div class="result"><div class="label">Superday</div><h2>Writing your debrief…</h2><p class="note">Four interviewers are comparing notes.</p></div>`;bindClose();
     const prompt=`You are the hiring committee at a top investment bank debriefing a college student's superday (4 interviews) for a junior-summer analyst role. Be honest, specific and direct. Calibrate: 5 = weak, 7 = solid, 9+ = exceptional.
 ${qs.map((q,i)=>`Interview ${i+1} (${q.c}, ${DIFF[q.d]}): ${q.q}\nStrong answers cover: ${q.k.join("; ")}\nCandidate: """${ans[i].slice(0,2500)}"""`).join("\n\n")}
@@ -3428,7 +3430,7 @@ function renderReviews(){const el=$("#reviews");if(!el)return;const list=REVIEWS
   const dist=[5,4,3,2,1].map(k=>[k,list.filter(r=>r.rating===k).length]);
   el.innerHTML=`<div class="sec-head"><h2>What members say</h2>${n?`<div class="cats" role="group" aria-label="Sort reviews"><button class="chip" data-rs="new" aria-pressed="${revSort==="new"}">Newest</button><button class="chip" data-rs="top" aria-pressed="${revSort==="top"}">Highest rated</button></div>`:""}</div>
    <div class="rv-top">${n?`<div class="rv-sum"><b>${avg.toFixed(1)}</b>${starsOf(Math.round(avg))}<span>${n} review${n===1?"":"s"}</span></div><div class="rv-dist">${dist.map(([k,c])=>`<div><span>${k}★</span><span class="gbar"><i style="width:${n?c/n*100:0}%"></i></span><span>${c}</span></div>`).join("")}</div>`:`<p class="note" style="margin:0">No reviews yet. ${canReview()?"Be the first to share what Pro is like.":"Members can review Pro after trying it."}</p>`}
-   <div class="rv-cta">${canReview()?(dbState==="on"?`<button class="${mine?'ghost outline':'btn'}" id="revWrite">${mine?"Edit your review":"Write a review"}</button>`:`<span class="note">Reviews are coming soon.</span>`):`<button class="ghost outline" id="revTry">Try Pro to leave a review</button>`}</div></div>
+   <div class="rv-cta">${canReview()?(dbState==="on"?`<button class="${mine?'ghost outline':'btn'}" id="revWrite">${mine?"Edit your review":"Write a review"}</button>`:`<span class="note">Reviews are available when you sign in.</span>`):`<button class="ghost outline" id="revTry">Try Pro to leave a review</button>`}</div></div>
    ${sorted.length?`<div class="rv-list">${sorted.map(r=>`<article class="rv-card"><div class="rv-h">${avatar(r.id,realName(r.id),36)}<div><b class="rv-name" data-id="${esc(r.id)}"></b><span>${esc(r.plan||"Pro member")} · ${r.updated?new Date(r.updated).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):""}</span></div>${starsOf(r.rating)}</div>${r.title?`<h4>${esc(r.title)}</h4>`:""}<p>${esc(r.text)}</p><div class="rv-foot"><span class="note">Reviewed during the Pro preview</span>${ownerView&&r.id!==myId?`<button class="rowbtn" data-rdel="${esc(r.id)}">Remove</button>`:""}${r.id===myId?`<button class="rowbtn" id="revDelMine">Delete my review</button>`:""}</div></article>`).join("")}</div>`:""}`;
   el.querySelectorAll(".rv-name").forEach(x=>x.textContent=x.dataset.id===myId?(myName||"You"):realName(x.dataset.id));
   el.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{revSort=b.dataset.rs;renderReviews()});
@@ -3653,7 +3655,7 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
     ${tog("hidden","Hide me from rankings","Removes your profile from leaderboards and stops posting stats.")}
     ${tog("noSchool","Hide my school","Keeps your school off leaderboards and your public profile.")}`],
    ["data","Your data",`
-    ${row("Sync across devices","Your progress saves in this browser. Syncing across devices is coming soon.",`<span style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="note" id="syncStat" style="text-align:right">Checking…</span><button class="ghost outline" id="syncNow" type="button">Sync now</button></span>`)}
+    ${row("Sync across devices","Your progress saves in this browser. Sign in to sync across devices.",`<span style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="note" id="syncStat" style="text-align:right">Checking…</span><button class="ghost outline" id="syncNow" type="button">Sync now</button></span>`)}
     ${row("Back up progress","Copy a code you can paste into another browser.",`<button class="ghost outline" id="expBtn">Copy backup code</button>`)}
     ${row("Restore from backup","Paste a backup code. This replaces progress in this browser.",`<div style="display:flex;gap:8px;width:100%"><input id="impTxt" placeholder="Paste backup code" aria-label="Backup code"><button class="ghost outline" id="impBtn">Restore</button></div>`,"col")}
     ${row("Reset progress","Clears XP, levels, streaks and interview scores. Keeps contacts, checklist and profile.",`<span id="rstBox"><button class="ghost danger" id="rstBtn">Reset</button></span>`)}
@@ -3675,7 +3677,7 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
   if(keep)window.scrollTo(0,scrollY);
   if($("#proCancel"))$("#proCancel").onclick=()=>{S.pro={};save();applyProUI();render();renderMock();renderSettings(true);syncSoon();toast("Pro canceled. Everything free stays yours.")};
   if($("#proGo"))$("#proGo").onclick=()=>showTab("pro");
-  if($("#proRev"))$("#proRev").onclick=()=>{if(dbState!=="on"){toast("Reviews are coming soon");return}writeReview(REVIEWS.find(r=>r.id===myId))};
+  if($("#proRev"))$("#proRev").onclick=()=>{if(dbState!=="on"){toast("Reviews are available when you sign in");return}writeReview(REVIEWS.find(r=>r.id===myId))};
   $("#expBtn").onclick=async()=>{const code=btoa(unescape(encodeURIComponent(JSON.stringify(S))));try{await navigator.clipboard.writeText(code);toast("Backup code copied")}catch(e){$("#impTxt").value=code;$("#impTxt").select();toast("Select and copy the code in the box")}};
   $("#impBtn").onclick=()=>{try{const o=JSON.parse(decodeURIComponent(escape(atob($("#impTxt").value.trim()))));if(!o||typeof o!=="object"||!o.best)throw 0;S=Object.assign(S,o);save();applySettings();applyProUI();render();renderCRM();renderFirms();renderMock();renderSettings(true);toast("Progress restored")}catch(e){toast("That code didn't work. Copy it again and paste the whole thing.")}};
   const confirmIn=(box,label,fn)=>{const b=$(box);b.innerHTML=`<span class="confirm">Sure? <button class="ghost danger" data-y>${label}</button><button class="ghost" data-n>Cancel</button></span>`;b.querySelector("[data-y]").onclick=fn;b.querySelector("[data-n]").onclick=()=>renderSettings(true);b.querySelector("[data-n]").focus()};
@@ -4076,7 +4078,7 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
    <div class="actions"><button class="btn" id="resGo">Review my resume</button><span class="note">${isPro()?"Unlimited with Pro.":usedToday?"Free review used today. Pro is unlimited.":"1 free review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
   $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<60){toast("Paste your full resume (at least a few sections)");return}
     if(!canRun&&!isPro()){upgrade("Unlimited resume reviews are part of Pro");return}
-    await samplePromise;if(!SAMPLE){$("#resOut").innerHTML=`<p class="note">AI review: coming soon.</p>`;return}
+    await samplePromise;if(!SAMPLE){$("#resOut").innerHTML=`<p class="note">AI review: sign in to use this.</p>`;return}
     const b=$("#resGo");b.disabled=true;b.textContent="Reviewing…";
     const prompt=`You are ${(typeof prof==="function"&&prof().recruiter)||"a recruiter at a top investment bank"} reviewing a college student's resume for a ${$("#resRole").value} role. Be direct and specific, like a mentor who wants them to get the interview. Banking resumes should be one page, use strong action verbs, quantify results, and lead with education.
 
@@ -4104,7 +4106,7 @@ function initSubs(){if(!DB||!myId){subState="off";renderSubUI();return}
 async function saveSub(email,topics,src){if(!DB||!myId)return false;email=email.trim().toLowerCase();if(!emailOk(email)){toast("Enter a valid email");return false}
   const now=new Date().toISOString();
   try{await DB.doc("subscribers/"+myId).set({email,topics,consent:true,source:src||"settings",school:S.settings.noSchool?"":(S.profile.school||""),grad:S.profile.grad||"",target:S.profile.target||"",joined:(MYSUB&&MYSUB.joined)||now,updated:now});
-    S.subEmail=email;save();return true}catch(e){toast(e&&e.code==="not_granted"?"Email updates are coming soon":"Couldn't save. Try again.");return false}}
+    S.subEmail=email;save();return true}catch(e){toast(e&&e.code==="not_granted"?"Email updates are available when you sign in":"Couldn't save. Try again.");return false}}
 async function unsub(){if(!DB||!myId)return;try{await DB.doc("subscribers/"+myId).delete();toast("Unsubscribed. You won't get any more emails.")}catch(e){toast("Couldn't unsubscribe. Try again.")}}
 function subFormHTML(id,src){const em=(MYSUB&&MYSUB.email)||S.subEmail||"";const on=MYSUB?MYSUB.topics||[]:SUB_TOPICS.map(t=>t[0]);
   return `<form class="sub-form" id="${id}" data-src="${src}" novalidate>
@@ -4122,7 +4124,7 @@ function renderSubUI(){
       bindSubForm($("#subFormHome"));$("#subX").onclick=()=>{S.subCardX=true;save();renderSubUI()}}}
   // settings box
   const sb=$("#subBox");if(sb){
-    if(subState==="off"){sb.innerHTML=`<p class="note" style="margin:0">Email updates are coming soon.</p>`}
+    if(subState==="off"){sb.innerHTML=`<p class="note" style="margin:0">Email updates are available when you sign in.</p>`}
     else if(subState==="loading"){sb.innerHTML=`<p class="note" style="margin:0">Loading…</p>`}
     else{sb.innerHTML=`${MYSUB?`<p class="sub-status">Subscribed as <b></b> · since ${new Date(MYSUB.joined).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</p>`:""}${subFormHTML("subFormSet","settings")}${MYSUB?`<button class="ghost danger" id="unsubBtn" type="button">Unsubscribe from everything</button>`:""}`;
       const st=sb.querySelector(".sub-status b");if(st)st.textContent=MYSUB.email;bindSubForm($("#subFormSet"));if($("#unsubBtn"))$("#unsubBtn").onclick=unsub}
@@ -4131,7 +4133,7 @@ function renderSubUI(){
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghost outline" id="subCsv" type="button">Download CSV</button><button class="ghost outline" id="subCopy" type="button">Copy emails</button></div>
         <p class="note">Import the CSV into Beehiiv, Kit or Mailchimp, or ask Claude to send an update from your Gmail.</p>`;
       $("#subCsv").onclick=async()=>{await dlPromise;const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';const csv=["email,topics,school,grad,target,source,joined",...SUBS.map(s=>[s.email,(s.topics||[]).join(" "),s.school,s.grad,s.target,s.source,s.joined].map(q).join(","))].join("\n");
-        if(!DL){toast("Downloads: coming soon");return}try{await DL.save({filename:"ma-subscribers.csv",data:new Blob([csv],{type:"text/csv"})})}catch(e){}};
+        if(!DL){toast("Downloads aren't available");return}try{await DL.save({filename:"ma-subscribers.csv",data:new Blob([csv],{type:"text/csv"})})}catch(e){}};
       $("#subCopy").onclick=()=>{const t=SUBS.map(s=>s.email).join(", ");(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast(SUBS.length+" emails copied"),()=>toast("Couldn't copy"))}}}}
 }
 
@@ -4234,7 +4236,7 @@ async function submitCase(c,f,practice){const rec=f.querySelector("[name=rec]").
   if(n>450){out.innerHTML=`<p class="note" style="color:var(--warn)">Keep it under 400 words. Judges reward tight writing.</p>`;return}
   if(!thesis){out.innerHTML=`<p class="note" style="color:var(--warn)">Add a one-line thesis.</p>`;return}
   if(practice&&!isPro()&&gradesToday()>=FREE_GRADES){out.innerHTML=`<p class="note">You've used today's ${FREE_GRADES} free grades. They reset tomorrow, or go unlimited with Pro.</p>`;return}
-  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">Judging: coming soon. Here's what strong memos cover:</p><div class="model">${esc(c.keys)}</div>`;return}
+  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">Judging: sign in to use this. Here's what strong memos cover:</p><div class="model">${esc(c.keys)}</div>`;return}
   const btn=$("#caseSubmit");btn.disabled=true;btn.textContent="The judges are reading…";
   const prompt=`You are a panel of judges at an undergraduate investment banking case competition (think senior bankers and PE investors). Score this student's memo strictly and fairly against the rubric. Check their math against the case data. Reward clear, decisive recommendations backed by numbers; penalize vague hedging, math errors, or ignoring the ask. A typical solid student memo scores 55-70; 85+ is exceptional.
 
@@ -4264,7 +4266,7 @@ Return ONLY JSON: {"parts":{"thesis":int,"valuation":int,"analysis":int,"risks":
 function prevBetter(res){const c=myCase();return c&&c.score>res.score}
 function caseEntries(){const mk=monthKey();return PLAYERS.filter(p=>p.cc&&p.cc.m===mk&&typeof p.cc.score==="number").map(p=>({p,score:p.cc.score,school:p.school||"",key:normSchool(p.school||"")}))}
 function renderCaseBoards(){const main=$("#caseMain");if(!main||caseTab==="case"||caseTab==="past")return;
-  if(dbState==="off"){main.innerHTML=`<p class="note">School boards are coming soon. You can still work the case.</p>`;return}
+  if(dbState==="off"){main.innerHTML=`<p class="note">School boards are available when you sign in. You can still work the case.</p>`;return}
   const all=caseEntries();
   if(caseTab==="school"){const mine=normSchool(S.settings.noSchool?"":(S.profile.school||""));
     if(!mine){main.innerHTML=`<div class="empty-s"><b>Add your school to see your bracket</b><span>Every school gets its own leaderboard each month.</span><button class="btn sm" id="caseSchool2">Add your school</button></div>`;$("#caseSchool2").onclick=editProfile;return}
@@ -4383,7 +4385,7 @@ function openShare(){openPanel(`<div class="label">Share</div><h2>Your profile c
   panel.classList.add("wide");const cv=$("#shareCv");(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>drawCard(cv));
   const me=myStats(),cap=`${RANKS[me.rank][0]} on M&A · ${me.xp} XP${me.mockN?` · ${me.mockAvg.toFixed(1)}/10 interview avg`:""}${Object.keys(S.certs||{}).length?` · Certified in ${Object.keys(S.certs).map(t=>T(t).name).join(", ")}`:""}. Training for high finance recruiting: ${SITE_URL}`;
   $("#shCopy").onclick=async()=>{try{await navigator.clipboard.writeText(cap);toast("Caption copied")}catch(e){$("#shNote").textContent=cap}};
-  $("#shSave").onclick=async()=>{await dlPromise;if(!DL){$("#shNote").textContent="Saving images: coming soon. You can also screenshot the card.";return}
+  $("#shSave").onclick=async()=>{await dlPromise;if(!DL){$("#shNote").textContent="Saving images isn't available. You can also screenshot the card.";return}
     cv.toBlob(async b=>{try{await DL.save({filename:"ma-profile-card.png",data:b});logEvent("Shared their profile card")}catch(e){$("#shNote").textContent=e&&e.code==="cancelled"?"":"Couldn't save. Try a screenshot instead."}},"image/png")};
 }
 
@@ -4446,7 +4448,7 @@ function draftEmail(c){const used=(S.drafts||{})[today()]||0;
    <label class="note" style="display:block;margin-top:12px">Anything to mention?<input id="emExtra" placeholder="e.g. we talked about their restructuring group"></label>
    <div class="actions"><button class="btn" id="emGo">Write it</button><span class="note">${isPro()?"Unlimited with Pro.":used?"Free draft used today.":"1 free draft a day."}</span></div><div id="emOut"></div>`);
   let type="intro";panel.querySelectorAll("[data-em]").forEach(b=>b.onclick=()=>{type=b.dataset.em;panel.querySelectorAll("[data-em]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}await samplePromise;if(!SAMPLE){$("#emOut").innerHTML=`<p class="note">Drafting: coming soon.</p>`;return}
+  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}await samplePromise;if(!SAMPLE){$("#emOut").innerHTML=`<p class="note">Drafting: sign in to use this.</p>`;return}
     const b=$("#emGo");b.disabled=true;b.textContent="Writing…";const pr=S.profile;
     const kinds={intro:"a short cold networking email asking for a 15-minute call",follow:"a short follow-up to an earlier email that got no reply",thanks:"a thank-you note sent within 24 hours of a call",referral:"a polite email asking whether they'd be comfortable referring the student for an internship"};
     const prompt=`Write ${kinds[type]} from a college student to ${(typeof prof==="function"&&prof().pro)||"a finance professional"}. Under 110 words, warm, specific, no flattery clichés. Use only facts given here; do not invent shared experiences.
@@ -4834,7 +4836,7 @@ function addExplain(raw){const fb=$("#fb");if(!fb||fb.querySelector(".xpl"))retu
   why.insertAdjacentHTML("afterend",`<div class="xpl"><button class="ghost xpl-b" type="button">Why was my answer wrong?</button></div>`);
   fb.querySelector(".xpl-b").onclick=async()=>{const box=fb.querySelector(".xpl");const key=raw[0]+"|"+pick.textContent;
     if(_expCache.has(key)){box.innerHTML=_expCache.get(key);return}
-    if(!SAMPLE){box.innerHTML=`<p class="note">Mistake explanations are coming soon.</p>`;return}
+    if(!SAMPLE){box.innerHTML=`<p class="note">Mistake explanations are available when you sign in.</p>`;return}
     if(!isPro()&&explainsToday()>=EXPLAIN_FREE){box.innerHTML=`<p class="note">You've used today's ${EXPLAIN_FREE} free mistake explanations. They reset tomorrow, or go unlimited with Pro.</p>`;return}
     box.innerHTML=`<p class="note xpl-load">Looking at your answer…</p>`;
     const strip=x=>String(x).replace(/<[^>]+>/g,"");
@@ -5018,7 +5020,7 @@ function startFinal(tid){const F=FINALS[tid];if(!F)return;
   const intro=()=>{openPanel(`<div class="fr"><div class="label">Final round · ${esc(T(tid).name)}</div><h2>${esc(F.name)}</h2><p class="sub">${esc(F.fmt)}. This is how ${esc(F.who)} decides who gets the offer.</p>
      ${F.case?`<div class="fr-case">${esc(F.case)}</div>`:""}
      <ol class="fr-plan">${F.rounds.map(r=>`<li><b>${esc(r.who)}</b><span>${esc(r.topic)}</span></li>`).join("")}</ol>
-     <p class="note">Score ${FINAL_PASS}+ overall, with no round under 40, to get the offer. ${ai?"Claude grades your written answers at the end.":(SAMPLE?`You've used today's free grades, so you'll check your own written answers against the key points.`:"AI grading is coming soon. For now you'll check them against the key points.")}</p>
+     <p class="note">Score ${FINAL_PASS}+ overall, with no round under 40, to get the offer. ${ai?"Claude grades your written answers at the end.":(SAMPLE?`You've used today's free grades, so you'll check your own written answers against the key points.`:"AI grading is available when you sign in. For now you'll check them against the key points.")}</p>
      <div class="actions"><button class="btn" id="frGo" type="button">Start the final round</button></div></div>`);
     $("#frGo").onclick=()=>{ri=0;draw()}};
   const next=()=>{clearInterval(clock);ri++;if(ri<F.rounds.length)draw();else finish()};
@@ -5243,7 +5245,7 @@ function editProfile(){
   scroller.addEventListener("scroll",spy,{passive:true});
   $p("#pePrevBtn").onclick=()=>{const on=panel.classList.toggle("pe-showprev");$p("#pePrevBtn").textContent=on?"Back to editing":"Preview"};
   /* AI */
-  const aiCall=async(prompt,note)=>{if(!SAMPLE){note.textContent="AI writing help is coming soon.";return null}if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
+  const aiCall=async(prompt,note)=>{if(!SAMPLE){note.textContent="AI writing help is available when you sign in.";return null}if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
     note.textContent="Writing…";try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.aiEdits=S.aiEdits||{};S.aiEdits[today()]=((S.aiEdits||{})[today()]||0)+1;save();note.textContent=isPro()?"Done. Edit it to sound like you.":`Done. ${peAiLeft()} free assist${peAiLeft()===1?"":"s"} left today.`;return r}catch(e){note.textContent="Couldn't reach Claude right now. Try again in a moment.";return null}};
   $p("#aiAbout").onclick=async()=>{const exp=readExpSafe();const cur=($p("#pAbout").value||"").trim();
     const prompt=`Write the "About" section of a college student's public profile on a finance recruiting site. First person, plain and confident, no buzzwords, no exclamation marks, 3 or 4 short sentences, under 550 characters. Don't invent facts beyond what's given; if something is missing, leave it out.
@@ -5656,7 +5658,7 @@ function pathEdit(i){const P=pathState(),st=P.steps[i];if(!st)return;const prev=
 
 async function pathReview(rows,warns){const out=$("#plAiOut"),btn=$("#plAi");
   if(pathAiLeft()<=0){out.innerHTML=`<p class="note">You've used today's free reviews. Pro makes them unlimited.</p>`;return}
-  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">AI reviews: coming soon. Meanwhile, check the warnings above and each step's costs.</p>`;return}
+  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">AI reviews: sign in to use this. Meanwhile, check the warnings above and each step's costs.</p>`;return}
   btn.disabled=true;btn.textContent="Reviewing…";const P=pathState();
   const plan=rows.map(r=>`- Age ${r.age} to ${r.age+r.y} (${r.year}): ${r.n}`).join("\n");
   const prompt=`You are a blunt, practical career coach for students aiming at high finance (investment banking, private equity, hedge funds, private credit, consulting). Review this student's career plan. They are ${P.age} and currently: ${PATH_STAT[P.status]}. Goal: ${(PATH_GOALS[P.goal]||["their own custom plan"])[0]}.${P.leave?" They want to leave finance at age "+P.leave+".":""}
@@ -6180,4 +6182,5 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 
 
 
+<script src="js/auth.js"></script>
 </body></html>

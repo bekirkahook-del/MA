@@ -165,9 +165,20 @@
   if(S.pro&&S.pro.plan&&S.pro.plan!=="trial"&&!S.pro.paid){S.pro={};save();try{applyProUI()}catch(e){}}
   if(S.pro&&S.pro.plan==="trial"&&!S.trialUsed){S.trialUsed=S.pro.start||Date.now();save()}
 
+  /* quiet Pro: no popups when someone taps a Pro feature, just a soft hint */
+  upgrade=function(reason){try{toast(`${reason}. You can try it free anytime.`)}catch(e){}const b=$("#proBtn");if(b){b.classList.remove("pro-hint");void b.offsetWidth;b.classList.add("pro-hint")}};
+
   /* ---------- styles ---------- */
   const st=document.createElement("style");st.textContent=`
-.ai-lock a{color:var(--cobalt);font-weight:600}
+.ai-lock{color:var(--ink-2)}.ai-lock a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}.ai-lock a:hover{color:var(--cobalt)}
+.probtn:not(.on){border:0!important;color:var(--ink-2)!important;background:none!important;font-weight:500!important;padding:4px 6px!important}
+.probtn:not(.on):hover{color:var(--ink)!important}
+.probtn.pro-hint{animation:proHint 1.4s ease 2}
+@keyframes proHint{0%,100%{color:var(--ink-2)}50%{color:var(--brass)}}
+.upsell{border:1px dashed var(--rule)!important;background:var(--paper)}
+.upsell b{font-weight:600}
+.gopro{color:var(--ink-2)!important;font-weight:500;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+.gopro:hover{color:var(--brass)!important}
 .av.rr1{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #B07A45}
 .av.rr2{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #9EA7B8}
 .av.rr3{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #D9A825,0 0 12px rgba(217,168,37,.45)}

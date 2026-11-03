@@ -48,4 +48,12 @@
   window.claude={use(name){
     if(name==="db")return makeDB();if(name==="user")return makeUser();if(name==="sample")return makeSample();
     if(name==="downloads")return Promise.resolve(downloads);return Promise.resolve(null)}};
+
+  /* AI is a Pro feature: friendly lock message used wherever AI would run */
+  window.aiLock=function(name){const signed=!!(window.MA_AUTH&&window.MA_AUTH.session);
+    return signed?`<span class="ai-lock">🔒 ${name} is part of M&amp;A Pro. <a href="#" data-ai-pro>Try Pro free for 7 days →</a></span>`
+      :`<span class="ai-lock">🔒 ${name} is part of M&amp;A Pro. <a href="#" data-ai-auth>Create a free account</a> to start a 7-day free trial.</span>`};
+  document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("[data-ai-pro],[data-ai-auth]");if(!a)return;e.preventDefault();
+    if(a.hasAttribute("data-ai-auth")){window.maOpenAuth&&window.maOpenAuth("up");return}
+    try{if(typeof closePanel==="function")closePanel()}catch(x){}try{showTab("pro")}catch(x){}});
 })();

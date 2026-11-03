@@ -3144,7 +3144,7 @@ async function grade(){const ans=$("#mockAns").value.trim();const out=$("#mockOu
   if(q.c==="Brain Teasers"?!ans:ans.split(/\s+/).length<15){out.innerHTML=`<p class="note" style="color:var(--warn)">${q.c==="Brain Teasers"?"Type an answer first, even just a number.":"Write a bit more so there's something to grade."}</p>`;return}
   if(!isPro()&&gradesToday()>=FREE_GRADES){out.innerHTML=`<div class="upsell"><b>You've used today's ${FREE_GRADES} free grades.</b><span>They reset tomorrow. Pro members get unlimited grading.</span><div class="actions" style="margin-top:8px"><button class="btn sm" id="upG">Start free trial</button><button class="ghost" id="upK">See key points instead</button></div></div>`;$("#upG").onclick=()=>startPlan("trial");$("#upK").onclick=()=>{out.innerHTML=keysHTML()};return}
   clearInterval(mockClock);const deliv=speakMode?deliveryStats(ans,mockT0?Math.round((Date.now()-mockT0)/1000):0):null;await samplePromise;
-  if(!SAMPLE){out.innerHTML=`<p class="note">AI grading: sign in to use this. Compare your answer against the key points:</p>`+keysHTML();return}
+  if(!SAMPLE){out.innerHTML=`<p class="note">${aiLock("AI grading")} Meanwhile, compare your answer against the key points:</p>`+keysHTML();return}
   const btn=$("#gradeBtn");btn.disabled=true;btn.textContent="Grading…";
   const prompt=`${q.c==="Consulting"?"You are a consulting interviewer at a top strategy firm (like McKinsey, BCG or Bain) running a case or fit interview with a college student applying for a business analyst internship.":"You are a senior investment banker interviewing a college student for a junior-summer analyst internship."} Grade their answer honestly and directly, like a demanding but fair interviewer. This is a ${DIFF[q.d]}-difficulty ${q.c} question. ${({gentle:"Be encouraging and lead with what went well, but stay honest. ",tough:"Grade like the toughest interviewer on a superday: no credit for vague answers. "})[S.settings.strict]||""}${deliv?`This answer was spoken aloud and dictated, so judge it as speech: ignore transcription typos, but note rambling or weak structure. `:""}${q.f?`This question is in the style of a ${q.f.replace("-style"," ")} interview. `:""}${q.c==="Brain Teasers"?"This is a brain teaser: always grade it, even if the answer is only a number or a few words. Score mainly on whether the final answer is correct; a correct bare answer can still score 7+, and shown reasoning earns the top scores. If it is wrong, say what the right answer is and why. ":""}Calibrate: 5 = weak, 7 = would pass a first round, 9+ = exceptional. Hold Advanced questions to a high bar.
 
@@ -3386,7 +3386,7 @@ function runSuperday(){const r=seeded("sd"+Date.now());const pick=(f)=>{const p=
     if($("#sdPrev"))$("#sdPrev").onclick=()=>{ans[n]=$("#sdA").value;n--;draw()};
     $("#sdNext").onclick=()=>{ans[n]=$("#sdA").value.trim();if((qs[n]&&qs[n].c==="Brain Teasers")?!ans[n]:ans[n].split(/\s+/).length<5){toast(qs[n]&&qs[n].c==="Brain Teasers"?"Type an answer first":"Give each interviewer a real answer");return}if(n<3){n++;draw()}else debrief()}};
   const debrief=async()=>{clearInterval(timerH);await samplePromise;
-    if(!SAMPLE){panel.innerHTML=`<button class="close" aria-label="Close">×</button><h2>Round complete</h2><p class="note">AI debriefs: sign in to use this. Compare each answer against the key points:</p>${qs.map(q=>`<div class="keysbox"><b>${esc(q.q)}</b><ul class="keys">${q.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>`).join("")}`;bindClose();return}
+    if(!SAMPLE){panel.innerHTML=`<button class="close" aria-label="Close">×</button><h2>Round complete</h2><p class="note">${aiLock("AI debriefs")} Meanwhile, compare each answer against the key points:</p>${qs.map(q=>`<div class="keysbox"><b>${esc(q.q)}</b><ul class="keys">${q.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>`).join("")}`;bindClose();return}
     panel.innerHTML=`<button class="close" aria-label="Close">×</button><div class="result"><div class="label">Superday</div><h2>Writing your debrief…</h2><p class="note">Four interviewers are comparing notes.</p></div>`;bindClose();
     const prompt=`You are the hiring committee at a top investment bank debriefing a college student's superday (4 interviews) for a junior-summer analyst role. Be honest, specific and direct. Calibrate: 5 = weak, 7 = solid, 9+ = exceptional.
 ${qs.map((q,i)=>`Interview ${i+1} (${q.c}, ${DIFF[q.d]}): ${q.q}\nStrong answers cover: ${q.k.join("; ")}\nCandidate: """${ans[i].slice(0,2500)}"""`).join("\n\n")}
@@ -4082,7 +4082,7 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
    <div class="actions"><button class="btn" id="resGo">Review my resume</button><span class="note">${isPro()?"Unlimited with Pro.":usedToday?"Free review used today. Pro is unlimited.":"1 free review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
   $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<60){toast("Paste your full resume (at least a few sections)");return}
     if(!canRun&&!isPro()){upgrade("Unlimited resume reviews are part of Pro");return}
-    await samplePromise;if(!SAMPLE){$("#resOut").innerHTML=`<p class="note">AI review: sign in to use this.</p>`;return}
+    await samplePromise;if(!SAMPLE){$("#resOut").innerHTML=`<p class="note">${aiLock("AI resume review")}</p>`;return}
     const b=$("#resGo");b.disabled=true;b.textContent="Reviewing…";
     const prompt=`You are ${(typeof prof==="function"&&prof().recruiter)||"a recruiter at a top investment bank"} reviewing a college student's resume for a ${$("#resRole").value} role. Be direct and specific, like a mentor who wants them to get the interview. Banking resumes should be one page, use strong action verbs, quantify results, and lead with education.
 
@@ -4240,7 +4240,7 @@ async function submitCase(c,f,practice){const rec=f.querySelector("[name=rec]").
   if(n>450){out.innerHTML=`<p class="note" style="color:var(--warn)">Keep it under 400 words. Judges reward tight writing.</p>`;return}
   if(!thesis){out.innerHTML=`<p class="note" style="color:var(--warn)">Add a one-line thesis.</p>`;return}
   if(practice&&!isPro()&&gradesToday()>=FREE_GRADES){out.innerHTML=`<p class="note">You've used today's ${FREE_GRADES} free grades. They reset tomorrow, or go unlimited with Pro.</p>`;return}
-  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">Judging: sign in to use this. Here's what strong memos cover:</p><div class="model">${esc(c.keys)}</div>`;return}
+  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">${aiLock("AI judging")} Here's what strong memos cover:</p><div class="model">${esc(c.keys)}</div>`;return}
   const btn=$("#caseSubmit");btn.disabled=true;btn.textContent="The judges are reading…";
   const prompt=`You are a panel of judges at an undergraduate investment banking case competition (think senior bankers and PE investors). Score this student's memo strictly and fairly against the rubric. Check their math against the case data. Reward clear, decisive recommendations backed by numbers; penalize vague hedging, math errors, or ignoring the ask. A typical solid student memo scores 55-70; 85+ is exceptional.
 
@@ -4452,7 +4452,7 @@ function draftEmail(c){const used=(S.drafts||{})[today()]||0;
    <label class="note" style="display:block;margin-top:12px">Anything to mention?<input id="emExtra" placeholder="e.g. we talked about their restructuring group"></label>
    <div class="actions"><button class="btn" id="emGo">Write it</button><span class="note">${isPro()?"Unlimited with Pro.":used?"Free draft used today.":"1 free draft a day."}</span></div><div id="emOut"></div>`);
   let type="intro";panel.querySelectorAll("[data-em]").forEach(b=>b.onclick=()=>{type=b.dataset.em;panel.querySelectorAll("[data-em]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}await samplePromise;if(!SAMPLE){$("#emOut").innerHTML=`<p class="note">Drafting: sign in to use this.</p>`;return}
+  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}await samplePromise;if(!SAMPLE){$("#emOut").innerHTML=`<p class="note">${aiLock("AI email drafting")}</p>`;return}
     const b=$("#emGo");b.disabled=true;b.textContent="Writing…";const pr=S.profile;
     const kinds={intro:"a short cold networking email asking for a 15-minute call",follow:"a short follow-up to an earlier email that got no reply",thanks:"a thank-you note sent within 24 hours of a call",referral:"a polite email asking whether they'd be comfortable referring the student for an internship"};
     const prompt=`Write ${kinds[type]} from a college student to ${(typeof prof==="function"&&prof().pro)||"a finance professional"}. Under 110 words, warm, specific, no flattery clichés. Use only facts given here; do not invent shared experiences.
@@ -4840,7 +4840,7 @@ function addExplain(raw){const fb=$("#fb");if(!fb||fb.querySelector(".xpl"))retu
   why.insertAdjacentHTML("afterend",`<div class="xpl"><button class="ghost xpl-b" type="button">Why was my answer wrong?</button></div>`);
   fb.querySelector(".xpl-b").onclick=async()=>{const box=fb.querySelector(".xpl");const key=raw[0]+"|"+pick.textContent;
     if(_expCache.has(key)){box.innerHTML=_expCache.get(key);return}
-    if(!SAMPLE){box.innerHTML=`<p class="note">Mistake explanations are available when you sign in.</p>`;return}
+    if(!SAMPLE){box.innerHTML=`<p class="note">${aiLock("AI mistake explanations")}</p>`;return}
     if(!isPro()&&explainsToday()>=EXPLAIN_FREE){box.innerHTML=`<p class="note">You've used today's ${EXPLAIN_FREE} free mistake explanations. They reset tomorrow, or go unlimited with Pro.</p>`;return}
     box.innerHTML=`<p class="note xpl-load">Looking at your answer…</p>`;
     const strip=x=>String(x).replace(/<[^>]+>/g,"");
@@ -5024,7 +5024,7 @@ function startFinal(tid){const F=FINALS[tid];if(!F)return;
   const intro=()=>{openPanel(`<div class="fr"><div class="label">Final round · ${esc(T(tid).name)}</div><h2>${esc(F.name)}</h2><p class="sub">${esc(F.fmt)}. This is how ${esc(F.who)} decides who gets the offer.</p>
      ${F.case?`<div class="fr-case">${esc(F.case)}</div>`:""}
      <ol class="fr-plan">${F.rounds.map(r=>`<li><b>${esc(r.who)}</b><span>${esc(r.topic)}</span></li>`).join("")}</ol>
-     <p class="note">Score ${FINAL_PASS}+ overall, with no round under 40, to get the offer. ${ai?"Claude grades your written answers at the end.":(SAMPLE?`You've used today's free grades, so you'll check your own written answers against the key points.`:"AI grading is available when you sign in. For now you'll check them against the key points.")}</p>
+     <p class="note">Score ${FINAL_PASS}+ overall, with no round under 40, to get the offer. ${ai?"AI grades your written answers at the end.":(SAMPLE?`You've used today's free grades, so you'll check your own written answers against the key points.`:aiLock("AI grading")+" For now you'll check them against the key points.")}</p>
      <div class="actions"><button class="btn" id="frGo" type="button">Start the final round</button></div></div>`);
     $("#frGo").onclick=()=>{ri=0;draw()}};
   const next=()=>{clearInterval(clock);ri++;if(ri<F.rounds.length)draw();else finish()};
@@ -5249,7 +5249,7 @@ function editProfile(){
   scroller.addEventListener("scroll",spy,{passive:true});
   $p("#pePrevBtn").onclick=()=>{const on=panel.classList.toggle("pe-showprev");$p("#pePrevBtn").textContent=on?"Back to editing":"Preview"};
   /* AI */
-  const aiCall=async(prompt,note)=>{if(!SAMPLE){note.textContent="AI writing help is available when you sign in.";return null}if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
+  const aiCall=async(prompt,note)=>{if(!SAMPLE){note.innerHTML=aiLock("AI writing help");return null}if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
     note.textContent="Writing…";try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.aiEdits=S.aiEdits||{};S.aiEdits[today()]=((S.aiEdits||{})[today()]||0)+1;save();note.textContent=isPro()?"Done. Edit it to sound like you.":`Done. ${peAiLeft()} free assist${peAiLeft()===1?"":"s"} left today.`;return r}catch(e){note.textContent="Couldn't reach Claude right now. Try again in a moment.";return null}};
   $p("#aiAbout").onclick=async()=>{const exp=readExpSafe();const cur=($p("#pAbout").value||"").trim();
     const prompt=`Write the "About" section of a college student's public profile on a finance recruiting site. First person, plain and confident, no buzzwords, no exclamation marks, 3 or 4 short sentences, under 550 characters. Don't invent facts beyond what's given; if something is missing, leave it out.
@@ -5662,7 +5662,7 @@ function pathEdit(i){const P=pathState(),st=P.steps[i];if(!st)return;const prev=
 
 async function pathReview(rows,warns){const out=$("#plAiOut"),btn=$("#plAi");
   if(pathAiLeft()<=0){out.innerHTML=`<p class="note">You've used today's free reviews. Pro makes them unlimited.</p>`;return}
-  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">AI reviews: sign in to use this. Meanwhile, check the warnings above and each step's costs.</p>`;return}
+  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">${aiLock("AI plan reviews")} Meanwhile, check the warnings above and each step's costs.</p>`;return}
   btn.disabled=true;btn.textContent="Reviewing…";const P=pathState();
   const plan=rows.map(r=>`- Age ${r.age} to ${r.age+r.y} (${r.year}): ${r.n}`).join("\n");
   const prompt=`You are a blunt, practical career coach for students aiming at high finance (investment banking, private equity, hedge funds, private credit, consulting). Review this student's career plan. They are ${P.age} and currently: ${PATH_STAT[P.status]}. Goal: ${(PATH_GOALS[P.goal]||["their own custom plan"])[0]}.${P.leave?" They want to leave finance at age "+P.leave+".":""}

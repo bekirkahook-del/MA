@@ -6,9 +6,9 @@
   const LADDER=[
     {ring:0,perks:[["🎓","Your training starts","Every track, the daily question and Rapid Fire. Free forever."]]},
     {ring:1,accent:"emerald",perks:[["🥉","Bronze ring","A bronze ring around your photo everywhere you appear."],["🎨","Emerald theme","A new accent color for the whole site."]]},
-    {ring:1,grades:1,shields:1,perks:[["🤖","+1 AI grade a day","4 free mock-interview grades daily, up from 3."],["🛡️","1 Streak Shield","Miss a day and your streak survives. Used automatically."]]},
+    {ring:1,shields:1,pass:1,perks:[["⭐","1 day of Pro, free","Try unlimited AI grading on us."],["🛡️","1 Streak Shield","Miss a day and your streak survives. Used automatically."]]},
     {ring:2,accent:"plum",perks:[["🥈","Silver ring","Upgrade from bronze. Shows on every board."],["🎨","Plum theme","Another accent color to make it yours."]]},
-    {ring:2,grades:2,shields:2,perks:[["🤖","+2 AI grades a day","5 free grades daily."],["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
+    {ring:2,shields:2,pass:2,perks:[["⭐","2 days of Pro, free","Another round of unlimited AI feedback."],["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
     {ring:3,accent:"crimson",pass:3,perks:[["🥇","Gold ring","Rare air. Only a few reach Director."],["⭐","3 days of Pro, free","Every Pro feature, unlocked automatically."],["🎨","Crimson theme","A bold new accent color."]]},
     {ring:4,accent:"gold",pass:7,shields:3,perks:[["💎","Animated MD ring","The top ring on the site."],["⭐","7 days of Pro, free","A full week of unlimited grading and final rounds."],["🛡️","3 more Streak Shields","Plus 1 more every Prestige level after this."]]}
   ];
@@ -16,8 +16,7 @@
   const RW=()=>{S.rw=S.rw||{};S.rw.got=S.rw.got||{};S.rw.shields=S.rw.shields||0;S.rw.used=S.rw.used||[];return S.rw};
   const myRank=()=>rankOf(totalXP());
   const prestige=x=>x>=TOP?Math.floor((x-TOP)/PRESTIGE_STEP):0;
-  const bonusGrades=r=>LADDER.slice(0,r+1).reduce((a,l)=>Math.max(a,l.grades||0),0);
-  const ringTier=r=>(LADDER[r]||LADDER[0]).ring||0;
+    const ringTier=r=>(LADDER[r]||LADDER[0]).ring||0;
   const passLeft=()=>Math.max(0,Math.ceil(((RW().passUntil||0)-Date.now())/864e5));
 
   /* grant rewards for every rank reached (works retroactively for existing players) */
@@ -27,7 +26,6 @@
       if(L.pass)w.passUntil=Math.max(w.passUntil||0,Date.now())+L.pass*864e5;
       got.push(i)}
     const pr=prestige(x);if((w.prestige||0)<pr){w.shields+=pr-(w.prestige||0);w.prestige=pr;got.push("p"+pr)}
-    FREE_GRADES=3+bonusGrades(r);
     if(got.length)save();return got}
 
   /* Streak Shields: fill missed days right before today so the streak survives */
@@ -77,7 +75,7 @@
         <div class="rw-perks">${L.perks.map(p=>`<span class="rw-chip" title="${esc(p[2])}">${p[0]} ${esc(p[1])}</span>`).join("")}</div></div></li>`}).join("");
     const unl=Object.entries(ACCENTS).filter(([,a])=>r>=a[1]);
     openPanel(`<div class="label">Career ladder</div><h2>Rank up, unlock rewards</h2><p class="sub">Every promotion gives you something real. Nothing here can be bought.</p>
-      <div class="rw-stats"><div><b>${w.shields}</b><span>Streak Shields</span></div><div><b>${FREE_GRADES}</b><span>Free AI grades a day</span></div><div><b>${passLeft()||"–"}</b><span>Pro pass days left</span></div><div><b>${pr?"★"+pr:"–"}</b><span>Prestige</span></div></div>
+      <div class="rw-stats"><div><b>${w.shields}</b><span>Streak Shields</span></div><div><b>${LADDER.slice(1,r+1).reduce((a,l)=>a+(l.pass||0),0)}</b><span>Pro days earned</span></div><div><b>${passLeft()||"–"}</b><span>Pro pass days left</span></div><div><b>${pr?"★"+pr:"–"}</b><span>Prestige</span></div></div>
       <ol class="rw-ladder">${rows}<li class="rw-step ${pr?"have":""}" style="--i:7"><div class="rw-dot">★</div><div class="rw-body"><div class="rw-h"><b>Prestige</b><span>Every ${PRESTIGE_STEP} XP after MD</span></div><div class="rw-perks"><span class="rw-chip">★ Prestige star on your profile</span><span class="rw-chip">🛡️ +1 Streak Shield each level</span></div></div></li></ol>
       <div class="rw-themes"><div class="label">Your themes</div><div class="rw-sw">${Object.entries(ACCENTS).map(([k,a])=>{const ok=r>=a[1];return `<button class="rw-swatch ${(w.accent||"cobalt")===k?"on":""}" ${ok?"":"disabled"} data-acc="${k}" style="--c:${a[2]}" title="${ok?a[0]:`Unlocks at ${RANKS[a[1]][0]}`}"><i></i><span>${a[0]}${ok?"":" 🔒"}</span></button>`}).join("")}</div></div>`);
     panel.classList.add("wide");
@@ -99,23 +97,23 @@
   /* ---------- redesigned Pro page ---------- */
   renderPro=function(){const el=$("#proPage");if(!el)return;const pro=isPro(),plan=S.pro&&S.pro.plan,r=myRank();
     const plans=[["monthly","Monthly","$9","/month","Flexible. Cancel whenever.",null],["yearly","Yearly","$69","/year","Works out to $5.75 a month. Covers a full recruiting cycle.","Save 36%"],["season","Season Pass","$29","one time","4 months of Pro for recruiting season. Never renews.",null]];
-    const rows=[["Every training track, all 1,000+ questions",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, friends, clubs, leaderboards",1,1],["LBO and DCF builders, pay ladders, The Wire",1,1],["AI-graded mock interviews",`${FREE_GRADES} a day*`,"Unlimited"],["Interview bank","Basic + Intermediate","Every level"],["Final rounds (Superday) with AI debrief","Practice mode","Unlimited"],["Firm-style packs: EB, PE, RX, markets",0,1],["Weekly plan that targets your weak spots",0,1],["Modeling library","5","All 12+"],["Application tracker","5 apps","Unlimited"],["AI networking email drafts","1 a day","Unlimited"],["Who viewed your profile","Count","Names"],["Pro League + profile banners",0,1]];
+    const rows=[["Every training track, all 1,000+ questions",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, friends, clubs, leaderboards",1,1],["LBO and DCF builders, pay ladders, The Wire",1,1],["AI-graded mock interviews",0,"Unlimited"],["AI feedback: Superday debriefs, case judging, mistake explanations",0,1],["AI writing: resume review, networking emails, profile help",0,1],["Interview bank","Basic + Intermediate","Every level"],["Final rounds (Superday)","Self-graded","AI-graded"],["Firm-style packs: EB, PE, RX, markets",0,1],["Weekly plan that targets your weak spots",0,1],["Modeling library","5","All 12+"],["Application tracker","5 apps","Unlimited"],["Who viewed your profile","Count","Names"],["Pro League + profile banners",0,1]];
     const cell=v=>v===1?'<span class="yes">✓</span>':v===0?'<span class="no">–</span>':esc(v);
     const promise=[["📚","Learning stays free","Every track and question is free forever. Pro never locks lessons."],["🏆","Pro can't buy rank","Leaderboards are earned. Pro gives you reps, not points."],["🖱️","Cancel in one click","No emails, no calls, no guilt trip."],["🎓","Can't afford it? Ask.","Students who need it can request free Pro. We read every request."]];
     el.innerHTML=`<section class="pro2-hero">
       <div class="pro2-glow" aria-hidden="true"></div>
       <span class="pro2-pill">${pro?proBadge()+" "+esc(proLabel()):"M&A Pro"}</span>
       <h1>Learn for free.<br><em>Go Pro for the final stretch.</em></h1>
-      <p>Free gets you ready. Pro gives you unlimited interview reps with instant feedback, so you walk into your Superday having already done it 50 times.</p>
+      <p>Free gets you ready. Pro adds AI that grades every answer and tells you exactly what to fix, so you walk into your Superday having already done it 50 times.</p>
       ${pro?"":`<div class="pro2-cta"><button class="btn pro2-go" id="proTrial">Try Pro free for 7 days</button><span>No card needed · nothing to cancel</span></div>`}
     </section>
-    <section class="pro2-why">${[["∞","Unlimited AI grading","Free gets "+FREE_GRADES+" a day. Pro grades every answer, every time, with a score and what to fix.","Most-used Pro feature"],["4×","Real Superday rounds","Back-to-back interviewers, timed, then a full debrief across all 4 rounds.","Closest thing to the real day"],["🎯","A plan built on your gaps","Pro tracks your scores by section and builds each week around your weakest topics.","Adapts every week"]].map(([n,t,d,tag],i)=>`<div class="pro2-card" style="--i:${i}"><div class="pro2-n">${n}</div><b>${t}</b><p>${d}</p><span>${tag}</span></div>`).join("")}</section>
-    <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Reach Director for 3 free days, Managing Director for 7. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
+    <section class="pro2-why">${[["∞","AI grading on every answer","Every mock interview answer gets a score out of 10 and specific feedback on what to fix.","Most-used Pro feature"],["4×","Real Superday rounds","Back-to-back interviewers, timed, then a full debrief across all 4 rounds.","Closest thing to the real day"],["🎯","A plan built on your gaps","Pro tracks your scores by section and builds each week around your weakest topics.","Adapts every week"]].map(([n,t,d,tag],i)=>`<div class="pro2-card" style="--i:${i}"><div class="pro2-n">${n}</div><b>${t}</b><p>${d}</p><span>${tag}</span></div>`).join("")}</section>
+    <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Earn free Pro days as you get promoted: 1 at Analyst, 2 at VP, 3 at Director, 7 at MD. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
     <section><div class="sec-head"><h2>Simple, student pricing</h2></div>
      <div class="plans pro2-plans">${plans.map(([k,n,p,per,d,tag])=>`<div class="plan ${k==="yearly"?"best":""}">${tag?`<span class="plan-tag">${tag}</span>`:""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${k==="yearly"?"btn":"ghost outline"}" data-plan="${k}">${pro&&plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
     <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div><button class="ghost outline sm" id="proNeed">Request free Pro</button></section>
-    <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">*Free grades go up to 5 a day as you rank up.</p></section>
+    <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members can still answer every question and check against the key points. Pro adds the AI feedback.</p></section>
     <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>About $10 per member per year. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
     <div id="reviews" class="reviews"></div>
     <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever."],["What if I can't afford it?","Hit Request free Pro above. Recruiting is expensive enough already."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
@@ -154,8 +152,14 @@
       if(ok){confetti();toast("Welcome to Pro 🎉")}else toast("Payment went through. Pro will unlock in a minute. Refresh if it doesn't.")}
     else{if(q==="cancel")toast("Checkout canceled. Nothing was charged.");syncBilling()}})();
 
+  /* AI is Pro-only: hide the AI client from non-Pro users */
+  let REAL_AI=null;const gateAI=()=>{try{SAMPLE=isPro()?REAL_AI:null}catch(e){}};
+  samplePromise.then(s=>{REAL_AI=s;gateAI()});setInterval(gateAI,1500);
+  {const _sp=startPlan;startPlan=function(){const r=_sp.apply(this,arguments);gateAI();return r}}
+
   /* ---------- styles ---------- */
   const st=document.createElement("style");st.textContent=`
+.ai-lock a{color:var(--cobalt);font-weight:600}
 .av.rr1{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #B07A45}
 .av.rr2{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #9EA7B8}
 .av.rr3{box-shadow:0 0 0 2px var(--sheet),0 0 0 4px #D9A825,0 0 12px rgba(217,168,37,.45)}

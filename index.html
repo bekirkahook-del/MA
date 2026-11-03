@@ -6095,6 +6095,80 @@ function renderPeople(){const el=$("#people");if(!el)return;
 .ppl-b.on{color:var(--good)!important;border-color:var(--good)!important}
 @media (max-width:620px){.ppl-grid{grid-template-columns:1fr}}`;document.head.appendChild(st)})();
 
+/* ---------- Friends page (Compete → Friends) ---------- */
+const frAgo=t=>{const s=Math.max(1,Math.round((Date.now()-t)/1000));return s<60?"just now":s<3600?Math.floor(s/60)+"m ago":s<86400?Math.floor(s/3600)+"h ago":Math.floor(s/86400)+"d ago"};
+function frList(){if(typeof PLAYERS==="undefined"||!myId)return[];return PLAYERS.filter(p=>p.id!==myId&&pplRel(p)==="connected")}
+function renderFriends(){const el=$("#friendsPage");if(!el)return;
+  const on=dbState==="on"&&!!myId,fr=frList(),inc=on?PLAYERS.filter(p=>p.id!==myId&&pplRel(p)==="incoming"):[];
+  const me={id:myId||"me",...myStats()};const nm=id=>id===myId||id==="me"?"You":realName(id);
+  let body="";
+  if(!on){body=`<div class="fr-empty"><b>Friends turn on when accounts are live.</b><span>You'll see your friends' progress, a weekly friends leaderboard and what everyone's working on.</span></div>`}
+  else if(!fr.length){body=`<div class="fr-empty"><b>No friends yet</b><span>Connect with classmates below. Once they connect back, you'll see their progress, a friends leaderboard and their activity here.</span></div>`}
+  else{
+    const board=[me,...fr].map(p=>({p,v:p.weekXP||0})).sort((a,b)=>b.v-a.v),mx=Math.max(1,...board.map(x=>x.v));
+    const myPos=board.findIndex(x=>x.p.id===me.id)+1;
+    const evs=[];fr.forEach(p=>(p.events||[]).forEach(e=>{if(e&&e.t&&Date.now()-(e.at||0)<7*864e5)evs.push({id:p.id,...e})}));evs.sort((a,b)=>(b.at||0)-(a.at||0));
+    body=`<div class="fr-grid">
+     <section class="fr-card"><div class="fr-h"><span class="label">This week</span><b>${myPos===1?"You're #1 🏆":`You're #${myPos} of ${board.length}`}</b></div>
+      <ol class="fr-board">${board.map((x,i)=>`<li class="${x.p.id===me.id?"me":""}" style="--i:${i}"><span class="fr-pos">${i+1}</span>${avatar(x.p.id,nm(x.p.id),28)}<span class="fr-nm">${esc(nm(x.p.id))}${(x.p.streak||0)>1?` <small>🔥${x.p.streak}</small>`:""}</span><span class="fr-bar"><i style="width:${Math.round(x.v/mx*100)}%"></i></span><span class="fr-v">${x.v} XP</span></li>`).join("")}</ol>
+      <p class="note">Weekly XP resets every Monday.</p></section>
+     <section class="fr-card"><div class="fr-h"><span class="label">Activity</span><b>What friends are doing</b></div>
+      ${evs.length?`<ul class="fr-feed">${evs.slice(0,12).map((e,i)=>`<li style="--i:${i}">${avatar(e.id,nm(e.id),26)}<span><b>${esc(nm(e.id).split(" ")[0])}</b> ${esc(e.t.charAt(0).toLowerCase()+e.t.slice(1))}<small>${frAgo(e.at||Date.now())}</small></span></li>`).join("")}</ul>`:`<p class="note">No activity from friends this week yet.</p>`}</section>
+    </div>
+    <section><div class="fr-h"><span class="label">Your friends</span><b>${fr.length} friend${fr.length===1?"":"s"}</b></div>
+     <div class="fr-people">${fr.sort((a,b)=>(b.xp||0)-(a.xp||0)).map((p,i)=>`<button class="fr-p" data-pid="${esc(p.id)}" style="--i:${i}">${avatar(p.id,nm(p.id),44)}<b>${esc(nm(p.id))}</b><small>${esc(RANKS[p.rank||0][0])} · ${(p.xp||0).toLocaleString()} XP</small><small>${p.school?esc(p.school):p.headline?esc(p.headline):"&nbsp;"}</small>${(p.streak||0)>1?`<span class="fr-st">🔥 ${p.streak}-day streak</span>`:""}</button>`).join("")}</div></section>`}
+  el.innerHTML=`<div class="fr-top"><div><h2 class="fr-title">Friends</h2><p class="note">Train together, compare progress and keep each other on streak.</p></div>${inc.length?`<button class="btn sm" id="frInv">${inc.length} invitation${inc.length===1?"":"s"}</button>`:""}</div>${body}`;
+  el.querySelectorAll(".fr-p").forEach(b=>b.onclick=()=>{const p=PLAYERS.find(x=>x.id===b.dataset.pid);if(p)showPlayer(p)});
+  const iv=$("#frInv");if(iv)iv.onclick=()=>{pplTab="inv";pplQ="";renderPeople();const pe=$("#people");pe&&pe.scrollIntoView({behavior:"smooth",block:"start"})};
+  {const need=fr.map(p=>p.id).filter(i=>!(i in NAMES));if(need.length){const r=loadNames(need);if(r&&r.then)r.then(()=>{need.forEach(i=>{if(!(i in NAMES))NAMES[i]=""});renderFriends()})}}}
+(function(){const club=document.querySelector('[data-pane="club"]');if(!club||document.querySelector('[data-pane="friends"]'))return;
+  const pane=document.createElement("div");pane.className="pane";pane.dataset.pane="friends";pane.hidden=true;pane.innerHTML='<div id="friendsPage" class="fr"></div>';club.before(pane);
+  const pp=$("#people");if(pp)pane.appendChild(pp);
+  const net=document.querySelector('[data-pane="net"]');if(net&&!$("#netFind")){const a=document.createElement("button");a.id="netFind";a.className="hcard net-find";a.innerHTML='<span class="label">Find people</span><b>Search classmates and connect</b><span class="hc-go">Open Friends →</span>';a.onclick=()=>showSub("compete","friends");net.insertBefore(a,net.firstChild)}
+  if(!GROUPS.compete.some(g=>g[0]==="friends")){const i=GROUPS.compete.findIndex(g=>g[0]==="leagues");GROUPS.compete.splice(i+1,0,["friends","Friends",["friends"]])}
+  document.querySelectorAll(".subnav [data-grp]").forEach(b=>b.remove());try{initGroups()}catch(e){}
+  {const _p=pplToggle;pplToggle=function(){_p.apply(this,arguments);try{renderFriends()}catch(e){}}}
+  {const _rc=renderCompete;renderCompete=function(){_rc.apply(this,arguments);try{renderFriends()}catch(e){}}}
+  try{renderFriends();renderPeople()}catch(e){}
+  const st=document.createElement("style");st.textContent=`
+.fr{display:flex;flex-direction:column;gap:20px}
+.fr-top{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.fr-title{font-family:var(--body);font-size:22px;font-weight:650;text-transform:none;margin:0}
+.fr-top .note{margin:4px 0 0}
+.fr-empty{border:1px dashed var(--rule);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:4px}
+.fr-empty b{font-size:15px}.fr-empty span{font-size:13.5px;color:var(--ink-2)}
+.fr-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+.fr-card{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--sheet);display:flex;flex-direction:column;gap:10px;min-width:0}
+.fr-h{display:flex;flex-direction:column;gap:2px;margin-bottom:6px}
+.fr-h b{font-size:16px;font-weight:600}
+.fr-card .fr-h{margin:0}
+.fr-board{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.fr-board li{display:grid;grid-template-columns:18px 28px minmax(0,1fr) minmax(50px,1.2fr) 58px;gap:8px;align-items:center;font-size:13.5px;animation:plIn .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*50ms)}
+.fr-board li.me .fr-nm{font-weight:700}
+.fr-pos{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.fr-nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr-nm small{font-size:11px;color:var(--warn)}
+.fr-bar{height:8px;background:var(--paper);border-radius:4px;overflow:hidden}
+.fr-bar i{display:block;height:100%;background:var(--cobalt);border-radius:4px;transform-origin:left;animation:plGrow .7s cubic-bezier(.2,.8,.2,1) both}
+.fr-board li.me .fr-bar i{background:var(--good)}
+.fr-v{font-family:var(--mono);font-size:11.5px;text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.fr-card .note{margin:0}
+.fr-feed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.fr-feed li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--rule);font-size:13.5px;line-height:1.4;animation:plIn .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*40ms)}
+.fr-feed li:first-child{border-top:0;padding-top:0}
+.fr-feed small{display:block;font-size:11.5px;color:var(--ink-2)}
+.fr-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.fr-p{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;border:1px solid var(--rule);border-radius:12px;padding:14px 10px;background:var(--sheet);font:inherit;color:inherit;cursor:pointer;min-width:0;animation:plIn .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*40ms);transition:border-color .2s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.fr-p:hover{border-color:var(--ink);transform:translateY(-2px)}
+.fr-p .av{margin-bottom:6px}
+.fr-p b{font-size:14px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fr-p small{font-size:12px;color:var(--ink-2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fr-st{font-size:11.5px;color:var(--warn);margin-top:4px}
+[data-pane="friends"] #people{border-bottom:0;border-top:1px solid var(--rule);padding-top:20px;margin:4px 0 0}
+.net-find{margin-bottom:6px}
+@media (max-width:760px){.fr-grid{grid-template-columns:1fr}}
+@media (max-width:620px){.fr-board li{grid-template-columns:16px 28px minmax(0,1.4fr) minmax(36px,1fr) 52px}}`;document.head.appendChild(st)})();
+
 try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 /* ---------- boot ---------- */
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();

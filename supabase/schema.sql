@@ -27,20 +27,20 @@ create policy docs_read on public.docs for select to authenticated
 
 -- You can only write your own documents.
 create policy docs_insert on public.docs for insert to authenticated
-  with check (uid = auth.uid() and col <> 'ai_usage' and (
+  with check (uid = auth.uid() and col not in ('ai_usage','billing') and (
     id = auth.uid()::text
     or col = 'data/users/' || auth.uid()::text
     or (col = 'views' and id = '_founder' and public.is_admin())));
 
 create policy docs_update on public.docs for update to authenticated
   using (uid = auth.uid() or (col = 'views' and id = '_founder' and public.is_admin()))
-  with check (uid = auth.uid() and col <> 'ai_usage' and (
+  with check (uid = auth.uid() and col not in ('ai_usage','billing') and (
     id = auth.uid()::text
     or col = 'data/users/' || auth.uid()::text
     or (col = 'views' and id = '_founder' and public.is_admin())));
 
 create policy docs_delete on public.docs for delete to authenticated
-  using ((uid = auth.uid() and col <> 'ai_usage') or (col = 'reviews' and public.is_admin()));
+  using ((uid = auth.uid() and col not in ('ai_usage','billing')) or (col = 'reviews' and public.is_admin()));
 
 -- Live updates for leaderboards, friends and reviews.
 do $$ begin

@@ -2781,7 +2781,7 @@ function myStats(){let lv=0,st=0;const tracks={};for(const tr of TRACKS){tracks[
   const g=S.gauntlet[isoWeek()];const x=totalXP();
   return{xp:x,rank:rankOf(x),levels:lv,stars:st,rapid:S.rapid||0,streak:streak(),mockAvg:mockAvg(),mockN:Object.keys(S.mockBest).length,tracks,
     gWeek:g?isoWeek():"",gScore:g?g.score:0,gCorrect:g?g.correct:0,gPath:g?(g.path||"all"):"",path:profKey(),
-    school:S.settings.noSchool?"":(S.profile.school||""),grad:S.profile.grad||"",target:S.profile.target||"",headline:S.profile.headline||"",major:S.profile.major||"",location:S.profile.location||"",about:S.profile.about||"",linkedin:S.profile.linkedin||"",offers:Object.keys(S.finals||{}).filter(k=>S.finals[k].offer),handshake:S.profile.handshake||"",open:S.profile.open||"",exp:S.profile.exp||[],skills:S.profile.skills||[],follows:S.profile.follows||[],endorse:S.profile.endorse||{},badges:Object.keys(S.badges||{}),cc:caseStats(),wk:isoWeek(),wkXP:weekXP(),season:seasonOf(),seasonPts:seasonPts(),events:(S.events||[]).slice(0,10),rival:S.profile.rival||"",certs:S.certs||{},titles:S.titles||[],club:(S.club&&S.club.code)||"",clubName:(S.club&&S.club.name)||"",clubOfficer:!!(S.club&&S.club.officer),pro:isPro(),banner:isPro()&&S.profile.banner!=null?S.profile.banner:null,founder:isPro()&&S.pro.plan==="founding",seen:isPro()&&!!S.settings.seen,lMonth:(S.league||{})[monthKey()]?monthKey():"",lScore:((S.league||{})[monthKey()]||{}).score||0}}
+    school:S.settings.noSchool?"":(S.profile.school||""),grad:S.profile.grad||"",target:S.profile.target||"",headline:S.profile.headline||"",major:S.profile.major||"",location:S.profile.location||"",about:S.profile.about||"",linkedin:S.profile.linkedin||"",offers:Object.keys(S.finals||{}).filter(k=>S.finals[k].offer),handshake:S.profile.handshake||"",open:S.profile.open||"",exp:S.profile.exp||[],skills:S.profile.skills||[],follows:S.profile.follows||[],endorse:S.profile.endorse||{},badges:Object.keys(S.badges||{}),cc:caseStats(),wk:isoWeek(),wkXP:weekXP(),season:seasonOf(),seasonPts:seasonPts(),events:(S.events||[]).slice(0,10),rival:S.profile.rival||"",certs:S.certs||{},titles:S.titles||[],club:(S.club&&S.club.code)||"",clubName:(S.club&&S.club.name)||"",clubOfficer:!!(S.club&&S.club.officer),clubInv:(S.club&&S.club.code&&S.club.inv)||[],pro:isPro(),banner:isPro()&&S.profile.banner!=null?S.profile.banner:null,founder:isPro()&&S.pro.plan==="founding",seen:isPro()&&!!S.settings.seen,lMonth:(S.league||{})[monthKey()]?monthKey():"",lScore:((S.league||{})[monthKey()]||{}).score||0}}
 function syncSoon(){clearTimeout(syncT);syncT=setTimeout(syncProfile,1200)}
 async function syncProfile(){if(!DB||!myId)return;if(S.settings.hidden){if(lastSync!=="hidden"){try{await DB.doc("players/"+myId).delete()}catch(e){}lastSync="hidden"}return}const st=myStats(),j=JSON.stringify(st);if(j===lastSync)return;
   try{await DB.doc("players/"+myId).set({...st,updated:Date.now()});lastSync=j}
@@ -3748,7 +3748,7 @@ function renderClub(){const el=$("#clubCard");if(!el)return;
   const top=mem.slice().sort((a,b)=>(b.xp||0)-(a.xp||0)).slice(0,5),gw=mem.filter(p=>p.gWeek===isoWeek()).sort((a,b)=>b.gScore-a.gScore);
   el.innerHTML=`<div class="label">Your club${S.club.officer?" · Officer":""}</div><h3>${esc(name)}</h3>
     <div class="club-meta"><span>${mem.length} member${mem.length===1?"":"s"}</span><span>Code <b class="code">${esc(S.club.code)}</b> <button class="flink" id="clubCopy">Copy</button></span></div>
-    <button class="btn sm" id="clubInvite" style="align-self:flex-start;margin-bottom:10px">Invite by email</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="btn sm" id="clubInvFr">Invite friends</button><button class="ghost outline sm" id="clubInvite">Invite by email</button></div>
     <ol class="mini-board">${top.map((p,i)=>`<li><span>${i+1}</span><span class="nm" data-id="${esc(p.id)}"></span><b>${p.xp||0} XP</b></li>`).join("")}</ol>
     <p class="note">${gw.length?`Gauntlet leader this week: <b class="gl"></b> with ${gw[0].gScore}.`:"No one in the club has played this week's Gauntlet yet."}</p>
     <div class="actions" style="margin-top:8px">${S.club.officer?`<button class="btn sm" id="clubOfficer">Officer view</button>`:""}<button class="ghost" id="clubLeave">Leave club</button></div>`;
@@ -6187,4 +6187,6 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 
 
 <script src="js/auth.js"></script>
+<script src="js/notify.js"></script>
+<script src="js/clubinv.js"></script>
 </body></html>

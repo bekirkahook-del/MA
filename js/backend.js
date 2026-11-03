@@ -8,9 +8,11 @@
   let sb=null;try{sb=window.supabase&&window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){console.warn("Supabase init failed",e)}
   const ready=sb?sb.auth.getSession().then(r=>r.data&&r.data.session||null).catch(()=>null):Promise.resolve(null);
   window.MA_AUTH={sb,ready,session:null,ownerEmail:OWNER_EMAIL};
-  ready.then(s=>{window.MA_AUTH.session=s});
-  if(sb)sb.auth.onAuthStateChange((ev,s)=>{const had=!!window.MA_AUTH.session;window.MA_AUTH.session=s;
-    if((ev==="SIGNED_IN"&&!had)||ev==="SIGNED_OUT"){setTimeout(()=>location.reload(),50)}});
+  let loadUid=null,reloading=false;
+  ready.then(s=>{window.MA_AUTH.session=s;loadUid=s?s.user.id:null;
+    /* only reload when the signed-in person actually changes (sign in / sign out), never on token refresh or tab focus */
+    if(sb)sb.auth.onAuthStateChange((ev,ns)=>{window.MA_AUTH.session=ns;const nu=ns?ns.user.id:null;
+      if(!reloading&&nu!==loadUid&&(ev==="SIGNED_IN"||ev==="SIGNED_OUT")){reloading=true;setTimeout(()=>location.reload(),60)}})});
 
   const split=path=>{const i=path.lastIndexOf("/");return [path.slice(0,i),path.slice(i+1)]};
   const mkDoc=(id,data)=>({id,exists:!!data,data:()=>data||undefined});
@@ -24,12 +26,12 @@
     async set(d){const uid=(window.MA_AUTH.session||{}).user?.id;const {error}=await sb.from("docs").upsert({col,id,data:d,uid,updated_at:new Date().toISOString()});if(error)throw error;bump(col)},
     async update(d){const cur=await this.get();return this.set({...(cur.data()||{}),...d})},
     async delete(){const {error}=await sb.from("docs").delete().eq("col",col).eq("id",id);if(error)throw error;bump(col)},
-    onSnapshot(cb,err){const run=()=>this.get().then(cb,e=>err&&err(e));run();return watch(col,run)}}}
+    onSnapshot(cb,err){let last;const run=()=>this.get().then(d=>{const k=JSON.stringify(d.data()||null);if(k===last)return;last=k;cb(d)},e=>err&&err(e));run();return watch(col,run)}}}
   function colRef(col,lim=1000){return{
     limit(n){return colRef(col,n)},
     doc(id){return docRef(col,id)},
     async get(){const {data,error}=await sb.from("docs").select("id,data").eq("col",col).order("updated_at",{ascending:false}).limit(lim);if(error)throw error;return{docs:(data||[]).map(r=>mkDoc(r.id,r.data))}},
-    onSnapshot(cb,err){const run=()=>this.get().then(cb,e=>err&&err(e));run();return watch(col,run)}}}
+    onSnapshot(cb,err){let last;const run=()=>this.get().then(r=>{const k=JSON.stringify(r.docs.map(d=>[d.id,d.data()]).sort((a,b)=>a[0]<b[0]?-1:1));if(k===last)return;last=k;cb(r)},e=>err&&err(e));run();return watch(col,run)}}}
 
   async function makeDB(){const s=await ready;if(!sb||!s)return null;
     return{collection:p=>colRef(p),doc:p=>{const [c,i]=split(p);return docRef(c,i)}}}

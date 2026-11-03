@@ -3326,7 +3326,7 @@ $("#crmToggle").onclick=()=>{const f=$("#crmForm"),o=f.hidden;f.hidden=!o;$("#cr
 $("#proBtn").onclick=()=>showTab("pro");
 $("#avBtn").onclick=()=>showPlayer({id:myId||"me",...myStats()});$("#setBtn").onclick=()=>showTab("settings");
 
-/* ---------- M&A Pro (preview: payments not live) ---------- */
+/* ---------- M&A Pro ---------- */
 let FREE_GRADES=3;
 function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return (Date.now()-p.start)<7*864e5;return true}
 function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,7-Math.floor((Date.now()-p.start)/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
@@ -3335,7 +3335,7 @@ function bumpGrades(){S.grades=S.grades||{};S.grades[today()]=gradesToday()+1;sa
 const monthKey=()=>today().slice(0,7);
 const proBadge=()=>`<span class="probadge">PRO</span>`;
 function startPlan(plan){S.pro={plan,start:Date.now()};S.proEver=true;save();applyProUI();render();renderMock();renderPro();renderCompete();syncSoon();
-  toast(plan==="trial"?"Your 7-day trial has started. Payments aren't live yet, so this is a preview.":"Preview unlocked. Payments aren't live yet, so nothing was charged.")}
+  }
 function applyProUI(){if(typeof renderResume==="function"&&$("#resume")&&!($("#resTxt")&&$("#resTxt").value))renderResume();const b=$("#proBtn");if(b){b.innerHTML=isPro()?proBadge():"Go Pro";b.classList.toggle("on",isPro())}}
 function upgrade(reason){openPanel(`<div class="label">M&A Pro</div><h2>${esc(reason)}</h2>
    <ul class="brief" style="margin-top:12px"><li>Unlimited AI-graded mock interviews, every Advanced question and firm-style packs</li><li>A weekly plan that adapts to your weak spots</li><li>The monthly Pro League and unlimited final-round grading</li><li>Pro badge and custom profile banners</li></ul>
@@ -3357,8 +3357,7 @@ function renderPro(){const el=$("#proPage");if(!el)return;const pro=isPro();
    <div class="why4">${[["Prep without limits","Unlimited graded answers, every Advanced question, and unlimited final rounds."],["Compete at the top","A monthly Pro League with its own board and seasonal prizes like resume reviews and analyst coffee chats."],["Look the part","Pro badge, custom banners and featured placement on leaderboards."],["Get seen","When firms partner with M&A, Pro members who opt in are the first pool they see."]].map(([t,d])=>`<div><b>${t}</b><p>${d}</p></div>`).join("")}</div>
    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>Everyone gets Pro, plus a private club leaderboard and an admin view for officers.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
    <div id="reviews" class="reviews"></div>
-   <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings, no emails or calls."],["Will Pro ever charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you access and status, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet and your profile stay free forever."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>
-   <p class="note" style="text-align:center">Preview: payments aren't live yet. Choosing a plan unlocks Pro on this device so you can try it.</p>`;
+   <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings, no emails or calls."],["Will Pro ever charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you access and status, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet and your profile stay free forever."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
   if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
   el.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>startPlan(b.dataset.plan));
   $("#clubBtn").onclick=()=>openPanel(`<div class="label">Club plan</div><h2>Bring M&A to your club</h2><p class="sub">Clubs get Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer dashboard.</p><ul class="brief"><li>$399 a year for up to 40 members</li><li>Free pilot for your first month</li><li>Officers see member progress and interview scores</li></ul><p class="note" style="margin-top:14px">Club plans are in pilot. Ask your club president to reach out to the M&A founder.</p>`);renderReviews()}
@@ -3652,7 +3651,7 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
     ${row("Answer timer","The clock turns orange after this long.",seg("tgt",[["90","1:30"],["120","2:00"],["150","2:30"],["180","3:00"]],String(st.tgt||150)))}
     ${row("Default difficulty","Where the question list starts.",seg("idiff",[["0","All"],["1","Basic"],["2","Inter."],["3","Adv."]],String(st.idiff||0)))}`],
    ["membership","Membership",`
-    ${row(proLabel(),isPro()?"Preview mode: payments aren't live, so nothing is charged.":"Everything you need to learn is free. Pro adds unlimited grading, the Pro League and more.",isPro()?`<span style="display:flex;gap:8px"><button class="ghost outline" id="proRev">Review Pro</button><button class="ghost danger" id="proCancel">Cancel Pro</button></span>`:`<button class="btn sm" id="proGo">See Pro</button>`)}
+    ${row(proLabel(),isPro()?"Manage or cancel anytime.":"Everything you need to learn is free. Pro adds unlimited grading, the Pro League and more.",isPro()?`<span style="display:flex;gap:8px"><button class="ghost outline" id="proRev">Review Pro</button><button class="ghost danger" id="proCancel">Cancel Pro</button></span>`:`<button class="btn sm" id="proGo">See Pro</button>`)}
     ${isPro()?tog("seen","Get Seen","Let recruiting partners see your profile when firms partner with M&A."):""}`],
    ["email","Email updates",`<div data-search="email updates newsletter subscribe unsubscribe inbox"><div id="subBox"></div><div id="subOwner" hidden></div></div>`],
    ["privacy","Privacy",`

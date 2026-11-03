@@ -155,7 +155,15 @@
   /* AI is Pro-only: hide the AI client from non-Pro users */
   let REAL_AI=null;const gateAI=()=>{try{SAMPLE=isPro()?REAL_AI:null}catch(e){}};
   samplePromise.then(s=>{REAL_AI=s;gateAI()});setInterval(gateAI,1500);
-  {const _sp=startPlan;startPlan=function(){const r=_sp.apply(this,arguments);gateAI();return r}}
+  /* paid plans always go through Stripe; the free trial works once per account */
+  {const _sp=startPlan;startPlan=function(plan){
+    if(plan!=="trial"){maCheckout(plan);return}
+    if(S.trialUsed&&!(S.pro&&S.pro.plan==="trial"&&isPro())){toast("You've already used your free trial. Pick a plan to keep Pro.");try{showTab("pro")}catch(e){}return}
+    S.trialUsed=Date.now();const r=_sp.call(this,plan);gateAI();
+    try{toast("Your 7-day free trial has started. No card, nothing to cancel.")}catch(e){}return r}}
+  /* clean up old "preview" Pro from before payments were live */
+  if(S.pro&&S.pro.plan&&S.pro.plan!=="trial"&&!S.pro.paid){S.pro={};save();try{applyProUI()}catch(e){}}
+  if(S.pro&&S.pro.plan==="trial"&&!S.trialUsed){S.trialUsed=S.pro.start||Date.now();save()}
 
   /* ---------- styles ---------- */
   const st=document.createElement("style");st.textContent=`

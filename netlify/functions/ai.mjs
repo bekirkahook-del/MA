@@ -21,7 +21,7 @@ async function underLimit(uid) {
   if (!svc) return true;
   const limit = Number(process.env.AI_DAILY_LIMIT || 60);
   const id = `${uid}_${new Date().toISOString().slice(0, 10)}`;
-  const h = { apikey: svc, Authorization: `Bearer ${svc}`, "Content-Type": "application/json" };
+  const h = { apikey: svc, "Content-Type": "application/json", ...(svc.startsWith("eyJ") ? { Authorization: `Bearer ${svc}` } : {}) };
   const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.ai_usage&id=eq.${id}&select=data`, { headers: h });
   const rows = r.ok ? await r.json() : [];
   const n = (rows[0] && rows[0].data && rows[0].data.n) || 0;

@@ -62,7 +62,7 @@
   A.ready.then(s=>{const top=document.querySelector(".top-r");if(!top)return;
     const b=document.createElement("button");b.className="authbtn"+(s?"":" cta");b.id="authBtn";b.type="button";
     b.textContent=s?"Sign out":"Sign in";if(s)b.title="Signed in as "+s.user.email;
-    b.onclick=()=>{if(s){if(confirm("Sign out of M&A?"))sb.auth.signOut()}else openAuth("in")};
+    b.onclick=async()=>{if(s){if(confirm("Sign out of M&A? Your progress stays saved to your account.")){b.disabled=true;b.textContent="Saving…";try{if(window.maCloudFlush)await maCloudFlush()}catch(e){}sb.auth.signOut()}}else openAuth("in")};
     top.insertBefore(b,top.firstChild);
     if(s){let last="";const tick=()=>{try{const n=(JSON.parse(localStorage.getItem("ma-progress-v1")||"{}").profile||{}).name||"";if(n&&n!==last&&A.pushName){last=n;A.pushName(n)}}catch(e){}};
       tick();setInterval(tick,20000);document.addEventListener("visibilitychange",tick)}});

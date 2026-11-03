@@ -10,6 +10,8 @@ create table if not exists public.docs (
 );
 create index if not exists docs_col_updated on public.docs (col, updated_at desc);
 alter table public.docs enable row level security;
+-- Feedback and question reports can come from signed-out visitors (written only by the server).
+alter table public.docs alter column uid drop not null;
 
 create or replace function public.is_admin() returns boolean
 language sql stable as $$

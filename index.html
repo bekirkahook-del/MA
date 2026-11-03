@@ -1926,7 +1926,7 @@ details[open]::details-content{block-size:auto}
   
   </div>
 
-  <footer><span>Progress saves in this browser. Pay and timelines are typical ranges.</span></footer>
+  <footer><span>Progress saves to your account when you sign in. Pay and timelines are typical ranges.</span> <a href="/guides/" style="margin-left:6px">Free interview guides</a></footer>
 </div>
 
 <div class="drawer-bg" id="drawerBg" hidden></div>
@@ -2609,13 +2609,17 @@ async function cloudPush(){if(!DB||!myId)return;try{const body=JSON.stringify(S)
 async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();return}
   try{const snap=await cloudDoc().get();let adopt=false,remote=null;
     if(snap.exists){const d=snap.data()||{};try{remote=JSON.parse(d.s||"null")}catch(e){remote=null}
-      if(remote){if(S._synced===myId)adopt=(d.t||0)>(S._t||0);else{const keep=S;let rx=0,lx=0;try{lx=totalXP();S=Object.assign(JSON.parse(S_DEFAULT),remote);rx=totalXP()}catch(e){}S=keep;adopt=rx>=lx&&rx>0}}}
+      if(remote){if(S._synced===myId)adopt=(d.t||0)>(S._t||0);else if(S._synced)adopt=true;else{const keep=S;let rx=0,lx=0;try{lx=totalXP();S=Object.assign(JSON.parse(S_DEFAULT),remote);rx=totalXP()}catch(e){}S=keep;adopt=rx>lx||(rx===lx&&!!(rx>0||(remote.profile&&remote.profile.name)))}}}
     if(adopt){S=Object.assign(JSON.parse(S_DEFAULT),remote);S._synced=myId;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
       ["applySettings","applyProUI","render","renderRoad","renderCal","renderOpenings","renderApps","renderCRM","renderFirms","renderDeals","renderMock","renderTape","renderSubUI","renderCompete","renderPlan","renderReview"].forEach(f=>{try{if(typeof window[f]==="function")window[f]()}catch(e){}});
       toast("Progress synced from your account");cloudState="synced";cloudAt=Date.now()}
     S._synced=myId;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
     cloudOn=true;if(!adopt&&(!snap.exists||!remote||(S._t||0)>((snap.data()||{}).t||0)))await cloudPush();else if(!adopt){cloudState="synced";cloudAt=Date.now()}
   }catch(e){cloudState="error"}renderSyncRow()}
+/* keep every device on the account current: re-check the cloud when the tab comes back */
+let cloudPullAt=0;document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&cloudOn&&Date.now()-cloudPullAt>20000){cloudPullAt=Date.now();cloudPull()}});
+window.addEventListener("pagehide",()=>{if(cloudOn&&cloudT){clearTimeout(cloudT);cloudPush()}});
+window.maCloudFlush=async()=>{if(cloudOn){clearTimeout(cloudT);await cloudPush()}};
 function renderSyncRow(){const el=document.getElementById("syncStat");if(!el)return;
   el.textContent=cloudState==="synced"?`On · last synced ${new Date(cloudAt||Date.now()).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}`:cloudState==="error"?"Couldn't sync just now. Your progress is still saved on this device.":cloudState==="toobig"?"Too much data to sync. Try clearing old contacts.":"Sync across devices is available when you sign in. Your progress saves in this browser."}
 if(!S.seeded){S.contacts=[
@@ -4692,7 +4696,7 @@ function tickMarket(){const el=$("#mktTxt");if(!el)return;const t=etNow(),days=[
 setInterval(tickMarket,1000);
 
 /* ---------- club email invites ---------- */
-const SITE_URL="https://claude.ai/artifact/BcU8LTmv3Y7Hk2Js7A66yi";
+const SITE_URL=/^https?:$/.test(location.protocol)&&!/claude\.ai$/.test(location.hostname)?location.origin+"/":"https://mnaprep.com/";
 function inviteClub(name){const code=S.club.code,link=SITE_URL+"#join-"+code,from=myName?myName.split(" ")[0]:"";
   const subject=`Join ${name} on M&A`;
   const body=`Hey,\n\n${from?from+" invited you":"You're invited"} to join ${name} on M&A, where we train for investment banking and PE interviews together and compete on a private club leaderboard.\n\nJoin here: ${link}\n\nOr open M&A, go to Compete, and enter club code: ${code}`;
@@ -6186,8 +6190,10 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 
 
 
+<script src="js/qfix.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/notify.js"></script>
 <script src="js/clubinv.js"></script>
 <script src="js/rewards.js"></script>
+<script src="js/feedback.js"></script>
 </body></html>

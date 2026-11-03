@@ -3,11 +3,19 @@
 (function(){
   const SB_URL="https://nbakxpnhcfzdosbzbupd.supabase.co";
   const SB_KEY="sb_publishable_-2q58P2-fXrY-q1y4GQ8jw_58OrzsDu";
-  const OWNER_EMAIL="bekirkahook@gmail.com";
+  const OWNER_HASH="13d8e795a85caa1b6668d51dd5c74b25aa7ed1c1a508336292a3078fcbe47fc6"; /* sha-256 of the owner email */
   const PUBLIC_COLS=["players","reviews","views","avatars","names"];
+  /* Progress belongs to an account. Runs before the app reads localStorage: if the saved progress
+     was synced to a different account (or someone signed out), start this browser fresh. The account's
+     own progress then loads from the cloud. Display settings like theme are kept. */
+  try{const KEY="ma-progress-v1",raw=localStorage.getItem(KEY);
+    let uid=null;try{const t=JSON.parse(localStorage.getItem("sb-nbakxpnhcfzdosbzbupd-auth-token")||"null");uid=(t&&(t.user||(t.currentSession&&t.currentSession.user))||{}).id||null}catch(e){}
+    if(raw){const loc=JSON.parse(raw);
+      if(loc&&loc._synced&&loc._synced!==uid){localStorage.setItem(KEY,JSON.stringify({settings:loc.settings||{},seeded:true,onboardSkip:true}));
+        ["ma-notif-v1"].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}})}}}catch(e){}
   let sb=null;try{sb=window.supabase&&window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){console.warn("Supabase init failed",e)}
   const ready=sb?sb.auth.getSession().then(r=>r.data&&r.data.session||null).catch(()=>null):Promise.resolve(null);
-  window.MA_AUTH={sb,ready,session:null,ownerEmail:OWNER_EMAIL};
+  window.MA_AUTH={sb,ready,session:null};
   let loadUid=null,reloading=false;
   ready.then(s=>{window.MA_AUTH.session=s;loadUid=s?s.user.id:null;
     /* only reload when the signed-in person actually changes (sign in / sign out), never on token refresh or tab focus */
@@ -39,7 +47,8 @@
     const nm=()=>{try{const st=JSON.parse(localStorage.getItem("ma-progress-v1")||"{}");if(st.profile&&st.profile.name)return st.profile.name}catch(e){}return (u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||""};
     const pushName=async n=>{if(!n)return;try{await sb.from("docs").upsert({col:"names",id:u.id,data:{name:n},uid:u.id,updated_at:new Date().toISOString()})}catch(e){}};
     pushName(nm());window.MA_AUTH.pushName=pushName;
-    return{id:async()=>u.id,me:async()=>({name:nm(),email:u.email}),isOwner:()=>(u.email||"").toLowerCase()===OWNER_EMAIL,can:async()=>true,
+    let owner=false;try{const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode((u.email||"").toLowerCase()));owner=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join("")===OWNER_HASH}catch(e){}
+    return{id:async()=>u.id,me:async()=>({name:nm(),email:u.email}),isOwner:()=>owner,can:async()=>true,
       async profiles(ids){const out={};if(!ids.length)return out;const {data}=await sb.from("docs").select("id,data").eq("col","names").in("id",ids.slice(0,500));(data||[]).forEach(r=>out[r.id]={name:(r.data&&r.data.name)||""});return out}}}
   async function makeSample(){const s=await ready;if(!s)return null;
     return{async json(prompt,opts){const cur=(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/ai",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(cur?cur.access_token:"")},body:JSON.stringify({prompt,json:true,tier:(opts&&opts.modelTier)||"default"})});

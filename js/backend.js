@@ -1,5 +1,6 @@
 /* M&A backend shim: gives the app the same window.claude.use() surface it had on claude.ai,
    backed by Supabase (auth + database) and a Netlify Function (AI). */
+window.MA_START_HASH=location.hash; /* before the app rewrites it */
 (function(){
   const SB_URL="https://nbakxpnhcfzdosbzbupd.supabase.co";
   const SB_KEY="sb_publishable_-2q58P2-fXrY-q1y4GQ8jw_58OrzsDu";

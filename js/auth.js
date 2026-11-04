@@ -21,7 +21,7 @@
 .auth-perks li::before{content:"✓ ";color:var(--good,#1e8e3e);font-weight:700}
 @keyframes authIn{from{opacity:0}to{opacity:1}}
 @media (max-width:620px){.authbtn{padding:5px 10px;font-size:12px}}
-@media (max-width:480px){.top-r{flex-wrap:nowrap!important;gap:8px!important}.top-r #newsBtn{display:none}}`;document.head.appendChild(st);
+@media (max-width:480px){.top-r{flex-wrap:nowrap!important;gap:8px!important}}`;document.head.appendChild(st);
 
   function openAuth(mode){mode=mode||"in";
     const ov=document.createElement("div");ov.className="auth-ov";

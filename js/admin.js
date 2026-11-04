@@ -76,7 +76,7 @@
     const since30=new Date(Date.now()-31*864e5).toISOString();
     const [vr,pr,nr,plr,br]=await Promise.all([
       sb.from("docs").select("id,data").eq("col","visits").gte("updated_at",since30).limit(10000),
-      sb.from("docs").select("col,updated_at").like("col","data/users/%").eq("id","progress").limit(5000),
+      sb.from("docs").select("col,updated_at,data").like("col","data/users/%").eq("id","progress").limit(5000),
       sb.from("docs").select("id,data").eq("col","names").limit(5000),
       sb.from("docs").select("id,data").eq("col","players").limit(5000),
       sb.from("docs").select("id,data").eq("col","billing").limit(5000)]);
@@ -90,7 +90,11 @@
     const v30=within(30);
     const names={};(nr.data||[]).forEach(r=>names[r.id]=(r.data&&r.data.name)||"");
     const players={};(plr.data||[]).forEach(r=>players[r.id]=r.data||{});
-    const accts=(pr.data||[]).map(r=>({uid:r.col.slice(11),t:Date.parse(r.updated_at)})).sort((a,b)=>b.t-a.t);
+    /* rebuild each account's active days from the dated entries saved in its progress */
+    const DK=["daily","grades","resumeLog","drafts","explains","aiEdits","pathAi","xpLog"],isD=k=>/^\d{4}-\d{2}-\d{2}$/.test(k);
+    const accts=(pr.data||[]).map(r=>{const d=r.data||{},set=new Set();DK.forEach(k=>{const o=d[k];if(o&&typeof o==="object")Object.keys(o).forEach(x=>{if(isD(x))set.add(x)})});
+      Object.keys(d.newsq||{}).forEach(x=>{const t=Date.parse(x);if(t)set.add(dayStr(new Date(t)))});const t=Date.parse(r.updated_at);if(t)set.add(dayStr(new Date(t)));
+      const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||"",xp:0}}).sort((a,b)=>b.t-a.t);
     const act=ms=>accts.filter(a=>Date.now()-a.t<ms).length;
     const pro=(br.data||[]).filter(r=>r.data&&r.data.paid&&(!r.data.until||Date.parse(r.data.until)>Date.now())).length;
     const schools=tally(Object.values(players),p=>(p.school||"").trim(),8);
@@ -109,8 +113,16 @@
      <div class="ms-sec"><h3>Accounts</h3>
       <div class="ms-tiles"><div class="ms-tile"><b>${accts.length}</b><span>Total accounts</span></div><div class="ms-tile"><b>${act(864e5)}</b><span>Active 24h</span></div>
        <div class="ms-tile"><b>${act(7*864e5)}</b><span>Active 7 days</span></div><div class="ms-tile"><b>${pro}</b><span>Paying Pro</span></div></div></div>
-     <div class="ms-sec"><h3>Most recently active <small>${Math.min(20,accts.length)} of ${accts.length}</small></h3>
-      ${accts.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Last seen</th></tr></thead><tbody>${accts.slice(0,20).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${ago(a.t)}</td></tr>`}).join("")}</tbody></table>`:`<p class="note">No accounts yet.</p>`}</div>
+     <div class="ms-sec"><h3>Account history <small>rebuilt from saved progress · back to launch</small></h3>${(()=>{const all=[...new Set(accts.flatMap(a=>a.days))].sort();if(!all.length)return`<p class="note">No dated activity yet.</p>`;
+       const start=all[0],list=[];for(let t=Date.parse(start+"T12:00:00");t<=Date.now();t+=864e5){const d=dayStr(new Date(t));list.push([d,accts.filter(a=>a.days.includes(d)).length,accts.filter(a=>a.first===d).length])}
+       const L=list.slice(-30),m=Math.max(1,...L.map(x=>x[1]));const tot=accts.filter(a=>a.first).length;
+       return `<div class="ms-tiles"><div class="ms-tile"><b>${start.slice(5).replace("-","/")}</b><span>First activity</span></div><div class="ms-tile"><b>${tot}</b><span>Accounts that used it</span></div><div class="ms-tile"><b>${Math.max(...list.map(x=>x[1]))}</b><span>Best day (active)</span></div><div class="ms-tile"><b>${(accts.reduce((n,a)=>n+a.days.length,0)/Math.max(1,tot)).toFixed(1)}</b><span>Avg days active</span></div></div>
+       <div class="ms-bars" role="img" aria-label="Active accounts per day">${L.map(([d,n,f])=>`<div class="ms-bar" title="${d}: ${n} active, ${f} new"><em>${n||""}</em><i style="height:${(n/m*100).toFixed(0)}%"></i></div>`).join("")}</div>
+       <div class="ms-days">${L.map(([d])=>`<span>${+d.slice(8)}</span>`).join("")}</div>
+       <table class="ms-tbl" style="margin-top:10px"><thead><tr><th>Day</th><th class="n">Active accounts</th><th class="n">New</th></tr></thead><tbody>${list.slice().reverse().filter(x=>x[1]).slice(0,14).map(([d,n,f])=>`<tr><td>${d}</td><td class="n">${n}</td><td class="n">${f}</td></tr>`).join("")}</tbody></table>
+       <p class="note" style="margin-top:6px">Counts people with an account who did something that saves a date (daily question, AI grading, drafts, the daily XP goal). Signed-out visitors before Nov 4 weren't recorded, so they can't be counted.</p>`})()}</div>
+     <div class="ms-sec"><h3>All accounts <small>${accts.length}, most recent first</small></h3>
+      ${accts.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">First seen</th><th class="n">Last seen</th></tr></thead><tbody>${accts.slice(0,accts.length>60?60:accts.length).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td></tr>`}).join("")}</tbody></table>`:`<p class="note">No accounts yet.</p>`}</div>
      <div class="ms-sec"><h3>Top schools <small>players on the leaderboard</small></h3>${rows(schools)}</div>
      <div style="margin-top:18px;display:flex;gap:8px"><button class="btn sm" id="msRefresh">Refresh</button></div>`;
     document.getElementById("msRefresh").onclick=openStats}

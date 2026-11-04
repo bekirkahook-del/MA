@@ -15,7 +15,7 @@ alter table public.docs alter column uid drop not null;
 
 create or replace function public.is_admin() returns boolean
 language sql stable as $$
-  select coalesce(lower(auth.jwt() ->> 'email') = 'bekirkahook@gmail.com', false)
+  select coalesce(lower(auth.jwt() ->> 'email') in ('bekirkahook@gmail.com','kahook.3@osu.edu'), false)
 $$;
 
 drop policy if exists docs_read on public.docs;

@@ -4,7 +4,7 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
 (function(){
   const SB_URL="https://nbakxpnhcfzdosbzbupd.supabase.co";
   const SB_KEY="sb_publishable_-2q58P2-fXrY-q1y4GQ8jw_58OrzsDu";
-  const OWNER_HASH="13d8e795a85caa1b6668d51dd5c74b25aa7ed1c1a508336292a3078fcbe47fc6"; /* sha-256 of the owner email */
+  const OWNER_HASHES=["13d8e795a85caa1b6668d51dd5c74b25aa7ed1c1a508336292a3078fcbe47fc6","00ad2d945215513b412199ba5c23dc5ecb8decd47866582041d1eccd0bb12d93"]; /* sha-256 of the owner emails (first = founder badge account) */
   const PUBLIC_COLS=["players","reviews","views","avatars","names"];
   /* Progress belongs to an account. Runs before the app reads localStorage: if the saved progress
      was synced to a different account (or someone signed out), start this browser fresh. The account's
@@ -48,8 +48,8 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
     const nm=()=>{try{const st=JSON.parse(localStorage.getItem("ma-progress-v1")||"{}");if(st.profile&&st.profile.name)return st.profile.name}catch(e){}return (u.user_metadata&&(u.user_metadata.full_name||u.user_metadata.name))||""};
     const pushName=async n=>{if(!n)return;try{await sb.from("docs").upsert({col:"names",id:u.id,data:{name:n},uid:u.id,updated_at:new Date().toISOString()})}catch(e){}};
     pushName(nm());window.MA_AUTH.pushName=pushName;
-    let owner=false;try{const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode((u.email||"").toLowerCase()));owner=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join("")===OWNER_HASH}catch(e){}
-    return{id:async()=>u.id,me:async()=>({name:nm(),email:u.email}),isOwner:()=>owner,can:async()=>true,
+    let owner=false,founder=false;try{const h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode((u.email||"").toLowerCase()));const hx=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join("");owner=OWNER_HASHES.includes(hx);founder=hx===OWNER_HASHES[0]}catch(e){}
+    return{id:async()=>u.id,me:async()=>({name:nm(),email:u.email}),isOwner:()=>owner,isFounder:()=>founder,can:async()=>true,
       async profiles(ids){const out={};if(!ids.length)return out;const {data}=await sb.from("docs").select("id,data").eq("col","names").in("id",ids.slice(0,500));(data||[]).forEach(r=>out[r.id]={name:(r.data&&r.data.name)||""});return out}}}
   async function makeSample(){const s=await ready;if(!s)return null;
     return{async json(prompt,opts){const cur=(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/ai",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(cur?cur.access_token:"")},body:JSON.stringify({prompt,json:true,tier:(opts&&opts.modelTier)||"default"})});

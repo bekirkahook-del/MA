@@ -4969,7 +4969,7 @@ initGroups();
 let FOUNDER_ID=null,amFounder=false;
 const founderBadge=()=>`<span class="founder-b" title="Founder of M&amp;A">M<i>&amp;</i>A founder</span>`;
 function isFounderId(id){return !!id&&((!!FOUNDER_ID&&id===FOUNDER_ID)||((id===myId||id==="me")&&amFounder))}
-async function initFounder(){try{if(USER&&USER.isOwner&&await USER.isOwner()){amFounder=true;if(DB&&myId&&FOUNDER_ID!==myId)DB.doc("views/_founder").set({founder:myId}).catch(()=>{});decorateFounder()}}catch(e){}}
+async function initFounder(){try{if(USER&&(USER.isFounder?USER.isFounder():USER.isOwner&&await USER.isOwner())){amFounder=true;if(DB&&myId&&FOUNDER_ID!==myId)DB.doc("views/_founder").set({founder:myId}).catch(()=>{});decorateFounder()}}catch(e){}}
 function decorateFounder(){
   if(amFounder){const n=document.querySelector("#cmpMe .me-name");if(n&&!n.querySelector(".founder-b")){const sm=n.querySelector("small");sm?sm.insertAdjacentHTML("beforebegin"," "+founderBadge()):n.insertAdjacentHTML("beforeend"," "+founderBadge())}}
   document.querySelectorAll(".brow[data-p]").forEach(b=>{if(isFounderId(b.dataset.p)&&!b.querySelector(".founder-b")){const nm=b.querySelector(".nm");if(nm)nm.insertAdjacentHTML("afterend"," "+founderBadge())}});

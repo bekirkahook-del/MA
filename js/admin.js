@@ -27,7 +27,9 @@
     try{if(chan)chan.untrack()}catch(e){}
     addLinks();setInterval(addLinks,3000);if(/^#(admin|stats)$/.test(startHash)||/^#(admin|stats)$/.test(location.hash))setTimeout(openStats,800)});
   window.addEventListener("hashchange",()=>{if(owner&&(location.hash==="#admin"||location.hash==="#stats"))openStats()});
-  function addLinks(){const f=document.querySelector("footer");if(f&&!f.querySelector("[data-stats]")){const b=document.createElement("button");b.type="button";b.dataset.stats="1";b.className="fb-link";b.textContent="Site stats";b.title="Only you can see this";b.onclick=openStats;f.appendChild(b)}
+  function addHeader(){const top=document.querySelector(".top-r");if(!top||top.querySelector("#statsBtn"))return;const b=document.createElement("button");b.id="statsBtn";b.type="button";b.className="iconbtn";b.title="Site stats (only you)";b.setAttribute("aria-label","Site stats");
+    b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';b.onclick=openStats;const g=top.querySelector("#setBtn");top.insertBefore(b,g||null)}
+  function addLinks(){addHeader();const f=document.querySelector("footer");if(f&&!f.querySelector("[data-stats]")){const b=document.createElement("button");b.type="button";b.dataset.stats="1";b.className="fb-link";b.textContent="Site stats";b.title="Only you can see this";b.onclick=openStats;f.appendChild(b)}
     const d=document.querySelector(".dr-foot");if(d&&!d.querySelector("[data-stats]")){const b=document.createElement("button");b.type="button";b.dataset.stats="1";b.textContent="Site stats (only you)";b.onclick=()=>{try{closeDrawer()}catch(e){}openStats()};d.insertBefore(b,d.firstChild)}}
 
   /* ---------- stats page ---------- */

@@ -21,6 +21,7 @@
       if(Array.isArray(w.APP_OPEN)&&w.APP_OPEN.length){APP_OPEN=w.APP_OPEN.filter(a=>Array.isArray(a)&&a.length>=6);if(w.APP_OPEN_DATE)APP_OPEN_DATE=String(w.APP_OPEN_DATE)}
       RECAP=w.RECAP&&typeof w.RECAP.t==="string"?w.RECAP:null;
       CAL=Array.isArray(w.CAL)?w.CAL.filter(c=>Array.isArray(c)&&c.length>=3):[];
+      if(Array.isArray(w.EARN)){EARN=w.EARN.filter(e=>Array.isArray(e)&&/^\d{4}-\d{2}-\d{2}$/.test(e[0])&&e[1]);EARN_SRC=Array.isArray(w.EARN_SRC)?w.EARN_SRC:[]}
       WIRE_UPDATED=w.updated;return true}catch(e){return false}}
   function refresh(){const safe=f=>{try{f()}catch(e){}};
     safe(()=>render());safe(()=>renderTape());safe(()=>renderBriefing());

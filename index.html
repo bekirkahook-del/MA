@@ -304,6 +304,16 @@ td.base{background:var(--cobalt);color:#fff;font-weight:600}
 .wcal b{font-size:13.5px;font-weight:600}
 .wcal p{margin:2px 0 0;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
 .wcal p a{color:inherit}
+.we-day{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid var(--rule)}
+.we-list{display:flex;flex-direction:column;gap:8px}
+.we-row{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.35}.we-row>.we-t{flex:0 0 48px}.we-row>.we-n{flex:1 1 auto}.we-row>.we-w{flex:none;margin-top:1px}
+.we-t{font-family:var(--mono);font-size:12px;font-weight:600}
+.we-n{min-width:0}.we-n small{display:block;font-size:11px;color:var(--ink-2);font-family:var(--mono)}.we-t{padding-top:1px}
+.we-w{font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:2px 6px;border-radius:99px;white-space:nowrap}
+.we-w.am{background:var(--brass-soft);color:var(--brass)}.we-w.pm{background:var(--cobalt-soft);color:var(--cobalt)}
+.we-e{grid-column:2/4;font-family:var(--mono);font-size:11px;color:var(--ink-2)}.we-e:empty{display:none}
+.wearn .flink{margin-top:6px;font-size:12.5px}
+.we-src{margin:8px 0 0;font-size:11.5px;line-height:1.45;color:var(--ink-2)}.we-src a{color:inherit}
 .story .meta .new{background:var(--cobalt);color:#fff;border-radius:99px;padding:1px 7px;font-size:9.5px;letter-spacing:.06em}
 .wire .chip small{font-family:var(--mono);font-size:10px;opacity:.6;margin-left:1px}
 .newsbtn{position:relative;display:inline-flex;align-items:center;gap:6px}
@@ -2231,12 +2241,41 @@ let NEWS_QUIZ=[
  ["Evercore says the Anthropic IPO could add about 0.8% to big banks' Q4 2026 profits. Where would that money come from?",["Interest on loans made to Anthropic","Trading gains on Anthropic shares","Underwriting fees for selling the shares","Advisory fees on Anthropic's buyouts"],2,"Banks earn an underwriting fee, the gross spread, for buying IPO shares from the company and reselling them to investors."],
  ["After Democrats were projected to win Congress on Nov 3, 2026, why did Nasdaq futures fall more than S&P 500 futures?",["Fears that oil prices would spike","Fears the Fed would cut rates faster","Expected new taxes on bank profits","Worries about tighter Big Tech rules"],3,"Analysts said the tech-heavy Nasdaq fell more on concern that a Democratic Congress would push tighter AI and Big Tech regulation."]
 ];
-let WIRE_UPDATED="2026-11-04T05:15:00Z",RECAP={"d":"Nov 3","t":"Chip stocks pushed the Nasdaq up 0.8% while a 1.9% drop in Apple pulled the Dow lower. Overnight, stock futures slipped as Democrats were projected to win control of Congress."},CAL=[
+let WIRE_UPDATED="2026-11-04T05:50:00Z",RECAP={"d":"Nov 3","t":"Chip stocks pushed the Nasdaq up 0.8% while a 1.9% drop in Apple pulled the Dow lower. Overnight, stock futures slipped as Democrats were projected to win control of Congress."},CAL=[
  ["Wed Nov 4","ISM services and ADP jobs","Forecasts: ISM 54.8 (above 50 means growth), ADP +68K jobs. Qualcomm reports after the close.",["Investing.com","https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"]],
  ["Thu Nov 5","Jobless claims, Fed speakers","Claims forecast at 197K. Richmond Fed's Barkin and Dallas Fed's Logan speak.",["Investing.com","https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"]],
  ["Fri Nov 6","October jobs report","Forecast: +63K jobs and 4.2% unemployment. A big input for whether the Fed hikes in December.",["Investing.com","https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"]],
  ["Nov 16","Anthropic IPO (earliest date)","Could be the biggest listing of the year. All five of the largest U.S. banks are on the deal.",["Yahoo Finance","https://finance.yahoo.com/markets/article/why-the-anthropic-ipo-could-be-the-swing-vote-for-wall-street-bank-stocks-172030065.html"]]
-];
+],EARN=[
+ ["2026-11-04","UBER","Uber","BMO","",""],
+ ["2026-11-04","MCD","McDonald's","BMO","$3.38",""],
+ ["2026-11-04","NVO","Novo Nordisk","BMO","$4.62",""],
+ ["2026-11-04","CVS","CVS Health","BMO","$1.65",""],
+ ["2026-11-04","QCOM","Qualcomm","AMC","$2.16","AI and phone chips"],
+ ["2026-11-04","ARM","Arm Holdings","AMC","",""],
+ ["2026-11-04","APP","AppLovin","AMC","",""],
+ ["2026-11-04","MET","MetLife","AMC","$2.77","Insurer"],
+ ["2026-11-04","ALL","Allstate","AMC","$6.96","Insurer"],
+ ["2026-11-05","COP","ConocoPhillips","BMO","$3.05","Oil"],
+ ["2026-11-05","SONY","Sony","BMO","",""],
+ ["2026-11-05","CAH","Cardinal Health","BMO","$2.94","Ohio company"],
+ ["2026-11-05","ABNB","Airbnb","AMC","",""],
+ ["2026-11-05","NET","Cloudflare","AMC","",""],
+ ["2026-11-05","DKNG","DraftKings","AMC","",""],
+ ["2026-11-06","MRNA","Moderna","BMO","-$1.35",""],
+ ["2026-11-06","HUM","Humana","BMO","-$1.00",""],
+ ["2026-11-09","KKR","KKR","BMO","$1.58","Private equity giant"],
+ ["2026-11-09","TTWO","Take-Two","AMC","$0.98",""],
+ ["2026-11-12","CSCO","Cisco","AMC","$1.32",""],
+ ["2026-11-12","AMAT","Applied Materials","AMC","$4.06","Chip equipment"],
+ ["2026-11-17","HD","Home Depot","BMO","$3.84",""],
+ ["2026-11-17","DIS","Disney","BMO","$1.69",""],
+ ["2026-11-17","NVDA","Nvidia","AMC","$2.47","The big AI report"],
+ ["2026-11-18","TJX","TJX","BMO","$1.34",""],
+ ["2026-11-18","LOW","Lowe's","BMO","$2.87",""],
+ ["2026-11-19","WMT","Walmart","BMO","$0.64","Read on the consumer"],
+ ["2026-11-19","INTU","Intuit","AMC","$2.64",""]
+],EARN_SRC=[["Portfolio Terminal","https://portfolio-terminal.com/earnings-calendar/november-2026"],["Earnings Watcher","https://earnings-watcher.com/earnings-this-week"]];
 /*WIRE_END*/
 
 const ORDER=["f","b","x","ib","pe","pm","rx","mc"];
@@ -3343,11 +3382,19 @@ function wireSnap(){const cells=WIRE_SNAP.map(([s,l])=>{const t=TICKER.find(x=>x
   return `<section class="ws" aria-label="Market close"><div class="ws-top"><span class="label">Market close · ${esc(TICKER_DATE)}</span><button class="flink" id="wsAll">All markets →</button></div><div class="ws-grid">${cells}</div>${RECAP&&RECAP.t?`<p class="ws-recap">${esc(RECAP.t)}</p>`:""}</section>`}
 function wireCal(){if(!CAL||!CAL.length)return"";
   return `<details class="wcal"${innerWidth>620?" open":""}><summary><span class="label">On the calendar</span><span class="chev" aria-hidden="true"></span></summary><ul>${CAL.map(([d,t,n,src])=>`<li><span class="wcal-d">${esc(d)}</span><div><b>${esc(t)}</b><p>${esc(n)}${src?` <a href="${esc(src[1])}" target="_blank" rel="noopener">${esc(src[0])}</a>`:""}</p></div></li>`).join("")}</ul></details>`}
+function wireEarn(){if(!EARN||!EARN.length)return"";const today=new Date().toLocaleDateString("en-CA",{timeZone:"America/New_York"});
+  const up=EARN.filter(e=>e[0]>=today);if(!up.length)return"";const days=[...new Set(up.map(e=>e[0]))];const show=wireEarnAll?days:days.slice(0,3);
+  const lbl=d=>{const x=new Date(d+"T12:00:00");return d===today?"Today":x.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})};
+  return `<details class="wcal wearn"${innerWidth>620?" open":""}><summary><span class="label">Earnings calendar</span><span class="chev" aria-hidden="true"></span></summary>
+   ${show.map(d=>`<div class="we-day"><span class="wcal-d">${esc(lbl(d))}</span><div class="we-list">${up.filter(e=>e[0]===d).map(([,t,n,w,eps,note])=>`<div class="we-row"><b class="we-t">${esc(t)}</b><span class="we-n">${esc(n)}${note||eps?`<small>${[note,eps?"EPS est. "+eps:""].filter(Boolean).map(esc).join(" · ")}</small>`:""}</span><span class="we-w ${w==="BMO"?"am":"pm"}" title="${w==="BMO"?"Reports before the market opens":"Reports after the market closes"}">${w==="BMO"?"Before open":w==="AMC"?"After close":"TBA"}</span></div>`).join("")}</div></div>`).join("")}
+   ${days.length>3?`<button class="flink" id="weMore">${wireEarnAll?"Show less":`Show all ${days.length} days →`}</button>`:""}
+   <p class="we-src">EPS est. = what analysts expect per share. Beat it and the stock often jumps. Dates can change. Source: ${(EARN_SRC||[]).map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(", ")}</p></details>`}
+let wireEarnAll=false;
 function renderNews(){const list=NEWS.filter(n=>newsFilter==="All"||n.k===newsFilter),seen=wireSeen();
   const cnt=c=>c==="All"?NEWS.length:NEWS.filter(n=>n.k===c).length;const cats=WIRE_CATS.filter(c=>c==="All"||cnt(c));
   $("#wire").innerHTML=`<div class="wire-head"><h2>The Wire <small>${esc(wireAgo())}</small><button class="close" id="wireClose" aria-label="Close news" style="position:static">×</button></h2>
    <div class="cats" role="group" aria-label="Filter news">${cats.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${c===newsFilter}">${c==="PE"?"PE & Funds":c} <small>${cnt(c)}</small></button>`).join("")}</div></div>
-   ${newsFilter==="All"?wireSnap()+wireCal():""}
+   ${newsFilter==="All"?wireSnap()+wireCal()+wireEarn():""}
    <div id="wq"></div>
    ${list.length?"":`<p class="note" style="margin-top:14px">No ${esc(newsFilter)} stories this week.</p>`}
    ${list.map((n,i)=>`<details class="story" ${i===0?"open":""}><summary><div><div class="meta"><span class="k">${n.k==="PE"?"PE & Funds":n.k}</span><span>${n.d}</span>${seen&&!seen.includes(n.h)?'<span class="new">New</span>':""}</div><h3>${n.h}</h3></div><span class="chev" aria-hidden="true" style="margin-top:8px"></span></summary><div class="story-body"><p>${linkFirms(n.w)}</p>${n.chart?feeChart():""}
@@ -3356,6 +3403,7 @@ function renderNews(){const list=NEWS.filter(n=>newsFilter==="All"||n.k===newsFi
   $("#wire").querySelectorAll(".wire-head .chip").forEach(b=>b.onclick=()=>{newsFilter=b.dataset.c;renderNews();$("#wire").querySelector(`.chip[data-c="${newsFilter}"]`).focus()});
   $("#wire").querySelectorAll(".ws-cell").forEach(b=>b.onclick=()=>{toggleWire(false,true);openMarkets(b.dataset.sym)});
   const wa=$("#wsAll");if(wa)wa.onclick=()=>{toggleWire(false,true);openMarkets()};
+  const wm=$("#weMore");if(wm)wm.onclick=()=>{wireEarnAll=!wireEarnAll;renderNews();const e=$("#wire .wearn");if(e)e.scrollIntoView({block:"start"})};
   $("#wireClose").onclick=()=>toggleWire(false);bindRel($("#wire"));
   renderWireQuiz();wireDot()}
 function renderWireQuiz(){const el=$("#wq");if(!el)return;const b=S.newsq[NEWS_DATE];

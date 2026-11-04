@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T05:15:00Z",
+ "updated": "2026-11-04T05:50:00Z",
  "TICKER_DATE": "Nov 3",
  "TICKER": [
   [
@@ -163,6 +163,242 @@
     "Yahoo Finance",
     "https://finance.yahoo.com/markets/article/why-the-anthropic-ipo-could-be-the-swing-vote-for-wall-street-bank-stocks-172030065.html"
    ]
+  ]
+ ],
+ "EARN": [
+  [
+   "2026-11-04",
+   "UBER",
+   "Uber",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "MCD",
+   "McDonald's",
+   "BMO",
+   "$3.38",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "NVO",
+   "Novo Nordisk",
+   "BMO",
+   "$4.62",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "CVS",
+   "CVS Health",
+   "BMO",
+   "$1.65",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "QCOM",
+   "Qualcomm",
+   "AMC",
+   "$2.16",
+   "AI and phone chips"
+  ],
+  [
+   "2026-11-04",
+   "ARM",
+   "Arm Holdings",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "APP",
+   "AppLovin",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-04",
+   "MET",
+   "MetLife",
+   "AMC",
+   "$2.77",
+   "Insurer"
+  ],
+  [
+   "2026-11-04",
+   "ALL",
+   "Allstate",
+   "AMC",
+   "$6.96",
+   "Insurer"
+  ],
+  [
+   "2026-11-05",
+   "COP",
+   "ConocoPhillips",
+   "BMO",
+   "$3.05",
+   "Oil"
+  ],
+  [
+   "2026-11-05",
+   "SONY",
+   "Sony",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-05",
+   "CAH",
+   "Cardinal Health",
+   "BMO",
+   "$2.94",
+   "Ohio company"
+  ],
+  [
+   "2026-11-05",
+   "ABNB",
+   "Airbnb",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-05",
+   "NET",
+   "Cloudflare",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-05",
+   "DKNG",
+   "DraftKings",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-06",
+   "MRNA",
+   "Moderna",
+   "BMO",
+   "-$1.35",
+   ""
+  ],
+  [
+   "2026-11-06",
+   "HUM",
+   "Humana",
+   "BMO",
+   "-$1.00",
+   ""
+  ],
+  [
+   "2026-11-09",
+   "KKR",
+   "KKR",
+   "BMO",
+   "$1.58",
+   "Private equity giant"
+  ],
+  [
+   "2026-11-09",
+   "TTWO",
+   "Take-Two",
+   "AMC",
+   "$0.98",
+   ""
+  ],
+  [
+   "2026-11-12",
+   "CSCO",
+   "Cisco",
+   "AMC",
+   "$1.32",
+   ""
+  ],
+  [
+   "2026-11-12",
+   "AMAT",
+   "Applied Materials",
+   "AMC",
+   "$4.06",
+   "Chip equipment"
+  ],
+  [
+   "2026-11-17",
+   "HD",
+   "Home Depot",
+   "BMO",
+   "$3.84",
+   ""
+  ],
+  [
+   "2026-11-17",
+   "DIS",
+   "Disney",
+   "BMO",
+   "$1.69",
+   ""
+  ],
+  [
+   "2026-11-17",
+   "NVDA",
+   "Nvidia",
+   "AMC",
+   "$2.47",
+   "The big AI report"
+  ],
+  [
+   "2026-11-18",
+   "TJX",
+   "TJX",
+   "BMO",
+   "$1.34",
+   ""
+  ],
+  [
+   "2026-11-18",
+   "LOW",
+   "Lowe's",
+   "BMO",
+   "$2.87",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "WMT",
+   "Walmart",
+   "BMO",
+   "$0.64",
+   "Read on the consumer"
+  ],
+  [
+   "2026-11-19",
+   "INTU",
+   "Intuit",
+   "AMC",
+   "$2.64",
+   ""
+  ]
+ ],
+ "EARN_SRC": [
+  [
+   "Portfolio Terminal",
+   "https://portfolio-terminal.com/earnings-calendar/november-2026"
+  ],
+  [
+   "Earnings Watcher",
+   "https://earnings-watcher.com/earnings-this-week"
   ]
  ],
  "NEWS_DATE": "Nov 4, 2026",

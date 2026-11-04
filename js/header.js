@@ -27,8 +27,9 @@
   .top-r .probtn{height:26px;padding:0 8px!important;font-size:11px!important}
   .top-r .iconbtn,.top-r .nbell,.top-r .palbtn,.top-r .newsbtn{width:34px!important;height:34px!important}
   .top-r .avbtn{width:30px!important;height:30px!important}.top-r #authBtn.cta{padding:0 12px;height:32px;font-size:12.5px}
-  .brand{font-size:24px!important}}
+  .top .brand{font-size:25px!important}}
 @media (max-width:370px){.top-r .probtn{display:none!important}}
+.top .brand{font-family:"Nunito",var(--display)!important;font-weight:900!important;font-stretch:normal!important;letter-spacing:.02em!important;font-size:31px!important;line-height:1}
 .acct-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--rule);border-radius:12px;padding:12px 14px;margin:0 0 18px;background:var(--sheet)}
 .acct-row span{font-size:13.5px;color:var(--ink-2)}.acct-row b{color:var(--ink);font-weight:600}
 .acct-row button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule);background:none;color:var(--ink);border-radius:9px;padding:7px 14px;cursor:pointer}

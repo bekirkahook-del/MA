@@ -1,0 +1,228 @@
+{
+ "posts": [
+  {
+   "key": "bc-ceopay",
+   "badge": "TOP 5",
+   "title": "Wall Street's highest-paid <em>bank CEOs</em>",
+   "sub": "Together they made $217 million last year.",
+   "swipe": "Swipe to see #1 \u2192",
+   "kicker": "2025 TOTAL PAY",
+   "chartTitle": "It's not <em>Jamie Dimon</em> at #1",
+   "rows": [
+    [
+     "David Solomon \u00b7 Goldman Sachs",
+     47,
+     "$47M",
+     1
+    ],
+    [
+     "Ted Pick \u00b7 Morgan Stanley",
+     45,
+     "$45M"
+    ],
+    [
+     "Jamie Dimon \u00b7 JPMorgan",
+     43,
+     "$43M"
+    ],
+    [
+     "Jane Fraser \u00b7 Citi",
+     42,
+     "$42M"
+    ],
+    [
+     "Charlie Scharf \u00b7 Wells Fargo",
+     40,
+     "$40M"
+    ]
+   ],
+   "caption": "Most of it is stock and bonus, not salary. Bank of America hadn't reported Brian Moynihan's pay yet.",
+   "source": "American Banker, Feb 2026 (company filings)"
+  },
+  {
+   "key": "bc-deals",
+   "badge": "TOP 5",
+   "title": "The biggest deals of <em>2026</em>",
+   "sub": "#1 is worth about $250 billion.",
+   "swipe": "Swipe to see #1 \u2192",
+   "kicker": "LARGEST M&A DEALS ANNOUNCED IN 2026",
+   "chartTitle": "Elon Musk owns the <em>#1 spot</em>",
+   "rows": [
+    [
+     "SpaceX + xAI",
+     250,
+     "~$250B",
+     1
+    ],
+    [
+     "Marvell + Lumentum",
+     115,
+     "~$115B"
+    ],
+    [
+     "Paramount + Warner Bros. Discovery",
+     110,
+     "$110B"
+    ],
+    [
+     "Equity Residential + AvalonBay",
+     70,
+     "~$70B"
+    ],
+    [
+     "SpaceX + Cursor",
+     60,
+     "~$60B"
+    ]
+   ],
+   "caption": "SpaceX shows up twice. The xAI value is press-reported. EQR/AvalonBay is a merger of equals (combined value).",
+   "source": "Dealroom (Oct 2026); Yahoo Finance (Marvell\u2013Lumentum, Nov 2026)"
+  },
+  {
+   "key": "bc-assetmgr",
+   "badge": "TOP 5",
+   "title": "BlackRock manages <em>$13.9 trillion</em>",
+   "sub": "That's $13,900,000,000,000 of other people's money.",
+   "swipe": "Swipe for the top 5 \u2192",
+   "kicker": "WORLD'S LARGEST ASSET MANAGERS (AUM)",
+   "chartTitle": "The money managers <em>running the world</em>",
+   "rows": [
+    [
+     "BlackRock",
+     13.9,
+     "$13.9T",
+     1
+    ],
+    [
+     "Vanguard",
+     11.6,
+     "$11.6T"
+    ],
+    [
+     "Fidelity",
+     7.1,
+     "$7.1T"
+    ],
+    [
+     "State Street",
+     5.7,
+     "$5.7T"
+    ],
+    [
+     "J.P. Morgan Asset Mgmt",
+     4.1,
+     "$4.1T"
+    ]
+   ],
+   "caption": "AUM = assets under management, the money clients trust them to invest. Figures from late 2025 to early 2026.",
+   "source": "Altss Largest Asset Managers 2026 (company reports)"
+  },
+  {
+   "key": "bc-hedge",
+   "badge": "TOP 5",
+   "title": "The 5 biggest <em>hedge funds</em> on earth",
+   "sub": "The top 3 are separated by less than $2 billion.",
+   "swipe": "Swipe for the ranking \u2192",
+   "kicker": "HEDGE FUND ASSETS \u00b7 JUNE 30, 2025",
+   "chartTitle": "A photo finish <em>at the top</em>",
+   "rows": [
+    [
+     "Bridgewater Associates",
+     78.0,
+     "$78.0B",
+     1
+    ],
+    [
+     "Millennium Management",
+     77.5,
+     "$77.5B"
+    ],
+    [
+     "Elliott Management",
+     76.1,
+     "$76.1B"
+    ],
+    [
+     "Citadel",
+     67.6,
+     "$67.6B"
+    ],
+    [
+     "Man Group",
+     66.5,
+     "$66.5B"
+    ]
+   ],
+   "caption": "Counts hedge fund assets only, as of June 30, 2025 (latest full public data).",
+   "source": "Pensions & Investments, via RankiaPro"
+  },
+  {
+   "key": "bc-bankstocks",
+   "badge": "THIS FALL",
+   "title": "Only one big bank stock is <em>winning</em> this fall",
+   "sub": "One of them is down 9% in a month.",
+   "swipe": "Swipe to see who \u2192",
+   "kicker": "STOCK MOVE \u00b7 OCT 1 \u2013 NOV 2, 2026",
+   "chartTitle": "JPMorgan up, <em>Bank of America</em> sinking",
+   "rows": [
+    [
+     "JPMorgan Chase",
+     3.0,
+     "+3.0%",
+     1
+    ],
+    [
+     "Goldman Sachs",
+     0.0001,
+     "0.0%"
+    ],
+    [
+     "Morgan Stanley",
+     -1.2,
+     "\u22121.2%"
+    ],
+    [
+     "Citigroup",
+     -5.0,
+     "\u22125.0%"
+    ],
+    [
+     "Bank of America",
+     -9.0,
+     "\u22129.0%"
+    ]
+   ],
+   "caption": "Rising interest rates are squeezing deal and trading revenue. The KBW bank index still rose more than 2%.",
+   "source": "Yahoo Finance, Nov 3, 2026 (Evercore ISI data)"
+  },
+  {
+   "key": "bc-bonus",
+   "badge": "RECORD",
+   "title": "The average Wall Street bonus was <em>$246,900</em>",
+   "sub": "That's just the bonus. Not the salary.",
+   "swipe": "Swipe to compare \u2192",
+   "kicker": "2025 BONUSES \u00b7 NEW YORK CITY",
+   "chartTitle": "One bonus = <em>3 years</em> of a typical household's income",
+   "rows": [
+    [
+     "Avg. Wall Street bonus, 2025",
+     246.9,
+     "$246,900",
+     1
+    ],
+    [
+     "Avg. Wall Street bonus, 2024 (est.)",
+     232,
+     "~$232,000"
+    ],
+    [
+     "U.S. median household income, 2024",
+     83.73,
+     "$83,730"
+    ]
+   ],
+   "caption": "NYC securities workers shared a record $49.2 billion bonus pool, up 9%.",
+   "source": "NY State Comptroller via AP (Mar 2026); U.S. Census Bureau (2024 income)"
+  }
+ ]
+}

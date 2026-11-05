@@ -14,3 +14,9 @@
 - 2026-11-05 bc-bschools — [Blue Chip] Top 5 business schools + acceptance
 - 2026-11-06 bc-profit — [Blue Chip] Top 6 bank profits Q3
 - 2026-11-07 bc-ibfees — [Blue Chip] Top 6 IB fees Q3
+- 2026-11-05 bc-ceopay — [Blue Chip] Top 5 highest-paid bank CEOs 2025
+- 2026-11-05 bc-deals — [Blue Chip] Top 5 biggest deals of 2026
+- 2026-11-06 bc-assetmgr — [Blue Chip] Top 5 asset managers by AUM
+- 2026-11-06 bc-hedge — [Blue Chip] Top 5 hedge funds by AUM
+- 2026-11-07 bc-bankstocks — [Blue Chip] Bank stocks this fall
+- 2026-11-07 bc-bonus — [Blue Chip] Avg Wall Street bonus $246,900

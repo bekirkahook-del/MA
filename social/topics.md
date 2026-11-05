@@ -1,5 +1,26 @@
-# TikTok topic backlog (DCF · LBO · valuation · related IB/PE technicals)
+# TikTok topic backlog
+Audience: ages 15–30. Every post needs a reason to comment (score, pick, school, guess, opinion).
 Pick unused topics from here. After posting, move the line to posted.md with the date and deck key.
+
+## Blue Chip ranking ideas (source every number)
+- Highest-paying entry-level jobs (new-grad pay)
+- Highest-paying internships (monthly pay)
+- Colleges that send the most grads to Goldman / JPMorgan
+- Starting salary by college major
+- What bankers make at 22 vs 25 vs 30 (analyst → associate → VP)
+- Richest self-made people under 35
+- Most valuable brands Gen Z actually uses
+- If you invested $1,000 ten years ago in Apple / Nvidia / Netflix / Nike
+- Cities where a $100K salary goes furthest (cost of living)
+- Average rent vs starting pay in NYC, Chicago, Columbus, Austin…
+- Biggest IPOs ever
+- Most-applied-to companies for new grads
+- Highest-paying business schools (median grad salary)
+- Most expensive colleges vs average starting salary (is it worth it?)
+
+## Quiz ideas (finance interview + money skills)
+- "Guess the salary" challenge: 3 jobs, guess which pays most
+- "Is it worth it?" college ROI quiz
 
 - Walk me through the 3 statements (depreciation +$10 example)
 - Levered vs unlevered free cash flow (quiz)

@@ -1852,6 +1852,7 @@ details[open]::details-content{block-size:auto}
       </div>
     </div>
     </div>
+    <div data-pane="curve" class="pane" hidden><div id="curve"></div></div>
     <div data-pane="chal" class="pane" hidden><div id="chal"></div></div>
     <div data-pane="lbo" class="pane" hidden><p class="hint">Excess cash after debt paydown counts toward exit equity. Interest and fees left out.</p>
     <div class="card tool">
@@ -2673,23 +2674,44 @@ let S={pro:{},grades:{},league:{},superdays:[],settings:{},best:{},rapid:0,daily
 const S_DEFAULT=JSON.stringify(S);
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
 let cloudOn=false,cloudT=null,cloudState="off",cloudAt=0;
-function save(){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(cloudPush,2500)}}
+function save(){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(()=>{cloudT=null;cloudPush()},1500)}}
 const cloudDoc=()=>DB.collection("data/users/"+myId).doc("progress");
 async function cloudPush(){if(!DB||!myId)return;try{const body=JSON.stringify(S);if(body.length>900000){cloudState="toobig";renderSyncRow();return}
   await cloudDoc().set({v:1,t:S._t||Date.now(),s:body});cloudAt=Date.now();cloudState="synced"}catch(e){cloudState="error"}renderSyncRow()}
+/* Merge instead of "newest copy wins". Old behavior lost work: any save() on page load stamped a fresh
+   time, so a stale device could overwrite newer progress from another device, and guest work was dropped
+   on sign-in. Progress only goes up (numbers take the max, finished = true wins, objects merge key by key);
+   personal data like settings, profile and contacts takes the most recently edited copy. */
+const MERGE_WHOLE=new Set(["settings","profile","contacts","targets","superdays","road","_t","_synced"]);
+function mergeVal(a,b,aNew,k){if(a===undefined||a===null)return b===undefined?a:b;if(b===undefined||b===null)return a;
+  if(/streak/i.test(k||""))return aNew?a:b;
+  if(typeof a==="number"&&typeof b==="number")return Math.max(a,b);
+  if(typeof a==="boolean"&&typeof b==="boolean")return a||b;
+  if(typeof a==="object"&&typeof b==="object"&&!Array.isArray(a)&&!Array.isArray(b)){const o={};for(const x of new Set([...Object.keys(a),...Object.keys(b)]))o[x]=mergeVal(a[x],b[x],aNew,x);return o}
+  if(Array.isArray(a)&&Array.isArray(b)&&!aNew&&b.length===0&&a.length)return a;
+  if(Array.isArray(a)&&Array.isArray(b)&&aNew&&a.length===0&&b.length)return b;
+  return aNew?a:b}
+function mergeState(L,R,lNew){const o={};for(const k of new Set([...Object.keys(L),...Object.keys(R)])){
+    o[k]=MERGE_WHOLE.has(k)?((lNew?L[k]:R[k])??L[k]??R[k]):mergeVal(L[k],R[k],lNew,k)}
+  o._t=Math.max(L._t||0,R._t||0);return o}
+const stateSig=x=>{try{const c=Object.assign({},x);delete c._t;delete c._synced;return JSON.stringify(c)}catch(e){return ""}};
 async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();return}
-  try{const snap=await cloudDoc().get();let adopt=false,remote=null;
-    if(snap.exists){const d=snap.data()||{};try{remote=JSON.parse(d.s||"null")}catch(e){remote=null}
-      if(remote){if(S._synced===myId)adopt=(d.t||0)>(S._t||0);else if(S._synced)adopt=true;else{const keep=S;let rx=0,lx=0;try{lx=totalXP();S=Object.assign(JSON.parse(S_DEFAULT),remote);rx=totalXP()}catch(e){}S=keep;adopt=rx>lx||(rx===lx&&!!(rx>0||(remote.profile&&remote.profile.name)))}}}
-    if(adopt){S=Object.assign(JSON.parse(S_DEFAULT),remote);S._synced=myId;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
-      ["applySettings","applyProUI","render","renderRoad","renderCal","renderOpenings","renderApps","renderCRM","renderFirms","renderDeals","renderMock","renderTape","renderSubUI","renderCompete","renderPlan","renderReview"].forEach(f=>{try{if(typeof window[f]==="function")window[f]()}catch(e){}});
-      toast("Progress synced from your account");cloudState="synced";cloudAt=Date.now()}
+  try{const snap=await cloudDoc().get();let remote=null,rt=0;
+    if(snap.exists){const d=snap.data()||{};rt=d.t||0;try{remote=JSON.parse(d.s||"null")}catch(e){remote=null}}
+    let gotNew=false,needPush=!remote;
+    if(remote){
+      if(S._synced&&S._synced!==myId){S=Object.assign(JSON.parse(S_DEFAULT),remote);gotNew=true}
+      else{const before=stateSig(S),xb=totalXP();const m=mergeState(S,remote,(S._t||0)>=rt);
+        S=Object.assign(JSON.parse(S_DEFAULT),m);gotNew=stateSig(S)!==before&&totalXP()>=xb;needPush=stateSig(S)!==stateSig(Object.assign(JSON.parse(S_DEFAULT),remote))}}
     S._synced=myId;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
-    cloudOn=true;if(!adopt&&(!snap.exists||!remote||(S._t||0)>((snap.data()||{}).t||0)))await cloudPush();else if(!adopt){cloudState="synced";cloudAt=Date.now()}
+    if(gotNew){["applySettings","applyProUI","render","renderRoad","renderCal","renderOpenings","renderApps","renderCRM","renderFirms","renderDeals","renderMock","renderTape","renderSubUI","renderCompete","renderPlan","renderReview"].forEach(f=>{try{if(typeof window[f]==="function")window[f]()}catch(e){}});
+      toast("Progress synced from your account")}
+    cloudOn=true;if(needPush){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}await cloudPush()}else{cloudState="synced";cloudAt=Date.now()}
   }catch(e){cloudState="error"}renderSyncRow()}
 /* keep every device on the account current: re-check the cloud when the tab comes back */
 let cloudPullAt=0;document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&cloudOn&&Date.now()-cloudPullAt>20000){cloudPullAt=Date.now();cloudPull()}});
-window.addEventListener("pagehide",()=>{if(cloudOn&&cloudT){clearTimeout(cloudT);cloudPush()}});
+const flushNow=()=>{if(cloudOn&&cloudT){clearTimeout(cloudT);cloudT=null;cloudPush()}};
+window.addEventListener("pagehide",flushNow);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")flushNow()});
 window.maCloudFlush=async()=>{if(cloudOn){clearTimeout(cloudT);await cloudPush()}};
 function renderSyncRow(){const el=document.getElementById("syncStat");if(!el)return;
   el.textContent=cloudState==="synced"?`On · last synced ${new Date(cloudAt||Date.now()).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}`:cloudState==="error"?"Couldn't sync just now. Your progress is still saved on this device.":cloudState==="toobig"?"Too much data to sync. Try clearing old contacts.":"Sync across devices is available when you sign in. Your progress saves in this browser."}
@@ -4314,12 +4336,12 @@ function renderCaseBoards(){const main=$("#caseMain");if(!main||caseTab==="case"
 
 /* ---------- practice by profession ---------- */
 const PROFS=[
- ["all","All",{subs:["interview","rapid","chal","cases","lbo","dcf"]}],
- ["ib","Investment Banking",{short:"IB",firms:["Bulge bracket","Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top investment bank",pro:"an investment banker",learnTracks:["f","ib","b","x"],secs:["Behavioral","Accounting","Enterprise Value","Valuation & DCF","M&A","Brain Teasers"],chal:["c1","c2","c4","c5","c6","c7","c8","c10","c12","c13","c15","c16"],subs:["interview","chal","dcf","lbo","cases","rapid"],tracks:["f","ib","b","x"],packs:[0,1],blurb:"Accounting, valuation, M&A and fit questions, plus DCF and merger modeling."}],
- ["pe","Private Equity",{short:"PE",firms:["Private equity"],openCat:"Buy side",ladder:"pe",recruiter:"a recruiter at a large private equity firm",pro:"a private equity investor",learnTracks:["f","pe","b","x"],secs:["LBO & PE","Valuation & DCF","Accounting","Behavioral"],chal:["c3","c9","c14","c17","c6","c7","c8"],subs:["interview","lbo","chal","cases","rapid"],tracks:["f","pe","b"],packs:[2],blurb:"Paper LBOs, returns math, deal judgment and investment cases."}],
- ["hf","Hedge Funds & Markets",{short:"Markets",firms:["Hedge fund"],openCat:"Buy side",ladder:"hf",recruiter:"a hiring manager at a top hedge fund",pro:"a hedge fund analyst",learnTracks:["f","pm","b","x"],secs:["Markets & Hedge Funds","Valuation & DCF","Brain Teasers","Behavioral"],chal:["c20","c6","c7","c8","c10","c13"],subs:["interview","dcf","chal","rapid"],tracks:["f","pm","b"],packs:[4],blurb:"Stock pitches, market questions, mental math and valuation."}],
- ["rx","Restructuring",{short:"RX",firms:["Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top restructuring advisory firm",pro:"a restructuring banker",learnTracks:["f","rx","b","x"],secs:["Restructuring","Enterprise Value","Accounting","Behavioral"],chal:["c11","c17","c16","c9","c4"],subs:["interview","chal","cases","dcf","rapid"],tracks:["f","rx","b"],packs:[3],blurb:"Capital structures, recoveries, bankruptcy and distressed cases."}],
- ["mc","Consulting",{short:"Consulting",firms:["Consulting"],openCat:"Consulting",ladder:"mc",recruiter:"a recruiter at a top strategy consulting firm",pro:"a management consultant",learnTracks:["f","mc","b"],secs:["Consulting","Brain Teasers","Behavioral"],chal:["c18","c19"],subs:["interview","chal","cases","rapid"],tracks:["mc","b"],packs:[],blurb:"Case interviews, market sizing, profitability and fit questions."}]
+ ["all","All",{subs:["interview","curve","rapid","chal","cases","lbo","dcf"]}],
+ ["ib","Investment Banking",{short:"IB",firms:["Bulge bracket","Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top investment bank",pro:"an investment banker",learnTracks:["f","ib","b","x"],secs:["Behavioral","Accounting","Enterprise Value","Valuation & DCF","M&A","Brain Teasers"],chal:["c1","c2","c4","c5","c6","c7","c8","c10","c12","c13","c15","c16"],subs:["interview","curve","chal","dcf","lbo","cases","rapid"],tracks:["f","ib","b","x"],packs:[0,1],blurb:"Accounting, valuation, M&A and fit questions, plus DCF and merger modeling."}],
+ ["pe","Private Equity",{short:"PE",firms:["Private equity"],openCat:"Buy side",ladder:"pe",recruiter:"a recruiter at a large private equity firm",pro:"a private equity investor",learnTracks:["f","pe","b","x"],secs:["LBO & PE","Valuation & DCF","Accounting","Behavioral"],chal:["c3","c9","c14","c17","c6","c7","c8"],subs:["interview","curve","lbo","chal","cases","rapid"],tracks:["f","pe","b"],packs:[2],blurb:"Paper LBOs, returns math, deal judgment and investment cases."}],
+ ["hf","Hedge Funds & Markets",{short:"Markets",firms:["Hedge fund"],openCat:"Buy side",ladder:"hf",recruiter:"a hiring manager at a top hedge fund",pro:"a hedge fund analyst",learnTracks:["f","pm","b","x"],secs:["Markets & Hedge Funds","Valuation & DCF","Brain Teasers","Behavioral"],chal:["c20","c6","c7","c8","c10","c13"],subs:["interview","curve","dcf","chal","rapid"],tracks:["f","pm","b"],packs:[4],blurb:"Stock pitches, market questions, mental math and valuation."}],
+ ["rx","Restructuring",{short:"RX",firms:["Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top restructuring advisory firm",pro:"a restructuring banker",learnTracks:["f","rx","b","x"],secs:["Restructuring","Enterprise Value","Accounting","Behavioral"],chal:["c11","c17","c16","c9","c4"],subs:["interview","curve","chal","cases","dcf","rapid"],tracks:["f","rx","b"],packs:[3],blurb:"Capital structures, recoveries, bankruptcy and distressed cases."}],
+ ["mc","Consulting",{short:"Consulting",firms:["Consulting"],openCat:"Consulting",ladder:"mc",recruiter:"a recruiter at a top strategy consulting firm",pro:"a management consultant",learnTracks:["f","mc","b"],secs:["Consulting","Brain Teasers","Behavioral"],chal:["c18","c19"],subs:["interview","curve","chal","cases","rapid"],tracks:["mc","b"],packs:[],blurb:"Case interviews, market sizing, profitability and fit questions."}]
 ];
 const PROF_BLURB={
  learn:{all:"Tracks, final rounds and real deals, explained simply.",ib:"Accounting, valuation and how banks run deals.",pe:"How funds buy, build and exit, plus the banking base it rests on.",hf:"Markets, stock pitches and the valuation behind them.",rx:"Distressed companies, the capital stack and bankruptcy.",mc:"How consulting works and how to crack the case interview."},
@@ -4891,7 +4913,7 @@ setTimeout(()=>{try{renderWeakCard();renderMastery()}catch(e){}},0);
 /* ================= NAV v52: pull-out menu + grouped sections ================= */
 const GROUPS={
  learn:[["tracks","Tracks",["tracks"]],["deals","Deals",["deals"]],["cheats","Cheat sheet",["cheats"]]],
- practice:[["drills","Drills",["rapid","interview"]],["models","Models",["dcf","lbo","chal"]]],
+ practice:[["drills","Drills",["rapid","interview"]],["curve","Curveballs",["curve"]],["models","Models",["dcf","lbo","chal"]]],
  compete:[["leagues","Leagues",["overview","boards"]],["case","Case Comp",["case"]],["club","Club",["club"]],["you","Your profile",["me"],true]],
  career:[["road","Roadmap",["road"]],["recruit","Recruiting",["open","cal","apps"]],["net","Network",["net"]],["firms","Firms",["firms"]],["res","Resume",["res"]]]
 };
@@ -6256,6 +6278,7 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 <script src="js/rewards.js"></script>
 <script src="js/feedback.js"></script>
 <script src="js/resume.js"></script>
+<script src="js/curve.js"></script>
 <script src="js/wire.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/hit.js"></script>

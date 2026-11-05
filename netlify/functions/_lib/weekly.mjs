@@ -1,3 +1,4 @@
+import { marketBrief } from "./brief.mjs";
 // Builds the Sunday email. Rotates through curveballs, tips and guides by week number, so it runs itself.
 const CURVE = [
   ["What's 13% of 87?", "11.31. 10% is 8.7, 3% is 2.61, add them."],
@@ -35,13 +36,14 @@ const GUIDES = [
   ["valuation-multiples", "Valuation multiples explained"],
   ["non-target-investment-banking", "Breaking in from a non-target school"],
 ];
-export function weekly(now = new Date()) {
+export async function weekly(now = new Date()) {
+  let brief = { html: "", subjectBit: "" }; try { brief = await marketBrief(now); } catch (e) { console.error("brief", e); }
   const w = Math.floor((now.getTime() / 864e5 - 3) / 7); // changes every Sunday
   const [q, a] = CURVE[w % CURVE.length], tip = TIPS[w % TIPS.length], [slug, title] = GUIDES[w % GUIDES.length];
   const u = (p) => `https://mnaprep.com/${p}${p.includes("?") ? "&" : "?"}utm_source=email&utm_campaign=weekly-${w}`;
   const btn = (href, text) => `<a href="${href}" style="display:inline-block;background:#2448D8;color:#fff;text-decoration:none;font-weight:bold;border-radius:10px;padding:11px 18px">${text}</a>`;
-  const subject = `This week's curveball: ${q.length > 48 ? q.slice(0, 45) + "…" : q}`;
-  const body = `<p style="margin-top:0;font-size:12px;letter-spacing:.1em;color:#C33;font-weight:bold">CURVEBALL OF THE WEEK</p>
+  const subject = `Your Sunday brief${brief.subjectBit} + this week's curveball`;
+  const body = `${brief.html ? brief.html + '<hr style="border:0;border-top:1px solid #D3D9E4;margin:22px 0">' : ""}<p style="margin-top:0;font-size:12px;letter-spacing:.1em;color:#C33;font-weight:bold">CURVEBALL OF THE WEEK</p>
 <p style="font-size:20px;font-weight:bold;line-height:1.3;margin:6px 0 16px">${q}</p>
 <p style="color:#4A5672">No calculator. Think about it, then scroll down for the answer.</p>
 <hr style="border:0;border-top:1px solid #D3D9E4;margin:20px 0">

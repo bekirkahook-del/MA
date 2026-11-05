@@ -9,7 +9,7 @@ export default async (req) => {
   const u = await getUser(req);
   if (!u || !OWNERS.includes(String(u.email || "").toLowerCase())) return json(403, { error: "owner only" });
   if (!process.env.RESEND_API_KEY) return json(503, { error: "Email isn't set up yet (RESEND_API_KEY missing in Netlify)." });
-  const { subject, body } = weekly(), subs = await activeSubs().catch(() => []);
+  const { subject, body } = await weekly(), subs = await activeSubs().catch(() => []);
   const s = { id: "0".repeat(32), token: "0".repeat(32) };
   try { await send([{ to: u.email, subject: "[TEST] " + subject, html: shell(body, s), s }]); } catch (e) { return json(502, { error: e.message }); }
   return json(200, { ok: true, to: u.email, subscribers: subs.length });

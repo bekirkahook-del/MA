@@ -172,3 +172,6 @@ PAGES = [
  ("cta", "Write your answer, then get feedback on it in M&amp;A Prep's interview practice. Free to start.", "/#interview", "Practice your answer →"),
 ]},
 ]
+
+from pages2 import PAGES2
+PAGES = PAGES + PAGES2

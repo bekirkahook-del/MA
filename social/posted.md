@@ -1,0 +1,11 @@
+# Posted to TikTok (@bluechipfinancial)
+- 2026-11-04 irr — IRR anchors (test post)
+- 2026-11-05 evq — EV quiz
+- 2026-11-05 multq — EV vs net income multiple mistake
+- 2026-11-05 dcfmist — 5 DCF mistakes
+- 2026-11-05 plbo — paper LBO IRR quiz
+- 2026-11-05 dcf — How to build a DCF in 5 steps
+- 2026-11-06 lbo — How PE firms build an LBO
+- 2026-11-06 wacc — WACC in 60 seconds
+- 2026-11-07 val — How bankers value a company (3 methods)
+- 2026-11-07 lbofit — What makes a great LBO target

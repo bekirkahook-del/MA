@@ -2746,7 +2746,7 @@ function streak(){let n=0;const d=new Date();if(!(today() in S.daily))d.setDate(
 
 /* ---------- tabs ---------- */
 const TABS=["home","learn","practice","compete","career","settings","pro"];
-const TAB_ALIAS={train:["learn","tracks"],tools:["practice","lbo"],interview:["practice","interview"],recruit:["career","road"],firms:["career","firms"]};
+const TAB_ALIAS={curve:["practice","curve"],curveballs:["practice","curve"],train:["learn","tracks"],tools:["practice","lbo"],interview:["practice","interview"],recruit:["career","road"],firms:["career","firms"]};
 function showSub(view,sub){const b=document.querySelector(`[data-view="${view}"] .sub [data-sub="${sub}"]`);if(b&&b.getAttribute("aria-pressed")!=="true")b.click()}
 function showTab(t,focus){setTimeout(()=>{try{scrollProfRows()}catch(e){}},80);if(TAB_ALIAS[t]){const [v,sb]=TAB_ALIAS[t];showTab(v,focus);showSub(v,sb);return}if(!TABS.includes(t))t="home";
   const cur=document.querySelector(".view:not([hidden])");const swap=()=>{document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));

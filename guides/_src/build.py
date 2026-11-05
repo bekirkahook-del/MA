@@ -76,6 +76,7 @@ def page(p):
 <h2>More free guides</h2><ul class="more">{more_html}</ul></main>
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
 <script src="/js/hit.js" defer></script>
+<script src="/js/email.js" defer></script>
 </body></html>
 """
 

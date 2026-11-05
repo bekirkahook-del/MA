@@ -89,12 +89,13 @@
 
   async function load(){
     const since=new Date(Date.now()-62*864e5).toISOString();
-    const [vr,pr,nr,plr,br]=await Promise.all([
+    const [vr,pr,nr,plr,br,er]=await Promise.all([
       sb.from("docs").select("id,data").eq("col","visits").gte("updated_at",since).limit(20000),
       sb.from("docs").select("col,updated_at,data").like("col","data/users/%").eq("id","progress").limit(5000),
       sb.from("docs").select("id,data").eq("col","names").limit(5000),
       sb.from("docs").select("id,data").eq("col","players").limit(5000),
-      sb.from("docs").select("id,data").eq("col","billing").limit(5000)]);
+      sb.from("docs").select("id,data").eq("col","billing").limit(5000),
+      sb.from("docs").select("id,data").eq("col","subscribers").limit(20000)]);
     if(vr.error||pr.error)throw new Error((vr.error||pr.error).message);
     const V=(vr.data||[]).map(r=>Object.assign({vid:String(r.id).slice(11)},r.data||{}));
     const names={};(nr.data||[]).forEach(r=>names[r.id]=(r.data&&r.data.name)||"");
@@ -104,7 +105,8 @@
       Object.keys(d.newsq||{}).forEach(x=>{const t=Date.parse(x);if(t)set.add(dayStr(new Date(t)))});const t=Date.parse(r.updated_at);if(t)set.add(dayStr(new Date(t)));
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
     const pro=(br.data||[]).filter(r=>r.data&&r.data.paid&&(!r.data.until||Date.parse(r.data.until)>Date.now())).length;
-    return{V,names,players,accts,pro,at:Date.now()}}
+    const subs=((er&&er.data)||[]).map(r=>r.data||{});
+    return{V,names,players,accts,pro,subs,at:Date.now()}}
 
   async function openStats(){if(!owner)return;window.__maStatsOpen=true;
     openPanel(`<div class="label">Only you can see this</div><h2>Site stats</h2><div class="ms-sec" id="msLive"></div><div id="msBody"><p class="note" style="margin-top:18px">Loading…</p></div>`);
@@ -160,6 +162,9 @@
      <div class="ms-sec"><h3>Accounts</h3>
       <div class="ms-tiles five">${t5("Total accounts",accts.length)}${t5(`New, ${N} days`,newAccts,chg(newAccts,prevAccts))}${t5("Active 24h",act(864e5))}${t5("Active 7 days",act(7*864e5))}${t5("Paying Pro",pro)}</div>
       <p class="note" style="margin-top:8px">${cur.length?`About <b>${pct(newAccts,Math.max(1,fresh(cur)))}%</b> of new visitors made an account in this period.`:""}</p></div>
+     <div class="ms-sec"><h3>Email list <small>Sunday curveball email</small></h3>${(()=>{const S2=CACHE.subs||[],act2=S2.filter(x=>x.status==="active"),nw=act2.filter(x=>(x.t||"").slice(0,10)>=cut(N)).length;
+       return `<div class="ms-tiles"><div class="ms-tile"><b>${act2.length}</b><span>Subscribers</span></div><div class="ms-tile"><b>${nw}</b><span>New, ${N} days</span></div><div class="ms-tile"><b>${S2.length-act2.length}</b><span>Unsubscribed</span></div><div class="ms-tile"><b>${(tally(act2,x=>(x.src||"").split(":")[0],1)[0]||["–"])[0]}</b><span>Top signup spot</span></div></div>
+       <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" id="msTestMail">Send me this week's email</button><span class="note" id="msTestMsg"></span></div>`})()}</div>
      <div class="ms-sec"><h3>Account history <small>rebuilt from saved progress · back to launch</small></h3>${(()=>{const all=[...new Set(accts.flatMap(a=>a.days))].sort();if(!all.length)return`<p class="note">No dated activity yet.</p>`;
        const start=all[0],list=[];for(let t=Date.parse(start+"T12:00:00");t<=Date.now();t+=864e5){const d=dayStr(new Date(t));list.push([d,accts.filter(a=>a.days.includes(d)).length,accts.filter(a=>a.first===d).length])}
        const L=list.slice(-Math.max(N,14)),m=Math.max(1,...L.map(x=>x[1]));const tot=accts.filter(a=>a.first).length;
@@ -177,6 +182,9 @@
     document.getElementById("msFind").oninput=e=>{acc.innerHTML=accRows(e.target.value)};
     body.querySelectorAll(".ms-seg button").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});
     document.getElementById("msRefresh").onclick=openStats;
+    {const tb=document.getElementById("msTestMail");if(tb)tb.onclick=async()=>{const msg=document.getElementById("msTestMsg");tb.disabled=true;msg.textContent="Sending…";
+      try{const tok=A.session&&A.session.access_token||(await sb.auth.getSession()).data.session.access_token;const r=await fetch("/.netlify/functions/email-test",{method:"POST",headers:{Authorization:"Bearer "+tok}});const j=await r.json().catch(()=>({}));
+        msg.textContent=r.ok?`Sent to ${j.to}. Check your inbox.`:(j.error||"Couldn't send.")}catch(e){msg.textContent="Couldn't send."}tb.disabled=false}}
     document.getElementById("msCsv").onclick=()=>{const cols=["d","t","p","src","cmp","ref","dev","country","region","city","first","acct"];
       const csv=[cols.join(",")].concat(cur.map(v=>cols.map(c=>`"${String(v[c]??"").replace(/"/g,'""')}"`).join(","))).join("\n");
       const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`mnaprep-visits-${N}d-${today}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}}

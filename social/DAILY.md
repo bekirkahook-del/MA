@@ -33,6 +33,12 @@ Read `social/posted.md` (never repeat a topic or deck key) and `social/topics.md
 - Topics: DCF, LBO, valuation, M&A math, accounting, IRR. Run every calculation in `node -e` first. The correct answer must not always be the same letter.
 - Render: `node render.js <spec> ` → `social/<YYYY-MM-DD>/<key>-NN.jpg`. Exit code 2 = overflow: shorten and re-render.
 
+### "Unexpected interview question" posts (every ~3rd day, replaces 1 quiz slot)
+- Inspired by a WSO meme post (1,050 likes): one weird, quick question + a reaction emoji, then the answer. On days where the day-of-month is divisible by 3, make 1 of the 3 quiz posts this type.
+- Good questions: quick mental math (13% of 87, 17 × 24, 15% of 360), clock angles, "how many golf balls fit in a bus" style estimates, sneaky finance ones ("a company has negative EV, what does that mean?"). Run the math in `node -e` first. Never claim a specific bank asked it; the label is generic ("IB SUPERDAY").
+- Spec: see `social/oddq/sample.json` (key must start with `oddq-`). Render: `node oddq.js <spec> ../oddq/<YYYY-MM-DD>` → 3 slides, slide 3 is the QR/mnaprep.com CTA automatically.
+- Caption: "No calculator. Comment your answer before you swipe 👇" + hashtags, ending with "Free interview prep: mnaprep.com 🔗". Title like "Real interview question 😳". commercialContentOwnBrand true. Counts as a quiz post (media URLs contain `/social/oddq/`).
+
 ### Blue Chip posts (2 content slides: building photo + title, then ranked bar chart; plus the auto CTA slide 3)
 - TOP 5/6 rankings 15–30 year-olds care about: highest-paying entry-level jobs, highest-paying internships, hardest internships/jobs to get, best business schools, colleges that send the most grads to Wall Street, starting salary by major, what bankers make by age/level, richest people under 35, most valuable brands Gen Z uses (Apple, Nike, Netflix…), biggest IPOs, cities where your salary goes furthest, rent vs pay in big cities, how long to save for a house by city, top stocks over the last 10 years, etc. Comment-bait in the caption: "Which would you pick?", "Did your school make it?", "Guess #1 before you swipe".
 - Research with WebSearch, then WebFetch only URLs that came back in search results (typed URLs are blocked). **Every number needs a source you read this run.** Prefer one source per chart. Never guess; skip a topic if data is weak.

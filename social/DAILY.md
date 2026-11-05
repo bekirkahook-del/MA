@@ -12,7 +12,7 @@ Everything is for **people aged 15–30**: high schoolers, college students, new
 - Keep evolving: lean into the formats and topics that get the most views, likes and comments (see step 2b), and try one new angle each day.
 
 ## Always promote M&A Prep
-Every post must show **mnaprep.com and a QR code**. Quiz carousels get it automatically on the last slide. Blue Chip posts get a mnaprep.com tag on slide 1 and a QR call-to-action box on slide 2 (built into bluechip.js; set `cta` in the spec for a custom line, e.g. "Want this salary? Train free at <em>mnaprep.com</em>"). Every caption ends with "Free interview prep: mnaprep.com 🔗".
+Every post must show **mnaprep.com and a QR code**. Quiz carousels get it automatically on the last slide. Blue Chip posts get an automatic **separate 3rd slide** with the QR code and mnaprep.com (built into bluechip.js). Never put the QR or link on the 2 content slides. Optional spec fields for slide 3: `ctaKicker` (default "WANT TO WORK HERE?") and `cta` (default "Break into Wall Street <em>for free.</em>"). So Blue Chip media = 3 URLs: -01, -02, -03. Every caption ends with "Free interview prep: mnaprep.com 🔗".
 
 ## 1. Repo
 `git clone --depth 1 https://github.com/bekirkahook-del/MA.git` (if that fails, use the add_repo tool for owner `bekirkahook-del`, repo `MA`, access `push`). Then `cd MA/social/gen && npm ci --no-audit --no-fund`.
@@ -33,7 +33,7 @@ Read `social/posted.md` (never repeat a topic or deck key) and `social/topics.md
 - Topics: DCF, LBO, valuation, M&A math, accounting, IRR. Run every calculation in `node -e` first. The correct answer must not always be the same letter.
 - Render: `node render.js <spec> ` → `social/<YYYY-MM-DD>/<key>-NN.jpg`. Exit code 2 = overflow: shorten and re-render.
 
-### Blue Chip posts (2 slides: building photo + title, then ranked bar chart)
+### Blue Chip posts (2 content slides: building photo + title, then ranked bar chart; plus the auto CTA slide 3)
 - TOP 5/6 rankings 15–30 year-olds care about: highest-paying entry-level jobs, highest-paying internships, hardest internships/jobs to get, best business schools, colleges that send the most grads to Wall Street, starting salary by major, what bankers make by age/level, richest people under 35, most valuable brands Gen Z uses (Apple, Nike, Netflix…), biggest IPOs, cities where your salary goes furthest, rent vs pay in big cities, how long to save for a house by city, top stocks over the last 10 years, etc. Comment-bait in the caption: "Which would you pick?", "Did your school make it?", "Guess #1 before you swipe".
 - Research with WebSearch, then WebFetch only URLs that came back in search results (typed URLs are blocked). **Every number needs a source you read this run.** Prefer one source per chart. Never guess; skip a topic if data is weak.
 - Slide 1 hook: short, surprising, specific (e.g. "Internships that are harder to get than Harvard", "JPMorgan made $15.3 billion in 3 months"). Add a teaser `sub` and a `swipe` line ("Swipe to see #1 →").

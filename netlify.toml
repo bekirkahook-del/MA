@@ -2,8 +2,8 @@
   publish = "."
   functions = "netlify/functions"
   # News refreshes only change data/wire.json, which the site reads straight from GitHub.
-  # Skip the deploy when that is the only file that changed (saves Netlify credits).
-  ignore = '''C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && [ "$C" = "data/wire.json" ]'''
+  # Skip the deploy when only that file or social/ (TikTok images) changed (saves Netlify credits).
+  ignore = '''C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && ! printf '%s\n' "$C" | grep -qvE '^(data/wire\.json|social/)'''
 
 [[headers]]
   for = "/vendor/*"

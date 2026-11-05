@@ -10,3 +10,7 @@
 - 2026-11-07 val — How bankers value a company (3 methods)
 - 2026-11-07 lbofit — What makes a great LBO target
 - 2026-11-04 quiz3 — 3-question challenge (Intern → MD), comment your score
+- 2026-11-04 bc-hardest — [Blue Chip] Top 5 internships harder than Harvard
+- 2026-11-05 bc-bschools — [Blue Chip] Top 5 business schools + acceptance
+- 2026-11-06 bc-profit — [Blue Chip] Top 6 bank profits Q3
+- 2026-11-07 bc-ibfees — [Blue Chip] Top 6 IB fees Q3

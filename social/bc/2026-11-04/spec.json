@@ -1,0 +1,14 @@
+{"posts":[
+{"key":"bc-hardest","badge":"TOP 5","title":"Internships that are harder to get than <em>Harvard</em>","sub":"#1 takes about 1 out of every 250 applicants.","swipe":"Swipe to see #1 →","kicker":"APPLICANTS PER SPOT","chartTitle":"The hardest internships <em>in the world</em>",
+ "rows":[["Citadel / Citadel Securities",250,"1 in 250",1],["JPMorgan",154,"1 in 154"],["Goldman Sachs",86,"1 in 86"],["PwC (global grad roles)",41,"1 in 41"],["For comparison: Harvard (est.)",27,"1 in 27"]],
+ "caption":"Citadel 0.4% · JPMorgan 630K applicants for 4,100 spots · Goldman 250K for 2,900 · PwC 304K for 7,400. Harvard ≈ 3.7% (class of 2030).","source":"eFinancialCareers, WSJ via Whali (2026); Harvard Magazine"},
+{"key":"bc-bschools","badge":"TOP 5","title":"The 5 best business schools in <em>America</em>","sub":"#1 lets in fewer than 4 out of 100 applicants.","swipe":"Swipe to see who's #1 →","kicker":"POETS&QUANTS 2026 RANKING · ACCEPTANCE RATE","chartTitle":"Ranked, with how many <em>get in</em>",
+ "rows":[["Penn (Wharton)",3.6,"3.6%",1],["Virginia (McIntire)",5.5,"5.5%"],["Cornell (Dyson)",5.4,"5.4%"],["Michigan (Ross)",7.0,"7.0%"],["USC (Marshall)",6.7,"6.7%"]],
+ "caption":"Shorter bar = harder to get in. The top 10 averaged a 6.9% acceptance rate.","source":"Poets&Quants for Undergrads, Best Undergraduate Business Schools 2026"},
+{"key":"bc-profit","badge":"TOP 6","title":"JPMorgan made <em>$15.3 billion</em> in 3 months","sub":"Here's how the rest of Wall Street compares.","swipe":"Swipe for the ranking →","kicker":"Q3 2026 NET INCOME","chartTitle":"JPMorgan is in a <em>league of its own</em>",
+ "rows":[["JPMorgan Chase",15.3,"$15.3B",1],["Bank of America",6.9,"$6.9B"],["Wells Fargo",5.95,"$5.95B"],["Goldman Sachs",5.3,"$5.3B"],["Citigroup",5.2,"$5.2B"],["Morgan Stanley",4.9,"$4.9B"]],
+ "caption":"JPMorgan beat Bank of America and Wells Fargo combined ($12.85B).","source":"company Q3 2026 reports, via Global Brands Magazine"},
+{"key":"bc-ibfees","badge":"TOP 6","title":"The banks that make the most from <em>deals</em>","sub":"#1 earned $3.2 billion in deal fees in 3 months.","swipe":"Swipe for the ranking →","kicker":"Q3 2026 INVESTMENT BANKING FEES","chartTitle":"Goldman edges out <em>JPMorgan</em>",
+ "rows":[["Goldman Sachs",3.22,"$3.22B",1],["JPMorgan Chase",3.0,"$3.0B"],["Morgan Stanley",2.36,"$2.36B"],["Bank of America",1.8,"$1.8B"],["Citigroup",1.35,"$1.35B"],["Wells Fargo",0.611,"$0.61B"]],
+ "caption":"Goldman grew these fees 21% from a year ago. Bank of America's fell 11%.","source":"company Q3 2026 reports, via Prospect Rock Partners"}
+]}

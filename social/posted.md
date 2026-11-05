@@ -9,3 +9,4 @@
 - 2026-11-06 wacc — WACC in 60 seconds
 - 2026-11-07 val — How bankers value a company (3 methods)
 - 2026-11-07 lbofit — What makes a great LBO target
+- 2026-11-04 quiz3 — 3-question challenge (Intern → MD), comment your score

@@ -28,7 +28,7 @@ Read `social/posted.md` (never repeat a topic or deck key) and `social/topics.md
 Commit only files under `social/`, then `git push origin HEAD:main` (`git pull --rebase` and retry if rejected). Deploys are skipped for social-only commits. Check one image returns 200 at `https://raw.githubusercontent.com/bekirkahook-del/MA/main/social/...`.
 
 ## 5. Schedule (Metricool createScheduledPost, blogId 7259200)
-- Times: today between 8:00am and 10:30pm ET (only future times), random-looking minutes (never :00 or :30), at least 75 minutes from any other post that day, mixing quiz and Blue Chip.
+- Times: first call Metricool `getBestTimeToPostByNetwork` (brandId 7259200, socialNetwork "tiktok", today 00:00–23:59, timezone America/New_York). Put each new post in one of the highest-scoring hours that is still in the future, between 8:00am and 10:30pm ET. Use random-looking minutes (never :00 or :30), keep each post at least 75 minutes from any other post that day, and alternate quiz and Blue Chip. Put the strongest hook in the single best hour.
 - info: `autoPublish true, draft false, providers [{"network":"tiktok"}], media = the raw.githubusercontent URLs in slide order, publicationDate {dateTime, timezone:"America/New_York"}, tiktokData {privacyOption:"PUBLIC_TO_EVERYONE", title:<hook, ≤60 chars + 1 emoji>, autoAddMusic:true, photoCoverIndex:0, commercialContentOwnBrand: true for quiz posts / false for Blue Chip, disableComment/Duet/Stitch false, commercialContentThirdParty false, isAigc false}`, plus the other default fields.
 - Caption (`text`): 1–2 punchy lines + a question that invites comments (👇) + 6–8 hashtags. Quiz captions mention mnaprep.com; Blue Chip captions don't.
 

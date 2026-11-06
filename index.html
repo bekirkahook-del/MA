@@ -2726,7 +2726,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const starStr=n=>"★".repeat(n)+"☆".repeat(3-n);
 const T=id=>TRACKS.find(t=>t.id===id);
 const lid=(t,l)=>t+"-"+l;
-const cleared=(t,l)=>(S.best[lid(t,l)]||0)>=2;
+const cleared=(t,l)=>(S.best[lid(t,l)]||0)>=2||!!(S.placed&&S.placed[lid(t,l)]);
 const clearedCount=t=>T(t).levels.filter((_,i)=>cleared(t,i)).length;
 const trackUnlocked=tr=>!tr.req||clearedCount(tr.req.t)>=tr.req.l;
 const levelOpen=(tr,i)=>trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1));
@@ -3829,7 +3829,30 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
     ["mins","How much time can you give it a day?",["10 minutes","20 minutes","45 minutes"],"Small and steady wins. You can change this later."],
     ["school","What school do you go to?",null,"Optional. Puts you on your school's team on the leaderboard."]];
   const WEEKS={"Already recruiting":3,"Within 3 months":10,"3–6 months":20,"6–12 months":40,"1+ year away":60,"Not sure":26};
-  const next=()=>{if(step<Q.length-1){step++;draw()}else finish()};
+  let tested=false,placedN=0,score=null;
+  const next=()=>{if(step<Q.length-1){if(Q[step+1][0]==="school"&&!tested){tested=true;if(a.know!=="Brand new"){placement(()=>{step++;draw()});return}}step++;draw()}else finish()};
+  /* placement test: 8 real questions from their path, weighted by year; correct answers in a row test them out of early levels */
+  const placement=done=>{const PATH={"Investment banking":"ib","Private equity":"pe","Hedge funds & markets":"pm","Restructuring":"rx","Consulting":"mc","Not sure yet":"ib"};
+    const path=PATH[a.target]||"ib",early=["High school","Freshman"].includes(a.year),mid=a.year==="Sophomore";
+    const plan=[["f",early?5:mid?4:3],[path,early?3:mid?4:5]],items=[];
+    plan.forEach(([t,n])=>{const L=T(t).levels;n=Math.min(n,L.length);const idx=[...new Set(Array.from({length:n},(_,i)=>n<2?0:Math.round(i*(L.length-1)/(n-1))))];
+      idx.forEach(l=>{const qs=L[l].q||[];if(qs.length)items.push({t,l,q:qs[Math.floor(Math.random()*qs.length)]})})});
+    const intro=()=>{openPanel(`<div class="ob"><div class="label">Quick check · optional</div><h2>Test out of what you already know</h2>
+      <p class="sub">${items.length} real interview questions from ${esc(T("f").name)} and ${esc(T(path).name)}, picked for your year. About 2 minutes. Get them right and we'll skip those levels in your plan.</p>
+      <div class="actions"><button class="btn" id="ptGo">Start the test →</button><button class="ghost" id="ptSkip">Skip, start from the beginning</button></div></div>`);
+      $("#ptGo").onclick=()=>ask(0,[]);$("#ptSkip").onclick=done;$("#ptGo").focus()};
+    const ask=(i,ans)=>{if(i>=items.length)return result(ans);const it=items[i];
+      openPanel(`<div class="ob"><div class="ob-dots">${items.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join("")}</div><div class="label">Question ${i+1} of ${items.length} · ${esc(T(it.t).name)}</div><h2 style="font-size:20px;line-height:1.35">${esc(it.q[0])}</h2>
+        <div class="ob-opts" style="grid-template-columns:1fr">${it.q[1].map((o,j)=>`<button class="ob-o" data-j="${j}">${esc(o)}</button>`).join("")}</div>
+        <div class="actions"><button class="ghost" id="ptIdk">I don't know</button></div></div>`);
+      panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>ask(i+1,ans.concat(+b.dataset.j===it.q[2])));$("#ptIdk").onclick=()=>ask(i+1,ans.concat(false));panel.querySelector(".ob-o").focus()};
+    const result=ans=>{S.placed=S.placed||{};placedN=0;
+      plan.forEach(([t])=>{let streak=true;items.forEach((it,k)=>{if(it.t!==t)return;if(!ans[k])streak=false;if(streak){const L=T(t).levels;const nextIdx=(items.filter(x=>x.t===t).find(x=>x.l>it.l)||{l:L.length}).l;for(let l=0;l<nextIdx&&l<=it.l;l++){if(!cleared(t,l)){S.placed[lid(t,l)]=1;placedN++}}}})});
+      const right=ans.filter(Boolean).length;score=[right,items.length];save();
+      const msg=right===items.length?"Wow, you know your stuff. We'll start you further along.":right>=items.length*.6?"Solid base. We'll skip what you already know.":right>0?"Good start. Your plan covers the gaps.":"No worries, that's what this is for. Your plan starts at the beginning.";
+      openPanel(`<div class="ob"><div class="label">Your result</div><h2>${right} of ${items.length} right</h2><p class="sub">${msg}${placedN?` You tested out of <b>${placedN} level${placedN>1?"s":""}</b>.`:""}</p>
+        <div class="actions"><button class="btn" id="ptNext">Continue →</button></div></div>`);$("#ptNext").onclick=done;$("#ptNext").focus()};
+    intro()};
   const draw=()=>{
     if(step<0){openPanel(`<div class="ob"><div class="label">Welcome to M&amp;A Prep</div><h2>Let's build your plan 👋</h2>
       <p class="sub">6 quick questions about where you are and where you want to go. Then you'll get a step-by-step plan, paced to your recruiting timeline. Takes about 30 seconds.</p>
@@ -3847,11 +3870,12 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
     (panel.querySelector(".ob-o")||$("#obText")).focus()};
   const finish=()=>{let order=(PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"]).slice();
     if(a.know==="Ready for interviews"&&order.length>2)order=order.filter(t=>t!=="f");
-    const total=order.reduce((n,t)=>n+T(t).levels.length,0),wk=WEEKS[a.weeks]||26;
+    const rem=t=>T(t).levels.filter((_,i)=>!cleared(t,i)).length;order=order.filter(t=>rem(t)>0);if(!order.length)order=(PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"]).slice();
+    const total=Math.max(1,order.reduce((n,t)=>n+rem(t),0)),wk=WEEKS[a.weeks]||26;
     /* realistic pace: levels per week follow the time they said they have, never inflated to "fit" a deadline */
     const per={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5,weeksToFinish=Math.ceil(total/per),known=a.weeks&&a.weeks!=="Not sure",onTime=weeksToFinish<=wk;
-    let focus=order.length;if(known&&!onTime){let n=0;focus=0;for(const t of order){if(focus>0&&n+T(t).levels.length>wk*per)break;n+=T(t).levels.length;focus++}}
-    const focusLv=order.slice(0,focus).reduce((n,t)=>n+T(t).levels.length,0);
+    let focus=order.length;if(known&&!onTime){let n=0;focus=0;for(const t of order){if(focus>0&&n+rem(t)>wk*per)break;n+=rem(t);focus++}}
+    const focusLv=order.slice(0,focus).reduce((n,t)=>n+rem(t),0);
     S.plan={...a,order,focus,perWeek:per,created:today()};
     if(S.settings.goal===undefined)S.settings.goal={"10 minutes":20,"20 minutes":50,"45 minutes":100}[a.mins]||50;
     if(!S.profile.target&&a.target!=="Not sure yet")S.profile.target=a.target.replace("Hedge funds & markets","Hedge funds");
@@ -3860,8 +3884,8 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
     panel.innerHTML=`<button class="close" aria-label="Close">×</button><div class="ob"><div class="label">Your plan is ready</div><h2>${esc(a.target)} · ${per} levels a week</h2>
       <p class="sub">${!known?`At ${per} levels a week, the full plan takes about <b>${weeksToFinish} weeks</b>. No rush: steady beats cramming.`
         :onTime?`At ${per} levels a week, you'll finish in about <b>${weeksToFinish} weeks</b>, before recruiting starts. 👍`
-        :`The full plan takes about <b>${weeksToFinish} weeks</b> at your pace, and recruiting is closer than that. So your first <b>${focus} track${focus>1?"s":""}</b> (${focusLv} levels) are the ones interviews test most. Do those first; the rest can come after.`} Your daily XP goal is ${S.settings.goal}.</p>
-      <ol class="ob-plan">${order.map((t,i)=>`<li${i>=focus?' style="opacity:.55"':""}><b>${T(t).name}</b><span>${T(t).levels.length} levels${i===focus-1&&focus<order.length?" · before recruiting":""}${i>=focus?" · after":""}</span></li>`).join("")}</ol>
+        :`The full plan takes about <b>${weeksToFinish} weeks</b> at your pace, and recruiting is closer than that. So your first <b>${focus} track${focus>1?"s":""}</b> (${focusLv} levels) are the ones interviews test most. Do those first; the rest can come after.`} Your daily XP goal is ${S.settings.goal}.${score?` Placement test: ${score[0]}/${score[1]}${placedN?`, ${placedN} level${placedN>1?"s":""} skipped`:""}.`:""}</p>
+      <ol class="ob-plan">${order.map((t,i)=>`<li${i>=focus?' style="opacity:.55"':""}><b>${T(t).name}</b><span>${rem(t)} level${rem(t)===1?"":"s"}${rem(t)<T(t).levels.length?" left":""}${i===focus-1&&focus<order.length?" · before recruiting":""}${i>=focus?" · after":""}</span></li>`).join("")}</ol>
       <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)} →</button>`:""}<button class="ghost" id="obDone">Go to Home</button></div></div>`;bindClose();
     if($("#obGo"))$("#obGo").onclick=()=>{closePanel();showBrief(nx.tr,nx.i)};$("#obDone").onclick=()=>{closePanel();showTab("home")};(($("#obGo")||$("#obDone"))).focus()};
   draw()}

@@ -20,3 +20,4 @@
 - 2026-11-06 bc-hedge — [Blue Chip] Top 5 hedge funds by AUM
 - 2026-11-07 bc-bankstocks — [Blue Chip] Bank stocks this fall
 - 2026-11-07 bc-bonus — [Blue Chip] Avg Wall Street bonus $246,900
+- 2026-11-06 oddq-pct — [Interview Q] 16% of 25 (percentages flip)

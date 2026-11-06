@@ -3848,16 +3848,20 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
   const finish=()=>{let order=(PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"]).slice();
     if(a.know==="Ready for interviews"&&order.length>2)order=order.filter(t=>t!=="f");
     const total=order.reduce((n,t)=>n+T(t).levels.length,0),wk=WEEKS[a.weeks]||26;
-    const base={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5,need=Math.ceil(total/wk),per=Math.max(base,Math.min(need,15));
-    const weeksToFinish=Math.ceil(total/per),onTime=weeksToFinish<=wk;
-    S.plan={...a,order,perWeek:per,created:today()};
+    /* realistic pace: levels per week follow the time they said they have, never inflated to "fit" a deadline */
+    const per={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5,weeksToFinish=Math.ceil(total/per),known=a.weeks&&a.weeks!=="Not sure",onTime=weeksToFinish<=wk;
+    let focus=order.length;if(known&&!onTime){let n=0;focus=0;for(const t of order){if(focus>0&&n+T(t).levels.length>wk*per)break;n+=T(t).levels.length;focus++}}
+    const focusLv=order.slice(0,focus).reduce((n,t)=>n+T(t).levels.length,0);
+    S.plan={...a,order,focus,perWeek:per,created:today()};
     if(S.settings.goal===undefined)S.settings.goal={"10 minutes":20,"20 minutes":50,"45 minutes":100}[a.mins]||50;
     if(!S.profile.target&&a.target!=="Not sure yet")S.profile.target=a.target.replace("Hedge funds & markets","Hedge funds");
     if(a.school&&!S.profile.school)S.profile.school=a.school;if(a.year)S.profile.year=a.year;save();render();
     const nx=nextPlanLevel();
     panel.innerHTML=`<button class="close" aria-label="Close">×</button><div class="ob"><div class="label">Your plan is ready</div><h2>${esc(a.target)} · ${per} levels a week</h2>
-      <p class="sub">${a.weeks==="Not sure"||!a.weeks?`At this pace you'll finish the whole plan in about <b>${weeksToFinish} weeks</b>.`:onTime?`You'll finish in about <b>${weeksToFinish} weeks</b>, before recruiting starts. 👍`:`Recruiting is close, so this plan focuses on what interviews test most. Try to do a little every day.`} Your daily XP goal is ${S.settings.goal}.</p>
-      <ol class="ob-plan">${order.map(t=>`<li><b>${T(t).name}</b><span>${T(t).levels.length} levels</span></li>`).join("")}</ol>
+      <p class="sub">${!known?`At ${per} levels a week, the full plan takes about <b>${weeksToFinish} weeks</b>. No rush: steady beats cramming.`
+        :onTime?`At ${per} levels a week, you'll finish in about <b>${weeksToFinish} weeks</b>, before recruiting starts. 👍`
+        :`The full plan takes about <b>${weeksToFinish} weeks</b> at your pace, and recruiting is closer than that. So your first <b>${focus} track${focus>1?"s":""}</b> (${focusLv} levels) are the ones interviews test most. Do those first; the rest can come after.`} Your daily XP goal is ${S.settings.goal}.</p>
+      <ol class="ob-plan">${order.map((t,i)=>`<li${i>=focus?' style="opacity:.55"':""}><b>${T(t).name}</b><span>${T(t).levels.length} levels${i===focus-1&&focus<order.length?" · before recruiting":""}${i>=focus?" · after":""}</span></li>`).join("")}</ol>
       <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)} →</button>`:""}<button class="ghost" id="obDone">Go to Home</button></div></div>`;bindClose();
     if($("#obGo"))$("#obGo").onclick=()=>{closePanel();showBrief(nx.tr,nx.i)};$("#obDone").onclick=()=>{closePanel();showTab("home")};(($("#obGo")||$("#obDone"))).focus()};
   draw()}

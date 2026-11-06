@@ -62,7 +62,7 @@ const wrap = (inner, i, n) => `<!doctype html><html><head><meta charset="utf-8">
   for (const [key, d] of Object.entries(spec.decks)) {
     if (!/^[a-z0-9-]{2,24}$/.test(key)) throw new Error("bad deck key " + key);
     const qr = await QR.toDataURL(`${d.guide || "https://mnaprep.com/"}?utm_source=tiktok&utm_campaign=${key}`, { margin: 1, width: 920, color: { dark: "#0E1424", light: "#FFFFFF" }, errorCorrectionLevel: "M" });
-    const CTAS = ["Practice free at <em>mnaprep.com</em>", "Get interview-ready <em>for free.</em>", "1,000+ real questions. <em>Free.</em>", "Train like an analyst. <em>Free.</em>", "Want more like this? <em>It's free.</em>"];
+    const CTAS = ["Practice free at <em>mnaprep.com</em>", "Get interview-ready <em>for free.</em>", "Real interview questions. <em>Free.</em>", "Train like an analyst. <em>Free.</em>", "Want more like this? <em>It's free.</em>"];
     const ctaHead = d.ctaHead || CTAS[[...key].reduce((a, c) => a + c.charCodeAt(0), 0) % CTAS.length];
     const slides = [...d.slides, `<div class="kicker">Free · no card needed</div><h2>${ctaHead}</h2><p class="lede">${d.ctaSub || "1,000+ interview questions, guides and drills."}</p><div class="qr"><b>mnaprep.com</b><span>🔗 Link in bio</span></div>`];
     for (let i = 0; i < slides.length; i++) {

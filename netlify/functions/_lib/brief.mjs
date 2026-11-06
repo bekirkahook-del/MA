@@ -68,6 +68,16 @@ export async function marketBrief(now = new Date()) {
       Object.entries(days).map(([d, cos]) => `<li style="margin:4px 0"><b>${d}</b> earnings: ${cos.slice(0, 5).join(", ").replace(/[<>]/g, "")}</li>`).join("")}</ul>
       <p style="font-size:13px;margin:8px 0 0"><a href="https://mnaprep.com/?utm_source=email#wire" style="color:#2448D8">Full calendar on The Wire →</a></p></div>`;
   }
+  /* applications that opened in the last 7 days (for everyone); Pro gets them instantly */
+  const weekAgo = new Date(now.getTime() - 7 * 864e5).toISOString().slice(0, 10);
+  const opened = w ? (w.APP_OPEN || []).filter(x => x[3] === "open" && x[4] && x[4] >= weekAgo && x[4] <= todayStr).slice(0, 8) : [];
+  const closing = w ? (w.APP_OPEN || []).filter(x => x[3] === "open" && x[6] && x[6] > todayStr && x[6] <= endStr).slice(0, 5) : [];
+  if (opened.length || closing.length) {
+    html += `<div style="margin-top:18px">${H("INTERNSHIP APPLICATIONS", "#1E7F4F")}<ul style="padding-left:20px;margin:0">${
+      opened.map(x => `<li style="margin:4px 0"><b>Now open:</b> ${String(x[0]).replace(/[<>]/g, "")} · ${String(x[1]).replace(/[<>]/g, "")}${x[6] ? ` (closes ${x[6]})` : ""}</li>`).join("")}${
+      closing.map(x => `<li style="margin:4px 0"><b>Closing soon:</b> ${String(x[0]).replace(/[<>]/g, "")} · ${String(x[1]).replace(/[<>]/g, "")} (closes ${x[6]})</li>`).join("")}</ul>
+      <p style="font-size:13px;margin:8px 0 0"><a href="https://mnaprep.com/?utm_source=email#recruit" style="color:#2448D8">All openings →</a> · Want these the day they open? Turn on instant alerts with Pro.</p></div>`;
+  }
   const sp = sum ? ` · S&P 500 ${sum.ch >= 0 ? "+" : ""}${fmt(sum.ch, 1)}%` : "";
   return { html, subjectBit: sp };
 }

@@ -121,7 +121,7 @@
   function homeCard(){const anchor=document.getElementById("daily");if(!anchor)return;let h=document.getElementById("cbHome");
     const done=st().day===today();
     if(!h){h=document.createElement("button");h.type="button";h.id="cbHome";h.className="cb-home";h.style.cssText+="width:100%;text-align:left;font:inherit;cursor:pointer;color:inherit";
-      h.onclick=()=>{try{showTab("practice")}catch(e){}setTimeout(()=>{try{openGroup("practice","curve")}catch(e){}const i=$("#cbIn");if(i&&!i.disabled)i.focus()},120)};
+      h.onclick=()=>{setTimeout(()=>{try{showSub("practice","curve")}catch(e){}const i=$("#cbIn");if(i&&!i.disabled)i.focus()},120)};
       anchor.closest("section").after(h)}
     h.innerHTML=`<span><span class="cb-k">Curveball of the day</span><b>${dq()[0]}</b></span><span class="cb-meta" style="white-space:nowrap">${done?(st().dayOk?"✓ Done":"Seen"):"Try it →"}</span>`}
 

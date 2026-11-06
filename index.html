@@ -1893,9 +1893,9 @@ details[open]::details-content{block-size:auto}
 
   <!-- COMPETE -->
   <section class="view" data-view="compete" hidden>
-    <header class="page-head"><h1>Compete</h1><p data-blurb="compete">Your rank, your school's Case Comp and this week's Gauntlet.</p></header>
+    <header class="page-head"><h1>Compete</h1><p data-blurb="compete">Your rank, your school's team and this week's Gauntlet.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
-    <nav class="seg sub subnav" role="tablist" aria-label="Compete sections"><button data-sub="overview" aria-pressed="true">Overview</button><button data-sub="case" aria-pressed="false">Case Comp</button><button data-sub="boards" aria-pressed="false">Leaderboards</button><button data-sub="club" aria-pressed="false">Club & duels</button><button data-sub="activity" aria-pressed="false">Activity</button></nav>
+    <nav class="seg sub subnav" role="tablist" aria-label="Compete sections"><button data-sub="overview" aria-pressed="true">Overview</button><button data-sub="boards" aria-pressed="false">Leaderboards</button><button data-sub="club" aria-pressed="false">Club & duels</button><button data-sub="activity" aria-pressed="false">Activity</button></nav>
     <div data-pane="overview" class="pane">
         <div id="cmpMe" class="cmp-me"></div>
     <div id="rivalBox"></div>
@@ -2571,7 +2571,6 @@ const ROAD=[
   {id:"fr11",g:"Networking",t:"Find 3 alumni from your school working in finance"},
   {id:"fr3",g:"Recruiting",t:"Build a one-page resume and a complete LinkedIn"},
   {id:"fr12",g:"Recruiting",t:"Get a part-time job, research role or campus leadership spot"},
-  {id:"fr13",g:"Recruiting",t:"Submit your first monthly Case Comp",auto:()=>Object.keys(S.cases||{}).length>=1},
   {id:"fr6",g:"Recruiting",t:"Apply to freshman or early-insight programs"}]},
  {y:"Sophomore",items:[
   {id:"so17",g:"Academics",t:"Keep your GPA up. Banks see your grades through junior fall"},
@@ -2610,7 +2609,6 @@ const ROAD=[
   {id:"ju5",g:"Recruiting",t:"Get graded on 25 interview questions",auto:()=>nMock()>=25},
   {id:"ju7",g:"Recruiting",t:"Average 7+ on graded interview answers",auto:()=>nMock()>=10&&mockAvg()>=7},
   {id:"ju6",g:"Recruiting",t:"Finish a final round in your path's track",auto:()=>(S.superdays||[]).length>=1||Object.values(S.finals||{}).some(f=>f.tries)},
-  {id:"ju14",g:"Recruiting",t:"Score 80+ on a Case Comp",auto:()=>bestCase()>=80},
   {id:"ju11",g:"Networking",t:"Send thank-you notes within 24 hours of every interview"},
   {id:"ju13",g:"Networking",t:"Stay in touch with 5 people from your internship team"},
   {id:"ju1",g:"Recruiting",t:"Land a junior-summer internship"},
@@ -3623,8 +3621,6 @@ const BADGES=[
  ["gauntlet1k","Thousand Club","Score 1,000+ in a Gauntlet","Compete","gold",()=>[gBest(),1000]],
  ["duel","Challenger","Finish a live duel","Compete","bronze",()=>[A().duels||0,1]],
  ["duelwin","Duelist","Win a live duel","Compete","silver",()=>[A().duelWins||0,1]],
- ["case1","Case Cracker","Submit a monthly Case Comp memo","Compete","bronze",()=>[Object.keys(S.cases||{}).length,1]],
- ["case80","Judges' Pick","Score 80+ on a Case Comp","Compete","gold",()=>[Math.max(0,...Object.values(S.cases||{}).map(c=>c.score||0)),80]],
  ["case3","Case Season","Compete in 3 monthly cases","Compete","silver",()=>[Object.keys(S.cases||{}).length,3]],
  ["club","Joined Up","Join or create a club","Compete","bronze",()=>[S.club&&S.club.code?1:0,1]],
  ["founder","Club Founder","Create a club","Compete","silver",()=>[S.club&&S.club.officer?1:0,1]],
@@ -4401,7 +4397,7 @@ const PROFS=[
 ];
 const PROF_BLURB={
  learn:{all:"Tracks, final rounds and real deals, explained simply.",ib:"Accounting, valuation and how banks run deals.",pe:"How funds buy, build and exit, plus the banking base it rests on.",hf:"Markets, stock pitches and the valuation behind them.",rx:"Distressed companies, the capital stack and bankruptcy.",mc:"How consulting works and how to crack the case interview."},
- compete:{all:"Your rank, your school's Case Comp and this week's Gauntlet.",ib:"The IB Gauntlet, banking leaderboards and your school's Case Comp.",pe:"The PE Gauntlet, buy-side leaderboards and your school's Case Comp.",hf:"The Markets Gauntlet, leaderboards and your school's Case Comp.",rx:"The Restructuring Gauntlet, leaderboards and your school's Case Comp.",mc:"The Consulting Gauntlet, leaderboards and your school's Case Comp."},
+ compete:{all:"Your rank, your school's team and this week's Gauntlet.",ib:"The IB Gauntlet, banking leaderboards and your school's team.",pe:"The PE Gauntlet, buy-side leaderboards and your school's team.",hf:"The Markets Gauntlet, leaderboards and your school's team.",rx:"The Restructuring Gauntlet, leaderboards and your school's team.",mc:"The Consulting Gauntlet, leaderboards and your school's team."},
  career:{all:"Everything between you and the offer.",ib:"Your path to a junior-summer banking offer.",pe:"Your path into private equity, usually through banking first.",hf:"Your path to a hedge fund or markets seat.",rx:"Your path into restructuring advisory.",mc:"Your path to a consulting offer."}};
 const DEAL_LENS={all:"",ib:"Focus on the rationale, the premium and how it was paid. That's what M&A interviews ask about.",pe:"Deals with a private equity buyer or seller are marked. Look at who sold to whom and why the exit made sense.",hf:"Think like an investor: who wins, who loses, and how should each stock trade on the news?",rx:"Watch how deals are financed. Heavily debt-funded deals are where future restructurings come from.",mc:"Ask the strategy question: why does this deal make sense, and what would you need to believe for it to work?"};
 const PE_NAMES=/KKR|CD&R|Clayton, Dubilier|Sycamore|Warburg|Berkshire Partners|Hg\b|General Atlantic|EQT|Blackstone|Apollo|Carlyle|Bain Capital|Ares|TPG|Vista/;
@@ -4428,7 +4424,7 @@ const profPacks=()=>{const p=prof();return p.packs?p.packs.map(i=>FIRM_PACKS[i])
 function renderPracticeCases(){const el=$("#pcases");if(!el)return;const k=profKey();
   const list=(k==="mc"?MC_CASES:k==="all"?ALL_CASES():CASES.slice()).sort((a,b)=>{const pref={pe:"LBO",ib:"M&A",rx:"Restructuring"}[k];return (b.type===pref)-(a.type===pref)});
   el.innerHTML=`<p class="hint">${k==="mc"?"Work a full business case end to end: structure, numbers and a clear recommendation. Claude grades it like a case interviewer.":"Full deal cases graded on a 100-point rubric. The same format as the monthly Case Comp, without the ranking."}</p>
-   <div class="case-past">${list.map(c=>{const r=(S.casePractice||{})[c.id];const live=caseNow().id===c.id;return `<button class="case-pi" data-pcase="${c.id}"><span><b>${esc(c.title)}</b><span>${esc(c.type)}${live?" · this month's Case Comp":""}${r?` · your best ${r.score}/100`:""}</span></span><span class="arrow" aria-hidden="true">→</span></button>`}).join("")}</div>`;
+   <div class="case-past">${list.map(c=>{const r=(S.casePractice||{})[c.id];const live=caseNow().id===c.id;return `<button class="case-pi" data-pcase="${c.id}"><span><b>${esc(c.title)}</b><span>${esc(c.type)}${r?` · your best ${r.score}/100`:""}</span></span><span class="arrow" aria-hidden="true">→</span></button>`}).join("")}</div>`;
   el.querySelectorAll("[data-pcase]").forEach(b=>b.onclick=()=>{const id=b.dataset.pcase;closeAll();showTab("compete");showSub("compete","case");if(caseNow().id===id){casePractice=null}else{casePractice=id}caseTab="case";renderCase()})}
 
 function renderV26(){renderBriefing();renderFocus();renderCerts();renderApps();renderSubUI()}
@@ -4623,7 +4619,7 @@ function linkFirms(html){const names=FIRMS.map(f=>f[0]).sort((a,b)=>b.length-a.l
 /* command palette */
 let palIdx=0,palItems=[];
 function palIndex(){const it=[];
-  [["home","Home"],["learn","Learn · Tracks"],["sub|learn|deals","Learn · Deal breakdowns"],["practice","Practice · Interview"],["sub|practice|rapid","Practice · Rapid Fire"],["sub|practice|chal","Practice · Modeling"],["compete","Compete"],["sub|compete|case","Compete · Case Comp"],["sub|compete|boards","Compete · Leaderboards"],["sub|compete|club","Compete · Club & duels"],["career","Career · Roadmap"],["sub|career|open","Career · Application openings"],["ladder|x","Career ladder: Intern → MD"],["sub|career|firms","Career · Firms"],["pro","M&A Pro"],["settings","Settings"],["subs|x","Email updates"]].forEach(([t,l])=>it.push({g:"Go to",l,act:t.startsWith("sub|")||t.startsWith("subs|")||t.startsWith("ladder|")?t:"tab|"+t}));
+  [["home","Home"],["learn","Learn · Tracks"],["sub|learn|deals","Learn · Deal breakdowns"],["practice","Practice · Interview"],["sub|practice|rapid","Practice · Rapid Fire"],["sub|practice|chal","Practice · Modeling"],["compete","Compete"],["sub|compete|boards","Compete · Leaderboards"],["sub|compete|club","Compete · Club & duels"],["career","Career · Roadmap"],["sub|career|open","Career · Application openings"],["ladder|x","Career ladder: Intern → MD"],["sub|career|firms","Career · Firms"],["pro","M&A Pro"],["settings","Settings"],["subs|x","Email updates"]].forEach(([t,l])=>it.push({g:"Go to",l,act:t.startsWith("sub|")||t.startsWith("subs|")||t.startsWith("ladder|")?t:"tab|"+t}));
   it.push({g:"Do",l:"Answer today's question",act:"tab|home"},{g:"Do",l:"Play Rapid Fire",act:"rapid"},{g:"Do",l:"Weekly Gauntlet",act:"gauntlet"},{g:"Do",l:"Open The Wire",act:"news"},{g:"Do",l:"View my profile",act:"profile"},{g:"Do",l:"Edit my profile",act:"edit"},{g:"Do",l:"LBO builder",act:"tool|lbo"},{g:"Do",l:"DCF builder",act:"tool|dcf"});
   ORDER.map(T).forEach(tr=>tr.levels.forEach((L,i)=>it.push({g:"Levels",l:`${L.n}`,s:`${tr.name} · Level ${i+1}`,act:`lvl|${tr.id}|${i}`})));
   MOCK_SECTIONS.forEach(sec=>it.push({g:"Interview sections",l:sec,s:`${MOCK_QS.filter(q=>q.c===sec).length} questions`,act:`int|${sec}`}));
@@ -4970,7 +4966,7 @@ setTimeout(()=>{try{renderWeakCard();renderMastery()}catch(e){}},0);
 const GROUPS={
  learn:[["tracks","Tracks",["tracks"]],["deals","Deals",["deals"]],["cheats","Cheat sheet",["cheats"]]],
  practice:[["drills","Drills",["rapid","interview"]],["curve","Curveballs",["curve"]],["models","Models",["dcf","lbo","chal"]]],
- compete:[["leagues","Leagues",["overview","boards"]],["case","Case Comp",["case"]],["club","Club",["club"]],["you","Your profile",["me"],true]],
+ compete:[["leagues","Leagues",["overview","boards"]],["club","Club",["club"]],["you","Your profile",["me"],true]],
  career:[["road","Roadmap",["road"]],["recruit","Recruiting",["open","cal","apps"]],["net","Network",["net"]],["firms","Firms",["firms"]],["res","Resume",["res"]]]
 };
 const PANE_LABEL={interview:"Interview questions",dcf:"DCF builder",lbo:"LBO builder",chal:"Modeling challenges",open:"Openings",cal:"Calendar",apps:"Applications",res:"Resume",firms:"Firms"};

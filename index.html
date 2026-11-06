@@ -1208,6 +1208,7 @@ html.noexp .panel .why{display:none}
 .ob-dots{display:flex;gap:6px;margin-bottom:16px}.ob-dots i{flex:1;height:3px;border-radius:9px;background:var(--rule)}.ob-dots i.on{background:var(--ink)}
 .ob h2{margin:4px 0 18px!important}
 .ob-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ob-in{display:flex;gap:8px;flex-wrap:wrap}.ob-in input{flex:1;min-width:180px;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink)}
 .ob-o{background:none;border:1px solid var(--rule);border-radius:10px;padding:14px 16px;text-align:left;font:inherit;font-size:15px;color:var(--ink);transition:border-color .15s,background .15s}
 .ob-o:hover{border-color:var(--ink);background:var(--paper)}
 .ob-o[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
@@ -3819,23 +3820,45 @@ const daysUntil=k=>Math.round((new Date(k+"T12:00:00")-new Date(today()+"T12:00:
 
 /* ---------- 1. onboarding + plan ---------- */
 const PLAN_ORDER={"Investment banking":["f","b","ib","x","pm"],"Private equity":["f","ib","pe","x","b"],"Hedge funds & markets":["f","pm","b","x"],"Restructuring":["f","rx","ib","b"],"Consulting":["f","mc","b","x"],"Not sure yet":["f","b","ib","pm"]};
-function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.plan||{};let step=0;const a={year:p.year||"",target:p.target||"",weeks:p.weeks||"",mins:p.mins||""};
-  const Q=[["target","What do you want to break into?",Object.keys(PLAN_ORDER)],["year","What year are you in?",["High school","Freshman","Sophomore","Junior","Senior","Grad / other"]],["mins","How much time can you give it a day?",["10 minutes","20 minutes","45 minutes"]]];
-  const draw=()=>{const [k,t,opts]=Q[step];
-    openPanel(`<div class="ob"><div class="ob-dots">${Q.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join("")}</div><div class="label">Step ${step+1} of ${Q.length} · takes 30 seconds</div><h2>${t}</h2>
-      <div class="ob-opts">${opts.map(o=>`<button class="ob-o" data-v="${esc(o)}" aria-pressed="${a[k]===o}">${esc(o)}</button>`).join("")}</div>
-      <div class="actions">${step>0?'<button class="ghost" id="obBack">Back</button>':'<button class="ghost" id="obSkip">Not now</button>'}</div></div>`);
-    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{a[k]=b.dataset.v;if(step<Q.length-1){step++;draw()}else finish()});
-    if($("#obBack"))$("#obBack").onclick=()=>{step--;draw()};if($("#obSkip"))$("#obSkip").onclick=()=>closePanel();
-    panel.querySelector(".ob-o").focus()};
-  const finish=()=>{const per={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5;S.plan={...a,order:PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"],perWeek:per,created:today()};
+function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.plan||{};let step=-1;
+  const a={year:p.year||"",target:p.target||"",weeks:p.weeks||"",know:p.know||"",mins:p.mins||"",school:p.school||S.profile.school||""};
+  const Q=[["year","What year are you in?",["High school","Freshman","Sophomore","Junior","Senior","Grad / other"],"So we start you at the right level."],
+    ["target","What do you want to break into?",Object.keys(PLAN_ORDER),"Not sure is totally fine. We'll show you a bit of everything."],
+    ["weeks","When does recruiting start for you?",["Already recruiting","Within 3 months","3–6 months","6–12 months","1+ year away","Not sure"],"We'll pace your plan so you're ready in time."],
+    ["know","How much finance do you know?",["Brand new","I know the basics","Ready for interviews"],"Be honest. You can skip ahead anytime."],
+    ["mins","How much time can you give it a day?",["10 minutes","20 minutes","45 minutes"],"Small and steady wins. You can change this later."],
+    ["school","What school do you go to?",null,"Optional. Puts you on your school's team on the leaderboard."]];
+  const WEEKS={"Already recruiting":3,"Within 3 months":10,"3–6 months":20,"6–12 months":40,"1+ year away":60,"Not sure":26};
+  const next=()=>{if(step<Q.length-1){step++;draw()}else finish()};
+  const draw=()=>{
+    if(step<0){openPanel(`<div class="ob"><div class="label">Welcome to M&amp;A Prep</div><h2>Let's build your plan 👋</h2>
+      <p class="sub">6 quick questions about where you are and where you want to go. Then you'll get a step-by-step plan, paced to your recruiting timeline. Takes about 30 seconds.</p>
+      <div class="actions"><button class="btn" id="obStart">Let's go →</button><button class="ghost" id="obSkip">Skip, I'll look around</button></div></div>`);
+      $("#obStart").onclick=next;$("#obSkip").onclick=()=>{S.onboardSkip=true;save();closePanel()};$("#obStart").focus();return}
+    const [k,t,opts,hint]=Q[step];
+    const body=opts?`<div class="ob-opts">${opts.map(o=>`<button class="ob-o" data-v="${esc(o)}" aria-pressed="${a[k]===o}">${esc(o)}</button>`).join("")}</div>`
+      :`<form id="obForm" class="ob-in"><input id="obText" type="text" maxlength="60" autocomplete="organization" placeholder="e.g. Ohio State" value="${esc(a[k])}"><button class="btn" type="submit">Continue →</button></form>`;
+    openPanel(`<div class="ob"><div class="ob-dots">${Q.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join("")}</div><div class="label">Step ${step+1} of ${Q.length}</div><h2>${t}</h2><p class="sub" style="margin-top:-4px">${hint}</p>
+      ${body}<div class="actions"><button class="ghost" id="obBack">Back</button>${opts?"":'<button class="ghost" id="obNext">Skip</button>'}</div></div>`);
+    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{a[k]=b.dataset.v;next()});
+    $("#obBack").onclick=()=>{step--;draw()};
+    if($("#obForm"))$("#obForm").onsubmit=e=>{e.preventDefault();a[k]=$("#obText").value.trim();next()};
+    if($("#obNext"))$("#obNext").onclick=()=>{a[k]="";next()};
+    (panel.querySelector(".ob-o")||$("#obText")).focus()};
+  const finish=()=>{let order=(PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"]).slice();
+    if(a.know==="Ready for interviews"&&order.length>2)order=order.filter(t=>t!=="f");
+    const total=order.reduce((n,t)=>n+T(t).levels.length,0),wk=WEEKS[a.weeks]||26;
+    const base={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5,need=Math.ceil(total/wk),per=Math.max(base,Math.min(need,15));
+    const weeksToFinish=Math.ceil(total/per),onTime=weeksToFinish<=wk;
+    S.plan={...a,order,perWeek:per,created:today()};
     if(S.settings.goal===undefined)S.settings.goal={"10 minutes":20,"20 minutes":50,"45 minutes":100}[a.mins]||50;
-    if(!S.profile.target&&a.target!=="Not sure yet")S.profile.target=a.target.replace("Hedge funds & markets","Hedge funds");save();render();
+    if(!S.profile.target&&a.target!=="Not sure yet")S.profile.target=a.target.replace("Hedge funds & markets","Hedge funds");
+    if(a.school&&!S.profile.school)S.profile.school=a.school;if(a.year)S.profile.year=a.year;save();render();
     const nx=nextPlanLevel();
     panel.innerHTML=`<button class="close" aria-label="Close">×</button><div class="ob"><div class="label">Your plan is ready</div><h2>${esc(a.target)} · ${per} levels a week</h2>
-      <p class="sub">Work through these tracks in order. Your daily XP goal is set to ${S.settings.goal}.</p>
-      <ol class="ob-plan">${S.plan.order.map(t=>`<li><b>${T(t).name}</b><span>${T(t).levels.length} levels</span></li>`).join("")}</ol>
-      <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)}</button>`:""}<button class="ghost" id="obDone">Go to Home</button></div></div>`;bindClose();
+      <p class="sub">${a.weeks==="Not sure"||!a.weeks?`At this pace you'll finish the whole plan in about <b>${weeksToFinish} weeks</b>.`:onTime?`You'll finish in about <b>${weeksToFinish} weeks</b>, before recruiting starts. 👍`:`Recruiting is close, so this plan focuses on what interviews test most. Try to do a little every day.`} Your daily XP goal is ${S.settings.goal}.</p>
+      <ol class="ob-plan">${order.map(t=>`<li><b>${T(t).name}</b><span>${T(t).levels.length} levels</span></li>`).join("")}</ol>
+      <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)} →</button>`:""}<button class="ghost" id="obDone">Go to Home</button></div></div>`;bindClose();
     if($("#obGo"))$("#obGo").onclick=()=>{closePanel();showBrief(nx.tr,nx.i)};$("#obDone").onclick=()=>{closePanel();showTab("home")};(($("#obGo")||$("#obDone"))).focus()};
   draw()}
 function nextPlanLevel(){const order=S.plan?S.plan.order:ORDER;for(const t of order){const tr=T(t);if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(t,i))return{tr,i}}return nextLevel()}
@@ -6265,7 +6288,7 @@ try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
 const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
 initCompete();
-/* no setup pop-up on arrival; users can build a plan from Home whenever they want */
+setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining&&(!h||h==="home"))onboarding()},900);
 </script>
 
 

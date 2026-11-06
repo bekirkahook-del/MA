@@ -30,7 +30,7 @@ const CSS=`@font-face{font-family:Archivo;font-weight:900;src:url(${F("archivo/f
 .c{position:absolute;top:0;bottom:0;left:100px;right:100px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:34px}
 .c h2{font-family:Archivo;font-weight:900;font-size:90px;line-height:1.02}.c h2 em{font-style:normal;color:#E3C27A}
 .cap{font-size:38px;line-height:1.4;color:#C7D0E2}
-.qrbig{background:#fff;border-radius:32px;padding:26px;display:flex;flex-direction:column;align-items:center;gap:10px}.qrbig img{width:380px;height:380px}.qrbig span{color:#07101F;font-family:Mono;font-size:26px}
+.qrbig{background:#fff;border-radius:32px;padding:40px 52px;display:flex;flex-direction:column;align-items:center;gap:12px}.qrbig b{color:#07101F;font-family:Mono;font-size:72px;font-weight:500}.qrbig span{color:#07101F;font-family:Mono;font-size:26px}
 .url2{font-family:Mono;font-size:42px;background:#E3C27A;color:#07101F;border-radius:99px;padding:14px 36px;font-weight:500}`;
 const page=(cls,b)=>`<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body class="${cls}">${b}</body></html>`;
 (async()=>{
@@ -42,7 +42,7 @@ const page=(cls,b)=>`<!doctype html><html><head><meta charset="utf-8"><style>${C
       <div class="q"><span class="qm">“</span><p>${p.question}</p></div><div class="emo">${p.emoji||"😳"}</div><div class="hint">No calculator. 10 seconds. Comment your answer 👇</div>`);
     const s2=page("d",`<div class="a"><div class="k">THE ANSWER</div><div class="ans">${p.answer}</div><div class="qq">${p.question.replace(/<[^>]+>/g,"")}</div>
       <div class="st">${p.steps.map((s,i)=>`<div class="s"><i>${i+1}</i><span>${s}</span></div>`).join("")}</div>${p.tip?`<div class="tip">💡 ${p.tip}</div>`:""}</div>`);
-    const s3=page("d",`<div class="c"><div class="k">WANT TO BE READY?</div><h2>Practice the weird ones <em>for free.</em></h2><p class="cap">Mental math, brainteasers and 1,000+ real IB and PE interview questions.</p><div class="qrbig"><img src="${qr}"><span>Scan or tap the link in bio</span></div><div class="url2">mnaprep.com</div></div>`);
+    const s3=page("d",`<div class="c"><div class="k">WANT TO BE READY?</div><h2>${["Practice the weird ones <em>for free.</em>","Ready for curveballs? <em>Train free.</em>","Don't freeze on the hard ones. <em>Practice free.</em>"][[...p.key].reduce((a,c)=>a+c.charCodeAt(0),0)%3]}</h2><p class="cap">Mental math, brainteasers and 1,000+ real IB and PE interview questions.</p><div class="qrbig"><b>mnaprep.com</b><span>🔗 Tap the link in bio</span></div></div>`);
     for(const [i,h] of [[1,s1],[2,s2],[3,s3]]){const f=path.join(out,`${p.key}-tmp.html`);fs.writeFileSync(f,h);await pg.goto("file://"+path.resolve(f));await pg.evaluate(()=>document.fonts.ready);
       const of=await pg.evaluate(()=>document.documentElement.scrollHeight>1920||[...document.querySelectorAll(".a,.q")].some(e=>e.getBoundingClientRect().bottom>1700));
       if(of){bad=1;console.log("OVERFLOW",p.key,i)}

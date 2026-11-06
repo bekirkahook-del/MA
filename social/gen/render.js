@@ -1,6 +1,6 @@
 // Renders TikTok carousel slides (1080x1920 JPG) from a spec file. Usage: node render.js spec.json
 // spec: {"date":"2026-11-08","decks":{"key":{"guide":"https://mnaprep.com/guides/...","ctaHead":"Practice DCFs <em>free</em>","ctaSub":"...","slides":["<html>",...]}}}
-// Output: ../<date>/<key>-01.jpg ... (the last slide of each deck is an automatic QR call-to-action slide).
+// Output: ../<date>/<key>-01.jpg ... (the last slide of each deck is an automatic call-to-action slide: mnaprep.com + link in bio, NO QR code: TikTok makes posts with QR codes ineligible for the For You feed).
 const { chromium } = require("playwright");
 const QR = require("qrcode");
 const fs = require("fs"), path = require("path");
@@ -46,7 +46,7 @@ td:first-child{font-weight:700;color:#DDB056}tr:last-child td{border-bottom:0}td
 .tl{display:flex;flex-direction:column;gap:0;border-left:6px solid #2448D8;margin-left:20px}
 .tl div{position:relative;padding:0 0 46px 60px}.tl div::before{content:"";position:absolute;left:-23px;top:10px;width:40px;height:40px;border-radius:50%;background:#0E1424;border:6px solid #7C97FF}
 .tl b{display:block;font-family:Archivo;font-weight:800;font-size:56px}.tl span{font-size:38px;color:#C3CBDD;line-height:1.35}
-.qr{align-self:center;background:#fff;border-radius:40px;padding:34px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.qr{align-self:center;background:#fff;border-radius:40px;padding:44px 56px;display:flex;flex-direction:column;align-items:center;gap:14px}.qr b{color:#0E1424;font-family:Mono;font-size:76px;font-weight:500}
 .qr img{width:420px;height:420px}.qr span{color:#0E1424;font-family:Mono;font-size:30px}
 .note{font-size:30px;color:#7F8AA6}
 .wide .step .n{width:var(--nw,290px);white-space:nowrap;font-size:52px}.wide .step{gap:24px}
@@ -62,7 +62,9 @@ const wrap = (inner, i, n) => `<!doctype html><html><head><meta charset="utf-8">
   for (const [key, d] of Object.entries(spec.decks)) {
     if (!/^[a-z0-9-]{2,24}$/.test(key)) throw new Error("bad deck key " + key);
     const qr = await QR.toDataURL(`${d.guide || "https://mnaprep.com/"}?utm_source=tiktok&utm_campaign=${key}`, { margin: 1, width: 920, color: { dark: "#0E1424", light: "#FFFFFF" }, errorCorrectionLevel: "M" });
-    const slides = [...d.slides, `<div class="kicker">Free · no card needed</div><h2>${d.ctaHead || "Practice free at <em>mnaprep.com</em>"}</h2><p class="lede">${d.ctaSub || "1,000+ interview questions, guides and drills."}</p><div class="qr"><img src="${qr}"><span>Scan or tap the link in bio</span></div>`];
+    const CTAS = ["Practice free at <em>mnaprep.com</em>", "Get interview-ready <em>for free.</em>", "1,000+ real questions. <em>Free.</em>", "Train like an analyst. <em>Free.</em>", "Want more like this? <em>It's free.</em>"];
+    const ctaHead = d.ctaHead || CTAS[[...key].reduce((a, c) => a + c.charCodeAt(0), 0) % CTAS.length];
+    const slides = [...d.slides, `<div class="kicker">Free · no card needed</div><h2>${ctaHead}</h2><p class="lede">${d.ctaSub || "1,000+ interview questions, guides and drills."}</p><div class="qr"><b>mnaprep.com</b><span>🔗 Link in bio</span></div>`];
     for (let i = 0; i < slides.length; i++) {
       const f = path.join(__dirname, "_tmp.html"); fs.writeFileSync(f, wrap(slides[i], i + 1, slides.length));
       await pg.goto("file://" + f); await pg.evaluate(() => document.fonts.ready); await pg.waitForTimeout(120);

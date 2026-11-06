@@ -3820,13 +3820,13 @@ const daysUntil=k=>Math.round((new Date(k+"T12:00:00")-new Date(today()+"T12:00:
 /* ---------- 1. onboarding + plan ---------- */
 const PLAN_ORDER={"Investment banking":["f","b","ib","x","pm"],"Private equity":["f","ib","pe","x","b"],"Hedge funds & markets":["f","pm","b","x"],"Restructuring":["f","rx","ib","b"],"Consulting":["f","mc","b","x"],"Not sure yet":["f","b","ib","pm"]};
 function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.plan||{};let step=0;const a={year:p.year||"",target:p.target||"",weeks:p.weeks||"",mins:p.mins||""};
-  const Q=[["year","What year are you in?",["High school","Freshman","Sophomore","Junior","Senior","Grad / other"]],["target","What are you aiming for?",Object.keys(PLAN_ORDER)],["weeks","When do you start recruiting?",["Within a month","1–3 months","3–6 months","6+ months"]],["mins","How much time a day?",["10 minutes","20 minutes","45 minutes"]]];
+  const Q=[["target","What do you want to break into?",Object.keys(PLAN_ORDER)],["year","What year are you in?",["High school","Freshman","Sophomore","Junior","Senior","Grad / other"]],["mins","How much time can you give it a day?",["10 minutes","20 minutes","45 minutes"]]];
   const draw=()=>{const [k,t,opts]=Q[step];
-    openPanel(`<div class="ob"><div class="ob-dots">${Q.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join("")}</div><div class="label">Step ${step+1} of 4</div><h2>${t}</h2>
+    openPanel(`<div class="ob"><div class="ob-dots">${Q.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join("")}</div><div class="label">Step ${step+1} of ${Q.length} · takes 30 seconds</div><h2>${t}</h2>
       <div class="ob-opts">${opts.map(o=>`<button class="ob-o" data-v="${esc(o)}" aria-pressed="${a[k]===o}">${esc(o)}</button>`).join("")}</div>
-      <div class="actions">${step>0?'<button class="ghost" id="obBack">Back</button>':'<button class="ghost" id="obSkip">Skip for now</button>'}</div></div>`);
-    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{a[k]=b.dataset.v;if(step<3){step++;draw()}else finish()});
-    if($("#obBack"))$("#obBack").onclick=()=>{step--;draw()};if($("#obSkip"))$("#obSkip").onclick=()=>{S.onboardSkip=true;save();closePanel()};
+      <div class="actions">${step>0?'<button class="ghost" id="obBack">Back</button>':'<button class="ghost" id="obSkip">Not now</button>'}</div></div>`);
+    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{a[k]=b.dataset.v;if(step<Q.length-1){step++;draw()}else finish()});
+    if($("#obBack"))$("#obBack").onclick=()=>{step--;draw()};if($("#obSkip"))$("#obSkip").onclick=()=>closePanel();
     panel.querySelector(".ob-o").focus()};
   const finish=()=>{const per={"10 minutes":3,"20 minutes":5,"45 minutes":10}[a.mins]||5;S.plan={...a,order:PLAN_ORDER[a.target]||PLAN_ORDER["Not sure yet"],perWeek:per,created:today()};
     if(S.settings.goal===undefined)S.settings.goal={"10 minutes":20,"20 minutes":50,"45 minutes":100}[a.mins]||50;
@@ -6265,7 +6265,7 @@ try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
 const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
 initCompete();
-setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},500);
+/* no setup pop-up on arrival: the Start-here checklist on Home offers it (js/guide.js) */
 </script>
 
 
@@ -6281,6 +6281,7 @@ setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining)onboarding()},50
 <script src="js/curve.js"></script>
 <script src="js/school.js"></script>
 <script src="js/email.js"></script>
+<script src="js/guide.js"></script>
 <script src="js/wire.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/hit.js"></script>

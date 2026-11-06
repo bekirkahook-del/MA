@@ -152,6 +152,16 @@
      <div class="ms-sec"><h3>When they visit <small>hour of day, ET · ${N} days</small></h3>
       <div class="ms-bars ms-hrs">${hours.map((n,h)=>`<div class="ms-bar" title="${hr(h)}: ${n} visits"><em>${n||""}</em><i style="height:${(n/hm*100).toFixed(0)}%"></i></div>`).join("")}</div>
       <div class="ms-days">${hours.map((_,h)=>`<span>${h%3?"":hr(h)}</span>`).join("")}</div></div>
+     ${(()=>{const agg={};let tot=0;const ppl=new Set();cur.forEach(v=>{if(!v.time)return;ppl.add(v.vid);for(const [k,x] of Object.entries(v.time)){const a=agg[k]=agg[k]||{s:0,p:new Set()};a.s+=+x||0;a.p.add(v.vid);tot+=+x||0}});
+       const nice=k=>{const L=(typeof PANE_LABEL!=="undefined"&&PANE_LABEL)||{};const cap=w=>w.charAt(0).toUpperCase()+w.slice(1);return k.split(" › ").map((w,i)=>i?(L[w]||cap(w)):cap(w)).join(" › ")};
+       const fm=x=>x>=3600?(x/3600).toFixed(1)+" hr":x>=60?Math.round(x/60)+" min":Math.round(x)+" sec";
+       const list=Object.entries(agg).map(([k,a])=>({k,s:a.s,p:a.p.size,avg:a.s/a.p.size}));
+       if(!list.length)return `<div class="ms-sec"><h3>Time spent <small>${N} days</small></h3><p class="note">No time data yet. It starts counting from today: active time per section, only while the page is open and being used.</p></div>`;
+       const most=list.slice().sort((a,b)=>b.s-a.s).slice(0,8),least=list.slice().sort((a,b)=>a.s-b.s).slice(0,8),mx=Math.max(...most.map(x=>x.s));
+       const row=x=>`<div class="ms-row" style="grid-template-columns:minmax(0,1fr) 80px 66px"><span title="${esc(x.k)}">${esc(nice(x.k))}</span><span class="tr"><i style="width:${Math.max(3,x.s/mx*100).toFixed(0)}%"></i></span><b>${fm(x.s)}</b></div><div class="note" style="margin:-4px 0 6px;font-size:11.5px">${x.p} ${x.p===1?"person":"people"} · ${fm(x.avg)} avg each</div>`;
+       return `<div class="ms-sec"><h3>Time spent <small>${N} days · active time only</small></h3>
+        <div class="ms-tiles"><div class="ms-tile"><b>${fm(tot/Math.max(1,ppl.size))}</b><span>Avg time per visitor</span></div><div class="ms-tile"><b>${fm(tot)}</b><span>Total time on site</span></div><div class="ms-tile"><b>${esc(nice(most[0].k).split(" › ").pop())}</b><span>Most-used section</span></div><div class="ms-tile"><b>${list.length}</b><span>Sections visited</span></div></div>
+        <div class="ms-grid2" style="margin-top:12px"><div><h3 style="font-size:14px">🔥 Most time spent</h3>${most.map(row).join("")}</div><div><h3 style="font-size:14px">🧊 Least time spent</h3>${least.map(row).join("")}</div></div></div>`})()}
      <div class="ms-grid2">
       <div class="ms-sec"><h3>Where they come from <small>${N} days</small></h3>${rows(srcs)}</div>
       <div class="ms-sec"><h3>TikTok posts <small>visits by QR / link tag</small></h3>${rows(tally(cur.filter(v=>v.cmp),v=>v.cmp,8))}</div>

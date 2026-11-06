@@ -16,6 +16,21 @@ export default async (req, context) => {
   if (!/^[a-z0-9]{8,24}$/.test(v)) return json(400, { error: "bad id" });
   const now = new Date();
   const d = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(now); // YYYY-MM-DD
+  const H = { apikey: key, "Content-Type": "application/json", ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}) };
+  if (b.time && typeof b.time === "object") { // time-spent update: add seconds to today's row
+    const add = {}; let n = 0;
+    for (const [k, s] of Object.entries(b.time)) { const sec = Math.round(+s || 0); if (sec > 0 && sec <= 3600 && n < 30) { add[clip(k, 80)] = sec; n++; } }
+    if (!n) return json(200, { ok: true });
+    const id = `${d}_${v}`;
+    const g = await fetch(`${SB_URL}/rest/v1/docs?col=eq.visits&id=eq.${encodeURIComponent(id)}&select=data`, { headers: H });
+    const rows = g.ok ? await g.json() : [];
+    if (!rows[0]) return json(200, { ok: true, skipped: true });
+    const data = rows[0].data || {}; const tm = data.time || {};
+    for (const [k, s] of Object.entries(add)) tm[k] = Math.min(86400, (tm[k] || 0) + s);
+    data.time = tm;
+    await fetch(`${SB_URL}/rest/v1/docs?col=eq.visits&id=eq.${encodeURIComponent(id)}`, { method: "PATCH", headers: { ...H, Prefer: "return=minimal" }, body: JSON.stringify({ data }) });
+    return json(200, { ok: true });
+  }
   let ref = "";
   try { const h = new URL(String(b.r || "")).hostname.replace(/^www\./, ""); if (h && !/mnaprep\.com$/.test(h)) ref = h; } catch (e) {}
   const geo = (context && context.geo) || {};

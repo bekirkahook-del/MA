@@ -6265,7 +6265,7 @@ try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
 const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
 initCompete();
-/* no setup pop-up on arrival: the Start-here checklist on Home offers it (js/guide.js) */
+/* no setup pop-up on arrival; users can build a plan from Home whenever they want */
 </script>
 
 

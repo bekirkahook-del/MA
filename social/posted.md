@@ -21,3 +21,4 @@
 - 2026-11-07 bc-bankstocks — [Blue Chip] Bank stocks this fall
 - 2026-11-07 bc-bonus — [Blue Chip] Avg Wall Street bonus $246,900
 - 2026-11-06 oddq-pct — [Interview Q] 16% of 25 (percentages flip)
+- 2026-11-07 oddq-mult — [Interview Q] 17 × 24 (round to 25, fix the difference)

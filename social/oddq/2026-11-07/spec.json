@@ -1,0 +1,1 @@
+[{"key":"oddq-mult","question":"What's <b>17 × 24</b>?","emoji":"🫠","answer":"408","steps":["Round up: 24 is one less than 25, so start with <b>17 × 25</b>","17 × 25 = 17 × 100 ÷ 4 = <b>425</b>","Take back the extra 17: 425 − 17 = <b>408</b> ✅"],"tip":"Turn ugly numbers into friendly ones (25, 50, 100), then fix the difference."}]

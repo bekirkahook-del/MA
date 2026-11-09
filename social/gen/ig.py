@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Make 1080x1350 (4:5) Instagram copies of 1080x1920 TikTok slides.
 Usage: python3 ig.py OUTDIR slide1.jpg slide2.jpg ...
+       python3 ig.py --pin OUTDIR slide.jpg ...   (1000x1500, 2:3 Pinterest pins)
 Trims empty rows at the bottom (TikTok button area), then fits the slide
 into 4:5, filling any side gap with a blurred, darkened copy of the slide."""
 import sys, os
 from PIL import Image, ImageChops, ImageFilter, ImageEnhance, ImageStat
-W, H = 1080, 1350
-out = sys.argv[1]; os.makedirs(out, exist_ok=True)
-for p in sys.argv[2:]:
+args = sys.argv[1:]
+W, H = (1000, 1500) if args[0] == '--pin' else (1080, 1350)
+if args[0] == '--pin': args = args[1:]
+out = args[0]; os.makedirs(out, exist_ok=True)
+for p in args[1:]:
     im = Image.open(p).convert('RGB')
     g = im.convert('L').resize((270, 480))
     # high-frequency detail (text, bars, photos), ignoring smooth background glows
@@ -17,7 +20,7 @@ for p in sys.argv[2:]:
         if ImageStat.Stat(d.crop((0, y, 270, y + 1))).mean[0] > 2.5:
             bottom = min(480, y + 14); break
     top = 0
-    crop = im.crop((0, top * 4, 1080, max(bottom * 4, 1350)))
+    crop = im.crop((0, top * 4, 1080, max(bottom * 4, round(1080 * H / W))))
     cw, ch = crop.size
     s = min(W / cw, H / ch)
     fg = crop.resize((round(cw * s), round(ch * s)), Image.LANCZOS)

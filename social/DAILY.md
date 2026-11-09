@@ -6,6 +6,21 @@ Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip ran
 ## Audience (read first)
 Everything is for **people aged 15–30**: high schoolers, college students, new grads. Pick topics they care about and will **comment on**: money, salaries, getting into college, landing internships and first jobs, famous companies and people, "is it worth it?", school rivalries, and things they can rate themselves against. Every post should give people a reason to comment: ask for their score, their pick, their school, their opinion, or a guess before they swipe. Skip dry topics that only bankers care about.
 
+## Get creative (Bekir, 2026-11-09: "use all the skills you have, don't be lackluster")
+Rotate formats every day so the feed never looks the same. Each day, at least 4 different formats across the 10 posts. Ideas (all must stay accurate, sourced where numbers are real):
+- **Guess the salary:** 3 jobs, swipe to reveal which pays most (Blue Chip chart reveal).
+- **This or that / Would you rather (money edition):** "$100K in NYC or $70K in Columbus?" with the cost-of-living math on the next slide.
+- **Rank these:** show 5 logos/names unranked on slide 1, ranked chart on slide 2. "Comment your ranking first."
+- **Myth vs fact:** "You need a 4.0 to get into IB" → fact slide. Keep claims verifiable.
+- **Red flag / green flag:** interview answers, resume lines, first-job offers.
+- **Day in the life (timeline):** analyst / PE associate / trader typical day using the `.tl` timeline block; label as typical, not a specific person.
+- **Starter pack / POV:** "POV: you just got your first bonus" with the real average-bonus number; "IB analyst starter pack" as a text list (no logos or real people's images).
+- **Countdown hooks:** "5 numbers every finance student should know", revealed one per slide.
+- **What $X buys:** what $1,000 invested 10 years ago in a well-known stock is worth now (source every price).
+- **Speed rounds:** 3 brain teasers in one post, 5 seconds each.
+- **Aesthetic series:** finance-aesthetic cards in a matching set (e.g. a 5-card "money rules" series across the day) so profiles look curated.
+Hooks: lead with a number, a dare ("Only 1 slide. Can you solve it?"), or a surprise. Always end with a specific comment prompt (score, pick, school, guess).
+
 ## What works (update this as you learn)
 - Bekir's favorite so far: the **bank CEO pay** post. People love **rankings and stats about money and exclusivity**: who gets paid the most, what's hardest to get into, the 1%, record bonuses, elite schools and firms.
 - **Less text, quick to digest (Bekir, 2026-11-09):** people want interesting things they get instantly: quantifiable rankings, fast brain teasers, quick tips. Quiz decks 5–6 slides max, one short line per slide, short captions. Cut anything that needs explaining.

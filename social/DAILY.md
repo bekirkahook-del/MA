@@ -8,6 +8,7 @@ Everything is for **people aged 15–30**: high schoolers, college students, new
 
 ## What works (update this as you learn)
 - Bekir's favorite so far: the **bank CEO pay** post. People love **rankings and stats about money and exclusivity**: who gets paid the most, what's hardest to get into, the 1%, record bonuses, elite schools and firms.
+- **Less text, quick to digest (Bekir, 2026-11-09):** people want interesting things they get instantly: quantifiable rankings, fast brain teasers, quick tips. Quiz decks 5–6 slides max, one short line per slide, short captions. Cut anything that needs explaining.
 - Keep it simple: one clear number per hook, plain words, no jargon. Think "would a 17-year-old get it in 2 seconds?"
 - Keep evolving: lean into the formats and topics that get the most views, likes and comments (see step 2b), and try one new angle each day.
 

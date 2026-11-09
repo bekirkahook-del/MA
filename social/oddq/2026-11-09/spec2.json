@@ -1,0 +1,1 @@
+[{"key":"oddq-week","question":"How many <b>seconds</b> are in a week?","emoji":"😶","answer":"604,800","steps":["Hours first: 7 days × 24 = <b>168 hours</b>","Seconds in an hour: 60 × 60 = <b>3,600</b>","168 × 3,600 = 168 × 36 × 100 = 6,048 × 100 = <b>604,800</b> ✅"],"tip":"Drop the zeros, multiply the small numbers, then add the zeros back."}]

@@ -25,3 +25,6 @@
 - 2026-11-09 q3acc — 3-question challenge: net debt, D&A +$10, accretion/dilution P/E rule
 - 2026-11-09 bc-majorpay — [Blue Chip] Starting salary by college major (NACE class of 2026)
 - 2026-11-09 oddq-13pct — [Interview Q] 13% of 87 (10% + 3% chunks)
+- 2026-11-09 rule72 — Rule of 72 explained (double at 8%, PE 2x in 3 yrs, 4x at 12%)
+- 2026-11-09 bc-ipos — [Blue Chip] Biggest IPOs in history (SpaceX $75B #1)
+- 2026-11-09 oddq-week — [Interview Q] Seconds in a week (604,800)

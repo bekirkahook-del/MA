@@ -1,0 +1,373 @@
+{
+ "boards": {
+  "pay": "Wall Street Salaries & Rankings",
+  "mkt": "Banks, Deals & IPOs",
+  "tease": "Finance Brain Teasers",
+  "ibq": "Investment Banking Interview Questions",
+  "val": "DCF, LBO & Valuation Explained",
+  "tips": "Money Tips for Students",
+  "vibe": "Finance Aesthetic"
+ },
+ "queue": [
+  {
+   "image": "pin/backfill/bc-ceopay-02.jpg",
+   "board": "Wall Street Salaries & Rankings",
+   "title": "Highest-Paid Bank CEOs 2025: Goldman, Morgan Stanley, JPMorgan",
+   "text": "Ranked: total 2025 pay for the CEOs of the biggest U.S. banks. Source: American Banker (company filings).",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-bonus-02.jpg",
+   "board": "Wall Street Salaries & Rankings",
+   "title": "Average Wall Street Bonus: $246,900",
+   "text": "The average New York securities industry bonus compared with typical household income. Source: NY State Comptroller.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-majorpay-02.jpg",
+   "board": "Wall Street Salaries & Rankings",
+   "title": "Starting Salary by College Major (Class of 2026)",
+   "text": "Projected average starting salaries for bachelor's grads: computer science, engineering, math, business and more. Source: NACE Winter 2026 Salary Survey.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-hardest-02.jpg",
+   "board": "Wall Street Salaries & Rankings",
+   "title": "Internships Harder to Get Into Than Harvard",
+   "text": "The most competitive finance internships ranked by acceptance rate, compared with Harvard admissions.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-bschools-02.jpg",
+   "board": "Wall Street Salaries & Rankings",
+   "title": "Best Undergraduate Business Schools 2026 + Acceptance Rates",
+   "text": "Top 5 U.S. undergrad business schools and how many applicants get in. Source: Poets&Quants for Undergrads.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-profit-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Biggest Bank Profits: Q3 2026",
+   "text": "Quarterly profit for the largest U.S. banks, led by JPMorgan at $15.3 billion. Source: company Q3 2026 reports.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-ibfees-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Investment Banking Fees by Bank: Q3 2026",
+   "text": "Which Wall Street banks earned the most advising on deals last quarter. Source: company Q3 2026 reports.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-deals-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Biggest M&A Deals of 2026",
+   "text": "The largest mergers and acquisitions announced in 2026, ranked by deal value.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-assetmgr-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Largest Asset Managers in the World by AUM",
+   "text": "BlackRock, Vanguard and the biggest money managers ranked by assets under management.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-hedge-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Largest Hedge Funds in the World",
+   "text": "The 5 biggest hedge funds ranked by assets. Source: Pensions & Investments.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-bankstocks-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Big Bank Stocks This Fall: Winners and Losers",
+   "text": "How JPMorgan, Bank of America and other big bank stocks performed this fall. Source: Yahoo Finance (Evercore ISI data).",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/bc-ipos-02.jpg",
+   "board": "Banks, Deals & IPOs",
+   "title": "Biggest IPOs in History: SpaceX Raised $75 Billion",
+   "text": "The largest IPOs ever by money raised: SpaceX, SK hynix, Saudi Aramco, Alibaba and more. Source: Renaissance Capital.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/oddq-clock-02.jpg",
+   "board": "Finance Brain Teasers",
+   "title": "Clock Angle Brain Teaser: 3:15",
+   "text": "What is the angle between the clock hands at 3:15? A classic interview brain teaser, solved step by step.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/oddq-pct-02.jpg",
+   "board": "Finance Brain Teasers",
+   "title": "Mental Math Trick: 16% of 25",
+   "text": "Flip the percentage to make it easy. A quick mental math trick for finance interviews.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/oddq-mult-02.jpg",
+   "board": "Finance Brain Teasers",
+   "title": "Mental Math: 17 x 24 Without a Calculator",
+   "text": "Round to a friendly number, then fix the difference. Interview mental math in 3 steps.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/oddq-13pct-02.jpg",
+   "board": "Finance Brain Teasers",
+   "title": "Mental Math: 13% of 87",
+   "text": "Split ugly percentages into 10% and 1% chunks. A fast mental math method for interviews and tests.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/oddq-week-02.jpg",
+   "board": "Finance Brain Teasers",
+   "title": "How Many Seconds Are in a Week?",
+   "text": "A quick interview brain teaser: 604,800 seconds, worked out without a calculator.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/quiz3-01.jpg",
+   "board": "Investment Banking Interview Questions",
+   "title": "3 Investment Banking Interview Questions: Intern to MD",
+   "text": "Test yourself on WACC, enterprise value and IRR. Real banking interview questions from easy to hard.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/q3acc-05.jpg",
+   "board": "Investment Banking Interview Questions",
+   "title": "Depreciation Goes Up $10: What Happens to Cash?",
+   "text": "A classic accounting interview question: walk through how a $10 depreciation increase flows through the 3 statements.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/evq-01.jpg",
+   "board": "Investment Banking Interview Questions",
+   "title": "Enterprise Value Interview Question",
+   "text": "Quiz yourself on enterprise value: the most common investment banking technical question.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/multq-01.jpg",
+   "board": "Investment Banking Interview Questions",
+   "title": "EV/EBITDA vs P/E: A Common Interview Mistake",
+   "text": "Why you can't pair enterprise value with net income. A valuation multiple mistake interviewers love to test.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/plbo-01.jpg",
+   "board": "Investment Banking Interview Questions",
+   "title": "Paper LBO Interview Question",
+   "text": "Work out a private equity return in your head: a paper LBO practice question.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/dcfmist-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "5 DCF Mistakes to Avoid",
+   "text": "The most common discounted cash flow mistakes students make in interviews and models.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/dcf-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "How to Build a DCF in 5 Steps",
+   "text": "Discounted cash flow valuation explained simply for finance students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/lbo-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "How Private Equity Firms Build an LBO",
+   "text": "Leveraged buyouts explained step by step for beginners.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/wacc-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "WACC Explained in 60 Seconds",
+   "text": "Weighted average cost of capital in plain English.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/val-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "How Bankers Value a Company: 3 Methods",
+   "text": "Comparable companies, precedent transactions and DCF: the 3 main valuation methods.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/lbofit-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "What Makes a Great LBO Target",
+   "text": "The traits private equity firms look for in a leveraged buyout candidate.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/irr-01.jpg",
+   "board": "DCF, LBO & Valuation Explained",
+   "title": "IRR Shortcuts Every PE Candidate Should Know",
+   "text": "Quick IRR anchors: what 2x and 3x returns over 3 to 5 years work out to.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/backfill/rule72-03.jpg",
+   "board": "Money Tips for Students",
+   "title": "Rule of 72: How Long to Double Your Money",
+   "text": "Divide 72 by your yearly return to see how many years it takes to double. At 8%, about 9 years.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-compound.jpg",
+   "board": "Finance Aesthetic",
+   "title": "$100 a month. 8% a year. 40 years. \u2248 $349,000.",
+   "text": "You only put in $48,000. Time did the rest. Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-quiet.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Quiet money. Loud results.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-payfirst.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Pay yourself first.",
+   "text": "Invest before you spend, not after. Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-skyline1.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Built in the hours nobody sees.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-onepct.jpg",
+   "board": "Finance Aesthetic",
+   "title": "1% better every day = 37x in a year.",
+   "text": "1.01 ^ 365 \u2248 37.8 Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-assets.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Buy assets, not attention.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-rule72.jpg",
+   "board": "Finance Aesthetic",
+   "title": "72 \u00f7 your return = years to double.",
+   "text": "At 8%, about 9 years. At 12%, about 6. Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-habit.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Rich is a number. Wealthy is a habit.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-tenx.jpg",
+   "board": "Finance Aesthetic",
+   "title": "10 years: $2,594 30 years: $17,449",
+   "text": "Same money. More time. Compounding at work. Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-skyline2.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Spreadsheets today. Corner office later.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-spendless.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Spend less than you earn. Invest the difference. Repeat.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-patience.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Compound interest rewards patience, not hype.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-yourself.jpg",
+   "board": "Finance Aesthetic",
+   "title": "The best investment is in yourself.",
+   "text": "Skills compound too. Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-early.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Time in the market beats timing the market.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  },
+  {
+   "image": "pin/aesthetic/2026-11-09/vibe-skyline3.jpg",
+   "board": "Finance Aesthetic",
+   "title": "Dress for the job. Prep for the interview.",
+   "text": "Money mindset and finance motivation for students.",
+   "link": "https://mnaprep.com/",
+   "posted": false
+  }
+ ]
+}

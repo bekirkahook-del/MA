@@ -78,8 +78,15 @@ One pin per post, same time as the TikTok (Bekir, 2026-11-09).
 - Metricool post: providers [{"network":"pinterest"}], media = the one SHA-pinned pin URL, `pinterestData: {"boardId":"M&A Prep","pinTitle":<searchable title, ≤100 chars, no emoji>,"pinLink":"https://mnaprep.com/","pinNewFormat":false,"isAiGenerated":false}`, text = 1–2 plain, keyword-rich sentences (Pinterest is search: "starting salary by major", "rule of 72", "investment banking interview questions"). No hashtags needed.
 - If the board can't be resolved, skip Pinterest for the run (don't fail the run) and mention it in the summary.
 
-## 5d. Instagram stories (3 a day)
-- Reuse today's 9:16 TikTok slides (no new images needed): a ranking chart, a brain teaser's question slide (post it ~20–40 min before that teaser's answer post goes up), and one quiz/tip slide.
+## 5c-2. Pinterest boards, backfill queue and "finance aesthetic" pins
+Boards (Bekir creates them on Pinterest; names must match exactly): Wall Street Salaries & Rankings · Banks, Deals & IPOs · Finance Brain Teasers · Investment Banking Interview Questions · DCF, LBO & Valuation Explained · Money Tips for Students · Finance Aesthetic · M&A Prep (catch-all).
+- Route each day's pins: Blue Chip pay/school/job rankings → Wall Street Salaries & Rankings; bank/deal/market rankings → Banks, Deals & IPOs; brain teasers → Finance Brain Teasers; interview quizzes → Investment Banking Interview Questions; DCF/LBO/valuation explainers → DCF, LBO & Valuation Explained; money tips → Money Tips for Students. If a board can't be resolved, fall back to "M&A Prep"; if that fails too, skip Pinterest.
+- **Backfill:** `social/pin/queue.json` lists ready-made pins (image, board, title, text, link). Every run, schedule up to 8 not-yet-posted items spread 12pm–11pm, set their `"posted": true`, commit.
+- **Finance aesthetic (Bekir, 2026-11-09: "doesn't even have to be about the website, just finance vibes with aesthetic pics"):** every day make 5 new cards with `node gen/aesthetic.js <spec> ../pin/aesthetic/<date>` (styles navy, cream, marble, skyline, chart; see pin/aesthetic/2026-11-09.json). Short original lines about money mindset, investing, compounding, Wall Street ambition. Never attribute a quote to a real person; any number must be checked in node. Pin them to "Finance Aesthetic" (no mnaprep.com promo needed in the text). Also render `--story` versions and use 2 of them as Instagram stories.
+- Daily Pinterest total: 10 post pins + 5 aesthetic pins + backfill until the queue is empty (that's 10+ a day on every platform).
+
+## 5d. Instagram stories (5 a day)
+- 3 from today's 9:16 TikTok slides (a ranking chart, a brain teaser's question slide ~20–40 min before that teaser's answer post, one quiz/tip slide) + 2 finance-aesthetic `--story` cards.
 - Metricool post: providers [{"network":"instagram"}], media = one SHA-pinned 9:16 slide, `instagramData: {"type":"STORY","isAiGenerated":false}`, no text. Spread them between 12pm and 11pm ET.
 - TikTok stories can't be scheduled through Metricool, so skip them.
 

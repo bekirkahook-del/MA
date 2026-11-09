@@ -1,6 +1,6 @@
 # Daily TikTok run (@bluechipfinancial, via Metricool brand 7259200)
 
-Goal: each day has **3 posts total: 1 quiz + 1 Blue Chip + 1 "unexpected interview question"**, spread across the best hours. Quality over quantity: make each one the strongest possible (Bekir cut from 7/day to 3/day on 2026-11-05). Only make what's missing.
+Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
 
 ## Audience (read first)
@@ -21,7 +21,7 @@ TikTok pushes down accounts that look automated or repetitive. Every run, make s
 - **Every caption is written fresh.** Never reuse a caption or the same closing line two posts in a row. Rotate the site mention between styles, and skip it entirely on about 1 in 3 posts (the last slide already shows it): "Free practice: link in bio 🔗" · "More like this on mnaprep.com" · "Full guide in bio" · "Train free: mnaprep.com" · none.
 - **Rotate hashtags from this pool, 3–5 per post**, never the same set twice in a row: #finance #financetok #wallstreet #investmentbanking #privateequity #moneytok #careertok #collegelife #college #businessschool #stocks #investing #learnontiktok #interviewtips #mentalmath #brainteaser #money #salary #jobs #internship #highschool #studytok #economics #financialliteracy #mergersandacquisitions. Add 1 topic tag (e.g. #goldmansachs) when it fits. Never use a tag you're unsure about.
 - **Vary the look and format.** Don't run the same Blue Chip topic type (e.g. two pay rankings) on back-to-back days; mix rankings, records, "vs." comparisons and "what X makes" posts. Quiz posts rotate formats (3-question challenge, single question, "5 mistakes", "explained in 60 seconds"). Vary hooks: number-led, question-led, surprise-led.
-- **Vary slide counts** (quiz decks 6–9 slides) and **posting minutes** (never the same time of day two days running; keep 2+ hours between posts).
+- **Vary slide counts** (quiz/tip decks 5–6 slides) and **posting minutes** (never the same minutes two days running; keep 60+ minutes between posts).
 - **Never repost** an old deck or reuse old images, even partly.
 - **Stay accurate and calm**: no misleading claims, no "guaranteed job/money" promises, no fake numbers, no engagement bait like "like if…/share or…". Comment questions are fine.
 - **Keep the AI-content setting accurate**: slides are designed graphics, not AI-generated video, so isAigc stays false; if a run ever uses AI-generated imagery, set it to true.
@@ -33,7 +33,7 @@ TikTok pushes down accounts that look automated or repetitive. Every run, make s
 ## 2. What's already scheduled today
 Call Metricool `getScheduledPosts` (brandId 7259200, today 00:00–23:59, timezone America/New_York).
 - Blue Chip post = media URLs contain `/social/bc/`. Interview-question post = media URLs contain `/social/oddq/`. Quiz post = everything else.
-- Need = 1 − existing for each type (quiz, Blue Chip, interview-question). If all are 0, stop: "Nothing needed today."
+- Need = target − existing for each type (Blue Chip 4, interview-question 3, quiz/tip 3). Media URLs are rewritten to static.metricool.com once scheduled, so classify existing posts by caption/title. If all are 0, stop: "Nothing needed today."
 
 ## 2b. Check engagement (keep it quick)
 Call Metricool `getAnalyticsDataByMetrics` (brandId 7259200, last 7 days, metrics TKPO02, TKPO05, TKPO07, TKPO08, TKPO09, TKPO10) to get each recent post's views, likes, comments and shares. Rank them by (likes + 3×comments + 2×shares) per view. Note the top 2 and bottom 2 topics/formats, then pick today's topics and hooks to be more like the winners. Add one dated line to `social/insights.md` (e.g. "2026-11-08: CEO pay 4.1k views, best; quiz formats lag"). If Metricool returns no rows (stats sync can lag), skip this and go by the "What works" notes above.
@@ -46,8 +46,8 @@ Read `social/posted.md` (never repeat a topic or deck key) and `social/topics.md
 - Topics: DCF, LBO, valuation, M&A math, accounting, IRR. Run every calculation in `node -e` first. The correct answer must not always be the same letter.
 - Render: `node render.js <spec> ` → `social/<YYYY-MM-DD>/<key>-NN.jpg`. Exit code 2 = overflow: shorten and re-render.
 
-### "Unexpected interview question" posts (1 every day, keeps things light)
-- Inspired by a WSO meme post (1,050 likes): one weird, quick question + a reaction emoji, then the answer. Make exactly 1 per day.
+### "Unexpected interview question" posts (3 every day, keeps things light)
+- Inspired by a WSO meme post (1,050 likes): one weird, quick question + a reaction emoji, then the answer. Make 3 per day, each a different kind (mental math, estimate, clock/logic, sneaky finance).
 - Good questions: quick mental math (13% of 87, 17 × 24, 15% of 360), clock angles, "how many golf balls fit in a bus" style estimates, sneaky finance ones ("a company has negative EV, what does that mean?"). Run the math in `node -e` first. Never claim a specific bank asked it; the label is generic ("IB SUPERDAY").
 - Spec: see `social/oddq/sample.json` (key must start with `oddq-`). Render: `node oddq.js <spec> ../oddq/<YYYY-MM-DD>` → 3 slides, slide 3 is the mnaprep.com CTA automatically (no QR).
 - Caption: "No calculator. Comment your answer before you swipe 👇" + hashtags. Follow the caption-variety rules below. Title like "Real interview question 😳". commercialContentOwnBrand true. Its own type: media URLs contain `/social/oddq/` (don't count it as a quiz post). Schedule it in the evening (7–10pm) when people are scrolling.
@@ -62,7 +62,7 @@ Read `social/posted.md` (never repeat a topic or deck key) and `social/topics.md
 Commit only files under `social/` (including insights.md), then `git push origin HEAD:main` (`git pull --rebase` and retry if rejected). Deploys are skipped for social-only commits. Check one image returns 200 at `https://raw.githubusercontent.com/bekirkahook-del/MA/main/social/...`.
 
 ## 5. Schedule (Metricool createScheduledPost, blogId 7259200)
-- Times: first call Metricool `getBestTimeToPostByNetwork` (brandId 7259200, socialNetwork "tiktok", today 00:00–23:59, timezone America/New_York). Only post when students are free: **weekdays 3:00–4:30pm or 6:30–10:30pm ET** (never during school hours, 7am–3pm); **weekends 11:00am–10:30pm ET**. Inside those windows, pick the highest-scoring best-time hours that are still in the future. Evening slots (7–9:30pm ET) also catch Central and Pacific students after school, so put the strongest post there. Use random-looking minutes (never :00 or :30), keep each post at least 75 minutes from any other post that day, and alternate quiz and Blue Chip. Put the strongest hook in the single best hour.
+- Times: first call Metricool `getBestTimeToPostByNetwork` (brandId 7259200, socialNetwork "tiktok", today 00:00–23:59, timezone America/New_York). Post every day between **12:00pm and 11:00pm ET** (Bekir's choice, 2026-11-09; this replaces the old after-school-only windows). Spread the 10 posts across that window, still in the future, weighting the highest-scoring best-time hours. Evening slots (7–9:30pm ET) also catch Central and Pacific students after school, so put the strongest post there. Use random-looking minutes (never :00 or :30), keep each post at least 60 minutes from any other post that day, and never put two of the same type back to back. If the run starts late and fewer slots remain, fit what you can 60+ min apart before 11pm and skip the rest. Put the strongest hook in the single best hour.
 - info: `autoPublish true, draft false, providers [{"network":"tiktok"}], media = the raw.githubusercontent URLs in slide order, publicationDate {dateTime, timezone:"America/New_York"}, tiktokData {privacyOption:"PUBLIC_TO_EVERYONE", title:<hook, ≤60 chars + 1 emoji>, autoAddMusic:true, photoCoverIndex:0, commercialContentOwnBrand: true for quiz posts / false for Blue Chip, disableComment/Duet/Stitch false, commercialContentThirdParty false, isAigc false}`, plus the other default fields.
 - Caption (`text`): 1–2 punchy lines + a question that invites comments (👇) + 3–5 hashtags. Follow the caption-variety rules below.
 

@@ -22,3 +22,6 @@
 - 2026-11-07 bc-bonus — [Blue Chip] Avg Wall Street bonus $246,900
 - 2026-11-06 oddq-pct — [Interview Q] 16% of 25 (percentages flip)
 - 2026-11-07 oddq-mult — [Interview Q] 17 × 24 (round to 25, fix the difference)
+- 2026-11-09 q3acc — 3-question challenge: net debt, D&A +$10, accretion/dilution P/E rule
+- 2026-11-09 bc-majorpay — [Blue Chip] Starting salary by college major (NACE class of 2026)
+- 2026-11-09 oddq-13pct — [Interview Q] 13% of 87 (10% + 3% chunks)

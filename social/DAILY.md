@@ -72,6 +72,17 @@ Every TikTok also goes to Instagram as a carousel at the same time (Bekir, 2026-
 - Schedule a separate Metricool post per carousel: providers [{"network":"instagram"}], media = the SHA-pinned raw URLs of the ig/ copies in slide order, `instagramData: {"type":"POST","isAiGenerated":false}`, same publication time as the TikTok version.
 - Caption: rewrite for Instagram (don't paste the TikTok caption): 1–2 short lines + a comment question + "Free practice at mnaprep.com (link in bio)" + 5–8 hashtags from the pool.
 
+## 5c. Pinterest (account tiktokshopbk29, board "M&A Prep")
+One pin per post, same time as the TikTok (Bekir, 2026-11-09).
+- Pick the single best slide: the ranking chart (slide 2), the brain teaser's answer slide (slide 2), or the quiz/tip's clearest answer slide. Make it 2:3 with `python3 gen/ig.py --pin pin/<YYYY-MM-DD> <slide.jpg>` (from social/) and commit it.
+- Metricool post: providers [{"network":"pinterest"}], media = the one SHA-pinned pin URL, `pinterestData: {"boardId":"M&A Prep","pinTitle":<searchable title, ≤100 chars, no emoji>,"pinLink":"https://mnaprep.com/","pinNewFormat":false,"isAiGenerated":false}`, text = 1–2 plain, keyword-rich sentences (Pinterest is search: "starting salary by major", "rule of 72", "investment banking interview questions"). No hashtags needed.
+- If the board can't be resolved, skip Pinterest for the run (don't fail the run) and mention it in the summary.
+
+## 5d. Instagram stories (3 a day)
+- Reuse today's 9:16 TikTok slides (no new images needed): a ranking chart, a brain teaser's question slide (post it ~20–40 min before that teaser's answer post goes up), and one quiz/tip slide.
+- Metricool post: providers [{"network":"instagram"}], media = one SHA-pinned 9:16 slide, `instagramData: {"type":"STORY","isAiGenerated":false}`, no text. Spread them between 12pm and 11pm ET.
+- TikTok stories can't be scheduled through Metricool, so skip them.
+
 ## 6. Log
 Append one line per post to `social/posted.md` (`- YYYY-MM-DD key — [Blue Chip] topic`), commit, push.
 

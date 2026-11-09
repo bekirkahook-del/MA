@@ -66,6 +66,12 @@ Commit only files under `social/` (including insights.md), then `git push origin
 - info: `autoPublish true, draft false, providers [{"network":"tiktok"}], media = the raw.githubusercontent URLs in slide order, publicationDate {dateTime, timezone:"America/New_York"}, tiktokData {privacyOption:"PUBLIC_TO_EVERYONE", title:<hook, ≤60 chars + 1 emoji>, autoAddMusic:true, photoCoverIndex:0, commercialContentOwnBrand: true for quiz posts / false for Blue Chip, disableComment/Duet/Stitch false, commercialContentThirdParty false, isAigc false}`, plus the other default fields.
 - Caption (`text`): 1–2 punchy lines + a question that invites comments (👇) + 3–5 hashtags. Follow the caption-variety rules below.
 
+## 5b. Instagram (@mnaprep, same Metricool brand)
+Every TikTok also goes to Instagram as a carousel at the same time (Bekir, 2026-11-09).
+- Make 4:5 copies: `python3 gen/ig.py ig/<YYYY-MM-DD> <the post's slide jpgs in order>` (run from social/). It trims the empty bottom and fits each slide into 1080x1350. Commit them with the TikTok images.
+- Schedule a separate Metricool post per carousel: providers [{"network":"instagram"}], media = the SHA-pinned raw URLs of the ig/ copies in slide order, `instagramData: {"type":"POST","isAiGenerated":false}`, same publication time as the TikTok version.
+- Caption: rewrite for Instagram (don't paste the TikTok caption): 1–2 short lines + a comment question + "Free practice at mnaprep.com (link in bio)" + 5–8 hashtags from the pool.
+
 ## 6. Log
 Append one line per post to `social/posted.md` (`- YYYY-MM-DD key — [Blue Chip] topic`), commit, push.
 

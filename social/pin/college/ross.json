@@ -4,48 +4,55 @@
   "style": "navy",
   "kicker": "College admissions",
   "line": "How to get into<br><em>Michigan Ross</em>",
-  "sub": "University of Michigan \u00b7 Ann Arbor \u00b7 save this for later \ud83d\udccc"
+  "sub": "University of Michigan \u00b7 from Ross's own advice \u00b7 save this \ud83d\udccc"
  },
  {
   "key": "ross-02",
   "style": "cream",
   "kicker": "The numbers",
-  "line": "<em>7.0%</em><br>acceptance rate",
-  "sub": "Ranked #4 undergrad business school. Source: Poets&Quants for Undergrads, 2026."
+  "line": "<em>7.0%</em> get in",
+  "sub": "Ranked #4 undergrad business school.<br>Source: Poets&Quants for Undergrads 2026"
  },
  {
   "key": "ross-03",
   "style": "marble",
-  "kicker": "Step 1 \u00b7 How you apply",
-  "line": "Know which<br><em>door</em> you're using",
-  "sub": "You can apply to Ross as a freshman through your Michigan application. Show real business curiosity, not just good grades."
+  "kicker": "Step 1 \u00b7 Apply direct",
+  "line": "Apply to Ross<br>as a <em>freshman</em>",
+  "sub": "Choose the Ross BBA in your Michigan application. Ross says applying directly gives you the best shot. New: the IBE business + engineering dual degree."
  },
  {
   "key": "ross-04",
-  "style": "chart",
-  "kicker": "Step 2 \u00b7 Grades",
-  "line": "Take the <em>hardest</em><br>math you can",
-  "sub": "Top business schools want proof you can handle numbers: calculus, stats, economics. Strong grades in hard classes beat easy A's."
+  "style": "navy",
+  "kicker": "Step 2 \u00b7 \"Why Michigan\" essay",
+  "line": "Talk about <em>Ross,</em><br>not Michigan",
+  "sub": "Describe what draws you to Ross specifically. Ross's tips: skip job-placement stats and buildings, say when you chose business, no generic praise."
  },
  {
   "key": "ross-05",
-  "style": "navy",
-  "kicker": "Step 3 \u00b7 Show, don't tell",
-  "line": "Do something<br><em>real</em> with business",
-  "sub": "Start a small business, run a club's budget, join DECA or FBLA, invest in a stock challenge. One real project beats ten club titles."
+  "style": "cream",
+  "kicker": "Step 3 \u00b7 Don't repeat yourself",
+  "line": "Every essay =<br>something <em>new</em>",
+  "sub": "Ross reads your Common App and Michigan essays. Same topic is OK, same example isn't. They want to learn something new each time."
  },
  {
   "key": "ross-06",
-  "style": "cream",
-  "kicker": "Step 4 \u00b7 The essay",
-  "line": "Make it <em>only</em><br>about Michigan Ross",
-  "sub": "Name specific classes, programs or clubs you'd join. If your essay works for any school, rewrite it."
+  "style": "marble",
+  "kicker": "Step 4 \u00b7 If you need the portfolio",
+  "line": "The case is <em>not</em><br>a research paper",
+  "sub": "Business Case Discussion: pick a local, unsolved problem, no citations, nothing you already fixed. Show how you'd think it through."
  },
  {
   "key": "ross-07",
-  "style": "marble",
-  "kicker": "Step 5 \u00b7 Plan ahead",
-  "line": "Already in?<br>Start <em>recruiting</em> early",
-  "sub": "Banking and consulting internships recruit sophomore year. Free interview prep at mnaprep.com"
+  "style": "chart",
+  "kicker": "Step 5 \u00b7 Timing",
+  "line": "<em>Nov 1</em><br>Early Decision & Action",
+  "sub": "Ross says submit a few days before your deadline, then check the portal that everything arrived."
+ },
+ {
+  "key": "ross-08",
+  "style": "navy",
+  "kicker": "Got in? Don't wait",
+  "line": "Banks recruit<br><em>sophomore year</em>",
+  "sub": "Start interview prep early. Free practice at mnaprep.com"
  }
 ]

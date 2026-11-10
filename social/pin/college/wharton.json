@@ -4,48 +4,55 @@
   "style": "navy",
   "kicker": "College admissions",
   "line": "How to get into<br><em>Wharton</em>",
-  "sub": "University of Pennsylvania \u00b7 Philadelphia \u00b7 save this for later \ud83d\udccc"
+  "sub": "University of Pennsylvania \u00b7 the real steps \u00b7 save this \ud83d\udccc"
  },
  {
   "key": "wharton-02",
   "style": "cream",
   "kicker": "The numbers",
-  "line": "<em>3.6%</em><br>acceptance rate",
-  "sub": "Average SAT: 1525. Ranked #1 undergrad business school. Source: Poets&Quants for Undergrads, 2026."
+  "line": "<em>3.6%</em> get in",
+  "sub": "Average SAT: 1525. All of Penn admitted 5.8% for the class of 2030.<br>Sources: Poets&Quants 2026, The Daily Pennsylvanian"
  },
  {
   "key": "wharton-03",
   "style": "marble",
-  "kicker": "Step 1 \u00b7 How you apply",
-  "line": "Know which<br><em>door</em> you're using",
-  "sub": "You apply to Penn and pick Wharton as your school, so your essays need to show why business, and why Penn."
+  "kicker": "Step 1 \u00b7 Apply to Penn",
+  "line": "Pick <em>Wharton</em><br>on the Common App",
+  "sub": "There's no separate Wharton application. You apply to Penn and choose The Wharton School as your undergrad school."
  },
  {
   "key": "wharton-04",
-  "style": "chart",
-  "kicker": "Step 2 \u00b7 Grades",
-  "line": "Take the <em>hardest</em><br>math you can",
-  "sub": "Top business schools want proof you can handle numbers: calculus, stats, economics. Strong grades in hard classes beat easy A's."
+  "style": "navy",
+  "kicker": "Step 2 \u00b7 Tests are back",
+  "line": "Send an <em>SAT</em><br>or ACT",
+  "sub": "Penn brought back required testing. The class of 2030 is the first admitted test-mandatory. Wharton's average SAT is 1525."
  },
  {
   "key": "wharton-05",
-  "style": "navy",
-  "kicker": "Step 3 \u00b7 Show, don't tell",
-  "line": "Do something<br><em>real</em> with business",
-  "sub": "Start a small business, run a club's budget, join DECA or FBLA, invest in a stock challenge. One real project beats ten club titles."
+  "style": "cream",
+  "kicker": "Step 3 \u00b7 The Wharton essay",
+  "line": "\"Discuss a current issue of importance to you\u2026\"",
+  "sub": "\u2026and how a Wharton education would help you explore it. 50\u2013200 words. Pick an issue you've actually worked on, not a headline you read once."
  },
  {
   "key": "wharton-06",
-  "style": "cream",
-  "kicker": "Step 4 \u00b7 The essay",
-  "line": "Make it <em>only</em><br>about Wharton",
-  "sub": "Name specific classes, programs or clubs you'd join. If your essay works for any school, rewrite it."
+  "style": "marble",
+  "kicker": "Step 4 \u00b7 Two more essays",
+  "line": "A <em>thank-you note</em><br>+ Penn community",
+  "sub": "Every applicant also writes a short thank-you note to someone they never thanked, and how they'd explore community at Penn. 50\u2013200 words each."
  },
  {
   "key": "wharton-07",
-  "style": "marble",
-  "kicker": "Step 5 \u00b7 Plan ahead",
-  "line": "Already in?<br>Start <em>recruiting</em> early",
-  "sub": "Banking and consulting internships recruit sophomore year. Free interview prep at mnaprep.com"
+  "style": "chart",
+  "kicker": "Step 5 \u00b7 Prove it",
+  "line": "Do <em>real</em> business,<br>not just clubs",
+  "sub": "A small business, a paid job, running a club's money, a stock pitch. One thing you built beats ten titles."
+ },
+ {
+  "key": "wharton-08",
+  "style": "navy",
+  "kicker": "Got in? Don't wait",
+  "line": "Banks recruit<br><em>sophomore year</em>",
+  "sub": "Start interview prep early. Free practice at mnaprep.com"
  }
 ]

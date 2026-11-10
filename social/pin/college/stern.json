@@ -4,48 +4,55 @@
   "style": "navy",
   "kicker": "College admissions",
   "line": "How to get into<br><em>NYU Stern</em>",
-  "sub": "New York University \u00b7 New York City \u00b7 save this for later \ud83d\udccc"
+  "sub": "New York University \u00b7 what actually matters \u00b7 save this \ud83d\udccc"
  },
  {
   "key": "stern-02",
   "style": "cream",
   "kicker": "The numbers",
-  "line": "<em>4.0%</em><br>acceptance rate",
-  "sub": "Ranked #6 undergrad business school. Source: Poets&Quants for Undergrads, 2026."
+  "line": "<em>4.0%</em> get in",
+  "sub": "Ranked #6 undergrad business school.<br>Source: Poets&Quants for Undergrads 2026"
  },
  {
   "key": "stern-03",
   "style": "marble",
-  "kicker": "Step 1 \u00b7 How you apply",
-  "line": "Know which<br><em>door</em> you're using",
-  "sub": "You apply to NYU and choose Stern. Show why studying business in the middle of NYC matters to you."
+  "kicker": "Step 1 \u00b7 Apply direct",
+  "line": "Choose <em>Stern</em><br>on your NYU app",
+  "sub": "Stern admits freshmen straight into the business school. NYU has Early Decision I and II: use one if Stern is your #1."
  },
  {
   "key": "stern-04",
-  "style": "chart",
+  "style": "navy",
   "kicker": "Step 2 \u00b7 Grades",
-  "line": "Take the <em>hardest</em><br>math you can",
-  "sub": "Top business schools want proof you can handle numbers: calculus, stats, economics. Strong grades in hard classes beat easy A's."
+  "line": "The <em>hardest</em> classes,<br>near-perfect grades",
+  "sub": "Admitted students usually took the toughest courses their school offers. If you send a score, 1500+ SAT or 34+ ACT puts you in a strong spot."
  },
  {
   "key": "stern-05",
-  "style": "navy",
-  "kicker": "Step 3 \u00b7 Show, don't tell",
-  "line": "Do something<br><em>real</em> with business",
-  "sub": "Start a small business, run a club's budget, join DECA or FBLA, invest in a stock challenge. One real project beats ten club titles."
+  "style": "cream",
+  "kicker": "Step 3 \u00b7 Have a niche",
+  "line": "Not \"I like business.\"<br>Which <em>part?</em>",
+  "sub": "Pick a lane (finance, sports business, fashion, startups) and go deep: read the news, take a free course, build something."
  },
  {
   "key": "stern-06",
-  "style": "cream",
-  "kicker": "Step 4 \u00b7 The essay",
-  "line": "Make it <em>only</em><br>about NYU Stern",
-  "sub": "Name specific classes, programs or clubs you'd join. If your essay works for any school, rewrite it."
+  "style": "marble",
+  "kicker": "Step 4 \u00b7 Real experience",
+  "line": "A <em>job</em> counts<br>more than you think",
+  "sub": "Paid work, a pre-college business program or an internship that fits your story all show you've seen business up close."
  },
  {
   "key": "stern-07",
-  "style": "marble",
-  "kicker": "Step 5 \u00b7 Plan ahead",
-  "line": "Already in?<br>Start <em>recruiting</em> early",
-  "sub": "Banking and consulting internships recruit sophomore year. Free interview prep at mnaprep.com"
+  "style": "chart",
+  "kicker": "Step 5 \u00b7 Start something",
+  "line": "Don't say <em>entrepreneur.</em><br>Be one.",
+  "sub": "Launch a real (even tiny) business or start a group at school. Action beats claimed interest."
+ },
+ {
+  "key": "stern-08",
+  "style": "navy",
+  "kicker": "Got in? Don't wait",
+  "line": "Banks recruit<br><em>sophomore year</em>",
+  "sub": "Start interview prep early. Free practice at mnaprep.com"
  }
 ]

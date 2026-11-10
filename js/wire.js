@@ -32,7 +32,29 @@
   let last=0;
   async function pull(){last=Date.now();
     try{const r=await fetch(SRC+"?t="+Math.floor(Date.now()/300000),{cache:"no-store"});if(!r.ok)return;
-      const w=await r.json();if(apply(w)){refresh();try{localStorage.setItem(CK,JSON.stringify(w))}catch(e){}}}catch(e){}}
+      const w=await r.json();if(apply(w)){refresh();if(liveAt)live();try{localStorage.setItem(CK,JSON.stringify(w))}catch(e){}}}catch(e){}}
   setTimeout(pull,300);
+  /* Live prices: /.netlify/functions/ticker returns current quotes (cached 60s at Netlify's edge).
+     They overwrite the prices from wire.json, so the tape is never stale. Refreshes every 60s while visible. */
+  const ET=d=>d.toLocaleString("en-US",{timeZone:"America/New_York",month:"short",day:"numeric"});
+  const ETT=d=>d.toLocaleString("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"2-digit"}).replace(" ","").toLowerCase();
+  let liveAt=0;
+  async function live(){liveAt=Date.now();
+    try{const base=new Set(["DOW","S&P 500","NASDAQ","RUSSELL 2000","VIX","10Y YIELD","WTI","GOLD","SILVER","BITCOIN"]);
+      const extra=TICKER.map(t=>t[0]).filter(s=>!base.has(s)&&/^[A-Z][A-Z.\-]{0,6}$/.test(s)).slice(0,20);
+      const r=await fetch("/.netlify/functions/ticker?s="+encodeURIComponent(extra.join(",")));if(!r.ok)return;
+      const j=await r.json();if(!j||!Array.isArray(j.tape)||j.tape.length<5)return;
+      const m=new Map(j.tape.filter(okTick).map(t=>[t[0],t]));
+      const next=TICKER.map(t=>m.get(t[0])||t);TICKER.forEach(t=>m.delete(t[0]));
+      /* core stocks the wire file didn't have go right after the indexes */
+      const at=next.findIndex(t=>!base.has(t[0]));const add=[...m.values()];
+      if(add.length)next.splice(at<0?next.length:at,0,...add);
+      TICKER=next;
+      if(j.asOf){const d=new Date(j.asOf),fresh=Date.now()-d<20*60000;
+        TICKER_DATE=fresh?ET(d)+", "+ETT(d)+" ET":ET(d);window.TAPE_LIVE=fresh}
+      refresh()}catch(e){}}
+  setTimeout(live,600);
+  setInterval(()=>{if(!document.hidden&&Date.now()-liveAt>55000)live()},15000);
+
   document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-last>15*60000)pull()});
 })();

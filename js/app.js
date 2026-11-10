@@ -1418,7 +1418,7 @@ function wireDot(){const d=$("#newsDot");if(!d)return;const n=wireUnread();d.hid
 const WIRE_SNAP=[["S&P 500","S&P 500"],["NASDAQ","Nasdaq"],["DOW","Dow"],["10Y YIELD","10Y yield"],["WTI","Oil"],["BITCOIN","Bitcoin"]];
 function wireSnap(){const cells=WIRE_SNAP.map(([s,l])=>{const t=TICKER.find(x=>x[0]===s);if(!t)return"";const c=t[2];
     return `<button class="ws-cell" data-sym="${esc(s)}"><span>${l}</span><b>${esc(t[1])}</b>${c==null?'<i>&nbsp;</i>':`<i class="${c>=0?"up":"dn"}">${c>=0?"▲":"▼"} ${Math.abs(c).toFixed(2)}%</i>`}</button>`}).join("");
-  return `<section class="ws" aria-label="Market close"><div class="ws-top"><span class="label">Market close · ${esc(TICKER_DATE)}</span><button class="flink" id="wsAll">All markets →</button></div><div class="ws-grid">${cells}</div>${RECAP&&RECAP.t?`<p class="ws-recap">${esc(RECAP.t)}</p>`:""}</section>`}
+  return `<section class="ws" aria-label="Market close"><div class="ws-top"><span class="label">${window.TAPE_LIVE?"Live":"Market close"} · ${esc(TICKER_DATE)}</span><button class="flink" id="wsAll">All markets →</button></div><div class="ws-grid">${cells}</div>${RECAP&&RECAP.t?`<p class="ws-recap">${esc(RECAP.t)}</p>`:""}</section>`}
 function wireCal(){if(!CAL||!CAL.length)return"";
   return `<details class="wcal"${innerWidth>620?" open":""}><summary><span class="label">On the calendar</span><span class="chev" aria-hidden="true"></span></summary><ul>${CAL.map(([d,t,n,src])=>`<li><span class="wcal-d">${esc(d)}</span><div><b>${esc(t)}</b><p>${esc(n)}${src?` <a href="${esc(src[1])}" target="_blank" rel="noopener">${esc(src[0])}</a>`:""}</p></div></li>`).join("")}</ul></details>`}
 function wireEarn(){if(!EARN||!EARN.length)return"";const today=new Date().toLocaleDateString("en-CA",{timeZone:"America/New_York"});
@@ -2740,14 +2740,14 @@ function mkPulseHTML(){const pick=["S&P 500","NASDAQ","DOW","10Y YIELD"].map(s=>
    <div class="mk-breadth"><div class="mk-bb" role="img" aria-label="${up} up, ${dn} down"><i class="up" style="width:${ch.length?up/ch.length*100:50}%"></i><i class="dn" style="width:${ch.length?dn/ch.length*100:50}%"></i></div><span><b class="up">${up} up</b> · <b class="dn">${dn} down</b> on the tape</span>
    ${g&&g[2]>0?`<button class="mk-mover up" data-mq="${esc(g[0])}">Top gainer <b>${esc(g[0])}</b> +${g[2].toFixed(1)}%</button>`:""}${l&&l[2]<0?`<button class="mk-mover dn" data-mq="${esc(l[0])}">Top loser <b>${esc(l[0])}</b> −${Math.abs(l[2]).toFixed(1)}%</button>`:""}</div>`}
 function openMarkets(sym){if(sym)return showQuote(sym);
-  openPanel(`<div class="label">Markets · tape prices from ${TICKER_DATE} close</div><h2>Market lookup</h2>
+  openPanel(`<div class="label">Markets · ${window.TAPE_LIVE?'live prices · '+TICKER_DATE:'prices from '+TICKER_DATE+' close'}</div><h2>Market lookup</h2>
     ${mkPulseHTML()}
     <div class="mk-search"><input id="mkQ" placeholder="Search 5,800+ U.S. companies, a symbol, or a market like oil" value="${esc(mktQ)}" aria-label="Search markets" autocomplete="off"></div>
     <div class="cats" id="mkCats" role="group" aria-label="Filter"></div>
     <div class="mk-head"><span>Name</span><button class="flink" id="mkSort">${mktSort==="up"?"Biggest gainers":mktSort==="down"?"Biggest losers":"Default order"} ⇅</button></div>
     <div id="mkList" class="mk-list"></div>
     <label class="srow" style="border:0"><span><b>Ticker shows my watchlist only</b><span>Star symbols to build a watchlist. Starred items always lead the tape.</span></span><input type="checkbox" class="sw" id="mkOnly" ${S.settings.tapeWatch?"checked":""}></label>
-    <p class="note">Closing prices from ${TICKER_DATE}, refreshed with The Wire. Not live quotes.</p>`);
+    <p class="note">${window.TAPE_LIVE?'Live prices from Yahoo Finance, updated every minute (can lag a few minutes).':'Closing prices from '+TICKER_DATE+'. Live prices show during market hours.'}</p>`);
   panel.classList.add("wide");
   const cats=["All","Companies","Watchlist","Index","Rates","Commodities","Crypto","Stocks"];
   const draw=()=>{$("#mkCats").innerHTML=cats.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${c===mktFilter}">${c==="Index"?"Indexes":c}</button>`).join("");
@@ -2788,7 +2788,7 @@ function showQuote(sym,fromList){const t=TICKER.find(x=>x[0]===sym);if(!t)return
   const stories=NEWS.filter(x=>re.test(x.h+" "+x.w+" "+x.m));
   const firm=FIRMS.find(f=>keys.some(k=>f[0].toLowerCase()===k.toLowerCase()));
   const sec=ty==="Stocks"||ty==="Index"||ty==="Crypto"?"Markets & Hedge Funds":ty==="Rates"?"Valuation & DCF":"Markets & Hedge Funds";
-  openPanel(`${fromList?'<button class="ghost back" id="qBack">← All markets</button>':""}<div class="label">${ty} · ${TICKER_DATE} close</div>
+  openPanel(`${fromList?'<button class="ghost back" id="qBack">← All markets</button>':""}<div class="label">${ty} · ${window.TAPE_LIVE?TICKER_DATE:TICKER_DATE+' close'}</div>
     <div class="q-head"><div><h2>${esc(sym)}</h2><p class="sub" style="margin:0">${esc(n)}</p></div><button class="star" id="qStar" aria-pressed="${w}">${w?"★ Watching":"☆ Watch"}</button></div>
     <div class="q-big">${t[1]?`<b>${esc(t[1])}</b>`:""}${t[2]===null||t[2]===undefined?`<span class="note">No daily change recorded</span>`:fmtChg(t[2])}</div>
     ${d?`<p>${esc(d)}</p>`:""}

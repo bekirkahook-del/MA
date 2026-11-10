@@ -30,4 +30,3 @@
 - 2026-11-09 oddq-week — [Interview Q] Seconds in a week (604,800)
 - 2026-11-09 bc-hfpay — [Blue Chip] Top 3 hedge fund manager earnings 2025 (Bloomberg; CEO-pay style)
 - 2026-11-09 vid-tq-ev — [Video quiz] Negative enterprise value (multiple choice, timer)
-- 2026-11-09 vid-tq-15pct — [Video teaser] 15% of 360 (timer)

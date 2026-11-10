@@ -6,6 +6,14 @@ Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip ran
 ## Audience (read first)
 Everything is for **people aged 15–30**: high schoolers, college students, new grads. Pick topics they care about and will **comment on**: money, salaries, getting into college, landing internships and first jobs, famous companies and people, "is it worth it?", school rivalries, and things they can rate themselves against. Every post should give people a reason to comment: ask for their score, their pick, their school, their opinion, or a guess before they swipe. Skip dry topics that only bankers care about.
 
+## Video rankings (Bekir, 2026-11-09: carousels felt "low effort", make it more entertaining)
+The 4 daily Blue Chip rankings are now **animated videos**, not 2-slide carousels:
+- Spec like the Blue Chip spec but for `gen/rankvid.js`: `{key, kicker, hook, sub, title, rows:[[label, value, display, emoji]] (#1 first, 4–6 rows), ask, source}`. Pick a fitting emoji per row (never a logo). Hook = the surprising number/claim; `ask` = a specific comment prompt.
+- Render: `node gen/rankvid.js <spec> ../vid/<date>` → `<key>.mp4` (~14s: hook → countdown from last place → mystery #1 → drumroll → reveal with money rain → end card) + `<key>-cover.jpg`. Soundtrack is synthesized by `gen/sfx.py` (original, no licensing). Needs `pip install qrcode numpy --break-system-packages` only for ig.py.
+- Check 3 frames (ffmpeg -ss 1 / mid / reveal+1) before posting: nothing cut off, #1 hidden until the reveal.
+- TikTok: media = [the mp4 URL], same tiktokData but `autoAddMusic:false`. Instagram: same mp4 as `instagramData {"type":"REEL","showReelOnFeed":true,"isAiGenerated":false}`. Pinterest: `ig.py --pin` on the `-cover.jpg`.
+- Keep making carousels for quizzes/brain teasers until a video version exists for those too.
+
 ## Get creative (Bekir, 2026-11-09: "use all the skills you have, don't be lackluster")
 Rotate formats every day so the feed never looks the same. Each day, at least 4 different formats across the 10 posts. Ideas (all must stay accurate, sourced where numbers are real):
 - **Guess the salary:** 3 jobs, swipe to reveal which pays most (Blue Chip chart reveal).

@@ -11,12 +11,16 @@ def tags(img, alt):
             f'<meta property="og:image:height" content="630"><meta property="og:image:alt" content="{alt}">'
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/img/og/{img}.jpg">')
 
+COLOR = open(os.path.join(ROOT, "guides", "_src", "color.css.html"), encoding="utf-8").read()
 ICONS = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml">'
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">'
          '<meta name="robots" content="max-image-preview:large"><link rel="alternate" type="application/rss+xml" title="M&amp;A Prep guides" href="/feed.xml">')
 
 def add_tags(s, img, alt):
     s = re.sub(r'<meta property="og:image[^>]*>|<meta name="twitter:(?:card|image)"[^>]*>', "", s)
+    if '<main class="wrap">' in s:  # guide pages only; the app homepage has its own color block
+        s = re.sub(r'<style id="color-pop">.*?</style>', "", s, flags=re.S)
+        s = s.replace("</head>", COLOR + "</head>", 1)
     s = re.sub(r'<link rel="(?:icon|apple-touch-icon|shortcut icon|manifest)"[^>]*>|<meta name="robots"[^>]*>|<link rel="alternate" type="application/rss\+xml"[^>]*>', "", s)
     return s.replace("</title>", "</title>" + tags(img, alt) + ICONS, 1)
 

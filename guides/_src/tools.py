@@ -14,6 +14,7 @@ ICONS = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" hr
          '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">'
          '<meta name="robots" content="max-image-preview:large"><link rel="alternate" type="application/rss+xml" title="M&amp;A Prep guides" href="/feed.xml">')
 
+COLOR = open(os.path.join(ROOT, "guides", "_src", "color.css.html"), encoding="utf-8").read()
 TOOL_CSS = """<style>
 .tool{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:18px;margin:18px 0}
 .tool label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}
@@ -55,7 +56,7 @@ def shell(slug, title, h1, desc, lede, body, faqs, script, kind="WebApplication"
 <meta name="description" content="{e(desc)}"><link rel="canonical" href="{url}">
 <meta property="og:title" content="{e(t)}"><meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:type" content="website"><meta property="og:site_name" content="M&amp;A Prep">
 <meta name="theme-color" content="#13203B">
-{FONTS}{STYLE}{TOOL_CSS}
+{FONTS}{STYLE}{TOOL_CSS}{COLOR}
 {''.join(f'<script type="application/ld+json">{json.dumps(x)}</script>' for x in ld)}
 {NUNITO}
 </head><body>

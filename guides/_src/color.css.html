@@ -1,0 +1,8 @@
+<style id="color-pop">:root{--c-green:#16A06A;--c-amber:#E39B0B;--c-violet:#7357F6}
+main h2::before{content:"";display:inline-block;width:4px;height:.9em;border-radius:2px;background:var(--cobalt);margin-right:10px;vertical-align:-2px}
+main h2:nth-of-type(4n+2)::before{background:var(--c-green)}main h2:nth-of-type(4n+3)::before{background:var(--c-amber)}main h2:nth-of-type(4n+4)::before{background:var(--c-violet)}
+.tag{color:var(--cobalt);border-color:color-mix(in srgb,var(--cobalt) 35%,var(--rule))}
+th{background:color-mix(in srgb,var(--cobalt) 8%,var(--sheet))!important}
+.cta{background:linear-gradient(135deg,color-mix(in srgb,var(--cobalt) 12%,var(--sheet)),color-mix(in srgb,var(--c-violet) 12%,var(--sheet)))!important}
+.crumb a:last-child{color:var(--cobalt)}
+</style>

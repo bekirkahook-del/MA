@@ -43,6 +43,16 @@ body .hl-step:hover{border-color:var(--ac)}
 body .hl-step .hl-n{background:var(--ac);color:#fff}
 body #xpBar{background:linear-gradient(90deg,var(--c-blue),var(--c-violet))!important}
 body .daily .label{color:var(--c-green)}
+/* Site-wide: each track gets its own accent; tab indicator in brand blue */
+body .fx-ind{background:var(--c-blue)}
+body .track{--tc:var(--c-blue)}
+body .track:nth-child(5n+2){--tc:var(--c-green)}body .track:nth-child(5n+3){--tc:var(--c-amber)}body .track:nth-child(5n+4){--tc:var(--c-violet)}body .track:nth-child(5n+5){--tc:#0E9AA7}
+body .track .tr-name::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--tc);margin-right:9px;vertical-align:2px}
+body .track .step.open .node{border-color:var(--tc);color:var(--tc)}
+body .track .step.cleared .node{background:var(--tc);border-color:var(--tc);color:#fff}
+body .track .tr-dots i.on{background:var(--tc)}
+body .track .pill.go{color:var(--tc)}
+body .page-head h1::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin-top:8px;background:linear-gradient(90deg,var(--c-blue),var(--c-violet))}
 </style>
 </head><body>
 <style>

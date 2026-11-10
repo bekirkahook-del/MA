@@ -15,6 +15,16 @@ The 4 daily Blue Chip rankings are now **animated videos**, not 2-slide carousel
 - **Brain teasers and quizzes are videos too** (Bekir: "more like that, videos and pictures"): `node gen/teaservid.js <spec> ../vid/<date>` → `<key>.mp4` (~15s: question pops → 5-second ticking timer ring → TIME'S UP → answer slam → steps one by one → comment prompt → end card) + `<key>-cover.jpg` + `<key>-answer.jpg`. Spec: `{key, label, question (<b>=red), emoji, seconds, options?:[4], correct?:index, answer, steps:[3], ask}`. Open questions use an emoji; multiple-choice uses 4 options (vary the correct letter). Keep the answer under ~22 characters.
 - Daily mix: 4 ranking videos + 3 teaser videos (open mental math / estimate / logic) + 3 quiz posts, of which at least 2 are teaservid multiple-choice videos and at most 1 is a carousel (use a "Get creative" format for it). Pinterest pins for teaser videos use `-answer.jpg`.
 
+## Table infographic decks (Bekir, 2026-11-10: "2 slide decks like this should be added in")
+Modeled on a viral "Big Ten Schools Most Frequently Hired for Finance" post. **2 every day**, on top of the 10 above (12 TikToks a day).
+- Format: slide 1 = skyscraper photo + big green rounded caption box ("BEST BIG 10 FINANCE SCHOOLS") + "—>" box; slide 2 = white newspaper-style ranked table (serif title, subtitle, black header row, rank · logo + name · 3 data columns, #1 row highlighted, sources line, mnaprep.com footer bar); slide 3 = mnaprep.com CTA.
+- Render: `node gen/tabledeck.js <spec> ../tbl/<date>` (spec example: tbl/2026-11-10/tbl-bschoolpay.json). Exit code 2 = table runs into the sources line: cut rows (8–10 is right) or shorten cells.
+- **Logos are allowed in these decks (Bekir, 2026-11-10).** Put them in gen/logos/<domain>.png, fetched with `curl -sL "https://www.google.com/s2/favicons?domain=<domain>&sz=128"`; check the size is at least 48px and it looks right (try the school/company's main domain or a subdomain like stern.nyu.edu); otherwise omit `logo` and the renderer draws an initials badge. Reuse files already in gen/logos.
+- Topics: rankings with 3 real numeric/text columns from ONE source read that run: schools (salary, acceptance, placement), companies (market cap, revenue, profit), banks (fees, profit, headcount), CEO/athlete/creator pay, cities (rent vs pay). Mix one school/career table and one company/money table per day. Never invent filler like "strong placement"; every cell must be sourced or plainly factual.
+- Instagram: 4:5 carousel copies with ig.py. Pinterest: slide 2 via `ig.py --pin`, board "Wall Street Salaries & Rankings" (schools/pay) or "Banks, Deals & IPOs" (companies/markets). TikTok autoAddMusic true, commercialContentOwnBrand false.
+- Spacing: with 12 TikToks, keep them at least 45 minutes apart (Bekir chose tighter spacing over dropping posts).
+- Done: tbl-bschoolpay (top b-schools by grad salary, P&Q), tbl-mktcap (most valuable companies, Nov 9 2026).
+
 ## Get creative (Bekir, 2026-11-09: "use all the skills you have, don't be lackluster")
 Rotate formats every day so the feed never looks the same. Each day, at least 4 different formats across the 10 posts. Ideas (all must stay accurate, sourced where numbers are real):
 - **Guess the salary:** 3 jobs, swipe to reveal which pays most (Blue Chip chart reveal).
@@ -110,7 +120,7 @@ One pin per post, same time as the TikTok (Bekir, 2026-11-09).
 Boards (Bekir creates them on Pinterest; names must match exactly): Wall Street Salaries & Rankings · Banks, Deals & IPOs · Finance Brain Teasers · Investment Banking Interview Questions · DCF, LBO & Valuation Explained · Money Tips for Students · Finance Aesthetic · M&A Prep (catch-all).
 - Route each day's pins: Blue Chip pay/school/job rankings → Wall Street Salaries & Rankings; bank/deal/market rankings → Banks, Deals & IPOs; brain teasers → Finance Brain Teasers; interview quizzes → Investment Banking Interview Questions; DCF/LBO/valuation explainers → DCF, LBO & Valuation Explained; money tips → Money Tips for Students. If a board can't be resolved, fall back to "M&A Prep"; if that fails too, skip Pinterest.
 - **Backfill:** `social/pin/queue.json` lists ready-made pins (image, board, title, text, link). Every run, schedule up to 8 not-yet-posted items spread 12pm–11pm, set their `"posted": true`, commit.
-- **Finance aesthetic (Bekir, 2026-11-09: "doesn't even have to be about the website, just finance vibes with aesthetic pics"):** every day make 5 new cards with `node gen/aesthetic.js <spec> ../pin/aesthetic/<date>` (styles navy, cream, marble, skyline, chart; see pin/aesthetic/2026-11-09.json). Short original lines about money mindset, investing, compounding, Wall Street ambition. Never attribute a quote to a real person; any number must be checked in node. Pin them to "Finance Aesthetic" with `pinLink` https://mnaprep.com/ and "mnaprep.com" at the end of the text. Also render `--story` versions and use 2 of them as Instagram stories.
+- **Finance aesthetic (Bekir, 2026-11-09: "doesn't even have to be about the website, just finance vibes with aesthetic pics"):** every day make 5 new cards with `node gen/aesthetic.js <spec> ../pin/aesthetic/<date>` (styles navy, cream, marble, skyline, chart; see pin/aesthetic/2026-11-09.json). Short original lines about money mindset, investing, compounding, Wall Street ambition. Never attribute a quote to a real person; any number must be checked in node. Pin them to "Finance Aesthetic" with `pinLink` https://mnaprep.com/ and "mnaprep.com" at the end of the text. (No Instagram stories: stopped 2026-11-10.)
 - Daily Pinterest total: 10 post pins + 5 aesthetic pins + backfill until the queue is empty (that's 10+ a day on every platform).
 
 ## 5c-3. "How to get into ___" college guide pins (Bekir, 2026-11-09)
@@ -121,10 +131,8 @@ Board: "How to Get Into Business School" (fall back to "M&A Prep" until Bekir cr
 - Every number must come from a source read that run (school class profile, Common Data Set, or Poets&Quants); name the source on the numbers slide. Never claim to be a certified counselor or admissions officer, never promise admission, and never use school logos, crests or mascots. Steps must be honest, general-but-specific advice (how you apply to that school, course rigor, real business projects, school-specific essay, plan recruiting early).
 - Done so far: Wharton, NYU Stern, Michigan Ross (scheduled 2026-11-10 on M&A Prep).
 
-## 5d. Instagram stories (5 a day)
-- 3 from today's 9:16 TikTok slides (a ranking chart, a brain teaser's question slide ~20–40 min before that teaser's answer post, one quiz/tip slide) + 2 finance-aesthetic `--story` cards.
-- Metricool post: providers [{"network":"instagram"}], media = one SHA-pinned 9:16 slide, `instagramData: {"type":"STORY","isAiGenerated":false}`, no text. Spread them between 12pm and 11pm ET.
-- TikTok stories can't be scheduled through Metricool, so skip them.
+## 5d. Instagram stories: STOPPED
+Bekir, 2026-11-10: "Don't post any more stories on insta." Never schedule Instagram stories (type STORY). TikTok stories can't be scheduled through Metricool either.
 
 ## 6. Log
 Append one line per post to `social/posted.md` (`- YYYY-MM-DD key — [Blue Chip] topic`), commit, push.

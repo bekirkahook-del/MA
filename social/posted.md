@@ -40,3 +40,5 @@
 - 2026-11-10 vid-tq-18x35 — [Brain teaser video] 18 × 35 = 630 (halve and double)
 - 2026-11-10 vid-rk-richest — [Ranking video] Richest people 2026 (Forbes; Musk $839B > #2–#4 combined)
 - 2026-11-10 vid-tq-stack — [Video quiz] Bankruptcy: senior secured lenders paid first (MC, C)
+- 2026-11-10 tbl-bschoolpay — [Table deck] Top business schools by grad starting salary (P&Q 2026, logos)
+- 2026-11-10 tbl-mktcap — [Table deck] Most valuable companies in the world (chartrow, Nov 9 2026, logos)

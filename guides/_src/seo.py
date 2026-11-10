@@ -11,9 +11,13 @@ def tags(img, alt):
             f'<meta property="og:image:height" content="630"><meta property="og:image:alt" content="{alt}">'
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/img/og/{img}.jpg">')
 
+ICONS = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml">'
+         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
+
 def add_tags(s, img, alt):
     s = re.sub(r'<meta property="og:image[^>]*>|<meta name="twitter:(?:card|image)"[^>]*>', "", s)
-    return s.replace("</title>", "</title>" + tags(img, alt), 1)
+    s = re.sub(r'<link rel="(?:icon|apple-touch-icon|shortcut icon)"[^>]*>', "", s)
+    return s.replace("</title>", "</title>" + tags(img, alt) + ICONS, 1)
 
 def nice(d):
     x = datetime.date.fromisoformat(d); return x.strftime("%b ") + str(x.day) + x.strftime(", %Y")

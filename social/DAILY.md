@@ -15,6 +15,11 @@ The 4 daily Blue Chip rankings are now **animated videos**, not 2-slide carousel
 - **Brain teasers and quizzes are videos too** (Bekir: "more like that, videos and pictures"): `node gen/teaservid.js <spec> ../vid/<date>` → `<key>.mp4` (~15s: question pops → 5-second ticking timer ring → TIME'S UP → answer slam → steps one by one → comment prompt → end card) + `<key>-cover.jpg` + `<key>-answer.jpg`. Spec: `{key, label, question (<b>=red), emoji, seconds, options?:[4], correct?:index, answer, steps:[3], ask}`. Open questions use an emoji; multiple-choice uses 4 options (vary the correct letter). Keep the answer under ~22 characters.
 - Daily mix: 4 ranking videos + 3 teaser videos (open mental math / estimate / logic) + 3 quiz posts, of which at least 2 are teaservid multiple-choice videos and at most 1 is a carousel (use a "Get creative" format for it). Pinterest pins for teaser videos use `-answer.jpg`.
 
+## Always a lead-up slide before a chart (Bekir, 2026-11-10)
+Never post a raw chart or table as the first thing people see. Every chart/table post starts with a lead-up "swipe" slide in the style of the viral Big Ten post: skyscraper photo, big uppercase white text in a dark-green rounded box, and a green "—>" box under it. Make it with `node gen/hookslide.js OUT.jpg "CAPTION" [W H]` (1000x1500 for pins, 1080 1920 for TikTok). The caption names the ranking but never gives away #1.
+- TikTok/Instagram: table decks (tabledeck.js slide 1) and Blue Chip carousels already open with it; ranking videos open with an animated hook over the photo.
+- Pinterest: chart pins are 2-image pins (`pinNewFormat: true`): media = [hook slide, chart pin]. This applies to ranking-video chart pins, table-deck pins and backfill chart pins (bc-*). Brain teaser/quiz answer pins stay single images.
+
 ## Table infographic decks (Bekir, 2026-11-10: "2 slide decks like this should be added in")
 Modeled on a viral "Big Ten Schools Most Frequently Hired for Finance" post. **2 every day**, on top of the 10 above (12 TikToks a day).
 - Format: slide 1 = skyscraper photo + big green rounded caption box ("BEST BIG 10 FINANCE SCHOOLS") + "—>" box; slide 2 = white newspaper-style ranked table (serif title, subtitle, black header row, rank · logo + name · 3 data columns, #1 row highlighted, sources line, mnaprep.com footer bar); slide 3 = mnaprep.com CTA.

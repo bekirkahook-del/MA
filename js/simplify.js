@@ -71,7 +71,31 @@ footer .ft-cols b{display:block;font-size:12px;letter-spacing:.08em;text-transfo
 footer .ft-cols a{display:block;color:var(--ink-2);text-decoration:none;font-size:13.5px;margin:5px 0}footer .ft-cols a:hover{color:var(--cobalt)}
 footer>a,footer>a+*{}footer>a[href="/guides/"],footer>a[href="/tools/"],footer>a[href="/deals/"]{display:none}
 footer{flex-direction:column;align-items:center}
-@media(max-width:560px){footer .ft-cols{grid-template-columns:1fr 1fr 1fr;gap:10px}footer .ft-cols a{font-size:12.5px}}`;
+@media(max-width:560px){footer .ft-cols{grid-template-columns:1fr 1fr 1fr;gap:10px}footer .ft-cols a{font-size:12.5px}}
+/* product preview under the landing button */
+.pv{position:relative;width:100%;max-width:440px;margin:6px auto 4px;transform:rotate(-1.5deg)}
+.pv-card{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:16px 18px;text-align:left;box-shadow:0 18px 40px rgba(19,32,59,.10),0 2px 6px rgba(19,32,59,.06)}
+.pv-k{display:flex;justify-content:space-between;font-family:var(--mono,monospace);font-size:11px;letter-spacing:.08em;color:var(--ink-2);text-transform:uppercase;margin-bottom:8px}
+.pv-q{font-weight:600;font-size:15px;margin:0 0 10px;color:var(--ink)}
+.pv-o{display:block;width:100%;text-align:left;font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:8px 11px;margin:6px 0;cursor:pointer;transition:border-color .15s,background .15s}
+.pv-o:hover{border-color:var(--cobalt)}.pv-o.y{border-color:#16A06A;background:color-mix(in srgb,#16A06A 12%,var(--sheet))}.pv-o.n{border-color:#C33;background:color-mix(in srgb,#C33 10%,var(--sheet))}
+.pv-why{font-size:13px;color:var(--ink-2);margin:8px 0 0}
+.pv-xp{position:absolute;top:-14px;right:-12px;background:linear-gradient(90deg,var(--cobalt),#7357F6);color:#fff;font-weight:700;font-size:13px;border-radius:99px;padding:6px 12px;box-shadow:0 8px 20px color-mix(in srgb,var(--cobalt) 35%,transparent);transform:rotate(4deg)}
+.pv-xp.pop{animation:pvPop .6s cubic-bezier(.2,1.6,.4,1)}@keyframes pvPop{0%{transform:rotate(4deg) scale(.6)}100%{transform:rotate(4deg) scale(1)}}
+@media(prefers-reduced-motion:reduce){.pv,.pv-xp{transform:none}.pv-xp.pop{animation:none}}
+/* live this week row */
+.lw{width:100%;max-width:820px;margin:4px auto 0}
+.hero .lw .lw-h{display:block;width:100%;max-width:none!important;margin:0 0 10px!important;font-size:12px!important;text-align:center!important;font-weight:400;font-family:var(--mono,monospace);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+.lw-h i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#16A06A;margin-right:7px;vertical-align:1px;animation:livePulse 1.6s infinite}
+.lw-row{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:10px}
+.lw-c{font:inherit;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--ac,var(--cobalt));border-radius:12px;padding:12px 14px;cursor:pointer;color:inherit;display:flex;flex-direction:column;gap:4px;transition:transform .15s,box-shadow .15s}
+.lw-c:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(19,32,59,.08)}
+.lw-c span{font-family:var(--mono,monospace);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac,var(--cobalt))}
+.lw-c b{font-size:14px;line-height:1.35;color:var(--ink)}.lw-c em{font-style:normal;font-size:12px;color:var(--ink-2)}
+@media(max-width:620px){.lw-row{grid-template-columns:1fr!important}}
+.hero:not(:has(.hl-land)) .lw{order:98}
+/* section headings centered for symmetry */
+.pane>h2,.pane>.sec-title,.pane .sec-head{text-align:center}`;
   const st=document.createElement("style");st.id="simplify";st.textContent=css;document.head.appendChild(st);
   const $=s=>document.querySelector(s);
 
@@ -116,7 +140,33 @@ footer{flex-direction:column;align-items:center}
 <div><b>Free tools</b><a href="/tools/recruiting-timeline-calculator/">Timeline calculator</a><a href="/tools/superday-readiness-test/">Superday test</a><a href="/tools/investment-banking-pay/">IB pay by level</a><a href="/deals/">Deal database</a></div>
 <div><b>M&amp;A Prep</b><a href="/tools/embed/">Add our widget</a><a href="https://calendar.google.com/calendar/render?cid=webcal://mnaprep.com/calendar.ics" target="_blank" rel="noopener">Deadline calendar</a><a href="/feed.xml">RSS feed</a><a href="/guides/#schools">IB by school</a></div>`;f.prepend(d);[...f.childNodes].forEach(n=>{if(n.nodeType===3&&/^[\s·]*$/.test(n.textContent))n.remove()})}
   /* the landing re-renders; keep icons and the proof line on it */
-  function keep(){const v=document.querySelector(".hero");if(!v)return setTimeout(keep,300);new MutationObserver(()=>{icons();trust()}).observe(v,{childList:true,subtree:true});icons();trust()}
+  function keep(){const v=document.querySelector(".hero");if(!v)return setTimeout(keep,300);let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;icons();trust();preview();live();busy=false}).observe(v,{childList:true,subtree:true});icons();trust();preview();live();setInterval(live,60000)}
+
+  /* 7. product preview: a real sample question with a +10 XP badge */
+  function preview(){const cta=document.querySelector(".hl-land .hl-cta");if(!cta||document.querySelector(".pv"))return;
+    const after=document.querySelector(".hl-trust")||cta;const d=document.createElement("div");d.className="pv";d.setAttribute("aria-label","Sample question");
+    d.innerHTML=`<span class="pv-xp">+10 XP</span><div class="pv-card"><div class="pv-k"><span>Level 1 · The three statements</span><span>1 of 8</span></div>
+<p class="pv-q">Depreciation goes up by $10. Tax rate is 25%. What happens to cash?</p>
+<button class="pv-o" data-i="0">Down $10</button><button class="pv-o" data-i="1">Up $2.50</button><button class="pv-o" data-i="2">No change</button>
+<p class="pv-why" hidden></p></div>`;after.after(d);
+    let done=false;d.querySelectorAll(".pv-o").forEach(b=>b.onclick=()=>{if(done)return;done=true;const ok=b.dataset.i==="1";
+      d.querySelectorAll(".pv-o").forEach(x=>{if(x.dataset.i==="1")x.classList.add("y");else if(x===b)x.classList.add("n")});
+      const w=d.querySelector(".pv-why");w.hidden=false;w.innerHTML=(ok?"<b>Nice.</b> ":"<b>Close.</b> ")+"Net income falls $7.50, but you add back the $10 non-cash expense, so cash goes up $2.50. <a href=\"#\" class=\"pv-go\">Play Level 1 →</a>";
+      w.querySelector(".pv-go").onclick=e=>{e.preventDefault();const g=document.getElementById("landGo");if(g)g.click()};
+      if(ok){const x=d.querySelector(".pv-xp");x.classList.remove("pop");void x.offsetWidth;x.classList.add("pop")}})}
+  /* 8. live this week: newest story, newest deal, soonest open application, all from The Wire */
+  function live(){const hero=document.querySelector(".hero");if(!hero)return;let el=document.querySelector(".lw");
+    const g=v=>{try{return eval(v)}catch(e){return null}};const N=g("NEWS")||[],D=g("DEALS")||[],A=g("APP_OPEN")||[];if(!N.length)return;
+    const ts=d=>Date.parse(d&&d.date)||0;const deal=D.slice().sort((a,b)=>ts(b)-ts(a))[0];
+    const today=new Date().toISOString().slice(0,10);const app=A.filter(a=>a[3]==="open"&&(!a[6]||a[6]>today)).sort((a,b)=>String(a[6]||"9").localeCompare(String(b[6]||"9")))[0];
+    const esc2=t=>String(t||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+    const cards=[`<button class="lw-c" style="--ac:var(--cobalt)" data-go="news"><span>Top story · ${esc2(N[0].d)}</span><b>${esc2(N[0].h)}</b><em>Read on The Wire →</em></button>`];
+    if(deal)cards.push(`<button class="lw-c" style="--ac:#7357F6" data-go="deal"><span>Newest deal · ${esc2(deal.value)}</span><b>${esc2(deal.buyer)} → ${esc2(deal.target)}</b><em>Break it down →</em></button>`);
+    if(app)cards.push(`<button class="lw-c" style="--ac:#16A06A" data-go="apps"><span>Applications open${app[6]?" · closes "+esc2(app[6].slice(5).replace("-","/")):""}</span><b>${esc2(app[0])}: ${esc2(app[1])}</b><em>See all openings →</em></button>`);
+    const html=`<p class="lw-h"><i></i>Live this week</p><div class="lw-row" style="--n:${cards.length}">${cards.join("")}</div>`;
+    if(!el){el=document.createElement("section");el.className="lw";const side=hero.querySelector(".hero-side");if(!side)return;side.insertBefore(el,side.querySelector(".side-daily"))}
+    if(el.dataset.h!==html){el.innerHTML=html;el.dataset.h=html;
+      el.onclick=e=>{const b=e.target.closest(".lw-c");if(!b)return;const k=b.dataset.go;try{if(k==="news")toggleWire(true);else if(k==="deal")showSub("learn","deals");else showTab("recruit")}catch(x){}}}}
   function init(){const t=$("#xpText"),c=t&&t.closest(".card");if(c)c.hidden=false;challenge();market();footer();keep()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(init,80));else setTimeout(init,80);
 })();

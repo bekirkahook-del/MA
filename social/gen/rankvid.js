@@ -9,8 +9,19 @@ const photo = "data:image/png;base64," + fs.readFileSync(path.join(__dirname, "j
 const [, , specPath, outDir] = process.argv; const S = JSON.parse(fs.readFileSync(specPath, "utf8"));
 const FPS = 30, n = S.rows.length;
 // timeline (seconds)
-const T = { hookEnd: 2.6, step: 1.25 }; T.listStart = T.hookEnd; T.rollStart = T.listStart + (n - 1) * T.step + 0.3; T.reveal = T.rollStart + 1.3;
-T.holdEnd = T.reveal + 3.2; T.end = T.holdEnd + 1.8; const DUR = T.end;
+const VO = require("./vo.js"); const voDir = path.join(outDir, "_vo_" + S.key); fs.mkdirSync(outDir, { recursive: true });
+// Voiceover script (override any line with spec.vo = {hook, rows:[...#1 first], roll, reveal, ask})
+const vo = S.vo || {}; const sayVal = r => { const m = String(r[2]).match(/^\$?([\d,.]+)\s?([KMBT])$/); if (!m) return r[2]; const v = parseFloat(m[1].replace(/,/g, "")); return (v >= 10 ? Math.round(v) : v) + m[2]; };
+const L = [vo.hook || S.hook,
+  ...S.rows.map((r, i) => (vo.rows && vo.rows[i]) || `Number ${i + 1}, ${r[0]}: ${sayVal(r)}.`).slice(1).reverse(),
+  vo.roll || "And number one is...", vo.reveal || `${S.rows[0][0]}, with ${S.rows[0][2]}!`, vo.ask || S.ask];
+const D = VO.synth(voDir, L); // durations
+const T = { at: [] }; T.hookEnd = Math.max(2.6, D[0] + 0.6); T.listStart = T.hookEnd; let c = T.listStart;
+for (let k = 0; k < n - 1; k++) { const i = n - 1 - k; T.at[i] = c; c += Math.max(1.5, D[1 + k] + 0.35); }
+T.rollStart = c + 0.1; T.reveal = T.rollStart + Math.max(1.4, D[n] + 0.35); T.askAt = T.reveal + D[n + 1] + 0.3;
+T.holdEnd = T.askAt + D[n + 2] + 1.3; T.end = T.holdEnd; const DUR = T.end;
+const VOEV = [[0.25, 0], ...Array.from({ length: n - 1 }, (_, k) => [T.at[n - 1 - k] + 0.05, 1 + k]), [T.rollStart, n], [T.reveal + 0.1, n + 1], [T.askAt, n + 2]]
+  .map(([t, i]) => [t, path.join(voDir, "vo_" + String(i).padStart(2, "0") + ".wav")]);
 const css = `@font-face{font-family:Arc;font-weight:900;src:url(${F("archivo/files/archivo-latin-900-normal.woff2")})}
 @font-face{font-family:Plex;font-weight:600;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2")})}
 @font-face{font-family:Mono;font-weight:500;src:url(${F("ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")})}
@@ -42,7 +53,7 @@ const html = `<html><head><style>${css}</style></head><body>
 <div class="sc" id="s1"><div class="ph" id="ph"></div><div class="shade"></div><div class="hook"><div class="k">${S.kicker}</div><h1>${words.map((w, i) => `<span class="w" id="w${i}">${w}</span>`).join(" ")}</h1><div class="sub" id="sub">${S.sub}</div></div><div class="stk" id="stk">Guess #1 before it drops 👇</div></div>
 <div class="sc" id="s2"><div class="top"><div class="k">${S.kicker}</div><h2>${S.title || S.hook}</h2></div><div class="rows">${rowsHtml}</div>
 <div class="roll" id="roll">🥁 And #1 is…</div><div class="ask" id="ask">${S.ask}</div><div class="src" id="src">Source: ${S.source}</div><div id="coins"></div><div class="flash" id="flash"></div></div>
-<div class="sc endc" id="s3"><h2>${S.endHead || "Want to work on <em>Wall Street?</em>"}</h2><div class="url">mnaprep.com</div><p>Free interview prep · link in bio</p></div>
+<div class="sc endc" id="s3" style="display:none"><div class="url"></div></div>
 <script>
 const S=${JSON.stringify(S)},T=${JSON.stringify(T)},n=S.rows.length,max=Math.max(...S.rows.map(r=>r[1]));
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),ease=x=>1-Math.pow(1-cl(x),3),back=x=>{x=cl(x);const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
@@ -59,20 +70,20 @@ window.render=t=>{
   document.querySelectorAll('.w').forEach((w,i)=>{const p=back((t-0.1-i*0.12)/0.35);w.style.opacity=cl((t-0.1-i*0.12)/0.15);w.style.transform='translateY('+(1-p)*60+'px) scale('+(0.7+0.3*p)+')'});
   $('sub').style.opacity=cl((t-1.2)/0.3); const sp=back((t-1.5)/0.4); $('stk').style.transform='scale('+(sp*(1+0.04*Math.sin(t*12)))+') rotate(-2deg)';
   for(let i=0;i<n;i++){ // rows: last place first, #1 at reveal
-    const at=i===0?T.reveal:T.listStart+(n-1-i)*T.step, p=(t-at)/0.5, el=$('r'+i);
+    const at=i===0?T.reveal:T.at[i], p=(t-at)/0.5, el=$('r'+i);
     el.style.opacity=cl(p*2); el.style.transform='translateX('+(1-ease(p))*-900+'px)'+(i===0?' scale('+(1+0.08*Math.max(0,1-cl((t-at)/0.6))*Math.sin((t-at)*30))+')':'');
     if(i===0&&t>=T.listStart&&t<T.reveal){el.style.opacity=0.45;el.style.transform='none';el.querySelector('.l').textContent='???';if(el.querySelector('.e'))el.querySelector('.e').textContent='❓';$('v0').textContent='?';$('bar0').style.width='0%';continue}
     if(i===0){el.querySelector('.l').textContent=S.rows[0][0];if(el.querySelector('.e'))el.querySelector('.e').textContent=S.rows[0][3]||'';}
     $('bar'+i).style.width=(S.rows[i][1]/max*100*ease((t-at-0.1)/0.9))+'%'; $('v'+i).textContent=fmt(S.rows[i],(t-at-0.1)/0.9);}
   const rp=(t-T.rollStart)/0.3; $('roll').style.opacity=(t>=T.rollStart&&t<T.reveal)?cl(rp):0; $('roll').style.transform='translateX('+Math.sin(t*50)*8+'px)';
   $('flash').style.opacity=t>=T.reveal?Math.max(0,0.8-(t-T.reveal)*2.5):0;
-  $('ask').style.opacity=cl((t-T.reveal-0.9)/0.3); $('src').style.opacity=cl((t-T.reveal-0.9)/0.3);
+  $('ask').style.opacity=cl((t-T.askAt)/0.3); $('src').style.opacity=cl((t-T.reveal-0.5)/0.3);
   coins.forEach(c=>{const dt=t-T.reveal;c.d.style.opacity=(dt>0&&dt<2.2)?1:0;c.d.style.left=c.x+'px';c.d.style.top=(-120+dt*c.v)+'px';c.d.style.transform='rotate('+(c.r+dt*200)+'deg)'});
   const ep=back((t-T.holdEnd-0.1)/0.5); document.querySelector('.endc .url').style.transform='scale('+ep+')';
 };
 </script></body></html>`;
 (async () => {
-  fs.mkdirSync(outDir, { recursive: true }); const fr = path.join(outDir, "_frames"); fs.rmSync(fr, { recursive: true, force: true }); fs.mkdirSync(fr);
+  const fr = path.join(outDir, "_frames_" + S.key); fs.rmSync(fr, { recursive: true, force: true }); fs.mkdirSync(fr);
   const b = await chromium.launch(); const pg = await b.newPage({ viewport: { width: 1080, height: 1920 } });
   await pg.setContent(html, { waitUntil: "networkidle" }); await pg.evaluate(() => document.fonts.ready);
   const N = Math.round(DUR * FPS);
@@ -80,8 +91,9 @@ window.render=t=>{
   // cover frame (full chart) for thumbnails
   await pg.evaluate(t => window.render(t), T.reveal + 1.5); await pg.screenshot({ path: path.join(outDir, S.key + "-cover.jpg"), type: "jpeg", quality: 90 });
   await b.close();
-  const wav = path.join(outDir, "_a.wav");
-  execFileSync("python3", [path.join(__dirname, "sfx.py"), wav, String(DUR), JSON.stringify({ hits: S.rows.map((_, i) => i === 0 ? null : T.listStart + (n - 1 - i) * T.step).filter(x => x !== null), roll: T.rollStart, reveal: T.reveal, end: T.holdEnd })]);
+  const wav = path.join(outDir, "_a_" + S.key + ".wav");
+  execFileSync("python3", [path.join(__dirname, "sfx.py"), wav, String(DUR), JSON.stringify({ hits: S.rows.map((_, i) => i === 0 ? null : T.at[i]).filter(x => x !== null), roll: T.rollStart, reveal: T.reveal, end: T.holdEnd })]);
+  const wav2 = path.join(outDir, "_m_" + S.key + ".wav"); VO.mix(wav, wav2, VOEV); fs.renameSync(wav2, wav); fs.rmSync(voDir, { recursive: true, force: true });
   const out = path.join(outDir, S.key + ".mp4");
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-framerate", String(FPS), "-i", path.join(fr, "%04d.jpg"), "-i", wav, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-preset", "medium", "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", out]);
   fs.rmSync(fr, { recursive: true, force: true }); fs.rmSync(wav);

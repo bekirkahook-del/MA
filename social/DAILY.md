@@ -52,7 +52,18 @@ Hooks: lead with a number, a dare ("Only 1 slide. Can you solve it?"), or a surp
 - Keep it simple: one clear number per hook, plain words, no jargon. Think "would a 17-year-old get it in 2 seconds?"
 - Keep evolving: lean into the formats and topics that get the most views, likes and comments (see step 2b), and try one new angle each day.
 
-## Always promote M&A Prep
+## Voiceover on every video (Bekir, 2026-11-10)
+rankvid.js and teaservid.js now narrate automatically (Piper TTS, voice en_US-joe-medium, CC0 dataset, so it's safe to use commercially) and the timeline stretches to fit the voice: rankings ~25–28s, teasers ~20–23s. The voice reads the hook, each row ("Number 5, Snowflake's CEO: 101 million"), "And number one is...", the reveal, and the comment question; teasers read the question, "Time's up!", the answer, each step and the question at the end. Music ducks under the voice.
+- Setup each run: `pip install piper-tts numpy --break-system-packages`, then download the voice once: `mkdir -p ~/.piper && cd ~/.piper && for f in en_US-joe-medium.onnx en_US-joe-medium.onnx.json; do curl -sL -o $f https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/joe/medium/$f; done`. Never use voices with NC licenses (ryan, lessac, hfc_*).
+- Text is auto-converted for speech by gen/vo.js (`$280.8M` -> "280.8 million dollars", `×` -> "times", emoji removed). If a line would read badly, override it with `"vo": {...}` in the spec (rankvid: hook, rows[#1 first], roll, reveal, ask; teaservid: question, up, answer, steps[], ask). Keep hooks short so the video stays under ~30s.
+
+## NO promotion for now (Bekir, 2026-11-10: "don't make them promotional pieces anymore, that will come later")
+Until Bekir says otherwise this overrides "Always promote M&A Prep" and "Always link the website" below:
+- No mnaprep.com end cards, CTA slides, footers, QR codes or "link in bio" in images. The video generators no longer add end cards; tabledeck.js leaves out the footer and CTA slide unless the spec sets `"promo": true`; make pins with `python3 gen/pinfit.py pin/<date> <slide>` (no footer) instead of `ig.py --pin`. Don't use render.js/oddq.js/bluechip.js CTA slides: drop the auto CTA slide from what you post.
+- Captions: no mnaprep.com, "link in bio", "free practice" or site mentions. Just the hook, a comment question and hashtags.
+- TikTok `commercialContentOwnBrand: false` on every post. Pinterest `pinLink` may stay https://mnaprep.com/ (it's just the click-through), but pin text has no site mention.
+
+## Always promote M&A Prep (PAUSED, see above)
 Every post must show **mnaprep.com** on its last slide (automatic in all 3 renderers: big "mnaprep.com" card + "🔗 Link in bio"). **Never put a QR code on a TikTok slide**: TikTok's Community Guidelines make content with QR codes ineligible for the For You feed (checked 2026-11-05). The CTA headline rotates automatically by deck key; set `cta`/`ctaHead` in the spec for a custom one.
 
 ## Stay out of shadowban territory (read every run)
@@ -112,7 +123,7 @@ Every TikTok also goes to Instagram as a carousel at the same time (Bekir, 2026-
 - Schedule a separate Metricool post per carousel: providers [{"network":"instagram"}], media = the SHA-pinned raw URLs of the ig/ copies in slide order, `instagramData: {"type":"POST","isAiGenerated":false}`, same publication time as the TikTok version.
 - Caption: rewrite for Instagram (don't paste the TikTok caption): 1–2 short lines + a comment question + "Free practice at mnaprep.com (link in bio)" + 5–8 hashtags from the pool.
 
-## Always link the website (Bekir, 2026-11-09)
+## Always link the website (Bekir, 2026-11-09; PAUSED 2026-11-10, see "NO promotion for now")
 Every post on every platform must point to mnaprep.com: the site's QR code or URL on the image (quiz/Blue Chip/oddq CTA slides, the pin footer) **and/or** the link itself (Pinterest `pinLink`, "mnaprep.com (link in bio)" in TikTok/Instagram captions). No exceptions, including finance-aesthetic pins and stories.
 
 ## 5c. Pinterest (account tiktokshopbk29, board "M&A Prep")

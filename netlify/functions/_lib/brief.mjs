@@ -78,6 +78,21 @@ export async function marketBrief(now = new Date()) {
       closing.map(x => `<li style="margin:4px 0"><b>Closing soon:</b> ${String(x[0]).replace(/[<>]/g, "")} · ${String(x[1]).replace(/[<>]/g, "")} (closes ${x[6]})</li>`).join("")}</ul>
       <p style="font-size:13px;margin:8px 0 0"><a href="https://mnaprep.com/?utm_source=email#recruit" style="color:#2448D8">All openings →</a> · Want these the day they open? Turn on instant alerts with Pro.</p></div>`;
   }
+  /* deal of the week: the newest deal from The Wire (last 14 days), else the biggest recent one */
+  const deals = w ? (w.DEALS || []).filter(d => d && d.buyer && d.target && d.what) : [];
+  const dts = d => Date.parse(d.date) || 0;
+  const recent = deals.filter(d => now - dts(d) < 14 * 864e5).sort((a, b) => dts(b) - dts(a));
+  const deal = recent[0] || deals.slice().sort((a, b) => (b.usd || 0) - (a.usd || 0))[0];
+  if (deal) {
+    const c = x => String(x || "").replace(/[<>]/g, "");
+    html += `<div style="margin-top:18px;background:#F4F6FB;border:1px solid #E3E7EE;border-radius:12px;padding:14px 16px">${H("DEAL OF THE WEEK", "#2448D8")}
+      <p style="font-size:17px;font-weight:bold;margin:0 0 4px">${c(deal.buyer)} → ${c(deal.target)}${deal.value ? ` · ${c(deal.value)}` : ""}</p>
+      <p style="font-size:12px;color:#4A5672;margin:0 0 10px">${c(deal.date)}</p>
+      <p style="margin:0 0 8px"><b>What happened:</b> ${c(deal.what)}</p>
+      ${deal.why ? `<p style="margin:0 0 8px"><b>Why it matters:</b> ${c(deal.why)}</p>` : ""}
+      ${deal.say ? `<p style="margin:0 0 8px"><b>Say this in an interview:</b> ${c(deal.say)}</p>` : ""}
+      <p style="font-size:13px;margin:8px 0 0"><a href="https://mnaprep.com/?utm_source=email&utm_campaign=deal#deals" style="color:#2448D8">Quiz yourself on this deal →</a></p></div>`;
+  }
   const sp = sum ? ` · S&P 500 ${sum.ch >= 0 ? "+" : ""}${fmt(sum.ch, 1)}%` : "";
   return { html, subjectBit: sp };
 }

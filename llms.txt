@@ -64,6 +64,7 @@ Everything core is free. M&A Prep Pro adds a Superday simulator and instant inte
 - [What is private equity? Explained simply](https://mnaprep.com/guides/what-is-private-equity/): What private equity firms do, how a buyout works, how they make money, and what jobs in private equity look like, explained in plain English.
 
 ## Free tools
+- [M&A deal database](https://mnaprep.com/deals/): the most relevant M&A deals of the last 12 months, searchable, with why each happened.
 - [Recruiting timeline calculator](https://mnaprep.com/tools/recruiting-timeline-calculator/): enter a graduation year and goal (IB, PE, S&T, asset management, consulting) to get a month-by-month recruiting plan.
 - [Superday readiness test](https://mnaprep.com/tools/superday-readiness-test/): 12 investment banking interview questions with instant explanations and a score.
 - [Investment banking pay by level](https://mnaprep.com/tools/investment-banking-pay/): 2025 survey pay from analyst to MD by bank type.

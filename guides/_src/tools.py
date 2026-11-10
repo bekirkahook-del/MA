@@ -11,7 +11,8 @@ TODAY = datetime.date.today().isoformat()
 e = lambda s: html.escape(s, quote=True)
 SITE = "https://mnaprep.com"
 ICONS = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml">'
-         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
+         '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">'
+         '<meta name="robots" content="max-image-preview:large"><link rel="alternate" type="application/rss+xml" title="M&amp;A Prep guides" href="/feed.xml">')
 
 TOOL_CSS = """<style>
 .tool{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:18px;margin:18px 0}
@@ -63,7 +64,7 @@ def shell(slug, title, h1, desc, lede, body, faqs, script, kind="WebApplication"
 {body}
 {('<h2>Common questions</h2>' + faq_html) if faqs else ''}
 <div class="cta"><p>Practice real interview questions in 5-minute levels, free.</p><a href="/">Start training on M&amp;A Prep</a></div>
-<h2>More free tools</h2><ul class="more"><li><a href="/tools/recruiting-timeline-calculator/">Recruiting timeline calculator</a></li><li><a href="/tools/superday-readiness-test/">Superday readiness test</a></li><li><a href="/tools/investment-banking-pay/">Investment banking pay by level</a></li><li><a href="/guides/">All free guides</a></li></ul></main>
+<h2>More free tools</h2><ul class="more"><li><a href="/tools/recruiting-timeline-calculator/">Recruiting timeline calculator</a></li><li><a href="/tools/superday-readiness-test/">Superday readiness test</a></li><li><a href="/tools/investment-banking-pay/">Investment banking pay by level</a></li><li><a href="/tools/embed/">Question of the day widget</a></li><li><a href="/deals/">M&amp;A deal database</a></li><li><a href="/guides/">All free guides</a></li></ul></main>
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
 <script>{script}</script>
 <script src="/js/hit.js" defer></script>
@@ -219,11 +220,47 @@ TOOLS = [
   T3_BODY, T3_FAQ, T3_JS),
 ]
 
+
+# ---------- 4. Embeddable question of the day (backlinks from club and blog sites) ----------
+EMBED_JS = r"""/* M&A Prep: finance interview question of the day. Embed: <div id="mnaprep-qotd"></div><script src="https://mnaprep.com/embed/q.js" async></script> */
+(function(){var Q=__QS__;var el=document.getElementById("mnaprep-qotd");if(!el){el=document.createElement("div");var s=document.currentScript;s&&s.parentNode.insertBefore(el,s)}
+var day=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5),q=Q[day%Q.length];var root=el.attachShadow?el.attachShadow({mode:"open"}):el;
+var esc=function(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+root.innerHTML='<style>.c{font:15px/1.5 system-ui,-apple-system,sans-serif;max-width:520px;border:1px solid #D3D9E4;border-radius:14px;padding:16px 18px;background:#fff;color:#13203B}.k{font-size:11px;letter-spacing:.1em;font-weight:700;color:#2448D8;margin:0 0 6px}.q{font-weight:700;font-size:16px;margin:0 0 10px}.o{display:block;width:100%;text-align:left;font:inherit;border:1px solid #D3D9E4;border-radius:9px;background:#F4F6FB;color:#13203B;padding:8px 10px;margin:5px 0;cursor:pointer}.o.y{border-color:#1E7F4F;background:#E7F4EC}.o.n{border-color:#C33;background:#FBEAEA}.w{font-size:13.5px;color:#4A5672;margin:8px 0 0}.f{font-size:12px;margin:12px 0 0;color:#4A5672}.f a{color:#2448D8;font-weight:600;text-decoration:none}</style>'+
+'<div class="c"><p class="k">FINANCE INTERVIEW QUESTION OF THE DAY</p><p class="q">'+esc(q[0])+'</p>'+q[1].map(function(o,i){return '<button class="o" data-i="'+i+'">'+esc(o)+'</button>'}).join("")+'<p class="w" hidden></p><p class="f">New question every day · <a href="https://mnaprep.com/?utm_source=embed&utm_medium=widget" target="_blank" rel="noopener">Practice 1,000+ more free on M&amp;A Prep →</a></p></div>';
+var done=false;root.querySelectorAll(".o").forEach(function(b){b.onclick=function(){if(done)return;done=true;var i=+b.dataset.i;root.querySelectorAll(".o").forEach(function(x){if(+x.dataset.i===q[2])x.classList.add("y");else if(x===b)x.classList.add("n")});var w=root.querySelector(".w");w.hidden=false;w.textContent=(i===q[2]?"Correct! ":"Not quite. ")+q[3]}})})();
+"""
+EXTRA_QS = [
+ ("What's the main reason a company's EV/EBITDA multiple might be higher than its peers'?", ["Faster expected growth or higher margins", "It has more cash", "It pays a bigger dividend", "Its stock trades on more exchanges"], 0, "Investors pay more for each dollar of EBITDA when they expect faster growth, higher margins or lower risk."),
+ ("In an LBO, which of these usually boosts returns the most?", ["Paying a higher purchase price", "Using more debt (with the same exit)", "Holding cash on the balance sheet", "Lowering EBITDA"], 1, "More debt means less equity up front, so the same exit value produces a bigger return on that equity (with more risk)."),
+ ("Revenue grows 10% and costs stay flat. What happens to profit margin?", ["It falls", "It stays the same", "It rises", "It depends on taxes only"], 2, "If costs don't change and revenue rises, more of each sales dollar is profit, so the margin goes up."),
+ ("What does a 'pitch book' do?", ["Tracks a banker's hours", "Pitches the bank's ideas and valuation to a client", "Lists a company's employees", "Files taxes for the deal"], 1, "A pitch book is the presentation a bank uses to win business: market view, valuation and deal ideas."),
+]
+EMBED_BODY = """<div class="tool"><p class="label">Live preview</p><div id="mnaprep-qotd"></div><script src="/embed/q.js" async></script></div>
+<h2>Add it to your site</h2><p>Copy this into any page (club website, Notion site, blog, newsletter page). It shows a new finance interview question every day.</p>
+<div class="tool"><textarea id="code" readonly rows="4" style="width:100%;font:13px/1.5 'IBM Plex Mono',monospace;padding:10px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink)">&lt;div id="mnaprep-qotd"&gt;&lt;/div&gt;
+&lt;script src="https://mnaprep.com/embed/q.js" async&gt;&lt;/script&gt;
+&lt;p style="font-size:12px"&gt;Free investment banking interview practice from &lt;a href="https://mnaprep.com/"&gt;M&amp;amp;A Prep&lt;/a&gt;&lt;/p&gt;</textarea>
+<button class="btn" id="cp">Copy code</button></div>
+<p class="muted">Free to use. No sign-up, no tracking cookies. Works on any site that allows HTML or embeds.</p>"""
+EMBED_JS_PAGE = r"""document.getElementById("cp").onclick=async function(){const t=document.getElementById("code");try{await navigator.clipboard.writeText(t.value);this.textContent="Copied!"}catch(e){t.select()}};"""
+TOOLS.append(("embed", "Free Finance Interview Question of the Day Widget", "Question of the day widget",
+  "Add a free finance interview question of the day to your club website or blog. One line of code, a new investment banking question every day.",
+  ["A free widget that shows a new investment banking interview question every day, with the answer explained.",
+   "Perfect for finance club websites, Notion pages and newsletters. Copy one snippet and you're done."],
+  EMBED_BODY, [("Is the widget free?", "Yes. It's free to embed anywhere, with no sign-up."), ("Does it change every day?", "Yes, it rotates to a new question each day.")], EMBED_JS_PAGE))
+os.makedirs(os.path.join(ROOT, "embed"), exist_ok=True)
+open(os.path.join(ROOT, "embed", "q.js"), "w", encoding="utf-8").write(EMBED_JS.replace("__QS__", json.dumps(QS + EXTRA_QS)))
+
 os.makedirs(os.path.join(ROOT, "tools"), exist_ok=True)
 for slug, title, h1, desc, lede, body, faqs, js in TOOLS:
     d = os.path.join(ROOT, "tools", slug); os.makedirs(d, exist_ok=True)
     open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(shell(slug, title, h1, desc, lede, body, faqs, js)); print("tool", slug)
-cards = "".join(f'<div class="card"><h3><a href="/tools/{s}/">{e(h)}</a></h3><p style="margin:0;color:var(--ink-2);font-size:15px">{e(d)}</p></div>' for s, t, h, d, *_ in TOOLS)
+CAL_CARD = ('<div class="card"><h3>Earnings + internship deadline calendar</h3><p style="margin:0 0 8px;color:var(--ink-2);font-size:15px">Add earnings dates, market events and finance internship deadlines to your own calendar. It updates automatically.</p>'
+  '<a class="btn" style="margin-top:4px" href="https://calendar.google.com/calendar/render?cid=webcal://mnaprep.com/calendar.ics" target="_blank" rel="noopener">Add to Google Calendar</a> '
+  '<a class="btn ghost" style="margin-top:4px" href="webcal://mnaprep.com/calendar.ics">Apple / Outlook</a></div>'
+  '<div class="card"><h3><a href="/deals/">M&amp;A deal database</a></h3><p style="margin:0;color:var(--ink-2);font-size:15px">The biggest deals of the last 12 months, searchable, with why each happened.</p></div>')
+cards = CAL_CARD + "".join(f'<div class="card"><h3><a href="/tools/{s}/">{e(h)}</a></h3><p style="margin:0;color:var(--ink-2);font-size:15px">{e(d)}</p></div>' for s, t, h, d, *_ in TOOLS)
 open(os.path.join(ROOT, "tools", "index.html"), "w", encoding="utf-8").write(shell("", "Free Finance Recruiting Tools", "Free finance recruiting tools",
   "Free tools for students recruiting for investment banking, private equity and consulting: a recruiting timeline calculator, a Superday readiness test and IB pay by level.",
   ["Free tools to plan your recruiting, test yourself and know what the job pays."], cards, [], "", kind="CollectionPage")); print("tools index")

@@ -12,11 +12,12 @@ def tags(img, alt):
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/img/og/{img}.jpg">')
 
 ICONS = ('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml">'
-         '<link rel="apple-touch-icon" href="/apple-touch-icon.png">')
+         '<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">'
+         '<meta name="robots" content="max-image-preview:large"><link rel="alternate" type="application/rss+xml" title="M&amp;A Prep guides" href="/feed.xml">')
 
 def add_tags(s, img, alt):
     s = re.sub(r'<meta property="og:image[^>]*>|<meta name="twitter:(?:card|image)"[^>]*>', "", s)
-    s = re.sub(r'<link rel="(?:icon|apple-touch-icon|shortcut icon)"[^>]*>', "", s)
+    s = re.sub(r'<link rel="(?:icon|apple-touch-icon|shortcut icon|manifest)"[^>]*>|<meta name="robots"[^>]*>|<link rel="alternate" type="application/rss\+xml"[^>]*>', "", s)
     return s.replace("</title>", "</title>" + tags(img, alt) + ICONS, 1)
 
 def nice(d):

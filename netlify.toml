@@ -38,3 +38,8 @@
   for = "/img/og/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[redirects]]
+  from = "/calendar.ics"
+  to = "/.netlify/functions/calendar"
+  status = 200

@@ -1,0 +1,1 @@
+{"key": "vid-tq-stock", "label": "IB SUPERDAY", "question": "A stock drops <b>50%</b>, then rises <b>50%</b>. Where is it now?", "emoji": "🤯", "seconds": 5, "answer": "Down 25%", "steps": ["$100 − 50% = <b>$50</b>", "$50 + 50% = <b>$75</b>", "$100 → $75 = <b>−25%</b> 📉"], "ask": "Did you say 'back to even'? 👇"}

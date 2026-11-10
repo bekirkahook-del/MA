@@ -1,0 +1,35 @@
+[
+{
+"key": "vibe-penny",
+"style": "chart",
+"kicker": "Compounding",
+"line": "A penny doubled daily<br>= <em>$5.37M</em><br>by day 30.",
+"sub": "$0.01 × 2²⁹. Slow, then sudden."
+},
+{
+"key": "vibe-seed",
+"style": "cream",
+"kicker": "First paycheck",
+"line": "Your first paycheck<br>is a <em>seed,</em><br>not a prize."
+},
+{
+"key": "vibe-skyline4",
+"style": "skyline",
+"kicker": "6:59 AM",
+"line": "Coffee. Models.<br><em>Market open.</em>"
+},
+{
+"key": "vibe-calm",
+"style": "marble",
+"kicker": "Rule no. 2",
+"line": "Three months of expenses.<br><em>Then</em> invest.",
+"sub": "An emergency fund buys you calm."
+},
+{
+"key": "vibe-200",
+"style": "navy",
+"kicker": "$200 a month · 7% a year",
+"line": "Age 22 to 62:<br><em>≈ $525,000</em>",
+"sub": "You only put in $96,000. Time did the rest."
+}
+]

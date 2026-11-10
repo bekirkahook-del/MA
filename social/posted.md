@@ -30,3 +30,13 @@
 - 2026-11-09 oddq-week — [Interview Q] Seconds in a week (604,800)
 - 2026-11-09 bc-hfpay — [Blue Chip] Top 3 hedge fund manager earnings 2025 (Bloomberg; CEO-pay style)
 - 2026-11-09 vid-tq-ev — [Video quiz] Negative enterprise value (multiple choice, timer)
+- 2026-11-10 vid-rk-athletes — [Ranking video] Highest-paid athletes 2026 (Forbes; Ronaldo $300M)
+- 2026-11-10 vid-tq-stock — [Brain teaser video] Stock −50% then +50% = down 25%
+- 2026-11-10 vid-tq-wacc — [Video quiz] WACC up → DCF value down (MC, D)
+- 2026-11-10 vid-rk-creators — [Ranking video] Highest-earning creators 2025 (Forbes; MrBeast $85M)
+- 2026-11-10 vid-tq-ball — [Brain teaser video] Bat and ball = 5 cents
+- 2026-11-10 wyr-penny — [Carousel, would-you-rather] $1M today vs penny doubled 30 days ($5.37M)
+- 2026-11-10 vid-rk-ceopay — [Ranking video] Highest-paid CEOs 2025 (Equilar 100 early look; Wayfair's CEO $280.8M)
+- 2026-11-10 vid-tq-18x35 — [Brain teaser video] 18 × 35 = 630 (halve and double)
+- 2026-11-10 vid-rk-richest — [Ranking video] Richest people 2026 (Forbes; Musk $839B > #2–#4 combined)
+- 2026-11-10 vid-tq-stack — [Video quiz] Bankruptcy: senior secured lenders paid first (MC, C)

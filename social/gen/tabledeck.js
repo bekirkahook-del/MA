@@ -1,5 +1,5 @@
 // 2-slide "table infographic" deck (like the viral Big Ten finance-schools post) -> 1080x1920 JPGs.
-// Usage: node tabledeck.js spec.json OUTDIR   -> <key>-01.jpg (photo hook) + <key>-02.jpg (ranked table). promo:true adds the mnaprep.com footer + <key>-03.jpg CTA (off for now: Bekir, 2026-11-10)
+// Usage: node tabledeck.js spec.json OUTDIR   -> <key>-01.jpg (photo hook) + <key>-02.jpg (ranked table). adds the mnaprep.com footer + <key>-03.jpg CTA unless spec.promo is false
 // spec: {key, hook:"BEST BIG 10 FINANCE SCHOOLS", title:"Big Ten Schools", subtitle:"Most Frequently Hired for Finance", note:"Based on ...",
 //        cols:["School","Avg salary","Notes"], rows:[{logo:"umich.edu", name:"Michigan", sub:"Ross", cells:["$94,909","..."], hot?:true}], sources:"..."}
 // logo = file in gen/logos/<logo>.png (fetched from the brand's site favicon); omit -> colored initials badge.
@@ -22,7 +22,7 @@ const s1 = `<html><head><style>${fonts}
 .box span{display:inline;background:#2E5A3A;color:#fff;font-family:Plex;font-weight:600;font-size:92px;line-height:1.32;padding:6px 26px;border-radius:22px;box-decoration-break:clone;-webkit-box-decoration-break:clone;text-transform:uppercase;letter-spacing:-1px}
 .arr{display:inline-block;margin-top:26px;background:#2E5A3A;color:#fff;font-family:Plex;font-size:70px;padding:0 40px 10px;border-radius:20px}</style></head><body>
 <div class="ph"></div><div class="sh"></div><div class="box"><span>${S.hook}</span><br><div class="arr">—&gt;</div></div></body></html>`;
-const n = S.rows.length, rowH = Math.min(132, Math.floor((S.promo ? 1200 : 1310) / n));
+const n = S.rows.length, rowH = Math.min(132, Math.floor(((S.promo !== false) ? 1200 : 1310) / n));
 const s2 = `<html><head><style>${fonts}body{background:#fff;color:#111;font-family:Plex;font-variant-numeric:lining-nums;display:flow-root}
 h1{font-family:PFB;font-size:${S.titleSize || 92}px;line-height:1;text-align:center;margin-top:120px;letter-spacing:-2px}
 h2{font-family:PF;font-size:56px;text-align:center;margin-top:8px}.nt{font-family:PF;font-size:28px;text-align:center;margin-top:10px;color:#333}
@@ -33,19 +33,19 @@ td.rk{font-family:PF;font-size:46px;text-align:center;width:70px}td.sc{width:300
 .ini{background:#1B2843;color:#fff;font-family:Arc;font-size:28px;display:grid;place-items:center}
 .nm{font-family:PF;font-size:31px;line-height:1.1}.nm small{display:block;font-size:22px;color:#333}
 td.big{font-family:PFB;font-size:34px;white-space:nowrap}td.big small{display:block;font-family:PF;font-size:20px;color:#444;white-space:normal}
-tr.hot td{background:#F4EBD3}.src{position:absolute;left:24px;right:24px;bottom:${S.promo ? 150 : 60}px;font-family:PF;font-size:21px;line-height:1.3;color:#222}
+tr.hot td{background:#F4EBD3}.src{position:absolute;left:24px;right:24px;bottom:${(S.promo !== false) ? 150 : 60}px;font-family:PF;font-size:21px;line-height:1.3;color:#222}
 .src b{font-family:PFB}.ft{position:absolute;left:0;right:0;bottom:0;height:120px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
 .ft b{font-family:Mono;font-size:44px;color:#E3C27A}.ft span{font-family:Plex;font-size:28px}</style></head><body>
 <h1>${S.title}</h1><h2>${S.subtitle}</h2><div class="nt">${S.note || ""}</div>
 <table><thead><tr><th>Rank</th><th>${S.cols[0]}</th>${S.cols.slice(1).map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>
 ${S.rows.map((r, i) => `<tr class="${r.hot ? "hot" : ""}"><td class="rk">${i + 1}</td><td class="sc"><div class="w">${badge(r)}<div class="nm">${r.name}${r.sub ? `<small>(${r.sub})</small>` : ""}</div></div></td>${r.cells.map((c, j) => `<td class="${j === 0 ? "big" : ""}">${c}</td>`).join("")}</tr>`).join("")}
-</tbody></table><div class="src"><b>Sources:</b> ${S.sources}</div>${S.promo ? `<div class="ft"><b>mnaprep.com</b><span>Free IB &amp; PE prep · link in bio</span></div>` : ""}</body></html>`;
+</tbody></table><div class="src"><b>Sources:</b> ${S.sources}</div>${(S.promo !== false) ? `<div class="ft"><b>mnaprep.com</b><span>Free IB &amp; PE prep · link in bio</span></div>` : ""}</body></html>`;
 const s3 = `<html><head><style>${fonts}body{background:radial-gradient(80% 60% at 50% 40%,#13254F,#050B18);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;text-align:center}
 h2{font-family:Arc;font-size:84px;line-height:1.02;padding:0 70px}h2 em{font-style:normal;color:#E3C27A}.url{background:#fff;color:#07101F;font-family:Mono;font-size:64px;padding:26px 48px;border-radius:24px}p{font-family:Plex;font-size:40px;color:#C7D0E2}</style></head><body>
 <h2>${S.ctaHead || "Want to land a job <em>like these?</em>"}</h2><div class="url">mnaprep.com</div><p>Free interview prep · link in bio</p></body></html>`;
 (async () => { fs.mkdirSync(outDir, { recursive: true }); const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
   let over = false;
-  for (const [i, h] of (S.promo ? [s1, s2, s3] : [s1, s2]).entries()) { await p.setContent(h); await p.waitForTimeout(150);
+  for (const [i, h] of ((S.promo !== false) ? [s1, s2, s3] : [s1, s2]).entries()) { await p.setContent(h); await p.waitForTimeout(150);
     if (i === 1) { over = await p.evaluate(() => { const t = document.querySelector("table").getBoundingClientRect(), s = document.querySelector(".src").getBoundingClientRect(); return t.bottom > s.top - 8; }); }
     const f = path.join(outDir, `${S.key}-0${i + 1}.jpg`); await p.screenshot({ path: f, type: "jpeg", quality: 92 }); console.log(f); }
   await b.close(); if (over) { console.error("OVERFLOW: table runs into sources"); process.exit(2); } })();

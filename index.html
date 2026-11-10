@@ -33,24 +33,16 @@
 <script src="vendor/supabase.js"></script>
 <script src="js/backend.js"></script>
 <style id="color-pop">
-/* Color accents (Nov 2026): brand palette beyond navy + cobalt. Tints use color-mix so they work in light and dark mode. */
-:root{--c-blue:var(--cobalt);--c-green:#16A06A;--c-amber:#E39B0B;--c-violet:#7357F6;--c-coral:#E5484D}
-body{background-image:radial-gradient(900px 420px at 8% -120px,color-mix(in srgb,var(--c-blue) 9%,transparent),transparent 70%),radial-gradient(700px 380px at 100% -80px,color-mix(in srgb,var(--c-violet) 8%,transparent),transparent 70%);background-repeat:no-repeat}
+/* Color accents (Nov 2026), kept light: brand palette beyond navy + cobalt. */
+:root{--c-blue:var(--cobalt);--c-green:#16A06A;--c-amber:#E39B0B;--c-violet:#7357F6}
 body .hl-land>.label{color:var(--c-blue)}
-body .hl-land h1 em{background:linear-gradient(90deg,var(--c-blue),var(--c-violet) 55%,var(--c-coral));-webkit-background-clip:text;background-clip:text;color:transparent}
+body .hl-land h1 em{background:linear-gradient(90deg,var(--c-blue),var(--c-violet));-webkit-background-clip:text;background-clip:text;color:transparent}
 body .hl-proof div:nth-child(1) b{color:var(--c-blue)}body .hl-proof div:nth-child(2) b{color:var(--c-green)}body .hl-proof div:nth-child(3) b{color:var(--c-amber)}body .hl-proof div:nth-child(4) b{color:var(--c-violet)}
-body .hl-step{--ac:var(--c-blue);border-top:3px solid var(--ac);background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 7%,transparent),transparent 70%)}
-body .hl-step:nth-child(2){--ac:var(--c-green)}body .hl-step:nth-child(3){--ac:var(--c-amber)}
-body .hl-step:hover{border-color:var(--ac);box-shadow:0 10px 24px color-mix(in srgb,var(--ac) 18%,transparent)}
+body .hl-step{--ac:var(--c-blue)}body .hl-step:nth-child(2){--ac:var(--c-green)}body .hl-step:nth-child(3){--ac:var(--c-amber)}
+body .hl-step:hover{border-color:var(--ac)}
 body .hl-step .hl-n{background:var(--ac);color:#fff}
-body .hl-step b{color:var(--ink)}
-body .hero-side .card{border-top:3px solid var(--c-violet)}
 body #xpBar{background:linear-gradient(90deg,var(--c-blue),var(--c-violet))!important}
-body .rank-name{color:var(--c-violet)}
-body .daily{border-left:3px solid var(--c-green);padding-left:14px;background:linear-gradient(90deg,color-mix(in srgb,var(--c-green) 6%,transparent),transparent 60%);border-radius:0 12px 12px 0}
 body .daily .label{color:var(--c-green)}
-body .hcard{border-top:3px solid var(--c-blue)}body .hcard+.hcard{border-top-color:var(--c-amber)}
-body .stat b{color:var(--c-blue)}body .stat:nth-child(2) b{color:var(--c-amber)}body .stat:nth-child(3) b{color:var(--c-coral)}body .stat:nth-child(4) b{color:var(--c-green)}
 </style>
 </head><body>
 <style>

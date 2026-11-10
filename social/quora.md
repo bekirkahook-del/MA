@@ -1,6 +1,6 @@
 # Quora answers log (account: Bekir Kahook)
 **RULES (Bekir, 2026-11-09): post automatically, spaced out, inside Quora's policies.** These override any looser pace in the task prompt.
-- At most 2 answers per run, at least 30 minutes apart (use wait actions between them).
+- **1 answer per run.** The task now runs twice a day, at 4:37pm and 7:37pm ET, so answers go out 3 hours apart (Bekir, 2026-11-09). Do not post a second answer in the same run.
 - Links to mnaprep.com in at most 1 in 4 answers, never 2 linked in a row or on the same day; every linked answer ends with "(Disclosure: I'm a finance student and I built M&A Prep, a free training site.)"
 - Each answer must fully help on its own (150–300 words), fresh wording every time, one answer per topic per day.
 - Follow Quora's policies; never try to get around spam protections. Don't upvote, follow, message or comment from the account.

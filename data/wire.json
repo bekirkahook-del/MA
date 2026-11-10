@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-04T05:50:00Z",
- "TICKER_DATE": "Nov 3",
+ "updated": "2026-11-10T22:15:18Z",
+ "TICKER_DATE": "Nov 10",
  "TICKER": [
   [
    "DOW",
@@ -124,200 +124,48 @@
   ]
  ],
  "RECAP": {
-  "d": "Nov 3",
-  "t": "Chip stocks pushed the Nasdaq up 0.8% while a 1.9% drop in Apple pulled the Dow lower. Overnight, stock futures slipped as Democrats were projected to win control of Congress."
+  "d": "Nov 10",
+  "t": "Stocks fell after a hotter-than-expected inflation report raised the odds of a December Fed rate hike: the S&P 500 lost 0.4% and the Nasdaq 0.7%, with Nvidia down 5.5%. That came a day after a 2.4% rally on Monday."
  },
  "CAL": [
   [
-   "Wed Nov 4",
-   "ISM services and ADP jobs",
-   "Forecasts: ISM 54.8 (above 50 means growth), ADP +68K jobs. Qualcomm reports after the close.",
+   "Fri Nov 13",
+   "Producer prices (PPI)",
+   "Wholesale inflation for October. After Tuesday's hot CPI, another strong number would add to rate-hike bets.",
    [
-    "Investing.com",
-    "https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"
+    "FedRateCalc release calendar",
+    "https://fedratecalc.com/us-economic-calendar/november-2026/"
    ]
   ],
   [
-   "Thu Nov 5",
-   "Jobless claims, Fed speakers",
-   "Claims forecast at 197K. Richmond Fed's Barkin and Dallas Fed's Logan speak.",
+   "Tue Nov 17",
+   "Retail sales",
+   "How much Americans spent in October, a key read on the consumer before the holidays. Home Depot and Nvidia also report.",
    [
-    "Investing.com",
-    "https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"
+    "FedRateCalc release calendar",
+    "https://fedratecalc.com/us-economic-calendar/november-2026/"
    ]
   ],
   [
-   "Fri Nov 6",
-   "October jobs report",
-   "Forecast: +63K jobs and 4.2% unemployment. A big input for whether the Fed hikes in December.",
+   "Wed Nov 18",
+   "Fed meeting minutes",
+   "Notes from the Oct 27–28 Fed meeting, which show how many officials want more rate hikes.",
    [
-    "Investing.com",
-    "https://ph.investing.com/news/stock-market-news/weekly-economic-outlook-payrolls-and-fed-speakers-in-focus-93CH-2668065"
+    "FedRateCalc release calendar",
+    "https://fedratecalc.com/us-economic-calendar/november-2026/"
    ]
   ],
   [
-   "Nov 16",
-   "Anthropic IPO (earliest date)",
-   "Could be the biggest listing of the year. All five of the largest U.S. banks are on the deal.",
+   "Wed Nov 25",
+   "GDP and PCE inflation",
+   "The second estimate of Q3 growth plus the Fed's favorite inflation gauge, the day before Thanksgiving.",
    [
-    "Yahoo Finance",
-    "https://finance.yahoo.com/markets/article/why-the-anthropic-ipo-could-be-the-swing-vote-for-wall-street-bank-stocks-172030065.html"
+    "FedRateCalc release calendar",
+    "https://fedratecalc.com/us-economic-calendar/november-2026/"
    ]
   ]
  ],
  "EARN": [
-  [
-   "2026-11-04",
-   "UBER",
-   "Uber",
-   "BMO",
-   "",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "MCD",
-   "McDonald's",
-   "BMO",
-   "$3.38",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "NVO",
-   "Novo Nordisk",
-   "BMO",
-   "$4.62",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "CVS",
-   "CVS Health",
-   "BMO",
-   "$1.65",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "QCOM",
-   "Qualcomm",
-   "AMC",
-   "$2.16",
-   "AI and phone chips"
-  ],
-  [
-   "2026-11-04",
-   "ARM",
-   "Arm Holdings",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "APP",
-   "AppLovin",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-04",
-   "MET",
-   "MetLife",
-   "AMC",
-   "$2.77",
-   "Insurer"
-  ],
-  [
-   "2026-11-04",
-   "ALL",
-   "Allstate",
-   "AMC",
-   "$6.96",
-   "Insurer"
-  ],
-  [
-   "2026-11-05",
-   "COP",
-   "ConocoPhillips",
-   "BMO",
-   "$3.05",
-   "Oil"
-  ],
-  [
-   "2026-11-05",
-   "SONY",
-   "Sony",
-   "BMO",
-   "",
-   ""
-  ],
-  [
-   "2026-11-05",
-   "CAH",
-   "Cardinal Health",
-   "BMO",
-   "$2.94",
-   "Ohio company"
-  ],
-  [
-   "2026-11-05",
-   "ABNB",
-   "Airbnb",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-05",
-   "NET",
-   "Cloudflare",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-05",
-   "DKNG",
-   "DraftKings",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-06",
-   "MRNA",
-   "Moderna",
-   "BMO",
-   "-$1.35",
-   ""
-  ],
-  [
-   "2026-11-06",
-   "HUM",
-   "Humana",
-   "BMO",
-   "-$1.00",
-   ""
-  ],
-  [
-   "2026-11-09",
-   "KKR",
-   "KKR",
-   "BMO",
-   "$1.58",
-   "Private equity giant"
-  ],
-  [
-   "2026-11-09",
-   "TTWO",
-   "Take-Two",
-   "AMC",
-   "$0.98",
-   ""
-  ],
   [
    "2026-11-12",
    "CSCO",
@@ -333,6 +181,46 @@
    "AMC",
    "$4.06",
    "Chip equipment"
+  ],
+  [
+   "2026-11-12",
+   "QXO",
+   "QXO",
+   "",
+   "",
+   "Full Q3 results"
+  ],
+  [
+   "2026-11-16",
+   "TSN",
+   "Tyson Foods",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-16",
+   "ARMK",
+   "Aramark",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-16",
+   "ACM",
+   "AECOM",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-16",
+   "PARA",
+   "Paramount",
+   "AMC",
+   "",
+   ""
   ],
   [
    "2026-11-17",
@@ -359,6 +247,14 @@
    "The big AI report"
   ],
   [
+   "2026-11-17",
+   "KLAR",
+   "Klarna",
+   "BMO",
+   "",
+   "Buy now, pay later"
+  ],
+  [
    "2026-11-18",
    "TJX",
    "TJX",
@@ -375,6 +271,14 @@
    ""
   ],
   [
+   "2026-11-18",
+   "TGT",
+   "Target",
+   "BMO",
+   "",
+   "Retail check"
+  ],
+  [
    "2026-11-19",
    "WMT",
    "Walmart",
@@ -389,6 +293,14 @@
    "AMC",
    "$2.64",
    ""
+  ],
+  [
+   "2026-11-19",
+   "WMG",
+   "Warner Music Group",
+   "BMO",
+   "",
+   ""
   ]
  ],
  "EARN_SRC": [
@@ -399,10 +311,112 @@
   [
    "Earnings Watcher",
    "https://earnings-watcher.com/earnings-this-week"
+  ],
+  [
+   "Earnings Whispers",
+   "https://www.earningswhispers.com/calweek/20261116"
   ]
  ],
- "NEWS_DATE": "Nov 4, 2026",
+ "NEWS_DATE": "Nov 10, 2026",
  "NEWS": [
+  {
+   "k": "Markets",
+   "d": "Nov 10",
+   "h": "A hotter inflation report knocks stocks lower and pushes the 10-year yield back above 5%",
+   "w": "October consumer prices rose 0.4%, and core prices (without food and energy) rose 0.3% for a third straight month. The S&P 500 fell 0.4%, the Nasdaq 0.7% and the Dow 0.3%, while the 10-year Treasury yield climbed back above 5% during the day.",
+   "m": "Sticky inflation makes a Fed rate hike in December more likely. Fed Governor Christopher Waller said he leans toward a quarter-point hike, and Dallas Fed President Lorie Logan said two more hikes will be needed.",
+   "a": "Interviewers often ask how rates affect valuation. Higher rates raise the discount rate in a DCF, which lowers the present value of future cash flows, and long-duration growth stocks like tech feel it most.",
+   "s": [
+    [
+     "Stocktitan",
+     "https://www.stocktitan.net/articles/stock-market-today-live-november-10-2026"
+    ]
+   ]
+  },
+  {
+   "k": "Markets",
+   "d": "Nov 10",
+   "h": "Nvidia drops 5.5% as its board investigates CEO Jensen Huang",
+   "w": "Nvidia fell 5.47% and its market value briefly slipped under $4 trillion, after falling more than 4% the day before. Its independent directors hired a law firm to look into a weekend email from Huang and a report about a possible foreign spying attempt.",
+   "m": "Nvidia is so large that its moves drag the whole market down, and the stock is down about 30% in five weeks. Key-person risk matters even for the biggest companies.",
+   "a": "A good interview point: governance and key-person risk can hit valuation even when the business is strong. Investors may demand a higher discount rate until the uncertainty clears.",
+   "s": [
+    [
+     "Stocktitan",
+     "https://www.stocktitan.net/articles/stock-market-today-live-november-10-2026"
+    ]
+   ]
+  },
+  {
+   "k": "Markets",
+   "d": "Nov 9",
+   "h": "Stocks jump 2.4% as oil falls and fear eases",
+   "w": "The S&P 500 rose 2.4% to 7,549.94, the Nasdaq gained 2.7% and the Dow added 1,104 points to 52,389.75. All 11 sectors rose, oil fell about 1% and the VIX fear gauge dropped 22%.",
+   "m": "Big one-day rallies often come when fear has built up and then eases. Lower oil prices help by cooling inflation worries.",
+   "a": "If asked what the VIX is, say it measures how much movement options traders expect over the next 30 days. A falling VIX means investors are calmer.",
+   "s": [
+    [
+     "Yahoo Finance (Zacks)",
+     "https://finance.yahoo.com/markets/stocks/articles/stock-market-news-nov-10-094800346.html"
+    ]
+   ]
+  },
+  {
+   "k": "PE",
+   "d": "Nov 9",
+   "h": "KKR posts record profit and plans to return over $40 billion to its investors",
+   "w": "KKR's adjusted net income rose 29% to $1.6 billion, or $1.78 a share, above the $1.59 analysts expected. It plans to return more than $40 billion to clients in 2026, over 50% above its old record.",
+   "m": "Returning cash to investors (exits) has been the weak spot for private equity. Big distributions help firms raise their next funds.",
+   "a": "In a PE interview, connect exits to fundraising: investors (LPs) need cash back before they commit to new funds, so a strong exit year makes future fundraising easier.",
+   "s": [
+    [
+     "HDFC Sky",
+     "https://hdfcsky.com/news/constellation-nrg-kkr-and-ckx-surge-on-earnings-beats-4-billion-asset-sale-and-1-billion-investment"
+    ]
+   ]
+  },
+  {
+   "k": "Deals",
+   "d": "Nov 9",
+   "h": "NRG sells six gas power plants to LS Power for $4 billion",
+   "w": "NRG Energy agreed to sell six gas-fired plants, about 4.9 gigawatts of power, to LS Power for $4 billion in cash, about 8 times estimated 2027 adjusted EBITDA. NRG shares rose about 9.5% after it also beat earnings estimates.",
+   "m": "NRG will use the cash for $2 billion of debt paydown and $1 billion of buybacks. Power plants are in demand as AI data centers need more electricity.",
+   "a": "This is a clean example of a divestiture: a seller trims assets to cut debt and return cash. Interviewers like it when you tie the price (8x EBITDA) to how the seller uses the proceeds.",
+   "s": [
+    [
+     "HDFC Sky",
+     "https://hdfcsky.com/news/constellation-nrg-kkr-and-ckx-surge-on-earnings-beats-4-billion-asset-sale-and-1-billion-investment"
+    ]
+   ]
+  },
+  {
+   "k": "Deals",
+   "d": "Nov 9",
+   "h": "Brad Jacobs leads a $1 billion investment into tiny CKX Lands, and its stock jumps 85%",
+   "w": "CKX Lands announced a $1 billion cash investment led by Brad Jacobs, with $900 million from Jacobs Private Equity II. Jacobs will become chairman and CEO, and the company plans to rename itself; the target industry hasn't been disclosed.",
+   "m": "Jacobs has built big companies through acquisitions before, including QXO, so investors bet he'll do it again here.",
+   "a": "This is a roll-up setup: a public shell plus fresh capital to buy many smaller companies. In interviews, say roll-ups work when buying smaller firms at lower multiples creates value once combined.",
+   "s": [
+    [
+     "HDFC Sky",
+     "https://hdfcsky.com/news/constellation-nrg-kkr-and-ckx-surge-on-earnings-beats-4-billion-asset-sale-and-1-billion-investment"
+    ]
+   ]
+  },
+  {
+   "k": "Economy",
+   "d": "Nov 6",
+   "h": "Employers add 165,000 jobs in October, far above forecasts",
+   "w": "The economy added 165,000 jobs versus about 65,000 expected, and unemployment fell to 4.1%. Wages rose 3.1% from a year earlier, and the prior two months were revised up by 84,000 jobs.",
+   "m": "A strong job market plus faster wage growth raises the odds of a Fed rate hike. Markets put the chance of a December hike at about 77%.",
+   "a": "If asked how jobs data moves markets, explain the chain: strong jobs and wages mean more inflation pressure, which means higher rates, which lowers stock valuations and raises bond yields.",
+   "s": [
+    [
+     "Fox Business",
+     "https://www.foxbusiness.com/economy/us-jobs-report-october-2026.amp"
+    ]
+   ]
+  },
   {
    "k": "Economy",
    "d": "Nov 4",
@@ -550,153 +564,91 @@
      "https://www.stocktitan.net/articles/stock-market-today-live-november-3-2026"
     ]
    ]
-  },
-  {
-   "k": "Banks",
-   "d": "Nov 2",
-   "h": "Fed survey: banks made it harder to borrow for the first time in a year",
-   "w": "A Federal Reserve survey of loan officers found U.S. banks broadly tightened their lending standards in the third quarter, ending four straight quarters of easing. Demand for loans also weakened in most categories.",
-   "m": "Tighter bank lending slows the economy, which is part of what the Fed wants as it fights inflation. It also makes buyouts harder to finance, giving private credit funds more room to lend instead.",
-   "a": "Connect the dots for a PE interview: when banks pull back, LBOs get less debt or pay more for it, so buyers must put in more equity, and returns (IRR) fall unless they pay a lower price.",
-   "s": [
-    [
-     "Yahoo Finance",
-     "https://finance.yahoo.com/markets/article/why-the-anthropic-ipo-could-be-the-swing-vote-for-wall-street-bank-stocks-172030065.html"
-    ]
-   ]
-  },
-  {
-   "k": "Deals",
-   "d": "Nov 2",
-   "h": "Marvell agrees to buy Lumentum for about $115 billion in stock, and both shares fall",
-   "w": "Chipmaker Marvell agreed to buy Lumentum, which makes lasers and other optical parts for AI data centers, in an all-stock deal valued at about $115 billion. Lumentum owners get 4.5 Marvell shares per share, and they would own about 33% of the combined company.",
-   "m": "It is one of the biggest tech deals ever and a large bet that data centers will move data with light. Both stocks dropped, with Marvell closing down about 13% and Lumentum about 19%, as investors worried about the price and the wait, since closing is not expected until the first half of 2028.",
-   "a": "Great stock-deal example. The $1,132 per share headline used Oct 28 prices, but the 4.5 share ratio is fixed, so the value moves with Marvell's stock. At Monday's $171.11 Marvell close, 4.5 shares are worth about $770.",
-   "s": [
-    [
-     "Yahoo Finance",
-     "https://finance.yahoo.com/markets/stocks/articles/marvell-strikes-115b-deal-acquire-124300132.html"
-    ],
-    [
-     "CBS News",
-     "https://www.cbsnews.com/news/marvell-lumentum-acquisition-ai-connectivity/"
-    ],
-    [
-     "Marvell 8-K via Stocktitan",
-     "https://www.stocktitan.net/sec-filings/MRVL/8-k-marvell-technology-inc-reports-material-event-7df547335b18.html"
-    ],
-    [
-     "Stocktitan live",
-     "https://www.stocktitan.net/articles/stock-market-today-live-november-2-2026"
-    ]
-   ]
-  },
-  {
-   "k": "Deals",
-   "d": "Nov 2",
-   "h": "EVgo jumps about 47% after its controlling owner LS Power offers $2 a share",
-   "w": "LS Power, which already holds about 56% of the voting power at electric-car charging company EVgo, proposed buying the public shares it does not own for $2.00 each in cash. The offer is non-binding, and EVgo's board formed a special committee to review it.",
-   "m": "This would take EVgo private, but it is not a signed deal yet. The stock's surge shows investors expect a sale, and possibly a better price.",
-   "a": "Explain why a special committee matters. When the buyer already controls the company, independent directors negotiate for the small shareholders, because the controlling owner sits on both sides of the deal.",
-   "s": [
-    [
-     "Stocktitan",
-     "https://www.stocktitan.net/news/EVGO/e-vgo-confirms-receipt-of-unsolicited-and-non-binding-take-private-erxkkelel9p6.html"
-    ],
-    [
-     "Stocktitan live",
-     "https://www.stocktitan.net/articles/stock-market-today-live-november-2-2026"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 2",
-   "h": "Oracle raises $20 billion for AI spending, and its stock falls about 9%",
-   "w": "Oracle announced a $20 billion capital raise, split between about $10 billion of bonds and a similar amount of stock. Alphabet and Microsoft are also selling debt to pay for AI, including a reported 6 billion euro bond sale by Alphabet.",
-   "m": "Big tech used to pay for growth with its own cash. Now the AI build-out is so costly that even giants are tapping bond and stock markets, which gives capital markets bankers plenty of work but makes investors question the payoff.",
-   "a": "Explain debt vs. equity financing: bonds add interest payments and leverage, while new shares add no interest but dilute current owners. That dilution is one reason a stock can fall on a raise.",
-   "s": [
-    [
-     "Yahoo Finance",
-     "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-2-dow-sp-500-nasdaq-091835095.html"
-    ],
-    [
-     "Motley Fool",
-     "https://www.fool.com/coverage/stock-market-today/2026/11/02/stock-market-midday-nov-2-stocks-rally-as-oil-prices-tumble-on-diplomatic-hopes/"
-    ]
-   ]
-  },
-  {
-   "k": "Deals",
-   "d": "Nov 2",
-   "h": "Blackstone-led group pays $3.1 billion for 49.9% of Mitsubishi's LNG Canada unit",
-   "w": "Blackstone and four Canadian pension investors, including CPP Investments and OMERS, agreed to pay US$3.1 billion for a 49.9% non-controlling stake in a Mitsubishi unit. That unit holds Mitsubishi's 15% interest in LNG Canada, the country's first liquefied natural gas export plant.",
-   "m": "Mitsubishi raises cash but keeps control and its full share of the plant's gas. Investors get a stake in a long-life energy asset, the kind that pension funds like for steady income.",
-   "a": "This is a minority stake sale, a way to free up cash without selling the asset. Do the math: $3.1 billion for 49.9% implies about $6.2 billion for the whole unit.",
-   "s": [
-    [
-     "Canadian Press via BNN Bloomberg",
-     "https://bnnbloomberg.ca/business/company-news/2026/11/02/blackstone-led-group-buys-into-mitsubishi-subsidiary-that-holds-lng-canada-stake"
-    ]
-   ]
-  },
-  {
-   "k": "Economy",
-   "d": "Oct 30",
-   "h": "Two Fed officials say interest rates need to go higher, and soon",
-   "w": "St. Louis Fed President Alberto Musalem said inflation is too high and spread across the economy, so more rate increases will be needed soon. Richmond Fed President Tom Barkin agreed rates should rise given strong demand, saying the only real question is how fast.",
-   "m": "Their comments come days after the Fed held rates in a split vote, and after September PCE inflation rose to 3.6% with Q3 growth at 3.4%. Traders now lean toward a December hike, which would make borrowing more expensive for companies and buyout firms.",
-   "a": "Be ready to explain why the Fed raises rates when inflation is high: higher rates cool spending and borrowing. For PE, higher rates mean pricier LBO debt, so firms can borrow less and must pay lower multiples to hit their target returns.",
-   "s": [
-    [
-     "AOL",
-     "https://www.aol.com/articles/rates-higher-2-fed-members-170145000.html"
-    ],
-    [
-     "Yahoo Finance",
-     "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-30-dow-sp-500-nasdaq-amazon-intel-131609630.html"
-    ]
-   ]
   }
  ],
  "NEWS_QUIZ": [
   [
-   "Apollo reported a $1.1 billion GAAP net loss for Q3 2026 while its fee-related earnings rose 23%. What mainly caused the loss?",
+   "October's CPI report showed core prices up 0.3% for a third straight month. Why did that push stocks lower on Nov 10?",
    [
-    "A large regulatory fine over fund fees",
-    "Paper losses on investments as rates rose",
-    "Write-offs on several failed buyouts",
-    "A one-time tax charge on overseas profit"
+    "It cut the odds of any Fed move",
+    "It raised the odds of a Fed rate hike",
+    "It showed the economy was shrinking",
+    "It meant gas prices would rise again"
    ],
    1,
-   "Higher rates lowered the value of investments at Apollo's retirement business, a mark-to-market loss, while its fee business kept growing."
+   "Sticky inflation makes the Fed more likely to raise rates, and higher rates lower stock valuations."
   ],
   [
-   "Evercore says the Anthropic IPO could add about 0.8% to big banks' Q4 2026 profits. Where would that money come from?",
+   "The U.S. added 165,000 jobs in October versus about 65,000 expected. What did that do to expectations for the Fed's December meeting?",
    [
-    "Interest on loans made to Anthropic",
-    "Trading gains on Anthropic shares",
-    "Underwriting fees for selling the shares",
-    "Advisory fees on Anthropic's buyouts"
+    "Odds of a hike fell below 20%",
+    "Odds of a rate cut rose to 50%",
+    "Odds of a hike rose to about 77%",
+    "Odds were unchanged at 66%"
    ],
    2,
-   "Banks earn an underwriting fee, the gross spread, for buying IPO shares from the company and reselling them to investors."
+   "Strong hiring and faster wage growth raised the chance of a December rate hike to about 77% per CME FedWatch."
   ],
   [
-   "After Democrats were projected to win Congress on Nov 3, 2026, why did Nasdaq futures fall more than S&P 500 futures?",
+   "KKR plans to return more than $40 billion to its investors in 2026. Why does that matter for KKR's future?",
    [
-    "Fears that oil prices would spike",
-    "Fears the Fed would cut rates faster",
-    "Expected new taxes on bank profits",
-    "Worries about tighter Big Tech rules"
+    "It lowers KKR's tax bill this year",
+    "It replaces KKR's management fees",
+    "It lets KKR skip new fundraising",
+    "It helps KKR raise its next funds"
    ],
    3,
-   "Analysts said the tech-heavy Nasdaq fell more on concern that a Democratic Congress would push tighter AI and Big Tech regulation."
+   "Investors want cash back from old funds before committing to new ones, so big distributions make fundraising easier."
   ]
  ],
- "DEALS_DATE": "Nov 2, 2026",
+ "DEALS_DATE": "Nov 10, 2026",
  "DEALS": [
+  {
+   "id": "d40",
+   "buyer": "LS Power",
+   "target": "Six NRG Energy gas power plants",
+   "value": "$4B",
+   "usd": 4,
+   "date": "Nov 9, 2026",
+   "terms": [
+    "All cash",
+    "About 4.9 gigawatts of capacity",
+    "~8x estimated 2027 adjusted EBITDA"
+   ],
+   "what": "NRG Energy agreed to sell six gas-fired power plants to LS Power for $4 billion in cash. The deal is expected to close in the second quarter of 2027 after regulatory approvals.",
+   "why": "NRG wants to cut debt and return cash to shareholders, while LS Power is betting on rising power demand from AI data centers. NRG plans $2 billion of debt paydown and $1 billion of buybacks.",
+   "say": "\"At about 8x 2027 EBITDA, NRG is turning plants into cash it can use to pay down $2 billion of debt and buy back stock, which is a classic way to unlock value through a divestiture.\"",
+   "src": [
+    [
+     "HDFC Sky",
+     "https://hdfcsky.com/news/constellation-nrg-kkr-and-ckx-surge-on-earnings-beats-4-billion-asset-sale-and-1-billion-investment"
+    ]
+   ],
+   "q": [
+    [
+     "NRG sold six gas plants to LS Power for $4 billion. What is this type of deal called from NRG's side?",
+     [
+      "A leveraged recapitalization",
+      "A divestiture of assets",
+      "A reverse merger",
+      "A spin-off to shareholders"
+     ],
+     1,
+     "Selling a group of assets to another company for cash is a divestiture. A spin-off would hand the assets to NRG's own shareholders instead."
+    ],
+    [
+     "LS Power paid about 8x estimated 2027 adjusted EBITDA for NRG's plants. Roughly what EBITDA does that imply for those plants?",
+     [
+      "About $320 million",
+      "About $800 million",
+      "About $500 million",
+      "About $1.2 billion"
+     ],
+     2,
+     "$4 billion divided by 8 is $500 million of expected yearly EBITDA."
+    ]
+   ]
+  },
   {
    "id": "d38",
    "buyer": "Marvell Technology",
@@ -1267,56 +1219,6 @@
      ],
      2,
      "Paying part of the price only on success shifts the risk of a failed trial or rejection back to the sellers."
-    ]
-   ]
-  },
-  {
-   "id": "d32",
-   "buyer": "Guidewire",
-   "target": "hyperexponential (hx)",
-   "value": "Up to $2.1B",
-   "usd": 2.1,
-   "date": "Oct 27, 2026",
-   "terms": [
-    "$1.7B base price in cash",
-    "Up to $400M more tied to recurring revenue targets",
-    "Funded by a $1.0B new term loan plus cash"
-   ],
-   "what": "Guidewire, which sells core software to more than 570 property and casualty (P&C) insurers, agreed to buy hyperexponential, a London startup whose AI tools help commercial insurers decide which risks to take on and how to price them. Guidewire pays $1.7 billion in cash up front and up to $400 million more if hx hits recurring revenue goals.",
-   "why": "Guidewire runs the back-office systems insurers use for policies, billing and claims, and hx adds the underwriting and pricing step that comes before a policy is written. Guidewire says the deal should add at least 6.5 percentage points to its annual recurring revenue (ARR) growth in fiscal 2027.",
-   "say": "\"Guidewire's up-to-$2.1 billion deal for hyperexponential pairs a $1.7 billion cash price with a $400 million earnout, so the sellers only get full value if hx keeps growing recurring revenue.\"",
-   "src": [
-    [
-     "Guidewire press release (SEC 8-K)",
-     "https://www.sec.gov/Archives/edgar/data/0001528396/000119312526432656/d121813dex991.htm"
-    ],
-    [
-     "FinTech Global",
-     "https://fintech.global/2026/10/28/guidewire-agrees-2-1bn-acquisition-of-hyperexponential/"
-    ]
-   ],
-   "q": [
-    [
-     "Guidewire will pay up to $400M extra for hyperexponential if hx hits recurring revenue targets. What is this part of the price usually called?",
-     [
-      "A reverse termination fee owed by Guidewire",
-      "An earnout paid only if targets are reached",
-      "A working capital adjustment made at closing",
-      "A rollover of equity held by hx's founders"
-     ],
-     1,
-     "An earnout is contingent consideration: the buyer pays more later only if the business hits agreed goals, which bridges a gap in price expectations."
-    ],
-    [
-     "Guidewire is funding its $1.7B cash payment for hyperexponential with a $1.0B term loan plus cash on hand. What is a key effect for Guidewire's shareholders?",
-     [
-      "They are diluted because new shares are issued",
-      "They must approve the deal in a special vote",
-      "The deal's cost is pushed onto hx's insurance clients",
-      "No dilution, but Guidewire takes on new debt"
-     ],
-     3,
-     "Paying with cash and debt instead of stock means no new shares, so ownership isn't diluted, but the company adds leverage and interest costs."
     ]
    ]
   },

@@ -53,7 +53,7 @@ while t < dur:
 for h in ev.get("hits", []): add(whoosh(), h - .1); add(pop(), h + .25)
 for h in ev.get("ticks", []): add(tick(), h)
 if roll < dur:
-    tt = roll; step = .11
+    tt = max(roll, reveal - 1.3); step = .11
     while tt < reveal - .05: add(snare(.05), tt, .25 + .5 * (tt - roll) / max(.1, reveal - roll)); tt += step; step = max(.04, step * .93)
 if reveal < dur: add(impact(), reveal, .9)
 if end < dur: add(whoosh(), end - .15, 1.2)

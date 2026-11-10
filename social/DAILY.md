@@ -12,7 +12,8 @@ The 4 daily Blue Chip rankings are now **animated videos**, not 2-slide carousel
 - Render: `node gen/rankvid.js <spec> ../vid/<date>` → `<key>.mp4` (~14s: hook → countdown from last place → mystery #1 → drumroll → reveal with money rain → end card) + `<key>-cover.jpg`. Soundtrack is synthesized by `gen/sfx.py` (original, no licensing). Needs `pip install qrcode numpy --break-system-packages` only for ig.py.
 - Check 3 frames (ffmpeg -ss 1 / mid / reveal+1) before posting: nothing cut off, #1 hidden until the reveal.
 - TikTok: media = [the mp4 URL], same tiktokData but `autoAddMusic:false`. Instagram: same mp4 as `instagramData {"type":"REEL","showReelOnFeed":true,"isAiGenerated":false}`. Pinterest: `ig.py --pin` on the `-cover.jpg`.
-- Keep making carousels for quizzes/brain teasers until a video version exists for those too.
+- **Brain teasers and quizzes are videos too** (Bekir: "more like that, videos and pictures"): `node gen/teaservid.js <spec> ../vid/<date>` → `<key>.mp4` (~15s: question pops → 5-second ticking timer ring → TIME'S UP → answer slam → steps one by one → comment prompt → end card) + `<key>-cover.jpg` + `<key>-answer.jpg`. Spec: `{key, label, question (<b>=red), emoji, seconds, options?:[4], correct?:index, answer, steps:[3], ask}`. Open questions use an emoji; multiple-choice uses 4 options (vary the correct letter). Keep the answer under ~22 characters.
+- Daily mix: 4 ranking videos + 3 teaser videos (open mental math / estimate / logic) + 3 quiz posts, of which at least 2 are teaservid multiple-choice videos and at most 1 is a carousel (use a "Get creative" format for it). Pinterest pins for teaser videos use `-answer.jpg`.
 
 ## Get creative (Bekir, 2026-11-09: "use all the skills you have, don't be lackluster")
 Rotate formats every day so the feed never looks the same. Each day, at least 4 different formats across the 10 posts. Ideas (all must stay accurate, sourced where numbers are real):

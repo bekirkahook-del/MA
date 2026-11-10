@@ -101,3 +101,6 @@ for p in PAGES:
         s = s.replace("</urlset>", f"  <url><loc>{loc}</loc><lastmod>{TODAY}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>\n</urlset>")
 s = re.sub(r"(<loc>https://mnaprep.com/(?:guides/)?</loc><lastmod>)[0-9-]+", rf"\g<1>{TODAY}", s)
 open(sm, "w", encoding="utf-8").write(s); print("sitemap:", s.count("<url>"), "urls")
+
+# preview images + visible "Updated" dates
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "seo.py"), encoding="utf-8").read())

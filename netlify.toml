@@ -33,3 +33,8 @@
   from = "/sitemap"
   to = "/sitemap.xml"
   status = 301
+
+[[headers]]
+  for = "/img/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

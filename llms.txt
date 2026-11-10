@@ -1,0 +1,69 @@
+# M&A Prep
+
+> M&A Prep (mnaprep.com) is a free, game-style training site for students preparing for investment banking, private equity, hedge fund, restructuring and consulting careers. It is built for high school students, college students and career switchers, and explains finance in plain English.
+
+What's on the site:
+- Learning tracks with 5-minute levels: Foundations (accounting, valuation basics), Investment Banking, Private Equity, Hedge Funds & Markets, Restructuring and Consulting
+- Interview practice: real technical and behavioral questions, AI mock interviews, rapid-fire drills, mental math sprints and brain teasers
+- Cheat sheets with every core formula explained in plain words
+- A searchable database of the most relevant M&A deals of the last 12 months
+- The Wire: market news, an earnings and economic calendar, and internship application openings
+- A free weekly email with a market recap, upcoming events and newly opened internships
+
+Everything core is free. M&A Prep Pro adds a Superday simulator and instant internship application alerts.
+
+## Guides
+
+### Interview questions
+- [Accounting interview questions: the three statements, explained simply](https://mnaprep.com/guides/accounting-interview-questions/): How the income statement, balance sheet and cash flow statement link together, plus the classic 'depreciation goes up by $10' walk-through and a free practice quiz.
+- [Behavioral and fit questions for finance interviews](https://mnaprep.com/guides/behavioral-interview-questions-finance/): How to answer 'walk me through your resume', 'why banking', your greatest weakness and the STAR questions, with what interviewers listen for.
+- [Brain teasers and mental math for finance interviews](https://mnaprep.com/guides/brain-teasers-finance-interviews/): Common brain teasers and mental math questions from banking and trading interviews, with answers and the reasoning interviewers want to hear.
+- [Coffee chat questions for finance networking (and how to ask for one)](https://mnaprep.com/guides/coffee-chat-questions/): Good questions to ask in an investment banking or private equity coffee chat, how to ask for a chat by email or LinkedIn, and how to follow up so it actually helps you get an interview.
+- [Consulting case interviews: structure, math and recommendations](https://mnaprep.com/guides/consulting-case-interview/): How to structure a case interview (MECE, profitability, market entry), do case math quickly and land a clear recommendation, with practice cases.
+- [How to walk through a DCF (and the questions that follow)](https://mnaprep.com/guides/dcf-interview-questions/): A clear answer to 'walk me through a DCF', plus WACC, terminal value and the follow-up valuation questions banks ask, with a free practice quiz.
+- [Equity research interview questions](https://mnaprep.com/guides/equity-research-interview-questions/): Common equity research interview questions, how to pitch a stock, and the valuation basics you need, explained simply.
+- [Hedge fund interview questions and how to pitch a stock](https://mnaprep.com/guides/hedge-fund-interview-questions-stock-pitch/): How to structure a stock pitch (thesis, variant view, catalyst, valuation, risks) plus markets questions on rates, shorting and portfolio risk.
+- [Investment banking interview questions, with what a strong answer covers](https://mnaprep.com/guides/investment-banking-interview-questions/): The most common investment banking interview questions: fit, accounting, enterprise value, valuation and M&A, with the key points interviewers listen for and a free practice quiz.
+- [LBO interview questions and a worked paper LBO](https://mnaprep.com/guides/lbo-interview-questions/): How a leveraged buyout works, what makes a good LBO candidate, and a step-by-step paper LBO with MOIC and IRR, plus a free practice quiz.
+- [Market sizing questions, with worked examples](https://mnaprep.com/guides/market-sizing-questions/): How to answer market sizing (guesstimate) questions top-down or bottom-up, with handy numbers to memorize and worked examples.
+- [Mental math for finance interviews: fast tricks and practice](https://mnaprep.com/guides/mental-math-finance-interviews/): The mental math tricks finance interviewers expect, like percentages, multiplying two-digit numbers, the Rule of 72 and quick IRR estimates, with practice questions and answers.
+- [Private equity interview questions](https://mnaprep.com/guides/private-equity-interview-questions/): What PE interviewers ask: how funds work, LBO logic, paper LBOs, case studies and 'would you invest?', with key points for strong answers and a free quiz.
+- [Restructuring interview questions](https://mnaprep.com/guides/restructuring-interview-questions/): Chapter 11 vs Chapter 7, recovery waterfalls, the fulcrum security, liability management and more, with key points and a free practice quiz.
+- [Sales and trading interview questions](https://mnaprep.com/guides/sales-and-trading-interview-questions/): The most common sales and trading interview questions, from markets and pitching a trade to mental math, with what a strong answer covers.
+- [The investment banking Superday: what to expect and how to prepare](https://mnaprep.com/guides/superday-guide/): What happens at an investment banking Superday, how many interviews you'll have, the questions they ask, and a simple checklist to prepare the week before.
+- [How to answer "Tell me about yourself" in a finance interview](https://mnaprep.com/guides/tell-me-about-yourself-finance/): A simple structure for the first question in almost every finance interview, with an example answer and the mistakes to avoid.
+- [How to answer "Why investment banking?" in an interview](https://mnaprep.com/guides/why-investment-banking-answer/): How to answer "Why investment banking?" with a clear, believable story: a simple 3-part structure, a sample answer, and the mistakes that make interviewers tune out.
+
+### Careers and recruiting
+- [Bulge bracket vs. elite boutique vs. middle-market banks](https://mnaprep.com/guides/bulge-bracket-vs-elite-boutique/): How investment banks are organized: bulge brackets, elite boutiques and middle-market banks, coverage vs product groups, and who does what on a deal team.
+- [How to cold email bankers (with a template)](https://mnaprep.com/guides/cold-email-investment-banking/): How to find bankers' emails, a short cold email template that gets replies, and how to follow up without being annoying.
+- [Corporate banking vs. investment banking](https://mnaprep.com/guides/corporate-banking-vs-investment-banking/): How corporate banking and investment banking differ in what they do, the hours, and the career path, explained simply.
+- [Finance internships for freshmen and sophomores](https://mnaprep.com/guides/finance-internships-for-freshmen/): Where freshmen and sophomores can find finance internships and early programs, what counts as good experience, and how to use it to land a bigger internship later.
+- [How to get into investment banking: a step-by-step plan](https://mnaprep.com/guides/how-to-get-into-investment-banking/): A plain-English roadmap for breaking into investment banking: what to do in high school, freshman, sophomore and junior year, how recruiting works, and how to prepare for interviews for free.
+- [How to write an investment banking cover letter](https://mnaprep.com/guides/investment-banking-cover-letter/): When banks actually read cover letters, a simple 3-paragraph template, and the mistakes that make recruiters skip yours.
+- [How to prepare for investment banking in high school](https://mnaprep.com/guides/investment-banking-for-high-school-students/): What high school students can do now to get ahead for an investment banking career: picking a college, building skills, and learning the basics early.
+- [Investment banking hours and lifestyle](https://mnaprep.com/guides/investment-banking-hours/): How many hours investment bankers really work, what a typical day looks like, why the hours are so long, and how it changes as you get promoted.
+- [The investment banking recruiting timeline, year by year](https://mnaprep.com/guides/investment-banking-recruiting-timeline/): When to start preparing for investment banking: what to do freshman, sophomore and junior year, how networking works, and how return offers happen.
+- [How to write an investment banking resume](https://mnaprep.com/guides/investment-banking-resume/): The one-page resume format banks expect, what to put in each section, and simple bullet examples for students with little or no finance experience.
+- [How to break into investment banking from a non-target school](https://mnaprep.com/guides/non-target-investment-banking/): What target and non-target schools mean, why it's harder from a non-target, and a practical plan to land an investment banking internship anyway.
+- [Private equity vs. investment banking, explained simply](https://mnaprep.com/guides/private-equity-vs-investment-banking/): The real difference between private equity and investment banking: what each job does, who they work for, the hours, and how people move from one to the other.
+- [What do investment banking analysts do? A day in the life](https://mnaprep.com/guides/what-do-investment-banking-analysts-do/): What an investment banking analyst actually does all day: models, pitch decks, deal work and the skills you need to do the job well.
+
+### Finance concepts explained
+- [Enterprise value vs. equity value](https://mnaprep.com/guides/enterprise-value-vs-equity-value/): What enterprise value and equity value mean, how to bridge between them, which multiples go with each, and the interview questions that test it.
+- [Free cash flow explained simply](https://mnaprep.com/guides/free-cash-flow-explained/): What free cash flow is, the formulas for levered and unlevered free cash flow, a quick example, and why it matters in valuation.
+- [Investment banking groups explained](https://mnaprep.com/guides/investment-banking-groups-explained/): The difference between coverage groups and product groups in investment banking, the most common groups, and how to pick one.
+- [IRR and MOIC cheat sheet for interviews](https://mnaprep.com/guides/irr-moic-cheat-sheet/): Memorize these IRR benchmarks to estimate returns in your head during PE and LBO interviews. Includes a full table and a free practice quiz.
+- [Merger models and accretion/dilution, explained](https://mnaprep.com/guides/merger-model-accretion-dilution/): How to tell if an acquisition is accretive or dilutive, the P/E shortcut, the cost of cash, debt and stock, and the M&A interview questions that test it.
+- [Valuation multiples explained: EV/EBITDA, P/E and more](https://mnaprep.com/guides/valuation-multiples/): What valuation multiples are, how EV/EBITDA, EV/Revenue and P/E work, which to use when, and a simple example, explained for beginners.
+- [WACC explained simply](https://mnaprep.com/guides/wacc-explained/): What WACC (weighted average cost of capital) means, the formula, a worked example, and how it's used in a DCF, at a beginner level.
+- [What is a hedge fund? Explained simply](https://mnaprep.com/guides/what-is-a-hedge-fund/): What hedge funds are, how they invest and make money, the main strategies, and how they differ from mutual funds and private equity.
+- [What is an LBO? A simple explanation with an example](https://mnaprep.com/guides/what-is-an-lbo/): What a leveraged buyout is, why private equity firms use debt, and a simple step-by-step example showing how an LBO makes money.
+- [What is EBITDA? Simple definition and example](https://mnaprep.com/guides/what-is-ebitda/): What EBITDA means, how to calculate it, why bankers and investors use it so much, and its biggest weaknesses, explained simply.
+- [What is investment banking? Explained simply](https://mnaprep.com/guides/what-is-investment-banking/): What investment bankers actually do, the main types of banks, the job titles from analyst to managing director, and what the job is really like, in plain English for high school and college students.
+- [What is private equity? Explained simply](https://mnaprep.com/guides/what-is-private-equity/): What private equity firms do, how a buyout works, how they make money, and what jobs in private equity look like, explained in plain English.
+
+## Main pages
+- [Home / start training](https://mnaprep.com/): the training app
+- [All guides](https://mnaprep.com/guides/): index of free guides
+- [Sitemap](https://mnaprep.com/sitemap.xml)

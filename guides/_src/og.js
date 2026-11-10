@@ -1,6 +1,9 @@
 const {chromium}=require('playwright');const fs=require('fs'),path=require('path');
 const root=require('path').resolve(__dirname,'../..');const items=[{slug:'home',kick:'FREE FINANCE CAREER TRAINING',t:'Train for investment banking & private equity',sub:'5-minute levels · real interview questions · live deals'}];
 for(const d of fs.readdirSync(root+'/guides')){const f=`${root}/guides/${d}/index.html`;if(!fs.existsSync(f)||d==='_src')continue;const s=fs.readFileSync(f,'utf8');const h=(s.match(/<h1>(.*?)<\/h1>/s)||[])[1];if(!h)continue;items.push({slug:d,kick:'FREE GUIDE',t:h.replace(/<[^>]+>/g,'').replace(/&quot;/g,'"').replace(/&#x27;|&#39;/g,"'").replace(/&amp;/g,'&'),sub:'mnaprep.com/guides'})}
+for(const d of (fs.existsSync(root+'/tools')?fs.readdirSync(root+'/tools'):[])){const f=`${root}/tools/${d}/index.html`;if(!fs.existsSync(f))continue;const s=fs.readFileSync(f,'utf8');const h=(s.match(/<h1>(.*?)<\/h1>/s)||[])[1];if(h)items.push({slug:d,kick:'FREE TOOL',t:h.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&'),sub:'mnaprep.com/tools'})}
+items.push({slug:'tools',kick:'FREE TOOLS',t:'Free finance recruiting tools',sub:'mnaprep.com/tools'});
+const ONLY=process.argv.slice(2);if(ONLY.length){const keep=items.filter(i=>ONLY.some(o=>i.slug.startsWith(o)));items.length=0;items.push(...keep)}
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1200,height:630}});
 for(const it of items){const fs2=it.t.length>70?60:it.t.length>45?70:82;

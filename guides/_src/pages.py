@@ -8,7 +8,7 @@ PAGES = [
 "title": "How to Get Into Investment Banking (Step-by-Step, From High School to Offer)",
 "h1": "How to get into investment banking: a step-by-step plan",
 "desc": "A plain-English roadmap for breaking into investment banking: what to do in high school, freshman, sophomore and junior year, how recruiting works, and how to prepare for interviews for free.",
-"related": ["investment-banking-recruiting-timeline", "what-is-investment-banking", "coffee-chat-questions", "why-investment-banking-answer", "superday-guide"],
+"related": ["investment-banking-recruiting-timeline", "what-is-investment-banking", "coffee-chat-questions", "why-investment-banking-answer", "superday-guide","how-to-pitch-a-stock-interview"],
 "lede": ["Most investment banking analysts get hired through a summer internship after junior year of college, and that internship usually comes from recruiting that starts much earlier. The people who get in aren't always the smartest. They start early, network a lot and show up to interviews already knowing the technical questions.",
          "Here's the plan, year by year, plus the four things every bank checks."],
 "body": [
@@ -38,7 +38,7 @@ PAGES = [
 "title": "What Is Investment Banking? A Simple Explanation for Students",
 "h1": "What is investment banking? Explained simply",
 "desc": "What investment bankers actually do, the main types of banks, the job titles from analyst to managing director, and what the job is really like, in plain English for high school and college students.",
-"related": ["how-to-get-into-investment-banking", "bulge-bracket-vs-elite-boutique", "investment-banking-interview-questions", "why-investment-banking-answer"],
+"related": ["how-to-get-into-investment-banking", "bulge-bracket-vs-elite-boutique", "investment-banking-interview-questions", "why-investment-banking-answer","corporate-finance-vs-investment-banking"],
 "lede": ["Investment bankers help companies with big money moves: buying or selling another company (M&amp;A), raising money by selling stock (like an IPO), or borrowing money by selling bonds. Companies hire banks for these deals because they're rare, complicated and huge.",
          "Bankers get paid a fee when the deal closes, which is why the job is so intense and so well paid."],
 "body": [

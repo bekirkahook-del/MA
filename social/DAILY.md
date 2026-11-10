@@ -24,6 +24,7 @@ Hooks: lead with a number, a dare ("Only 1 slide. Can you solve it?"), or a surp
 ## What works (update this as you learn)
 - Bekir's favorite so far: the **bank CEO pay** post. People love **rankings and stats about money and exclusivity**: who gets paid the most, what's hardest to get into, the 1%, record bonuses, elite schools and firms.
 - **Less text, quick to digest (Bekir, 2026-11-09):** people want interesting things they get instantly: quantifiable rankings, fast brain teasers, quick tips. Quiz decks 5–6 slides max, one short line per slide, short captions. Cut anything that needs explaining.
+- **Copy the winner (Bekir, 2026-11-09: "make posts similar to my most viewed/liked"):** Metricool returns no per-post TikTok stats and TikTok blocks reading the profile, so the best known winner is the bank CEO pay ranking. At least 3 of the 4 daily Blue Chip posts should follow its recipe: famous names + how much money they make/have/earned, a one-number hook ("$9.3 million a day"), "Guess #1 before you swipe", and a surprise at #1 (e.g. 2026-11-09 bc-hfpay). Ideas: highest-paid athletes vs CEOs, richest people under 30, biggest Wall Street bonuses by bank, highest-paid CEOs overall, YouTubers/creators earnings, top PE founders net worth. If Bekir names other top posts, add them here.
 - Keep it simple: one clear number per hook, plain words, no jargon. Think "would a 17-year-old get it in 2 seconds?"
 - Keep evolving: lean into the formats and topics that get the most views, likes and comments (see step 2b), and try one new angle each day.
 

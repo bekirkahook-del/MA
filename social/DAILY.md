@@ -24,6 +24,7 @@ Short screen recordings of the real mnaprep.com on a phone, with hook captions a
 - Times: spread them (e.g. ~1pm, ~5pm, ~8:30pm), 45+ min from every other post. Log each as `- <date> <time> sitevid-<name> — [Site voice] <voice>` in posted.md, and **don't count these 3 toward the 10 + 2 targets** in step 2 (match them by those posted.md lines).
 
 ## YouTube Shorts: every video goes there too (Bekir connected YouTube, 2026-11-10)
+**PAUSED (2026-11-10): Bekir said never post to the YouTube channel on his personal account (bekirkahook@gmail.com); YouTube posts must go only to the channel on tiktokshopbk29@gmail.com. Don't schedule any YouTube posts until this line says the connected channel is confirmed.**
 Every **video** post (ranking videos, teaser/quiz videos, voiced site-demo videos) is also scheduled as a separate Metricool post to YouTube at the same time. Image carousels/decks don't go to YouTube.
 - providers [{"network":"youtube"}], media = the same mp4 URL, `youtubeData: {"title": <hook, ≤90 chars, plain words, end with " #shorts">, "type":"short", "privacy":"public", "tags":[3–5 search phrases like "investment banking salary"], "category":"EDUCATION", "madeForKids":false, "isAiGeneratedContent": true only for voiced site-demo videos (AI voice), else false}`.
 - `text` = 1–2 plain sentences describing the video for search + "Free at mnaprep.com" + 2–3 hashtags including #shorts. Write it fresh (not the TikTok caption).

@@ -46,9 +46,9 @@
 - 2026-11-11 5:08pm sitevid-investment-banker-pay — [Site voice] am_puck
 - 2026-11-11 8:41pm sitevid-superday-test — [Site voice] am_liam
 - 2026-11-11 tbl-gradpay — [Table deck] Colleges where grads earn the most (College Scorecard median earnings 10 yrs; MIT $143,372)
-- 2026-11-11 vid-rk-actors — [Ranking video] Highest-paid actors 2025 (Forbes; Adam Sandler $48M)
+- 2026-11-11 vid-rk-hardbiz — [Ranking video] Hardest undergrad business schools to get into (P&Q 2026; Wharton 3.6%)
 - 2026-11-11 vid-tq-25x48 — [Brain teaser video] 25 × 48 = 1,200 (100 ÷ 4 trick)
-- 2026-11-11 vid-rk-under30 — [Ranking video] Richest self-made billionaires under 30 (Forbes; Alexandr Wang $3.2B)
+- 2026-11-11 vid-rk-mbagoes — [Ranking video] Where Wharton MBAs go: industries (Wharton 2025 report; consulting 28.2%)
 - 2026-11-11 vid-tq-evcalc — [Video quiz] EV = 8x × 25% × $100M = $200M (MC, B)
 - 2026-11-11 tbl-banks — [Table deck] Biggest US banks by domestic assets (Bankrate/Fed June 30 2026, logos)
 - 2026-11-11 vid-rk-mbajobs — [Ranking video] Highest-paying jobs for Wharton MBAs (Wharton 2025 report; legal/professional $235K > PE $200K)

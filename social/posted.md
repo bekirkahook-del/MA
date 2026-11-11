@@ -51,9 +51,9 @@
 - 2026-11-11 vid-rk-under30 — [Ranking video] Richest self-made billionaires under 30 (Forbes; Alexandr Wang $3.2B)
 - 2026-11-11 vid-tq-evcalc — [Video quiz] EV = 8x × 25% × $100M = $200M (MC, B)
 - 2026-11-11 tbl-banks — [Table deck] Biggest US banks by domestic assets (Bankrate/Fed June 30 2026, logos)
-- 2026-11-11 vid-rk-music — [Ranking video] Highest-paid musicians 2025 (Forbes; The Weeknd $298M)
+- 2026-11-11 vid-rk-mbajobs — [Ranking video] Highest-paying jobs for Wharton MBAs (Wharton 2025 report; legal/professional $235K > PE $200K)
 - 2026-11-11 vid-tq-lily — [Brain teaser video] Lily pad doubling: half covered day 47
-- 2026-11-11 vid-rk-nfl — [Ranking video] Most valuable NFL teams 2026 (Forbes; Cowboys $17B)
+- 2026-11-11 vid-rk-mbapay — [Ranking video] Highest-paying MBA programs (US News via P&Q, avg base Class of 2025; Stanford $190K)
 - 2026-11-11 vid-tq-hands — [Brain teaser video] Clock hands overlap 11 times in 12 hours
 - 2026-11-11 vid-tq-swap — [Video quiz] Stock-for-debt swap: EV doesn't change (MC, D)
 - 2026-11-11 college guides — Georgetown McDonough, UVA McIntire (Pinterest)

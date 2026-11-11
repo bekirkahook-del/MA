@@ -23,6 +23,12 @@ Short screen recordings of the real mnaprep.com on a phone, with hook captions a
 - Files go in `social/vid/<date>/sitevid-<name>.mp4`. TikTok: autoAddMusic false, isAigc **true** (the voice is AI-generated), commercialContentOwnBrand true. Instagram: same mp4 as REEL with isAiGenerated true. No Pinterest.
 - Times: spread them (e.g. ~1pm, ~5pm, ~8:30pm), 45+ min from every other post. Log each as `- <date> <time> sitevid-<name> — [Site voice] <voice>` in posted.md, and **don't count these 3 toward the 10 + 2 targets** in step 2 (match them by those posted.md lines).
 
+## YouTube Shorts: every video goes there too (Bekir connected YouTube, 2026-11-10)
+Every **video** post (ranking videos, teaser/quiz videos, voiced site-demo videos) is also scheduled as a separate Metricool post to YouTube at the same time. Image carousels/decks don't go to YouTube.
+- providers [{"network":"youtube"}], media = the same mp4 URL, `youtubeData: {"title": <hook, ≤90 chars, plain words, end with " #shorts">, "type":"short", "privacy":"public", "tags":[3–5 search phrases like "investment banking salary"], "category":"EDUCATION", "madeForKids":false, "isAiGeneratedContent": true only for voiced site-demo videos (AI voice), else false}`.
+- `text` = 1–2 plain sentences describing the video for search + "Free at mnaprep.com" + 2–3 hashtags including #shorts. Write it fresh (not the TikTok caption).
+- YouTube doesn't need the 45-minute spacing from TikTok posts; it's a different app.
+
 ## Always a lead-up slide before a chart (Bekir, 2026-11-10)
 Never post a raw chart or table as the first thing people see. Every chart/table post starts with a lead-up "swipe" slide in the style of the viral Big Ten post: skyscraper photo, big uppercase white text in a dark-green rounded box, and a green "—>" box under it. Make it with `node gen/hookslide.js OUT.jpg "CAPTION" [W H]` (1000x1500 for pins, 1080 1920 for TikTok). The caption names the ranking but never gives away #1.
 - TikTok/Instagram: table decks (tabledeck.js slide 1) and Blue Chip carousels already open with it; ranking videos open with an animated hook over the photo.

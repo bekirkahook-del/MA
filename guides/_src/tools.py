@@ -68,6 +68,7 @@ def shell(slug, title, h1, desc, lede, body, faqs, script, kind="WebApplication"
 <h2>More free tools</h2><ul class="more"><li><a href="/tools/recruiting-timeline-calculator/">Recruiting timeline calculator</a></li><li><a href="/tools/superday-readiness-test/">Superday readiness test</a></li><li><a href="/tools/investment-banking-pay/">Investment banking pay by level</a></li><li><a href="/tools/embed/">Question of the day widget</a></li><li><a href="/deals/">M&amp;A deal database</a></li><li><a href="/guides/">All free guides</a></li></ul></main>
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
 <script>{script}</script>
+<script src="/js/sharecard.js" defer></script>
 <script src="/js/hit.js" defer></script>
 <script src="/js/email.js" defer></script>
 </body></html>
@@ -157,7 +158,7 @@ $("#grade").onclick=()=>{const n=Object.keys(pick).length;if(n<QS.length&&!confi
  const tier=s>=11?["Superday ready","You'd hold your own in a final round. Keep it sharp with timed practice."]:s>=8?["Close","Solid base. Tighten the misses and practice explaining answers out loud."]:s>=5?["Getting there","You know the ideas. Drill accounting and valuation until the answers are automatic."]:["Start with the basics","Begin with the three statements and enterprise value, then come back."];
  const txt=`I scored ${s}/${QS.length} on the Superday readiness test: ${tier[0]}. Try it: https://mnaprep.com/tools/superday-readiness-test/`;
  $("#res").innerHTML=`<div class="big">${s} / ${QS.length}</div><p><b>${tier[0]}.</b> ${tier[1]}</p><a class="btn" href="/">Practice 1,000+ more questions free</a> <button class="btn ghost" id="share">Share my score</button>`;
- $("#share").onclick=async()=>{try{if(navigator.share)await navigator.share({text:txt});else{await navigator.clipboard.writeText(txt);$("#share").textContent="Copied!"}}catch(e){}};
+ $("#share").onclick=async()=>{const b=$("#share");try{if(window.shareCard){b.textContent="Making your card…";const r=await shareCard({kicker:"Superday readiness test",big:`${s}/${QS.length}`,title:tier[0],sub:"Think you can beat me? Take the free 3-minute test.",short:"/superday",path:"/tools/superday-readiness-test/",file:`superday-score-${s}-of-${QS.length}.png`,text:txt});b.textContent=r==="downloaded"?"Saved! Post it to your story":"Share my score";return}if(navigator.share)await navigator.share({text:txt});else{await navigator.clipboard.writeText(txt);b.textContent="Copied!"}}catch(e){b.textContent="Share my score"}};
  $("#res").scrollIntoView({behavior:"smooth",block:"center"})};
 """
 T2_FAQ = [

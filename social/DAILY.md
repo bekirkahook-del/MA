@@ -171,3 +171,15 @@ Append one line per post to `social/posted.md` (`- YYYY-MM-DD key — [Blue Chip
 
 ## If anything fails
 Send ONE SendUserMessage: "TikTok daily run failed: <step> — <exact error>". Don't retry endlessly.
+
+## Cross-promo: every platform points to the others (added 2026-11-11)
+One hub: **mnaprep.com/links** (every profile + the site + Discord). Short links: mnaprep.com/youtube, /tiktok, /instagram, /pinterest, /quora, /producthunt, /discord.
+| Where | Rule |
+|---|---|
+| Every profile bio (TikTok, IG, Pinterest, YouTube, Product Hunt, Quora, Discord) | Link = mnaprep.com/links |
+| TikTok / IG captions | About 1 in 3 ends with a soft cross-link that rotates: "full breakdown on YouTube (link in bio)", "daily question in our Discord (link in bio)", "free 50-question PDF (link in bio)" |
+| YouTube Shorts + long videos | Description footer: "🎮 Train free: mnaprep.com · 💬 Discord: mnaprep.com/discord · 🎵 TikTok: mnaprep.com/tiktok · 📸 IG: mnaprep.com/instagram". Pin a comment pointing to the matching guide page. |
+| Weekly long YouTube video | Same week: cut 2–3 Shorts/TikToks from it ("full video on YouTube"), 1 Pinterest pin to the matching guide, and Discord announces it automatically (discord-youtube function) |
+| Pinterest pins | Link to the matching guide or tool page, never just the homepage |
+| Quora answers | Mention mnaprep.com only when it fits; profile credential links to mnaprep.com/links |
+| Emails and site footer | Already link Discord + YouTube + TikTok + IG (done in code) |

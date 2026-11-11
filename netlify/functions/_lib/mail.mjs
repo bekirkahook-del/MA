@@ -45,6 +45,7 @@ export function shell(body, s) {
 <div style="font-weight:900;letter-spacing:.06em;font-size:22px;margin-bottom:14px">M<span style="color:#2448D8">&amp;</span>A Prep</div>
 <div style="background:#fff;border:1px solid #D3D9E4;border-radius:14px;padding:22px 20px;font-size:16px;line-height:1.55">${body}</div>
 <p style="font-size:14px;margin:14px 0 0;text-align:center"><a href="${SITE}/discord" style="color:#2448D8;font-weight:bold">💬 Join the M&amp;A Prep Discord</a>: daily questions, deal alerts and application alerts</p>
+<p style="font-size:13px;margin:8px 0 0;text-align:center"><a href="${SITE}/youtube" style="color:#4A5672">YouTube</a> · <a href="${SITE}/tiktok" style="color:#4A5672">TikTok</a> · <a href="${SITE}/instagram" style="color:#4A5672">Instagram</a> · <a href="${SITE}/pinterest" style="color:#4A5672">Pinterest</a></p>
 <p style="font-size:12px;color:#4A5672;line-height:1.5;margin-top:16px">You're getting this because you signed up at mnaprep.com.
 <a href="${unsubUrl(s)}" style="color:#4A5672">Unsubscribe</a>${addr ? `<br>${addr.replace(/[<>&]/g, "")}` : ""}</p>
 </div></body></html>`;

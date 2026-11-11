@@ -12,6 +12,36 @@
 
 # keep setup files off the public site
 [[redirects]]
+  from = "/youtube"
+  to = "https://www.youtube.com/channel/UCecz_zgUGiksG2HpJEt0cTg?sub_confirmation=1"
+  status = 302
+
+[[redirects]]
+  from = "/tiktok"
+  to = "https://www.tiktok.com/@bluechipfinancial"
+  status = 302
+
+[[redirects]]
+  from = "/instagram"
+  to = "https://www.instagram.com/mnaprep/"
+  status = 302
+
+[[redirects]]
+  from = "/pinterest"
+  to = "https://www.pinterest.com/tiktokshopbk29/"
+  status = 302
+
+[[redirects]]
+  from = "/quora"
+  to = "https://www.quora.com/profile/Bekir-Kahook"
+  status = 302
+
+[[redirects]]
+  from = "/producthunt"
+  to = "https://www.producthunt.com/products/m-a-prep"
+  status = 302
+
+[[redirects]]
   from = "/discord"
   to = "https://discord.gg/aEF6fN8b8C"
   status = 302

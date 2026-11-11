@@ -12,6 +12,11 @@
 
 # keep setup files off the public site
 [[redirects]]
+  from = "/discord"
+  to = "https://discord.gg/j9CKteeQB"
+  status = 302
+
+[[redirects]]
   from = "/superday"
   to = "/tools/superday-readiness-test/"
   status = 301

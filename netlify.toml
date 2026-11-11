@@ -13,7 +13,7 @@
 # keep setup files off the public site
 [[redirects]]
   from = "/discord"
-  to = "https://discord.gg/j9CKteeQB"
+  to = "https://discord.gg/aEF6fN8b8C"
   status = 302
 
 [[redirects]]

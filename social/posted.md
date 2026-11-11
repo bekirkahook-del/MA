@@ -42,3 +42,6 @@
 - 2026-11-10 vid-tq-stack — [Video quiz] Bankruptcy: senior secured lenders paid first (MC, C)
 - 2026-11-10 tbl-bschoolpay — [Table deck] Top business schools by grad starting salary (P&Q 2026, logos)
 - 2026-11-10 tbl-mktcap — [Table deck] Most valuable companies in the world (chartrow, Nov 9 2026, logos)
+- 2026-11-11 1:17pm sitevid-train-for-wall-street — [Site voice] am_michael
+- 2026-11-11 5:08pm sitevid-investment-banker-pay — [Site voice] am_puck
+- 2026-11-11 8:41pm sitevid-superday-test — [Site voice] am_liam

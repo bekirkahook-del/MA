@@ -1,0 +1,3 @@
+{"order": ["am_michael", "am_puck", "am_liam", "am_fenrir", "am_eric", "am_adam", "am_echo", "bm_fable", "bm_george"],
+ "next": 3,
+ "note": "Rotate in this order, one voice per video; bump next (mod 9) after each video. Used so far: 2026-11-11 michael, puck, liam."}

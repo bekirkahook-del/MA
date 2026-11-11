@@ -43,7 +43,7 @@ Modeled on a viral "Big Ten Schools Most Frequently Hired for Finance" post. **2
 - Topics: rankings with 3 real numeric/text columns from ONE source read that run: schools (salary, acceptance, placement), companies (market cap, revenue, profit), banks (fees, profit, headcount), CEO/athlete/creator pay, cities (rent vs pay). Mix one school/career table and one company/money table per day. Never invent filler like "strong placement"; every cell must be sourced or plainly factual.
 - Instagram: 4:5 carousel copies with ig.py. Pinterest: slide 2 via `ig.py --pin`, board "Wall Street Salaries & Rankings" (schools/pay) or "Banks, Deals & IPOs" (companies/markets). TikTok autoAddMusic true, commercialContentOwnBrand false.
 - Spacing: with 12 TikToks, keep them at least 45 minutes apart (Bekir chose tighter spacing over dropping posts).
-- Done: tbl-bschoolpay (top b-schools by grad salary, P&Q), tbl-mktcap (most valuable companies, Nov 9 2026).
+- Done: tbl-bschoolpay (top b-schools by grad salary, P&Q), tbl-mktcap (most valuable companies, Nov 9 2026), tbl-gradpay (College Scorecard earnings), tbl-banks (biggest US banks by assets).
 
 ## Get creative (Bekir, 2026-11-09: "use all the skills you have, don't be lackluster")
 Rotate formats every day so the feed never looks the same. Each day, at least 4 different formats across the 10 posts. Ideas (all must stay accurate, sourced where numbers are real):
@@ -161,7 +161,7 @@ Board: "How to Get Into Business School" (fall back to "M&A Prep" until Bekir cr
 - Pick schools students search for: top undergrad business schools (Wharton, Stern, Ross, McIntire, Dyson, Marshall, Kenan-Flagler, Mendoza, Goizueta, Haas, McCombs, Kelley, Fisher…), plus target schools for Wall Street (Georgetown, Harvard, Columbia, Duke…) and later MBA programs.
 - **Bekir, 2026-11-09: the first version "doesn't even explain how to get in."** Each guide must teach the actual process for THAT school, 8 slides: cover → numbers → how you apply there (which app, which school to pick, direct admit or not) → testing policy → the school's real essay prompt(s) quoted with word limits → what that school says it looks for → deadlines/ED options → recruiting/mnaprep.com. Research the school's own admissions pages/blog first (then Common Data Set, student paper, Poets&Quants). See pin/college/wharton.json, ross.json, stern.json.
 - Every number must come from a source read that run (school class profile, Common Data Set, or Poets&Quants); name the source on the numbers slide. Never claim to be a certified counselor or admissions officer, never promise admission, and never use school logos, crests or mascots. Steps must be honest, general-but-specific advice (how you apply to that school, course rigor, real business projects, school-specific essay, plan recruiting early).
-- Done so far: Wharton, NYU Stern, Michigan Ross (scheduled 2026-11-10 on M&A Prep).
+- Done so far: Wharton, NYU Stern, Michigan Ross (2026-11-10), Georgetown McDonough, UVA McIntire (2026-11-11).
 
 ## 5d. Instagram stories: STOPPED
 Bekir, 2026-11-10: "Don't post any more stories on insta." Never schedule Instagram stories (type STORY). TikTok stories can't be scheduled through Metricool either.

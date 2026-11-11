@@ -1,0 +1,12 @@
+{"key":"tbl-banks","hook":"AMERICA'S BIGGEST BANKS","title":"Biggest Banks in America","subtitle":"Ranked by Domestic Assets","note":"Federal Reserve data as of June 30, 2026","cols":["Bank","Domestic assets","Branches","ATMs"],"rows":[
+{"logo":"jpmorganchase.com","name":"JPMorgan Chase","cells":["$2.88T","5,000+","14,000+"],"hot":true},
+{"logo":"bankofamerica.com","name":"Bank of America","cells":["$2.49T","~3,600","~15,000"]},
+{"logo":"wellsfargo.com","name":"Wells Fargo","cells":["$1.89T","4,100+","11,000+"]},
+{"logo":"citi.com","name":"Citibank","cells":["$1.21T","~670","65,000+"]},
+{"logo":"usbank.com","name":"U.S. Bank","cells":["$695.5B","~2,100","40,000+"]},
+{"logo":"capitalone.com","name":"Capital One","cells":["$661.7B","~250","70,000+"]},
+{"logo":"goldmansachs.com","name":"Goldman Sachs","sub":"Marcus","cells":["$628.2B","5","None"]},
+{"logo":"pnc.com","name":"PNC","cells":["$603.7B","~2,400","~60,000"]},
+{"name":"Truist","cells":["$548.1B","1,900+","~2,800"]},
+{"logo":"morganstanley.com","name":"Morgan Stanley","sub":"Bank NA","cells":["$344.5B","0","None"]}],
+"sources":"Bankrate, America's top 10 biggest banks (Federal Reserve data, June 30, 2026). Branch and ATM counts as reported by Bankrate.","ctaHead":"Want to work at one? <em>Train</em> for the interview"}

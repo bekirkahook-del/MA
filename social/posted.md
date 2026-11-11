@@ -45,3 +45,15 @@
 - 2026-11-11 1:17pm sitevid-train-for-wall-street — [Site voice] am_michael
 - 2026-11-11 5:08pm sitevid-investment-banker-pay — [Site voice] am_puck
 - 2026-11-11 8:41pm sitevid-superday-test — [Site voice] am_liam
+- 2026-11-11 tbl-gradpay — [Table deck] Colleges where grads earn the most (College Scorecard median earnings 10 yrs; MIT $143,372)
+- 2026-11-11 vid-rk-actors — [Ranking video] Highest-paid actors 2025 (Forbes; Adam Sandler $48M)
+- 2026-11-11 vid-tq-25x48 — [Brain teaser video] 25 × 48 = 1,200 (100 ÷ 4 trick)
+- 2026-11-11 vid-rk-under30 — [Ranking video] Richest self-made billionaires under 30 (Forbes; Alexandr Wang $3.2B)
+- 2026-11-11 vid-tq-evcalc — [Video quiz] EV = 8x × 25% × $100M = $200M (MC, B)
+- 2026-11-11 tbl-banks — [Table deck] Biggest US banks by domestic assets (Bankrate/Fed June 30 2026, logos)
+- 2026-11-11 vid-rk-music — [Ranking video] Highest-paid musicians 2025 (Forbes; The Weeknd $298M)
+- 2026-11-11 vid-tq-lily — [Brain teaser video] Lily pad doubling: half covered day 47
+- 2026-11-11 vid-rk-nfl — [Ranking video] Most valuable NFL teams 2026 (Forbes; Cowboys $17B)
+- 2026-11-11 vid-tq-hands — [Brain teaser video] Clock hands overlap 11 times in 12 hours
+- 2026-11-11 vid-tq-swap — [Video quiz] Stock-for-debt swap: EV doesn't change (MC, D)
+- 2026-11-11 college guides — Georgetown McDonough, UVA McIntire (Pinterest)

@@ -3,8 +3,10 @@
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
 
-## TIKTOK PAUSED until Thu Nov 12, 2026 11:30pm ET (Bekir, 2026-11-11 11:27pm: "pause all tiktoks for a day")
-Don't schedule or publish anything to TikTok before then. Instagram, Pinterest and YouTube keep going as normal. Two TikToks are waiting as drafts (EV question video, Superday deck). After the pause ends, the first run sets them to draft:false and schedules them for the next open slots.
+## NO POSTS ANYWHERE on Thu Nov 12, 2026 (Bekir, 2026-11-11 11:28pm: "tomorrow dont post, move the posts throughout the month")
+- Nothing gets scheduled or published on Nov 12 on any platform: TikTok, Instagram, Pinterest or YouTube. Normal posting starts again Fri Nov 13.
+- Spread posts across the rest of the month: when you make content, schedule it over the coming days, not all on one day.
+- The 2 queued TikToks were moved: EV question video to Wed Nov 18 7:13pm, Superday deck to Tue Nov 24 6:37pm.
 
 ## NO M&A PREP MENTIONS until Nov 14, 2026 (Bekir, 2026-11-11 10:25pm: "dont tag m&a in any post for 2 days")
 Through the end of Fri Nov 13, 2026 (ET), no post on any platform can mention M&A Prep. That means:

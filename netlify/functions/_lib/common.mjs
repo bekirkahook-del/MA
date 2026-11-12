@@ -66,6 +66,30 @@ export function tierOf(b, now = Date.now()) {
   b = b || {};
   const paid = (b.paid || ["active", "trialing", "past_due"].includes(b.status)) && (b.until || 0) > now;
   if (paid) return b.plan === "season" ? "season" : "pro";
-  if ((b.trialUntil || 0) > now) return "trial";
+  if ((b.grantUntil || 0) > now) return "pro";            // free Pro you gave (requests, clubs)
+  if ((b.trialUntil || 0) > now || (b.passUntil || 0) > now) return "trial"; // 3-day trial or Pro days earned by ranking up
   return "free";
 }
+export const proUntil = (b) => Math.max((b && b.until) || 0, (b && b.grantUntil) || 0, (b && b.trialUntil) || 0, (b && b.passUntil) || 0);
+
+// Public list of verified Pro members (views/_pro). Written only by the server, so leaderboard badges can't be faked.
+export async function rebuildProList() {
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.billing&select=id,data&limit=20000`, { headers: svcH() });
+  const rows = r.ok ? await r.json() : [];
+  const list = {};
+  for (const { id, data } of rows) {
+    const t = tierOf(data);
+    if (t !== "free") list[id] = { until: proUntil(data), f: data.plan === "founding" && (data.until || 0) > Date.now() ? 1 : 0 };
+  }
+  await fetch(`${SB_URL}/rest/v1/docs`, {
+    method: "POST",
+    headers: { ...svcH(), Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({ col: "views", id: "_pro", uid: null, data: { list, at: Date.now() }, updated_at: new Date().toISOString() }),
+  });
+  return Object.keys(list).length;
+}
+export async function foundingCount() {
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.billing&data->>plan=eq.founding&select=id&limit=2000`, { headers: svcH() });
+  return r.ok ? (await r.json()).length : 0;
+}
+export const FOUNDING_CAP = Number(process.env.FOUNDING_CAP || 500);

@@ -885,6 +885,11 @@ $("#rfBtn").onclick=()=>{const pool=rapidPool().sort(()=>Math.random()-.5);let t
   timerH=setInterval(()=>{t--;const el=$("#tm");if(!el){clearInterval(timerH);return}el.textContent=t;el.classList.toggle("low",t<=10);el.classList.toggle("final",t<=5&&t>0);if(t<=0)end()},1000)};
 
 /* ---------- compete: profiles, gauntlet, leaderboards ---------- */
+/* Pro badges come from a server-written list (views/_pro), not from what each browser says about itself */
+let PRO_LIST=null,PRO_AT=0;
+function proFix(p){if(PRO_LIST&&p){const e=PRO_LIST[p.id],ok=!!e&&(e.until||0)>Date.now();p.pro=ok;p.founder=ok&&!!e.f}return p}
+async function loadProList(){if(Date.now()-PRO_AT<5*60e3)return;PRO_AT=Date.now();try{const A=window.MA_AUTH;if(!A||!A.sb)return;const {data}=await A.sb.from("docs").select("data").eq("col","views").eq("id","_pro").maybeSingle();
+  if(!data||!data.data||!data.data.list)return;PRO_LIST=data.data.list;PLAYERS.forEach(proFix);try{renderCompete()}catch(e){}}catch(e){}}
 let boardPath="mine",DB=null,USER=null,myId=null,PLAYERS=[],NAMES={},lastSync="",syncT=null,boardMetric="xp",dbState="loading";
 const capUse=n=>(window.claude&&typeof window.claude.use==="function")?window.claude.use(n).catch(()=>null):Promise.resolve(null);
 function isoWeek(d=new Date()){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=t.getUTCFullYear();const w=Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7);return y+"-W"+String(w).padStart(2,"0")}
@@ -911,7 +916,7 @@ async function initCompete(){
   renderHome();
   if(USER.can){try{const w=await USER.can("data.write");if(w===false)dbState="readonly"}catch(e){}}
   initReviews();initViews();initSubs();cloudPull();
-  DB.collection("players").limit(300).onSnapshot(async snap=>{PLAYERS=snap.docs.map(d=>({id:d.id,...d.data()}));if(dbState==="loading")dbState="on";
+  DB.collection("players").limit(300).onSnapshot(async snap=>{PLAYERS=snap.docs.map(d=>proFix({id:d.id,...d.data()}));loadProList();if(dbState==="loading")dbState="on";
     await loadNames(PLAYERS.map(p=>p.id));renderCompete()},()=>{dbState="error";renderCompete()});
   syncSoon()}
 function renderCompete(){
@@ -1494,7 +1499,7 @@ function renderPro(){const el=$("#proPage");if(!el)return;const pro=isPro();
    <div class="founding"><div><b>Founding Member: $49 a year, locked for life</b><span>For the first 500 members. Includes a permanent Founding Member badge.</span></div><button class="ghost outline" data-plan="founding">${pro&&S.pro.plan==="founding"?"You're a founder":"Claim founding price"}</button></div>
    <div class="sec-head" style="margin-top:8px"><h2>What's included</h2></div>
    <div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div>
-   <div class="why4">${[["Prep without limits","Unlimited graded answers, every Advanced question, and unlimited final rounds."],["Compete at the top","A monthly Pro League with its own board and seasonal prizes like resume reviews and analyst coffee chats."],["Look the part","Pro badge, custom banners and featured placement on leaderboards."],["Get seen","When firms partner with M&A, Pro members who opt in are the first pool they see."]].map(([t,d])=>`<div><b>${t}</b><p>${d}</p></div>`).join("")}</div>
+   <div class="why4">${[["Prep without limits","Unlimited graded answers, every Advanced question, and unlimited final rounds."],["Compete at the top","A monthly Pro League with its own invite-only board."],["Look the part","Pro badge and custom profile banners."],["See who viewed you","Names of everyone who looked at your profile, not just the count."]].map(([t,d])=>`<div><b>${t}</b><p>${d}</p></div>`).join("")}</div>
    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>Everyone gets Pro, plus a private club leaderboard and an admin view for officers.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
    <div id="reviews" class="reviews"></div>
    <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings, no emails or calls."],["Will Pro ever charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you access and status, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet and your profile stay free forever. AI features are capped at 8 uses a day on Free, 20 a day on the trial and 40 a day on the Season Pass."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
@@ -1790,7 +1795,7 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
     ${row("Default difficulty","Where the question list starts.",seg("idiff",[["0","All"],["1","Basic"],["2","Inter."],["3","Adv."]],String(st.idiff||0)))}`],
    ["membership","Membership",`
     ${row(proLabel(),isPro()?"Manage or cancel anytime.":"Everything you need to learn is free. Pro adds unlimited grading, the Pro League and more.",isPro()?`<span style="display:flex;gap:8px"><button class="ghost outline" id="proRev">Review Pro</button><button class="ghost danger" id="proCancel">Cancel Pro</button></span>`:`<button class="btn sm" id="proGo">See Pro</button>`)}
-    ${isPro()?tog("seen","Get Seen","Let recruiting partners see your profile when firms partner with M&A."):""}`],
+    `],
    ["email","Email updates",`<div data-search="email updates newsletter subscribe unsubscribe inbox"><div id="subBox"></div><div id="subOwner" hidden></div></div>`],
    ["privacy","Privacy",`
     ${tog("hidden","Hide me from rankings","Removes your profile from leaderboards and stops posting stats.")}

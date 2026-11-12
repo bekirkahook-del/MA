@@ -1,5 +1,5 @@
 // Starts a Stripe Checkout for a signed-in user. Prices live here, so no Stripe dashboard setup is needed.
-import { json, getUser, stripe, getBilling, SITE } from "./_lib/common.mjs";
+import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP } from "./_lib/common.mjs";
 
 const PLANS = {
   monthly:  { name: "M&A Pro (Monthly)",  amount: 900,  interval: "month" },
@@ -18,6 +18,8 @@ export default async (req) => {
   if (!P) return json(400, { error: "Unknown plan" });
 
   const bill = await getBilling(user.id);
+  if (plan === "founding" && (!bill || bill.plan !== "founding") && (await foundingCount()) >= FOUNDING_CAP)
+    return json(409, { error: "Founding Member spots are sold out. The yearly plan is $69.", code: "sold_out" });
   const price_data = { currency: "usd", unit_amount: P.amount, product_data: { name: P.name } };
   if (P.interval) price_data.recurring = { interval: P.interval };
   const params = {

@@ -1,5 +1,5 @@
 // Starts the 3-day free trial. One per account, recorded on the server so it can't be reset.
-import { json, getUser, getBilling, setBilling, tierOf } from "./_lib/common.mjs";
+import { json, getUser, getBilling, setBilling, tierOf, rebuildProList } from "./_lib/common.mjs";
 const DAYS = 3;
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
@@ -16,5 +16,6 @@ export default async (req) => {
   const start = legacy && legacy < CUTOFF && now - legacy < 7 * 864e5 ? legacy : now;
   const until = start === now ? now + DAYS * 864e5 : legacy + 7 * 864e5;
   await setBilling(user.id, { ...b, trialStart: start, trialUntil: until });
+  await rebuildProList().catch(() => {});
   return json(200, { ok: true, trialStart: start, trialUntil: until });
 };

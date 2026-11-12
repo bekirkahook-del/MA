@@ -89,7 +89,7 @@
 
   async function load(){
     const since=new Date(Date.now()-62*864e5).toISOString();
-    const [vr,pr,nr,plr,br,er,fr,rr]=await Promise.all([
+    const [vr,pr,nr,plr,br,er,fr,rr,qr]=await Promise.all([
       sb.from("docs").select("id,data").eq("col","visits").gte("updated_at",since).limit(20000),
       sb.from("docs").select("col,updated_at,data").like("col","data/users/%").eq("id","progress").limit(5000),
       sb.from("docs").select("id,data").eq("col","names").limit(5000),
@@ -97,7 +97,8 @@
       sb.from("docs").select("id,data").eq("col","billing").limit(5000),
       sb.from("docs").select("id,data").eq("col","subscribers").limit(20000),
       sb.from("docs").select("id,data,updated_at").eq("col","feedback").order("updated_at",{ascending:false}).limit(200),
-      sb.from("docs").select("id,data").eq("col","reviews").limit(1000)]);
+      sb.from("docs").select("id,data").eq("col","reviews").limit(1000),
+      sb.from("docs").select("id,data,updated_at").eq("col","requests").order("updated_at",{ascending:false}).limit(200)]);
     if(vr.error||pr.error)throw new Error((vr.error||pr.error).message);
     const V=(vr.data||[]).map(r=>Object.assign({vid:String(r.id).slice(11)},r.data||{}));
     const names={};(nr.data||[]).forEach(r=>names[r.id]=(r.data&&r.data.name)||"");
@@ -108,7 +109,7 @@
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
     const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:Date.parse(b.until||0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
     const subs=((er&&er.data)||[]).map(r=>r.data||{});
-    return{V,names,players,accts,pro,bill,trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
+    return{V,names,players,accts,pro,bill,reqs:((qr&&qr.data)||[]),billAll:Object.fromEntries((br.data||[]).map(r=>[r.id,r.data||{}])),trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
 
   async function openStats(){if(!owner)return;window.__maStatsOpen=true;
     openPanel(`<div class="label">Only you can see this</div><h2>Site stats</h2><div class="ms-sec" id="msLive"></div><div id="msBody"><p class="note" style="margin-top:18px">Loading…</p></div>`);
@@ -154,7 +155,15 @@
       <div class="ms-sec"><h3>Day of week <small>${N===1?"today":N+" days"}</small></h3><div class="ms-bars" style="height:110px">${dow.map((n,i)=>`<div class="ms-bar" title="${DN[i]}: ${n}"><em>${n||""}</em><i style="height:${(n/dm*100).toFixed(0)}%"></i></div>`).join("")}</div><div class="ms-days">${DN.map(d=>`<span>${d}</span>`).join("")}</div></div></div>`;
     const L=[["Google Search Console","https://search.google.com/search-console?resource_id=sc-domain%3Amnaprep.com"],["Bing Webmaster","https://www.bing.com/webmasters/home?siteUrl=https://mnaprep.com/"],["Metricool (all socials)","https://app.metricool.com/evolution/web?blogId=7259200"],["TikTok Studio","https://www.tiktok.com/tiktokstudio"],["Instagram insights","https://www.instagram.com/mnaprep/"],["YouTube Studio","https://studio.youtube.com/channel/UCecz_zgUGiksG2HpJEt0cTg"],["Pinterest analytics","https://www.pinterest.com/business/hub/"],["Stripe","https://dashboard.stripe.com/"],["Netlify","https://app.netlify.com/"],["Supabase","https://supabase.com/dashboard/project/nbakxpnhcfzdosbzbupd"],["Resend (emails)","https://resend.com/emails"],["Discord server","https://discord.com/channels/1529231349494452365"],["Product Hunt","https://www.producthunt.com/products/m-a-prep"],["AlternativeTo","https://alternativeto.net/software/manda-prep/"],["Quora profile","https://www.quora.com/profile/Bekir-Kahook"]];
     const links=`<div class="ms-sec"><h3>Everything else <small>open the other dashboards</small></h3><div style="display:flex;flex-wrap:wrap;gap:8px">${L.map(([t,u])=>`<a class="btn sm" style="text-decoration:none" href="${u}" target="_blank" rel="noopener">${t} ↗</a>`).join("")}</div></div>`;
+    const BA=C.billAll||{},proTil=u=>{const b=BA[u]||{};return Math.max(b.until||0,b.grantUntil||0,b.trialUntil||0,b.passUntil||0)};
+    const reqs=(C.reqs||[]).map(r=>({uid:r.id,...(r.data||{})}));
+    const reqSec=`<div class="ms-sec"><h3>Free Pro requests <small>${reqs.length} total · tap a button to give Pro</small></h3>${reqs.length?`<table class="ms-tbl"><thead><tr><th>When</th><th>Who</th><th>What they said</th><th>Pro until</th><th></th></tr></thead><tbody>${reqs.slice(0,40).map(q=>{const t=proTil(q.uid);return `<tr><td>${q.at?new Date(q.at).toLocaleDateString(undefined,{month:"numeric",day:"numeric"}):""}</td><td>${esc(C.names[q.uid]||q.name||"(no name)")}</td><td>${esc((q.note||"").slice(0,160))}</td><td>${t>Date.now()?new Date(t).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"–"}</td><td style="white-space:nowrap"><button class="btn sm" data-grant="${esc(q.uid)}" data-days="30">+30 days</button> <button class="ghost outline sm" data-grant="${esc(q.uid)}" data-days="120">+4 months</button></td></tr>`}).join("")}</tbody></table>`:`<p class="note">No requests yet.</p>`}</div>`;
     return funnel+money+eng+content+voice+links}
+  /* owner: give Pro (server checks you're the owner) */
+  document.addEventListener("click",async e=>{const b=e.target.closest&&e.target.closest("[data-grant]");if(!b)return;e.preventDefault();
+    const days=+b.dataset.days;if(!confirm(days?`Give ${days} days of Pro?`:"Remove free Pro?"))return;b.disabled=true;
+    try{const sb=window.MA_AUTH&&MA_AUTH.sb,s=sb&&(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/grant",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(s?s.access_token:"")},body:JSON.stringify({uid:b.dataset.grant,days})});
+      const j=await r.json().catch(()=>({}));b.textContent=r.ok?"✓ Done":(j.error||"Failed")}catch(x){b.textContent="Failed"}});
   function draw(){const body=document.getElementById("msBody");if(!body||!CACHE)return;
     const {V,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
     const cut=n=>dayStr(new Date(Date.now()-(n-1)*864e5));
@@ -227,7 +236,7 @@
      <div class="ms-sec"><h3>Top schools <small>players on the leaderboard</small></h3>${rows(tally(Object.values(players),p=>(p.school||"").trim(),8))}</div>
      <p class="note" style="margin-top:14px">Visits = one per person per day. Your own visits aren't counted. Counting started Nov 4, 2026. Loaded ${new Date(CACHE.at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}.</p>`;
     const accRows=q=>{q=(q||"").toLowerCase().trim();const L=accts.filter(a=>{if(!q)return true;const p=players[a.uid]||{};return((names[a.uid]||"")+" "+(p.school||"")).toLowerCase().includes(q)});
-      return L.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Days active</th><th class="n">First seen</th><th class="n">Last seen</th></tr></thead><tbody>${L.slice(0,100).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.days.length}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td></tr>`}).join("")}</tbody></table>${L.length>100?`<p class="note">Showing 100 of ${L.length}. Search to narrow it down.</p>`:""}`:`<p class="note">${q?"No matches.":"No accounts yet."}</p>`};
+      return L.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Days active</th><th class="n">First seen</th><th class="n">Last seen</th><th></th></tr></thead><tbody>${L.slice(0,100).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.days.length}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td><td><button class="ghost outline sm" data-grant="${esc(a.uid)}" data-days="30" title="Give 30 days of Pro">+Pro</button></td></tr>`}).join("")}</tbody></table>${L.length>100?`<p class="note">Showing 100 of ${L.length}. Search to narrow it down.</p>`:""}`:`<p class="note">${q?"No matches.":"No accounts yet."}</p>`};
     const acc=document.getElementById("msAcc");acc.innerHTML=accRows("");
     document.getElementById("msFind").oninput=e=>{acc.innerHTML=accRows(e.target.value)};
     body.querySelectorAll(".ms-seg button").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});

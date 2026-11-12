@@ -8,9 +8,9 @@
     {ring:1,accent:"emerald",perks:[["🥉","Bronze ring","A bronze ring around your photo everywhere you appear."],["🎨","Emerald theme","A new accent color for the whole site."]]},
     {ring:1,shields:1,pass:1,perks:[["⭐","1 day of Pro, free","Try unlimited AI grading on us."],["🛡️","1 Streak Shield","Miss a day and your streak survives. Used automatically."]]},
     {ring:2,accent:"plum",perks:[["🥈","Silver ring","Upgrade from bronze. Shows on every board."],["🎨","Plum theme","Another accent color to make it yours."]]},
-    {ring:2,shields:2,pass:2,perks:[["⭐","2 days of Pro, free","Another round of unlimited AI feedback."],["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
+    {ring:2,shields:2,pass:2,perks:[["⭐","2 days of Pro, free","Every Pro feature, plus 20 AI uses a day."],["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
     {ring:3,accent:"crimson",pass:3,perks:[["🥇","Gold ring","Rare air. Only a few reach Director."],["⭐","3 days of Pro, free","Every Pro feature, unlocked automatically."],["🎨","Crimson theme","A bold new accent color."]]},
-    {ring:4,accent:"gold",pass:7,shields:3,perks:[["💎","Animated MD ring","The top ring on the site."],["⭐","7 days of Pro, free","A full week of unlimited grading and final rounds."],["🛡️","3 more Streak Shields","Plus 1 more every Prestige level after this."]]}
+    {ring:4,accent:"gold",pass:7,shields:3,perks:[["💎","Animated MD ring","The top ring on the site."],["⭐","7 days of Pro, free","A full week of every Pro feature, plus 20 AI uses a day."],["🛡️","3 more Streak Shields","Plus 1 more every Prestige level after this."]]}
   ];
   const ACCENTS={cobalt:["Cobalt",0,"#2448D8","#E3E9FC","#7C97FF","#1E2A52"],emerald:["Emerald",1,"#0F7A55","#DDF3EA","#4FD1A0","#123A2D"],plum:["Plum",3,"#7A2FB5","#F0E4FA","#C79BFF","#33204A"],crimson:["Crimson",5,"#C0283C","#FBE3E6","#FF7D8C","#4A1A22"],gold:["Gold",6,"#A87B10","#F6ECD2","#E6BE5A","#3D3114"]};
   const RW=()=>{S.rw=S.rw||{};S.rw.got=S.rw.got||{};S.rw.shields=S.rw.shields||0;S.rw.used=S.rw.used||[];return S.rw};
@@ -26,7 +26,7 @@
       if(L.pass)w.passUntil=Math.max(w.passUntil||0,Date.now())+L.pass*864e5;
       got.push(i)}
     const pr=prestige(x);if((w.prestige||0)<pr){w.shields+=pr-(w.prestige||0);w.prestige=pr;got.push("p"+pr)}
-    if(got.length)save();return got}
+    if(got.length){save();if(got.some(i=>LADDER[i]&&LADDER[i].pass))setTimeout(()=>{try{syncBilling()}catch(e){}},500)}return got}
 
   /* Streak Shields: fill missed days right before today so the streak survives */
   function useShields(){const w=RW();if(!w.shields)return;const D=S.daily||{},key=d=>d.toLocaleDateString("en-CA");
@@ -97,9 +97,9 @@
   /* ---------- redesigned Pro page ---------- */
   renderPro=function(){const el=$("#proPage");if(!el)return;const pro=isPro(),plan=S.pro&&S.pro.plan,r=myRank();
     const plans=[["monthly","Monthly","$9","/month","Flexible. Cancel whenever.",null],["yearly","Yearly","$69","/year","Works out to $5.75 a month. Covers a full recruiting cycle.","Save 36%"],["season","Season Pass","$29","one time","4 months of Pro for recruiting season. Never renews.",null]];
-    const rows=[["Every training track, all 1,000+ questions",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, friends, clubs, leaderboards",1,1],["LBO and DCF builders, pay ladders, The Wire",1,1],["AI-graded mock interviews",0,"Unlimited"],["AI feedback: Superday debriefs, case judging, mistake explanations",0,1],["AI writing: resume review, networking emails, profile help",0,1],["Interview bank","Basic + Intermediate","Every level"],["Final rounds (Superday)","Self-graded","AI-graded"],["Firm-style packs: EB, PE, RX, markets",0,1],["Weekly plan that targets your weak spots",0,1],["Modeling library","5","All 12+"],["Application tracker","5 apps","Unlimited"],["Who viewed your profile","Count","Names"],["Pro League + profile banners",0,1]];
+    const rows=[["Every training track, all 1,000+ questions",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, friends, clubs, leaderboards",1,1],["LBO and DCF builders, pay ladders, The Wire",1,1],["AI uses per day (all AI features combined)","8","Unlimited (fair use)"],["AI-graded mock interviews","3 a day","Unlimited"],["AI feedback: Superday debriefs, case judging, mistake explanations","Limited",1],["AI writing: resume review, networking emails, profile help","1 a day each",1],["Interview bank","Basic + Intermediate","Every level"],["Final rounds (Superday)","Self-graded","AI-graded"],["Firm-style packs: EB, PE, RX, markets",0,1],["Weekly plan that targets your weak spots",0,1],["Modeling library","5","All 12+"],["Application tracker","5 apps","Unlimited"],["Who viewed your profile","Count","Names"],["Pro League + profile banners",0,1]];
     const cell=v=>v===1?'<span class="yes">✓</span>':v===0?'<span class="no">–</span>':esc(v);
-    const promise=[["📚","Learning stays free","Every track and question is free forever. Pro never locks lessons."],["🏆","Pro can't buy rank","Leaderboards are earned. Pro gives you reps, not points."],["🖱️","Cancel in one click","No emails, no calls, no guilt trip."],["🎓","Can't afford it? Ask.","Students who need it can request free Pro. We read every request."]];
+    const promise=[["📚","Learning stays free","Every track and question is free forever. Pro never locks lessons."],["🏆","Pro can't buy rank","Leaderboards are earned. Pro gives you reps, not points."],["🖱️","Cancel in one click","No emails, no calls, no guilt trip."]];
     el.innerHTML=`<section class="pro2-hero">
       <div class="pro2-glow" aria-hidden="true"></div>
       <span class="pro2-pill">${pro?proBadge()+" "+esc(proLabel()):"M&A Pro"}</span>
@@ -112,17 +112,14 @@
     <section><div class="sec-head"><h2>Simple, student pricing</h2></div>
      <div class="plans pro2-plans">${plans.map(([k,n,p,per,d,tag])=>`<div class="plan ${k==="yearly"?"best":""}">${tag?`<span class="plan-tag">${tag}</span>`:""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${k==="yearly"?"btn":"ghost outline"}" data-plan="${k}">${pro&&plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
-    <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div><button class="ghost outline sm" id="proNeed">Request free Pro</button></section>
-    <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members can still answer every question and check against the key points. Pro adds the AI feedback.</p></section>
-    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>About $10 per member per year. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
+    <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
+    <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members get 8 AI uses a day and can check any answer against the key points. Pro removes the daily limits. The 3-day trial and Pro days you earn by ranking up include 20 AI uses a day.</p></section>
+    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>About $10 per member per year. Everyone gets Pro, plus a club leaderboard and an officer view. Message us to set it up.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
     <div id="reviews" class="reviews"></div>
-    <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever."],["What if I can't afford it?","Hit Request free Pro above. Recruiting is expensive enough already."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
+    <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever. AI features are capped at 8 uses a day."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
     el.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>maCheckout(b.dataset.plan,b));
     $("#proLadder").onclick=()=>maRewards();
-    $("#proNeed").onclick=()=>{if(typeof DB==="undefined"||!DB||!myId){if(window.maOpenAuth)maOpenAuth("up");else toast("Sign in first");return}
-      openPanel(`<div class="label">Free Pro</div><h2>Request free Pro</h2><p class="sub">If Pro would help but the price doesn't work right now, tell us a little. No proof needed.</p><form class="pform" style="grid-template-columns:1fr" id="needF"><label>Anything you'd like us to know (optional)<textarea id="needT" maxlength="600" style="min-height:120px" placeholder="School, what you're recruiting for, timing…"></textarea></label><div class="actions"><button class="btn">Send request</button></div></form>`);
-      $("#needF").onsubmit=async e=>{e.preventDefault();try{await DB.doc("requests/"+myId).set({type:"free_pro",note:$("#needT").value.trim().slice(0,600),name:myName||"",at:Date.now()});closePanel();toast("Request sent. We'll get back to you soon.")}catch(x){toast("Couldn't send. Try again.")}}};
     $("#clubBtn").onclick=()=>openPanel(`<div class="label">Club plan</div><h2>Bring M&A to your club</h2><p class="sub">Clubs get Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer dashboard.</p><ul class="brief"><li>$399 a year for up to 40 members (about $10 each)</li><li>Free pilot for your first month</li><li>Officers see member progress and interview scores</li></ul>`);
     try{renderReviews()}catch(e){}};
 
@@ -139,17 +136,22 @@
     if(btn){btn.disabled=false;btn.textContent=t}};
   window.maPortal=async function(){try{const r=await authed("portal");if(r.j&&r.j.url){location.href=r.j.url;return}toast((r.j&&r.j.error)||"Couldn't open billing.")}catch(e){toast("Couldn't open billing.")}};
   /* the billing record (written only by the server) decides the tier: free / trial / season / pro */
-  const tierOf=b=>{b=b||{};const now=Date.now();if((b.paid||["active","trialing","past_due"].includes(b.status))&&(b.until||0)>now)return b.plan==="season"?"season":"pro";if((b.trialUntil||0)>now)return"trial";return"free"};
+  const tierOf=b=>{b=b||{};const now=Date.now();if((b.paid||["active","trialing","past_due"].includes(b.status))&&(b.until||0)>now)return b.plan==="season"?"season":"pro";if((b.grantUntil||0)>now)return"pro";if((b.trialUntil||0)>now||(b.passUntil||0)>now)return"trial";return"free"};
+  /* Pro days earned by ranking up are recorded on the server once per rank */
+  async function claimPasses(b){const w=RW();let n=0;for(const i of Object.keys(w.got||{})){const L=LADDER[i];if(!L||!L.pass||(b.passes||{})[i])continue;if(Date.now()-w.got[i]>=L.pass*864e5)continue;const r=await authed("pass",{rank:+i,at:w.got[i]});if(r.status===200)n++}return n}
   window.MA_TIER="free";
   async function syncBilling(again){const A=window.MA_AUTH;if(!A||!A.sb)return;const s=await A.ready;if(!s)return;
     try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=(data&&data.data)||{};
-      const tier=tierOf(b);window.MA_TIER=tier;const live=tier==="pro"||tier==="season";
-      if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
-      else if(tier==="trial"){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
+      if(!again&&await claimPasses(b))return syncBilling(true);
+      const tier=tierOf(b);window.MA_TIER=tier;const live=(tier==="pro"||tier==="season")&&!((b.grantUntil||0)>Date.now()&&!((b.until||0)>Date.now()));
+      if(!live&&(b.grantUntil||0)>Date.now()){S.pro={plan:"granted",start:b.grantStart||Date.now(),paid:true,until:b.grantUntil};S.proEver=true}
+      else if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
+      else if((b.trialUntil||0)>Date.now()){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
       else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<7*864e5){ // trial started before trials moved to the server: keeps its 7 days
         const r=await authed("trial",{legacyStart:S.pro.start});if(r.status===200)return syncBilling(true);S.pro={}}
       else if(S.pro&&(S.pro.paid||S.pro.plan==="trial"))S.pro={};
       if(b.trialStart)S.trialUsed=b.trialStart;
+      if((b.passUntil||0)>(RW().passUntil||0))RW().passUntil=b.passUntil;
       save();applyProUI();renderPro();try{render()}catch(e){}gateAI();return live||tier==="trial"}catch(e){}}
   {const _ip2=isPro;isPro=function(){if(S.pro&&S.pro.paid&&(S.pro.until||0)<Date.now()&&!((S.rw&&S.rw.passUntil||0)>Date.now()))return false;return _ip2()}}
   document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#proCancel");if(c&&S.pro&&S.pro.paid){e.preventDefault();e.stopImmediatePropagation();maPortal()}},true);

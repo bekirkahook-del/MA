@@ -1,6 +1,6 @@
 // Stripe tells us when someone pays, renews or cancels. We record it in Supabase (col "billing", id = user id).
 import crypto from "node:crypto";
-import { json, stripe, setBilling, getBilling } from "./_lib/common.mjs";
+import { json, stripe, setBilling, getBilling, rebuildProList } from "./_lib/common.mjs";
 
 function verify(raw, header, secret) {
   const parts = Object.fromEntries((header || "").split(",").map((p) => p.split("=")));
@@ -38,6 +38,7 @@ export default async (req) => {
           customer: o.customer, sub: o.id, until: end * 1000, cancelAtEnd: !!o.cancel_at_period_end });
       }
     }
+    await rebuildProList().catch((e) => console.error("pro list", e));
   } catch (e) { console.error(e); return json(500, { error: "handler failed" }); }
   return json(200, { ok: true });
 };

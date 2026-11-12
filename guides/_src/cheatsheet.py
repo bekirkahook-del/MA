@@ -137,6 +137,6 @@ f.onsubmit=async ev=>{{ev.preventDefault();const email=f.email.value.trim();if(!
   if(r.ok){{try{{localStorage.setItem("ma-cs","1");localStorage.setItem("ma-sub","1")}}catch(x){{}}ok()}}else{{m.textContent=j.error||"Something went wrong. Try again.";b.disabled=false;b.textContent="Send me the PDF"}}}}
  catch(x){{m.textContent="Network error. Try again.";b.disabled=false;b.textContent="Send me the PDF"}}}};
 </script>
-<script src="/js/hit.js" defer></script></body></html>"""
+<script src="/js/hit.js" defer></script><script src="/js/grow.js" defer></script></body></html>"""
 open(os.path.join(ROOT, "cheat-sheet", "index.html"), "w", encoding="utf-8").write(PAGE)
 print("cheat sheet page + print html written")

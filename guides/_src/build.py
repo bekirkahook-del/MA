@@ -75,7 +75,7 @@ def page(p):
 <main class="wrap"><p class="crumb"><a href="/">M&amp;A Prep</a> › <a href="/guides/">Guides</a></p><h1>{e(p['h1'])}</h1><div class="lede">{''.join(f'<p>{x}</p>' for x in p['lede'])}</div>{''.join(block(b) for b in p['body'])}
 <h2>More free guides</h2><ul class="more">{more_html}</ul></main>
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
-<script src="/js/hit.js" defer></script>
+<script src="/js/hit.js" defer></script><script src="/js/grow.js" defer></script>
 <script src="/js/email.js" defer></script>
 </body></html>
 """

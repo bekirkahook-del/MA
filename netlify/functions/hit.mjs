@@ -17,6 +17,20 @@ export default async (req, context) => {
   const now = new Date();
   const d = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(now); // YYYY-MM-DD
   const H = { apikey: key, "Content-Type": "application/json", ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}) };
+  if (b.ev && typeof b.ev === "object") { // funnel events: add counts to today's row (data.ev)
+    const add = {}; let n = 0;
+    for (const [k, c] of Object.entries(b.ev)) { const x = Math.round(+c || 0); if (/^[a-z0-9_]{2,40}$/.test(k) && x > 0 && x <= 50 && n < 20) { add[k] = x; n++; } }
+    if (!n) return json(200, { ok: true });
+    const id = `${d}_${v}`;
+    const g = await fetch(`${SB_URL}/rest/v1/docs?col=eq.visits&id=eq.${encodeURIComponent(id)}&select=data`, { headers: H });
+    const rows = g.ok ? await g.json() : [];
+    if (!rows[0]) return json(200, { ok: true, skipped: true });
+    const data = rows[0].data || {}; const evs = data.ev || {};
+    for (const [k, c] of Object.entries(add)) evs[k] = Math.min(500, (evs[k] || 0) + c);
+    data.ev = evs;
+    await fetch(`${SB_URL}/rest/v1/docs?col=eq.visits&id=eq.${encodeURIComponent(id)}`, { method: "PATCH", headers: { ...H, Prefer: "return=minimal" }, body: JSON.stringify({ data }) });
+    return json(200, { ok: true });
+  }
   if (b.time && typeof b.time === "object") { // time-spent update: add seconds to today's row
     const add = {}; let n = 0;
     for (const [k, s] of Object.entries(b.time)) { const sec = Math.round(+s || 0); if (sec > 0 && sec <= 3600 && n < 30) { add[clip(k, 80)] = sec; n++; } }

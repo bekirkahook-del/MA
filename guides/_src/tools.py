@@ -69,7 +69,7 @@ def shell(slug, title, h1, desc, lede, body, faqs, script, kind="WebApplication"
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
 <script>{script}</script>
 <script src="/js/sharecard.js" defer></script>
-<script src="/js/hit.js" defer></script>
+<script src="/js/hit.js" defer></script><script src="/js/grow.js" defer></script>
 <script src="/js/email.js" defer></script>
 </body></html>
 """

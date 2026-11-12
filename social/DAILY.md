@@ -5,6 +5,7 @@ Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip ran
 
 ## NO POSTS ANYWHERE on Thu Nov 12, 2026 (Bekir, 2026-11-11 11:28pm: "tomorrow dont post, move the posts throughout the month")
 - Nothing gets scheduled or published on Nov 12 on any platform: TikTok, Instagram, Pinterest or YouTube. Normal posting starts again Fri Nov 13.
+- **TikTok: max 5 posts a day from Nov 13 through Nov 30** (Bekir, 2026-11-11 11:28pm). This overrides the 10+ a day target, and the 2 already-queued TikToks count toward their days. Instagram, Pinterest and YouTube keep their normal rules.
 - Spread posts across the rest of the month: when you make content, schedule it over the coming days, not all on one day.
 - The 2 queued TikToks were moved: EV question video to Wed Nov 18 7:13pm, Superday deck to Tue Nov 24 6:37pm.
 

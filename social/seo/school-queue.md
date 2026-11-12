@@ -80,16 +80,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Hamilton -> hamilton
 
 Batch added 2026-11-12 to reach 100 (mix of semi-targets and niche schools):
-- [ ] Johns Hopkins
-- [ ] MIT (Sloan)
-- [ ] Tufts
-- [ ] Colgate
-- [ ] Williams
-- [ ] Amherst
-- [ ] Middlebury
-- [ ] Bowdoin
-- [ ] Holy Cross
-- [ ] Washington and Lee
+- [x] Johns Hopkins -> johns-hopkins
+- [x] MIT (Sloan) -> mit
+- [x] Tufts -> tufts
+- [x] Colgate -> colgate
+- [x] Williams -> williams-college
+- [x] Amherst -> amherst
+- [x] Middlebury -> middlebury
+- [x] Bowdoin -> bowdoin
+- [x] Holy Cross -> holy-cross
+- [x] Washington and Lee -> washington-and-lee
 - [ ] Claremont McKenna
 - [ ] Iowa (Tippie)
 - [ ] Oklahoma (Price)

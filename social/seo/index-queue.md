@@ -64,3 +64,13 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/unc-kenan-flagler-investment-banking/
 - [ ] https://mnaprep.com/guides/siena-investment-banking/
 - [ ] https://mnaprep.com/guides/georgia-tech-scheller-investment-banking/
+- [ ] https://mnaprep.com/guides/elon-love-investment-banking/
+- [ ] https://mnaprep.com/guides/georgia-terry-investment-banking/
+- [ ] https://mnaprep.com/guides/furman-investment-banking/
+- [ ] https://mnaprep.com/guides/maryland-smith-investment-banking/
+- [ ] https://mnaprep.com/guides/davidson-investment-banking/
+- [ ] https://mnaprep.com/guides/minnesota-carlson-investment-banking/
+- [ ] https://mnaprep.com/guides/wofford-investment-banking/
+- [ ] https://mnaprep.com/guides/michigan-state-broad-investment-banking/
+- [ ] https://mnaprep.com/guides/rollins-investment-banking/
+- [ ] https://mnaprep.com/guides/rutgers-investment-banking/

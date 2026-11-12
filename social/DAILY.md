@@ -8,6 +8,13 @@ Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip ran
 - **No AI voiceover on any video** (this also covers the voiced site-demo videos, which are paused). Videos carry only the beat.
 - The old rankvid.js / vo.js / sitevid voice pipeline is retired. Check every number on screen against the spec before posting.
 
+## Daily ranking videos: new prompt every post, new style every post, keep what wins (Bekir, 2026-11-11)
+- **Topics:** come up with fresh ones every day, only on **finance, business school or internships**. Every video is a **Top 5, Top 7 or Top 10** (rotate). Examples: hardest business schools to get into, highest starting salaries by school, banks that hire the most interns, best-paying internships, biggest PE firms, highest-paid jobs out of undergrad, most-recruited majors, biggest bank bonuses, hardest finance internships to land, best cities for finance jobs, largest IPOs, biggest deals this year. Every number needs a real, current source (WebSearch). Name the source on screen.
+- **Never repeat a topic** that's in `social/punch-log.md` from the last 30 days, unless it was a top-3 performer. In that case make a sequel (e.g. "Top 10 hardest business schools, part 2: MBA").
+- **Make it entertaining:** hook = the most shocking number plus "guess which one". Hide #1 until the drumroll. End with a comment question (your school, your pick, your score).
+- **Change the style every post.** punch.js `style` = glow | paper | neon | terminal. Never use the same style twice in a row. Also rotate `bpm` (110–132), the hook wording type (number-first, question-first, "nobody believes #1"), and the list length.
+- **Track and keep the winners.** Add one row per video to `social/punch-log.md` (date | topic | top N | style | bpm | hook | views after 48h | likes | comments | shares). Each run, fill in the 48h numbers from Metricool (TKPO07–TKPO10, IGRE23/21). Once 8+ videos are logged, at least half of each day's videos use the top 2 styles and top 3 topic types by views. The rest keep testing new ones.
+
 ## Mix: 50% pictures, 50% videos (Bekir, 2026-11-11: "dont post all videos")
 - Every day, on every platform, split posts **half picture posts, half videos**. Picture posts = TikTok photo-mode carousels / Instagram carousels (`instagramData type "POST"`) / Pinterest pins. Videos = reels/TikTok videos/Shorts.
 - Alternate them through the day (picture, video, picture, video…), never 2 videos back to back.

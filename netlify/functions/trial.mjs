@@ -1,6 +1,6 @@
-// Starts the 7-day free trial. One per account, recorded on the server so it can't be reset.
+// Starts the 3-day free trial. One per account, recorded on the server so it can't be reset.
 import { json, getUser, getBilling, setBilling, tierOf } from "./_lib/common.mjs";
-const DAYS = 7;
+const DAYS = 3;
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const user = await getUser(req);

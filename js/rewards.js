@@ -105,7 +105,7 @@
       <span class="pro2-pill">${pro?proBadge()+" "+esc(proLabel()):"M&A Pro"}</span>
       <h1>Learn for free.<br><em>Go Pro for the final stretch.</em></h1>
       <p>Free gets you ready. Pro adds AI that grades every answer and tells you exactly what to fix, so you walk into your Superday having already done it 50 times.</p>
-      ${pro?"":`<div class="pro2-cta"><button class="btn pro2-go" id="proTrial">Try Pro free for 7 days</button><span>No card needed · nothing to cancel</span></div>`}
+      ${pro?"":`<div class="pro2-cta"><button class="btn pro2-go" id="proTrial">Try Pro free for 3 days</button><span>No card needed · nothing to cancel</span></div>`}
     </section>
     <section class="pro2-why">${[["∞","AI grading on every answer","Every mock interview answer gets a score out of 10 and specific feedback on what to fix.","Most-used Pro feature"],["4×","Real Superday rounds","Back-to-back interviewers, timed, then a full debrief across all 4 rounds.","Closest thing to the real day"],["🎯","A plan built on your gaps","Pro tracks your scores by section and builds each week around your weakest topics.","Adapts every week"]].map(([n,t,d,tag],i)=>`<div class="pro2-card" style="--i:${i}"><div class="pro2-n">${n}</div><b>${t}</b><p>${d}</p><span>${tag}</span></div>`).join("")}</section>
     <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Earn free Pro days as you get promoted: 1 at Analyst, 2 at VP, 3 at Director, 7 at MD. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
@@ -146,7 +146,7 @@
       const tier=tierOf(b);window.MA_TIER=tier;const live=tier==="pro"||tier==="season";
       if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
       else if(tier==="trial"){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
-      else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<7*864e5){ // trial started before trials moved to the server
+      else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<3*864e5){ // trial started before trials moved to the server
         const r=await authed("trial");if(r.status===200)return syncBilling(true);S.pro={}}
       else if(S.pro&&(S.pro.paid||S.pro.plan==="trial"))S.pro={};
       if(b.trialStart)S.trialUsed=b.trialStart;
@@ -167,10 +167,10 @@
   /* paid plans always go through Stripe; the free trial works once per account */
   {const _sp=startPlan;startPlan=async function(plan){
     if(plan!=="trial"){maCheckout(plan);return}
-    if(!(window.MA_AUTH&&MA_AUTH.session)){toast("Make a free account to start your 7-day trial");window.maOpenAuth&&maOpenAuth("up");return}
+    if(!(window.MA_AUTH&&MA_AUTH.session)){toast("Make a free account to start your 3-day trial");window.maOpenAuth&&maOpenAuth("up");return}
     if(isPro()){toast("You already have Pro");return}
     const r=await authed("trial");
-    if(r.status===200){await syncBilling(true);try{confetti()}catch(e){}toast("Your 7-day free trial has started. No card, nothing to cancel.");return}
+    if(r.status===200){await syncBilling(true);try{confetti()}catch(e){}toast("Your 3-day free trial has started. No card, nothing to cancel.");return}
     if(r.status===409){toast((r.j&&r.j.code)==="paid"?"You already have Pro":"You've already used your free trial. Pick a plan to keep Pro.");try{showTab("pro")}catch(e){}return}
     toast((r.j&&r.j.error)||"Couldn't start the trial. Try again.")}}
   /* clean up old "preview" Pro from before payments were live */

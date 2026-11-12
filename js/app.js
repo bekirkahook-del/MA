@@ -1468,8 +1468,8 @@ $("#avBtn").onclick=()=>showPlayer({id:myId||"me",...myStats()});$("#setBtn").on
 
 /* ---------- M&A Pro ---------- */
 let FREE_GRADES=3;
-function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return (Date.now()-p.start)<7*864e5;return true}
-function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,7-Math.floor((Date.now()-p.start)/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
+function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return p.until?Date.now()<p.until:(Date.now()-p.start)<3*864e5;return true}
+function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,Math.ceil(((p.until||p.start+3*864e5)-Date.now())/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
 const gradesToday=()=>(S.grades||{})[today()]||0;
 function bumpGrades(){S.grades=S.grades||{};S.grades[today()]=gradesToday()+1;save()}
 const monthKey=()=>today().slice(0,7);
@@ -1479,7 +1479,7 @@ function startPlan(plan){S.pro={plan,start:Date.now()};S.proEver=true;save();app
 function applyProUI(){if(typeof renderResume==="function"&&$("#resume")&&!($("#resTxt")&&$("#resTxt").value))renderResume();const b=$("#proBtn");if(b){b.innerHTML=isPro()?proBadge():"Pro";b.classList.toggle("on",isPro())}}
 function upgrade(reason){openPanel(`<div class="label">M&A Pro</div><h2>${esc(reason)}</h2>
    <ul class="brief" style="margin-top:12px"><li>Unlimited AI-graded mock interviews, every Advanced question and firm-style packs</li><li>A weekly plan that adapts to your weak spots</li><li>The monthly Pro League and unlimited final-round grading</li><li>Pro badge and custom profile banners</li></ul>
-   <div class="actions"><button class="btn" id="upTrial">Start 7-day free trial</button><button class="ghost" id="upSee">See what's included</button></div>
+   <div class="actions"><button class="btn" id="upTrial">Start 3-day free trial</button><button class="ghost" id="upSee">See what's included</button></div>
    <p class="note" style="margin-top:12px">$9 a month or $69 a year. Cancel anytime.</p>`);
   $("#upTrial").onclick=()=>{closePanel();startPlan("trial")};$("#upSee").onclick=()=>{closePanel();showTab("pro")}}
 
@@ -1489,7 +1489,7 @@ function renderPro(){const el=$("#proPage");if(!el)return;const pro=isPro();
   const cell=v=>v===1?'<span class="yes">✓</span>':v===0?'<span class="no">–</span>':esc(v);
   el.innerHTML=`<div class="pro-hero"><div class="label">M&A Pro</div><h1>Everything you need to learn is free.<br>Pro is for winning the seat.</h1>
      <p>Unlimited interview reps, a tougher league, and a profile that stands out when it counts.</p>
-     ${pro?`<div class="pro-status">${proBadge()} <span>${proLabel()}</span></div>`:`<div class="actions" style="justify-content:center"><button class="btn" id="proTrial">Start 7-day free trial</button></div><p class="note" style="text-align:center">No card needed. One trial per account.</p>`}</div>
+     ${pro?`<div class="pro-status">${proBadge()} <span>${proLabel()}</span></div>`:`<div class="actions" style="justify-content:center"><button class="btn" id="proTrial">Start 3-day free trial</button></div><p class="note" style="text-align:center">No card needed. One trial per account.</p>`}</div>
    <div class="plans">${plans.map(([k,n,p,per,d,best])=>`<div class="plan ${best?'best':''}">${best?'<span class="plan-tag">Most popular</span>':""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${best?'btn':'ghost outline'}" data-plan="${k}">${pro&&S.pro.plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
    <div class="founding"><div><b>Founding Member: $49 a year, locked for life</b><span>For the first 500 members. Includes a permanent Founding Member badge.</span></div><button class="ghost outline" data-plan="founding">${pro&&S.pro.plan==="founding"?"You're a founder":"Claim founding price"}</button></div>
    <div class="sec-head" style="margin-top:8px"><h2>What's included</h2></div>

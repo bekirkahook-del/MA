@@ -204,6 +204,41 @@ T3_FAQ = [
  ("Do elite boutiques pay more than bulge brackets?", "Often at some levels, per this survey (for example Associate 1 and VP 2), but not at every level. Compare actual offers rather than averages."),
 ]
 
+
+EXTRA = {
+ "recruiting-timeline-calculator": """<h2>How investment banking recruiting works, year by year</h2>
+<p>Most students land a full-time investment banking job through a <b>junior-summer internship</b>. Banks hire their summer analysts early, often a year and a half before the internship starts, so the real work happens in your first two years of college.</p>
+<h3>Freshman year: build the base</h3>
+<p>Join one or two finance clubs, keep your GPA high (many banks screen at 3.5), and learn accounting basics: how the income statement, balance sheet and cash flow statement connect. Apply to early-insight and diversity programs. Some of them feed straight into internship interviews.</p>
+<h3>Sophomore year: the main window</h3>
+<p>Applications for junior-summer internships at many large banks open during sophomore year. That's when you send applications, do online assessments and HireVues, and go to first rounds and Superdays. Networking with alumni before applications open matters a lot, because a referral often decides who gets an interview.</p>
+<h3>Junior summer: the internship</h3>
+<p>You work 10 weeks as a summer analyst. Strong interns usually get a return offer for a full-time analyst job after graduation.</p>
+<h3>Missed the window?</h3>
+<p>You still have options: smaller banks and boutiques that recruit later, off-cycle internships, a related role (Big 4 transaction services, valuation, corporate banking) and lateral moves, or a master's in finance.</p>""",
+ "superday-readiness-test": """<h2>What a Superday is</h2>
+<p>A <b>Superday</b> is the final round of investment banking interviews. You usually have several back-to-back interviews in one day with analysts, associates, VPs and sometimes managing directors. Offers often come within days.</p>
+<h3>What they ask</h3>
+<ul><li><b>Fit and behavioral:</b> walk me through your resume, why banking, why this bank, tell me about a time you worked on a team.</li>
+<li><b>Accounting:</b> how the three statements link, and what happens when depreciation or working capital changes.</li>
+<li><b>Valuation:</b> enterprise value vs. equity value, comparable companies, precedent transactions and the DCF.</li>
+<li><b>LBOs and M&amp;A:</b> why private equity uses debt, what drives returns, and accretion/dilution basics.</li>
+<li><b>Markets and deals:</b> a recent deal you followed and what you think of it.</li></ul>
+<h3>How to use this test</h3>
+<p>Take it once cold, read every explanation, then take it again a few days later. If you score under 9 of 12, spend your time on the topics you missed before you spend it on rare edge cases. Interviewers care much more about clean, confident answers to the core questions than about obscure ones.</p>""",
+ "investment-banking-pay": """<h2>How investment banking pay works</h2>
+<p>Banker pay has two parts: a <b>base salary</b> paid through the year and a <b>year-end bonus</b> based on your performance, your group and how the bank did. Bonuses make up a bigger share of pay as you get more senior.</p>
+<h3>The levels</h3>
+<ul><li><b>Analyst</b> (usually 2–3 years, straight out of college): builds models, decks and research.</li>
+<li><b>Associate</b> (after analyst or an MBA): checks the analysts' work and manages the process.</li>
+<li><b>Vice president</b>: runs deals day to day and talks with clients.</li>
+<li><b>Director / managing director</b>: brings in clients and deals. Pay depends heavily on fees generated.</li></ul>
+<h3>Why pay differs between banks</h3>
+<p>Bulge-bracket banks (the largest global banks), elite boutiques (advisory-focused firms) and middle-market banks pay differently. Elite boutiques often pay at or above bulge brackets because their fees come from advisory work. Location matters too: New York pay is usually the highest in the U.S.</p>
+<h3>Is the pay worth it?</h3>
+<p>Hours are long, often 70+ a week as an analyst. Many people treat the first two years as training that leads to private equity, hedge funds, corporate development or startups.</p>""",
+}
+
 TOOLS = [
  ("recruiting-timeline-calculator", "Investment Banking Recruiting Timeline Calculator", "Recruiting timeline calculator",
   "Enter your graduation year and goal to see exactly when investment banking, PE, consulting and markets internship applications open for you, with a month-by-month plan.",
@@ -256,6 +291,7 @@ open(os.path.join(ROOT, "embed", "q.js"), "w", encoding="utf-8").write(EMBED_JS.
 
 os.makedirs(os.path.join(ROOT, "tools"), exist_ok=True)
 for slug, title, h1, desc, lede, body, faqs, js in TOOLS:
+    body = body + EXTRA.get(slug, '')
     d = os.path.join(ROOT, "tools", slug); os.makedirs(d, exist_ok=True)
     open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(shell(slug, title, h1, desc, lede, body, faqs, js)); print("tool", slug)
 CAL_CARD = ('<div class="card"><h3>Earnings + internship deadline calendar</h3><p style="margin:0 0 8px;color:var(--ink-2);font-size:15px">Add earnings dates, market events and finance internship deadlines to your own calendar. It updates automatically.</p>'

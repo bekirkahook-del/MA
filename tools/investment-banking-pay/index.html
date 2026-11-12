@@ -69,7 +69,17 @@ th{background:color-mix(in srgb,var(--cobalt) 8%,var(--sheet))!important}
 <div class="bars" id="bars"></div>
 <p class="muted" id="note"></p></div>
 <h2>The numbers</h2><div class="tbl"><table><thead><tr><th>Level</th><th>Bulge bracket</th><th>Elite boutique</th><th>Middle market</th><th>All banks</th></tr></thead><tbody id="tb"></tbody></table></div>
-<p class="muted">Total yearly pay (salary + bonus) for 2025 in US dollars, from the <a href="https://prospectrockpartners.com/prospect-rock-partners-2025-ib-compensation-report/" rel="nofollow">Prospect Rock Partners 2025 IB Compensation Report</a> (866 survey responses collected in early 2026). Figures are survey medians or reported data points; "—" means the public summary didn't report it. "All banks" for VP 1 is the New York median. Real offers vary by bank, city, group and year.</p>
+<p class="muted">Total yearly pay (salary + bonus) for 2025 in US dollars, from the <a href="https://prospectrockpartners.com/prospect-rock-partners-2025-ib-compensation-report/" rel="nofollow">Prospect Rock Partners 2025 IB Compensation Report</a> (866 survey responses collected in early 2026). Figures are survey medians or reported data points; "—" means the public summary didn't report it. "All banks" for VP 1 is the New York median. Real offers vary by bank, city, group and year.</p><h2>How investment banking pay works</h2>
+<p>Banker pay has two parts: a <b>base salary</b> paid through the year and a <b>year-end bonus</b> based on your performance, your group and how the bank did. Bonuses make up a bigger share of pay as you get more senior.</p>
+<h3>The levels</h3>
+<ul><li><b>Analyst</b> (usually 2–3 years, straight out of college): builds models, decks and research.</li>
+<li><b>Associate</b> (after analyst or an MBA): checks the analysts' work and manages the process.</li>
+<li><b>Vice president</b>: runs deals day to day and talks with clients.</li>
+<li><b>Director / managing director</b>: brings in clients and deals. Pay depends heavily on fees generated.</li></ul>
+<h3>Why pay differs between banks</h3>
+<p>Bulge-bracket banks (the largest global banks), elite boutiques (advisory-focused firms) and middle-market banks pay differently. Elite boutiques often pay at or above bulge brackets because their fees come from advisory work. Location matters too: New York pay is usually the highest in the U.S.</p>
+<h3>Is the pay worth it?</h3>
+<p>Hours are long, often 70+ a week as an analyst. Many people treat the first two years as training that leads to private equity, hedge funds, corporate development or startups.</p>
 <h2>Common questions</h2><details><summary>How much do first-year investment banking analysts make?</summary><div class="ans">The survey's median total pay for first-year analysts in 2025 was about $160K (salary plus bonus). Pay varies by bank, city and group.</div></details><details><summary>Why does pay jump so much at associate and above?</summary><div class="ans">Bonuses become a much bigger share of pay as bankers take on more responsibility for deals and clients.</div></details><details><summary>Do elite boutiques pay more than bulge brackets?</summary><div class="ans">Often at some levels, per this survey (for example Associate 1 and VP 2), but not at every level. Compare actual offers rather than averages.</div></details>
 <div class="cta"><p>Practice real interview questions in 5-minute levels, free.</p><a href="/">Start training on M&amp;A Prep</a></div>
 <h2>More free tools</h2><ul class="more"><li><a href="/tools/recruiting-timeline-calculator/">Recruiting timeline calculator</a></li><li><a href="/tools/superday-readiness-test/">Superday readiness test</a></li><li><a href="/tools/investment-banking-pay/">Investment banking pay by level</a></li><li><a href="/tools/embed/">Question of the day widget</a></li><li><a href="/deals/">M&amp;A deal database</a></li><li><a href="/guides/">All free guides</a></li></ul></main>
@@ -86,6 +96,7 @@ function draw(k){const rows=PAY.map(([l,o])=>[l,o[k]!=null?o[k]:o.all,o[k]==null
 $("#seg").onclick=e=>{const b=e.target.closest("button");if(b)draw(b.dataset.k)};draw("bb");
 $("#tb").innerHTML=PAY.map(([l,o])=>`<tr><td>${l}</td>${["bb","eb","mm","all"].map(k=>`<td>${o[k]!=null?f(o[k]):"—"}</td>`).join("")}</tr>`).join("");
 </script>
+<script src="/js/sharecard.js" defer></script>
 <script src="/js/hit.js" defer></script>
 <script src="/js/email.js" defer></script>
 </body></html>

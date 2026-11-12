@@ -43,16 +43,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Richmond (Robins) -> richmond-robins
 - [x] John Carroll -> john-carroll
 - [x] Boston University (Questrom) -> boston-university-questrom
-- [ ] Kent State
-- [ ] Northeastern (D'Amore-McKim)
-- [ ] Akron
-- [ ] Babson
-- [ ] Toledo
-- [ ] Fordham (Gabelli)
-- [ ] Denison
-- [ ] Baruch (Zicklin)
-- [ ] Kenyon
-- [ ] Syracuse (Whitman)
+- [x] Kent State -> kent-state
+- [x] Northeastern (D'Amore-McKim) -> northeastern-damore-mckim
+- [x] Akron -> akron
+- [x] Babson -> babson
+- [x] Toledo -> toledo
+- [x] Fordham (Gabelli) -> fordham-gabelli
+- [x] Denison -> denison
+- [x] Baruch (Zicklin) -> baruch-zicklin
+- [x] Kenyon -> kenyon
+- [x] Syracuse (Whitman) -> syracuse-whitman
 - [ ] Wabash
 - [ ] Lehigh
 - [ ] DePauw

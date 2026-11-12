@@ -78,3 +78,30 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Trinity College -> trinity-college
 - [x] Wesleyan -> wesleyan
 - [x] Hamilton -> hamilton
+
+Batch added 2026-11-12 to reach 100 (mix of semi-targets and niche schools):
+- [ ] Johns Hopkins
+- [ ] MIT (Sloan)
+- [ ] Tufts
+- [ ] Colgate
+- [ ] Williams
+- [ ] Amherst
+- [ ] Middlebury
+- [ ] Bowdoin
+- [ ] Holy Cross
+- [ ] Washington and Lee
+- [ ] Claremont McKenna
+- [ ] Iowa (Tippie)
+- [ ] Oklahoma (Price)
+- [ ] Arkansas (Walton)
+- [ ] Utah (Eccles)
+- [ ] Colorado (Leeds)
+- [ ] South Carolina (Darla Moore)
+- [ ] Clemson
+- [ ] Auburn (Harbert)
+- [ ] Marquette
+- [ ] Creighton (Heider)
+- [ ] Drexel (LeBow)
+- [ ] Temple (Fox)
+- [ ] UConn
+- [ ] UMass Amherst (Isenberg)

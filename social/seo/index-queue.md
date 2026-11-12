@@ -1,16 +1,16 @@
 # Google indexing request queue
 One line per URL. The daily task requests the first 10 unchecked ones in Search Console and checks them off.
 
-- [ ] https://mnaprep.com/guides/wharton-investment-banking/
-- [ ] https://mnaprep.com/guides/nyu-stern-investment-banking/
-- [ ] https://mnaprep.com/guides/georgetown-investment-banking/
-- [ ] https://mnaprep.com/guides/uva-mcintire-investment-banking/
-- [ ] https://mnaprep.com/guides/cornell-investment-banking/
-- [ ] https://mnaprep.com/guides/usc-marshall-investment-banking/
-- [ ] https://mnaprep.com/guides/emory-goizueta-investment-banking/
-- [ ] https://mnaprep.com/guides/boston-college-investment-banking/
-- [ ] https://mnaprep.com/guides/vanderbilt-investment-banking/
-- [ ] https://mnaprep.com/guides/wake-forest-investment-banking/
+- [x] https://mnaprep.com/guides/wharton-investment-banking/
+- [x] https://mnaprep.com/guides/nyu-stern-investment-banking/
+- [x] https://mnaprep.com/guides/georgetown-investment-banking/
+- [x] https://mnaprep.com/guides/uva-mcintire-investment-banking/
+- [x] https://mnaprep.com/guides/cornell-investment-banking/
+- [x] https://mnaprep.com/guides/usc-marshall-investment-banking/
+- [x] https://mnaprep.com/guides/emory-goizueta-investment-banking/
+- [x] https://mnaprep.com/guides/boston-college-investment-banking/
+- [x] https://mnaprep.com/guides/vanderbilt-investment-banking/
+- [x] https://mnaprep.com/guides/wake-forest-investment-banking/
 - [ ] https://mnaprep.com/guides/texas-am-investment-banking/
 - [ ] https://mnaprep.com/guides/florida-investment-banking/
 - [ ] https://mnaprep.com/guides/byu-investment-banking/

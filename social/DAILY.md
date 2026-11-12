@@ -3,6 +3,13 @@
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
 
+## Mix: 50% pictures, 50% videos (Bekir, 2026-11-11: "dont post all videos")
+- Every day, on every platform, split posts **half picture posts, half videos**. Picture posts = TikTok photo-mode carousels / Instagram carousels (`instagramData type "POST"`) / Pinterest pins. Videos = reels/TikTok videos/Shorts.
+- Alternate them through the day (picture, video, picture, video…), never 2 videos back to back.
+- With an odd count, the extra post is a picture post. Voiced site-demo videos count toward the video half (still max 3 a day).
+- Pinterest stays image pins and doesn't count toward the split.
+- Before scheduling, check the day's queue with getScheduledPosts. If videos are more than half, set the extras to draft (draft:true) or swap them for a carousel.
+
 ## The 5-step growth system (Bekir, 2026-11-11, from a creator who went 0 → 38K followers in 4 months)
 Run these 5 steps for every video, in order. They sit on top of everything else in this file.
 1. **Connect (real numbers first).** Step 2b plus Instagram reels: `getAnalyticsDataByMetrics` with IGRE01, IGRE03, IGRE23 (views), IGRE12 (saves), IGRE21 (shares), IGRE27 (retention %), IGRE30 (skip rate %). Skip rate over ~60% means the hook failed; retention under ~50% means the middle dragged. Write the winners and losers to insights.md before picking topics.

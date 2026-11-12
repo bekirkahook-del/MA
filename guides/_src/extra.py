@@ -7,7 +7,8 @@ src = open(os.path.join(HERE, "build.py"), encoding="utf-8").read()
 exec(src[:src.index("for p in PAGES:")])          # block(), page(), STYLE, TODAY, e, ROOT, G ...
 from schools import SCHOOLS
 from schools2 import SCHOOLS2
-SCHOOLS = SCHOOLS + SCHOOLS2
+from schools3 import SCHOOLS3
+SCHOOLS = SCHOOLS + SCHOOLS2 + SCHOOLS3
 from banks import BANKS
 PAGES.extend(SCHOOLS + BANKS)                              # so related-link names resolve
 for p in SCHOOLS + BANKS:

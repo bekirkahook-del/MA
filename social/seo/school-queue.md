@@ -1,0 +1,78 @@
+# School guide queue (target: 100 schools)
+The scheduled task builds the first 10 unchecked schools per run and checks them off. If a school can't be sourced, mark it [skip] with a reason.
+
+- [ ] Duke
+- [ ] Northwestern
+- [ ] UChicago
+- [ ] Harvard
+- [ ] Columbia
+- [ ] Princeton
+- [ ] Yale
+- [ ] Brown
+- [ ] Dartmouth
+- [ ] Stanford
+- [ ] MIT
+- [ ] Carnegie Mellon (Tepper)
+- [ ] Washington University in St. Louis (Olin)
+- [ ] Rice
+- [ ] UNC Chapel Hill (Kenan-Flagler)
+- [ ] Georgia Tech (Scheller)
+- [ ] Georgia (Terry)
+- [ ] Maryland (Smith)
+- [ ] Minnesota (Carlson)
+- [ ] Michigan State (Broad)
+- [ ] Iowa (Tippie)
+- [ ] Rutgers
+- [ ] Pitt
+- [ ] Virginia Tech (Pamplin)
+- [ ] William & Mary (Mason)
+- [ ] Richmond (Robins)
+- [ ] James Madison
+- [ ] Boston University (Questrom)
+- [ ] Northeastern (D'Amore-McKim)
+- [ ] Babson
+- [ ] Bentley
+- [ ] Fordham (Gabelli)
+- [ ] Baruch (Zicklin)
+- [ ] Syracuse (Whitman)
+- [ ] Lehigh
+- [ ] Bucknell
+- [ ] Tufts
+- [ ] Rochester
+- [ ] Case Western (Weatherhead)
+- [ ] Cincinnati (Lindner)
+- [ ] Ohio University
+- [ ] Kentucky (Gatton)
+- [ ] Tennessee (Haslam)
+- [ ] Clemson
+- [ ] South Carolina (Darla Moore)
+- [ ] Alabama (Culverhouse)
+- [ ] Auburn (Harbert)
+- [ ] LSU (Ourso)
+- [ ] Tulane (Freeman)
+- [ ] SMU (Cox)
+- [ ] TCU (Neeley)
+- [ ] Baylor (Hankamer)
+- [ ] Oklahoma (Price)
+- [ ] Arizona State (W. P. Carey)
+- [ ] Arizona (Eller)
+- [ ] Colorado Boulder (Leeds)
+- [ ] Utah (Eccles)
+- [ ] Washington (Foster)
+- [ ] Oregon (Lundquist)
+- [ ] UCLA
+- [ ] UC San Diego
+- [ ] Santa Clara (Leavey)
+- [ ] Loyola Chicago (Quinlan)
+- [ ] DePaul (Driehaus)
+- [ ] Marquette
+- [ ] Creighton (Heider)
+- [ ] Missouri (Trulaske)
+- [ ] Kansas
+- [ ] Nebraska
+- [ ] Delaware (Lerner)
+- [ ] UConn
+- [ ] Temple (Fox)
+- [ ] Drexel (LeBow)
+- [ ] Holy Cross
+- [ ] Colgate

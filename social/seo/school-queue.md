@@ -53,16 +53,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Baruch (Zicklin) -> baruch-zicklin
 - [x] Kenyon -> kenyon
 - [x] Syracuse (Whitman) -> syracuse-whitman
-- [ ] Wabash
-- [ ] Lehigh
-- [ ] DePauw
-- [ ] Bucknell
-- [ ] Hope College
-- [ ] SMU (Cox)
-- [ ] Grand Valley State
-- [ ] Alabama (Culverhouse)
-- [ ] St. John's (Tobin)
-- [ ] UCLA
+- [x] Wabash -> wabash
+- [x] Lehigh -> lehigh
+- [x] DePauw -> depauw
+- [x] Bucknell -> bucknell
+- [x] Hope College -> hope-college
+- [x] SMU (Cox) -> smu-cox
+- [x] Grand Valley State -> grand-valley-state
+- [x] Alabama (Culverhouse) -> alabama-culverhouse
+- [x] St. John's (Tobin) -> st-johns-tobin
+- [x] UCLA -> ucla
 - [ ] Hofstra (Zarb)
 - [ ] Washington (Foster)
 - [ ] Pace (Lubin)

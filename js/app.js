@@ -1468,8 +1468,8 @@ $("#avBtn").onclick=()=>showPlayer({id:myId||"me",...myStats()});$("#setBtn").on
 
 /* ---------- M&A Pro ---------- */
 let FREE_GRADES=3;
-function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return p.until?Date.now()<p.until:(Date.now()-p.start)<3*864e5;return true}
-function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,Math.ceil(((p.until||p.start+3*864e5)-Date.now())/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
+function isPro(){const p=S.pro;if(!p||!p.plan)return false;if(p.plan==="trial")return p.until?Date.now()<p.until:(Date.now()-p.start)<7*864e5;return true}
+function proLabel(){const p=S.pro;if(!isPro())return p&&p.plan==="trial"?"Trial ended":"Free";return p.plan==="trial"?`Trial · ${Math.max(1,Math.ceil(((p.until||p.start+7*864e5)-Date.now())/864e5))} days left`:({monthly:"Pro · Monthly",yearly:"Pro · Yearly",founding:"Pro · Founding Member",season:"Pro · Season Pass"})[p.plan]||"Pro"}
 const gradesToday=()=>(S.grades||{})[today()]||0;
 function bumpGrades(){S.grades=S.grades||{};S.grades[today()]=gradesToday()+1;save()}
 const monthKey=()=>today().slice(0,7);

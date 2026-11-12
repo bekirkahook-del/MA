@@ -146,8 +146,8 @@
       const tier=tierOf(b);window.MA_TIER=tier;const live=tier==="pro"||tier==="season";
       if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
       else if(tier==="trial"){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
-      else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<3*864e5){ // trial started before trials moved to the server
-        const r=await authed("trial");if(r.status===200)return syncBilling(true);S.pro={}}
+      else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<7*864e5){ // trial started before trials moved to the server: keeps its 7 days
+        const r=await authed("trial",{legacyStart:S.pro.start});if(r.status===200)return syncBilling(true);S.pro={}}
       else if(S.pro&&(S.pro.paid||S.pro.plan==="trial"))S.pro={};
       if(b.trialStart)S.trialUsed=b.trialStart;
       save();applyProUI();renderPro();try{render()}catch(e){}gateAI();return live||tier==="trial"}catch(e){}}

@@ -33,16 +33,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Michigan State (Broad) -> michigan-state-broad
 - [x] Rollins -> rollins
 - [x] Rutgers -> rutgers
-- [ ] Hillsdale
-- [ ] Pitt
-- [ ] Butler
-- [ ] Virginia Tech (Pamplin)
-- [ ] Xavier
-- [ ] William & Mary (Mason)
-- [ ] Dayton
-- [ ] Richmond (Robins)
-- [ ] John Carroll
-- [ ] Boston University (Questrom)
+- [x] Hillsdale -> hillsdale
+- [x] Pitt -> pitt
+- [x] Butler -> butler
+- [x] Virginia Tech (Pamplin) -> virginia-tech-pamplin
+- [x] Xavier -> xavier
+- [x] William & Mary (Mason) -> william-and-mary-mason
+- [x] Dayton -> dayton
+- [x] Richmond (Robins) -> richmond-robins
+- [x] John Carroll -> john-carroll
+- [x] Boston University (Questrom) -> boston-university-questrom
 - [ ] Kent State
 - [ ] Northeastern (D'Amore-McKim)
 - [ ] Akron

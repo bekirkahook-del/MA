@@ -6,6 +6,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 src = open(os.path.join(HERE, "build.py"), encoding="utf-8").read()
 exec(src[:src.index("for p in PAGES:")])          # block(), page(), STYLE, TODAY, e, ROOT, G ...
 from schools import SCHOOLS
+from schools2 import SCHOOLS2
+SCHOOLS = SCHOOLS + SCHOOLS2
 from banks import BANKS
 PAGES.extend(SCHOOLS + BANKS)                              # so related-link names resolve
 for p in SCHOOLS + BANKS:
@@ -19,6 +21,7 @@ ix = os.path.join(G, "index.html"); s = open(ix, encoding="utf-8").read()
 if 'id="banks"' not in s:
     cards = "".join(f'<li><a href="/guides/{p["slug"]}/">{e(p["short"])}</a></li>' for p in BANKS)
     s = s.replace("</main>", f'<h2 id="banks">Interview guides by bank</h2><ul class="more">{cards}</ul></main>', 1); open(ix, "w", encoding="utf-8").write(s); print("index: banks section")
+s = re.sub(r'<h2 id="schools">.*?</ul>', '', s, flags=re.S)
 if 'id="schools"' not in s:
     cards = "".join(f'<li><a href="/guides/{p["slug"]}/">{e(p["short"])}</a></li>' for p in SCHOOLS)
     sec = f'<h2 id="schools">Investment banking by school</h2><ul class="more">{cards}</ul>'

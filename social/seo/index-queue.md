@@ -34,3 +34,13 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/jefferies-investment-banking-interview/
 - [ ] https://mnaprep.com/cheat-sheet/
 - [ ] https://mnaprep.com/links/
+- [ ] https://mnaprep.com/guides/duke-investment-banking/
+- [ ] https://mnaprep.com/guides/northwestern-investment-banking/
+- [ ] https://mnaprep.com/guides/uchicago-investment-banking/
+- [ ] https://mnaprep.com/guides/harvard-investment-banking/
+- [ ] https://mnaprep.com/guides/columbia-investment-banking/
+- [ ] https://mnaprep.com/guides/princeton-investment-banking/
+- [ ] https://mnaprep.com/guides/yale-investment-banking/
+- [ ] https://mnaprep.com/guides/brown-investment-banking/
+- [ ] https://mnaprep.com/guides/dartmouth-investment-banking/
+- [ ] https://mnaprep.com/guides/stanford-investment-banking/

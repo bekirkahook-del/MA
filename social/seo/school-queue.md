@@ -3,16 +3,16 @@ The scheduled task builds the first 10 unchecked schools per run and checks them
 
 Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 
-- [ ] Duke
-- [ ] Northwestern
-- [ ] UChicago
-- [ ] Harvard
-- [ ] Columbia
-- [ ] Princeton
-- [ ] Yale
-- [ ] Brown
-- [ ] Dartmouth
-- [ ] Stanford
+- [x] Duke -> duke
+- [x] Northwestern -> northwestern
+- [x] UChicago -> uchicago
+- [x] Harvard -> harvard
+- [x] Columbia -> columbia
+- [x] Princeton -> princeton
+- [x] Yale -> yale
+- [x] Brown -> brown
+- [x] Dartmouth -> dartmouth
+- [x] Stanford -> stanford
 - [ ] Bryant
 - [ ] Carnegie Mellon (Tepper)
 - [ ] Providence College

@@ -120,7 +120,7 @@ SCHOOLS = [
  "lede": ["At Illinois, the Gies Investment Banking Academy (part of the Stanley C. Golder Academies) is the most structured path into investment banking.",
           "It's open to sophomores and juniors and is highly selective, so freshman year is about building your grades and basics."],
  "body": [("h2", "The Gies Investment Banking Academy"),
-   ("card", "What it is", ["A highly selective program for current sophomores and juniors, aimed at full-time roles at top banks.", "Upperclass members mentor newly selected sophomores.", "Technical training, case competitions, interview and internship prep, and alumni networking.", "Hands-on practice with banking software in the Margolis Market Information Lab."], "Sophomores &amp; juniors"),
+   ("card", "What it is", ["A highly selective program for current sophomores and juniors, aimed at full-time roles at top banks.", "Upperclass members mentor newly selected sophomores.", "Technical training, case competitions, interview and internship prep, and alumni networking.", "Hands-on practice with banking software in the Margolis Market Information Lab."], "Sophomores and juniors"),
    *timeline("Illinois"),
    *standout(["Chicago banks and boutiques are close by. Network with Illinois alumni there.", "Get interview-ready technicals before you apply so the Academy sees you as a strong candidate."]),
    ("h2", "Common questions"),

@@ -16,3 +16,13 @@
 | 2026-11-12 | Why banks refuse borrowers who meet federal standards | https://www.quora.com/Why-do-most-major-banks-refuse-to-lend-to-borrowers-who-technically-meet-federal-qualification-standards/answer/Bekir-Kahook |
 | 2026-11-12 | Interviewer calls your references: odds of the job | https://www.quora.com/If-a-job-interviewer-calls-your-references-how-likely-are-you-to-get-the-job/answer/Bekir-Kahook |
 | 2026-11-12 | Red flags in a job interview | https://www.quora.com/What-are-some-red-flags-that-a-job-interview-might-not-be-what-you-expected/answer/Bekir-Kahook |
+| 2026-11-12 | Ideal degree for an investment banking career | https://www.quora.com/What-would-be-an-ideal-degree-course-to-pursue-if-I-wanted-to-have-a-career-in-investment-banking/answer/Bekir-Kahook |
+| 2026-11-12 | Is poor performance at work a training problem | https://www.quora.com/How-can-you-tell-whether-poor-performance-at-work-is-actually-a-training-problem/answer/Bekir-Kahook |
+| 2026-11-12 | Final round IB interview questions after technicals | https://www.quora.com/What-type-of-questions-to-expect-for-a-final-round-interview-in-investment-banking-for-a-junior-position-as-a-finance-graduate-I-had-5-hours-of-technical-questions-in-total-previous-to-that-and-a-first-fit-interview/answer/Bekir-Kahook |
+| 2026-11-12 | Is the FMVA worth it | https://www.quora.com/I-am-planning-to-FMVA-Is-it-really-worth-it-and-should-I-enroll/answer/Bekir-Kahook |
+| 2026-11-12 | Careers available with a finance degree | https://www.quora.com/What-careers-are-available-with-a-finance-degree/answer/Bekir-Kahook |
+| 2026-11-12 | Wait for a job posting before asking for a referral | https://www.quora.com/Should-you-wait-until-a-job-is-posted-to-ask-someone-for-a-referral/answer/Bekir-Kahook |
+| 2026-11-12 | Is a finance degree necessary to be a stock trader | https://www.quora.com/Is-a-finance-degree-necessary-to-be-a-stock-trader/answer/Bekir-Kahook |
+| 2026-11-12 | Typical workday of a quant or trader | https://www.quora.com/Do-you-know-anyone-who-works-as-a-quantitative-analyst-quant-or-trader-on-Wall-Street-What-does-their-typical-workday-look-like-What-kind-of-tasks-do-they-handle-and-what-skills-do-they-rely-on-the-most/answer/Bekir-Kahook |
+| 2026-11-12 | Office politics and job security: HCL vs PwC vs Deloitte | https://www.quora.com/What-should-I-consider-about-office-politics-and-job-security-when-choosing-between-HCL-PWC-and-Deloitte/answer/Bekir-Kahook |
+| 2026-11-12 | Why Goldman Sachs keeps higher talent and productivity | https://www.quora.com/Why-do-you-think-Goldman-Sachs-manages-to-maintain-a-higher-quality-of-talent-and-productivity-compared-to-lower-tier-firms/answer/Bekir-Kahook |

@@ -13,16 +13,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Brown -> brown
 - [x] Dartmouth -> dartmouth
 - [x] Stanford -> stanford
-- [ ] Bryant
-- [ ] Carnegie Mellon (Tepper)
-- [ ] Providence College
-- [ ] Washington University in St. Louis (Olin)
-- [ ] Fairfield (Dolan)
-- [ ] Rice
-- [ ] Quinnipiac
-- [ ] UNC Chapel Hill (Kenan-Flagler)
-- [ ] Siena
-- [ ] Georgia Tech (Scheller)
+- [x] Bryant -> bryant
+- [x] Carnegie Mellon (Tepper) -> cmu-tepper
+- [x] Providence College -> providence-college
+- [x] Washington University in St. Louis (Olin) -> washu-olin
+- [x] Fairfield (Dolan) -> fairfield-dolan
+- [x] Rice -> rice
+- [x] Quinnipiac -> quinnipiac
+- [x] UNC Chapel Hill (Kenan-Flagler) -> unc-kenan-flagler
+- [x] Siena -> siena
+- [x] Georgia Tech (Scheller) -> georgia-tech-scheller
 - [ ] Elon (Love)
 - [ ] Georgia (Terry)
 - [ ] Furman

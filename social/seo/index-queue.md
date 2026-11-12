@@ -1,0 +1,36 @@
+# Google indexing request queue
+One line per URL. The daily task requests the first 10 unchecked ones in Search Console and checks them off.
+
+- [ ] https://mnaprep.com/guides/wharton-investment-banking/
+- [ ] https://mnaprep.com/guides/nyu-stern-investment-banking/
+- [ ] https://mnaprep.com/guides/georgetown-investment-banking/
+- [ ] https://mnaprep.com/guides/uva-mcintire-investment-banking/
+- [ ] https://mnaprep.com/guides/cornell-investment-banking/
+- [ ] https://mnaprep.com/guides/usc-marshall-investment-banking/
+- [ ] https://mnaprep.com/guides/emory-goizueta-investment-banking/
+- [ ] https://mnaprep.com/guides/boston-college-investment-banking/
+- [ ] https://mnaprep.com/guides/vanderbilt-investment-banking/
+- [ ] https://mnaprep.com/guides/wake-forest-investment-banking/
+- [ ] https://mnaprep.com/guides/texas-am-investment-banking/
+- [ ] https://mnaprep.com/guides/florida-investment-banking/
+- [ ] https://mnaprep.com/guides/byu-investment-banking/
+- [ ] https://mnaprep.com/guides/villanova-investment-banking/
+- [ ] https://mnaprep.com/guides/berkeley-haas-investment-banking/
+- [ ] https://mnaprep.com/guides/notre-dame-investment-banking/
+- [ ] https://mnaprep.com/guides/ut-austin-investment-banking/
+- [ ] https://mnaprep.com/guides/penn-state-investment-banking/
+- [ ] https://mnaprep.com/guides/illinois-gies-investment-banking/
+- [ ] https://mnaprep.com/guides/wisconsin-investment-banking/
+- [ ] https://mnaprep.com/guides/purdue-investment-banking/
+- [ ] https://mnaprep.com/guides/miami-university-investment-banking/
+- [ ] https://mnaprep.com/tools/
+- [ ] https://mnaprep.com/guides/corporate-finance-vs-investment-banking/
+- [ ] https://mnaprep.com/guides/goldman-sachs-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/jpmorgan-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/morgan-stanley-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/bank-of-america-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/citi-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/wells-fargo-investment-banking-interview/
+- [ ] https://mnaprep.com/guides/jefferies-investment-banking-interview/
+- [ ] https://mnaprep.com/cheat-sheet/
+- [ ] https://mnaprep.com/links/

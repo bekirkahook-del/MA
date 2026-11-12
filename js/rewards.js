@@ -138,12 +138,19 @@
     catch(e){toast("Couldn't open checkout. Try again.")}
     if(btn){btn.disabled=false;btn.textContent=t}};
   window.maPortal=async function(){try{const r=await authed("portal");if(r.j&&r.j.url){location.href=r.j.url;return}toast((r.j&&r.j.error)||"Couldn't open billing.")}catch(e){toast("Couldn't open billing.")}};
-  async function syncBilling(){const A=window.MA_AUTH;if(!A||!A.sb)return;const s=await A.ready;if(!s)return;
-    try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=data&&data.data;
-      const live=b&&["active","trialing","past_due"].includes(b.status)&&(b.until||0)>Date.now();
+  /* the billing record (written only by the server) decides the tier: free / trial / season / pro */
+  const tierOf=b=>{b=b||{};const now=Date.now();if((b.paid||["active","trialing","past_due"].includes(b.status))&&(b.until||0)>now)return b.plan==="season"?"season":"pro";if((b.trialUntil||0)>now)return"trial";return"free"};
+  window.MA_TIER="free";
+  async function syncBilling(again){const A=window.MA_AUTH;if(!A||!A.sb)return;const s=await A.ready;if(!s)return;
+    try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=(data&&data.data)||{};
+      const tier=tierOf(b);window.MA_TIER=tier;const live=tier==="pro"||tier==="season";
       if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
-      else if(S.pro&&S.pro.paid)S.pro={};
-      save();applyProUI();renderPro();try{render()}catch(e){}return live}catch(e){}}
+      else if(tier==="trial"){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
+      else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<7*864e5){ // trial started before trials moved to the server
+        const r=await authed("trial");if(r.status===200)return syncBilling(true);S.pro={}}
+      else if(S.pro&&(S.pro.paid||S.pro.plan==="trial"))S.pro={};
+      if(b.trialStart)S.trialUsed=b.trialStart;
+      save();applyProUI();renderPro();try{render()}catch(e){}gateAI();return live||tier==="trial"}catch(e){}}
   {const _ip2=isPro;isPro=function(){if(S.pro&&S.pro.paid&&(S.pro.until||0)<Date.now()&&!((S.rw&&S.rw.passUntil||0)>Date.now()))return false;return _ip2()}}
   document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#proCancel");if(c&&S.pro&&S.pro.paid){e.preventDefault();e.stopImmediatePropagation();maPortal()}},true);
   (async()=>{const q=new URLSearchParams(location.search).get("checkout");
@@ -153,14 +160,19 @@
     else{if(q==="cancel")toast("Checkout canceled. Nothing was charged.");syncBilling()}})();
 
   /* AI is Pro-only: hide the AI client from non-Pro users */
-  let REAL_AI=null;const gateAI=()=>{try{SAMPLE=isPro()?REAL_AI:null}catch(e){}};
+  /* AI works for every signed-in account; the server caps uses per day by tier (free 8, trial 20, season 40, pro 100) */
+  let REAL_AI=null;const AI_WRAP={async json(p,o){try{return await REAL_AI.json(p,o)}catch(e){if(e.code==="limit"){try{upgrade(MA_TIER==="free"?"You've used today's free AI uses. Pro is unlimited":"You've hit today's AI limit for your plan")}catch(x){}}throw e}}};
+  function gateAI(){try{SAMPLE=REAL_AI&&window.MA_AUTH&&MA_AUTH.session?AI_WRAP:null}catch(e){}}
   samplePromise.then(s=>{REAL_AI=s;gateAI()});setInterval(gateAI,1500);
   /* paid plans always go through Stripe; the free trial works once per account */
-  {const _sp=startPlan;startPlan=function(plan){
+  {const _sp=startPlan;startPlan=async function(plan){
     if(plan!=="trial"){maCheckout(plan);return}
-    if(S.trialUsed&&!(S.pro&&S.pro.plan==="trial"&&isPro())){toast("You've already used your free trial. Pick a plan to keep Pro.");try{showTab("pro")}catch(e){}return}
-    S.trialUsed=Date.now();const r=_sp.call(this,plan);gateAI();
-    try{toast("Your 7-day free trial has started. No card, nothing to cancel.")}catch(e){}return r}}
+    if(!(window.MA_AUTH&&MA_AUTH.session)){toast("Make a free account to start your 7-day trial");window.maOpenAuth&&maOpenAuth("up");return}
+    if(isPro()){toast("You already have Pro");return}
+    const r=await authed("trial");
+    if(r.status===200){await syncBilling(true);try{confetti()}catch(e){}toast("Your 7-day free trial has started. No card, nothing to cancel.");return}
+    if(r.status===409){toast((r.j&&r.j.code)==="paid"?"You already have Pro":"You've already used your free trial. Pick a plan to keep Pro.");try{showTab("pro")}catch(e){}return}
+    toast((r.j&&r.j.error)||"Couldn't start the trial. Try again.")}}
   /* clean up old "preview" Pro from before payments were live */
   if(S.pro&&S.pro.plan&&S.pro.plan!=="trial"&&!S.pro.paid){S.pro={};save();try{applyProUI()}catch(e){}}
   if(S.pro&&S.pro.plan==="trial"&&!S.trialUsed){S.trialUsed=S.pro.start||Date.now();save()}

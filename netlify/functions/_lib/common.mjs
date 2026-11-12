@@ -47,3 +47,25 @@ export async function setBilling(uid, data) {
   });
   if (!r.ok) throw new Error("Supabase write failed: " + (await r.text()));
 }
+
+// ---------- pay tiers (decided on the server from the billing record) ----------
+// free → trial (7 days, once per account) → season ($29 / 4 months) → pro (monthly, yearly, founding)
+export const AI_LIMITS = {
+  free: Number(process.env.AI_LIMIT_FREE || 8),
+  trial: Number(process.env.AI_LIMIT_TRIAL || 20),
+  season: Number(process.env.AI_LIMIT_SEASON || 40),
+  pro: Number(process.env.AI_LIMIT_PRO || 100),
+  owner: 1e9,
+};
+const OWNER_HASHES = ["13d8e795a85caa1b6668d51dd5c74b25aa7ed1c1a508336292a3078fcbe47fc6", "00ad2d945215513b412199ba5c23dc5ecb8decd47866582041d1eccd0bb12d93"];
+export async function isOwner(email) {
+  const { createHash } = await import("node:crypto");
+  return OWNER_HASHES.includes(createHash("sha256").update(String(email || "").toLowerCase()).digest("hex"));
+}
+export function tierOf(b, now = Date.now()) {
+  b = b || {};
+  const paid = (b.paid || ["active", "trialing", "past_due"].includes(b.status)) && (b.until || 0) > now;
+  if (paid) return b.plan === "season" ? "season" : "pro";
+  if ((b.trialUntil || 0) > now) return "trial";
+  return "free";
+}

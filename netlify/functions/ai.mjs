@@ -1,6 +1,7 @@
 // AI proxy for M&A. Keeps the Anthropic key on the server and only answers signed-in users.
 // Netlify env vars: ANTHROPIC_API_KEY (required), SUPABASE_SERVICE_ROLE_KEY (optional, turns on the daily limit),
 // AI_DAILY_LIMIT (optional, default 60), AI_MODEL_QUICK / AI_MODEL_DEFAULT / AI_MODEL_COMPLEX (optional overrides).
+import { getBilling, tierOf, AI_LIMITS, isOwner } from "./_lib/common.mjs";
 const SB_URL = "https://nbakxpnhcfzdosbzbupd.supabase.co";
 const SB_KEY = "sb_publishable_-2q58P2-fXrY-q1y4GQ8jw_58OrzsDu";
 const MODELS = {
@@ -16,22 +17,21 @@ async function getUser(token) {
   return r.ok ? r.json() : null;
 }
 
-async function underLimit(uid) {
+async function underLimit(uid, limit) {
   const svc = (process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY);
-  if (!svc) return true;
-  const limit = Number(process.env.AI_DAILY_LIMIT || 60);
+  if (!svc) return { ok: true, left: limit };
   const id = `${uid}_${new Date().toISOString().slice(0, 10)}`;
   const h = { apikey: svc, "Content-Type": "application/json", ...(svc.startsWith("eyJ") ? { Authorization: `Bearer ${svc}` } : {}) };
   const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.ai_usage&id=eq.${id}&select=data`, { headers: h });
   const rows = r.ok ? await r.json() : [];
   const n = (rows[0] && rows[0].data && rows[0].data.n) || 0;
-  if (n >= limit) return false;
+  if (n >= limit) return { ok: false, left: 0 };
   await fetch(`${SB_URL}/rest/v1/docs`, {
     method: "POST",
     headers: { ...h, Prefer: "resolution=merge-duplicates" },
     body: JSON.stringify({ col: "ai_usage", id, uid, data: { n: n + 1 }, updated_at: new Date().toISOString() }),
   });
-  return true;
+  return { ok: true, left: limit - n - 1 };
 }
 
 function parseJSON(text) {
@@ -52,7 +52,13 @@ export default async (req) => {
   try { body = await req.json(); } catch (e) { return json(400, { error: "Bad request" }); }
   const prompt = String(body.prompt || "").slice(0, 60000);
   if (!prompt) return json(400, { error: "Empty prompt" });
-  if (!(await underLimit(user.id))) return json(429, { error: "Daily AI limit reached. Try again tomorrow.", code: "limit" });
+  // pay tier decides the daily AI allowance
+  const owner = await isOwner(user.email);
+  let plan = "free";
+  try { plan = owner ? "owner" : tierOf(await getBilling(user.id)); } catch (e) {}
+  const limit = AI_LIMITS[plan] ?? AI_LIMITS.free;
+  const u = await underLimit(user.id, limit);
+  if (!u.ok) return json(429, { error: plan === "free" ? `You've used today's ${limit} free AI uses. Pro is unlimited.` : plan === "trial" ? `You've used today's ${limit} trial AI uses. Upgrade for more.` : "Daily AI limit reached. Try again tomorrow.", code: "limit", plan, limit });
 
   const model = MODELS[body.tier] || MODELS.default;
   const r = await fetch("https://api.anthropic.com/v1/messages", {
@@ -72,6 +78,6 @@ export default async (req) => {
   }
   const out = await r.json();
   const text = (out.content || []).filter((c) => c.type === "text").map((c) => c.text).join("");
-  try { return json(200, { result: parseJSON(text) }); }
+  try { return json(200, { result: parseJSON(text), plan, left: u.left }); }
   catch (e) { return json(502, { error: "AI returned an unreadable answer. Try again.", code: "parse" }); }
 };

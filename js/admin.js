@@ -108,7 +108,7 @@
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
     const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:Date.parse(b.until||0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
     const subs=((er&&er.data)||[]).map(r=>r.data||{});
-    return{V,names,players,accts,pro,bill,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
+    return{V,names,players,accts,pro,bill,trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
 
   async function openStats(){if(!owner)return;window.__maStatsOpen=true;
     openPanel(`<div class="label">Only you can see this</div><h2>Site stats</h2><div class="ms-sec" id="msLive"></div><div id="msBody"><p class="note" style="margin-top:18px">Loading…</p></div>`);
@@ -139,7 +139,7 @@
       <div class="ms-tiles five"><div class="ms-tile"><b>${xpT.toLocaleString()}</b><span>Total XP earned</span></div><div class="ms-tile"><b>${P.length?Math.round(xpT/P.length):0}</b><span>Avg XP per member</span></div><div class="ms-tile"><b>${lvT}</b><span>Levels cleared</span></div><div class="ms-tile"><b>${mockT}</b><span>Mock interview answers</span></div><div class="ms-tile"><b>${stk}</b><span>On a 3+ day streak</span></div></div>
       <div class="ms-grid2"><div class="ms-sec"><h3>Recruiting for</h3>${rows(tally(P,p=>(p.target||"").trim(),6))}</div><div class="ms-sec"><h3>Graduation year</h3>${rows(tally(P,p=>String(p.grad||"").trim(),6))}</div></div></div>`;
     const PR={monthly:9,yearly:69/12,founding:49/12,season:29/4,trial:0};const mrr=(C.bill||[]).reduce((n,b)=>n+(PR[b.plan]??0),0);
-    const money=`<div class="ms-sec"><h3>Money</h3><div class="ms-tiles five"><div class="ms-tile"><b>${C.pro}</b><span>Active Pro</span></div><div class="ms-tile"><b>$${mrr.toFixed(0)}</b><span>Est. monthly revenue</span></div><div class="ms-tile"><b>$${(mrr*12).toFixed(0)}</b><span>Est. yearly run rate</span></div><div class="ms-tile"><b>${C.accts.length?(C.pro/C.accts.length*100).toFixed(1):0}%</b><span>Accounts that pay</span></div><div class="ms-tile"><b>${subsA}</b><span>Email subscribers</span></div></div>
+    const money=`<div class="ms-sec"><h3>Money</h3><div class="ms-tiles five"><div class="ms-tile"><b>${C.pro}</b><span>Active Pro</span></div><div class="ms-tile"><b>$${mrr.toFixed(0)}</b><span>Est. monthly revenue</span></div><div class="ms-tile"><b>$${(mrr*12).toFixed(0)}</b><span>Est. yearly run rate</span></div><div class="ms-tile"><b>${C.accts.length?(C.pro/C.accts.length*100).toFixed(1):0}%</b><span>Accounts that pay</span></div><div class="ms-tile"><b>${subsA}</b><span>Email subscribers</span></div><div class="ms-tile"><b>${C.trials||0}</b><span>On free trial now (${C.trialsEver||0} ever)</span></div></div>
       ${(C.bill||[]).length?`<div style="margin-top:10px">${rows(tally(C.bill,b=>b.plan||"other",6))}</div>`:""}</div>`;
     const rv=C.rev||[],ravg=rv.length?(rv.reduce((n,r)=>n+r.rating,0)/rv.length).toFixed(1):"–";
     const fb=(C.fb||[]).map(r=>r.data||{}),fbN=fb.filter(f=>(f.at||"").slice(0,10)>=cut(N));

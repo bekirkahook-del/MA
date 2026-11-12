@@ -109,3 +109,13 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/trinity-college-investment-banking/
 - [ ] https://mnaprep.com/guides/wesleyan-investment-banking/
 - [ ] https://mnaprep.com/guides/hamilton-investment-banking/
+- [ ] https://mnaprep.com/guides/johns-hopkins-investment-banking/
+- [ ] https://mnaprep.com/guides/mit-investment-banking/
+- [ ] https://mnaprep.com/guides/tufts-investment-banking/
+- [ ] https://mnaprep.com/guides/colgate-investment-banking/
+- [ ] https://mnaprep.com/guides/williams-college-investment-banking/
+- [ ] https://mnaprep.com/guides/amherst-investment-banking/
+- [ ] https://mnaprep.com/guides/middlebury-investment-banking/
+- [ ] https://mnaprep.com/guides/bowdoin-investment-banking/
+- [ ] https://mnaprep.com/guides/holy-cross-investment-banking/
+- [ ] https://mnaprep.com/guides/washington-and-lee-investment-banking/

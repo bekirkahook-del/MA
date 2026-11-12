@@ -13,7 +13,7 @@ STYLE = base[base.index("<style>"):base.index("</style>") + 8]
 FONTS = base[base.index('<link rel="preconnect"'):base.index("<style>")]
 ICON = re.search(r'<link rel="icon"[^>]*>', base).group(0)
 NUNITO = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&text=M%26A&display=swap">'
-e = lambda s: html.escape(s, quote=True)
+e = lambda s: html.escape(html.unescape(s), quote=True)  # unescape first so "&amp;" in sources is not double-escaped
 strip = lambda s: re.sub(r"<[^>]+>", "", s)
 
 EXISTING = [

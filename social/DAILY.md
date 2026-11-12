@@ -9,6 +9,7 @@ Through the end of Fri Nov 13, 2026 (ET), no post on any platform can mention M&
 - No site watermark or end card in videos (punch.js `"wm": false`)
 - No site mention on carousel slides
 This overrides "Always promote M&A Prep" and the cross-promo rules. From Sat Nov 14, go back to normal.
+**Exception: Quora.** Quora answers can still mention M&A Prep / mnaprep.com (Bekir, 2026-11-11 10:27pm). The pause only covers TikTok, Instagram, Pinterest and YouTube.
 
 ## NEW VIDEO STYLE (Bekir, 2026-11-11: old videos and voices were "horrible")
 - All ranking videos use `social/gen/punch/punch.js` (run with `NODE_PATH=$(npm root -g) node punch.js spec.json out.mp4`, see hardbiz.json). The style is full-screen, one stat per cut, huge type, the number counting up, a background color per school or firm, an original 124bpm beat with whooshes, a drumroll and an impact on #1, and 10–15 seconds total.

@@ -220,3 +220,6 @@ One hub: **mnaprep.com/links** (every profile + the site + Discord). Short links
 | Pinterest pins | Link to the matching guide or tool page, never just the homepage |
 | Quora answers | Mention mnaprep.com only when it fits; profile credential links to mnaprep.com/links |
 | Emails and site footer | Already link Discord + YouTube + TikTok + IG (done in code) |
+
+## TikTok photo posts must be JPG (2026-11-11)
+TikTok rejects PNG carousels ("image/png type is not allowed"). Always convert slides to .jpg (quality 90+) before scheduling TikTok photo posts.

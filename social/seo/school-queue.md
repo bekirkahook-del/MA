@@ -1,6 +1,8 @@
 # School guide queue (target: 100 schools)
 The scheduled task builds the first 10 unchecked schools per run and checks them off. If a school can't be sourced, mark it [skip] with a reason.
 
+Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
+
 - [ ] Duke
 - [ ] Northwestern
 - [ ] UChicago
@@ -11,68 +13,68 @@ The scheduled task builds the first 10 unchecked schools per run and checks them
 - [ ] Brown
 - [ ] Dartmouth
 - [ ] Stanford
-- [ ] MIT
+- [ ] Bryant
 - [ ] Carnegie Mellon (Tepper)
+- [ ] Providence College
 - [ ] Washington University in St. Louis (Olin)
+- [ ] Fairfield (Dolan)
 - [ ] Rice
+- [ ] Quinnipiac
 - [ ] UNC Chapel Hill (Kenan-Flagler)
+- [ ] Siena
 - [ ] Georgia Tech (Scheller)
+- [ ] Elon (Love)
 - [ ] Georgia (Terry)
+- [ ] Furman
 - [ ] Maryland (Smith)
+- [ ] Davidson
 - [ ] Minnesota (Carlson)
+- [ ] Wofford
 - [ ] Michigan State (Broad)
-- [ ] Iowa (Tippie)
+- [ ] Rollins
 - [ ] Rutgers
+- [ ] Hillsdale
 - [ ] Pitt
+- [ ] Butler
 - [ ] Virginia Tech (Pamplin)
+- [ ] Xavier
 - [ ] William & Mary (Mason)
+- [ ] Dayton
 - [ ] Richmond (Robins)
-- [ ] James Madison
+- [ ] John Carroll
 - [ ] Boston University (Questrom)
+- [ ] Kent State
 - [ ] Northeastern (D'Amore-McKim)
+- [ ] Akron
 - [ ] Babson
-- [ ] Bentley
+- [ ] Toledo
 - [ ] Fordham (Gabelli)
+- [ ] Denison
 - [ ] Baruch (Zicklin)
+- [ ] Kenyon
 - [ ] Syracuse (Whitman)
+- [ ] Wabash
 - [ ] Lehigh
+- [ ] DePauw
 - [ ] Bucknell
-- [ ] Tufts
-- [ ] Rochester
-- [ ] Case Western (Weatherhead)
-- [ ] Cincinnati (Lindner)
-- [ ] Ohio University
-- [ ] Kentucky (Gatton)
-- [ ] Tennessee (Haslam)
-- [ ] Clemson
-- [ ] South Carolina (Darla Moore)
-- [ ] Alabama (Culverhouse)
-- [ ] Auburn (Harbert)
-- [ ] LSU (Ourso)
-- [ ] Tulane (Freeman)
+- [ ] Hope College
 - [ ] SMU (Cox)
-- [ ] TCU (Neeley)
-- [ ] Baylor (Hankamer)
-- [ ] Oklahoma (Price)
-- [ ] Arizona State (W. P. Carey)
-- [ ] Arizona (Eller)
-- [ ] Colorado Boulder (Leeds)
-- [ ] Utah (Eccles)
-- [ ] Washington (Foster)
-- [ ] Oregon (Lundquist)
+- [ ] Grand Valley State
+- [ ] Alabama (Culverhouse)
+- [ ] St. John's (Tobin)
 - [ ] UCLA
-- [ ] UC San Diego
-- [ ] Santa Clara (Leavey)
-- [ ] Loyola Chicago (Quinlan)
-- [ ] DePaul (Driehaus)
-- [ ] Marquette
-- [ ] Creighton (Heider)
-- [ ] Missouri (Trulaske)
-- [ ] Kansas
-- [ ] Nebraska
-- [ ] Delaware (Lerner)
-- [ ] UConn
-- [ ] Temple (Fox)
-- [ ] Drexel (LeBow)
-- [ ] Holy Cross
-- [ ] Colgate
+- [ ] Hofstra (Zarb)
+- [ ] Washington (Foster)
+- [ ] Pace (Lubin)
+- [ ] Tulane (Freeman)
+- [ ] Seton Hall (Stillman)
+- [ ] TCU (Neeley)
+- [ ] Loyola Maryland (Sellinger)
+- [ ] Gettysburg
+- [ ] Dickinson
+- [ ] Franklin & Marshall
+- [ ] Lafayette
+- [ ] Union College
+- [ ] Trinity College
+- [ ] Wesleyan
+- [ ] Hamilton

@@ -114,3 +114,8 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/gettysburg-investment-banking/
 - [ ] https://mnaprep.com/guides/dickinson-investment-banking/
 - [ ] https://mnaprep.com/guides/franklin-marshall-investment-banking/
+- [ ] https://mnaprep.com/guides/lafayette-investment-banking/
+- [ ] https://mnaprep.com/guides/union-college-investment-banking/
+- [ ] https://mnaprep.com/guides/trinity-college-investment-banking/
+- [ ] https://mnaprep.com/guides/wesleyan-investment-banking/
+- [ ] https://mnaprep.com/guides/hamilton-investment-banking/

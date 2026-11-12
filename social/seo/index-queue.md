@@ -11,88 +11,78 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/boston-college-investment-banking/
 - [x] https://mnaprep.com/guides/vanderbilt-investment-banking/
 - [x] https://mnaprep.com/guides/wake-forest-investment-banking/
-- [ ] https://mnaprep.com/guides/texas-am-investment-banking/
-- [ ] https://mnaprep.com/guides/florida-investment-banking/
-- [ ] https://mnaprep.com/guides/byu-investment-banking/
-- [ ] https://mnaprep.com/guides/villanova-investment-banking/
-- [ ] https://mnaprep.com/guides/berkeley-haas-investment-banking/
-- [ ] https://mnaprep.com/guides/notre-dame-investment-banking/
+- [x] https://mnaprep.com/guides/texas-am-investment-banking/
+- [x] https://mnaprep.com/guides/florida-investment-banking/
+- [x] https://mnaprep.com/guides/byu-investment-banking/
+- [x] https://mnaprep.com/guides/villanova-investment-banking/
+- [x] https://mnaprep.com/guides/berkeley-haas-investment-banking/
+- [x] https://mnaprep.com/guides/notre-dame-investment-banking/
 - [ ] https://mnaprep.com/guides/ut-austin-investment-banking/
 - [ ] https://mnaprep.com/guides/penn-state-investment-banking/
-- [ ] https://mnaprep.com/guides/illinois-gies-investment-banking/
-- [ ] https://mnaprep.com/guides/wisconsin-investment-banking/
-- [ ] https://mnaprep.com/guides/purdue-investment-banking/
-- [ ] https://mnaprep.com/guides/miami-university-investment-banking/
+- [x] https://mnaprep.com/guides/illinois-gies-investment-banking/
+- [x] https://mnaprep.com/guides/wisconsin-investment-banking/
+- [x] https://mnaprep.com/guides/purdue-investment-banking/
+- [x] https://mnaprep.com/guides/miami-university-investment-banking/
 - [ ] https://mnaprep.com/tools/
-- [ ] https://mnaprep.com/guides/corporate-finance-vs-investment-banking/
-- [ ] https://mnaprep.com/guides/goldman-sachs-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/jpmorgan-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/morgan-stanley-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/bank-of-america-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/citi-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/wells-fargo-investment-banking-interview/
-- [ ] https://mnaprep.com/guides/jefferies-investment-banking-interview/
+- [x] https://mnaprep.com/guides/corporate-finance-vs-investment-banking/
+- [x] https://mnaprep.com/guides/goldman-sachs-investment-banking-interview/
+- [x] https://mnaprep.com/guides/jpmorgan-investment-banking-interview/
+- [x] https://mnaprep.com/guides/morgan-stanley-investment-banking-interview/
+- [x] https://mnaprep.com/guides/bank-of-america-investment-banking-interview/
+- [x] https://mnaprep.com/guides/citi-investment-banking-interview/
+- [x] https://mnaprep.com/guides/wells-fargo-investment-banking-interview/
+- [x] https://mnaprep.com/guides/jefferies-investment-banking-interview/
 - [ ] https://mnaprep.com/cheat-sheet/
 - [ ] https://mnaprep.com/links/
-- [ ] https://mnaprep.com/guides/duke-investment-banking/
-- [ ] https://mnaprep.com/guides/northwestern-investment-banking/
+- [x] https://mnaprep.com/guides/duke-investment-banking/
+- [x] https://mnaprep.com/guides/northwestern-investment-banking/
 - [ ] https://mnaprep.com/guides/uchicago-investment-banking/
-- [ ] https://mnaprep.com/guides/harvard-investment-banking/
-- [ ] https://mnaprep.com/guides/columbia-investment-banking/
-- [ ] https://mnaprep.com/guides/princeton-investment-banking/
-- [ ] https://mnaprep.com/guides/yale-investment-banking/
-- [ ] https://mnaprep.com/guides/brown-investment-banking/
-- [ ] https://mnaprep.com/guides/dartmouth-investment-banking/
-- [ ] https://mnaprep.com/guides/stanford-investment-banking/
-- [ ] https://mnaprep.com/guides/duke-investment-banking/
-- [ ] https://mnaprep.com/guides/northwestern-investment-banking/
-- [ ] https://mnaprep.com/guides/uchicago-investment-banking/
-- [ ] https://mnaprep.com/guides/harvard-investment-banking/
-- [ ] https://mnaprep.com/guides/columbia-investment-banking/
-- [ ] https://mnaprep.com/guides/princeton-investment-banking/
-- [ ] https://mnaprep.com/guides/yale-investment-banking/
-- [ ] https://mnaprep.com/guides/brown-investment-banking/
-- [ ] https://mnaprep.com/guides/dartmouth-investment-banking/
-- [ ] https://mnaprep.com/guides/stanford-investment-banking/
-- [ ] https://mnaprep.com/guides/bryant-investment-banking/
-- [ ] https://mnaprep.com/guides/cmu-tepper-investment-banking/
-- [ ] https://mnaprep.com/guides/providence-college-investment-banking/
-- [ ] https://mnaprep.com/guides/washu-olin-investment-banking/
-- [ ] https://mnaprep.com/guides/fairfield-dolan-investment-banking/
-- [ ] https://mnaprep.com/guides/rice-investment-banking/
-- [ ] https://mnaprep.com/guides/quinnipiac-investment-banking/
+- [x] https://mnaprep.com/guides/harvard-investment-banking/
+- [x] https://mnaprep.com/guides/columbia-investment-banking/
+- [x] https://mnaprep.com/guides/princeton-investment-banking/
+- [x] https://mnaprep.com/guides/yale-investment-banking/
+- [x] https://mnaprep.com/guides/brown-investment-banking/
+- [x] https://mnaprep.com/guides/dartmouth-investment-banking/
+- [x] https://mnaprep.com/guides/stanford-investment-banking/
+- [x] https://mnaprep.com/guides/bryant-investment-banking/
+- [x] https://mnaprep.com/guides/cmu-tepper-investment-banking/
+- [x] https://mnaprep.com/guides/providence-college-investment-banking/
+- [x] https://mnaprep.com/guides/washu-olin-investment-banking/
+- [x] https://mnaprep.com/guides/fairfield-dolan-investment-banking/
+- [x] https://mnaprep.com/guides/rice-investment-banking/
+- [x] https://mnaprep.com/guides/quinnipiac-investment-banking/
 - [ ] https://mnaprep.com/guides/unc-kenan-flagler-investment-banking/
-- [ ] https://mnaprep.com/guides/siena-investment-banking/
-- [ ] https://mnaprep.com/guides/georgia-tech-scheller-investment-banking/
-- [ ] https://mnaprep.com/guides/elon-love-investment-banking/
-- [ ] https://mnaprep.com/guides/georgia-terry-investment-banking/
-- [ ] https://mnaprep.com/guides/furman-investment-banking/
-- [ ] https://mnaprep.com/guides/maryland-smith-investment-banking/
-- [ ] https://mnaprep.com/guides/davidson-investment-banking/
-- [ ] https://mnaprep.com/guides/minnesota-carlson-investment-banking/
-- [ ] https://mnaprep.com/guides/wofford-investment-banking/
-- [ ] https://mnaprep.com/guides/michigan-state-broad-investment-banking/
+- [x] https://mnaprep.com/guides/siena-investment-banking/
+- [x] https://mnaprep.com/guides/georgia-tech-scheller-investment-banking/
+- [x] https://mnaprep.com/guides/elon-love-investment-banking/
+- [x] https://mnaprep.com/guides/georgia-terry-investment-banking/
+- [x] https://mnaprep.com/guides/furman-investment-banking/
+- [x] https://mnaprep.com/guides/maryland-smith-investment-banking/
+- [x] https://mnaprep.com/guides/davidson-investment-banking/
+- [x] https://mnaprep.com/guides/minnesota-carlson-investment-banking/
+- [x] https://mnaprep.com/guides/wofford-investment-banking/
+- [x] https://mnaprep.com/guides/michigan-state-broad-investment-banking/
 - [ ] https://mnaprep.com/guides/rollins-investment-banking/
-- [ ] https://mnaprep.com/guides/rutgers-investment-banking/
-- [ ] https://mnaprep.com/guides/hillsdale-investment-banking/
-- [ ] https://mnaprep.com/guides/pitt-investment-banking/
-- [ ] https://mnaprep.com/guides/butler-investment-banking/
-- [ ] https://mnaprep.com/guides/virginia-tech-pamplin-investment-banking/
-- [ ] https://mnaprep.com/guides/xavier-investment-banking/
-- [ ] https://mnaprep.com/guides/william-and-mary-mason-investment-banking/
-- [ ] https://mnaprep.com/guides/dayton-investment-banking/
-- [ ] https://mnaprep.com/guides/richmond-robins-investment-banking/
-- [ ] https://mnaprep.com/guides/john-carroll-investment-banking/
-- [ ] https://mnaprep.com/guides/boston-university-questrom-investment-banking/
-- [ ] https://mnaprep.com/guides/kent-state-investment-banking/
-- [ ] https://mnaprep.com/guides/northeastern-damore-mckim-investment-banking/
+- [x] https://mnaprep.com/guides/rutgers-investment-banking/
+- [x] https://mnaprep.com/guides/hillsdale-investment-banking/
+- [x] https://mnaprep.com/guides/pitt-investment-banking/
+- [x] https://mnaprep.com/guides/butler-investment-banking/
+- [x] https://mnaprep.com/guides/virginia-tech-pamplin-investment-banking/
+- [x] https://mnaprep.com/guides/xavier-investment-banking/
+- [x] https://mnaprep.com/guides/william-and-mary-mason-investment-banking/
+- [x] https://mnaprep.com/guides/dayton-investment-banking/
+- [x] https://mnaprep.com/guides/richmond-robins-investment-banking/
+- [x] https://mnaprep.com/guides/john-carroll-investment-banking/
+- [x] https://mnaprep.com/guides/boston-university-questrom-investment-banking/
+- [x] https://mnaprep.com/guides/kent-state-investment-banking/
+- [x] https://mnaprep.com/guides/northeastern-damore-mckim-investment-banking/
 - [ ] https://mnaprep.com/guides/akron-investment-banking/
-- [ ] https://mnaprep.com/guides/babson-investment-banking/
-- [ ] https://mnaprep.com/guides/toledo-investment-banking/
-- [ ] https://mnaprep.com/guides/fordham-gabelli-investment-banking/
+- [x] https://mnaprep.com/guides/babson-investment-banking/
+- [x] https://mnaprep.com/guides/toledo-investment-banking/
+- [x] https://mnaprep.com/guides/fordham-gabelli-investment-banking/
 - [ ] https://mnaprep.com/guides/denison-investment-banking/
 - [ ] https://mnaprep.com/guides/baruch-zicklin-investment-banking/
-- [ ] https://mnaprep.com/guides/kenyon-investment-banking/
+- [x] https://mnaprep.com/guides/kenyon-investment-banking/
 - [ ] https://mnaprep.com/guides/syracuse-whitman-investment-banking/
 - [ ] https://mnaprep.com/guides/wabash-investment-banking/
 - [ ] https://mnaprep.com/guides/lehigh-investment-banking/

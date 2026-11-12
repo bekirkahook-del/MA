@@ -7,8 +7,8 @@ const [, , specP, out] = process.argv; const S = JSON.parse(fs.readFileSync(spec
 const BEAT = 60 / (S.bpm || 124);
 const TH = {glow:'',paper:'body{background:#F3EEE3;color:#14110F}.k{color:#B3261E}.h1,.h3{color:#3A332C}.big{color:#B3261E}.rank{color:rgba(20,17,15,.15)}.lbl{color:#6B6158}.dots i{background:rgba(20,17,15,.15)}.dots i.on{background:#14110F}.wm,.src{color:#8A7F73}.grain{opacity:.12;background-image:radial-gradient(#000 1px,transparent 1px)}',neon:'body{background:#000}.k{color:#39FF88}.big,.val{color:transparent;-webkit-text-stroke:6px #39FF88;text-shadow:0 0 40px #39FF8866}.name{color:#fff;text-shadow:0 0 30px #fff5}.rank{color:#39FF8833}.dots i.on{background:#39FF88}',terminal:'body{background:#0A0A0A;font-family:M}.k,.lbl,.wm{color:#FF9F1C}.name,.h1,.h3,.ask{font-family:M;font-weight:500;letter-spacing:0}.big,.val{color:#FF9F1C;font-family:M;letter-spacing:-6px}.rank{color:#FF9F1C44}.grain{background-image:repeating-linear-gradient(0deg,#fff1 0 2px,transparent 2px 6px);background-size:auto;opacity:.25}.dots i.on{background:#FF9F1C}'}[S.style||'glow']; // 124 bpm, cuts land on beats
 const n = S.rows.length; const T = []; let t = 4 * BEAT; // hook = 4 beats
-for (let i = n - 1; i >= 1; i--) { T[i] = t; t += 3 * BEAT; } // each of #n..#2 = 3 beats
-const ROLL = t; t += 3 * BEAT; T[0] = t; t += 7 * BEAT; const END = t;
+for (let i = n - 1; i >= 1; i--) { T[i] = t; t += (S.pace || 3) * BEAT; } // each of #n..#2 = 3 beats
+const ROLL = t; t += Math.max(2, S.pace || 3) * BEAT; T[0] = t; t += 7 * BEAT; const END = t;
 const html = `<html><head><style>
 @font-face{font-family:A;font-weight:900;src:url(${F("archivo/files/archivo-latin-900-normal.woff2")})}
 @font-face{font-family:P;font-weight:600;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2")})}
@@ -24,7 +24,7 @@ const html = `<html><head><style>
 .ask{font:900 92px/1.05 A}.src{position:absolute;bottom:90px;left:60px;right:60px;text-align:center;font:500 24px M;color:#7C89A8}
 .wm{position:absolute;bottom:150px;left:0;right:0;text-align:center;font:700 34px P;color:rgba(255,255,255,.55)}
 #flash{position:absolute;inset:0;background:#fff;opacity:0}${TH}
-</style></head><body><div id=bg></div><div class=grain></div><div class=k>${S.kicker}</div><div id=stage></div><div class=dots id=dots></div><div class=wm>mnaprep.com</div><div class=src>Source: ${S.source}</div><div id=flash></div>
+</style></head><body><div id=bg></div><div class=grain></div><div class=k>${S.kicker}</div><div id=stage></div><div class=dots id=dots></div>${S.wm===false?'':'<div class=wm>mnaprep.com</div>'}<div class=src>Source: ${S.source}</div><div id=flash></div>
 <script>
 const S=${JSON.stringify(S)},T=${JSON.stringify(T)},ROLL=${ROLL},END=${END},B=${BEAT};
 const ease=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3), back=x=>{x=Math.min(1,Math.max(0,x));const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};

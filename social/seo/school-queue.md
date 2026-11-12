@@ -63,16 +63,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Alabama (Culverhouse) -> alabama-culverhouse
 - [x] St. John's (Tobin) -> st-johns-tobin
 - [x] UCLA -> ucla
-- [ ] Hofstra (Zarb)
-- [ ] Washington (Foster)
-- [ ] Pace (Lubin)
-- [ ] Tulane (Freeman)
-- [ ] Seton Hall (Stillman)
-- [ ] TCU (Neeley)
-- [ ] Loyola Maryland (Sellinger)
-- [ ] Gettysburg
-- [ ] Dickinson
-- [ ] Franklin & Marshall
+- [x] Hofstra (Zarb) -> hofstra-zarb
+- [x] Washington (Foster) -> washington-foster
+- [x] Pace (Lubin) -> pace-lubin
+- [x] Tulane (Freeman) -> tulane-freeman
+- [x] Seton Hall (Stillman) -> seton-hall-stillman
+- [x] TCU (Neeley) -> tcu-neeley
+- [x] Loyola Maryland (Sellinger) -> loyola-maryland-sellinger
+- [x] Gettysburg -> gettysburg
+- [x] Dickinson -> dickinson
+- [x] Franklin & Marshall -> franklin-marshall
 - [ ] Lafayette
 - [ ] Union College
 - [ ] Trinity College

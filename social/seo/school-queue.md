@@ -23,16 +23,16 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] UNC Chapel Hill (Kenan-Flagler) -> unc-kenan-flagler
 - [x] Siena -> siena
 - [x] Georgia Tech (Scheller) -> georgia-tech-scheller
-- [ ] Elon (Love)
-- [ ] Georgia (Terry)
-- [ ] Furman
-- [ ] Maryland (Smith)
-- [ ] Davidson
-- [ ] Minnesota (Carlson)
-- [ ] Wofford
-- [ ] Michigan State (Broad)
-- [ ] Rollins
-- [ ] Rutgers
+- [x] Elon (Love) -> elon-love
+- [x] Georgia (Terry) -> georgia-terry
+- [x] Furman -> furman
+- [x] Maryland (Smith) -> maryland-smith
+- [x] Davidson -> davidson
+- [x] Minnesota (Carlson) -> minnesota-carlson
+- [x] Wofford -> wofford
+- [x] Michigan State (Broad) -> michigan-state-broad
+- [x] Rollins -> rollins
+- [x] Rutgers -> rutgers
 - [ ] Hillsdale
 - [ ] Pitt
 - [ ] Butler

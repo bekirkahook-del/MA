@@ -73,8 +73,8 @@ Half of these are niche (non-target) schools, by Bekir's request 2026-11-11.
 - [x] Gettysburg -> gettysburg
 - [x] Dickinson -> dickinson
 - [x] Franklin & Marshall -> franklin-marshall
-- [ ] Lafayette
-- [ ] Union College
-- [ ] Trinity College
-- [ ] Wesleyan
-- [ ] Hamilton
+- [x] Lafayette -> lafayette
+- [x] Union College -> union-college
+- [x] Trinity College -> trinity-college
+- [x] Wesleyan -> wesleyan
+- [x] Hamilton -> hamilton

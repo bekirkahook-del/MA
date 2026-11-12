@@ -94,3 +94,13 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/baruch-zicklin-investment-banking/
 - [ ] https://mnaprep.com/guides/kenyon-investment-banking/
 - [ ] https://mnaprep.com/guides/syracuse-whitman-investment-banking/
+- [ ] https://mnaprep.com/guides/wabash-investment-banking/
+- [ ] https://mnaprep.com/guides/lehigh-investment-banking/
+- [ ] https://mnaprep.com/guides/depauw-investment-banking/
+- [ ] https://mnaprep.com/guides/bucknell-investment-banking/
+- [ ] https://mnaprep.com/guides/hope-college-investment-banking/
+- [ ] https://mnaprep.com/guides/smu-cox-investment-banking/
+- [ ] https://mnaprep.com/guides/grand-valley-state-investment-banking/
+- [ ] https://mnaprep.com/guides/alabama-culverhouse-investment-banking/
+- [ ] https://mnaprep.com/guides/st-johns-tobin-investment-banking/
+- [ ] https://mnaprep.com/guides/ucla-investment-banking/

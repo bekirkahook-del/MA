@@ -3,6 +3,11 @@
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
 
+## NEW VIDEO STYLE (Bekir, 2026-11-11: old videos and voices were "horrible")
+- All ranking videos use `social/gen/punch/punch.js` (run with `NODE_PATH=$(npm root -g) node punch.js spec.json out.mp4`, see hardbiz.json). The style is full-screen, one stat per cut, huge type, the number counting up, a background color per school or firm, an original 124bpm beat with whooshes, a drumroll and an impact on #1, and 10–15 seconds total.
+- **No AI voiceover on any video** (this also covers the voiced site-demo videos, which are paused). Videos carry only the beat.
+- The old rankvid.js / vo.js / sitevid voice pipeline is retired. Check every number on screen against the spec before posting.
+
 ## Mix: 50% pictures, 50% videos (Bekir, 2026-11-11: "dont post all videos")
 - Every day, on every platform, split posts **half picture posts, half videos**. Picture posts = TikTok photo-mode carousels / Instagram carousels (`instagramData type "POST"`) / Pinterest pins. Videos = reels/TikTok videos/Shorts.
 - Alternate them through the day (picture, video, picture, video…), never 2 videos back to back.

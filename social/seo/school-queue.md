@@ -90,18 +90,106 @@ Batch added 2026-11-12 to reach 100 (mix of semi-targets and niche schools):
 - [x] Bowdoin -> bowdoin
 - [x] Holy Cross -> holy-cross
 - [x] Washington and Lee -> washington-and-lee
-- [ ] Claremont McKenna
-- [ ] Iowa (Tippie)
-- [ ] Oklahoma (Price)
-- [ ] Arkansas (Walton)
-- [ ] Utah (Eccles)
-- [ ] Colorado (Leeds)
-- [ ] South Carolina (Darla Moore)
-- [ ] Clemson
-- [ ] Auburn (Harbert)
-- [ ] Marquette
-- [ ] Creighton (Heider)
-- [ ] Drexel (LeBow)
-- [ ] Temple (Fox)
-- [ ] UConn
-- [ ] UMass Amherst (Isenberg)
+- [x] Claremont McKenna -> claremont-mckenna
+- [x] Iowa (Tippie) -> iowa-tippie
+- [x] Oklahoma (Price) -> oklahoma-price
+- [x] Arkansas (Walton) -> arkansas-walton
+- [x] Utah (Eccles) -> utah-eccles
+- [x] Colorado (Leeds) -> colorado-leeds
+- [x] South Carolina (Darla Moore) -> south-carolina-darla-moore
+- [x] Clemson -> clemson
+- [x] Auburn (Harbert) -> auburn-harbert
+- [x] Marquette -> marquette
+- [x] Creighton (Heider) -> creighton-heider
+- [x] Drexel (LeBow) -> drexel-lebow
+- [x] Temple (Fox) -> temple-fox
+- [x] UConn -> uconn
+- [x] UMass Amherst (Isenberg) -> umass-isenberg
+
+## Batch 4 (2026-11-13, built in parallel)
+- [x] UC San Diego -> uc-san-diego
+- [x] UC Irvine -> uc-irvine-merage
+- [x] UC Davis -> uc-davis
+- [x] UC Santa Barbara -> uc-santa-barbara
+- [x] Santa Clara -> santa-clara-leavey
+- [x] Pepperdine -> pepperdine
+- [x] Loyola Marymount -> loyola-marymount
+- [x] San Diego State -> san-diego-state-fowler
+- [x] Cal Poly San Luis Obispo -> cal-poly-slo-orfalea
+- [x] Arizona -> arizona-eller
+- [x] Arizona State -> arizona-state-wp-carey
+- [x] Oregon -> oregon-lundquist
+- [x] Gonzaga -> gonzaga
+- [x] Baylor -> baylor-hankamer
+- [x] Texas Tech -> texas-tech-rawls
+- [x] Houston -> houston-bauer
+- [x] Trinity University -> trinity-university
+- [x] Oklahoma State -> oklahoma-state-spears
+- [x] Kansas -> kansas
+- [x] Missouri -> missouri-trulaske
+- [x] Nebraska -> nebraska
+- [x] Iowa State -> iowa-state-ivy
+- [x] LSU -> lsu-ourso
+- [x] Ole Miss -> ole-miss
+- [x] Tennessee -> tennessee-haslam
+- [x] Kentucky -> kentucky-gatton
+- [x] Cincinnati -> cincinnati-lindner
+- [x] Ohio University -> ohio-university
+- [x] Case Western -> case-western-weatherhead
+- [x] Miami -> miami-herbert
+- [x] Florida State -> florida-state
+- [x] UCF -> ucf
+- [x] South Florida -> south-florida-muma
+- [x] FIU -> fiu
+- [x] Georgia State -> georgia-state
+- [x] George Washington -> george-washington
+- [x] American (Kogod) -> american-kogod
+- [x] Howard -> howard
+- [x] Morehouse -> morehouse
+- [x] Spelman -> spelman
+- [x] Duquesne -> duquesne
+- [x] Saint Joseph's -> saint-josephs-haub
+- [x] Rochester -> rochester
+- [x] RPI -> rpi-lally
+- [x] Binghamton -> binghamton
+- [x] University at Buffalo -> buffalo
+- [x] SUNY Geneseo -> suny-geneseo
+- [x] Manhattan College -> manhattan-college
+- [x] Marist -> marist
+- [x] Stevens Institute of Technology -> stevens
+- [x] TCNJ -> tcnj
+- [x] Bentley -> bentley
+- [x] Brandeis -> brandeis
+- [x] Sacred Heart -> sacred-heart
+- [x] URI -> uri
+- [x] UNH -> unh-paul
+- [x] UVM -> uvm-grossman
+- [x] Loyola Chicago -> loyola-chicago-quinlan
+- [x] DePaul -> depaul-driehaus
+- [x] Saint Louis University -> saint-louis-chaifetz
+- [x] Macalester -> macalester
+- [x] Grinnell -> grinnell
+- [x] Wheaton (IL) -> wheaton-illinois
+- [x] Western Michigan -> western-michigan-haworth
+- [x] Skidmore -> skidmore
+- [x] Sewanee -> sewanee
+- [x] Rhodes -> rhodes
+- [x] Hampden-Sydney -> hampden-sydney
+- [x] James Madison -> james-madison
+- [x] George Mason -> george-mason
+- [x] NC State -> nc-state-poole
+- [x] Appalachian State -> appalachian-state
+- [x] Charlotte -> charlotte-belk
+- [x] College of Charleston -> college-of-charleston
+- [x] Samford -> samford
+- [x] Belmont -> belmont
+- [x] Stetson -> stetson
+- [x] Pomona -> pomona
+- [x] Colorado College -> colorado-college
+- [x] Denver -> denver-daniels
+- [x] Swarthmore -> swarthmore
+- [x] Haverford -> haverford
+- [x] Bates -> bates
+- [x] Colby -> colby
+- [x] Vassar -> vassar
+- [skip] Carleton: no sourced program found

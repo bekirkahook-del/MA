@@ -8,7 +8,8 @@ exec(src[:src.index("for p in PAGES:")])          # block(), page(), STYLE, TODA
 from schools import SCHOOLS
 from schools2 import SCHOOLS2
 from schools3 import SCHOOLS3
-SCHOOLS = SCHOOLS + SCHOOLS2 + SCHOOLS3
+from schools4 import SCHOOLS4
+SCHOOLS = SCHOOLS + SCHOOLS2 + SCHOOLS3 + SCHOOLS4
 from banks import BANKS
 PAGES.extend(SCHOOLS + BANKS)                              # so related-link names resolve
 for p in SCHOOLS + BANKS:

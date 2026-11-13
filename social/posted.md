@@ -66,3 +66,8 @@
 - 2026-11-14 punch-mbaadmit — [Ranking video] Hardest MBAs to get into, fall 2025 (Stanford 6.8%, Ohio State tied #3)
 - 2026-11-15 punch-dealcount — [Ranking video] Most M&A deals Jan–Sep 2026 (Houlihan Lokey 250 #1)
 - 2026-11-15 sitevid-ohio-state-ib — [Site demo, no voice] Ohio State IB guide
+- 2026-11-14 tbl-usnews — [Table deck] U.S. News 2027 best undergrad business schools (Wharton #1, peer scores, logos)
+- 2026-11-14 bc-comppay — [Blue Chip] Q3 2026 pay + benefits per employee by bank (Goldman $107.8K, Prospect Rock)
+- 2026-11-14 oddq-sq45 — [Interview Q] 45 × 45 = 2,025 (numbers ending in 5 trick)
+- 2026-11-15 q3pe — 3-question challenge: EV from margin × multiple, inventory +$10 → CFO −$10, 3x in 5 yrs ≈ 25% IRR
+- 2026-11-15 oddq-widgets — [Interview Q] 5 machines/5 widgets/5 min → 100 machines = 5 minutes

@@ -1,0 +1,117 @@
+{
+"key": "tbl-usnews",
+"hook": "BEST UNDERGRAD BUSINESS SCHOOLS FOR 2027",
+"title": "Best Business Schools",
+"subtitle": "Undergrad \u00b7 U.S. News 2027 (Sept. 2026)",
+"note": "Peer score = rating from deans and faculty (5 = best)",
+"cols": [
+"School",
+"Peer score",
+"Last year",
+"University"
+],
+"rows": [
+{
+"rank": "1",
+"logo": "upenn.edu",
+"name": "Wharton",
+"cells": [
+"4.8",
+"#1 (tie)",
+"Penn"
+],
+"hot": true
+},
+{
+"rank": "2",
+"logo": "mit.edu",
+"name": "MIT Sloan",
+"cells": [
+"4.7",
+"#1 (tie)",
+"MIT"
+]
+},
+{
+"rank": "3",
+"logo": "berkeley.edu",
+"name": "Berkeley Haas",
+"cells": [
+"4.6",
+"#3",
+"UC Berkeley"
+]
+},
+{
+"rank": "T4",
+"logo": "stern.nyu.edu",
+"name": "NYU Stern",
+"cells": [
+"4.5",
+"#5",
+"NYU"
+]
+},
+{
+"rank": "T4",
+"logo": "umich.edu",
+"name": "Michigan Ross",
+"cells": [
+"4.5",
+"#4",
+"Michigan"
+]
+},
+{
+"rank": "T6",
+"logo": "cmu.edu",
+"name": "CMU Tepper",
+"cells": [
+"4.3",
+"#6",
+"Carnegie Mellon"
+]
+},
+{
+"rank": "T6",
+"logo": "cornell.edu",
+"name": "Cornell Dyson",
+"cells": [
+"4.3",
+"#8",
+"Cornell"
+]
+},
+{
+"rank": "T6",
+"logo": "indiana.edu",
+"name": "IU Kelley",
+"cells": [
+"4.3",
+"#8",
+"Indiana"
+]
+},
+{
+"rank": "T6",
+"logo": "unc.edu",
+"name": "UNC Kenan-Flagler",
+"cells": [
+"4.3",
+"#8",
+"UNC"
+]
+},
+{
+"rank": "T6",
+"logo": "utexas.edu",
+"name": "Texas McCombs",
+"cells": [
+"4.3",
+"#6",
+"UT Austin"
+]
+}
+],
+"sources": "U.S. News &amp; World Report, 2027 Best Undergraduate Business Programs, via Poets&amp;Quants (Sept. 23, 2026)."
+}

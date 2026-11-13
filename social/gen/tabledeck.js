@@ -38,7 +38,7 @@ tr.hot td{background:#F4EBD3}.src{position:absolute;left:24px;right:24px;bottom:
 .ft b{font-family:Mono;font-size:44px;color:#E3C27A}.ft span{font-family:Plex;font-size:28px}</style></head><body>
 <h1>${S.title}</h1><h2>${S.subtitle}</h2><div class="nt">${S.note || ""}</div>
 <table><thead><tr><th>Rank</th><th>${S.cols[0]}</th>${S.cols.slice(1).map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>
-${S.rows.map((r, i) => `<tr class="${r.hot ? "hot" : ""}"><td class="rk">${i + 1}</td><td class="sc"><div class="w">${badge(r)}<div class="nm">${r.name}${r.sub ? `<small>(${r.sub})</small>` : ""}</div></div></td>${r.cells.map((c, j) => `<td class="${j === 0 ? "big" : ""}">${c}</td>`).join("")}</tr>`).join("")}
+${S.rows.map((r, i) => `<tr class="${r.hot ? "hot" : ""}"><td class="rk">${r.rank ?? (i + 1)}</td><td class="sc"><div class="w">${badge(r)}<div class="nm">${r.name}${r.sub ? `<small>(${r.sub})</small>` : ""}</div></div></td>${r.cells.map((c, j) => `<td class="${j === 0 ? "big" : ""}">${c}</td>`).join("")}</tr>`).join("")}
 </tbody></table><div class="src"><b>Sources:</b> ${S.sources}</div>${(S.promo !== false) ? `<div class="ft"><b>mnaprep.com</b><span>Free IB &amp; PE prep · link in bio</span></div>` : ""}</body></html>`;
 const s3 = `<html><head><style>${fonts}body{background:radial-gradient(80% 60% at 50% 40%,#13254F,#050B18);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;text-align:center}
 h2{font-family:Arc;font-size:84px;line-height:1.02;padding:0 70px}h2 em{font-style:normal;color:#E3C27A}.url{background:#fff;color:#07101F;font-family:Mono;font-size:64px;padding:26px 48px;border-radius:24px}p{font-family:Plex;font-size:40px;color:#C7D0E2}</style></head><body>

@@ -33,3 +33,13 @@
 | 2026-11-12 | Should Nvidia make Colette Kress permanent CEO | https://www.quora.com/Should-Nvidia-make-its-CFO-and-interim-CEO-Colette-Kress-its-permanent-CEO/answer/Bekir-Kahook |
 | 2026-11-12 | Was Colette Kress's $16M CFO pay justified | https://www.quora.com/Was-Colette-Kresss-16-million-pay-package-as-Nvidias-chief-financial-officer-justified/answer/Bekir-Kahook |
 | 2026-11-12 | English phrases for coordinating tasks in a multicultural workplace | https://www.quora.com/Which-English-phrases-are-the-most-effective-for-coordinating-tasks-in-a-high-pressure-multicultural-workplace/answer/Bekir-Kahook |
+| 2026-11-13 | Where the skills section goes on a resume | https://www.quora.com/Where-should-the-skills-section-go-on-a-resume/answer/Bekir-Kahook |
+| 2026-11-13 | How employers view CA + CFA candidates | https://www.quora.com/How-do-employers-view-candidates-who-have-both-CA-and-CFA-qualifications-in-the-finance-industry/answer/Bekir-Kahook |
+| 2026-11-13 | Professional, ATS-friendly CV | https://www.quora.com/How-can-I-create-a-professional-and-ATS-friendly-CV-that-helps-me-stand-out-to-employers/answer/Bekir-Kahook |
+| 2026-11-13 | Nvidia export scrutiny and Singapore as a business hub | https://www.quora.com/Will-scrutiny-over-Nvidia-chip-exports-hurt-Singapores-appeal-as-a-business-hub/answer/Bekir-Kahook |
+| 2026-11-13 | Jane Street doubling Nvidia holdings before Huang resigned | https://www.quora.com/What-do-you-think-of-trading-firm-Jane-Street-more-than-doubling-its-Nvidia-holdings-before-Jensen-Huang-resigned-as-CEO/answer/Bekir-Kahook |
+| 2026-11-13 | English degree without internships | https://www.quora.com/Is-a-Bachelors-in-English-worth-it-if-youre-not-planning-to-hustle-with-internships-and-extra-projects-while-studying/answer/Bekir-Kahook |
+| 2026-11-13 | Why Jensen Huang matters to Nvidia's suppliers and clients | https://www.quora.com/Why-is-Jensen-Huang-so-critical-to-Nvidia-s-relationships-with-suppliers-and-clients-Can-someone-else-really-fill-his-shoes/answer/Bekir-Kahook |
+| 2026-11-13 | 1950s bank tellers balancing cash drawers | https://www.quora.com/What-challenges-did-bank-tellers-face-with-balancing-cash-drawers-manually-in-the-1950s/answer/Bekir-Kahook |
+| 2026-11-13 | Will Nvidia's technical work slow after Huang resigns | https://www.quora.com/Will-Nvidias-technical-work-slow-down-following-co-founder-Jensen-Huangs-resignation-as-CEO/answer/Bekir-Kahook |
+| 2026-11-13 | Marketing intern: Excel vs Canva | https://www.quora.com/Should-a-marketing-intern-prioritize-learning-Excel-over-Canva/answer/Bekir-Kahook |

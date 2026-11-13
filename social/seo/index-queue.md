@@ -17,13 +17,13 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/villanova-investment-banking/
 - [x] https://mnaprep.com/guides/berkeley-haas-investment-banking/
 - [x] https://mnaprep.com/guides/notre-dame-investment-banking/
-- [ ] https://mnaprep.com/guides/ut-austin-investment-banking/
-- [ ] https://mnaprep.com/guides/penn-state-investment-banking/
+- [x] https://mnaprep.com/guides/ut-austin-investment-banking/
+- [x] https://mnaprep.com/guides/penn-state-investment-banking/
 - [x] https://mnaprep.com/guides/illinois-gies-investment-banking/
 - [x] https://mnaprep.com/guides/wisconsin-investment-banking/
 - [x] https://mnaprep.com/guides/purdue-investment-banking/
 - [x] https://mnaprep.com/guides/miami-university-investment-banking/
-- [ ] https://mnaprep.com/tools/
+- [x] https://mnaprep.com/tools/
 - [x] https://mnaprep.com/guides/corporate-finance-vs-investment-banking/
 - [x] https://mnaprep.com/guides/goldman-sachs-investment-banking-interview/
 - [x] https://mnaprep.com/guides/jpmorgan-investment-banking-interview/
@@ -32,11 +32,11 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/citi-investment-banking-interview/
 - [x] https://mnaprep.com/guides/wells-fargo-investment-banking-interview/
 - [x] https://mnaprep.com/guides/jefferies-investment-banking-interview/
-- [ ] https://mnaprep.com/cheat-sheet/
-- [ ] https://mnaprep.com/links/
+- [x] https://mnaprep.com/cheat-sheet/
+- [x] https://mnaprep.com/links/
 - [x] https://mnaprep.com/guides/duke-investment-banking/
 - [x] https://mnaprep.com/guides/northwestern-investment-banking/
-- [ ] https://mnaprep.com/guides/uchicago-investment-banking/
+- [x] https://mnaprep.com/guides/uchicago-investment-banking/
 - [x] https://mnaprep.com/guides/harvard-investment-banking/
 - [x] https://mnaprep.com/guides/columbia-investment-banking/
 - [x] https://mnaprep.com/guides/princeton-investment-banking/
@@ -51,7 +51,7 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/fairfield-dolan-investment-banking/
 - [x] https://mnaprep.com/guides/rice-investment-banking/
 - [x] https://mnaprep.com/guides/quinnipiac-investment-banking/
-- [ ] https://mnaprep.com/guides/unc-kenan-flagler-investment-banking/
+- [x] https://mnaprep.com/guides/unc-kenan-flagler-investment-banking/
 - [x] https://mnaprep.com/guides/siena-investment-banking/
 - [x] https://mnaprep.com/guides/georgia-tech-scheller-investment-banking/
 - [x] https://mnaprep.com/guides/elon-love-investment-banking/
@@ -62,7 +62,7 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/minnesota-carlson-investment-banking/
 - [x] https://mnaprep.com/guides/wofford-investment-banking/
 - [x] https://mnaprep.com/guides/michigan-state-broad-investment-banking/
-- [ ] https://mnaprep.com/guides/rollins-investment-banking/
+- [x] https://mnaprep.com/guides/rollins-investment-banking/
 - [x] https://mnaprep.com/guides/rutgers-investment-banking/
 - [x] https://mnaprep.com/guides/hillsdale-investment-banking/
 - [x] https://mnaprep.com/guides/pitt-investment-banking/
@@ -76,11 +76,11 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [x] https://mnaprep.com/guides/boston-university-questrom-investment-banking/
 - [x] https://mnaprep.com/guides/kent-state-investment-banking/
 - [x] https://mnaprep.com/guides/northeastern-damore-mckim-investment-banking/
-- [ ] https://mnaprep.com/guides/akron-investment-banking/
+- [x] https://mnaprep.com/guides/akron-investment-banking/
 - [x] https://mnaprep.com/guides/babson-investment-banking/
 - [x] https://mnaprep.com/guides/toledo-investment-banking/
 - [x] https://mnaprep.com/guides/fordham-gabelli-investment-banking/
-- [ ] https://mnaprep.com/guides/denison-investment-banking/
+- [x] https://mnaprep.com/guides/denison-investment-banking/
 - [ ] https://mnaprep.com/guides/baruch-zicklin-investment-banking/
 - [x] https://mnaprep.com/guides/kenyon-investment-banking/
 - [ ] https://mnaprep.com/guides/syracuse-whitman-investment-banking/

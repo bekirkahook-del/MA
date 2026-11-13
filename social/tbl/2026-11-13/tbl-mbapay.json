@@ -1,0 +1,12 @@
+{"key":"tbl-mbapay","hook":"MBA PROGRAMS THAT PAY THE MOST","title":"Highest-Paid MBA Grads","subtitle":"Average Starting Base Salary, Class of 2025","note":"Top U.S. programs","cols":["School","Avg. base","Avg. signing bonus","P&amp;Q rank"],"rows":[
+{"logo":"stanford.edu","name":"Stanford GSB","cells":["$190,109","$35,888","#26"],"hot":true},
+{"logo":"harvard.edu","name":"Harvard","cells":["$180,889","$36,740","#2"]},
+{"logo":"upenn.edu","name":"Wharton","cells":["$179,909","$39,756","#8"]},
+{"logo":"columbia.edu","name":"Columbia","cells":["$173,816","$41,016","#3"]},
+{"logo":"mit.edu","name":"MIT Sloan","cells":["$173,132","$40,192","#11"]},
+{"logo":"uchicago.edu","name":"Chicago Booth","cells":["$172,309","$35,847","#12"]},
+{"logo":"stern.nyu.edu","name":"NYU Stern","cells":["$168,970","$41,007","#6"]},
+{"logo":"dartmouth.edu","name":"Dartmouth Tuck","cells":["$168,328","$36,638","#4"]},
+{"logo":"northwestern.edu","name":"Kellogg","cells":["$167,151","$34,658","#1"]},
+{"logo":"berkeley.edu","name":"Berkeley Haas","cells":["$164,930","$35,829","#14"]}],
+"sources":"Poets&amp;Quants, \"High &amp; Low MBA Salaries &amp; Bonuses At The Top 100 U.S. B-Schools\" (May 31, 2026), using U.S. News data for the Class of 2025.","promo":false}

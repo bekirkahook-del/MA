@@ -57,3 +57,8 @@
 - 2026-11-11 vid-tq-hands — [Brain teaser video] Clock hands overlap 11 times in 12 hours
 - 2026-11-11 vid-tq-swap — [Video quiz] Stock-for-debt swap: EV doesn't change (MC, D)
 - 2026-11-11 college guides — Georgetown McDonough, UVA McIntire (Pinterest)
+- 2026-11-13 tbl-mbapay — [Table deck] Highest-paid MBA grads, avg base Class of 2025 (P&Q / U.S. News)
+- 2026-11-13 punch-ibfees — [Ranking video] Q3 2026 IB fees by bank (Goldman $3.22B #1)
+- 2026-11-13 oddq-pct — [Interview Q] 4% of 75 = 3 (flip the percent)
+- 2026-11-13 punch-mna — [Ranking video] M&A league table Jan–Sep 2026 (Goldman $688B #1)
+- 2026-11-13 oddq-sale — [Interview Q] 20% off twice = $64

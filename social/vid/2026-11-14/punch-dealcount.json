@@ -1,0 +1,3 @@
+{"kicker":"M&A DEALS ADVISED · JAN–SEP 2026","hook":["Which bank worked the most M&A deals this year?","250","It's not Goldman 👀"],
+"rows":[["Houlihan Lokey",250,"","#E35205"],["Morgan Stanley",212,"","#1F4E8C"],["JPMorgan",165,"","#6B4F3A"],["Goldman Sachs",154,"","#3E6FA8"],["Evercore",133,"","#00563F"]],
+"dec":0,"label":"M&A DEALS ADVISED","reveal":"GOLDMAN LED ON DOLLARS, NOT DEAL COUNT","ask":"Bulge bracket or boutique? 👇","source":"GlobalData via Private Banker International, Oct 2026","style":"neon","pace":2,"bpm":136,"wm":false,"photo":"jpm.png","scrim":0.7,"photoFilter":"grayscale(1) blur(3px)"}

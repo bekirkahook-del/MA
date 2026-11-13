@@ -62,3 +62,7 @@
 - 2026-11-13 oddq-pct — [Interview Q] 4% of 75 = 3 (flip the percent)
 - 2026-11-13 punch-mna — [Ranking video] M&A league table Jan–Sep 2026 (Goldman $688B #1)
 - 2026-11-13 oddq-sale — [Interview Q] 20% off twice = $64
+- 2026-11-14 sitevid-ib-recruiting-timeline — [Site demo, no voice] Recruiting timeline calculator (class of 2029: it's open now)
+- 2026-11-14 punch-mbaadmit — [Ranking video] Hardest MBAs to get into, fall 2025 (Stanford 6.8%, Ohio State tied #3)
+- 2026-11-15 punch-dealcount — [Ranking video] Most M&A deals Jan–Sep 2026 (Houlihan Lokey 250 #1)
+- 2026-11-15 sitevid-ohio-state-ib — [Site demo, no voice] Ohio State IB guide

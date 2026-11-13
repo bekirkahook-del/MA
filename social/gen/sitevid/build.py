@@ -46,6 +46,19 @@ V = {
    ("xp", "+10 XP every time you get one right", ["+10", "XP"]),
    ("feat", "8 tracks: IB, PE, hedge funds, consulting", ["8", "tracks:"]),
    ("live", "Live deals + internship deadlines. All free.", ["free."])]),
+ "osu": ("ohio-state-ib", [
+   ("hook", "Going to Ohio State and want investment banking?", ["Ohio", "State"]),
+   ("clubs", "Step 1: Fisher Futures. Apply sophomore year.", ["Fisher", "Futures."]),
+   ("bci", "Step 2: join a finance club early, like BCI", ["early,"]),
+   ("tl", "Freshman fall: 1-2 clubs and a 3.5+ GPA", ["3.5+"]),
+   ("stand", "Free guides for 100+ schools at mnaprep.com", ["100+", "mnaprep.com"])]),
+ "tl": ("ib-recruiting-timeline", [
+   ("hook", "When does IB recruiting ACTUALLY start?", ["ACTUALLY"]),
+   ("pick", "Class of 2029? Watch this.", ["2029?"]),
+   ("go", "It's already open. Sophomore fall.", ["open."]),
+   ("r1", "Freshman year: clubs, GPA, coffee chats", []),
+   ("r2", "Main window: sophomore fall to spring", ["sophomore"]),
+   ("r3", "Get your timeline free at mnaprep.com", ["free", "mnaprep.com"])]),
  "pay": ("investment-banker-pay", [
    ("hook", "How much do investment bankers ACTUALLY make?", ["ACTUALLY"]),
    ("an", "1st-year analyst: $160K", ["$160K"]),
@@ -71,7 +84,9 @@ bg.save(f"{D}/bg.png")
 PW, PH, PX, PY = 810, 1440, 135, 470
 mk = Image.new("L", (PW, PH), 0); ImageDraw.Draw(mk).rounded_rectangle([0, 0, PW - 1, PH - 1], 44, fill=255); mk.save(f"{D}/mask.png")
 os.makedirs(f"{D}/out", exist_ok=True)
-for k, (name, caps) in V.items():
+import sys
+KEYS = sys.argv[1:] or list(V)
+for k, (name, caps) in [(k, V[k]) for k in KEYS]:
     m = json.load(open(f"{D}/r_{k}/marks.json")); T = m["total"]
     ins = ["-i", f"{D}/r_{k}/raw.mp4"]
     flt = []
@@ -87,7 +102,10 @@ for k, (name, caps) in V.items():
     flt.append(f"{prev}fps=30,format=yuv420p,setsar=1[m]")
     flt.append("[m][e]concat=n=2:v=1:a=0[vv]")
     tot = T + 2.5
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", *ins, "-f", "lavfi", "-t", f"{tot:.2f}", "-i", "anullsrc=r=44100:cl=stereo",
+    tj = f"{D}/r_{k}/timing.json"; B_ = 60 / 116
+    json.dump({"T": [T] + sorted([m[c[0]] for c in caps[1:]], reverse=True), "ROLL": max(0, T - 4 * B_), "END": tot, "BEAT": B_, "n": len(caps)}, open(tj, "w"))
+    subprocess.run(["python3", f"{D}/../punch/beat_up.py", tj, f"{D}/r_{k}/beat.wav"], check=True)
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", *ins, "-i", f"{D}/r_{k}/beat.wav",
            "-filter_complex", ";".join(flt), "-map", "[vv]", "-map", f"{n+3}:a", "-c:v", "libx264", "-crf", "19", "-preset", "veryfast",
            "-c:a", "aac", "-shortest", "-movflags", "+faststart", f"{D}/out/{name}.mp4"]
     subprocess.run(cmd, check=True); print("ok", name, round(tot, 1))

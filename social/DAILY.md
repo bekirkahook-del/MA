@@ -22,6 +22,11 @@ This overrides "Always promote M&A Prep" and the cross-promo rules. From Sat Nov
 - **No AI voiceover on any video** (this also covers the voiced site-demo videos, which are paused). Videos carry only the beat.
 - The old rankvid.js / vo.js / sitevid voice pipeline is retired. Check every number on screen against the spec before posting.
 
+## Video upgrades (2026-11-13)
+- punch.js now takes `"photo":"jpm.png"` (any image path relative to gen/) for a full-bleed photo background with a slow Ken Burns zoom, plus `"scrim"` (0–1 darkness, default .6), `"photoFilter"` (CSS filter) and `"bigPx"` (hook number size; lower it if the hook number is wide like "$687.6B"). Rotate photo vs no-photo.
+- Site-demo videos are back WITHOUT voice: captions + an original music bed (build.py runs punch/beat_up.py automatically). New scenarios in sitevid/rec.js: `osu` (Ohio State guide) and `tl` (recruiting timeline calculator). Build only what you need: `python3 build.py osu tl`. TikTok isAigc false (no AI voice), no Pinterest.
+- Checking frames: this sandbox's ffmpeg glitches when seeking (-ss) into these videos; the files are fine. Decode in order instead: `ffmpeg -i v.mp4 -vf scale=270:-1 fr/%04d.jpg` and look at the frames you need.
+
 ## Daily ranking videos: new prompt every post, new style every post, keep what wins (Bekir, 2026-11-11)
 - **Topics:** come up with fresh ones every day, only on **finance, business school or internships**. Every video is a **Top 5, Top 7 or Top 10** (rotate). Examples: hardest business schools to get into, highest starting salaries by school, banks that hire the most interns, best-paying internships, biggest PE firms, highest-paid jobs out of undergrad, most-recruited majors, biggest bank bonuses, hardest finance internships to land, best cities for finance jobs, largest IPOs, biggest deals this year. Every number needs a real, current source (WebSearch). Name the source on screen.
 - **Never repeat a topic** that's in `social/punch-log.md` from the last 30 days, unless it was a top-3 performer. In that case make a sequel (e.g. "Top 10 hardest business schools, part 2: MBA").

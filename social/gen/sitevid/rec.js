@@ -49,6 +49,27 @@ background:rgba(37,99,235,.35);border:3px solid rgba(37,99,235,.9);pointer-event
     await scroll(560, 1500); mark('live'); await W(2600);
     mark('end');
   }
+  if (scen === 'osu') {
+    await p.goto('https://mnaprep.com/guides/ohio-state-investment-banking/', { waitUntil: 'networkidle' }); await W(1500); await css(); await tick();
+    await start(); mark('hook'); await W(2600);
+    await scrollTo('h2', 90, 1100); mark('clubs'); await W(2600);
+    await scroll(420, 1200); mark('bci'); await W(2400);
+    await p.evaluate(() => [...document.querySelectorAll('h2')][1].id = 'h2tl'); await scrollTo('#h2tl', 90, 1300); mark('tl'); await W(2800);
+    await p.evaluate(() => [...document.querySelectorAll('h2')][2].id = 'h2sf'); await scrollTo('#h2sf', 90, 1300); mark('stand'); await W(2800);
+    mark('end');
+  }
+  if (scen === 'tl') {
+    await p.goto('https://mnaprep.com/tools/recruiting-timeline-calculator/', { waitUntil: 'networkidle' }); await W(1500); await css(); await tick();
+    await start(); mark('hook'); await W(2400);
+    await scrollTo('#gy', 260, 900); mark('pick'); await W(800);
+    await p.selectOption('#gy', String(new Date().getFullYear() + 3)); await W(700);
+    await p.selectOption('#tg', 'ib'); await W(700);
+    await tap(p.locator('#go')); mark('go'); await W(1600);
+    await scroll(380, 1200); mark('r1'); await W(2600);
+    await scroll(420, 1200); mark('r2'); await W(2600);
+    await scroll(420, 1200); mark('r3'); await W(2600);
+    mark('end');
+  }
   if (scen === 'pay') {
     await p.goto('https://mnaprep.com/tools/investment-banking-pay/', { waitUntil: 'networkidle' }); await W(1500); await css(); await tick();
     await start(); mark('hook'); await W(2400);

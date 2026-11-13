@@ -43,3 +43,16 @@
 | 2026-11-13 | 1950s bank tellers balancing cash drawers | https://www.quora.com/What-challenges-did-bank-tellers-face-with-balancing-cash-drawers-manually-in-the-1950s/answer/Bekir-Kahook |
 | 2026-11-13 | Will Nvidia's technical work slow after Huang resigns | https://www.quora.com/Will-Nvidias-technical-work-slow-down-following-co-founder-Jensen-Huangs-resignation-as-CEO/answer/Bekir-Kahook |
 | 2026-11-13 | Marketing intern: Excel vs Canva | https://www.quora.com/Should-a-marketing-intern-prioritize-learning-Excel-over-Canva/answer/Bekir-Kahook |
+| 2026-11-13 | Explaining your abilities to a recruiter outside your field | https://www.quora.com/How-do-you-communicate-your-abilities-effectively-to-a-recruiter-who-might-not-be-familiar-with-your-field/answer/Bekir-Kahook |
+| 2026-11-13 | Will Huang's resignation hurt Nvidia long term | https://www.quora.com/Will-Jensen-Huangs-resignation-amid-scrutiny-of-a-relationship-with-a-suspected-spy-hurt-Nvidias-long-term-prospects/answer/Bekir-Kahook |
+| 2026-11-13 | Why founders bring in an experienced CEO | https://www.quora.com/Why-do-some-founders-choose-to-bring-in-an-experienced-CEO-and-what-should-you-look-for-to-avoid-hiring-someone-whos-all-talk/answer/Bekir-Kahook |
+| 2026-11-13 | Red flags with internal recruiters | https://www.quora.com/What-are-some-red-flags-to-watch-out-for-when-dealing-with-internal-company-recruiters/answer/Bekir-Kahook |
+| 2026-11-13 | 1950s banks overwhelmed by paperwork | https://www.quora.com/Why-were-banks-so-overwhelmed-by-paperwork-in-the-1950s-despite-having-fewer-customers-than-today/answer/Bekir-Kahook |
+| 2026-11-13 | Short bank hours in the 1950s | https://www.quora.com/Why-did-banks-in-the-1950s-have-such-short-hours-compared-to-today/answer/Bekir-Kahook |
+| 2026-11-13 | Colette Kress as Nvidia interim CEO | https://www.quora.com/What-do-you-think-of-Nvidia-naming-its-longtime-CFO-Colette-Kress-as-interim-CEO/answer/Bekir-Kahook |
+| 2026-11-13 | Will Nvidia struggle to replace Huang | https://www.quora.com/Will-Nvidia-struggle-to-replace-co-founder-Jensen-Huang-after-his-resignation-as-CEO/answer/Bekir-Kahook |
+| 2026-11-13 | Do accountants get promoted to CEO or CFO | https://www.quora.com/Do-accountants-ever-get-promoted-to-CEO-or-CFO/answer/Bekir-Kahook |
+| 2026-11-13 | Why Nvidia employees might leave after Huang | https://www.quora.com/Why-might-Nvidia-employees-choose-to-leave-if-Jensen-Huang-exits-and-how-could-this-affect-the-company-s-future/answer/Bekir-Kahook |
+| 2026-11-13 | US inspections for Singapore Nvidia chip buyers | https://www.quora.com/Should-Singapore-based-buyers-of-Nvidia-chips-have-to-accept-US-inspections/answer/Bekir-Kahook |
+| 2026-11-13 | Should Congress investigate Nvidia export controls | https://www.quora.com/Should-Congress-investigate-whether-Nvidia-helped-Chinese-companies-get-around-US-chip-export-controls/answer/Bekir-Kahook |
+| 2026-11-13 | Do grades matter when applying for jobs | https://www.quora.com/Is-academic-grades-important-when-applying-for-a-job-Does-it-affect-how-they-see-you-also-as-a-college-graduate/answer/Bekir-Kahook |

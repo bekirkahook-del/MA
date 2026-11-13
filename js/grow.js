@@ -35,6 +35,13 @@
 .gw-cta div{flex:1;min-width:220px}.gw-cta .k{font-size:11.5px;letter-spacing:.1em;font-weight:700;color:var(--cobalt,#2448D8);text-transform:uppercase}
 .gw-cta .h{font-size:19px;font-weight:700;margin:4px 0;color:var(--ink,#13203B)}.gw-cta p{font-size:14.5px;color:var(--ink-2,#4A5672);margin:0}
 .gw-cta a{display:inline-block;font-size:15px;font-weight:700;padding:11px 18px;border-radius:10px;background:var(--cobalt,#2448D8);color:#fff!important;text-decoration:none;white-space:nowrap}
+.gw-tc{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9997;width:min(460px,calc(100% - 24px));display:flex;align-items:center;gap:10px;padding:11px 12px 11px 14px;border-radius:14px;background:#13203B;color:#fff;font-size:14.5px;line-height:1.35;box-shadow:0 14px 40px rgba(0,0,0,.35);animation:gwUp .25s ease}
+.gw-tc .m{flex:1}.gw-tc b{font-family:var(--mono,monospace)}.gw-tc .ic{font-size:20px}
+.gw-tc button.go{font:inherit;font-size:13.5px;font-weight:700;padding:8px 12px;border:0;border-radius:9px;background:#2448D8;color:#fff;cursor:pointer;white-space:nowrap}
+.gw-tc button.x{border:0;background:none;color:#B8C2DA;font-size:20px;cursor:pointer;padding:0 2px}
+.gw-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid var(--rule,#D3D9E4);border-left:4px solid var(--cobalt,#2448D8);border-radius:12px;background:var(--sheet,#fff);padding:10px 14px;margin:10px 0;font-size:14.5px;color:var(--ink,#13203B)}
+.gw-strip>span{flex:1;min-width:200px}.gw-strip button.go{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border:0;border-radius:9px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer;white-space:nowrap}
+@keyframes gwUp{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes gwIn{from{opacity:0}to{opacity:1}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 
@@ -81,9 +88,9 @@
   /* ---------- 1) save-your-progress pop-up ---------- */
   function popup(n){if(document.querySelector(".gw-ov"))return;
     const ov=document.createElement("div");ov.className="gw-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
-    const first=n===1;
-    ov.innerHTML=`<div class="gw-box"><button class="gw-x" aria-label="Close">×</button><div class="gw-ic">${first?"🎉":"🔥"}</div>
-      <h2>${first?"First level cleared!":"3 levels down. You're on a roll."}</h2>
+    const first=n===1,back=n===0;
+    ov.innerHTML=`<div class="gw-box"><button class="gw-x" aria-label="Close">×</button><div class="gw-ic">${back?"👋":first?"🎉":"🔥"}</div>
+      <h2>${back?"Welcome back!":first?"First level cleared!":"3 levels down. You're on a roll."}</h2>
       <p>You have <span class="gw-xp">${xp()} XP</span>, but it's only saved in this browser. Make a free account so you don't lose it.</p>
       <ul class="gw-list"><li>Keep your XP, streak and levels on any device</li><li>Get ranked on the leaderboard and your school's board</li><li>Free forever. No card needed</li></ul>
       <button class="gw-go" type="button">Save my progress (free)</button><button class="gw-no" type="button">Not now</button></div>`;
@@ -95,7 +102,7 @@
   function onLevel(){ev("level_clear");const n=cleared();if(n===1&&!LS.get("ma-first-clear")){LS.set("ma-first-clear","1");ev("first_level")}
     if(!guest())return;[1,3].forEach(k=>{if(n>=k&&!LS.get("ma-gw-p"+k)){LS.set("ma-gw-p"+k,"1");setTimeout(()=>popup(k),2200)}})}
   const hook=(t=0)=>{if(typeof window.questEvt==="function"&&!window.questEvt.__gw){const orig=window.questEvt;
-      const w=function(k){const r=orig.apply(this,arguments);try{if(k==="level")onLevel()}catch(e){}return r};w.__gw=1;window.questEvt=w}
+      const w=function(k,v){const r=orig.apply(this,arguments);try{if(k==="level")onLevel();else if(k==="daily")onDaily();else if(k==="rfBest")onRapid(v)}catch(e){}return r};w.__gw=1;window.questEvt=w}
     else if(t<40)setTimeout(()=>hook(t+1),250)};
   hook();
 
@@ -111,11 +118,79 @@
     bar.querySelector(".n").textContent=xp()}
   setTimeout(drawBar,1500);setInterval(drawBar,4000);
 
+  /* ---------- more sign-in moments. Guests only, always dismissible, never block free content.
+     Every one logs p_<name>_shown / _click (and signup_from_<name>) so the stats page shows which ones work. ---------- */
+  const $1=s=>document.querySelector(s);
+  function toastCard(key,icon,msg,btn){
+    if(!guest()||SS.get("ma-gwt-"+key)||document.querySelector(".gw-ov,.gw-tc"))return false;
+    if(Date.now()-(+SS.get("ma-gwt-last")||0)<45000)return false;
+    SS.set("ma-gwt-"+key,"1");SS.set("ma-gwt-last",String(Date.now()));
+    const d=document.createElement("div");d.className="gw-tc";d.setAttribute("role","status");
+    d.innerHTML=`<span class="ic">${icon}</span><span class="m">${msg}</span><button class="go" type="button">${btn}</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
+    let t=0;const close=()=>{clearTimeout(t);d.remove()};
+    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);close();if(window.maOpenAuth)window.maOpenAuth("up")};
+    d.querySelector(".x").onclick=()=>{ev("p_"+key+"_dismiss");close()};
+    document.body.appendChild(d);ev("p_"+key+"_shown");ev("p_any_shown");t=setTimeout(close,14000);return true}
+  function mkStrip(key,html,btn){const d=document.createElement("div");d.className="gw-strip";d.dataset.gw=key;
+    d.innerHTML=`<span>${html}</span><button class="go" type="button">${btn}</button>`;
+    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);if(window.maOpenAuth)window.maOpenAuth("up")};return d}
+  function putStrip(host,where,key,html,btn){if(!host)return;document.querySelectorAll(`.gw-strip[data-gw="${key}"]`).forEach(x=>x.remove());
+    if(!guest())return;host.insertAdjacentElement(where,mkStrip(key,html,btn));
+    if(!SS.get("ma-gws-"+key)){SS.set("ma-gws-"+key,"1");ev("p_"+key+"_shown");ev("p_any_shown")}}
+  const E=s=>typeof esc==="function"?esc(s):String(s).replace(/[<>&"]/g,"");
+
+  /* daily question + Rapid Fire results */
+  function onDaily(){setTimeout(()=>{const n=typeof streak==="function"?streak():0;
+    if(n>=2)toastCard("streak","🔥",`Don't lose your <b>${n}-day streak</b>. It's only saved on this device.`,"Save my streak");
+    else toastCard("score","✅","Save today's answer and XP, and start a streak that follows you.","Save it free")},1800)}
+  function onRapid(score){setTimeout(()=>toastCard("rapid","⚡",`You scored <b>${+score||0}</b> in Rapid Fire. Save it and see where you rank.`,"Save my score"),2000)}
+
+  /* wrap the app's own render functions so the prompts survive every re-render */
+  function wrap(name,fn){const o=window[name];if(typeof o!=="function"||o.__gw)return;const w=function(){const r=o.apply(this,arguments);try{fn()}catch(e){}return r};w.__gw=1;window[name]=w}
+  const afterPlan=()=>{const hasPlan=typeof S!=="undefined"&&!!S.plan;if(!hasPlan){document.querySelectorAll('.gw-strip[data-gw="plan"]').forEach(x=>x.remove());return}putStrip($1("#planCard"),"afterend","plan","📌 Your plan is saved on this device only. Save it free so it's here tomorrow.","Save my plan")};
+  const afterCompete=()=>{if(!guest())return;
+    const sc=(typeof S!=="undefined"&&S.profile&&S.profile.school)||"";
+    putStrip($1("#gauntlet"),"beforebegin","school",sc?`Join the <b>${E(sc)}</b> board and see how you rank against your school.`:"Pick your school and see how you rank against it.","Join free");
+    putStrip($1("#board"),"beforebegin","lb","<b>You · unranked.</b> Sign up to claim a spot on the leaderboard.","Claim my spot")};
+  const afterOpen=()=>{const el=$1("#openings");if(!el||el.dataset.gwo)return;el.dataset.gwo="1";
+    el.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".op-add");if(!b||!guest()||b.getAttribute("aria-pressed")==="true")return;
+      setTimeout(()=>toastCard("open","🗓️","Added to your calendar <b>on this device</b>. Make a free account so your deadlines follow you.","Save my deadlines"),700)},true)};
+  const dealCount=()=>{const c=$1("#dealCount");if(!c)return;const n=Object.keys((typeof S!=="undefined"&&S.savedDeals)||{}).length;
+    c.textContent=c.textContent.replace(/ · ★ \d+ saved$/,"")+(n?` · ★ ${n} saved`:"")};
+  const afterDeals=()=>{const el=$1("#deals");if(!el)return;
+    el.querySelectorAll("[data-deal]").forEach(b=>{if(b.parentNode.querySelector(".gw-save"))return;const id=b.dataset.deal;
+      const on=!!((S.savedDeals||{})[id]);const s=document.createElement("button");s.type="button";s.className="ghost gw-save";s.setAttribute("aria-pressed",String(on));s.textContent=on?"★ Saved":"☆ Save deal";
+      s.onclick=e=>{e.stopPropagation();
+        if(guest()){ev("p_deal_click");ev("p_any_click");LS.set("ma-gw-from","deal");if(window.maOpenAuth)window.maOpenAuth("up");return}
+        S.savedDeals=S.savedDeals||{};if(S.savedDeals[id])delete S.savedDeals[id];else S.savedDeals[id]=Date.now();try{save()}catch(x){}
+        const n=!!S.savedDeals[id];s.setAttribute("aria-pressed",String(n));s.textContent=n?"★ Saved":"☆ Save deal";dealCount()};
+      b.after(s)});
+    if(guest()&&el.querySelector(".gw-save")&&!SS.get("ma-gws-deal")){SS.set("ma-gws-deal","1");ev("p_deal_shown");ev("p_any_shown")}
+    dealCount()};
+  const hookRender=(t=0)=>{const m=[["renderPlan",afterPlan],["renderCompete",afterCompete],["renderOpenings",afterOpen],["renderDeals",afterDeals]];
+    let miss=0;m.forEach(([n,f])=>{if(typeof window[n]!=="function")miss++;else wrap(n,f)});if(miss&&t<40)setTimeout(()=>hookRender(t+1),250);
+    else{try{afterPlan();afterOpen()}catch(e){}}};
+  hookRender();
+
+  /* the "Your plan is ready" screen: add a save button right there */
+  setTimeout(()=>{const pn=$1("#panel");if(!pn)return;
+    new MutationObserver(()=>{if(!guest())return;const o=pn.querySelector(".ob");if(!o||o.querySelector("[data-gw=planpanel]"))return;
+      const l=o.querySelector(".label");if(!l||!/plan is ready/i.test(l.textContent))return;const a=o.querySelector(".actions");if(!a)return;
+      a.before(mkStrip("planpanel","Save your plan free so you keep it on every device.","Save my plan"));ev("p_planpanel_shown");ev("p_any_shown")}).observe(pn,{childList:true,subtree:true})},800);
+
+  /* returning guest with progress: one welcome-back pop-up (2nd visit or later) */
+  {const v=+LS.get("ma-visits")||0;if(!SS.get("ma-visit-counted")){SS.set("ma-visit-counted","1");LS.set("ma-visits",String(v+1))}
+   let tries=0;const wb=()=>{if(!guest()||xp()<=0||(+LS.get("ma-visits")||0)<2||LS.get("ma-gw-wb"))return;
+     const ovl=$1("#overlay");if((ovl&&!ovl.hidden)||document.querySelector(".gw-ov")){if(++tries<8)setTimeout(wb,6000);return}
+     LS.set("ma-gw-wb","1");popup(0)};
+   setTimeout(wb,5000)}
+
   /* ---------- count sign-ups (and which nudge led to them) ---------- */
   const watch=(t=0)=>{const A=window.MA_AUTH;if(!(A&&A.sb)){if(t<40)setTimeout(()=>watch(t+1),250);return}
     try{A.sb.auth.onAuthStateChange((e,s)=>{if(e!=="SIGNED_IN"||!s||!s.user)return;const made=Date.parse(s.user.created_at||0);
       if(made&&Date.now()-made<10*60000&&!LS.get("ma-gw-signed")){LS.set("ma-gw-signed","1");ev("signup");const f=LS.get("ma-gw-from");if(f)ev("signup_from_"+f);
         if(new URLSearchParams(location.search).get("utm_source")==="guide")ev("signup_from_guide");flush()}
+      document.querySelectorAll(".gw-strip,.gw-tc").forEach(x=>x.remove());
       if(bar){bar.remove();bar=null}})}catch(e){}};
   watch();
   /* remember a guide-box arrival for sign-up attribution */

@@ -125,7 +125,7 @@
     const ppl=a=>new Set(a.map(v=>v.vid)).size,evP=(a,k)=>new Set(a.filter(v=>v.ev&&v.ev[k]).map(v=>v.vid)).size,evN=(a,k)=>a.reduce((n,v)=>n+((v.ev&&v.ev[k])||0),0);
     const newA=C.accts.filter(a=>a.first>=cut(N)).length,act7=C.accts.filter(a=>Date.now()-a.t<7*864e5).length;
     const subsA=(C.subs||[]).filter(x=>x.status==="active").length;
-    const steps=[["Visitors",ppl(cur)],["Cleared a level",evP(cur,"level_clear")],["Saw a sign-up nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_shown||v.ev.bar_shown||v.ev.guide_cta_shown)).map(v=>v.vid)).size],["Clicked a nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_click||v.ev.bar_click||v.ev.guide_cta_click)).map(v=>v.vid)).size],["New accounts",newA],["Paying Pro (now)",C.pro]];
+    const steps=[["Visitors",ppl(cur)],["Cleared a level",evP(cur,"level_clear")],["Saw a sign-up nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_shown||v.ev.bar_shown||v.ev.guide_cta_shown||v.ev.p_any_shown)).map(v=>v.vid)).size],["Clicked a nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_click||v.ev.bar_click||v.ev.guide_cta_click||v.ev.p_any_click)).map(v=>v.vid)).size],["New accounts",newA],["Paying Pro (now)",C.pro]];
     const top=Math.max(1,steps[0][1]);
     const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · sign-up nudges started Nov 12</small></h3>
       ${steps.map(([l,n],i)=>`<div class="ms-row" style="grid-template-columns:minmax(0,1fr) 160px 70px"><span>${l}</span><span class="tr"><i style="width:${Math.max(2,n/top*100).toFixed(0)}%"></i></span><b>${n}${i?` <small style="color:var(--ink-2)">${pct(n,steps[i-1][1])}%</small>`:""}</b></div>`).join("")}
@@ -133,7 +133,9 @@
        <div class="ms-tile"><b>${evN(cur,"prompt_shown")} → ${evN(cur,"prompt_click")}</b><span>Level pop-up: shown → clicked</span></div>
        <div class="ms-tile"><b>${evN(cur,"bar_shown")} → ${evN(cur,"bar_click")}</b><span>"Only on this device" bar</span></div>
        <div class="ms-tile"><b>${evN(cur,"guide_cta_shown")} → ${evN(cur,"guide_cta_click")}</b><span>Guide sign-up boxes</span></div>
-       <div class="ms-tile"><b>${evN(cur,"signup")}</b><span>Tracked sign-ups (${["prompt1","prompt3","bar","guide"].map(k=>evN(cur,"signup_from_"+k)+" "+k.replace("prompt","pop-up ")).join(", ")})</span></div></div></div>`;
+       ${[["plan","Plan strip on Home"],["planpanel","Plan-ready screen"],["lb","Leaderboard row"],["school","School board strip"],["streak","Streak toast"],["score","Daily score toast"],["rapid","Rapid Fire toast"],["open","Deadline toast"],["deal","Save-deal button"]].map(([k,l])=>`<div class="ms-tile"><b>${evN(cur,"p_"+k+"_shown")} → ${evN(cur,"p_"+k+"_click")}</b><span>${l}: shown → clicked</span></div>`).join("")}
+       <div class="ms-tile"><b>${evN(cur,"prompt0_shown")} → ${evN(cur,"prompt0_click")}</b><span>Welcome-back pop-up: shown → clicked</span></div>
+       <div class="ms-tile"><b>${evN(cur,"signup")}</b><span>Tracked sign-ups (${["prompt0","prompt1","prompt3","bar","guide","plan","planpanel","lb","school","streak","score","rapid","open","deal"].map(k=>evN(cur,"signup_from_"+k)+" "+k.replace("prompt","pop-up ")).join(", ")})</span></div></div></div>`;
     const sum=(f)=>P.reduce((n,p)=>n+(+f(p)||0),0);
     const xpT=sum(p=>p.xp),lvT=sum(p=>p.levels),mockT=sum(p=>p.mockN),stk=P.filter(p=>(p.streak||0)>=3).length;
     const eng=`<div class="ms-sec"><h3>What members do <small>everyone on the leaderboard (${P.length})</small></h3>

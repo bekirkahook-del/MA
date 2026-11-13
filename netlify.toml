@@ -53,6 +53,16 @@
   status = 301
 
 [[redirects]]
+  from = "/timeline"
+  to = "/tools/recruiting-timeline-calculator/"
+  status = 301
+
+[[redirects]]
+  from = "/openings"
+  to = "/tools/internship-alerts/"
+  status = 301
+
+[[redirects]]
   from = "/supabase/*"
   to = "/404.html"
   status = 404

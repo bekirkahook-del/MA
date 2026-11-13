@@ -10,7 +10,7 @@ export default async (req) => {
   if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(email)) return json(400, { error: "Please enter a valid email." });
   const id = await sha(email);
   const old = await getSub(id).catch(() => null);
-  const cs = String(b.src || "") === "cheatsheet";
+  const src0 = String(b.src || ""), cs = src0 === "cheatsheet" || src0.startsWith("cheatsheet:"), al = src0.startsWith("alerts");
   const PDF = "https://mnaprep.com/cheat-sheet/50-investment-banking-interview-questions.pdf";
   const csHtml = (s) => shell(`<p style="margin-top:0"><b>Here's your cheat sheet:</b> 50 investment banking interview questions, each with a short answer you can say out loud.</p>
 <p><a href="${PDF}" style="display:inline-block;background:#2448D8;color:#fff;text-decoration:none;font-weight:bold;border-radius:10px;padding:12px 20px">Download the PDF →</a></p>
@@ -24,6 +24,13 @@ export default async (req) => {
   try { await putSub(id, s); } catch (e) { console.error(e); return json(502, { error: "Couldn't save right now. Try again." }); }
   if (cs && process.env.RESEND_API_KEY) {
     try { await send([{ to: email, subject: "Your free cheat sheet: 50 IB interview questions", html: csHtml(s), s }]); } catch (e) { console.error(e); }
+  } else if (al && process.env.RESEND_API_KEY) {
+    const html = shell(`<p style="margin-top:0"><b>You're on the list.</b> Every Sunday you'll get one short email with:</p>
+<ul style="padding-left:20px"><li>Internship applications that just opened or are about to close</li><li>A curveball interview question (answer at the bottom)</li><li>One quick tip for breaking into finance</li></ul>
+<p>See what's open right now:</p>
+<p><a href="https://mnaprep.com/?utm_source=email&utm_campaign=alerts-welcome#recruit" style="display:inline-block;background:#2448D8;color:#fff;text-decoration:none;font-weight:bold;border-radius:10px;padding:12px 20px">See open applications →</a></p>
+<p style="font-size:13.5px;color:#4A5672">Want these the day they open? Instant alerts are part of Pro.</p>`, s);
+    try { await send([{ to: email, subject: "You're in: internship openings every Sunday", html, s }]); } catch (e) { console.error(e); }
   } else if (process.env.RESEND_API_KEY) {
     const html = shell(`<p style="margin-top:0"><b>You're in.</b> Every Sunday you'll get one short email:</p>
 <ul style="padding-left:20px"><li>A curveball interview question (answer at the bottom)</li><li>One quick tip for breaking into finance</li><li>A free guide worth reading</li></ul>

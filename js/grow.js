@@ -63,6 +63,17 @@
     setTimeout(tryOpen,900);
     try{q.delete("signup");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}catch(e){}}
 
+  /* ---------- invites: remember ?ref=, credit the inviter once this visitor has a confirmed account ---------- */
+  const rf=(q.get("ref")||"").toLowerCase();if(/^[a-z0-9]{4,12}$/.test(rf)&&!LS.get("ma-ref-done")){LS.set("ma-ref",rf);ev("ref_land")}
+  async function claimRef(){const code=LS.get("ma-ref"),A=window.MA_AUTH;if(!code||!A||!A.sb)return;
+    try{const s=(await A.sb.auth.getSession()).data.session;if(!s)return;
+      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"claim",code})});
+      const j=await r.json().catch(()=>({}));
+      if(j&&j.drop){try{localStorage.removeItem("ma-ref")}catch(e){}LS.set("ma-ref-done","1")}
+    }catch(e){}}
+  const hookRef=(n=0)=>{const A=window.MA_AUTH;if(A&&A.sb&&A.ready){A.ready.then(()=>claimRef());try{A.sb.auth.onAuthStateChange(evt=>{if(evt==="SIGNED_IN")setTimeout(claimRef,800)})}catch(e){}}else if(n<40)setTimeout(()=>hookRef(n+1),250)};
+  if(LS.get("ma-ref"))hookRef();
+
   /* ---------- helpers that read the app's state ---------- */
   const xp=()=>{try{return totalXP()}catch(e){return 0}};
   const cleared=()=>{try{return Object.values(S.best||{}).filter(x=>x>=2).length}catch(e){return 0}};

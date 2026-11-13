@@ -119,6 +119,10 @@ function show(){const G=+$("#gy").value,t=$("#tg").value,P=plan(G,t),key=P.find(
  $("#out").innerHTML=head+`<ul class="tl">${P.map(p=>{const cls=p[1]<now?"done":(p[0]<=now&&now<=p[1])?"now":p===key?"hot":"";
    return `<li class="${cls}"><span class="when">${lab(p[0],p[1])}</span><b>${p[2]}</b>${p[3]}</li>`}).join("")}</ul>
    <p class="muted">Want alerts the day applications open? <a href="/">Track openings on M&amp;A Prep</a>.</p>`;
+ const sb=document.createElement("button");sb.className="btn ghost";sb.textContent="Share my timeline";$("#out").appendChild(sb);
+ sb.onclick=async()=>{const txt=months>0?`My finance recruiting window opens in ${months} month${months===1?"":"s"}. Find yours: https://mnaprep.com/tools/recruiting-timeline-calculator/`:`My finance recruiting window is open right now. Find yours: https://mnaprep.com/tools/recruiting-timeline-calculator/`;
+  try{if(window.shareCard){sb.textContent="Making your card…";const r=await shareCard({kicker:"Recruiting timeline",big:months>0?String(months):"NOW",title:months>0?(months===1?"month until my recruiting window opens":"months until my recruiting window opens"):"My recruiting window is open",sub:"When does yours open? Free calculator.",short:"/timeline",path:"/tools/recruiting-timeline-calculator/",file:"my-recruiting-timeline.png",text:txt});sb.textContent=r==="downloaded"?"Saved! Post it to your story":"Share my timeline";return}
+   if(navigator.share)await navigator.share({text:txt});else{await navigator.clipboard.writeText(txt);sb.textContent="Copied!"}}catch(e){sb.textContent="Share my timeline"}};
  try{history.replaceState(null,"","?y="+G+"&t="+t)}catch(e){}}
 const q=new URLSearchParams(location.search);if(q.get("y"))$("#gy").value=q.get("y");if(q.get("t"))$("#tg").value=q.get("t");
 $("#go").onclick=show;if(q.get("y"))show();

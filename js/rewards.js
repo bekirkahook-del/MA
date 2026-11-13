@@ -109,6 +109,7 @@
     </section>
     <section class="pro2-why">${[["∞","AI grading on every answer","Every mock interview answer gets a score out of 10 and specific feedback on what to fix.","Most-used Pro feature"],["4×","Real Superday rounds","Back-to-back interviewers, timed, then a full debrief across all 4 rounds.","Closest thing to the real day"],["🎯","A plan built on your gaps","Pro tracks your scores by section and builds each week around your weakest topics.","Adapts every week"]].map(([n,t,d,tag],i)=>`<div class="pro2-card" style="--i:${i}"><div class="pro2-n">${n}</div><b>${t}</b><p>${d}</p><span>${tag}</span></div>`).join("")}</section>
     <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Earn free Pro days as you get promoted: 1 at Analyst, 2 at VP, 3 at Director, 7 at MD. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
+    <section class="pro2-earn"><div><span class="label">Invite friends</span><b>Invite 3 friends, get a week of Pro</b><p>Share your link. Every 3 friends who make a free account earns you 7 days of Pro (up to 4 weeks). <span id="refStat"></span></p></div><button class="ghost outline" id="refBtn">Copy my invite link</button></section>
     <section><div class="sec-head"><h2>Simple, student pricing</h2></div>
      <div class="plans pro2-plans">${plans.map(([k,n,p,per,d,tag])=>`<div class="plan ${k==="yearly"?"best":""}">${tag?`<span class="plan-tag">${tag}</span>`:""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${k==="yearly"?"btn":"ghost outline"}" data-plan="${k}">${pro&&plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
@@ -120,6 +121,13 @@
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
     el.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>maCheckout(b.dataset.plan,b));
     $("#proLadder").onclick=()=>maRewards();
+    $("#refBtn").onclick=async()=>{const A=window.MA_AUTH;if(!(A&&A.session)){toast("Make a free account first so your invites count");window.maOpenAuth&&maOpenAuth("up");return}
+      const b=$("#refBtn");b.disabled=true;const x=await authed("refer",{action:"code"});b.disabled=false;
+      if(!x.j||!x.j.ok){toast((x.j&&x.j.error)||"Couldn't get your link. Try again.");return}
+      const url="https://mnaprep.com/?ref="+x.j.code,txt="Free finance interview prep, like a game. Join me on M&A Prep: "+url;
+      if($("#refStat"))$("#refStat").textContent=x.j.capped?`${x.j.joined} joined. You've earned the max.`:`${x.j.joined} joined so far, ${x.j.toNext} more for your next week.`;
+      try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
+      try{await navigator.clipboard.writeText(url);toast("Invite link copied")}catch(e){toast(url)}};
     $("#clubBtn").onclick=()=>openPanel(`<div class="label">Club plan</div><h2>Bring M&A to your club</h2><p class="sub">Clubs get Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer dashboard.</p><ul class="brief"><li>$399 a year for up to 40 members (about $10 each)</li><li>Free pilot for your first month</li><li>Officers see member progress and interview scores</li></ul>`);
     try{renderReviews()}catch(e){}};
 

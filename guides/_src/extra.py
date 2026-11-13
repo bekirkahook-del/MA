@@ -25,7 +25,7 @@ if 'id="banks"' not in s:
     s = s.replace("</main>", f'<h2 id="banks">Interview guides by bank</h2><ul class="more">{cards}</ul></main>', 1); open(ix, "w", encoding="utf-8").write(s); print("index: banks section")
 s = re.sub(r'<h2 id="schools">.*?</ul>', '', s, flags=re.S)
 if 'id="schools"' not in s:
-    cards = "".join(f'<li><a href="/guides/{p["slug"]}/">{e(p["short"])}</a></li>' for p in sorted(SCHOOLS, key=lambda p: p["short"].replace("Investment banking from ", "").lower()))
+    cards = "".join(f'<li><a href="/guides/{p["slug"]}/">{e(p["short"])}</a></li>' for p in sorted(SCHOOLS, key=lambda p: __import__("schoolsort").key(p["short"])))
     sec = f'<h2 id="schools">Investment banking by school</h2><ul class="more">{cards}</ul>'
     s = s.replace("</main>", sec + "</main>", 1); open(ix, "w", encoding="utf-8").write(s); print("index: schools section")
 sm = os.path.join(ROOT, "sitemap.xml"); s = open(sm, encoding="utf-8").read()

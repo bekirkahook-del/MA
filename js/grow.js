@@ -167,7 +167,25 @@
       b.after(s)});
     if(guest()&&el.querySelector(".gw-save")&&!SS.get("ma-gws-deal")){SS.set("ma-gws-deal","1");ev("p_deal_shown");ev("p_any_shown")}
     dealCount()};
-  const hookRender=(t=0)=>{const m=[["renderPlan",afterPlan],["renderCompete",afterCompete],["renderOpenings",afterOpen],["renderDeals",afterDeals]];
+  /* favorite stocks: toast on add, plus a strip in the markets list while the guest has favorites */
+  const nWatch=()=>((typeof S!=="undefined"&&S.watch)||[]).length;
+  const favStrip=()=>{const l=$1("#mkList");document.querySelectorAll('.gw-strip[data-gw="fav"]').forEach(x=>x.remove());
+    if(!l||!guest()||!nWatch())return;const n=nWatch();
+    putStrip(l,"beforebegin","fav",`★ You're watching <b>${n}</b> ${n===1?"stock":"stocks"}. They're only saved on this device. Sign up free to keep your watchlist everywhere.`,"Save my watchlist")};
+  function hookWatch(t=0){const o=window.toggleWatch;
+    if(typeof o!=="function"){if(t<40)setTimeout(()=>hookWatch(t+1),250);return}
+    if(o.__gw)return;
+    const w=function(sym){const before=nWatch();const r=o.apply(this,arguments);
+      try{const n=nWatch();
+        if(guest()&&n>before){setTimeout(()=>{
+          if(n>=3)toastCard("fav3","★",`You're watching <b>${n}</b> stocks. Sign up free so your watchlist follows you.`,"Save my watchlist");
+          else toastCard("fav","★",`<b>${E(sym)}</b> is on your watchlist, saved <b>on this device only</b>. Sign up free to keep it.`,"Save my watchlist")},500)}
+        setTimeout(favStrip,0)}catch(e){}
+      return r};
+    w.__gw=1;window.toggleWatch=w}
+  hookWatch();
+  const afterMarkets=()=>setTimeout(favStrip,0);
+  const hookRender=(t=0)=>{const m=[["renderPlan",afterPlan],["renderCompete",afterCompete],["renderOpenings",afterOpen],["renderDeals",afterDeals],["openMarkets",afterMarkets]];
     let miss=0;m.forEach(([n,f])=>{if(typeof window[n]!=="function")miss++;else wrap(n,f)});if(miss&&t<40)setTimeout(()=>hookRender(t+1),250);
     else{try{afterPlan();afterOpen()}catch(e){}}};
   hookRender();

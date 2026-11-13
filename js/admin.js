@@ -133,9 +133,9 @@
        <div class="ms-tile"><b>${evN(cur,"prompt_shown")} → ${evN(cur,"prompt_click")}</b><span>Level pop-up: shown → clicked</span></div>
        <div class="ms-tile"><b>${evN(cur,"bar_shown")} → ${evN(cur,"bar_click")}</b><span>"Only on this device" bar</span></div>
        <div class="ms-tile"><b>${evN(cur,"guide_cta_shown")} → ${evN(cur,"guide_cta_click")}</b><span>Guide sign-up boxes</span></div>
-       ${[["plan","Plan strip on Home"],["planpanel","Plan-ready screen"],["lb","Leaderboard row"],["school","School board strip"],["streak","Streak toast"],["score","Daily score toast"],["rapid","Rapid Fire toast"],["open","Deadline toast"],["deal","Save-deal button"]].map(([k,l])=>`<div class="ms-tile"><b>${evN(cur,"p_"+k+"_shown")} → ${evN(cur,"p_"+k+"_click")}</b><span>${l}: shown → clicked</span></div>`).join("")}
+       ${[["plan","Plan strip on Home"],["planpanel","Plan-ready screen"],["lb","Leaderboard row"],["school","School board strip"],["streak","Streak toast"],["score","Daily score toast"],["rapid","Rapid Fire toast"],["open","Deadline toast"],["deal","Save-deal button"],["fav","Favorite-stock toast"],["fav3","3-favorites toast"]].map(([k,l])=>`<div class="ms-tile"><b>${evN(cur,"p_"+k+"_shown")} → ${evN(cur,"p_"+k+"_click")}</b><span>${l}: shown → clicked</span></div>`).join("")}
        <div class="ms-tile"><b>${evN(cur,"prompt0_shown")} → ${evN(cur,"prompt0_click")}</b><span>Welcome-back pop-up: shown → clicked</span></div>
-       <div class="ms-tile"><b>${evN(cur,"signup")}</b><span>Tracked sign-ups (${["prompt0","prompt1","prompt3","bar","guide","plan","planpanel","lb","school","streak","score","rapid","open","deal"].map(k=>evN(cur,"signup_from_"+k)+" "+k.replace("prompt","pop-up ")).join(", ")})</span></div></div></div>`;
+       <div class="ms-tile"><b>${evN(cur,"signup")}</b><span>Tracked sign-ups (${["prompt0","prompt1","prompt3","bar","guide","plan","planpanel","lb","school","streak","score","rapid","open","deal","fav","fav3"].map(k=>evN(cur,"signup_from_"+k)+" "+k.replace("prompt","pop-up ")).join(", ")})</span></div></div></div>`;
     const sum=(f)=>P.reduce((n,p)=>n+(+f(p)||0),0);
     const xpT=sum(p=>p.xp),lvT=sum(p=>p.levels),mockT=sum(p=>p.mockN),stk=P.filter(p=>(p.streak||0)>=3).length;
     const eng=`<div class="ms-sec"><h3>What members do <small>everyone on the leaderboard (${P.length})</small></h3>

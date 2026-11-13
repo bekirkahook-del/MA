@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LBO Calculator: IRR, MOIC and Returns Breakdown | M&amp;A Prep</title><meta property="og:image" content="https://mnaprep.com/img/og/lbo-calculator.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mnaprep.com/img/og/lbo-calculator.jpg"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="robots" content="max-image-preview:large"><link rel="alternate" type="application/rss+xml" title="M&amp;A Prep guides" href="/feed.xml">
+<meta name="description" content="Free LBO calculator. Enter EBITDA, entry and exit multiples, leverage and growth to get the IRR, MOIC and a breakdown of where the returns come from."><link rel="canonical" href="https://mnaprep.com/tools/lbo-calculator/">
+<meta property="og:title" content="LBO Calculator: IRR, MOIC and Returns Breakdown | M&amp;A Prep"><meta property="og:description" content="Free LBO calculator. Enter EBITDA, entry and exit multiples, leverage and growth to get the IRR, MOIC and a breakdown of where the returns come from."><meta property="og:url" content="https://mnaprep.com/tools/lbo-calculator/"><meta property="og:type" content="website"><meta property="og:site_name" content="M&amp;A Prep">
+<meta name="theme-color" content="#13203B">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#EEF1F5;--sheet:#fff;--ink:#13203B;--ink-2:#4A5672;--rule:#D3D9E4;--cobalt:#2448D8;--soft:#E3E9FC;--good:#1E7F4F}
+@media (prefers-color-scheme:dark){:root{--paper:#0E1424;--sheet:#161E33;--ink:#E6EAF3;--ink-2:#9AA5BE;--rule:#2A3550;--cobalt:#7C97FF;--soft:#1E2A52;--good:#4FC48A}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-size:16.5px;line-height:1.65}
+a{color:var(--cobalt)}.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.top{border-bottom:1px solid var(--rule);background:var(--sheet)}header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.brand{font-family:Nunito,Archivo,Arial,sans-serif;font-weight:900;letter-spacing:.06em;font-size:26px;color:var(--ink);text-decoration:none}.brand span{color:var(--cobalt)}
+.topcta{font-size:14px;font-weight:600;background:var(--cobalt);color:#fff;text-decoration:none;border-radius:99px;padding:8px 16px}
+.crumb{font-size:13px;color:var(--ink-2);margin:26px 0 6px}.crumb a{color:var(--ink-2)}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-size:22px;margin:38px 0 12px}h3{font-size:17.5px;margin:0 0 8px;line-height:1.4}
+.lede p{color:var(--ink-2);margin:0 0 14px}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;margin:0 0 12px}
+.tag{display:inline-block;font-size:11.5px;font-family:"IBM Plex Mono",monospace;color:var(--ink-2);border:1px solid var(--rule);border-radius:99px;padding:1px 8px;margin-bottom:8px}
+.card ul{margin:6px 0 0;padding-left:20px}.card li{margin:3px 0}.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+details{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;padding:14px 18px;margin:0 0 10px}
+summary{cursor:pointer;font-weight:600;list-style:none}summary::-webkit-details-marker{display:none}
+summary::after{content:"Show answer";float:right;font-size:12.5px;font-weight:500;color:var(--cobalt)}details[open] summary::after{content:"Hide"}
+ol.opts{margin:10px 0 6px;padding-left:22px}ol.opts li{margin:2px 0}ol.opts li.ok{color:var(--good);font-weight:600}
+.ans{border-left:3px solid var(--good);padding:2px 0 2px 12px;color:var(--ink-2);margin-top:8px}
+.cta{margin:34px 0;background:var(--soft);border-radius:16px;padding:22px;text-align:center}.cta p{margin:0 0 12px;color:var(--ink-2)}
+.cta a{display:inline-block;background:var(--cobalt);color:#fff;font-weight:600;text-decoration:none;border-radius:10px;padding:12px 22px}
+table{width:100%;border-collapse:collapse;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden;font-variant-numeric:tabular-nums}
+th,td{padding:9px 10px;border-bottom:1px solid var(--rule);text-align:center;font-size:15px}th{background:var(--paper);font-size:13px}td:first-child,th:first-child{text-align:left;font-weight:600}
+.tbl{overflow-x:auto}.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;padding:0;list-style:none}
+.more a{display:block;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}.more a:hover{border-color:var(--cobalt)}
+footer{border-top:1px solid var(--rule);margin-top:40px;padding:22px 0 40px;font-size:13px;color:var(--ink-2)}
+</style><style>
+.tool{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:18px;margin:18px 0}
+.tool label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}
+.tool select,.tool input{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);width:100%}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.btn{display:inline-block;border:0;cursor:pointer;background:var(--cobalt);color:#fff;font:inherit;font-weight:600;border-radius:10px;padding:12px 20px;margin-top:14px;text-decoration:none}
+.ghost{background:transparent;color:var(--cobalt);border:1px solid var(--rule)}
+.tl{list-style:none;padding:0;margin:14px 0 0}.tl li{position:relative;padding:0 0 16px 22px;border-left:2px solid var(--rule);margin-left:6px}
+.tl li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--rule)}
+.tl li.now::before{background:var(--cobalt)}.tl li.hot::before{background:#E0A526}.tl li.done{opacity:.55}
+.tl b{display:block}.tl .when{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+.big{font-size:30px;font-weight:800;margin:4px 0}.muted{color:var(--ink-2);font-size:14px}
+.q{margin:0 0 18px}.q p{font-weight:600;margin:0 0 8px}.opt{display:block;width:100%;text-align:left;font:inherit;font-size:15.5px;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+.opt.sel{border-color:var(--cobalt);box-shadow:0 0 0 1px var(--cobalt)}.opt.ok{border-color:var(--good);background:rgba(30,127,79,.12)}.opt.bad{border-color:#C33;background:rgba(204,51,51,.1)}
+.why{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--good);padding-left:10px;margin-top:6px}
+.bars{margin:12px 0 0}.bar{display:grid;grid-template-columns:120px 1fr 80px;gap:10px;align-items:center;margin:8px 0;font-size:14.5px}
+.bar .t{height:16px;border-radius:6px;background:var(--rule);overflow:hidden}.bar .t i{display:block;height:100%;background:var(--cobalt);border-radius:6px}
+.bar b{text-align:right;font-variant-numeric:tabular-nums}.seg{display:flex;flex-wrap:wrap;gap:6px}.seg button{font:inherit;font-size:14px;padding:7px 12px;border-radius:99px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer}.seg button.on{background:var(--cobalt);color:#fff;border-color:var(--cobalt)}
+@media(max-width:480px){.bar{grid-template-columns:92px 1fr 66px}}
+</style><style id="color-pop">:root{--c-green:#16A06A;--c-amber:#E39B0B;--c-violet:#7357F6}
+main h2::before{content:"";display:inline-block;width:4px;height:.9em;border-radius:2px;background:var(--cobalt);margin-right:10px;vertical-align:-2px}
+main h2:nth-of-type(4n+2)::before{background:var(--c-green)}main h2:nth-of-type(4n+3)::before{background:var(--c-amber)}main h2:nth-of-type(4n+4)::before{background:var(--c-violet)}
+.tag{color:var(--cobalt);border-color:color-mix(in srgb,var(--cobalt) 35%,var(--rule))}
+th{background:color-mix(in srgb,var(--cobalt) 8%,var(--sheet))!important}
+.cta{background:linear-gradient(135deg,color-mix(in srgb,var(--cobalt) 12%,var(--sheet)),color-mix(in srgb,var(--c-violet) 12%,var(--sheet)))!important}
+.crumb a:last-child{color:var(--cobalt)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "LBO calculator", "description": "Free LBO calculator. Enter EBITDA, entry and exit multiples, leverage and growth to get the IRR, MOIC and a breakdown of where the returns come from.", "url": "https://mnaprep.com/tools/lbo-calculator/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "M&A Prep", "url": "https://mnaprep.com"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "M&A Prep", "item": "https://mnaprep.com/"}, {"@type": "ListItem", "position": 2, "name": "Free tools", "item": "https://mnaprep.com/tools/"}, {"@type": "ListItem", "position": 3, "name": "LBO calculator", "item": "https://mnaprep.com/tools/lbo-calculator/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What's a good LBO return?", "acceptedAnswer": {"@type": "Answer", "text": "Private equity firms often target an IRR around 20% or more and roughly 2\u20133x their money over 5 years, but targets vary by firm, deal size and market."}}, {"@type": "Question", "name": "Why does more debt raise returns?", "acceptedAnswer": {"@type": "Answer", "text": "Debt means the firm puts in less equity. If the business grows, the whole gain goes to that smaller equity check, so the percentage return is higher. The trade-off is more risk if things go wrong."}}, {"@type": "Question", "name": "What does this calculator leave out?", "acceptedAnswer": {"@type": "Answer", "text": "Fees, interest rate details, taxes on the exit, dividends and management equity. It's built for learning and quick checks, not for a real deal model."}}]}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&text=M%26A&display=swap">
+</head><body>
+<header class="top"><div class="wrap"><a class="brand" href="/">M<span>&amp;</span>A</a><a class="topcta" href="/">Train free</a></div></header>
+<main class="wrap"><p class="crumb"><a href="/">M&amp;A Prep</a> › <a href="/tools/">Free tools</a></p><h1>LBO calculator</h1><div class="lede"><p>Model a simple leveraged buyout in seconds. Change any input and the returns update live.</p><p>The breakdown shows how much of the gain came from EBITDA growth, multiple expansion and paying down debt, which is exactly how PE interviewers want you to think.</p></div>
+<style>
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.kp div{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:10px 12px}
+.kp b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.2}.kp span{font-size:12.5px;color:var(--ink-2)}
+.kp .main{border-color:var(--cobalt);background:color-mix(in srgb,var(--cobalt) 10%,var(--sheet))}
+.steps{margin:10px 0 0;padding-left:20px;font-size:15px}.steps li{margin:4px 0}
+.warn{color:#C33;font-size:14px;font-weight:600}
+.qq{font-size:26px;font-weight:800;margin:10px 0;font-variant-numeric:tabular-nums}
+.out pre{white-space:pre-wrap;font:14.5px/1.55 "IBM Plex Sans",system-ui,sans-serif;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px;margin:6px 0}
+td.hi{background:color-mix(in srgb,var(--cobalt) 16%,var(--sheet));font-weight:700}
+.tool textarea{font:inherit;font-size:15px;width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink)}
+.small{font-size:13px;color:var(--ink-2)}
+</style><div class="tool"><div class="row"><div><label for="e0">EBITDA today ($M)</label><input id="e0" inputmode="decimal" value="100"></div><div><label for="em">Entry multiple (x EBITDA)</label><input id="em" inputmode="decimal" value="10"></div><div><label for="xm">Exit multiple (x EBITDA)</label><input id="xm" inputmode="decimal" value="10"></div><div><label for="lev">Debt (x EBITDA)</label><input id="lev" inputmode="decimal" value="5"></div><div><label for="gr">EBITDA growth per year (%)</label><input id="gr" inputmode="decimal" value="8"></div><div><label for="yr">Years held</label><input id="yr" inputmode="decimal" value="5"></div><div><label for="fc">Free cash flow to pay debt (% of EBITDA)</label><input id="fc" inputmode="decimal" value="40"><span class="small">after interest, taxes and capex</span></div></div>
+<div id="out" aria-live="polite"></div></div><h2>The three drivers of LBO returns</h2><p><b>EBITDA growth</b> (the business earns more), <b>multiple expansion</b> (someone pays a higher multiple when you sell) and <b>debt paydown</b> (cash flow shrinks the debt, so more of the exit value belongs to equity). Interviewers often ask which one matters most in a given deal. Try setting the exit multiple equal to the entry multiple to see returns without multiple expansion.</p>
+<p>Learn to do it by hand: <a href="/guides/what-is-an-lbo/">what is an LBO</a>, <a href="/guides/lbo-interview-questions/">LBO interview questions</a> and the <a href="/guides/irr-moic-cheat-sheet/">IRR and MOIC cheat sheet</a>.</p>
+<h2>Common questions</h2><details><summary>What&#x27;s a good LBO return?</summary><div class="ans">Private equity firms often target an IRR around 20% or more and roughly 2–3x their money over 5 years, but targets vary by firm, deal size and market.</div></details><details><summary>Why does more debt raise returns?</summary><div class="ans">Debt means the firm puts in less equity. If the business grows, the whole gain goes to that smaller equity check, so the percentage return is higher. The trade-off is more risk if things go wrong.</div></details><details><summary>What does this calculator leave out?</summary><div class="ans">Fees, interest rate details, taxes on the exit, dividends and management equity. It's built for learning and quick checks, not for a real deal model.</div></details>
+<div class="cta"><p>Practice real interview questions in 5-minute levels, free.</p><a href="/">Start training on M&amp;A Prep</a></div>
+<h2>More free tools</h2><ul class="more"><li><a href="/tools/recruiting-timeline-calculator/">Recruiting timeline calculator</a></li><li><a href="/tools/finance-career-quiz/">Which finance career fits you?</a></li><li><a href="/tools/mental-math-test/">60-second mental math test</a></li><li><a href="/tools/superday-readiness-test/">Superday readiness test</a></li><li><a href="/tools/lbo-calculator/">LBO calculator</a></li><li><a href="/tools/investment-banking-pay/">Investment banking pay by level</a></li><li><a href="/tools/">All free tools</a></li><li><a href="/deals/">M&amp;A deal database</a></li></ul></main>
+<footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=id=>{const v=parseFloat(String($(id).value).replace(/[,$%x\s]/g,''));return isFinite(v)?v:0};
+const money=(v,d=1)=>(v<0?'-$':'$')+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d});
+const M=(v,d=1)=>money(v,d)+'M';
+const pct=(v,d=1)=>(v*100).toFixed(d)+'%';
+const xx=v=>v.toFixed(2)+'x';
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[Math.floor(Math.random()*a.length)];
+async function shareIt(btn,card,txt,label){try{if(window.shareCard){btn.textContent="Making your card…";const r=await shareCard(card);btn.textContent=r==="downloaded"?"Saved! Post it to your story":label;return}
+ if(navigator.share)await navigator.share({text:txt});else{await navigator.clipboard.writeText(txt);btn.textContent="Copied!"}}catch(e){btn.textContent=label}}
+function live(ids,fn){ids.forEach(i=>{const el=$(i);el&&el.addEventListener('input',fn)});fn()}
+function inp(id,label,val,hint){return `<div><label for="${id}">${label}</label><input id="${id}" inputmode="decimal" value="${val}">${hint?`<span class="small">${hint}</span>`:''}</div>`}
+
+function calc(){const E0=num('#e0'),em=num('#em'),xm=num('#xm'),lev=num('#lev'),g=num('#gr')/100,Y=Math.max(1,Math.round(num('#yr'))),fc=num('#fc')/100;
+ const ev=E0*em,D0=Math.min(E0*lev,ev),eq=ev-D0;let D=D0,cash=0,E=E0,rows='';
+ for(let t=1;t<=Y;t++){E=E*(1+g);const f=E*fc;const pay=Math.min(D,f);D-=pay;cash+=f-pay;rows+=`<tr><td>Year ${t}</td><td>${M(E)}</td><td>${M(f)}</td><td>${M(D)}</td></tr>`}
+ const xev=E*xm,xeq=xev-D+cash;if(eq<=0){$('#out').innerHTML='<p class="warn">Debt can\'t be bigger than the purchase price. Lower the debt multiple.</p>';return}
+ const moic=xeq/eq,irr=moic>0?Math.pow(moic,1/Y)-1:-1;
+ const gG=(E-E0)*em,gM=(xm-em)*E,gD=(D0-D)+cash,tot=gG+gM+gD,mx=Math.max(...[gG,gM,gD].map(Math.abs),1);
+ const bar=(l,v)=>`<div class="bar"><span>${l}</span><div class="t"><i style="width:${Math.abs(v)/mx*100}%;${v<0?'background:#C33':''}"></i></div><b>${M(v,0)}</b></div>`;
+ $('#out').innerHTML=`<div class="kp"><div class="main"><span>IRR</span><b>${pct(irr)}</b></div><div class="main"><span>MOIC</span><b>${xx(moic)}</b></div><div><span>Purchase price</span><b>${M(ev,0)}</b></div><div><span>Equity in</span><b>${M(eq,0)}</b></div><div><span>Exit value</span><b>${M(xev,0)}</b></div><div><span>Equity out</span><b>${M(xeq,0)}</b></div></div>
+ <p class="label">Where the ${M(tot,0)} gain came from</p><div class="bars">${bar('EBITDA growth',gG)}${bar('Multiple change',gM)}${bar('Debt paydown',gD)}</div>
+ <div class="tbl" style="margin-top:14px"><table><thead><tr><th>Year</th><th>EBITDA</th><th>Cash to debt</th><th>Debt left</th></tr></thead><tbody><tr><td>Today</td><td>${M(E0)}</td><td>–</td><td>${M(D0)}</td></tr>${rows}</tbody></table></div>`}
+live(['#e0','#em','#xm','#lev','#gr','#yr','#fc'],calc);
+</script>
+<script src="/js/sharecard.js" defer></script>
+<script src="/js/hit.js" defer></script><script src="/js/grow.js" defer></script>
+<script src="/js/email.js" defer></script>
+</body></html>

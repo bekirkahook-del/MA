@@ -48,6 +48,21 @@
   status = 302
 
 [[redirects]]
+  from = "/math"
+  to = "/tools/mental-math-test/"
+  status = 301
+
+[[redirects]]
+  from = "/lbo"
+  to = "/tools/lbo-calculator/"
+  status = 301
+
+[[redirects]]
+  from = "/quiz"
+  to = "/tools/finance-career-quiz/"
+  status = 301
+
+[[redirects]]
   from = "/superday"
   to = "/tools/superday-readiness-test/"
   status = 301

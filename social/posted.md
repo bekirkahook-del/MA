@@ -73,3 +73,4 @@
 - 2026-11-15 oddq-widgets — [Interview Q] 5 machines/5 widgets/5 min → 100 machines = 5 minutes
 - 2026-11-13 ad-mnaprep-40s — [Ad, AI voice: ElevenLabs] 40s M&A Prep ad (Bekir asked to post now, overriding the Nov 13 no-mention pause and 5/day TikTok cap)
 - 2026-11-13 8:00pm ad-mnaprep2-25s — [Ad, AI voice: ElevenLabs] 25s 'You don't need Wharton' ad (Bekir: post to all socials at 8pm)
+- 2026-11-14 comeback-reel — [AI ad] 27s "0 offers to offer" story reel (ElevenLabs images + Runway video, Tyler voice): IG Reel + YouTube Short + Facebook Reel Nov 14 8:41pm, TikTok Nov 15 7:47pm. All marked AI-generated.

@@ -1,0 +1,15 @@
+{"date":"2026-11-16","decks":{
+"tsm":{"guide":"https://mnaprep.com/","ctaHead":"Got it? Try <em>the next one</em>","ctaSub":"1,000+ real finance interview questions. Free at mnaprep.com.","slides":[
+"<div class=\"kicker\">Analyst interview question</div><h1>Most people get the <em>share count</em> wrong.</h1><p class=\"lede\">One question. No calculator.</p>",
+"<div class=\"kicker\">Diluted shares</div><h2>100M shares out. 10M options with a <em>$20 strike.</em> Stock is at <em>$50.</em> Diluted share count?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>110M</div><div class=\"opt\"><i>B</i>104M</div><div class=\"opt\"><i>C</i>106M</div><div class=\"opt\"><i>D</i>100M</div></div><p class=\"note\">Lock it in, then swipe.</p>",
+"<div class=\"kicker\">Answer</div><div class=\"big\">106M</div><div class=\"card wide\" style=\"display:flex;flex-direction:column;gap:24px;--nw:270px\"><div class=\"step\"><div class=\"n\">+10M</div><div class=\"t\">Options get exercised</div></div><div class=\"step\"><div class=\"n\">$200M</div><div class=\"t\">Cash in: 10M × $20</div></div><div class=\"step\"><div class=\"n\">−4M</div><div class=\"t\">Buyback: $200M ÷ $50</div></div></div><p class=\"lede\" style=\"color:#DDB056;font-weight:600\">C. 100 + 10 − 4 = 106M</p>",
+"<div class=\"kicker\">Why it works</div><h2>That's the <em>treasury stock method.</em></h2><p class=\"lede\">The company uses the cash from the exercise to buy shares back at today's price. Only the leftover shares count as new.</p>",
+"<div class=\"kicker\">Curveball</div><h2>Stock falls to <em>$15.</em> Now what?</h2><p class=\"lede\">Strike $20 is above $15, so nobody exercises. Diluted shares stay at <em>100M.</em></p><p class=\"lede\">Comment if you got it 👇</p>"
+]},
+"compound":{"guide":"https://mnaprep.com/","ctaHead":"Learn the money stuff <em>early</em>","ctaSub":"Free finance practice for students at mnaprep.com.","slides":[
+"<div class=\"kicker\">Would you rather</div><h1>Invest for <em>10 years</em> or for <em>30 years?</em></h1><p class=\"lede\">The answer surprises almost everyone. Swipe.</p>",
+"<div class=\"kicker\">Two friends · $200 a month · 8% a year</div><div class=\"list\"><div class=\"li\"><b>A</b>Invests from 22 to 32, then stops forever</div><div class=\"li\"><b>B</b>Starts at 32 and invests until 62</div></div><h2>Who has more at <em>62?</em></h2><p class=\"note\">Pick A or B, then swipe.</p>",
+"<div class=\"kicker\">Answer</div><div class=\"big\">A wins</div><table><thead><tr><th></th><th>PUT IN</th><th>AT 62</th></tr></thead><tbody><tr><td class=\"hot\">A</td><td>$24,000</td><td class=\"hot\">~$400,000</td></tr><tr><td>B</td><td>$72,000</td><td>~$298,000</td></tr></tbody></table><p class=\"note\">Assumes 8% a year, compounded monthly. Not a guarantee.</p>",
+"<div class=\"kicker\">Why</div><h2>A's money had <em>10 extra years</em> to grow.</h2><p class=\"lede\">A put in a third as much and still ended up with about $100K more. Time does most of the work.</p>",
+"<div class=\"kicker\">Your turn</div><h2>How old were you when you <em>started investing?</em></h2><p class=\"lede\">Or not yet? Comment 👇</p>"
+]}}}

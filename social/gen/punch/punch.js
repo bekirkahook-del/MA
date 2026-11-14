@@ -20,7 +20,7 @@ const html = `<html><head><style>
 #stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 70px}
 .h1{font:600 64px/1.15 P;color:#D7DEEF}.big{font:900 ${S.bigPx||330}px/0.9 A;letter-spacing:-12px;color:#FFD34D;margin:10px 0}.h3{font:600 64px/1.15 P;color:#D7DEEF}
 .rank{font:900 200px/1 A;color:rgba(255,255,255,.18)}.name{font:900 104px/1.02 A;margin:10px 0 30px;letter-spacing:-2px}
-.val{font:900 300px/0.9 A;letter-spacing:-10px}.lbl{font:500 34px M;letter-spacing:.2em;color:#B8C3DD;margin-top:16px}
+.val{font:900 ${S.valPx||300}px/0.9 A;letter-spacing:-10px}.lbl{font:500 34px M;letter-spacing:.2em;color:#B8C3DD;margin-top:16px}
 .dots{position:absolute;bottom:260px;left:0;right:0;display:flex;gap:18px;justify-content:center}.dots i{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.18)}.dots i.on{background:#fff}
 .ask{font:900 92px/1.05 A}.src{position:absolute;bottom:90px;left:60px;right:60px;text-align:center;font:500 24px M;color:#7C89A8}
 .wm{position:absolute;bottom:150px;left:0;right:0;text-align:center;font:700 34px P;color:rgba(255,255,255,.55)}
@@ -39,7 +39,7 @@ window.draw=t=>{const st=document.getElementById('stage'),bg=document.getElement
    h='<div class=rank style="transform:translateY('+(1-ease(p/0.25))*-120+'px)">#'+(cur+1)+'</div><div class=name style="transform:translateX('+(1-ease(p/0.3))*900+'px)">'+r[0]+'</div><div class=val style="transform:scale('+(0.6+0.4*back(p/0.35))+')">'+fmt(v,1)+r[2]+'</div><div class=lbl>'+S.label+'</div>';}
   fo=0;}
  else if(cur===0){const r=S.rows[0],p=t-T[0];acc=r[3];fo=Math.max(0,1-p/0.25);
-  h='<div class=rank style="color:#FFD34D;opacity:.9">#1</div><div class=name style="transform:scale('+(0.5+0.5*back(p/0.4))+');font-size:150px">'+r[0]+'</div><div class=val style="color:#FFD34D">'+fmt(r[1],1)+r[2]+'</div><div class=lbl style="opacity:'+ease((p-0.8)/0.3)+'">'+S.reveal+'</div>'+(p>1.9?'<div class=ask style="margin-top:70px;opacity:'+ease((p-1.9)/0.3)+';transform:translateY('+(1-ease((p-1.9)/0.3))*40+'px)">'+S.ask+'</div>':'');}
+  h='<div class=rank style="color:'+(S.gold||'#FFD34D')+';opacity:.9">#1</div><div class=name style="transform:scale('+(0.5+0.5*back(p/0.4))+');font-size:150px">'+r[0]+'</div><div class=val style="color:'+(S.gold||'#FFD34D')+'">'+fmt(r[1],1)+r[2]+'</div><div class=lbl style="opacity:'+ease((p-0.8)/0.3)+'">'+S.reveal+'</div>'+(p>1.9?'<div class=ask style="margin-top:70px;opacity:'+ease((p-1.9)/0.3)+';transform:translateY('+(1-ease((p-1.9)/0.3))*40+'px)">'+S.ask+'</div>':'');}
  st.innerHTML=h;fl.style.opacity=fo;const ph=document.getElementById('ph');if(ph)ph.style.transform='scale('+(1+0.12*t/END)+') translateY('+(-30*t/END)+'px)';
  const SM='${S.style||'glow'}';bg.style.background=SM==='glow'?'radial-gradient(1200px 1000px at 50% 40%,'+acc+(S.photo?'99':'cc')+',transparent 70%)'+(S.photo?'':',#060B1A'):SM==='paper'?'linear-gradient(180deg,transparent 70%,'+acc+'33)':SM==='neon'?'radial-gradient(900px 700px at 50% 45%,'+acc+'55,transparent 70%)':'none';
  dots.innerHTML=S.rows.map((_,i)=>'<i class="'+(cur>=0&&i>=cur?'on':'')+'"></i>').reverse().join('');

@@ -74,3 +74,8 @@
 - 2026-11-13 ad-mnaprep-40s — [Ad, AI voice: ElevenLabs] 40s M&A Prep ad (Bekir asked to post now, overriding the Nov 13 no-mention pause and 5/day TikTok cap)
 - 2026-11-13 8:00pm ad-mnaprep2-25s — [Ad, AI voice: ElevenLabs] 25s 'You don't need Wharton' ad (Bekir: post to all socials at 8pm)
 - 2026-11-14 comeback-reel — [AI ad] 27s "0 offers to offer" story reel (ElevenLabs images + Runway video, Tyler voice): IG Reel + YouTube Short + Facebook Reel Nov 14 8:41pm, TikTok Nov 15 7:47pm. All marked AI-generated.
+- 2026-11-16 tsm — [Quiz] Treasury stock method: 100M + 10M options @ $20, stock $50 → 106M (C), curveball at $15
+- 2026-11-16 type-ccdebt — [Teaser video, type.js, no voice] $1,000 card at 24% APR, $25/mo → 82 payments, $2,032 total
+- 2026-11-16 oddq-eighth — [Interview Q] 12.5% of 640 = 80 (1/8 trick)
+- 2026-11-16 punch-pe100 — [Ranking video] Biggest private markets firms by capital raised 2021–25 (PEI Private Markets 100; Blackstone $356.7B)
+- 2026-11-16 compound — [Carousel, would-you-rather] $200/mo 22–32 then stop (~$400K) vs 32–62 (~$298K) at 8%

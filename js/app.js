@@ -1003,8 +1003,63 @@ function showBrief(tr,i){const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
   openPanel(`<div class="label">${tr.name} · Level ${i+1} of ${tr.levels.length}</div><h2>${L.n}</h2><p class="sub">${L.sub}</p>
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
    ${L.ex?`<div class="example">${esc(L.ex)}</div>`:""}
-   <div class="actions"><button class="btn" id="go">Start drill · 3 questions</button>${L.q.length>3?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need 2 of 3 to clear</span>`}</div>${briefLinks(tr,i)}`);
-  $("#go").onclick=()=>runLevel(tr,i);bindRel(panel)}
+   <div class="actions"><button class="btn" id="go">Start drill · 3 questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>3?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need 2 of 3 to clear</span>`}</div>${briefLinks(tr,i)}`);
+  $("#go").onclick=()=>runLevel(tr,i);if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
+/* ---------- Excel key drill: press the real keys (Windows Excel) ---------- */
+const KEYDRILL=[
+["Jump to the edge of the data block, going right","c|ArrowRight","Ctrl + →"],
+["Select from here to the edge of the data, going down","cs|ArrowDown","Ctrl + Shift + ↓"],
+["Select the entire row","s|Space","Shift + Space"],
+["Select the entire column","c|Space","Ctrl + Space"],
+["Jump to cell A1","c|Home","Ctrl + Home"],
+["Jump to the last used cell","c|End","Ctrl + End"],
+["Select from here back to A1","cs|Home","Ctrl + Shift + Home"],
+["Open the Go To box","c|g","Ctrl + G"],
+["Select the whole sheet","c|a","Ctrl + A"],
+["Open Find","c|f","Ctrl + F"],
+["Open Find and Replace","c|h","Ctrl + H"],
+["Edit the active cell","|F2","F2"],
+["Flip a cell reference between relative and absolute ($)","|F4","F4"],
+["Fill the cell above down into the selection","c|d","Ctrl + D"],
+["Fill the cell on the left across into the selection","c|r","Ctrl + R"],
+["AutoSum the cells above","a|=","Alt + ="],
+["Show formulas instead of values","c|`","Ctrl + `"],
+["Enter today's date","c|;","Ctrl + ;"],
+["Start a new line inside a cell","a|Enter","Alt + Enter"],
+["Recalculate everything","|F9","F9"],
+["Open the Insert Function box","s|F3","Shift + F3"],
+["Jump to the cells a formula refers to","c|[","Ctrl + ["],
+["Undo","c|z","Ctrl + Z"],
+["Redo","c|y","Ctrl + Y"],
+["Format as a percentage","cs|%","Ctrl + Shift + %"],
+["Format as currency","cs|$","Ctrl + Shift + $"],
+["Format as a date","cs|#","Ctrl + Shift + #"],
+["Put an outline border around the selection","cs|&","Ctrl + Shift + &"],
+["Remove all borders","cs|_","Ctrl + Shift + _"],
+["Open Paste Special","ca|v","Ctrl + Alt + V"],
+["Make the selection bold","c|b","Ctrl + B"],
+["Delete the selected cells, rows or columns","c|-","Ctrl + -"]];
+function keyDrill(tr,i){
+  const N=10,deck=KEYDRILL.slice().sort(()=>Math.random()-.5).slice(0,N);let n=0,first=0,miss=0,streak=0,best=0,shown=false;
+  const caps=t=>t.split(" + ").map(k=>'<kbd style="display:inline-block;min-width:28px;text-align:center;padding:5px 9px;margin:0 3px 3px 0;border:1px solid var(--rule);border-bottom-width:3px;border-radius:7px;background:var(--sheet);font:600 13px var(--mono,monospace);color:var(--ink)">'+esc(k)+'</kbd>').join("");
+  const match=(e,spec)=>{const[m,k]=spec.split("|");if(e.ctrlKey!==m.includes("c")||e.altKey!==m.includes("a"))return false;if(e.metaKey)return false;
+    const want=k==="Space"?" ":k;if(e.key.toLowerCase()!==want.toLowerCase())return false;if(want.length===1&&want!==" "&&!/[A-Za-z0-9]/.test(want))return true;return e.shiftKey===m.includes("s")};
+  const draw=()=>{const d=deck[n];shown=false;miss=0;
+    panel.innerHTML='<button class="close" aria-label="Close">×</button><div id="kd"><div class="q-meta"><span class="label">Key drill · '+(n+1)+'/'+N+'</span><span class="label">Streak '+streak+'</span></div><div class="q" style="margin:14px 0 6px">'+esc(d[0])+'</div><p class="note" id="kdMsg" style="min-height:44px;margin:10px 0">Press the keys now. Windows Excel shortcuts.</p><div id="kdAns" style="min-height:40px"></div><div class="actions"><button class="ghost" id="kdShow">Show me</button><button class="ghost" id="kdSkip">Skip (my computer blocks it)</button></div></div>';
+    bindClose();
+    $("#kdShow").onclick=()=>{shown=true;$("#kdAns").innerHTML=caps(d[2]);$("#kdMsg").textContent="Now press them to lock it in.";streak=0};
+    $("#kdSkip").onclick=()=>{n++;n<N?draw():end()}};
+  const end=()=>{document.removeEventListener("keydown",onKey,true);
+    panel.innerHTML='<button class="close" aria-label="Close">×</button><div class="label">Key drill</div><h2 style="margin:6px 0 4px">'+first+' of '+N+' first try</h2><p>Best streak: '+best+'. '+(first>=8?"You're fast. That's analyst speed.":first>=5?"Solid. Run it again to lock in the misses.":"Keep at it. Use Show me, then press the keys. Repetition is what makes these automatic.")+'</p><div class="actions"><button class="btn" id="kdAgain">Drill again</button><button class="ghost" id="kdBack">Back</button></div>';
+    bindClose();$("#kdAgain").onclick=()=>keyDrill(tr,i);$("#kdBack").onclick=()=>showBrief(tr,i)};
+  const onKey=e=>{if(!$("#kd")){document.removeEventListener("keydown",onKey,true);return}
+    if(["Control","Shift","Alt","Meta","CapsLock","Escape","Tab"].includes(e.key))return;
+    if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
+    e.preventDefault();e.stopPropagation();const d=deck[n];
+    if(match(e,d[1])){if(!shown&&!miss)first++;if(!shown&&!miss){streak++;best=Math.max(best,streak)}$("#kdMsg").innerHTML='<b style="color:var(--good)">Correct.</b> '+caps(d[2]);sfx&&sfx("ok");
+      document.removeEventListener("keydown",onKey,true);setTimeout(()=>{n++;if(n<N){draw();document.addEventListener("keydown",onKey,true)}else end()},700)}
+    else{miss++;streak=0;$("#kdMsg").textContent=miss>=2?"Not that one. Here's the answer, press it to continue.":"Not that one. Try again.";if(miss>=2){shown=true;$("#kdAns").innerHTML=caps(d[2])}}};
+  openPanel('<div id="kd"></div>');draw();document.addEventListener("keydown",onKey,true)}
 function runLevel(tr,i){const L=tr.levels[i];
   quiz({title:L.n,qs:L.q.length>3?L.q.slice().sort(()=>Math.random()-.5).slice(0,3):L.q,finish:c=>{const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);

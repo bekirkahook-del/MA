@@ -1,9 +1,10 @@
 // Opt in/out of streak-reminder and friend-nudge emails. POST {streak?:bool, nudge?:bool}. Doc (server-only): engage/<uid>.
-import { json, getUser, SB_URL } from "./_lib/common.mjs";
+import { json, getUser, SB_URL, hitLimit, tooMany } from "./_lib/common.mjs";
 import { svc } from "./_lib/mail.mjs";
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const u = await getUser(req); if (!u || !u.id) return json(401, { error: "Sign in first" });
+  if (!(await hitLimit("engage", u.id, 30, 3600))) return tooMany();
   let b = {}; try { b = await req.json(); } catch (e) {}
   const g = await fetch(`${SB_URL}/rest/v1/docs?col=eq.engage&id=eq.${u.id}&select=data`, { headers: svc() });
   const rows = g.ok ? await g.json() : [];

@@ -3,8 +3,33 @@
   functions = "netlify/functions"
   # Every production deploy costs 15 Netlify credits. Skip the deploy when a push only changes
   # things visitors never load: news data (read straight from GitHub), social/, notes (*.md),
-  # guide source scripts, database setup and the YouTube/Discord tooling.
-  ignore = '''C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && ! printf '%s\n' "$C" | grep -qvE '^(data/wire\.json|social/|guides/_src/|supabase/)|\.md$' '''
+  # guide source scripts, database setup, tests and the YouTube/Discord tooling.
+  ignore = '''C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && ! printf '%s\n' "$C" | grep -qvE '^(data/wire\.json|social/|guides/_src/|supabase/|tests/)|\.md$' '''
+
+# ---------------------------------------------------------------------------------------------------------------
+# Security headers for every page (added Nov 17, 2026).
+#  - CSP: only this site, Supabase (data + live updates), Google Fonts and the Wire feed on GitHub may load or be
+#    contacted. No plugins (object-src), no <base> tricks, no framing by other sites (frame-ancestors), forms only post
+#    to this site. 'unsafe-inline' stays for scripts/styles because the app uses inline handlers; moving those to
+#    event listeners would let us drop it (tracked in SECURITY notes).
+#  - Permissions-Policy: the app only needs the microphone (voice answers). Everything else is switched off.
+# ---------------------------------------------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+    Permissions-Policy = "camera=(), microphone=(self), geolocation=(), payment=(), usb=(), serial=(), bluetooth=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' blob: data:; connect-src 'self' https://nbakxpnhcfzdosbzbupd.supabase.co wss://nbakxpnhcfzdosbzbupd.supabase.co https://raw.githubusercontent.com; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+
+# API responses: never cached by browsers or the CDN
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Cache-Control = "no-store"
 
 [[headers]]
   for = "/vendor/*"
@@ -91,6 +116,55 @@
   from = "/openings"
   to = "/tools/internship-alerts/"
   status = 301
+
+# Internal notes, scripts and tests are not part of the public site (they used to be downloadable).
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/social/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/guides/_src/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tests/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.github/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.claude/*"
+  to = "/404.html"
+  status = 404
+  force = true
 
 [[redirects]]
   from = "/supabase/*"

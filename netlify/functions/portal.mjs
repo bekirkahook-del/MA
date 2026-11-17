@@ -10,5 +10,5 @@ export default async (req) => {
   try {
     const s = await stripe("POST", "billing_portal/sessions", { customer: bill.customer, return_url: SITE });
     return json(200, { url: s.url });
-  } catch (e) { console.error(e); return json(502, { error: e.message }); }
+  } catch (e) { console.error("portal", String(e)); return json(502, { error: "Couldn't open billing. Try again in a minute." }); }
 };

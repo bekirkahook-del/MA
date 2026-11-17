@@ -1,16 +1,20 @@
 // Newsletter signup: saves the email (server-only table) and sends a welcome email.
-import { json } from "./_lib/common.mjs";
+import { json, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
+import { isEmail, cleanText } from "./_lib/security.mjs";
 import { sha, rand, getSub, putSub, shell, send } from "./_lib/mail.mjs";
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   let b; try { b = await req.json(); } catch (e) { return json(400, { error: "bad request" }); }
   if (b.hp) return json(200, { ok: true }); // honeypot: bots fill hidden fields
   const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
-  if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(email)) return json(400, { error: "Please enter a valid email." });
+  if (!isEmail(email)) return json(400, { error: "Please enter a valid email." });
+  // Anti-abuse: this endpoint sends mail to whatever address it is given, so cap it per visitor and per address.
+  if (!(await hitLimit("sub-ip", clientIp(req, context), 30, 3600))) return tooMany();
+  if (!(await hitLimit("sub-em", email, 3, 86400))) return json(200, { ok: true }); // a 4th request for the same address does nothing (and doesn't reveal that)
   const id = await sha(email);
   const old = await getSub(id).catch(() => null);
-  const src0 = String(b.src || ""), cs = src0 === "cheatsheet" || src0.startsWith("cheatsheet:"), al = src0.startsWith("alerts");
+  const src0 = cleanText(b.src, 40), cs = src0 === "cheatsheet" || src0.startsWith("cheatsheet:"), al = src0.startsWith("alerts");
   const PDF = "https://mnaprep.com/cheat-sheet/50-investment-banking-interview-questions.pdf";
   const csHtml = (s) => shell(`<p style="margin-top:0"><b>Here's your cheat sheet:</b> 50 investment banking interview questions, each with a short answer you can say out loud.</p>
 <p><a href="${PDF}" style="display:inline-block;background:#2448D8;color:#fff;text-decoration:none;font-weight:bold;border-radius:10px;padding:12px 20px">Download the PDF →</a></p>
@@ -20,7 +24,7 @@ export default async (req) => {
     if (cs && process.env.RESEND_API_KEY) { try { await send([{ to: email, subject: "Your free cheat sheet: 50 IB interview questions", html: csHtml(old), s: old }]); } catch (e) { console.error(e); } }
     return json(200, { ok: true, already: true });
   }
-  const s = { id, email, src: String(b.src || "").slice(0, 40), t: new Date().toISOString(), token: (old && old.token) || rand(), status: "active" };
+  const s = { id, email, src: cleanText(b.src, 40), t: new Date().toISOString(), token: (old && old.token) || rand(), status: "active" };
   try { await putSub(id, s); } catch (e) { console.error(e); return json(502, { error: "Couldn't save right now. Try again." }); }
   if (cs && process.env.RESEND_API_KEY) {
     try { await send([{ to: email, subject: "Your free cheat sheet: 50 IB interview questions", html: csHtml(s), s }]); } catch (e) { console.error(e); }

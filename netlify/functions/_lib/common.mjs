@@ -1,13 +1,18 @@
 export const SB_URL = "https://nbakxpnhcfzdosbzbupd.supabase.co";
 export const SB_KEY = "sb_publishable_-2q58P2-fXrY-q1y4GQ8jw_58OrzsDu";
 export const SITE = process.env.SITE_URL || "https://mnaprep.com";
-export const json = (status, body) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+import { isConfirmed, clientIp, UUID } from "./security.mjs";
+export { isConfirmed, clientIp, UUID };
+// API responses are never cached or sniffed.
+export const json = (status, body, extra) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", ...(extra || {}) } });
 
 export async function getUser(req) {
-  const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
-  if (!token) return null;
-  const r = await fetch(`${SB_URL}/auth/v1/user`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${token}` } });
-  return r.ok ? r.json() : null;
+  const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  if (!token || token.length > 4096) return null;
+  try {
+    const r = await fetch(`${SB_URL}/auth/v1/user`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(8000) });
+    return r.ok ? await r.json() : null;
+  } catch (e) { return null; }
 }
 
 // Stripe REST call without the SDK (form-encoded, nested keys like line_items[0][price_data][currency])
@@ -62,6 +67,38 @@ export async function isOwner(email) {
   const { createHash } = await import("node:crypto");
   return OWNER_HASHES.includes(createHash("sha256").update(String(email || "").toLowerCase()).digest("hex"));
 }
+// Owner powers also require a CONFIRMED email, so nobody can become owner by signing up with an owner address
+// on a project where email confirmation is off.
+export const isOwnerUser = async (u) => !!u && isConfirmed(u) && (await isOwner(u.email));
+
+// Atomic counter in the docs table. Returns the new count, or null when `limit` was already reached.
+// Uses the bump_counter() SQL function (supabase/security-hardening.sql). If that function isn't installed yet it
+// falls back to read-then-write (approximate under heavy concurrency, still a real cap). Throws on infrastructure errors.
+export async function bump(col, id, uid, limit) {
+  const r = await fetch(`${SB_URL}/rest/v1/rpc/bump_counter`, { method: "POST", headers: svcH(), body: JSON.stringify({ p_col: col, p_id: id, p_uid: uid || null, p_limit: limit }), signal: AbortSignal.timeout(6000) });
+  if (r.ok) { const n = await r.json(); return typeof n === "number" ? n : null; }
+  if (r.status !== 404) throw new Error("counter rpc " + r.status);
+  const g = await fetch(`${SB_URL}/rest/v1/docs?col=eq.${encodeURIComponent(col)}&id=eq.${encodeURIComponent(id)}&select=data`, { headers: svcH(), signal: AbortSignal.timeout(6000) });
+  if (!g.ok) throw new Error("counter read " + g.status);
+  const rows = await g.json(), n = (rows[0] && rows[0].data && rows[0].data.n) || 0;
+  if (n >= limit) return null;
+  const w = await fetch(`${SB_URL}/rest/v1/docs?on_conflict=col,id`, { method: "POST", headers: { ...svcH(), Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify({ col, id, uid: uid || null, data: { n: n + 1 }, updated_at: new Date().toISOString() }), signal: AbortSignal.timeout(6000) });
+  if (!w.ok) throw new Error("counter write " + w.status);
+  return n + 1;
+}
+
+// Shared rate limiter across all function instances: at most `max` hits per `windowSec` for (name, who).
+// `who` is hashed before storage (no raw IPs in the database). Fails OPEN on infrastructure errors so an outage
+// never takes the site down; pass failOpen=false for endpoints that spend money.
+export async function hitLimit(name, who, max, windowSec, failOpen = true) {
+  const { createHash } = await import("node:crypto");
+  const bucket = Math.floor(Date.now() / (windowSec * 1000));
+  const id = `${name}:${createHash("sha256").update(String(who) + (process.env.RATE_LIMIT_SALT || "ma")).digest("hex").slice(0, 20)}:${bucket}`;
+  try { return (await bump("ratelimit", id, null, max)) !== null; }
+  catch (e) { console.error("rate limiter", String(e)); return failOpen; }
+}
+export const tooMany = () => json(429, { error: "Too many requests. Please slow down and try again in a bit.", code: "rate_limited" }, { "Retry-After": "60" });
 export function tierOf(b, now = Date.now()) {
   b = b || {};
   const paid = (b.paid || ["active", "trialing", "past_due"].includes(b.status)) && (b.until || 0) > now;

@@ -1,6 +1,6 @@
 // Invite friends: every 3 friends who make a free (email-confirmed) account earns the inviter 7 days of Pro (trial level, same as rank-up days).
 // Docs (server-only, uid null): refcodes/<code> -> {uid} · refs/<inviterUid> -> {code, joined[], rewarded} · refby/<friendUid> -> {by, t}
-import { json, getUser, getBilling, setBilling, rebuildProList, SB_URL } from "./_lib/common.mjs";
+import { json, getUser, getBilling, setBilling, rebuildProList, SB_URL, hitLimit, tooMany } from "./_lib/common.mjs";
 import { svc } from "./_lib/mail.mjs";
 
 const NEED = 3, DAYS = 7, MAX_REWARDS = 4, MAX_AGE_MS = 3 * 864e5;
@@ -25,6 +25,7 @@ export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const user = await getUser(req);
   if (!user || !user.id) return json(401, { error: "Sign in first" });
+  if (!(await hitLimit("refer", user.id, 40, 3600))) return tooMany();
   let b = {}; try { b = await req.json(); } catch (e) {}
 
   if (b.action === "code") {

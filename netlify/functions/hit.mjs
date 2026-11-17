@@ -1,5 +1,6 @@
 // Visitor counter: one row per visitor per day in docs (col "visits"). Only the owner can read them.
 import { json, SB_URL } from "./_lib/common.mjs";
+import { memLimit, clientIp } from "./_lib/security.mjs";
 
 const clip = (s, n) => String(s || "").slice(0, n);
 const BOT = /bot|crawl|spider|slurp|preview|headless|lighthouse|facebookexternalhit|embedly|curl|wget|python|monitor/i;
@@ -10,6 +11,8 @@ export default async (req, context) => {
   if (!key) return json(503, { error: "not set up" });
   const ua = req.headers.get("user-agent") || "";
   if (BOT.test(ua)) return json(200, { ok: true });
+  // cheap per-instance cap (no database call): one address can't flood the visit counter
+  if (!memLimit("hit:" + clientIp(req, context), 3000, 3600e3)) return json(200, { ok: true });
   let b;
   try { b = await req.json(); } catch (e) { return json(400, { error: "bad request" }); }
   const v = String(b.v || "");

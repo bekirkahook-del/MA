@@ -1,5 +1,5 @@
 // Starts a Stripe Checkout for a signed-in user. Prices live here, so no Stripe dashboard setup is needed.
-import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP } from "./_lib/common.mjs";
+import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP, hitLimit, tooMany } from "./_lib/common.mjs";
 
 const PLANS = {
   monthly:  { name: "M&A Pro (Monthly)",  amount: 900,  interval: "month" },
@@ -13,8 +13,9 @@ export default async (req) => {
   if (!(process.env.STRIPE_SECRET_KEY || process.env.STripeSecretKey) || !(process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY)) return json(503, { error: "Payments aren't set up yet", code: "no_key" });
   const user = await getUser(req);
   if (!user || !user.id) return json(401, { error: "Sign in first", code: "not_granted" });
+  if (!(await hitLimit("checkout", user.id, 12, 3600))) return tooMany(); // 12 checkout starts per account per hour
   const { plan } = await req.json().catch(() => ({}));
-  const P = PLANS[plan];
+  const P = typeof plan === "string" && Object.hasOwn(PLANS, plan) ? PLANS[plan] : null;
   if (!P) return json(400, { error: "Unknown plan" });
 
   const bill = await getBilling(user.id);
@@ -41,5 +42,5 @@ export default async (req) => {
   try {
     const s = await stripe("POST", "checkout/sessions", params);
     return json(200, { url: s.url });
-  } catch (e) { console.error(e); return json(502, { error: e.message }); }
+  } catch (e) { console.error("checkout", String(e)); return json(502, { error: "Couldn't start checkout. Try again in a minute." }); }
 };

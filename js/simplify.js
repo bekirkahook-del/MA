@@ -156,7 +156,7 @@ footer{flex-direction:column;align-items:center}
       if(ok){const x=d.querySelector(".pv-xp");x.classList.remove("pop");void x.offsetWidth;x.classList.add("pop")}})}
   /* 8. live this week: newest story, newest deal, soonest open application, all from The Wire */
   function live(){const hero=document.querySelector(".hero");if(!hero)return;let el=document.querySelector(".lw");
-    const g=v=>{try{return eval(v)}catch(e){return null}};const N=g("NEWS")||[],D=g("DEALS")||[],A=g("APP_OPEN")||[];if(!N.length)return;
+    const g=v=>{try{switch(v){case"NEWS":return NEWS;case"DEALS":return DEALS;case"APP_OPEN":return APP_OPEN}}catch(e){}return null};const N=g("NEWS")||[],D=g("DEALS")||[],A=g("APP_OPEN")||[];if(!N.length)return;
     const ts=d=>Date.parse(d&&d.date)||0;const deal=D.slice().sort((a,b)=>ts(b)-ts(a))[0];
     const today=new Date().toISOString().slice(0,10);const app=A.filter(a=>a[3]==="open"&&(!a[6]||a[6]>today)).sort((a,b)=>String(a[6]||"9").localeCompare(String(b[6]||"9")))[0];
     const esc2=t=>String(t||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));

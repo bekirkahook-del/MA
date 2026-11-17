@@ -1,6 +1,6 @@
 // Superday test school board. Self-reported, unverified: one row per visitor (first attempt only) in docs (col "testscore").
 // POST {school, score, v}  -> saves the visitor's first score. GET -> top schools (needs at least MIN results each).
-import { json, SB_URL } from "./_lib/common.mjs";
+import { json, SB_URL, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
 
 const MIN = 5, TOTAL = 12, TOP = 10;
 const key = () => process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -22,7 +22,7 @@ async function board(k) {
   return { top: ranked.slice(0, TOP), ranked: ranked.map((o) => o.school), counts: Object.fromEntries(all.map((o) => [o.school, o.n])), total: TOTAL, min: MIN, takers: rows.length };
 }
 
-export default async (req) => {
+export default async (req, context) => {
   const k = key();
   if (!k) return json(503, { error: "not set up" });
   if (req.method === "GET") {
@@ -31,6 +31,7 @@ export default async (req) => {
   }
   if (req.method !== "POST") return json(405, { error: "GET or POST only" });
   if (BOT.test(req.headers.get("user-agent") || "")) return json(200, { ok: true });
+  if (!(await hitLimit("score", clientIp(req, context), 60, 3600))) return tooMany(); // one visitor can't flood the school board
   let b;
   try { b = await req.json(); } catch (e) { return json(400, { error: "bad request" }); }
   const v = String(b.v || ""), s = String(b.school || ""), n = Math.round(+b.score);

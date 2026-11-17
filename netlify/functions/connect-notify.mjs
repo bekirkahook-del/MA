@@ -1,7 +1,7 @@
 // Emails someone when another member sends them a connection request (or accepts theirs).
 // POST {to: <uid>, accepted?: bool} with the sender's sign-in token. Server-side checks: real account, confirmed email,
 // one email per pair per 7 days, max 25 per sender per day. Docs (server-only): connmail/<from>_<to>, connmail/day_<from>.
-import { json, getUser, SB_URL, SITE } from "./_lib/common.mjs";
+import { json, getUser, SB_URL, SITE, isConfirmed, hitLimit, tooMany } from "./_lib/common.mjs";
 import { svc, FROM } from "./_lib/mail.mjs";
 
 const esc = s => String(s ?? "").replace(/[<>&"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
@@ -13,6 +13,8 @@ export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const me = await getUser(req);
   if (!me || !me.id) return json(401, { error: "Sign in first" });
+  if (!isConfirmed(me)) return json(200, { ok: true, sent: false }); // unconfirmed accounts can't make us email other people
+  if (!(await hitLimit("connect", me.id, 60, 3600))) return tooMany();
   let b = {}; try { b = await req.json(); } catch (e) {}
   const to = String(b.to || ""), accepted = !!b.accepted;
   if (!UUID.test(to) || to === me.id) return json(400, { error: "Bad request" });

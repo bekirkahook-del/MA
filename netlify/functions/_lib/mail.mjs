@@ -1,5 +1,6 @@
 // Email helpers: subscriber storage (Supabase docs, col "subscribers", server-only) and sending via Resend.
 import { SB_URL, SITE } from "./common.mjs";
+import { isEmail } from "./security.mjs";
 
 const key = () => process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 export const svc = () => { const k = key(); return { apikey: k, "Content-Type": "application/json", ...(k.startsWith("eyJ") ? { Authorization: `Bearer ${k}` } : {}) }; };
@@ -29,7 +30,9 @@ export async function activeSubs() {
   for (;;) {
     const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.subscribers&select=id,data&order=id`, { headers: { ...svc(), Range: `${from}-${from + 999}` } });
     const rows = r.ok ? await r.json() : [];
-    rows.forEach(x => { if (x.data && x.data.status === "active" && x.data.email) out.push({ id: x.id, ...x.data }); });
+    // Only rows the server itself created count: signed-up-by-form subscribers have a 32-hex id and token. Anything else
+    // in this collection (e.g. a signed-in user's own settings doc) is never emailed by the weekly send.
+    rows.forEach(x => { const d = x.data; if (d && d.status === "active" && /^[a-f0-9]{32}$/.test(x.id) && /^[a-f0-9]{32}$/.test(d.token || "") && isEmail(d.email)) out.push({ ...d, id: x.id }); });
     if (rows.length < 1000) break; from += 1000;
   }
   return out;
@@ -61,4 +64,13 @@ export async function send(list) { // list of {to, subject, html, s}
     const r = await fetch("https://api.resend.com/emails/batch", { method: "POST", headers: { Authorization: `Bearer ${k}`, "Content-Type": "application/json" }, body: JSON.stringify(batch) });
     if (!r.ok) throw new Error("send failed " + r.status + " " + (await r.text()));
   }
+}
+
+// The address on file for an account, straight from Supabase Auth (never from a user-writable document). null unless confirmed.
+export async function confirmedEmail(uid) {
+  if (!/^[0-9a-f-]{36}$/i.test(String(uid))) return null;
+  const r = await fetch(`${SB_URL}/auth/v1/admin/users/${uid}`, { headers: svc(), signal: AbortSignal.timeout(8000) }).catch(() => null);
+  if (!r || !r.ok) return null;
+  const u = await r.json();
+  return u && u.email && (u.email_confirmed_at || u.confirmed_at) ? u.email : null;
 }

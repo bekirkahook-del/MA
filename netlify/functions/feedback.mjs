@@ -1,10 +1,11 @@
 // Stores feedback and question reports in Supabase (col "feedback"). Works for signed-in and signed-out visitors.
-import { json, getUser, SB_URL } from "./_lib/common.mjs";
+import { json, getUser, SB_URL, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
+import { cleanText, isEmail } from "./_lib/security.mjs";
 
 const KINDS = new Set(["feedback", "question"]);
-const clip = (s, n) => String(s || "").slice(0, n);
+const clip = (s, n) => cleanText(s, n);
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return json(503, { error: "Feedback isn't set up yet" });
@@ -14,6 +15,7 @@ export default async (req) => {
   const text = clip(b.text, 2000).trim();
   if (!text && kind === "feedback") return json(400, { error: "Write something first" });
   if (b.website) return json(200, { ok: true }); // honeypot for bots
+  if (!(await hitLimit("feedback", clientIp(req, context), 30, 3600))) return tooMany();
   const user = await getUser(req).catch(() => null);
   const id = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
   const data = {
@@ -24,7 +26,7 @@ export default async (req) => {
     answer: clip(b.answer, 300),
     where: clip(b.where, 120),
     page: clip(b.page, 200),
-    email: user && user.email ? user.email : clip(b.email, 120),
+    email: user && user.email ? user.email : (isEmail(String(b.email || "").trim()) ? clip(b.email, 120) : ""),
     signedIn: !!(user && user.id),
     at: new Date().toISOString(),
     ua: clip(req.headers.get("user-agent"), 160),

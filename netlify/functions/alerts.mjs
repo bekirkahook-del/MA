@@ -1,10 +1,11 @@
 // Pro: turn instant application alerts on or off for the signed-in user.
-import { json, getUser, SB_URL } from "./_lib/common.mjs";
+import { json, getUser, SB_URL, hitLimit, tooMany } from "./_lib/common.mjs";
 import { svc } from "./_lib/mail.mjs";
 import { isProUser } from "./_lib/pro.mjs";
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const u = await getUser(req); if (!u || !u.id) return json(401, { error: "Sign in first" });
+  if (!(await hitLimit("alerts", u.id, 30, 3600))) return tooMany();
   let b = {}; try { b = await req.json(); } catch (e) {}
   const on = !!b.on;
   const pro = await isProUser(u.id);

@@ -30,7 +30,7 @@ async function one(sym) {
 
 export default async (req) => {
   const extra = (new URL(req.url).searchParams.get("s") || "").split(",").map(s => s.trim().toUpperCase())
-    .filter(s => OK.test(s)).slice(0, 20);
+    .filter(s => OK.test(s)).sort().slice(0, 12);
   const stocks = [...new Set([...CORE, ...extra])].map(s => [s, s, "usd"]);
   const all = [...MAP, ...stocks];
   const res = await Promise.allSettled(all.map(([, y]) => one(y)));

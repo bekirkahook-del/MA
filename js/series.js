@@ -99,22 +99,33 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
 .sr-tbl{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}.sr-tbl th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding:6px 8px;border-bottom:1px solid var(--rule)}
 .sr-tbl td{padding:9px 8px;border-bottom:1px solid var(--rule)}.sr-tbl tr.me td{background:var(--cobalt-soft,rgba(40,80,200,.08));font-weight:700}
 .sr-res{border:1px solid var(--rule);border-radius:12px;padding:14px;margin-top:12px;background:var(--sheet)}.sr-res .big{font-family:var(--mono);font-size:34px;font-weight:800;color:var(--cobalt)}
+
+.sr-ban{display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px;padding:12px 16px;margin:0 0 14px;border-radius:14px}
+.sr-ban .sr-l{flex:1 1 280px;min-width:0}
+.sr-ban .sr-top{font-size:10.5px;gap:8px}
+.sr-ban .sr-live{padding:2px 8px}
+.sr-h{margin:5px 0 0;font-size:19px;line-height:1.15;font-weight:900;letter-spacing:-.01em;color:#fff}
+.sr-h em{font-style:normal;color:#f5b83d}
+.sr-h small{display:block;font-size:12px;font-weight:500;letter-spacing:0;color:#9fb0d0;margin-top:3px}
+.sr-ban .sr-clock{margin:0;gap:6px}
+.sr-ban .sr-box{min-width:44px;max-width:54px;padding:4px 2px;border-radius:9px}
+.sr-ban .sr-box b{font-size:18px}
+.sr-ban .sr-box span{font-size:8.5px}
+.sr-ban .sr-act{margin:0;gap:8px;flex-wrap:nowrap}
+.sr-ban .sr-btn{font-size:13.5px;padding:9px 14px;border-radius:9px;white-space:nowrap}
+@media(max-width:560px){.sr-ban{padding:10px 12px}.sr-ban .sr-clock{order:3}.sr-ban .sr-act{order:2}.sr-h{font-size:17px}}
 `;document.head.appendChild(st);
 
   /* ---------- home banner ---------- */
   function bannerHTML(){const p=phase(),n=step(),done=ready();
-    const badge=p==="live"?`<span class="sr-live"><i></i>LIVE NOW</span>`:p==="pre"?`<span class="sr-live pre"><i></i>OPENS SOON</span>`:`<span class="sr-live end"><i></i>FINAL</span>`;
-    const chips=["School email","Your school","Official club","Compete"].map((l,i)=>`<span class="sr-chip ${i+1<n||done?"on":i+1===n?"now":""}">${i+1<n||done?"✓ ":(i+1)+". "}${l}</span>`).join("");
-    const clock=p==="ended"?"":`<div class="sr-clock" id="srClock">${["d","h","m","s"].map((k,i)=>`<div class="sr-box"><b data-k="${k}">00</b><span>${["days","hrs","min","sec"][i]}</span></div>`).join("")}</div><p class="sr-cap" id="srCap"></p>`;
-    const btn=p==="ended"?`<button class="sr-btn" data-sr="board">See final results</button>`
-      :done?`<button class="sr-btn" data-sr="hub">${p==="live"?"Enter the Series":"You're in. See the hub"}</button>`
-      :`<button class="sr-btn" data-sr="begin">${n===1&&!sess()?"Begin":"Continue setup"}</button>`;
-    return `<div class="sr-top">${badge}<span>${E(SERIES.name)} · 2 weeks only</span></div>
-      <h2>Rep your school. <em>Win the Cup.</em></h2>
-      <p class="sr-sub">A national case competition and stock pitch, school vs school. Sign in with your .edu, join your school's official club, then compete. Top 5 entries set your school's score.</p>
-      ${clock}
-      <div class="sr-act">${btn}${p==="ended"?"":`<button class="sr-btn ghost" data-sr="board">School leaderboard</button>`}</div>
-      <div class="sr-steps">${chips}</div>`}
+    const badge=p==="live"?`<span class="sr-live"><i></i>LIVE</span>`:p==="pre"?`<span class="sr-live pre"><i></i>OPENS SOON</span>`:`<span class="sr-live end"><i></i>FINAL</span>`;
+    const clock=p==="ended"?"":`<div class="sr-clock" id="srClock" title="${p==="pre"?"Opens":"Closes"} ${new Date(p==="pre"?SERIES.start:SERIES.end).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"})}">${["d","h","m","s"].map((k,i)=>`<div class="sr-box"><b data-k="${k}">00</b><span>${["day","hr","min","sec"][i]}</span></div>`).join("")}</div>`;
+    const btn=p==="ended"?`<button class="sr-btn" data-sr="board">Final results</button>`
+      :done?`<button class="sr-btn" data-sr="hub">${p==="live"?"Enter":"You're in"}</button>`
+      :`<button class="sr-btn" data-sr="begin">${n===1&&!sess()?"Begin":"Continue · step "+n+" of 4"}</button>`;
+    return `<div class="sr-l"><div class="sr-top">${badge}<span>${E(SERIES.name)} · 2 weeks only</span></div>
+      <div class="sr-h">Rep your school. <em>Win the Cup.</em><small>Case comp + stock pitch. .edu sign-in and official club required.</small></div></div>
+      ${clock}<div class="sr-act">${btn}${p==="ended"?"":`<button class="sr-btn ghost" data-sr="board">Leaderboard</button>`}</div>`}
   function paintBanner(){const home=q('section.view[data-view="home"]');if(!home)return;let b=q("#seriesBanner");
     if(!b){b=document.createElement("section");b.id="seriesBanner";b.className="sr-ban";b.dataset.sig="";home.insertBefore(b,home.firstChild);
       b.addEventListener("click",e=>{const a=e.target.closest("[data-sr]");if(!a)return;const k=a.dataset.sr;

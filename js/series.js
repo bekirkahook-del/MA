@@ -24,7 +24,7 @@
   const hasSchool=()=>!!(S.profile&&(S.profile.school||"").trim());
   const officerOf=code=>(typeof PLAYERS!=="undefined"?PLAYERS:[]).find(p=>p.club===code&&p.clubOfficer);
   const clubSchool=()=>{const c=S.club&&S.club.code;if(!c)return"";if(S.club.officer)return domain();const o=officerOf(c);return(o&&o.sd)||S.club.sd||""};
-  const clubOK=()=>{const d=domain();return !!(d&&S.club&&S.club.code&&clubSchool()===d)};
+  const clubOK=()=>{const d=domain();return !!(d&&S.club&&S.club.code&&clubSchool()===d&&(!window.maClubMod||maClubMod.approved()))};
   const step=()=>!sess()||!eduOK()?1:!hasSchool()?2:!clubOK()?3:4;
   const ready=()=>step()===4;
   const eligible=()=>ready()&&phase()==="live";

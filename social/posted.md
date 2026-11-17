@@ -101,3 +101,4 @@
 - 2026-11-21 nike-bull — [Presenter video] Why we're bullish on Nike (contrarian bull case, risks + not financial advice), Chatterbox voice (AI), QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YouTube Short + FB Reel + Pinterest, 7:23pm
 - 2026-11-24 apple-bull — [Presenter video] Why we're bullish on Apple, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:47pm
 - 2026-11-27 starbucks-bull — [Presenter video] Why we're bullish on Starbucks, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:21pm
+- 2026-11-30 disney-bull — [Presenter video] Why we're bullish on Disney, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:16pm

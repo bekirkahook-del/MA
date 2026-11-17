@@ -65,7 +65,7 @@ def g_bars(sc,seg,t):
         if k>0.05 and hi>lo: d.rectangle([cx-bw,base-hh_,cx+bw,base-hl],fill=tuple(int(c*0.55+20) for c in col))
         if k>0.95: ctext(d,cx,base-hh_-66,it["text"],F(50 if n<=2 else 44),WHITE)
         ctext(d,cx,base+14,it["xlabel"],F(28 if n<=2 else 26,"Bold"),MUT)
-    badge(d,sc,seg,t,500,150)
+    badge(d,sc,seg,t,*( (760,112) if sc.get('chips') else (500,150) ))
     for q,cp in enumerate(sc.get("chips",[])):
         if since(f"{seg}.chips.{q}",t)>=0: chip(d,100,100,cp["text"],F(36),NAVY,C(cp.get("color","GREEN")))
     foot(d,sc.get("foot",""))
@@ -112,9 +112,10 @@ def g_stat(sc,seg,t):
     x=since(f"{seg}.start_word",t)
     if x>=0:
         v=countup(0,sc["value"],x/0.9); txt=fmtv(sc["fmt"],v); fs=170
-        while d.textlength(txt,font=F(fs))>600 and fs>90: fs-=8
-        ctext(d,590 if sc.get("icon") else 500,110,txt,F(fs),C(sc.get("color","GOLD")))
-        if x>0.6: ctext(d,590 if sc.get("icon") else 500,320,sc["label"],F(36,"Bold"),WHITE)
+        ic=bool(sc.get("icon")); mw=540 if ic else 700
+        while d.textlength(txt,font=F(fs))>mw and fs>90: fs-=8
+        ctext(d,620 if ic else 500,110+(170-fs)//2,txt,F(fs),C(sc.get("color","GOLD")))
+        if x>0.6: ctext(d,620 if sc.get("icon") else 500,320,sc["label"],F(36,"Bold"),WHITE)
     for q,cp in enumerate(sc.get("chips",[])):
         y=since(f"{seg}.chips.{q}",t)
         if y>=0 and back(y/0.3)>0.2:

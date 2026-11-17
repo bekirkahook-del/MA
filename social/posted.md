@@ -84,3 +84,4 @@
 - 2026-11-17 oddq-19x21 — [Interview Q] 19 × 21 = 399 (difference of squares)
 - 2026-11-17 punch-ipo26 — [Ranking video] Biggest IPOs of 2026 by market value (interactive investor Oct 30 2026; SpaceX $1.96T)
 - 2026-11-17 whyib — [Carousel, red/green flag] 4 answers to "Why banking?"
+- 2026-11-17 5:58pm ps2-summer2027 — [AI video, ElevenLabs Alex voice, PS2-style character] Summer 2027 IB recruiting still open (Citi, Piper Sandler, William Blair). TikTok + IG Reel + YouTube Short + Facebook Reel, all marked AI-generated. Bekir asked to post to all socials

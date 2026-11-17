@@ -79,3 +79,8 @@
 - 2026-11-16 oddq-eighth — [Interview Q] 12.5% of 640 = 80 (1/8 trick)
 - 2026-11-16 punch-pe100 — [Ranking video] Biggest private markets firms by capital raised 2021–25 (PEI Private Markets 100; Blackstone $356.7B)
 - 2026-11-16 compound — [Carousel, would-you-rather] $200/mo 22–32 then stop (~$400K) vs 32–62 (~$298K) at 8%
+- 2026-11-17 ufcf — [Quiz] Unlevered FCF: EBIT 100, 25% tax, D&A 20, capex 30, NWC +10 → $55 (B)
+- 2026-11-17 story-jugs — [Teaser video, story.js, no voice] 3- and 5-gallon jugs → exactly 4 gallons in 6 moves
+- 2026-11-17 oddq-19x21 — [Interview Q] 19 × 21 = 399 (difference of squares)
+- 2026-11-17 punch-ipo26 — [Ranking video] Biggest IPOs of 2026 by market value (interactive investor Oct 30 2026; SpaceX $1.96T)
+- 2026-11-17 whyib — [Carousel, red/green flag] 4 answers to "Why banking?"

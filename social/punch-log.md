@@ -5,3 +5,5 @@
 | 2026-11-15 | Most M&A deals by count (sequel to league table) | 5 | neon + photo bg | 136 | question-first "It's not Goldman" | | | | |
 | 2026-11-16 | Biggest private markets firms by money raised 2021–25 (PEI Private Markets 100) | 7 | paper (new gold/valPx opts) | 104 | "Nobody believes #1" $356.7B | | | | |
 | 2026-11-16 | Credit card $1,000 at 24% paying $25/mo = 82 payments, $2,032 (type.js) | 4 steps | typewriter | 96 | question-first "How long?" | | | | |
+| 2026-11-17 | Biggest IPOs of 2026 by market value (interactive investor, Oct 30) | 5 | terminal + photo bg | 122 | number-first "#2 is worth $1.18T" | | | | |
+| 2026-11-17 | 3- & 5-gallon jug puzzle (story.js) | 5 steps | story | 120 | question-first "Get exactly 4 gallons" | | | | |

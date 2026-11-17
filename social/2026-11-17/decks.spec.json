@@ -1,0 +1,15 @@
+{"date":"2026-11-17","decks":{
+"ufcf":{"guide":"https://mnaprep.com/","ctaHead":"Nailed it? Try <em>the next one</em>","ctaSub":"1,000+ real finance interview questions. Free at mnaprep.com.","slides":[
+"<div class=\"kicker\">DCF interview question</div><h1>The <em>cash flow</em> question that trips up juniors.</h1><p class=\"lede\">One question. 20 seconds.</p>",
+"<div class=\"kicker\">Unlevered free cash flow</div><h2>EBIT <em>$100</em>. Tax <em>25%</em>. D&amp;A <em>$20</em>. Capex <em>$30</em>. NWC up <em>$10</em>. UFCF?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$65</div><div class=\"opt\"><i>B</i>$55</div><div class=\"opt\"><i>C</i>$45</div><div class=\"opt\"><i>D</i>$75</div></div><p class=\"note\">Lock it in, then swipe.</p>",
+"<div class=\"kicker\">Answer</div><div class=\"big\">$55</div><div class=\"card wide\" style=\"display:flex;flex-direction:column;gap:24px;--nw:270px\"><div class=\"step\"><div class=\"n\">$75</div><div class=\"t\">EBIT after tax: $100 × 75%</div></div><div class=\"step\"><div class=\"n\">+$20</div><div class=\"t\">Add back D&amp;A (not cash)</div></div><div class=\"step\"><div class=\"n\">−$40</div><div class=\"t\">Capex $30 + NWC $10</div></div></div><p class=\"lede\" style=\"color:#DDB056;font-weight:600\">B. 75 + 20 − 30 − 10 = 55</p>",
+"<div class=\"kicker\">Why no interest?</div><h2><em>Unlevered</em> means before debt.</h2><p class=\"lede\">It's the cash the business makes for everyone who funded it, lenders and shareholders. So interest stays out.</p>",
+"<div class=\"kicker\">Most common miss</div><h2>NWC went <em>up</em>, so cash goes <em>down.</em></h2><p class=\"lede\">More inventory or receivables ties up cash. People add it and get $75.</p><p class=\"lede\">What did you pick? 👇</p>"
+]},
+"whyib":{"guide":"https://mnaprep.com/","ctaHead":"Practice your <em>answers</em>","ctaSub":"Mock interviews and 1,000+ questions. Free at mnaprep.com.","slides":[
+"<div class=\"kicker\">Red flag or green flag?</div><h1>4 answers to <em>\"Why banking?\"</em></h1><p class=\"lede\">Judge each one before you swipe.</p>",
+"<div class=\"kicker\">Answer 1</div><h2>\"Honestly? The <em>money.</em>\"</h2><div class=\"big\">🚩</div><p class=\"lede\">Everyone knows it pays. Saying only that tells them nothing about why you'd last 100-hour weeks.</p>",
+"<div class=\"kicker\">Answer 2</div><h2>\"I built a DCF for my club's stock pitch and want to do that on <em>live deals.</em>\"</h2><div class=\"big\">🟢</div><p class=\"lede\">Specific, real, and it shows you've already done the work.</p>",
+"<div class=\"kicker\">Answer 3</div><h2>\"I just want to <em>keep my options open.</em>\"</h2><div class=\"big\">🚩</div><p class=\"lede\">Sounds like you'll leave in a year. Talk about what you want to learn instead.</p>",
+"<div class=\"kicker\">Answer 4</div><h2>\"I talked to analysts on your team and liked how much they <em>own their deals.</em>\"</h2><div class=\"big\">🟢</div><p class=\"lede\">Only if it's true. Which one would you say? 👇</p>"
+]}}}

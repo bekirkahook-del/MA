@@ -43,6 +43,11 @@ def block(b):
     if k == "cta": return f'<div class="cta"><p>{b[1]}</p><a href="{b[2]}">{e(b[3])}</a></div>'
     raise ValueError(k)
 
+def answer_box(a):
+    """The "short answer" box near the top of a guide: 2-3 plain sentences that answer the headline question directly."""
+    if not a: return ""
+    return f'<div class="card ans-top" style="border-left:4px solid #2448D8;margin:0 0 22px"><h3 style="margin:0 0 6px">Short answer</h3><p style="margin:0">{a}</p></div>'
+
 def page(p):
     url = f"https://mnaprep.com/guides/{p['slug']}/"
     title = f"{p['title']} | M&A Prep"
@@ -72,7 +77,7 @@ def page(p):
 {NUNITO}
 </head><body>
 <header class="top"><div class="wrap"><a class="brand" href="/">M<span>&amp;</span>A</a><a class="topcta" href="/">Train free</a></div></header>
-<main class="wrap"><p class="crumb"><a href="/">M&amp;A Prep</a> › <a href="/guides/">Guides</a></p><h1>{e(p['h1'])}</h1><div class="lede">{''.join(f'<p>{x}</p>' for x in p['lede'])}</div>{''.join(block(b) for b in p['body'])}
+<main class="wrap"><p class="crumb"><a href="/">M&amp;A Prep</a> › <a href="/guides/">Guides</a></p><h1>{e(p['h1'])}</h1><div class="lede">{''.join(f'<p>{x}</p>' for x in p['lede'])}</div>{answer_box(p.get('answer'))}{''.join(block(b) for b in p['body'])}
 <h2>More free guides</h2><ul class="more">{more_html}</ul></main>
 <footer><div class="wrap">M&amp;A Prep is a free, game-style way to train for investment banking, private equity, hedge fund, restructuring and consulting interviews. <a href="/">Start training</a>.</div></footer>
 <script src="/js/hit.js" defer></script><script src="/js/grow.js" defer></script>

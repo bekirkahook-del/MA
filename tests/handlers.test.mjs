@@ -101,13 +101,13 @@ test("ai: unauthenticated 401, unconfirmed 409", async () => {
 test("ai: free tier stops at its daily limit (429), earlier calls succeed", async () => {
   const h = await F("ai"), b = { tier: "quick", prompt: "hi" }; let ok = 0, last;
   for (let i = 0; i < 12; i++) { last = await h(post("ai", b, "tok1")); if (last.status === 200) ok++; else break; }
-  assert.equal(ok, 8); assert.equal(last.status, 429);
+  assert.equal(ok, 3); assert.equal(last.status, 429);
 });
 test("ai: also enforced when the atomic RPC is missing (fallback path)", async () => {
   be = installBackend({ users: T, rpc: false }); setEnv();
   const h = await F("ai"), b = { tier: "quick", prompt: "hi" }; let ok = 0;
   for (let i = 0; i < 12; i++) { const r = await h(post("ai", b, "tok1")); if (r.status === 200) ok++; else break; }
-  assert.equal(ok, 8);
+  assert.equal(ok, 3);
 });
 test("ai: unknown tier key like __proto__ never reaches upstream", async () => {
   const h = await F("ai"), before = be.calls.filter((c) => c.host === "api.anthropic.com").length;

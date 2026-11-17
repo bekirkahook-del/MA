@@ -111,11 +111,11 @@
   function drawBar(){const show=guest()&&xp()>0&&!SS.get("ma-gw-barx")&&!LS.get("ma-notrack");
     if(!show){if(bar){bar.remove();bar=null}return}
     if(!bar){bar=document.createElement("div");bar.className="gw-bar";bar.setAttribute("role","status");
-      bar.innerHTML=`<span>⚠️ Your <b class="n"></b> XP is only saved on this device.</span><button class="go" type="button">Save it free</button><button class="x" type="button" aria-label="Hide">×</button>`;
+      bar.innerHTML=`<span>⚠️ Your <b class="n"></b> XP<span class="sk"></span> only lives on this device. Save it free and keep your rank.</span><button class="go" type="button">Save it free</button><button class="x" type="button" aria-label="Hide">×</button>`;
       bar.querySelector(".go").onclick=()=>{ev("bar_click");LS.set("ma-gw-from","bar");if(window.maOpenAuth)window.maOpenAuth("up")};
       bar.querySelector(".x").onclick=()=>{SS.set("ma-gw-barx","1");ev("bar_dismiss");drawBar()};
       document.body.insertBefore(bar,document.body.firstChild);if(!SS.get("ma-gw-barseen")){SS.set("ma-gw-barseen","1");ev("bar_shown")}}
-    bar.querySelector(".n").textContent=xp()}
+    bar.querySelector(".n").textContent=xp();try{const k=typeof streak==="function"?streak():0;bar.querySelector(".sk").textContent=k>1?" and "+k+"-day streak":""}catch(e){}}
   setTimeout(drawBar,1500);setInterval(drawBar,4000);
 
   /* ---------- more sign-in moments. Guests only, always dismissible, never block free content.

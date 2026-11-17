@@ -200,6 +200,7 @@
     {const ff=$("#ffChart");if(ff&&!ff.dataset.pnFf){ff.dataset.pnFf="1";const lb=ff.previousElementSibling;const nx=ff.nextElementSibling;
       const d=document.createElement("details");d.className="pn-fold";d.innerHTML="<summary>📊 Football field: valuation range</summary>";ff.parentNode.insertBefore(d,lb&&lb.classList.contains("label")?lb:ff);
       [lb&&lb.classList.contains("label")?lb:null,ff,nx&&nx.tagName==="P"?nx:null].filter(Boolean).forEach(x=>d.appendChild(x))}}
+    fold($('[data-view="home"] .lw'),"📰 Live this week");
     fold($("#lb"),"🏆 Top players");
     fold($("#lboTbl"),"Year-by-year table");
     fold($("#dcfTbl"),"Projection table");

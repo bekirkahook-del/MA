@@ -236,9 +236,10 @@ Return ONLY JSON: {"score": integer 1-10, "verdict": one short sentence, "parts"
       ${r.best_question?`<div class="label">Your best question</div><p style="margin:4px 0 12px">“${esc2(r.best_question)}”</p>`:""}
       ${(r.try_asking||[]).length?`<div class="label">Try asking next time</div><ul>${r.try_asking.map(s=>`<li>${esc2(s)}</li>`).join("")}</ul>`:""}
       ${r.thank_you?`<div class="label" style="margin-bottom:6px">A thank-you note to send</div><div class="model">${esc2(r.thank_you)}</div>`:""}
-      <div class="actions"><button class="btn sm" id="ccAgain">New call</button>${r.thank_you?`<button class="ghost outline" id="ccCopy">Copy thank-you note</button>`:""}</div></div></div>`}
+      <div class="actions"><button class="btn sm" id="ccAgain">New call</button>${sc>=8?`<button class="ghost outline" id="ccShare">Share my score</button>`:""}${r.thank_you?`<button class="ghost outline" id="ccCopy">Copy thank-you note</button>`:""}</div></div></div>`}
 
   function bindAfter(){const a=$("#ccAgain");if(a)a.onclick=()=>{chat=null;render();const b=$("#ccBox");b&&b.scrollIntoView({block:"start",behavior:"smooth"})};
+    const sh=$("#ccShare");if(sh)sh.onclick=()=>{const g=chat.grade;if(window.shareCard)window.shareCard({kicker:"COFFEE CHAT CALL",big:g.score+"/10",title:"Mock networking call",sub:"Practice yours free",path:"/",file:"my-coffee-chat-score.png",text:"I scored "+g.score+"/10 on a mock finance coffee chat. Try it free: https://mnaprep.com"})};
     const c=$("#ccCopy");if(c)c.onclick=()=>{try{navigator.clipboard.writeText(chat.grade.thank_you);if(typeof toast==="function")toast("Copied")}catch(e){}}}
 
   function mount(){const pane=document.querySelector('[data-pane="coffee"]');if(!pane||$("#ccBox"))return;

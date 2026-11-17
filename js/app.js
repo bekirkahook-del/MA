@@ -1004,7 +1004,7 @@ function showBrief(tr,i){const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
   openPanel(`<div class="label">${tr.name} · Level ${i+1} of ${tr.levels.length}</div><h2>${L.n}</h2><p class="sub">${L.sub}</p>
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
    ${L.ex?`<div class="example">${esc(L.ex)}</div>`:""}
-   <div class="actions"><button class="btn" id="go">Start drill · 3 questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>3?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need 2 of 3 to clear</span>`}</div>${briefLinks(tr,i)}`);
+   <div class="actions"><button class="btn" id="go">Start drill · ${lvlN(tr)} questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>lvlN(tr)?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need 2 of 3 to clear</span>`}</div>${briefLinks(tr,i)}`);
   $("#go").onclick=()=>runLevel(tr,i);if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
 /* ---------- Excel key drill: press the real keys (Windows Excel) ---------- */
 const KEYDRILL=[
@@ -1061,17 +1061,21 @@ function keyDrill(tr,i){
       document.removeEventListener("keydown",onKey,true);setTimeout(()=>{n++;if(n<N){draw();document.addEventListener("keydown",onKey,true)}else end()},700)}
     else{miss++;streak=0;$("#kdMsg").textContent=miss>=2?"Not that one. Here's the answer, press it to continue.":"Not that one. Try again.";if(miss>=2){shown=true;$("#kdAns").innerHTML=caps(d[2])}}};
   openPanel('<div id="kd"></div>');draw();document.addEventListener("keydown",onKey,true)}
-function runLevel(tr,i){const L=tr.levels[i];
-  quiz({title:L.n,qs:L.q.length>3?L.q.slice().sort(()=>Math.random()-.5).slice(0,3):L.q,finish:c=>{const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
+/* specialized tracks take longer: 10 questions a level (pass at 7, 3 stars at 9) instead of 3 */
+const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
+const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
+const lvlStars=(tr,raw)=>lvlN(tr)===3?raw:(raw>=lvlN(tr)-1?3:raw>=Math.ceil(lvlN(tr)*.7)?2:raw>=Math.ceil(lvlN(tr)*.4)?1:0);
+function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);
+  quiz({title:L.n,qs:L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
     const xp0=totalXP(),r0=rankOf(xp0);if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
     if(c>=2){questEvt("level");sfx("clear")}if(c===3)questEvt("stars3");
     const nowDone=clearedCount(tr.id)===tr.levels.length,pass=c>=2,hasNext=i+1<tr.levels.length;
     const unlocked=before.filter(n=>trackUnlocked(TRACKS.find(t=>t.name===n)));
     if(nowDone&&!wasDone)logEvent(`Completed the ${tr.name} track`);if(r1>r0)logEvent(`Was promoted to ${RANKS[r1][0]}`);
-    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):"Need 2 of 3 to clear. Reread the briefing and try again.";
+    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":Math.ceil(lvlN(tr)*.7)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
     setTimeout(()=>{if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
-    return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${c} of 3 correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
+    return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${Math.min(raw,lvlN(tr))} of ${lvlN(tr)} correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
       <p>${msg}</p>${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}
       ${r1>r0?`<p style="font-weight:600;margin-top:12px">Promoted to ${RANKS[r1][0]}.</p>`:""}
       ${unlocked.length?`<p style="margin-top:8px">Unlocked: <b>${unlocked.join(", ")}</b></p>`:""}

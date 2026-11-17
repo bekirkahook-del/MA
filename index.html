@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Free, game-style training for investment banking, private equity, hedge fund, restructuring and consulting careers. Learn in 5-minute levels, practice real interview questions, follow live deals.">
+<meta name="description" content="Free, game-style prep for investment banking, private equity, hedge fund and consulting interviews. Learn in 5-minute levels and practice real questions.">
 <meta property="og:title" content="M&amp;A: Train for Wall Street like it's a game">
 <meta property="og:description" content="Free training for IB, PE, hedge funds, restructuring and consulting. 1,000+ interview-style questions, live deal breakdowns, career planning.">
 <meta property="og:type" content="website">
@@ -54,7 +54,7 @@ body .track .tr-dots i.on{background:var(--tc)}
 body .track .pill.go{color:var(--tc)}
 body nav.tabs,body nav.subnav{justify-content:space-around!important;gap:0!important}body nav.tabs .tab,body nav.subnav button{flex:0 0 auto}
 body .page-head{text-align:center}body .prof-row{display:flex;justify-content:center}body .prof-row .prof-menu{left:50%;translate:-50% 0}
-body .page-head h1::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin:8px auto 0;background:linear-gradient(90deg,var(--c-blue),var(--c-violet))}
+body .page-head h1::after,body .page-head h2::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin:8px auto 0;background:linear-gradient(90deg,var(--c-blue),var(--c-violet))}
 </style>
 </head><body>
 <style>
@@ -1486,7 +1486,7 @@ body{overflow-x:clip}
 /* ===== IA pass: page heads, subnav, home grid ===== */
 .view{gap:28px}
 .page-head{display:flex;flex-direction:column;gap:4px}
-.page-head h1{font-family:var(--body);font-size:26px;font-weight:600;font-stretch:100%;letter-spacing:-.01em}
+.page-head h1,.page-head h2{font-family:var(--body);font-size:26px;font-weight:600;font-stretch:100%;letter-spacing:-.01em}
 .page-head p{margin:0;color:var(--ink-2);font-size:14px}
 .subnav{display:flex!important;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;border:0!important;border-bottom:1px solid var(--rule)!important;border-radius:0!important;gap:22px;align-self:stretch;margin-top:-8px}
 .subnav::-webkit-scrollbar{display:none}
@@ -1504,7 +1504,7 @@ body{overflow-x:clip}
 .focus-card{border-top:0;padding-top:0}
 .home-links{grid-template-columns:1fr 1fr}
 .arcade{grid-template-columns:1fr 1fr}
-@media (max-width:760px){.home-grid{grid-template-columns:1fr;gap:28px}.page-head h1{font-size:22px}.subnav{gap:16px}}
+@media (max-width:760px){.home-grid{grid-template-columns:1fr;gap:28px}.page-head h1,.page-head h2{font-size:22px}.subnav{gap:16px}}
 
 /* smooth + even pass */
 /* pull-out nav (off) */
@@ -1824,7 +1824,7 @@ details[open]::details-content{block-size:auto}
 
   <!-- LEARN -->
   <section class="view" data-view="learn" hidden>
-    <header class="page-head"><h1>Learn</h1><p data-blurb="learn">Tracks, final rounds and real deals, explained simply.</p></header>
+    <header class="page-head"><h2>Learn</h2><p data-blurb="learn">Tracks, final rounds and real deals, explained simply.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
     <nav class="seg sub subnav" role="tablist" aria-label="Learn sections"><button data-sub="tracks" aria-pressed="true">Tracks</button><button data-sub="certs" aria-pressed="false">Certifications</button><button data-sub="deals" aria-pressed="false">Deal breakdowns</button><button data-sub="cheats" aria-pressed="false">Cheat sheet</button></nav>
     <div data-pane="tracks" class="pane">
@@ -1847,7 +1847,7 @@ details[open]::details-content{block-size:auto}
 
   <!-- PRACTICE -->
   <section class="view" data-view="practice" hidden>
-    <header class="page-head"><h1>Practice</h1><p data-blurb="practice">Interview reps, speed drills and modeling.</p></header>
+    <header class="page-head"><h2>Practice</h2><p data-blurb="practice">Interview reps, speed drills and modeling.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
     <nav class="seg sub subnav" role="tablist" aria-label="Practice sections"><button data-sub="interview" aria-pressed="true">Interview</button><button data-sub="rapid" aria-pressed="false">Rapid Fire</button><button data-sub="chal" aria-pressed="false">Modeling</button><button data-sub="cases" aria-pressed="false">Cases</button><button data-sub="lbo" aria-pressed="false">LBO builder</button><button data-sub="dcf" aria-pressed="false">DCF builder</button></nav>
     <div data-pane="cases" class="pane" hidden><div id="pcases"></div></div>
@@ -1917,7 +1917,7 @@ details[open]::details-content{block-size:auto}
 
   <!-- COMPETE -->
   <section class="view" data-view="compete" hidden>
-    <header class="page-head"><h1>Compete</h1><p data-blurb="compete">Your rank, your school's team and this week's Gauntlet.</p></header>
+    <header class="page-head"><h2>Compete</h2><p data-blurb="compete">Your rank, your school's team and this week's Gauntlet.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
     <nav class="seg sub subnav" role="tablist" aria-label="Compete sections"><button data-sub="overview" aria-pressed="true">Overview</button><button data-sub="boards" aria-pressed="false">Leaderboards</button><button data-sub="club" aria-pressed="false">Club & duels</button><button data-sub="activity" aria-pressed="false">Activity</button></nav>
     <div data-pane="overview" class="pane">
@@ -1945,7 +1945,7 @@ details[open]::details-content{block-size:auto}
 
   <!-- CAREER -->
   <section class="view" data-view="career" hidden>
-    <header class="page-head"><h1>Career</h1><p data-blurb="career">Everything between you and the offer.</p></header>
+    <header class="page-head"><h2>Career</h2><p data-blurb="career">Everything between you and the offer.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
     <nav class="seg sub subnav" role="tablist" aria-label="Career sections"><button data-sub="road" aria-pressed="true">Roadmap</button><button data-sub="open" aria-pressed="false">Openings</button><button data-sub="apps" aria-pressed="false">Applications</button><button data-sub="cal" aria-pressed="false">Calendar</button><button data-sub="net" aria-pressed="false">Networking</button><button data-sub="res" aria-pressed="false">Resume</button><button data-sub="firms" aria-pressed="false">Firms</button></nav>
     <div data-pane="road" class="pane">

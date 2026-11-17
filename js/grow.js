@@ -206,11 +206,15 @@
   /* ---------- count sign-ups (and which nudge led to them) ---------- */
   const watch=(t=0)=>{const A=window.MA_AUTH;if(!(A&&A.sb)){if(t<40)setTimeout(()=>watch(t+1),250);return}
     try{A.sb.auth.onAuthStateChange((e,s)=>{if(e!=="SIGNED_IN"||!s||!s.user)return;const made=Date.parse(s.user.created_at||0);
-      if(made&&Date.now()-made<10*60000&&!LS.get("ma-gw-signed")){LS.set("ma-gw-signed","1");ev("signup");const f=LS.get("ma-gw-from");if(f)ev("signup_from_"+f);
+      if(made&&Date.now()-made<10*60000&&!LS.get("ma-gw-signed")){LS.set("ma-gw-signed","1");ev("signup");const f=LS.get("ma-gw-from");if(f)ev("signup_from_"+f);if(LS.get("ma-ai-from"))ev("signup_from_chatgpt");
         if(new URLSearchParams(location.search).get("utm_source")==="guide")ev("signup_from_guide");flush()}
       document.querySelectorAll(".gw-strip,.gw-tc").forEach(x=>x.remove());
       if(bar){bar.remove();bar=null}})}catch(e){}};
   watch();
   /* remember a guide-box arrival for sign-up attribution */
   if(q.get("utm_source")==="guide")LS.set("ma-gw-from","guide");
+  /* AI-assistant arrivals (ChatGPT adds utm_source=chatgpt.com; others only leave a referrer): count the visit and credit later sign-ups */
+  {const src=(q.get("utm_source")||"").toLowerCase(),ref=(document.referrer||"").toLowerCase();
+   const ai=/chatgpt|openai/.test(src)||/chatgpt\.com|chat\.openai\.com/.test(ref)||/perplexity/.test(src+ref)||/claude\.ai/.test(ref)||/gemini\.google|copilot\.microsoft/.test(ref);
+   if(ai&&!SS.get("ma-ai-seen")){SS.set("ma-ai-seen","1");LS.set("ma-ai-from","1");ev("from_ai");if(/chatgpt|openai/.test(src+ref))ev("from_chatgpt")}}
 })();

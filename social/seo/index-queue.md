@@ -219,3 +219,4 @@ One line per URL. The daily task requests the first 10 unchecked ones in Search 
 - [ ] https://mnaprep.com/guides/bates-investment-banking/
 - [ ] https://mnaprep.com/guides/colby-investment-banking/
 - [ ] https://mnaprep.com/guides/vassar-investment-banking/
+- [ ] https://mnaprep.com/guides/how-to-prepare-for-a-coffee-chat/

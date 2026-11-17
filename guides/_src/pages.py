@@ -98,7 +98,7 @@ PAGES = [
 "title": "Coffee Chat Questions for Investment Banking Networking (+ Email Template)",
 "h1": "Coffee chat questions for finance networking (and how to ask for one)",
 "desc": "Good questions to ask in an investment banking or private equity coffee chat, how to ask for a chat by email or LinkedIn, and how to follow up so it actually helps you get an interview.",
-"related": ["how-to-get-into-investment-banking", "investment-banking-recruiting-timeline", "behavioral-interview-questions-finance", "superday-guide"],
+"related": ["how-to-prepare-for-a-coffee-chat", "how-to-get-into-investment-banking", "investment-banking-recruiting-timeline", "behavioral-interview-questions-finance"],
 "lede": ["A coffee chat is a short call (usually 15 to 30 minutes) with someone who works where you want to work. In banking, these chats matter a lot. They're how you learn about a group, and how a banker might remember your name when applications come in.",
          "The goal isn't to ask for a job. It's to learn, be easy to talk to, and leave them thinking you'd be a good fit."],
 "body": [
@@ -115,6 +115,7 @@ PAGES = [
  ("qa", "How long should a coffee chat be?", "Plan for 15 to 20 minutes and respect their time. If they want to keep talking, great, but offer to let them go when time is up."),
  ("qa", "How do I follow up after a coffee chat?", "Send a thank-you note within a day that mentions one specific thing they said. Then check in every month or two with a short update, like a new internship or something you learned."),
  ("qa", "How many coffee chats should I do?", "Many students who land banking jobs do dozens over a recruiting cycle. Track them in a spreadsheet or in M&amp;A Prep's free networking tracker so you know who to follow up with."),
+ ("p", "Before your next call, read <a href=\"/guides/how-to-prepare-for-a-coffee-chat/\">how to prepare for a coffee chat</a> or try a <a href=\"/#coffee\">mock coffee chat</a> with an AI banker."),
  ("cta", "Track every contact and follow-up date in M&amp;A Prep's free networking tracker.", "/#recruit", "Open the tracker →"),
 ]},
 {

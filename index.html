@@ -1760,6 +1760,16 @@ details::details-content{block-size:0;overflow:clip;overflow-clip-margin:14px;tr
 details[open]::details-content{block-size:auto}
 .xp,.stat b,.qb,.clock,.streak,.mm-sum,.pill,#xpText,.tape-track{font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){*:not(.tape-track){animation:none!important;transition:none!important}}
+/* UX pass (Nov 17): Fitts's law + bigger hit areas on touch, no tap delay */
+button,a,.btn,.ghost,.chip,.opt,.tab,.hl,.primary,input[type=checkbox],input[type=radio],select{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media (pointer:coarse){
+.btn,.primary,.ghost,.chip,nav.tabs .tab,.subnav button,.opt{min-height:44px}
+.chip{padding-left:14px;padding-right:14px}
+.ghost{padding-left:14px;padding-right:14px}
+.sl input[type=range]{height:8px;padding:18px 0;background-clip:content-box}
+.sl input[type=range]::-webkit-slider-thumb{width:28px;height:28px}
+.sl input[type=range]::-moz-range-thumb{width:26px;height:26px}
+}
 </style>
 
 <div class="wrap">

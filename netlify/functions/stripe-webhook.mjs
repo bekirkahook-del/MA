@@ -1,5 +1,5 @@
 // Stripe tells us when someone pays, renews or cancels. We record it in Supabase (col "billing", id = user id).
-import { json, stripe, setBilling, getBilling, rebuildProList, UUID } from "./_lib/common.mjs";
+import { json, stripe, setBilling, getBilling, rebuildProList, UUID, getClub, setClub, setMemberAccess, clubCodeOk } from "./_lib/common.mjs";
 import { verifyStripeSignature } from "./_lib/security.mjs";
 
 const secret = () => (process.env.STRIPE_WEBHOOK_SECRET || process.env.STRIPESECRETWEBHOOKMNA || "").trim();
@@ -21,6 +21,20 @@ export default async (req) => {
     if (ev.type === "checkout.session.completed" || ev.type === "checkout.session.async_payment_succeeded") {
       const uid = o.client_reference_id || (o.metadata && o.metadata.uid);
       if (!uid || !UUID.test(uid)) return json(200, { ok: true });
+      if (o.metadata && o.metadata.plan === "club") {
+        // Club plan: the entitlement lives on the club (col clubbilling), and each seat holder's billing doc gets clubUntil.
+        const code = o.metadata && o.metadata.club;
+        if (!clubCodeOk(code)) return json(200, { ok: true });
+        const sub = await stripe("GET", `subscriptions/${o.subscription}`);
+        const until = (sub.current_period_end || (sub.items && sub.items.data[0] && sub.items.data[0].current_period_end) || 0) * 1000;
+        const prev = (await getClub(code)) || {};
+        const club = { ...prev, officer: uid, seats: Number(o.metadata.seats) || prev.seats || 10, members: [...new Set([uid, ...(prev.members || [])])],
+          status: sub.status, customer: o.customer, sub: o.subscription, until, start: Date.now(), cancelAtEnd: false };
+        await setClub(code, club);
+        await setMemberAccess(club.members, until);
+        await rebuildProList().catch((e) => console.error("pro list", e));
+        return json(200, { ok: true });
+      }
       const p = plan(o.metadata && o.metadata.plan, o.mode === "subscription" ? "monthly" : null);
       if (!p) return json(200, { ok: true, ignored: "unknown plan" });
       // A one-time payment only counts once it is actually paid (delayed methods report "unpaid" first).
@@ -32,6 +46,16 @@ export default async (req) => {
           until: (sub.current_period_end || (sub.items && sub.items.data[0] && sub.items.data[0].current_period_end) || 0) * 1000, start: Date.now() });
       } else {
         await setBilling(uid, { ...prev, plan: p, status: "active", customer: o.customer || prev.customer, until: Date.now() + 122 * 864e5, start: Date.now() });
+      }
+    } else if (ev.type.startsWith("customer.subscription.") && o.metadata && o.metadata.plan === "club") {
+      const code = o.metadata.club, club = clubCodeOk(code) && (await getClub(code));
+      if (club && club.sub === o.id) {
+        const end = (o.current_period_end || (o.items && o.items.data[0] && o.items.data[0].current_period_end) || 0) * 1000;
+        const gone = ev.type.endsWith("deleted");
+        club.status = gone ? "canceled" : o.status; club.until = end || club.until; club.cancelAtEnd = !!o.cancel_at_period_end;
+        await setClub(code, club);
+        if (gone) await setMemberAccess(club.members || [], 0);
+        else if (["active", "trialing", "past_due"].includes(o.status)) await setMemberAccess(club.members || [], club.until);
       }
     } else if (ev.type.startsWith("customer.subscription.")) {
       const uid = o.metadata && o.metadata.uid;

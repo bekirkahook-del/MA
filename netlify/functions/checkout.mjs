@@ -1,5 +1,6 @@
 // Starts a Stripe Checkout for a signed-in user. Prices live here, so no Stripe dashboard setup is needed.
-import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP, hitLimit, tooMany } from "./_lib/common.mjs";
+import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP, hitLimit, tooMany, getClub, clubActive, clubPlayers, clubCodeOk } from "./_lib/common.mjs";
+import { clubQuote } from "./_lib/clubprice.mjs";
 
 const PLANS = {
   monthly:  { name: "M&A Pro (Monthly)",  amount: 900,  interval: "month" },
@@ -14,8 +15,25 @@ export default async (req) => {
   const user = await getUser(req);
   if (!user || !user.id) return json(401, { error: "Sign in first", code: "not_granted" });
   if (!(await hitLimit("checkout", user.id, 12, 3600))) return tooMany(); // 12 checkout starts per account per hour
-  const { plan } = await req.json().catch(() => ({}));
-  const P = typeof plan === "string" && Object.hasOwn(PLANS, plan) ? PLANS[plan] : null;
+  const reqBody = await req.json().catch(() => ({}));
+  const { plan } = reqBody;
+  let P = typeof plan === "string" && Object.hasOwn(PLANS, plan) ? PLANS[plan] : null, clubMeta = null;
+  if (plan === "club") {
+    // Club plan: the price is computed here from the member count, never trusted from the browser.
+    const q = clubQuote(reqBody.members);
+    if (!q.ok) return json(400, { error: q.error, contact: !!q.contact });
+    const code = String(reqBody.code || "").toLowerCase();
+    if (!clubCodeOk(code)) return json(400, { error: "Create your club in the app first, then come back to subscribe." });
+    // The buyer must be an officer of that club (their own player doc says so) and nobody else may already hold a plan on it.
+    const me = (await clubPlayers(code)).find((p) => p.id === user.id);
+    if (!me || !me.data || !me.data.clubOfficer) return json(403, { error: "Only the club's officer can subscribe. Open your club in the app and try again." });
+    const existing = await getClub(code);
+    if (existing && existing.officer !== user.id && clubActive(existing)) return json(409, { error: "This club already has a plan." });
+    if (existing && existing.officer === user.id && clubActive(existing) && !existing.cancelAtEnd) return json(409, { error: "Your club already has an active plan. Use Manage billing to change it." });
+    const name = String((me.data && me.data.clubName) || "Club").slice(0, 40);
+    P = { name: `M&A Pro Club Plan (${q.seats} seats)${name ? " · " + name : ""}`, amount: q.totalCents, interval: "year" };
+    clubMeta = { club: code, seats: String(q.seats) };
+  }
   if (!P) return json(400, { error: "Unknown plan" });
 
   const bill = await getBilling(user.id);
@@ -34,11 +52,11 @@ export default async (req) => {
     custom_text: { submit: { message: P.interval
       ? `Renews automatically every ${P.interval} at the same price until you cancel. Cancel anytime in Settings. By subscribing you agree to the Terms (${SITE}/terms/) and Refund Policy (${SITE}/refund/).`
       : `One-time payment, no renewal. By paying you agree to the Terms (${SITE}/terms/) and Refund Policy (${SITE}/refund/).` } },
-    metadata: { uid: user.id, plan },
+    metadata: { uid: user.id, plan, ...(clubMeta || {}) },
   };
   if (bill && bill.customer) params.customer = bill.customer;
   else { params.customer_email = user.email; if (!P.interval) params.customer_creation = "always"; }
-  if (P.interval) params.subscription_data = { metadata: { uid: user.id, plan } };
+  if (P.interval) params.subscription_data = { metadata: { uid: user.id, plan, ...(clubMeta || {}) } };
   try {
     const s = await stripe("POST", "checkout/sessions", params);
     return json(200, { url: s.url });

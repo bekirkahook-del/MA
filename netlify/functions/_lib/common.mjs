@@ -104,10 +104,51 @@ export function tierOf(b, now = Date.now()) {
   const paid = (b.paid || ["active", "trialing", "past_due"].includes(b.status)) && (b.until || 0) > now;
   if (paid) return b.plan === "season" ? "season" : "pro";
   if ((b.grantUntil || 0) > now) return "pro";            // free Pro you gave (requests, clubs)
+  if ((b.clubUntil || 0) > now) return "pro";             // seat on a paid club plan (set by club.mjs / stripe-webhook.mjs)
   if ((b.trialUntil || 0) > now || (b.passUntil || 0) > now) return "trial"; // 3-day trial or Pro days earned by ranking up
   return "free";
 }
-export const proUntil = (b) => Math.max((b && b.until) || 0, (b && b.grantUntil) || 0, (b && b.trialUntil) || 0, (b && b.passUntil) || 0);
+export const proUntil = (b) => Math.max((b && b.until) || 0, (b && b.grantUntil) || 0, (b && b.clubUntil) || 0, (b && b.trialUntil) || 0, (b && b.passUntil) || 0);
+
+// ---------- club plans (col "clubbilling", id = club code, written only by the server) ----------
+// data: { officer: uid, name, seats, members: [uid...], status, until, customer, sub, start }
+export const clubCodeOk = (c) => /^[a-z0-9]{4,8}$/.test(c || "");
+export async function getClub(code) {
+  if (!clubCodeOk(code)) return null;
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.clubbilling&id=eq.${code}&select=data`, { headers: svcH() });
+  const rows = r.ok ? await r.json() : [];
+  return (rows[0] && rows[0].data) || null;
+}
+export async function setClub(code, data) {
+  const r = await fetch(`${SB_URL}/rest/v1/docs`, {
+    method: "POST",
+    headers: { ...svcH(), Prefer: "resolution=merge-duplicates" },
+    body: JSON.stringify({ col: "clubbilling", id: code, uid: data.officer, data, updated_at: new Date().toISOString() }),
+  });
+  if (!r.ok) throw new Error("Supabase write failed: " + (await r.text()));
+}
+export async function clubByOfficer(uid) {
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.clubbilling&uid=eq.${uid}&select=id,data&limit=5`, { headers: svcH() });
+  const rows = r.ok ? await r.json() : [];
+  return rows.map((x) => ({ code: x.id, ...x.data }));
+}
+// Everyone whose public player doc says they are in this club (the join code is the shared secret).
+export async function clubPlayers(code) {
+  if (!clubCodeOk(code)) return [];
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.players&data->>club=eq.${code}&select=id,data&limit=1000`, { headers: svcH() });
+  return r.ok ? await r.json() : [];
+}
+export const clubActive = (c, now = Date.now()) => !!c && ["active", "trialing", "past_due"].includes(c.status) && (c.until || 0) > now;
+// Writes clubUntil onto each member's own billing doc, so tierOf() and the Pro list just work. until = 0 removes it.
+export async function setMemberAccess(uids, until) {
+  for (let i = 0; i < uids.length; i += 20) {
+    await Promise.all(uids.slice(i, i + 20).map(async (u) => {
+      const b = (await getBilling(u)) || {};
+      if ((b.clubUntil || 0) === until) return;
+      await setBilling(u, { ...b, clubUntil: until });
+    }));
+  }
+}
 
 // Public list of verified Pro members (views/_pro). Written only by the server, so leaderboard badges can't be faked.
 export async function rebuildProList() {

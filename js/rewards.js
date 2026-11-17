@@ -116,7 +116,7 @@
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
     <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
     <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members get 8 AI uses a day and can check any answer against the key points. Pro removes the daily limits. The 3-day trial and Pro days you earn by ranking up include 20 AI uses a day.</p></section>
-    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · $399 a year for up to 40 members</b><p>About $10 per member per year. Everyone gets Pro, plus a club leaderboard and an officer view. Message us to set it up.</p></div><button class="ghost outline" id="clubBtn">Bring it to your club</button></div>
+    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>From $11 a member per year, cheaper as you grow. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
     <div id="reviews" class="reviews"></div>
     <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever. AI features are capped at 8 uses a day."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
@@ -129,10 +129,50 @@
       if($("#refStat"))$("#refStat").textContent=x.j.capped?`${x.j.joined} joined. You've earned the max.`:`${x.j.joined} joined so far, ${x.j.toNext} more for your next week.`;
       try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
       try{await navigator.clipboard.writeText(url);toast("Invite link copied")}catch(e){toast(url)}};
-    $("#clubBtn").onclick=()=>openPanel(`<div class="label">Club plan</div><h2>Bring M&A to your club</h2><p class="sub">Clubs get Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer dashboard.</p><ul class="brief"><li>$399 a year for up to 40 members (about $10 each)</li><li>Free pilot for your first month</li><li>Officers see member progress and interview scores</li></ul>`);
+    $("#clubBtn").onclick=()=>window.maClubQuote();
     try{renderReviews()}catch(e){}};
 
   /* ---------- Stripe checkout + billing sync ---------- */
+  /* ---------- Club plan: a yearly quote based on member count (server re-computes the price at checkout; keep in sync with netlify/functions/_lib/clubprice.mjs) ---------- */
+  const CLUB_TIERS=[[25,1100],[75,900],[200,700],[500,500]],CLUB_MIN=10,CLUB_MAX=500;
+  function clubQuote(members){const n=Math.floor(Number(members));if(!isFinite(n)||n<1)return{ok:false,error:"Enter how many members your club has."};
+    if(n>CLUB_MAX)return{ok:false,contact:true,error:"Clubs over "+CLUB_MAX+" members get a custom quote. Email us."};
+    const seats=Math.max(n,CLUB_MIN);let left=seats,prev=0,total=0;const lines=[];
+    for(const[upTo,c]of CLUB_TIERS){const k=Math.min(left,upTo-prev);if(k>0){total+=k*c;lines.push({from:prev+1,to:prev+k,count:k,cents:c});left-=k}prev=upTo;if(left<=0)break}
+    return{ok:true,members:n,seats,totalCents:total,perMemberCents:Math.round(total/seats),lines}}
+  window.maClubQuote_calc=clubQuote;
+  const money=c=>"$"+(c/100).toLocaleString("en-US",{minimumFractionDigits:c%100?2:0,maximumFractionDigits:2});
+  window.maClubQuote=async function(){
+    const club=S.club&&S.club.code?S.club:null,seen=(typeof clubMembers==="function"&&club)?clubMembers().length:0;
+    const start=Math.max(seen,CLUB_MIN);
+    openPanel(`<div class="label">Club plan</div><h2>Your club's quote</h2><p class="sub">Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer view. You pay by member count and the rate drops as the club grows.</p>
+      <label class="label" for="cqN" style="margin-top:12px;display:block">How many members?</label>
+      <input id="cqN" type="number" inputmode="numeric" min="1" max="${CLUB_MAX}" value="${start}" style="width:120px">
+      <div id="cqOut" class="tbl-wrap" style="margin-top:12px" aria-live="polite"></div>
+      <div class="actions" style="margin-top:14px"><button class="btn" id="cqGo">Subscribe</button></div>
+      <p class="note" id="cqNote" style="margin-top:10px"></p>
+      <p class="note" style="margin-top:6px">Billed once a year to the officer and renews automatically until canceled. Minimum ${CLUB_MIN} seats. Members take a seat by joining with your club code. If someone leaves, their seat frees up. See the <a href="/terms/">Terms</a> and <a href="/refund/">Refund Policy</a>.</p>`);
+    const out=$("#cqOut"),inp=$("#cqN"),go=$("#cqGo"),note=$("#cqNote");
+    const draw=()=>{const q=clubQuote(inp.value);
+      if(!q.ok){out.innerHTML=`<p class="note">${q.error}</p>`;go.disabled=!q.contact;go.textContent=q.contact?"Email us for a quote":"Subscribe";go.dataset.contact=q.contact?"1":"";return}
+      go.disabled=false;go.dataset.contact="";go.textContent="Subscribe · "+money(q.totalCents)+" a year";
+      out.innerHTML=`<table class="cmp"><thead><tr><th>Members</th><th>Price each</th><th>Subtotal</th></tr></thead><tbody>${q.lines.map(l=>`<tr><td>${l.from}–${l.to}</td><td>${money(l.cents)}</td><td>${money(l.count*l.cents)}</td></tr>`).join("")}</tbody><tfoot><tr><td><b>${q.seats} seats${q.seats>q.members?" (minimum)":""}</b></td><td>about ${money(q.perMemberCents)} each</td><td><b>${money(q.totalCents)} / year</b></td></tr></tfoot></table>`};
+    inp.oninput=draw;draw();
+    if(!club){note.textContent="First create your club in Compete → Club so members have a code to join with. Then come back here.";go.disabled=true}
+    else if(!club.officer){note.textContent="Only your club's officer can subscribe. Send this quote to them.";go.disabled=true}
+    go.onclick=async()=>{if(go.dataset.contact){location.href="mailto:hello@mnaprep.com?subject="+encodeURIComponent("Club plan quote")+"&body="+encodeURIComponent("Club: "+(club&&club.name||"")+"\nMembers: "+inp.value);return}
+      if(!(window.MA_AUTH&&MA_AUTH.session)){toast("Create a free account first so the plan is tied to you");window.maOpenAuth&&maOpenAuth("up");return}
+      const t=go.textContent;go.disabled=true;go.textContent="Opening checkout…";
+      try{try{if(typeof syncProfile==="function")await syncProfile()}catch(e){}
+        const r=await authed("checkout",{plan:"club",members:+inp.value,code:club.code});
+        if(r.j&&r.j.url){location.href=r.j.url;return}
+        note.textContent=(r.j&&r.j.error)||"Couldn't open checkout. Try again."}
+      catch(e){note.textContent="Couldn't open checkout. Try again."}
+      go.disabled=false;go.textContent=t};
+    // officers who already pay: show seats used and renewal
+    if(club&&club.officer&&window.MA_AUTH&&MA_AUTH.session){const r=await authed("club",{action:"status"}),c=r.j&&r.j.clubs&&r.j.clubs.find(x=>x.code===club.code);
+      if(c&&c.until>Date.now()&&c.status!=="canceled"){note.innerHTML=`<b>Your plan is active:</b> ${c.used} of ${c.seats} seats used, ${c.cancelAtEnd?"ends":"renews"} ${new Date(c.until).toLocaleDateString()}. <a href="#" id="cqManage">Manage billing</a>`;
+        const m=$("#cqManage");if(m)m.onclick=e=>{e.preventDefault();maPortal()}}}};
   async function authed(path,body){const A=window.MA_AUTH;const s=A&&A.sb&&(await A.sb.auth.getSession()).data.session;if(!s)return{status:401};
     const r=await fetch("/.netlify/functions/"+path,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify(body||{})});
     return{status:r.status,j:await r.json().catch(()=>({}))}}
@@ -145,15 +185,18 @@
     if(btn){btn.disabled=false;btn.textContent=t}};
   window.maPortal=async function(){try{const r=await authed("portal");if(r.j&&r.j.url){location.href=r.j.url;return}toast((r.j&&r.j.error)||"Couldn't open billing.")}catch(e){toast("Couldn't open billing.")}};
   /* the billing record (written only by the server) decides the tier: free / trial / season / pro */
-  const tierOf=b=>{b=b||{};const now=Date.now();if((b.paid||["active","trialing","past_due"].includes(b.status))&&(b.until||0)>now)return b.plan==="season"?"season":"pro";if((b.grantUntil||0)>now)return"pro";if((b.trialUntil||0)>now||(b.passUntil||0)>now)return"trial";return"free"};
+  const tierOf=b=>{b=b||{};const now=Date.now();if((b.paid||["active","trialing","past_due"].includes(b.status))&&(b.until||0)>now)return b.plan==="season"?"season":"pro";if((b.grantUntil||0)>now||(b.clubUntil||0)>now)return"pro";if((b.trialUntil||0)>now||(b.passUntil||0)>now)return"trial";return"free"};
   /* Pro days earned by ranking up are recorded on the server once per rank */
   async function claimPasses(b){const w=RW();let n=0;for(const i of Object.keys(w.got||{})){const L=LADDER[i];if(!L||!L.pass||(b.passes||{})[i])continue;if(Date.now()-w.got[i]>=L.pass*864e5)continue;const r=await authed("pass",{rank:+i,at:w.got[i]});if(r.status===200)n++}return n}
   window.MA_TIER="free";
   async function syncBilling(again){const A=window.MA_AUTH;if(!A||!A.sb)return;const s=await A.ready;if(!s)return;
     try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=(data&&data.data)||{};
       if(!again&&await claimPasses(b))return syncBilling(true);
-      const tier=tierOf(b);window.MA_TIER=tier;const live=(tier==="pro"||tier==="season")&&!((b.grantUntil||0)>Date.now()&&!((b.until||0)>Date.now()));
-      if(!live&&(b.grantUntil||0)>Date.now()){S.pro={plan:"granted",start:b.grantStart||Date.now(),paid:true,until:b.grantUntil};S.proEver=true}
+      if(!again&&S.club&&S.club.code&&tierOf(b)==="free"&&Date.now()-(+localStorage.getItem("maClubTry")||0)>6e4){try{localStorage.setItem("maClubTry",Date.now())}catch(e){}
+        const cr=await authed("club",{action:"claim",code:S.club.code});if(cr.j&&cr.j.ok)return syncBilling(true);if(cr.j&&cr.j.reason==="full")toast("Your club's seats are full. Ask your officer to add more.")}
+      const tier=tierOf(b);window.MA_TIER=tier;const live=(tier==="pro"||tier==="season")&&!(((b.grantUntil||0)>Date.now()||(b.clubUntil||0)>Date.now())&&!((b.until||0)>Date.now()));
+      if(!live&&(b.clubUntil||0)>Date.now()&&(b.clubUntil||0)>=(b.grantUntil||0)){S.pro={plan:"club",start:b.start||Date.now(),paid:true,until:b.clubUntil};S.proEver=true}
+      else if(!live&&(b.grantUntil||0)>Date.now()){S.pro={plan:"granted",start:b.grantStart||Date.now(),paid:true,until:b.grantUntil};S.proEver=true}
       else if(live){S.pro={plan:b.plan,start:b.start||Date.now(),paid:true,until:b.until,cancelAtEnd:!!b.cancelAtEnd};S.proEver=true}
       else if((b.trialUntil||0)>Date.now()){S.pro={plan:"trial",start:b.trialStart,until:b.trialUntil,srv:true};S.trialUsed=b.trialStart;S.proEver=true}
       else if(S.pro&&S.pro.plan==="trial"&&!b.trialStart&&!again&&(Date.now()-(S.pro.start||0))<7*864e5){ // trial started before trials moved to the server: keeps its 7 days

@@ -1,0 +1,72 @@
+import os,json,subprocess,re,numpy as np,soundfile as sf,io,sys
+import build as B
+from PIL import ImageDraw,Image
+R=[]
+def ok(name,cond,detail): R.append((("PASS" if cond else "FAIL"),name,detail))
+# 1 format
+p=json.loads(subprocess.run(["ffprobe","-v","error","-show_entries","format=duration:stream=codec_name,width,height,r_frame_rate,sample_rate,channels","-of","json",os.environ.get("OUT",os.environ.get("OUT","final.mp4"))],capture_output=True,text=True).stdout)
+v=[s for s in p["streams"] if s.get("width")][0]; a=[s for s in p["streams"] if s.get("sample_rate")][0]; dur=float(p["format"]["duration"])
+ok("Format 1080x1920 / 30fps / H.264+AAC",v["width"]==1080 and v["height"]==1920 and v["r_frame_rate"]=="30/1" and v["codec_name"]=="h264" and a["codec_name"]=="aac",f'{v["width"]}x{v["height"]} {v["r_frame_rate"]} {v["codec_name"]}/{a["codec_name"]} {a["channels"]}ch')
+ok(f"Length = {B.DUR:.2f}s (voice + 2.4s outro)",abs(dur-B.DUR)<0.06,f"{dur:.2f}s")
+# 2 loudness
+e=subprocess.run(["ffmpeg","-v","info","-nostats","-i",os.environ.get("OUT",os.environ.get("OUT","final.mp4")),"-af","ebur128=peak=true","-f","null","-"],capture_output=True,text=True).stderr
+I=float(re.findall(r"I:\s+(-?[\d.]+) LUFS",e)[-1]); TP=float(re.findall(r"Peak:\s+(-?[\d.]+) dBFS",e)[-1])
+ok("Loudness (social target -14 LUFS ±1)",abs(I+14)<=1.0,f"{I:.1f} LUFS")
+ok("True peak <= -1 dBTP (no clipping)",TP<=-1.0,f"{TP:.1f} dBTP")
+# 3 audio sync: final mp4 audio vs source voice envelope
+raw=subprocess.run(["ffmpeg","-v","error","-i",os.environ.get("OUT",os.environ.get("OUT","final.mp4")),"-f","f32le","-ac","1","-ar","8000","-"],capture_output=True).stdout
+fa=np.frombuffer(raw,np.float32); vv,sr=sf.read("voice.wav",dtype="float32"); vv=vv if vv.ndim==1 else vv[:,0]
+vv=np.interp(np.arange(0,len(vv),sr/8000),np.arange(len(vv)),vv)
+def env(x): k=80; return np.convolve(np.abs(x),np.ones(k)/k,'same')[::80]
+ea,ev=env(fa),env(vv); n=min(len(ea),len(ev)); ea,ev=ea[:n]-ea[:n].mean(),ev[:n]-ev[:n].mean()
+lags=range(-20,21); cc=[np.dot(np.roll(ev,l),ea) for l in lags]; lag=list(lags)[int(np.argmax(cc))]*10
+ok("A/V audio offset = 0 ms",abs(lag)<=20,f"{lag} ms")
+# 4 captions == script word for word
+script=[d for d,s,e,n,sp in B.WORDS if d]; shown=[w[0] for c,_,_ in B.CH for w in c]
+ok("Captions match script word-for-word",script==shown,f"{len(shown)} words, {sum(x!=y for x,y in zip(script,shown))} mismatches")
+# 5 every spoken word is on screen while spoken
+miss=[]
+for d,s,e,n,sp in B.WORDS:
+    if not d: continue
+    mid=(s+e)/2; hit=False
+    for k,(c,s0,e0) in enumerate(B.CH):
+        nxt=B.CH[k+1][1] if k+1<len(B.CH) else e0+0.6
+        if s0-0.04<=mid<min(e0+0.4,nxt) and any(w[0]==d for w in c): hit=True;break
+    if not hit: miss.append(d)
+ok("Every word on screen while spoken",not miss,f"missing: {miss[:5]}" if miss else f"{len(script)}/{len(script)}")
+# 6 text fits the frame
+dr=ImageDraw.Draw(Image.new("RGB",(10,10)))
+capw=max(dr.textlength(" ".join(B.cap(w[0]) for w in c),font=B.F(B.CAPF,"ExtraBold")) for c,_,_ in B.CH)
+tw=max(dr.textlength(t,font=B.F(80))+(210 if n else 0) for n,t in B.TITLES.values())
+ok("No text runs off screen (60px margin)",capw<=B.W-120 and tw<=B.W-120,f"widest caption {capw:.0f}px, title {tw:.0f}px of {B.W}")
+# 7 graphics not clipped
+clip=[]
+for n,_,s,e in B.idx:
+    im=B.illus(n,e-0.01); al=np.array(im)[:,:,3]
+    if al[0].any() or al[-1].any() or al[:,0].any() or al[:,-1].any(): clip.append(n)
+ok("No graphics clipped at edges",not clip,f"clipped: {clip}" if clip else f"{len(B.idx)}/{len(B.idx)} scenes clean")
+# 8 tip cards switch when the number is spoken
+dl=[abs(B.seg_start(k)+0.08-B.NUMT[k]) for k in B.NUMT]
+ok("Tip card appears on 'Number X' (±100ms)",max(dl)<=0.1,f"max offset {max(dl)*1000:.0f} ms")
+# 9 mouth closed in silence / moving in speech
+mo=np.load("mo.npy"); vr=np.array([np.sqrt(np.mean(B.v[int(i/30*B.SR):int((i+1)/30*B.SR)]**2)) if int(i/30*B.SR)<len(B.v) else 0 for i in range(len(mo))])
+sil0=vr<0.01; sil=sil0&np.r_[False,sil0[:-1]]; spk=vr>0.05
+ok("Mouth shut during pauses (2+ silent frames)",np.mean(mo[sil]<0.12)>0.95,f"{np.mean(mo[sil]<0.12)*100:.0f}% of silent frames closed")
+ok("Mouth moves with speech (correlation)",np.corrcoef(mo,vr/vr.max())[0,1]>0.8,f"r = {np.corrcoef(mo,vr/vr.max())[0,1]:.2f}")
+# 10 no dead air
+gaps=[];prev=0
+for d,s,e,n,sp in B.WORDS:
+    if s-prev>1.0: gaps.append(round(s-prev,2))
+    prev=max(prev,e)
+ok("No dead air > 1.0s while talking",not gaps,f"longest pause {max([0]+[s-pe for (pe,(d,s,e,n,sp)) in zip([0]+[w[2] for w in B.WORDS],B.WORDS)]):.2f}s")
+SOURCED={"79%":"Fool/Mitrade: 79% off record (11/12/26)","80%":"spoken 'almost 80%' (79% on 11/12, lower after 11/17 drop)","$281B":"Mitrade: peak market value $281B","$55B":"Fool 11/17/26: market value nearly $55B",
+ "$1.15–1.35":"Nike FY27 adj. EPS guide","$3.00–3.50":"Investor Day FY31 adj. EPS target","$3–$3.50":"same","2031":"FY2031 target year","6%":"Fool: ~6% adj. op. margin this year","12–14%":"Investor Day FY31 op. margin target",
+ "$4B":"Investor Day: ~$4B from performance sports","$5B":"Investor Day: ~$5B added revenue","$1B":"Investor Day: ~$1B sportswear","24":"247WallSt: 24 straight years of raises","4%":"StockAnalysis 4.32% yield at $37.99","$12B":"Investor Day: ~$12B dividends FY27–31","2003":"24 years back from 2026","0–20%":"chart axis scale (not a claim)"}
+import inspect
+src=inspect.getsource(B)
+shown=set(re.findall(r'\$?\d[\d.,]*(?:–\$?\d[\d.]*)?%?B?',open("build.py").read().split("# ---------------- 6. data graphics")[1].split("# ---------------- 7.")[0]+" ".join(d for d,_,_,_,_ in B.WORDS)))
+shown={x for x in shown if re.search(r"[%$B–]",x) or x in("24","2031","2003")}
+unk=sorted(x for x in shown if x not in SOURCED)
+ok("Every on-screen number is sourced",not unk,f"{len(shown)-len(unk)}/{len(shown)} sourced"+(f"; unknown: {unk}" if unk else ""))
+for r in R: print(f"{r[0]} | {r[1]} | {r[2]}")
+print(f"\n{sum(r[0]=='PASS' for r in R)}/{len(R)} passed")

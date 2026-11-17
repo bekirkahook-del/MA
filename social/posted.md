@@ -98,3 +98,4 @@
 - 2026-11-21 punch-ficc — [Ranking video] Q3 2026 bond trading revenue by bank (JPM $5.40B, Citi $4.40B, GS $3.47B, BofA $2.60B, MS $2.01B)
 - 2026-11-21 oddq-1pct — [Interview Q] 1% of 1% of $1M = $100
 - 2026-11-20 resume-mistakes — [Presenter video] 4 resume mistakes, male animated presenter, Chatterbox voice (AI), QA 13/13, score 78/100 (quality floor). TikTok + IG trial reels A/B + YouTube Short + FB Reel + Pinterest pin, 6:52pm
+- 2026-11-21 nike-bull — [Presenter video] Why we're bullish on Nike (contrarian bull case, risks + not financial advice), Chatterbox voice (AI), QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YouTube Short + FB Reel + Pinterest, 7:23pm

@@ -2,6 +2,18 @@
 
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
+## QUALITY FLOOR: NOTHING BELOW 78/100 (Bekir, 2026-11-17: "THIS IS THE LOWEST QUALITY VIDEO WE WILL EVER POST FROM NOW ON" / "never create something below that score again")
+The reference is `social/vid/2026-11-20/resume-mistakes-a.mp4` ("4 resume mistakes", animated male presenter), scored **78/100**. Every new video must score at least 78 on this rubric, or it doesn't get made or posted. If a video can't reach it, fix it or drop it and tell Bekir.
+| Part (weight) | What 78 looks like |
+|---|---|
+| Script (20) | Full grammatical sentences, no fragments; strong hook in the first second; original wording (never copy a creator's lines or footage, never fake first-person stories) |
+| Voice (20) | Expressive, not flat: Chatterbox (exaggeration ~0.65, hook ~0.85) guided by a synthetic reference voice that matches the presenter's gender; every sentence checked with Whisper (match ≥ 0.85); natural pauses between sentences, no phrase-chopping, no speed-up past ~1.1x |
+| Visuals (20) | Presenter faces the camera with eye contact, blinks, brows, nods and hand gestures on word beats; mouth shapes follow the letters; a graphic for every point, revealed on the exact word; punch-in zooms every ~3s |
+| Captions (15) | Built from the script text (never raw ASR), break at punctuation, max 3 words, exactly one highlighted word |
+| Sound (10) | Original music bed ducked under the voice, whoosh on scene changes, pop/ding/thud on reveals; −14 LUFS, true peak ≤ −1 dBTP |
+| Technical (15) | Must pass all 13 checks in `social/gen/presenter/qa.py` (1080x1920, 30fps, exact length, A/V sync 0 ms, captions = script, no clipped text or graphics, mouth shut in pauses, no dead air >1s) |
+Pipeline: `social/gen/presenter/` (README.md has the steps). Score every new video against this table before scheduling and note the score in posted.md.
+
 
 ## NO POSTS ANYWHERE on Thu Nov 12, 2026 (Bekir, 2026-11-11 11:28pm: "tomorrow dont post, move the posts throughout the month")
 - Nothing gets scheduled or published on Nov 12 on any platform: TikTok, Instagram, Pinterest or YouTube. Normal posting starts again Fri Nov 13.

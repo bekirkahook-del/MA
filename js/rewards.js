@@ -116,7 +116,7 @@
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
     <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
     <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members get 8 AI uses a day and can check any answer against the key points. Pro removes the daily limits. The 3-day trial and Pro days you earn by ranking up include 20 AI uses a day.</p></section>
-    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>From $11 a member per year, cheaper as you grow. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
+    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>$4 per member per month. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
     <div id="reviews" class="reviews"></div>
     <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever. AI features are capped at 8 uses a day."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
@@ -134,29 +134,27 @@
 
   /* ---------- Stripe checkout + billing sync ---------- */
   /* ---------- Club plan: a yearly quote based on member count (server re-computes the price at checkout; keep in sync with netlify/functions/_lib/clubprice.mjs) ---------- */
-  const CLUB_TIERS=[[25,1100],[75,900],[200,700],[500,500]],CLUB_MIN=10,CLUB_MAX=500;
+  const CLUB_CENTS=400,CLUB_MIN=10,CLUB_MAX=500;
   function clubQuote(members){const n=Math.floor(Number(members));if(!isFinite(n)||n<1)return{ok:false,error:"Enter how many members your club has."};
     if(n>CLUB_MAX)return{ok:false,contact:true,error:"Clubs over "+CLUB_MAX+" members get a custom quote. Email us."};
-    const seats=Math.max(n,CLUB_MIN);let left=seats,prev=0,total=0;const lines=[];
-    for(const[upTo,c]of CLUB_TIERS){const k=Math.min(left,upTo-prev);if(k>0){total+=k*c;lines.push({from:prev+1,to:prev+k,count:k,cents:c});left-=k}prev=upTo;if(left<=0)break}
-    return{ok:true,members:n,seats,totalCents:total,perMemberCents:Math.round(total/seats),lines}}
+    const seats=Math.max(n,CLUB_MIN);return{ok:true,members:n,seats,perMemberCents:CLUB_CENTS,totalCents:seats*CLUB_CENTS}}
   window.maClubQuote_calc=clubQuote;
   const money=c=>"$"+(c/100).toLocaleString("en-US",{minimumFractionDigits:c%100?2:0,maximumFractionDigits:2});
   window.maClubQuote=async function(){
     const club=S.club&&S.club.code?S.club:null,seen=(typeof clubMembers==="function"&&club)?clubMembers().length:0;
     const start=Math.max(seen,CLUB_MIN);
-    openPanel(`<div class="label">Club plan</div><h2>Your club's quote</h2><p class="sub">Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer view. You pay by member count and the rate drops as the club grows.</p>
+    openPanel(`<div class="label">Club plan</div><h2>Your club's quote</h2><p class="sub">Pro for every member, a private leaderboard, a weekly club Gauntlet and an officer view. You pay $4 per member per month.</p>
       <label class="label" for="cqN" style="margin-top:12px;display:block">How many members?</label>
       <input id="cqN" type="number" inputmode="numeric" min="1" max="${CLUB_MAX}" value="${start}" style="width:120px">
       <div id="cqOut" class="tbl-wrap" style="margin-top:12px" aria-live="polite"></div>
       <div class="actions" style="margin-top:14px"><button class="btn" id="cqGo">Subscribe</button></div>
       <p class="note" id="cqNote" style="margin-top:10px"></p>
-      <p class="note" style="margin-top:6px">Billed once a year to the officer and renews automatically until canceled. Minimum ${CLUB_MIN} seats. Members take a seat by joining with your club code. If someone leaves, their seat frees up. See the <a href="/terms/">Terms</a> and <a href="/refund/">Refund Policy</a>.</p>`);
+      <p class="note" style="margin-top:6px">Billed monthly to the officer and renews automatically until canceled. Cancel anytime. Minimum ${CLUB_MIN} seats. Members take a seat by joining with your club code. If someone leaves, their seat frees up. See the <a href="/terms/">Terms</a> and <a href="/refund/">Refund Policy</a>.</p>`);
     const out=$("#cqOut"),inp=$("#cqN"),go=$("#cqGo"),note=$("#cqNote");
     const draw=()=>{const q=clubQuote(inp.value);
       if(!q.ok){out.innerHTML=`<p class="note">${q.error}</p>`;go.disabled=!q.contact;go.textContent=q.contact?"Email us for a quote":"Subscribe";go.dataset.contact=q.contact?"1":"";return}
-      go.disabled=false;go.dataset.contact="";go.textContent="Subscribe · "+money(q.totalCents)+" a year";
-      out.innerHTML=`<table class="cmp"><thead><tr><th>Members</th><th>Price each</th><th>Subtotal</th></tr></thead><tbody>${q.lines.map(l=>`<tr><td>${l.from}–${l.to}</td><td>${money(l.cents)}</td><td>${money(l.count*l.cents)}</td></tr>`).join("")}</tbody><tfoot><tr><td><b>${q.seats} seats${q.seats>q.members?" (minimum)":""}</b></td><td>about ${money(q.perMemberCents)} each</td><td><b>${money(q.totalCents)} / year</b></td></tr></tfoot></table>`};
+      go.disabled=false;go.dataset.contact="";go.textContent="Subscribe · "+money(q.totalCents)+" a month";
+      out.innerHTML=`<table class="cmp"><tbody><tr><td>${q.seats} seats${q.seats>q.members?" (10-seat minimum)":""} × ${money(q.perMemberCents)}</td><td><b>${money(q.totalCents)} / month</b></td></tr><tr><td>That works out to</td><td>${money(q.totalCents*12)} a year</td></tr></tbody></table>`};
     inp.oninput=draw;draw();
     if(!club){note.textContent="First create your club in Compete → Club so members have a code to join with. Then come back here.";go.disabled=true}
     else if(!club.officer){note.textContent="Only your club's officer can subscribe. Send this quote to them.";go.disabled=true}

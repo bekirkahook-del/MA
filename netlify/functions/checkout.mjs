@@ -31,7 +31,7 @@ export default async (req) => {
     if (existing && existing.officer !== user.id && clubActive(existing)) return json(409, { error: "This club already has a plan." });
     if (existing && existing.officer === user.id && clubActive(existing) && !existing.cancelAtEnd) return json(409, { error: "Your club already has an active plan. Use Manage billing to change it." });
     const name = String((me.data && me.data.clubName) || "Club").slice(0, 40);
-    P = { name: `M&A Pro Club Plan (${q.seats} seats)${name ? " · " + name : ""}`, amount: q.totalCents, interval: "year" };
+    P = { name: `M&A Pro Club Plan (${q.seats} seats)${name ? " · " + name : ""}`, amount: q.totalCents, interval: "month" };
     clubMeta = { club: code, seats: String(q.seats) };
   }
   if (!P) return json(400, { error: "Unknown plan" });

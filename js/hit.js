@@ -2,7 +2,7 @@
    a random id in localStorage, the page, where they came from, and the device type. */
 (function(){
   try{
-    if(localStorage.getItem("ma-notrack"))return; /* the owner's own browser */
+    if(localStorage.getItem("ma-notrack")||navigator.globalPrivacyControl||navigator.doNotTrack==="1")return; /* the owner's own browser */
     const day=new Date().toLocaleDateString("en-CA",{timeZone:"America/New_York"});
     let v=localStorage.getItem("ma-vid");if(!v){v=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem("ma-vid",v)}
     let f=localStorage.getItem("ma-vfirst");if(!f){f=day;localStorage.setItem("ma-vfirst",f)}
@@ -19,7 +19,7 @@
    last minute) and sends small totals to the same counter. Used for the "time spent" ranking on the owner's stats. */
 (function(){
   try{
-    if(localStorage.getItem("ma-notrack"))return;
+    if(localStorage.getItem("ma-notrack")||navigator.globalPrivacyControl||navigator.doNotTrack==="1")return;
     const v=localStorage.getItem("ma-vid");if(!v)return;
     let last=Date.now(),buf={},n=0;
     ["mousemove","keydown","scroll","touchstart","click"].forEach(e=>addEventListener(e,()=>{last=Date.now()},{passive:true}));

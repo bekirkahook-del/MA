@@ -1711,6 +1711,7 @@ function renderPro(){const el=$("#proPage");if(!el)return;const pro=isPro();
      <p>Unlimited interview reps, a tougher league, and a profile that stands out when it counts.</p>
      ${pro?`<div class="pro-status">${proBadge()} <span>${proLabel()}</span></div>`:`<div class="actions" style="justify-content:center"><button class="btn" id="proTrial">Start 3-day free trial</button></div><p class="note" style="text-align:center">No card needed. One trial per account.</p>`}</div>
    <div class="plans">${plans.map(([k,n,p,per,d,best])=>`<div class="plan ${best?'best':''}">${best?'<span class="plan-tag">Most popular</span>':""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${best?'btn':'ghost outline'}" data-plan="${k}">${pro&&S.pro.plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
+   <p class="note pay-fine" style="margin:10px 0 14px;text-align:center;font-size:13px">Monthly, Yearly and Founding plans renew automatically at the same price until you cancel. Cancel anytime in Settings. Season Pass is a one-time payment. By continuing you agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a>; see <a href="/refund/" target="_blank" rel="noopener">Refunds</a>. Prices in USD, taxes added where required.</p>
    <div class="founding"><div><b>Founding Member: $49 a year, locked for life</b><span>For the first 500 members. Includes a permanent Founding Member badge.</span></div><button class="ghost outline" data-plan="founding">${pro&&S.pro.plan==="founding"?"You're a founder":"Claim founding price"}</button></div>
    <div class="sec-head" style="margin-top:8px"><h2>What's included</h2></div>
    <div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div>
@@ -2452,7 +2453,7 @@ function subFormHTML(id,src){const em=(MYSUB&&MYSUB.email)||S.subEmail||"";const
   return `<form class="sub-form" id="${id}" data-src="${src}" novalidate>
     <div class="sub-row"><input type="email" name="em" placeholder="you@school.edu" value="${esc(em)}" aria-label="Email address" autocomplete="email" required><button class="btn" type="submit">${MYSUB?"Save":"Subscribe"}</button></div>
     <div class="sub-topics" role="group" aria-label="What to send"><span class="sub-lbl">Send me</span>${SUB_TOPICS.map(([k,l,d])=>`<label class="sub-chip" title="${esc(d)}"><input type="checkbox" name="t" value="${k}" ${on.includes(k)?"checked":""}><span>${l}</span></label>`).join("")}</div>
-    <p class="sub-fine">No spam. One-click unsubscribe in every email.</p></form>`}
+    <p class="sub-fine">No spam. One-click unsubscribe in every email. By subscribing you agree to our <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</p></form>`}
 function bindSubForm(form){if(!form)return;form.onsubmit=async e=>{e.preventDefault();const em=form.querySelector("[name=em]").value;const topics=[...form.querySelectorAll('[name=t]:checked')].map(x=>x.value);
   if(!topics.length){toast("Pick at least one, or unsubscribe");return}
   const b=form.querySelector("button[type=submit]");b.disabled=true;const ok=await saveSub(em,topics,form.dataset.src);b.disabled=false;

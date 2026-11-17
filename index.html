@@ -56,7 +56,7 @@ body nav.tabs,body nav.subnav{justify-content:space-around!important;gap:0!impor
 body .page-head{text-align:center}body .prof-row{display:flex;justify-content:center}body .prof-row .prof-menu{left:50%;translate:-50% 0}
 body .page-head h1::after,body .page-head h2::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin:8px auto 0;background:linear-gradient(90deg,var(--c-blue),var(--c-violet))}
 </style>
-</head><body>
+</head><body><a href="#main" class="ma-skip">Skip to main content</a>
 <style>
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */
 :root{
@@ -1782,7 +1782,7 @@ details[open]::details-content{block-size:auto}
   </nav>
 
   <div class="layout">
-  <main class="col">
+  <main class="col" id="main" tabindex="-1">
 
   <!-- HOME -->
   <section class="view" data-view="home">
@@ -1998,7 +1998,7 @@ details[open]::details-content{block-size:auto}
   
   </div>
 
-  <footer><span>Progress saves to your account when you sign in. Pay and timelines are typical ranges.</span> <a href="/guides/" style="margin-left:6px">Free interview guides</a> · <a href="/tools/">Free tools</a> · <a href="/deals/">Deal database</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></footer>
+  <footer><span>Progress saves to your account when you sign in. Pay and timelines are typical ranges.</span> <a href="/guides/" style="margin-left:6px">Free interview guides</a> · <a href="/tools/">Free tools</a> · <a href="/deals/">Deal database</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund/">Refunds</a> · <a href="/cookies/">Cookies</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/accessibility/">Accessibility</a> · <a href="mailto:hello@mnaprep.com">Contact</a><div style="margin-top:6px;font-size:12px;opacity:.8">M&amp;A Prep is independent and not affiliated with any firm or school mentioned. Education only, not financial advice. © 2026 M&amp;A Prep.</div></footer>
 </div>
 
 <div class="drawer-bg" id="drawerBg" hidden></div>
@@ -2042,5 +2042,6 @@ details[open]::details-content{block-size:auto}
 <script src="js/visuals-hero.js"></script>
 <script src="js/panes.js"></script>
 <script src="js/sharecard.js" defer></script>
+<script src="js/legal.js"></script>
 <script src="js/engage.js"></script>
 </body></html>

@@ -29,6 +29,10 @@ export default async (req) => {
     success_url: `${SITE}/?checkout=success`,
     cancel_url: `${SITE}/?checkout=cancel`,
     allow_promotion_codes: "true",
+    billing_address_collection: "auto",
+    custom_text: { submit: { message: P.interval
+      ? `Renews automatically every ${P.interval} at the same price until you cancel. Cancel anytime in Settings. By subscribing you agree to the Terms (${SITE}/terms/) and Refund Policy (${SITE}/refund/).`
+      : `One-time payment, no renewal. By paying you agree to the Terms (${SITE}/terms/) and Refund Policy (${SITE}/refund/).` } },
     metadata: { uid: user.id, plan },
   };
   if (bill && bill.customer) params.customer = bill.customer;

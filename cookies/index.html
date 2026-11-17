@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cookie &amp; Local Storage Policy · M&amp;A Prep</title><meta name="description" content="What M&A Prep stores in your browser and how to opt out of visit counting."><link rel="canonical" href="https://mnaprep.com/cookies/">
+<meta name="theme-color" content="#13203B"><link rel="icon" href="/favicon-512.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>body{margin:0;background:#EEF1F5;color:#13203B;font:16px/1.65 'IBM Plex Sans',system-ui,sans-serif}.w{max-width:720px;margin:0 auto;padding:40px 16px 70px}
+h1{font:800 34px/1.1 Archivo,sans-serif;margin:8px 0 6px}h2{font-size:19px;margin:28px 0 6px}a{color:#2448D8}.d{color:#4A5672;font-size:14px}ul{padding-left:20px}.back{font-size:14px;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:3px solid #2448D8;outline-offset:2px}table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid #C9D1E0;padding:8px 10px;text-align:left}
+.nav{margin-top:36px;font-size:14px;color:#4A5672}button{font:inherit;padding:10px 16px;border-radius:10px;border:0;background:#2448D8;color:#fff;cursor:pointer}</style></head><body><main class="w">
+<a class="back" href="/">← M&amp;A Prep</a><h1>Cookie &amp; Local Storage Policy</h1><p class="d">Last updated November 17, 2026</p>
+
+<p>M&amp;A Prep doesn't use advertising or cross-site tracking cookies. We use your browser's local storage (a small first-party store) for the things below.</p>
+<table><tr><th>What</th><th>Why</th><th>Type</th></tr>
+<tr><td>Sign-in session</td><td>Keeps you signed in (set by our login provider, Supabase)</td><td>Strictly necessary</td></tr>
+<tr><td>Progress and settings</td><td>Saves XP, answers, streaks and preferences on your device</td><td>Strictly necessary</td></tr>
+<tr><td>Visitor ID, visit day, time-on-section totals</td><td>Anonymous visit counts and which sections are used, so we can improve the site</td><td>Analytics (first-party, no name or email attached)</td></tr>
+<tr><td>Stripe checkout</td><td>When you pay, Stripe's own page may set cookies it needs to process the payment and prevent fraud</td><td>Strictly necessary (third party)</td></tr></table>
+<p>Fonts are loaded from Google Fonts, so your browser contacts Google to fetch them.</p>
+<h2>Your choice</h2><p>You can turn off visit counting in this browser right now. We also turn it off automatically if your browser sends Global Privacy Control or Do Not Track.</p>
+<p id="st" class="d"></p><p><button id="tg" type="button">Loading…</button></p>
+<h2>Clearing data</h2><p>You can clear local storage in your browser settings at any time. That signs you out and removes progress saved only on this device.</p><p class="d" style="margin-top:36px">Questions? Email <a href="mailto:hello@mnaprep.com">hello@mnaprep.com</a>.</p><p class="nav"><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund/">Refunds</a> · <a href="/cookies/">Cookies</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/accessibility/">Accessibility</a></p><script>(function(){var b=document.getElementById("tg"),s=document.getElementById("st");function on(){try{return!localStorage.getItem("ma-notrack")}catch(e){return true}}
+function paint(){var gpc=navigator.globalPrivacyControl||navigator.doNotTrack==="1";b.textContent=on()?"Turn off visit counting":"Turn visit counting back on";s.textContent=gpc?"Your browser is sending a privacy signal, so counting is already off.":(on()?"Visit counting is on.":"Visit counting is off in this browser.")}
+b.onclick=function(){try{if(on())localStorage.setItem("ma-notrack","1");else localStorage.removeItem("ma-notrack")}catch(e){}paint()};paint()})()</script></main></body></html>

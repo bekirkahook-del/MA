@@ -9,7 +9,7 @@
 .em-f button:disabled{opacity:.6}.em-msg{font-size:13.5px;margin-top:8px;color:var(--ink-2,#4A5672)}.em-hp{position:absolute;left:-9999px}`;
   function box(src,o){o=o||{};const d=document.createElement("div");d.className="em-box";d.id="emBox";
     d.innerHTML=`<div class="em-k">${o.k||"Free · Every Sunday"}</div><div class="em-h">${o.h||"One finance curveball a week"}</div><p class="em-p">${o.p||"A real interview question, one tip for breaking in, and a guide worth reading. Takes 2 minutes. Unsubscribe anytime."}</p>
-      <form class="em-f" novalidate><input type="email" name="email" placeholder="you@school.edu" autocomplete="email" required aria-label="Email address"><input class="em-hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">${o.btn||"Get it free"}</button></form><div class="em-msg" role="status"></div>`;
+      <form class="em-f" novalidate><input type="email" name="email" placeholder="you@school.edu" autocomplete="email" required aria-label="Email address"><input class="em-hp" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">${o.btn||"Get it free"}</button></form><div class="em-msg" role="status"></div><div class="em-msg" style="font-size:12px">By subscribing you agree to our <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>. Unsubscribe anytime.</div>`;
     const f=d.querySelector("form"),m=d.querySelector(".em-msg"),b=f.querySelector("button");
     f.onsubmit=async e=>{e.preventDefault();const email=f.email.value.trim();if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)){m.textContent="Please enter a valid email.";return}
       b.disabled=true;b.textContent="Signing up…";

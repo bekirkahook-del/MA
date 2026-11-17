@@ -33,6 +33,7 @@
        ${up?`<label>Your name<input id="auN" autocomplete="name" placeholder="Jane Smith"></label>`:""}
        <label>Email<input id="auE" type="email" autocomplete="email" placeholder="you@school.edu" required></label>
        <label>Password<input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="${up?"At least 6 characters":""}" required></label>
+       ${up?`<label class="auth-agree" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;margin:6px 0"><input id="auT" type="checkbox" required style="width:auto;margin-top:2px"><span>I'm 13 or older and agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a> and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>`:""}
        <button class="auth-go" type="submit">${up?"Create account":"Sign in"}</button>
        <div class="auth-msg" id="auM"></div>
        <button type="button" class="auth-sw" id="auSw">${up?"Already have an account? Sign in":"New here? Create a free account"}</button>
@@ -45,6 +46,7 @@
         const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};
       f.onsubmit=async ev=>{ev.preventDefault();const e=ov.querySelector("#auE").value.trim(),p=ov.querySelector("#auP").value;
         if(!e||!p){say("Enter your email and password.");return}
+        if(up&&!ov.querySelector("#auT").checked){say("Please agree to the Terms and Privacy Policy to continue.");return}
         go.disabled=true;say("");
         try{if(up){const n=(ov.querySelector("#auN").value||"").trim();
             if(n)try{const k="ma-progress-v1",s=JSON.parse(localStorage.getItem(k)||"{}");s.profile=s.profile||{};if(!s.profile.name){s.profile.name=n;localStorage.setItem(k,JSON.stringify(s))}}catch(x){}

@@ -13,6 +13,11 @@
 
 # keep setup files off the public site
 [[redirects]]
+  from = "/compete"
+  to = "/#series"
+  status = 302
+
+[[redirects]]
   from = "/youtube"
   to = "https://www.youtube.com/channel/UCecz_zgUGiksG2HpJEt0cTg?sub_confirmation=1"
   status = 302

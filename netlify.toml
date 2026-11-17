@@ -68,6 +68,16 @@
   status = 301
 
 [[redirects]]
+  from = "/email"
+  to = "/tools/networking-email-generator/"
+  status = 301
+
+[[redirects]]
+  from = "/templates"
+  to = "/tools/networking-templates/"
+  status = 301
+
+[[redirects]]
   from = "/superday"
   to = "/tools/superday-readiness-test/"
   status = 301

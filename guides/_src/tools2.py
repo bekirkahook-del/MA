@@ -43,7 +43,7 @@ def fields(rows):
         f'<div><label for="{i}">{l}</label><input id="{i}" inputmode="decimal" value="{v}">' + (f'<span class="small">{h}</span>' if h else '') + '</div>'
         for i, l, v, h in rows) + '</div>'
 
-KEEP = {"finance-career-quiz", "mental-math-test", "lbo-calculator"}
+KEEP = {"finance-career-quiz", "mental-math-test", "lbo-calculator", "networking-email-generator"}
 TOOLS = []
 def tool(slug, title, h1, desc, lede, body, faqs, js, extra="", short=None):
     if slug not in KEEP: return

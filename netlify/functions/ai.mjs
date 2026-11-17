@@ -42,7 +42,7 @@ export default async (req, context) => {
   try {
     // atomic daily counters: one per account, one for the whole site (a hard ceiling on the Anthropic bill)
     const used = await bump("ai_usage", `${user.id}_${day}`, user.id, limit);
-    if (used === null) return json(429, { error: plan === "free" ? `You've used today's ${limit} free AI uses. Pro is unlimited.` : plan === "trial" ? `You've used today's ${limit} trial AI uses. Upgrade for more.` : "Daily AI limit reached. Try again tomorrow.", code: "limit", plan, limit });
+    if (used === null) return json(429, { error: plan === "free" ? `You've used today's ${limit} free AI uses. Pro is unlimited.` : plan === "club" ? `You've used today's ${limit} AI uses on your club plan. They reset tomorrow.` : plan === "trial" ? `You've used today's ${limit} trial AI uses. Upgrade for more.` : "Daily AI limit reached. Try again tomorrow.", code: "limit", plan, limit });
     left = limit - used;
     if (!owner && (await bump("ai_usage", `global_${day}`, null, GLOBAL_DAILY)) === null) return json(503, { error: "AI is at capacity for today. Try again tomorrow.", code: "capacity" });
   } catch (e) { console.error("ai limit", String(e)); return json(503, { error: "AI is unavailable right now. Try again in a minute.", code: "upstream" }); }

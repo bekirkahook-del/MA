@@ -21,6 +21,9 @@ for (const n of [-1, 0, 1, 9, 10, 11, 25, 26, 40, 75, 76, 200, 201, 499, 500, 50
   assert.equal(c.ok, s.ok, "ok " + n); if (s.ok) { assert.equal(c.totalCents, s.totalCents, "total " + n); assert.equal(c.seats, s.seats); }
 }
 
+const { AI_LIMITS } = await import("../netlify/functions/_lib/common.mjs");
+assert.equal(AI_LIMITS.club, 15); assert.ok(AI_LIMITS.club < AI_LIMITS.pro && AI_LIMITS.club > AI_LIMITS.free);
+
 // 3. fake Supabase + Stripe
 const docs = new Map(); const key = (c, i) => c + "|" + i;
 const OFFICER = "11111111-1111-1111-1111-111111111111", M1 = "22222222-2222-2222-2222-222222222222", M2 = "33333333-3333-3333-3333-333333333333", M3 = "44444444-4444-4444-4444-444444444444";
@@ -72,12 +75,12 @@ assert.equal(new URLSearchParams(stripeCalls.at(-1).body).get("line_items[0][pri
 const subMeta = { uid: OFFICER, plan: "club", club: "abc123", seats: "10" };
 await hook({ type: "checkout.session.completed", data: { object: { client_reference_id: OFFICER, customer: "cus_1", subscription: "sub_1", mode: "subscription", metadata: subMeta } } });
 const { tierOf, getBilling } = await import("../netlify/functions/_lib/common.mjs");
-assert.equal(tierOf(await getBilling(OFFICER)), "pro"); assert.equal(docs.get(key("clubbilling", "abc123")).data.seats, 10);
+assert.equal(tierOf(await getBilling(OFFICER)), "club"); assert.equal(docs.get(key("clubbilling", "abc123")).data.seats, 10);
 assert.equal(tierOf(await getBilling(M1)), "free", "members need to claim");
 
 // members claim: 10 seats, officer + 9 more
 assert.equal((await j(await call("../netlify/functions/club.mjs", { action: "claim", code: "abc123" }, "tok1"))).ok, true);
-assert.equal(tierOf(await getBilling(M1)), "pro");
+assert.equal(tierOf(await getBilling(M1)), "club");
 assert.equal((await j(await call("../netlify/functions/club.mjs", { action: "claim", code: "zzz999" }, "tok2"))).ok, false, "wrong code");
 // seats full
 const c = docs.get(key("clubbilling", "abc123")).data; c.seats = 2; // officer + M1 = 2
@@ -86,7 +89,7 @@ assert.equal(tierOf(await getBilling(M2)), "free");
 // M1 leaves the club -> seat frees -> M2 can claim
 put("players", M1, {});
 assert.equal((await j(await call("../netlify/functions/club.mjs", { action: "claim", code: "abc123" }, "tok2"))).ok, true);
-assert.equal(tierOf(await getBilling(M1)), "free", "left member loses Pro"); assert.equal(tierOf(await getBilling(M2)), "pro");
+assert.equal(tierOf(await getBilling(M1)), "free", "left member loses Pro"); assert.equal(tierOf(await getBilling(M2)), "club");
 // status
 const st = await j(await call("../netlify/functions/club.mjs", { action: "status" }, "tokO"));
 assert.equal(st.clubs[0].used, 2); assert.equal(st.clubs[0].seats, 2);

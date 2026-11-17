@@ -13,7 +13,7 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 ## Backend
 - Supabase table `docs` (col, id, uid, data). Users can't write `billing` or `ai_usage`; `views/_pro` is the server-written list of Pro members.
 - Netlify functions in `netlify/functions/`. Shared helpers in `_lib/common.mjs`: `tierOf()`, `AI_LIMITS`, `rebuildProList()`, `isOwner()`.
-- Pay tiers are decided on the server from the billing doc: free (8 AI uses/day), trial (3 days, once per account, 20/day), season (40/day), pro (100/day). Earned rank-up Pro days = trial level. `grant.mjs` = owner gives Pro.
+- Pay tiers are decided on the server from the billing doc: free (3 AI uses/day), trial (3 days, once per account, 20/day), season (40/day), pro (100/day). Earned rank-up Pro days = trial level. `grant.mjs` = owner gives Pro.
 - Stripe is live: webhook `stripe-webhook.mjs` listens to checkout.session.completed + customer.subscription.created/updated/deleted. Secrets live only in Netlify env vars; never ask for, paste or print them.
 
 ## Hard rules

@@ -56,10 +56,11 @@ export async function setBilling(uid, data) {
 // ---------- pay tiers (decided on the server from the billing record) ----------
 // free → trial (7 days, once per account) → season ($29 / 4 months) → pro (monthly, yearly, founding)
 export const AI_LIMITS = {
-  free: Number(process.env.AI_LIMIT_FREE || 8),
+  free: Number(process.env.AI_LIMIT_FREE || 3),
   trial: Number(process.env.AI_LIMIT_TRIAL || 20),
   season: Number(process.env.AI_LIMIT_SEASON || 40),
   pro: Number(process.env.AI_LIMIT_PRO || 100),
+  club: Number(process.env.AI_LIMIT_CLUB || 15), // a seat on a club plan ($4/seat/month): Pro access, smaller daily AI allowance
   owner: 1e9,
 };
 const OWNER_HASHES = ["13d8e795a85caa1b6668d51dd5c74b25aa7ed1c1a508336292a3078fcbe47fc6", "00ad2d945215513b412199ba5c23dc5ecb8decd47866582041d1eccd0bb12d93"];
@@ -104,8 +105,8 @@ export function tierOf(b, now = Date.now()) {
   const paid = (b.paid || ["active", "trialing", "past_due"].includes(b.status)) && (b.until || 0) > now;
   if (paid) return b.plan === "season" ? "season" : "pro";
   if ((b.grantUntil || 0) > now) return "pro";            // free Pro you gave (requests, clubs)
-  if ((b.clubUntil || 0) > now) return "pro";             // seat on a paid club plan (set by club.mjs / stripe-webhook.mjs)
   if ((b.trialUntil || 0) > now || (b.passUntil || 0) > now) return "trial"; // 3-day trial or Pro days earned by ranking up
+  if ((b.clubUntil || 0) > now) return "club";            // seat on a paid club plan (set by club.mjs / stripe-webhook.mjs): Pro access, 15 AI uses/day
   return "free";
 }
 export const proUntil = (b) => Math.max((b && b.until) || 0, (b && b.grantUntil) || 0, (b && b.clubUntil) || 0, (b && b.trialUntil) || 0, (b && b.passUntil) || 0);

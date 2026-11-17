@@ -1,0 +1,225 @@
+{
+ "ticker": "DIS",
+ "date": "11/17/26",
+ "titles": {
+  "hook": "DISNEY (DIS)",
+  "1": "STREAMING",
+  "2": "THE PARKS",
+  "3": "CASH BACK",
+  "4": "THE PRICE",
+  "risk": "THE RISK",
+  "cta": "OUR TAKE"
+ },
+ "scenes": {
+  "hook": {
+   "label": "Disney revenue growth, Q4 FY26",
+   "value": 16,
+   "fmt": "+{:.0f}%",
+   "color": "GREEN",
+   "sub": "Dividend raised 33%",
+   "start_word": [
+    "revenue"
+   ],
+   "stamp": {
+    "text": "ANALYSTS: BUY",
+    "word": [
+     "buy"
+    ]
+   },
+   "banner": {
+    "text": "WHY WE'RE BULLISH",
+    "word": [
+     "bullish"
+    ]
+   }
+  },
+  "1": {
+   "type": "bars",
+   "title": "Streaming operating income, per quarter",
+   "max": 1000,
+   "items": [
+    {
+     "v": 402,
+     "text": "$402M",
+     "xlabel": "Q4 FY25",
+     "color": "GREY",
+     "word": [
+      "streaming",
+      1
+     ]
+    },
+    {
+     "v": 824,
+     "text": "$824M",
+     "xlabel": "Q4 FY26",
+     "color": "GOLD",
+     "word": [
+      "eight"
+     ]
+    }
+   ],
+   "badge": {
+    "text": "2X",
+    "word": [
+     "quarter"
+    ]
+   },
+   "foot": "Disney Q4 FY26 results (SVOD)"
+  },
+  "2": {
+   "type": "stat",
+   "title": "Parks operating income, Q4 FY26",
+   "icon": "ticket",
+   "value": 2.25,
+   "fmt": "${:.2f}B",
+   "label": "Up 20% from a year ago",
+   "color": "GOLD",
+   "start_word": [
+    "twenty"
+   ],
+   "chips": [
+    {
+     "text": "Disney World bookings pacing up",
+     "word": [
+      "bookings"
+     ]
+    }
+   ],
+   "foot": "Disney Q4 FY26 results + earnings call"
+  },
+  "3": {
+   "type": "bars",
+   "title": "Dividend per share, per year",
+   "max": 2.5,
+   "items": [
+    {
+     "v": 1.5,
+     "text": "$1.50",
+     "xlabel": "FY2026",
+     "color": "GREY",
+     "word": [
+      "cash"
+     ]
+    },
+    {
+     "v": 2.0,
+     "text": "$2.00",
+     "xlabel": "Coming year",
+     "color": "GOLD",
+     "word": [
+      "two"
+     ]
+    }
+   ],
+   "badge": {
+    "text": "+33%",
+    "word": [
+     "share"
+    ]
+   },
+   "chips": [
+    {
+     "text": "~$9B buybacks planned",
+     "word": [
+      "nine"
+     ],
+     "color": "GREEN"
+    }
+   ],
+   "foot": "Disney Q4 FY26 release"
+  },
+  "4": {
+   "type": "bars",
+   "title": "Forward P/E (lower = cheaper)",
+   "max": 45,
+   "items": [
+    {
+     "v": 15.7,
+     "text": "~16x",
+     "xlabel": "Disney",
+     "color": "GOLD",
+     "word": [
+      "price"
+     ]
+    },
+    {
+     "v": 37.8,
+     "text": "~38x",
+     "xlabel": "Apple",
+     "color": "GREY",
+     "word": [
+      "sixteen"
+     ]
+    },
+    {
+     "v": 32.8,
+     "text": "~33x",
+     "xlabel": "Starbucks",
+     "color": "GREY",
+     "word": [
+      "forward"
+     ]
+    }
+   ],
+   "chips": [
+    {
+     "text": "Double-digit EPS growth expected",
+     "word": [
+      "double"
+     ],
+     "color": "GREEN"
+    }
+   ],
+   "foot": "Forward P/E via StockAnalysis, Nov 2026"
+  },
+  "risk": {
+   "type": "risk",
+   "start_word": [
+    "risk"
+   ],
+   "lines": [
+    {
+     "text": "Content spend rising to ~$26B",
+     "word": [
+      "content"
+     ]
+    },
+    {
+     "text": "Shanghai & Hong Kong parks",
+     "sub": "under consumer pressure",
+     "word": [
+      "shanghai"
+     ]
+    }
+   ]
+  },
+  "cta": {
+   "type": "cta",
+   "start_word": [
+    "opinion"
+   ],
+   "follow_word": [
+    "follow"
+   ],
+   "foot": "Data: Disney Q4 FY26 results + call, StockAnalysis (11/13/26)"
+  }
+ },
+ "facts": {
+  "16%": "Q4 revenue +16%",
+  "33%": "dividend $1.50 -> $2.00",
+  "$402M": "Q4 FY25 SVOD op income",
+  "$824M": "Q4 FY26 SVOD op income",
+  "20%": "Experiences Q4 op income +20%",
+  "$2.25B": "Experiences Q4 op income",
+  "$2": "FY27 dividend $2.00",
+  "$2.00": "same",
+  "$1.50": "FY26 dividend",
+  "$9B": "~$9B buybacks FY27",
+  "16x": "fwd P/E 15.73 StockAnalysis 11/13/26",
+  "38x": "Apple fwd P/E 37.82",
+  "33x": "SBUX fwd P/E 32.79",
+  "$26B": "FY27 cash content spend ~$26B (call)",
+  "2026": "date",
+  "26": "date"
+ }
+}

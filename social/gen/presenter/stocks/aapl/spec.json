@@ -1,0 +1,185 @@
+{
+ "ticker": "AAPL",
+ "date": "11/17/26",
+ "titles": {
+  "hook": "APPLE (AAPL)",
+  "1": "THE IPHONE",
+  "2": "SERVICES",
+  "3": "BUYBACKS",
+  "4": "CASH MACHINE",
+  "risk": "THE RISK",
+  "cta": "OUR TAKE"
+ },
+ "scenes": {
+  "hook": {
+   "label": "Apple revenue, fiscal 2026",
+   "value": 479,
+   "fmt": "${:.0f}B",
+   "color": "GREEN",
+   "sub": "All-time record year",
+   "start_word": [
+    "four"
+   ],
+   "stamp": {
+    "text": "ANALYSTS: BUY",
+    "word": [
+     "buy"
+    ]
+   },
+   "banner": {
+    "text": "WHY WE'RE BULLISH",
+    "word": [
+     "bullish"
+    ]
+   }
+  },
+  "1": {
+   "type": "stack",
+   "title": "Q4 FY26 revenue: $114.5B, up 12%",
+   "icon": "phone",
+   "headline": "iPhone",
+   "subline": "September-quarter record",
+   "parts": [
+    {
+     "v": 57.6,
+     "text": "iPhone $57.6B",
+     "color": "GOLD",
+     "word": [
+      "fifty"
+     ]
+    },
+    {
+     "v": 31.6,
+     "text": "Services $31.6B",
+     "color": "BLUE",
+     "word": [
+      "record"
+     ]
+    },
+    {
+     "v": 25.3,
+     "text": "Other $25.3B",
+     "color": "GREY",
+     "word": [
+      "record"
+     ]
+    }
+   ],
+   "total": {
+    "text": "= $114.5B in one quarter",
+    "word": [
+     "record"
+    ]
+   },
+   "foot": "Apple Q4 FY26 results (quarter ended Sep 26, 2026)"
+  },
+  "2": {
+   "type": "stat",
+   "title": "Services revenue in one quarter",
+   "value": 31.6,
+   "fmt": "${:.1f}B",
+   "label": "All-time high (Q4 FY26)",
+   "color": "BLUE",
+   "start_word": [
+    "thirty"
+   ],
+   "chips": [
+    {
+     "text": "App Store \u00b7 iCloud \u00b7 Music",
+     "word": [
+      "app"
+     ],
+     "color": "GOLD"
+    }
+   ],
+   "foot": "Apple Q4 FY26 results"
+  },
+  "3": {
+   "type": "bars",
+   "title": "Cash returned to shareholders, FY2026",
+   "max": 100,
+   "items": [
+    {
+     "v": 86.4,
+     "text": "$86.4B",
+     "xlabel": "Buybacks",
+     "color": "GOLD",
+     "word": [
+      "eighty"
+     ]
+    },
+    {
+     "v": 15.7,
+     "text": "$15.7B",
+     "xlabel": "Dividends",
+     "color": "BLUE",
+     "word": [
+      "shrinks"
+     ]
+    }
+   ],
+   "foot": "Apple FY26 cash flow statement"
+  },
+  "4": {
+   "type": "stat",
+   "title": "Operating cash flow in one quarter",
+   "icon": "cash",
+   "value": 28,
+   "fmt": "${:.0f}B",
+   "label": "Q4 FY26",
+   "color": "GREEN",
+   "start_word": [
+    "twenty"
+   ],
+   "chips": [
+    {
+     "text": "$28B returned to shareholders",
+     "word": [
+      "returned"
+     ]
+    }
+   ],
+   "foot": "Apple CFO, Q4 FY26 earnings release"
+  },
+  "risk": {
+   "type": "risk",
+   "start_word": [
+    "risk"
+   ],
+   "lines": [
+    {
+     "text": "Valuation: ~40x earnings",
+     "sub": "Priced for continued growth",
+     "word": [
+      "forty"
+     ]
+    }
+   ]
+  },
+  "cta": {
+   "type": "cta",
+   "start_word": [
+    "opinion"
+   ],
+   "follow_word": [
+    "follow"
+   ],
+   "foot": "Data: Apple Q4 FY26 results, StockAnalysis (11/13/26)"
+  }
+ },
+ "facts": {
+  "$479B": "Apple FY26 revenue $478,834M (8-K)",
+  "$114.5B": "Apple Q4 FY26 revenue",
+  "12%": "Q4 revenue growth",
+  "$57.6B": "iPhone $57,583M",
+  "$31.6B": "Services $31,573M",
+  "$25.3B": "114.5-57.6-31.6 (computed)",
+  "$86B": "FY26 buybacks $86,390M",
+  "$86.4B": "same",
+  "$15.7B": "FY26 dividends $15,721M",
+  "$28B": "Q4 operating cash flow / returned (CFO)",
+  "40x": "P/E 39.67 StockAnalysis 11/13/26",
+  "2026": "date",
+  "26": "date"
+ }
+}

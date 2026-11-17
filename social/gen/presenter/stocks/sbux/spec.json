@@ -1,0 +1,201 @@
+{
+ "ticker": "SBUX",
+ "date": "11/17/26",
+ "titles": {
+  "hook": "STARBUCKS (SBUX)",
+  "1": "TRAFFIC IS BACK",
+  "2": "MARGINS",
+  "3": "EARNINGS",
+  "4": "STILL GROWING",
+  "risk": "THE RISK",
+  "cta": "OUR TAKE"
+ },
+ "scenes": {
+  "hook": {
+   "label": "Global same-store sales, Q4 FY26",
+   "value": 7.2,
+   "fmt": "+{:.1f}%",
+   "color": "GREEN",
+   "sub": "North America: +7.9%",
+   "start_word": [
+    "samestore"
+   ],
+   "stamp": {
+    "text": "ANALYSTS: BUY",
+    "word": [
+     "buy"
+    ]
+   },
+   "banner": {
+    "text": "WHY WE'RE BULLISH",
+    "word": [
+     "bullish"
+    ]
+   }
+  },
+  "1": {
+   "type": "bars",
+   "title": "North America same-store sales, Q4 FY26",
+   "max": 6,
+   "items": [
+    {
+     "v": 2.7,
+     "text": "+2.7%",
+     "xlabel": "Transactions",
+     "color": "GREEN",
+     "word": [
+      "transactions"
+     ]
+    },
+    {
+     "v": 5.0,
+     "text": "+5.0%",
+     "xlabel": "Avg. ticket",
+     "color": "BLUE",
+     "word": [
+      "prices"
+     ]
+    }
+   ],
+   "foot": "Starbucks Q4 FY26 results"
+  },
+  "2": {
+   "type": "rings",
+   "title": "Adjusted operating margin",
+   "items": [
+    {
+     "frac": 0.47,
+     "text": "9.4%",
+     "sub": "Q4 FY25",
+     "color": "GREY",
+     "word": [
+      "margins"
+     ]
+    },
+    {
+     "frac": 0.7,
+     "text": "14.0%",
+     "sub": "Q4 FY26",
+     "color": "GOLD",
+     "word": [
+      "fourteen"
+     ]
+    }
+   ],
+   "badge": {
+    "text": "+4.6 PTS",
+    "word": [
+     "four"
+    ]
+   },
+   "foot": "Non-GAAP, company figures. Ring scale: 0\u201320%"
+  },
+  "3": {
+   "type": "bars",
+   "title": "Adjusted EPS per share",
+   "max": 4,
+   "items": [
+    {
+     "v": 2.72,
+     "text": "$2.72",
+     "xlabel": "FY2026",
+     "color": "GREY",
+     "word": [
+      "earnings"
+     ]
+    },
+    {
+     "lo": 3.15,
+     "hi": 3.25,
+     "text": "$3.15\u20133.25",
+     "xlabel": "FY2027 guide",
+     "color": "GOLD",
+     "word": [
+      "three",
+      1
+     ]
+    }
+   ],
+   "badge": {
+    "text": "+16\u201319%",
+    "word": [
+     "two"
+    ]
+   },
+   "foot": "Starbucks FY27 guidance (non-GAAP)"
+  },
+  "4": {
+   "type": "stat",
+   "title": "Net new stores planned, FY2027",
+   "icon": "store",
+   "value": 1200,
+   "fmt": "{:,.0f}",
+   "label": "Led by International",
+   "color": "GOLD",
+   "start_word": [
+    "twelve"
+   ],
+   "chips": [
+    {
+     "text": "2%+ dividend yield",
+     "word": [
+      "dividend"
+     ]
+    }
+   ],
+   "foot": "Starbucks FY27 guidance, StockAnalysis"
+  },
+  "risk": {
+   "type": "risk",
+   "start_word": [
+    "risk"
+   ],
+   "lines": [
+    {
+     "text": "Revenue guided ~1% lower",
+     "sub": "after selling Starbucks China",
+     "word": [
+      "revenue"
+     ]
+    },
+    {
+     "text": "Valuation: 30x+ forward P/E",
+     "word": [
+      "thirty"
+     ]
+    }
+   ]
+  },
+  "cta": {
+   "type": "cta",
+   "start_word": [
+    "opinion"
+   ],
+   "follow_word": [
+    "follow"
+   ],
+   "foot": "Data: Starbucks Q4 FY26 results, StockAnalysis (11/6/26)"
+  }
+ },
+ "facts": {
+  "7%": "spoken rounding of 7.2%",
+  "7.2%": "Q4 FY26 global comps",
+  "7.9%": "Q4 FY26 NA comps",
+  "2.7%": "NA transactions",
+  "5.0%": "NA avg ticket",
+  "14%": "Q4 non-GAAP op margin 14.0%",
+  "14.0%": "same",
+  "4.6": "up 460 bps",
+  "9.4%": "14.0-4.6 (computed)",
+  "$3.15\u2013$3.25": "FY27 non-GAAP EPS guide",
+  "$3.15\u20133.25": "same",
+  "$2.72": "FY26 non-GAAP EPS",
+  "16\u201319%": "3.15/2.72-1 to 3.25/2.72-1 (computed)",
+  "1,200": "~1,200 net new stores FY27",
+  "2%": "yield 2.39% StockAnalysis",
+  "1%": "FY27 revenue guide down ~1%",
+  "30x": "fwd P/E 32.79 StockAnalysis 11/6/26",
+  "0\u201320%": "chart axis scale",
+  "2026": "date"
+ }
+}

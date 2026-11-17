@@ -4409,7 +4409,8 @@ let pplQ="",pplTab="suggest";
 const pplFollows=()=>new Set(S.profile.follows||[]);
 const pplRel=p=>{const f=pplFollows(),iF=f.has(p.id),fB=(p.follows||[]).includes(myId);return iF&&fB?"connected":iF?"requested":fB?"incoming":"none"};
 function pplMutual(p){const mine=pplFollows();return (p.follows||[]).filter(id=>id!==myId&&mine.has(id)).length}
-function pplToggle(id,on){const f=pplFollows();on?f.add(id):f.delete(id);S.profile.follows=[...f];save();try{syncProfile()}catch(e){}renderPeople();try{renderCrmFriends()}catch(e){}}
+async function pplNotify(id,accepted){try{const A=window.MA_AUTH,s=A&&A.sb&&(await A.sb.auth.getSession()).data.session;if(!s)return;await fetch("/.netlify/functions/connect-notify",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({to:id,accepted:!!accepted,name:myName})})}catch(e){}}
+function pplToggle(id,on){const f=pplFollows();on?f.add(id):f.delete(id);S.profile.follows=[...f];save();try{syncProfile()}catch(e){}if(on&&typeof PLAYERS!=="undefined"&&dbState==="on"){const p=PLAYERS.find(x=>x.id===id);if(p)pplNotify(id,pplRel(p)==="connected")}renderPeople();try{renderCrmFriends()}catch(e){}}
 function pplMatch(p,q){if(!q)return true;const nm=realName(p.id).toLowerCase(),ex=(p.exp||[]).map(e=>(e.t||"")+" "+(e.o||"")).join(" ");
   return [nm,p.headline,p.school,p.major,p.location,p.clubName,ex].join(" ").toLowerCase().includes(q.toLowerCase())}
 function pplSuggest(){const me=S.profile||{},mine=pplFollows(),club=S.club&&S.club.code;

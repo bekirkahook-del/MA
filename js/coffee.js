@@ -43,7 +43,7 @@
 .cc-opts{display:flex;gap:8px;flex-wrap:wrap}.cc-opt{border:1px solid var(--rule);border-radius:12px;padding:10px 12px;background:var(--sheet);cursor:pointer;text-align:left;flex:1;min-width:150px;font:inherit;color:var(--ink)}
 .cc-opt[aria-pressed="true"]{border-color:var(--cobalt);box-shadow:0 0 0 1px var(--cobalt)}.cc-opt b{display:block;font-size:14px}.cc-opt span{font-size:12.5px;color:var(--ink-2)}
 .cc-rows{margin:8px 0 12px}.cc-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--rule);font-size:14px}
-.cc-tips{font-size:14px;color:var(--ink-2);margin:0;padding-left:18px;line-height:1.55}
+.cc-how{border:1px solid var(--rule);border-radius:12px;padding:0 14px;background:var(--sheet)}.cc-how summary{padding:12px 0;font-weight:600;cursor:pointer;font-size:15px}.cc-how[open]{padding-bottom:12px}.cc-how p{margin:0 0 8px!important}.cc-tips{font-size:14px;color:var(--ink-2);margin:0;padding-left:18px;line-height:1.55}
 /* voice stage */
 .cc-stage{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 8px 6px;border-radius:18px;background:linear-gradient(160deg,color-mix(in srgb,var(--cobalt) 16%,transparent),color-mix(in srgb,var(--brass) 14%,transparent));border:1px solid var(--rule)}
 .cc-orb{position:relative;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:800;color:#fff;background:linear-gradient(145deg,var(--cobalt),var(--brass))}
@@ -125,11 +125,11 @@
   function render(){const box=$("#ccBox");if(!box)return;
     if(!chat){const hist=(S.coffee||[]);const best=hist.reduce((m,h)=>Math.max(m,h.sc||0),0);const md=modeNow();
       box.innerHTML=`<div class="cc-wrap">
-        <p style="margin:0">Practice a real networking call, out loud. You'll talk to a made-up banker for up to ${MAX} turns, and they talk back. Then AI grades the whole call: your intro, questions, listening, tone and close. Keep their <b>Rapport</b> meter climbing.</p>
+        <details class="cc-how"><summary>How it works &amp; tips</summary><p style="margin:0">Practice a real networking call, out loud. You'll talk to a made-up banker for up to ${MAX} turns, and they talk back. Then AI grades the whole call: your intro, questions, listening, tone and close. Keep their <b>Rapport</b> meter climbing.</p><ul class="cc-tips"><li>They open by asking about you. Have a 30-second intro ready.</li><li>Ask about their path, their work and their group. Follow up on what they say.</li><li>Close well: thank them and ask who else you should talk to.</li></ul></details>
         ${voiceOK?`<div class="label">How do you want to talk?</div><div class="cc-opts cc-modes"><button type="button" class="cc-opt" data-md="voice" aria-pressed="${md==="voice"}"><b>🎙 Voice call</b><span>Speak, they answer out loud</span></button><button type="button" class="cc-opt" data-md="text" aria-pressed="${md==="text"}"><b>⌨ Type it</b><span>Same call, no mic</span></button></div>`:`<p class="note" style="margin:0">Voice calls need Chrome, Edge or Safari. You can still do this call by typing.</p>`}
         <div class="label">Pick the banker's mood</div>
         <div class="cc-opts">${MOODS.map(([k,n,d])=>`<button type="button" class="cc-opt" data-mood="${k}" aria-pressed="${k===mood}"><b>${n}</b><span>${d}</span></button>`).join("")}</div>
-        <ul class="cc-tips"><li>They open by asking about you. Have a 30-second intro ready.</li><li>Ask about their path, their work and their group. Follow up on what they say.</li><li>Close well: thank them and ask who else you should talk to.</li></ul>
+
         <div class="cc-meta"><span>${hist.length?`${hist.length} call${hist.length===1?"":"s"} done · best ${best}/10`:"Uses about 6 AI uses per call."} <a href="/guides/how-to-prepare-for-a-coffee-chat/">How to prepare →</a></span><button class="btn" id="ccStart">${md==="voice"?"Start the call 🎙":"Start the call →"}</button></div></div>`;
       box.querySelectorAll("[data-mood]").forEach(b=>b.onclick=()=>{mood=b.dataset.mood;render()});
       box.querySelectorAll("[data-md]").forEach(b=>b.onclick=()=>{S.coffeeMode=b.dataset.md;try{save()}catch(e){}render()});

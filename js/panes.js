@@ -187,6 +187,19 @@
     Object.keys(C).forEach(view=>{const root=$(`[data-view="${view}"]`);if(!root)return;
       Object.keys(C[view]).forEach(sub=>{const pane=$(`[data-pane="${sub}"]`,root);if(pane)ensureHero(pane,C[view][sub])})});
     // practice: tuck tables, rankings and long lists into sub-sections
+    // practice, page by page: keep the main action on screen, tuck the rest one tap away
+    fold($("#weakCard"),"🎯 Weak-spot drill");
+    fold($("#toolkitCard"),"📊 Your stats & toolkit");
+    const cb=$("#curve .cb-meta");if(cb)cb.setAttribute("data-pn-x","1");
+    fold($("#emBox"),"📬 Free weekly curveball email");
+    fold($("#cbSprint"),"⚡ 60-second mental math sprint");
+    const bt=[...document.querySelectorAll("#curve .cb-card")].find(x=>!x.id&&!x.dataset.pn&&/brainteaser/i.test(x.textContent));fold(bt,"🧠 Brainteasers & estimates");
+    fold($("#sdCard"),"🎓 Superday simulator");
+    fold($('[data-pane="interview"] .mock-grid'),"Pick a different question");
+    ["dcf","lbo"].forEach(k=>fold($(`[data-pane="${k}"]>p.hint`),"How this model works"));
+    {const ff=$("#ffChart");if(ff&&!ff.dataset.pnFf){ff.dataset.pnFf="1";const lb=ff.previousElementSibling;const nx=ff.nextElementSibling;
+      const d=document.createElement("details");d.className="pn-fold";d.innerHTML="<summary>📊 Football field: valuation range</summary>";ff.parentNode.insertBefore(d,lb&&lb.classList.contains("label")?lb:ff);
+      [lb&&lb.classList.contains("label")?lb:null,ff,nx&&nx.tagName==="P"?nx:null].filter(Boolean).forEach(x=>d.appendChild(x))}}
     fold($("#lb"),"🏆 Top players");
     fold($("#lboTbl"),"Year-by-year table");
     fold($("#dcfTbl"),"Projection table");

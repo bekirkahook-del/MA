@@ -90,3 +90,10 @@
 - 2026-11-18 oddq-clock315 — [Interview Q] Clock at 3:15 → 7.5°
 - 2026-11-19 punch-eqtrade — [Ranking video] Q3 2026 equities trading revenue by bank (Goldman $6.44B, MS $5.80B, JPM $4.95B, BofA $2.50B, Citi $1.73B)
 - 2026-11-19 type2-lbo — [Teaser video, type2.js, no voice] LBO: $1B buy, $400M equity → $1B equity in 5 yrs = 2.5x ≈ 20% IRR
+- 2026-11-19 q3wacc — 3-question challenge: EBITDA margin 25% (C), P/E 20x → $50 (A), WACC 7.5% (D)
+- 2026-11-19 12:21pm reel-anthropic-ipo — [News reel, ElevenLabs Tyler voice, AI-labeled] Anthropic IPO: $70–78, 825M shares, ~$61B base raise, up to $1.4T fully diluted, Nasdaq ANT Nov 19, 22 bookrunners (Renaissance Capital Nov 10, The Next Web Nov 11)
+- 2026-11-20 story-horses — [Teaser video, story.js] 25 horses, 5 lanes → 7 races
+- 2026-11-20 mythib — [Carousel, myth vs fact] 4.0 GPA, finance-only, senior-year recruiting, networking
+- 2026-11-20 type-coin — [Teaser video, type.js] Flip until heads → 2 flips on average
+- 2026-11-21 punch-ficc — [Ranking video] Q3 2026 bond trading revenue by bank (JPM $5.40B, Citi $4.40B, GS $3.47B, BofA $2.60B, MS $2.01B)
+- 2026-11-21 oddq-1pct — [Interview Q] 1% of 1% of $1M = $100

@@ -909,6 +909,7 @@ function totalXP(){let x=0;
   x+=Math.min(S.mockXP,20)*5;
   x+=Object.values(S.deals||{}).reduce((a,b)=>a+b*5,0)+Object.keys(S.models||{}).length*15+Object.keys(S.certs||{}).length*50;
   x+=Object.values(S.cases||{}).reduce((a,c)=>a+25+(c.score>=80?25:0),0);
+  x+=Math.min(200,(S.coffee||[]).reduce((a,h)=>a+(typeof window.coffeeXP==="function"?window.coffeeXP(h):10),0));
   if(typeof badgeXP==="function")x+=badgeXP();
   return x}
 const rankOf=x=>{let r=0;RANKS.forEach((k,i)=>{if(x>=k[1])r=i});return r};
@@ -3076,7 +3077,8 @@ const QUEST_POOL=[
  {id:"stars3",t:"Get 3 stars on any level",n:1,ev:"stars3",tier:2},
  {id:"iv7",t:"Score 7+ on an interview answer",n:7,ev:"ivBest",tier:2,max:true},
  {id:"correct15",t:"Get 15 answers right",n:15,ev:"correct",tier:2},
- {id:"level2",t:"Clear 2 levels",n:2,ev:"level",tier:2}
+ {id:"level2",t:"Clear 2 levels",n:2,ev:"level",tier:2},
+ {id:"coffee",t:"Finish a voice coffee chat",n:1,ev:"coffee",tier:2}
 ];
 const qHash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 function todayQuests(){const d=today();if(!S.quests||S.quests.d!==d){const h=qHash(d+(myId||""));const pick=tier=>{const opts=QUEST_POOL.filter(q=>q.tier===tier&&(!q.need||q.need())&&!(q.id==="daily"&&GS().hideDaily));return opts[(h>>>(tier*5))%opts.length]||opts[0]};

@@ -85,3 +85,8 @@
 - 2026-11-17 punch-ipo26 — [Ranking video] Biggest IPOs of 2026 by market value (interactive investor Oct 30 2026; SpaceX $1.96T)
 - 2026-11-17 whyib — [Carousel, red/green flag] 4 answers to "Why banking?"
 - 2026-11-17 5:58pm ps2-summer2027 — [AI video, ElevenLabs Alex voice, PS2-style character] Summer 2027 IB recruiting still open (Citi, Piper Sandler, William Blair). TikTok + IG Reel + YouTube Short + Facebook Reel, all marked AI-generated. Bekir asked to post to all socials
+- 2026-11-18 oddq-7pt5 — [Interview Q] 7.5% of 240 = 18 (10% minus a quarter)
+- 2026-11-18 da10 — [Quiz] Depreciation +$10 at 25% tax → cash +$2.50 (D), balance sheet check
+- 2026-11-18 oddq-clock315 — [Interview Q] Clock at 3:15 → 7.5°
+- 2026-11-19 punch-eqtrade — [Ranking video] Q3 2026 equities trading revenue by bank (Goldman $6.44B, MS $5.80B, JPM $4.95B, BofA $2.50B, Citi $1.73B)
+- 2026-11-19 type2-lbo — [Teaser video, type2.js, no voice] LBO: $1B buy, $400M equity → $1B equity in 5 yrs = 2.5x ≈ 20% IRR

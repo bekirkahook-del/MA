@@ -7,3 +7,5 @@
 | 2026-11-16 | Credit card $1,000 at 24% paying $25/mo = 82 payments, $2,032 (type.js) | 4 steps | typewriter | 96 | question-first "How long?" | | | | |
 | 2026-11-17 | Biggest IPOs of 2026 by market value (interactive investor, Oct 30) | 5 | terminal + photo bg | 122 | number-first "#2 is worth $1.18T" | | | | |
 | 2026-11-17 | 3- & 5-gallon jug puzzle (story.js) | 5 steps | story | 120 | question-first "Get exactly 4 gallons" | | | | |
+| 2026-11-19 | Q3 2026 equities trading revenue by bank (bank earnings reports) | 5 | glow, no photo | 134 (pace 2, fast ~9s) | question-first "King of stock trading? It's not JPMorgan" | | | | | |
+| 2026-11-19 | LBO 2.5x in 5 yrs ≈ 20% IRR (type2.js) | 4 steps | timeline | 110 | question-first "What's the IRR?" | | | | | |

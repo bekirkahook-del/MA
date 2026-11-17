@@ -24,7 +24,7 @@
   const hasSchool=()=>!!(S.profile&&(S.profile.school||"").trim());
   const officerOf=code=>(typeof PLAYERS!=="undefined"?PLAYERS:[]).find(p=>p.club===code&&p.clubOfficer);
   const clubSchool=()=>{const c=S.club&&S.club.code;if(!c)return"";if(S.club.officer)return domain();const o=officerOf(c);return(o&&o.sd)||S.club.sd||""};
-  const clubOK=()=>{const d=domain();return !!(d&&S.club&&S.club.code&&clubSchool()===d&&(!window.maClubMod||maClubMod.approved()))};
+  const clubOK=()=>{const d=domain();if(window.maClubMod)return !!(d&&maClubMod.gateOK(d));return !!(d&&S.club&&S.club.code&&clubSchool()===d)};
   const step=()=>!sess()||!eduOK()?1:!hasSchool()?2:!clubOK()?3:4;
   const ready=()=>step()===4;
   const eligible=()=>ready()&&phase()==="live";
@@ -169,13 +169,13 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
     q("#srGo").onclick=()=>{const v=q("#srSch").value.trim();if(v.length<3){q("#srM").className="sr-msg err";q("#srM").textContent="Enter your school's name.";return}
       S.profile.school=v;try{S.settings.noSchool=false}catch(e){}save();try{syncProfile()}catch(e){}onboard()}}
 
-  function clubsAtMySchool(){const d=domain(),seen={},list=[];
+  function clubsAtMySchool(){if(window.maClubMod)return maClubMod.schoolList();const d=domain(),seen={},list=[];
     (typeof PLAYERS!=="undefined"?PLAYERS:[]).forEach(p=>{if(p.clubOfficer&&p.club&&p.sd===d&&!seen[p.club]){seen[p.club]=1;
       list.push({code:p.club,name:p.clubName||"School club",members:PLAYERS.filter(x=>x.club===p.club).length})}});
     return list}
   function joinClub(code,name){try{maJoinClub(code,name)}catch(e){S.club={code,name,officer:false};save();try{syncProfile()}catch(x){}}
     S.club=S.club||{};S.club.sd=domain();save();try{syncProfile()}catch(e){}}
-  function stepClub(){const list=clubsAtMySchool();
+  function stepClub(){const list=clubsAtMySchool();if(window.maClubMod)maClubMod.loadSchool(()=>{if(q("#srReg"))stepClub()});
     openPanel(`<div class="sr-pn"><div class="label">${E(SERIES.name)}</div>${prog(3)}<h2>Step 3: join your school's official club</h2>
       <p class="sr-kv">You compete as part of a club at <b>${E(S.profile.school)}</b> (${E(domain())}). Clubs here were created by verified students from your school.</p>
       ${list.length?list.map(c=>`<div class="sr-row"><div class="t"><b>${E(c.name)}<span class="sr-ok">✓ ${E(domain())}</span></b><small>${c.members} member${c.members===1?"":"s"}</small></div><button class="sr-btn" data-j="${E(c.code)}" data-n="${E(c.name)}">Join</button></div>`).join("")
@@ -186,14 +186,16 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
       <label class="sr-lab" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="srOff"> I'm an officer or founder of this club</label>
       <div class="sr-msg" id="srM"></div><div class="sr-act"><button class="sr-btn ghost" style="color:var(--ink);border-color:var(--rule)" id="srReg">Register club</button></div></div>`);
     const err=t=>{const m=q("#srM");m.className="sr-msg err";m.textContent=t};
-    document.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{joinClub(b.dataset.j,b.dataset.n);onboard()});
+    document.querySelectorAll("[data-j]").forEach(b=>b.onclick=async()=>{if(window.maClubMod){const r=await maClubMod.join(b.dataset.j);if(!r.ok){err(r.error);return}onboard();return}joinClub(b.dataset.j,b.dataset.n);onboard()});
     q("#srCodeGo").onclick=()=>{const c=q("#srCode").value.trim().toLowerCase();if(!/^[a-z0-9]{4,8}$/.test(c)){err("Enter the code your club officer shared.");return}
+      if(window.maClubMod){maClubMod.join(c).then(r=>{if(!r.ok){err(r.error);return}onboard()});return}
       const o=officerOf(c);if(!o){err("Club not found. Ask the officer to open M&A Prep once so it shows up.");return}
       if(o.sd!==domain()){err(o.sd?"That club belongs to a different school.":"That club's school isn't verified yet. Ask the officer to open M&A Prep once.");return}
       joinClub(c,o.clubName||"School club");onboard()};
     q("#srReg").onclick=()=>{const n=q("#srNew").value.trim();if(n.length<3){err("Name your club first.");return}
       if(!q("#srOff").checked){err("Only an officer or founder can register a club. Everyone else joins one.");return}
       if(list.some(c=>c.name.toLowerCase()===n.toLowerCase())){err("That club already exists. Join it above.");return}
+      if(window.maClubMod){maClubMod.create(n).then(r=>{if(!r.ok){err(r.error);return}onboard()});return}
       S.club={code:typeof randCode==="function"?randCode(6):Math.random().toString(36).slice(2,8),name:n,officer:true,sd:domain()};save();try{syncProfile()}catch(e){}onboard()}}
 
   function stepGo(){ser().joined=ser().joined||Date.now();save();

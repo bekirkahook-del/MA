@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import crypto from "node:crypto";
-process.env.STRIPE_SECRET_KEY = "sk_test_x"; process.env.SUPABASE_SERVICE_ROLE_KEY = "sbsecret"; process.env.STRIPE_WEBHOOK_SECRET = "whsec_t";
+process.env.STRIPE_SECRET_KEY = "sk_test_x"; process.env.SUPABASE_SERVICE_ROLE_KEY = "sbsecret"; process.env.STRIPE_WEBHOOK_SECRET = "whsec_test_secret";
 const { clubQuote } = await import("../netlify/functions/_lib/clubprice.mjs");
 
 // 1. price table: flat $4 per member per month, 10-seat minimum, 500 max
@@ -53,7 +53,7 @@ globalThis.fetch = async (url, opt = {}) => {
 };
 const call = async (mod, body, tok) => (await import(mod)).default(new Request("http://x", { method: "POST", headers: tok ? { authorization: "Bearer " + tok } : {}, body: JSON.stringify(body) }));
 const j = async (r) => ({ status: r.status, ...(await r.json()) });
-const hook = async (ev) => { const raw = JSON.stringify(ev), t = Math.floor(Date.now() / 1000), sig = crypto.createHmac("sha256", "whsec_t").update(`${t}.${raw}`).digest("hex");
+const hook = async (ev) => { const raw = JSON.stringify(ev), t = Math.floor(Date.now() / 1000), sig = crypto.createHmac("sha256", "whsec_test_secret").update(`${t}.${raw}`).digest("hex");
   return (await import("../netlify/functions/stripe-webhook.mjs")).default(new Request("http://x", { method: "POST", headers: { "stripe-signature": `t=${t},v1=${sig}` }, body: raw })); };
 
 put("players", OFFICER, { club: "abc123", clubOfficer: true, clubName: "Fisher Finance" });

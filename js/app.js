@@ -4284,8 +4284,8 @@ function homeLanding(){
   const nx=nextLevel();
   return `<div class="hl-land">
    <span class="label">Free · Built for students chasing finance jobs</span>
-   <h1>Train for Wall Street <br><em>like it's a game.</em></h1>
-   <p>Learn investment banking, private equity, hedge funds, restructuring and consulting in 5-minute levels. Practice real interview questions, follow live deals, and map your path to an offer.</p>
+   <h1>Get Superday-ready <br><em>5 minutes at a time.</em></h1>
+   <p>Free prep for investment banking, private equity and hedge fund interviews. Clear short levels, see how you rank against other students, and always know what to do next.</p>
    <div class="hl-cta"><button class="btn hl-go" id="landGo">${nx?`Start Level 1 · 5 min`:"Start training"} →</button><button class="ghost hl-2" id="landPlan">Plan my path</button></div>
    <div class="hl-proof n${proof.length}">${proof.map(([n,l],i)=>`<div style="--i:${i}"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
    <div class="hl-how">${[["1","Learn","Short levels that teach the 3 statements, valuation, LBOs and more.","learn"],["2","Practice","Rapid Fire, mock interviews, DCF and LBO builders.","practice"],["3","Land it","Plan your path, track deadlines and network like a pro.","career"]].map(([n,t,d,v],i)=>`<button class="hl-step" data-v="${v}" style="--i:${i}"><span class="hl-n">${n}</span><b>${t}</b><span>${d}</span></button>`).join("")}</div>

@@ -43,6 +43,19 @@ def block(b):
     if k == "cta": return f'<div class="cta"><p>{b[1]}</p><a href="{b[2]}">{e(b[3])}</a></div>'
     raise ValueError(k)
 
+def shorten_title(full, LIM=65):
+    """Search engines flag titles over ~65 chars. Drop parentheticals, then the brand suffix, then any subtitle."""
+    suf = " | M&A Prep"; t = full[:-len(suf)] if full.endswith(suf) else full
+    if len(t + suf) <= LIM: return t + suf
+    t2 = re.sub(r"\s*\([^)]*\)", "", t).strip()
+    if len(t2 + suf) <= LIM: return t2 + suf
+    if len(t2) <= LIM: return t2
+    for sep in (": ", " - ", " \u2013 "):
+        if sep in t2:
+            h = t2.split(sep)[0]
+            if len(h) >= 25: return h if len(h) > LIM - len(suf) else h + suf
+    return t2[:LIM - 1].rsplit(" ", 1)[0].rstrip(",:;&-")
+
 def answer_box(a):
     """The "short answer" box near the top of a guide: 2-3 plain sentences that answer the headline question directly."""
     if not a: return ""
@@ -50,7 +63,7 @@ def answer_box(a):
 
 def page(p):
     url = f"https://mnaprep.com/guides/{p['slug']}/"
-    title = f"{p['title']} | M&A Prep"
+    title = shorten_title(f"{p['title']} | M&A Prep")
     faqs = [(b[1], strip(b[2])) for b in p["body"] if b[0] == "qa"]
     ld = [
         {"@context": "https://schema.org", "@type": "Article", "headline": p["h1"], "description": p["desc"], "datePublished": TODAY, "dateModified": TODAY,

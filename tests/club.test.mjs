@@ -5,10 +5,10 @@ import crypto from "node:crypto";
 process.env.STRIPE_SECRET_KEY = "sk_test_x"; process.env.SUPABASE_SERVICE_ROLE_KEY = "sbsecret"; process.env.STRIPE_WEBHOOK_SECRET = "whsec_test_secret";
 const { clubQuote } = await import("../netlify/functions/_lib/clubprice.mjs");
 
-// 1. price table: flat $4 per member per month, 10-seat minimum, 500 max
+// 1. price table: flat $6 per member per month, 10-seat minimum, 500 max
 const cents = (n) => clubQuote(n).totalCents;
-assert.equal(cents(1), 4000); assert.equal(cents(10), 4000);
-assert.equal(cents(25), 10000); assert.equal(cents(40), 16000); assert.equal(cents(500), 200000);
+assert.equal(cents(1), 6000); assert.equal(cents(10), 6000);
+assert.equal(cents(25), 15000); assert.equal(cents(40), 24000); assert.equal(cents(500), 300000);
 assert.equal(clubQuote(501).contact, true); assert.equal(clubQuote(0).ok, false); assert.equal(clubQuote("abc").ok, false);
 for (let n = 1; n < 500; n++) assert.ok(cents(n + 1) >= cents(n), "price never drops when a member is added: " + n);
 
@@ -64,12 +64,12 @@ assert.equal((await j(await call("../netlify/functions/checkout.mjs", { plan: "c
 assert.equal((await j(await call("../netlify/functions/checkout.mjs", { plan: "club", members: 600, code: "abc123" }, "tokO"))).status, 400, "over 500 = custom quote");
 const co = await j(await call("../netlify/functions/checkout.mjs", { plan: "club", members: 40, code: "abc123" }, "tokO"));
 assert.equal(co.status, 200); const body = new URLSearchParams(stripeCalls.at(-1).body);
-assert.equal(body.get("line_items[0][price_data][unit_amount]"), "16000", "server prices 40 members at $160/month");
+assert.equal(body.get("line_items[0][price_data][unit_amount]"), "24000", "server prices 40 members at $240/month");
 assert.equal(body.get("metadata[club]"), "abc123"); assert.equal(body.get("metadata[seats]"), "40");
 assert.equal(body.get("mode"), "subscription"); assert.equal(body.get("line_items[0][price_data][recurring][interval]"), "month");
 // price can't be forced from the browser
 await call("../netlify/functions/checkout.mjs", { plan: "club", members: 40, amount: 1, code: "abc123" }, "tokO");
-assert.equal(new URLSearchParams(stripeCalls.at(-1).body).get("line_items[0][price_data][unit_amount]"), "16000");
+assert.equal(new URLSearchParams(stripeCalls.at(-1).body).get("line_items[0][price_data][unit_amount]"), "24000");
 
 // payment -> officer gets a seat + Pro
 const subMeta = { uid: OFFICER, plan: "club", club: "abc123", seats: "10" };

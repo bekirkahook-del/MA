@@ -116,7 +116,7 @@
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
     <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
     <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members get 3 AI uses a day and can check any answer against the key points. Pro removes the daily limits. The 3-day trial and Pro days you earn by ranking up include 20 AI uses a day.</p></section>
-    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>$4 per member per month. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
+    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>$6 per member per month. Everyone gets Pro, plus a club leaderboard and an officer view.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
     <div id="reviews" class="reviews"></div>
     <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever. AI features are capped at 3 uses a day."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
@@ -134,7 +134,7 @@
 
   /* ---------- Stripe checkout + billing sync ---------- */
   /* ---------- Club plan: a yearly quote based on member count (server re-computes the price at checkout; keep in sync with netlify/functions/_lib/clubprice.mjs) ---------- */
-  const CLUB_CENTS=400,CLUB_MIN=10,CLUB_MAX=500;
+  const CLUB_CENTS=600,CLUB_MIN=10,CLUB_MAX=500;
   function clubQuote(members){const n=Math.floor(Number(members));if(!isFinite(n)||n<1)return{ok:false,error:"Enter how many members your club has."};
     if(n>CLUB_MAX)return{ok:false,contact:true,error:"Clubs over "+CLUB_MAX+" members get a custom quote. Email us."};
     const seats=Math.max(n,CLUB_MIN);return{ok:true,members:n,seats,perMemberCents:CLUB_CENTS,totalCents:seats*CLUB_CENTS}}
@@ -143,7 +143,7 @@
   window.maClubQuote=async function(){
     const club=S.club&&S.club.code?S.club:null,seen=(typeof clubMembers==="function"&&club)?clubMembers().length:0;
     const start=Math.max(seen,CLUB_MIN);
-    openPanel(`<div class="label">Club plan</div><h2>Your club's quote</h2><p class="sub">Pro for every member (15 AI uses a day each), a private leaderboard, a weekly club Gauntlet and an officer view. You pay $4 per member per month.</p>
+    openPanel(`<div class="label">Club plan</div><h2>Your club's quote</h2><p class="sub">Pro for every member (15 AI uses a day each), a private leaderboard, a weekly club Gauntlet and an officer view. You pay $6 per member per month.</p>
       <label class="label" for="cqN" style="margin-top:12px;display:block">How many members?</label>
       <input id="cqN" type="number" inputmode="numeric" min="1" max="${CLUB_MAX}" value="${start}" style="width:120px">
       <div id="cqOut" class="tbl-wrap" style="margin-top:12px" aria-live="polite"></div>

@@ -1,7 +1,7 @@
-// Club plan pricing: a flat $4 per member per month, billed monthly to the club officer.
-// Minimum 10 seats ($40/month). Over 500 members = talk to us.
+// Club plan pricing: a flat $6 per member per month, billed monthly to the club officer.
+// Minimum 10 seats ($60/month). Over 500 members = talk to us.
 // KEEP IN SYNC with the copy in js/rewards.js (tests/club.test.mjs checks both).
-export const CLUB = { centsPerMember: 400, minSeats: 10, maxSeats: 500, interval: "month" };
+export const CLUB = { centsPerMember: 600, minSeats: 10, maxSeats: 500, interval: "month" };
 
 export function clubQuote(members) {
   const n = Math.floor(Number(members));

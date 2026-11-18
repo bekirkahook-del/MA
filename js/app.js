@@ -841,7 +841,8 @@ const FIRMS=[
 const KEY="ma-progress-v1";
 let S={pro:{},grades:{},league:{},superdays:[],settings:{},best:{},rapid:0,daily:{},newsq:{},mock:0,mockXP:0,mockBest:{},gauntlet:{},profile:{},road:{},contacts:[],targets:{},seeded:false};
 const S_DEFAULT=JSON.stringify(S);
-try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const safeJSON=t=>JSON.parse(t,(k,v)=>(k==="__proto__"||k==="constructor"||k==="prototype")?undefined:v);
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,safeJSON(r))}catch(e){}
 let cloudOn=false,cloudT=null,cloudState="off",cloudAt=0;
 function save(){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(()=>{cloudT=null;cloudPush()},1500)}}
 const cloudDoc=()=>DB.collection("data/users/"+myId).doc("progress");
@@ -866,7 +867,7 @@ function mergeState(L,R,lNew){const o={};for(const k of new Set([...Object.keys(
 const stateSig=x=>{try{const c=Object.assign({},x);delete c._t;delete c._synced;return JSON.stringify(c)}catch(e){return ""}};
 async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();return}
   try{const snap=await cloudDoc().get();let remote=null,rt=0;
-    if(snap.exists){const d=snap.data()||{};rt=d.t||0;try{remote=JSON.parse(d.s||"null")}catch(e){remote=null}}
+    if(snap.exists){const d=snap.data()||{};rt=d.t||0;try{remote=safeJSON(d.s||"null")}catch(e){remote=null}}
     let gotNew=false,needPush=!remote;
     if(remote){
       if(S._synced&&S._synced!==myId){S=Object.assign(JSON.parse(S_DEFAULT),remote);gotNew=true}
@@ -2043,7 +2044,7 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
   if($("#proGo"))$("#proGo").onclick=()=>showTab("pro");
   if($("#proRev"))$("#proRev").onclick=()=>{if(dbState!=="on"){toast("Reviews are available when you sign in");return}writeReview(REVIEWS.find(r=>r.id===myId))};
   $("#expBtn").onclick=async()=>{const code=btoa(unescape(encodeURIComponent(JSON.stringify(S))));try{await navigator.clipboard.writeText(code);toast("Backup code copied")}catch(e){$("#impTxt").value=code;$("#impTxt").select();toast("Select and copy the code in the box")}};
-  $("#impBtn").onclick=()=>{try{const o=JSON.parse(decodeURIComponent(escape(atob($("#impTxt").value.trim()))));if(!o||typeof o!=="object"||!o.best)throw 0;S=Object.assign(S,o);save();applySettings();applyProUI();render();renderCRM();renderFirms();renderMock();renderSettings(true);toast("Progress restored")}catch(e){toast("That code didn't work. Copy it again and paste the whole thing.")}};
+  $("#impBtn").onclick=()=>{try{const o=safeJSON(decodeURIComponent(escape(atob($("#impTxt").value.trim()))));if(!o||typeof o!=="object"||!o.best)throw 0;S=Object.assign(S,o);save();applySettings();applyProUI();render();renderCRM();renderFirms();renderMock();renderSettings(true);toast("Progress restored")}catch(e){toast("That code didn't work. Copy it again and paste the whole thing.")}};
   const confirmIn=(box,label,fn)=>{const b=$(box);b.innerHTML=`<span class="confirm">Sure? <button class="ghost danger" data-y>${label}</button><button class="ghost" data-n>Cancel</button></span>`;b.querySelector("[data-y]").onclick=fn;b.querySelector("[data-n]").onclick=()=>renderSettings(true);b.querySelector("[data-n]").focus()};
   $("#rstBtn").onclick=()=>confirmIn("#rstBox","Yes, reset",()=>{Object.assign(S,{best:{},rapid:0,daily:{},newsq:{},mock:0,mockXP:0,mockBest:{},xpLog:{}});save();render();renderMock();renderSettings(true);toast("Progress reset")});
   $("#clrBtn").onclick=()=>confirmIn("#clrBox","Yes, clear all",()=>{const g=S.gauntlet,l=S.league;S={pro:{},grades:{},league:l||{},superdays:[],settings:{},best:{},rapid:0,daily:{},newsq:{},mock:0,mockXP:0,mockBest:{},gauntlet:g,profile:{},road:{},contacts:[],targets:{},seeded:true,xpLog:{}};save();applySettings();applyProUI();render();renderCRM();renderFirms();renderMock();renderSettings(true);toast("Everything cleared")});

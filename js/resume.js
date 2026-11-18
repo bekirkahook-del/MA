@@ -164,8 +164,10 @@
     const seen = new Set(); return out.filter(x => { const k = x.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
   }
   function parse(input) {
-    const main = Array.isArray(input.main) ? input.main : String(input.text || input).split(/\n/);
-    const side = input.side || [];
+    /* guard: cap line count/length and squash long whitespace runs so a hostile or garbage file can't stall the regexes */
+    const squash = l => String(l).replace(/[ \t]{3,}/g, "  ").slice(0, 2000);
+    const main = (Array.isArray(input.main) ? input.main : String(input.text || input).split(/\n/)).slice(0, 5000).map(squash);
+    const side = (input.side || []).slice(0, 5000).map(squash);
     const all = [...main, ...side].join("\n");
     const S = sections(main), SS = sections(side);
     const r = { name: "", headline: "", school: "", grad: "", major: "", location: "", about: "", linkedin: "", handshake: "", exp: [], skills: [] };

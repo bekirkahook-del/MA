@@ -151,10 +151,12 @@
       <p class="note" id="cqNote" style="margin-top:10px"></p>
       <p class="note" style="margin-top:6px">Billed monthly to the officer and renews automatically until canceled. Cancel anytime. Minimum ${CLUB_MIN} seats. Members take a seat by joining with your club code. If someone leaves, their seat frees up. See the <a href="/terms/">Terms</a> and <a href="/refund/">Refund Policy</a>.</p>`);
     const out=$("#cqOut"),inp=$("#cqN"),go=$("#cqGo"),note=$("#cqNote");
+    let planActive=false;
     const draw=()=>{const q=clubQuote(inp.value);
       if(!q.ok){out.innerHTML=`<p class="note">${q.error}</p>`;go.disabled=!q.contact;go.textContent=q.contact?"Email us for a quote":"Subscribe";go.dataset.contact=q.contact?"1":"";return}
       go.disabled=false;go.dataset.contact="";go.textContent="Subscribe · "+money(q.totalCents)+" a month";
-      out.innerHTML=`<table class="cmp"><tbody><tr><td>${q.seats} seats${q.seats>q.members?" (10-seat minimum)":""} × ${money(q.perMemberCents)}</td><td><b>${money(q.totalCents)} / month</b></td></tr><tr><td>That works out to</td><td>${money(q.totalCents*12)} a year</td></tr></tbody></table>`};
+      out.innerHTML=`<table class="cmp"><tbody><tr><td>${q.seats} seats${q.seats>q.members?" (10-seat minimum)":""} × ${money(q.perMemberCents)}</td><td><b>${money(q.totalCents)} / month</b></td></tr><tr><td>That works out to</td><td>${money(q.totalCents*12)} a year</td></tr></tbody></table>`;
+      if(planActive){go.disabled=true;go.textContent="Plan active"}};
     inp.oninput=draw;draw();
     if(!club){note.textContent="First create your club in Compete → Club so members have a code to join with. Then come back here.";go.disabled=true}
     else if(!club.officer){note.textContent="Only your club's officer can subscribe. Send this quote to them.";go.disabled=true}
@@ -169,7 +171,8 @@
       go.disabled=false;go.textContent=t};
     // officers who already pay: show seats used and renewal
     if(club&&club.officer&&window.MA_AUTH&&MA_AUTH.session){const r=await authed("club",{action:"status"}),c=r.j&&r.j.clubs&&r.j.clubs.find(x=>x.code===club.code);
-      if(c&&c.until>Date.now()&&c.status!=="canceled"){note.innerHTML=`<b>Your plan is active:</b> ${c.used} of ${c.seats} seats used, ${c.cancelAtEnd?"ends":"renews"} ${new Date(c.until).toLocaleDateString()}. <a href="#" id="cqManage">Manage billing</a>`;
+      if(c&&c.until>Date.now()&&c.status!=="canceled"){note.innerHTML=`<b>Your plan is active:</b> ${c.used} of ${c.seats} seats used, ${c.cancelAtEnd?"ends":"renews"} ${new Date(c.until).toLocaleDateString()}.${c.canBill?` <a href="#" id="cqManage">Manage billing</a>`:" Billing is handled by the officer who subscribed."}`;
+        if(!c.cancelAtEnd){planActive=true;draw()}
         const m=$("#cqManage");if(m)m.onclick=e=>{e.preventDefault();maPortal()}}}};
   async function authed(path,body){const A=window.MA_AUTH;const s=A&&A.sb&&(await A.sb.auth.getSession()).data.session;if(!s)return{status:401};
     const r=await fetch("/.netlify/functions/"+path,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify(body||{})});
@@ -187,6 +190,7 @@
   /* Pro days earned by ranking up are recorded on the server once per rank */
   async function claimPasses(b){const w=RW();let n=0;for(const i of Object.keys(w.got||{})){const L=LADDER[i];if(!L||!L.pass||(b.passes||{})[i])continue;if(Date.now()-w.got[i]>=L.pass*864e5)continue;const r=await authed("pass",{rank:+i,at:w.got[i]});if(r.status===200)n++}return n}
   window.MA_TIER="free";
+  window.maClubClaim=function(){try{localStorage.removeItem("maClubTry")}catch(e){}return syncBilling()}; /* called by clubmod.js after joining / approval */
   async function syncBilling(again){const A=window.MA_AUTH;if(!A||!A.sb)return;const s=await A.ready;if(!s)return;
     try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=(data&&data.data)||{};
       if(!again&&await claimPasses(b))return syncBilling(true);
@@ -202,7 +206,7 @@
       else if(S.pro&&(S.pro.paid||S.pro.plan==="trial"))S.pro={};
       if(b.trialStart)S.trialUsed=b.trialStart;
       if((b.passUntil||0)>(RW().passUntil||0))RW().passUntil=b.passUntil;
-      save();applyProUI();renderPro();try{render()}catch(e){}gateAI();return live||tier==="trial"}catch(e){}}
+      save();applyProUI();renderPro();try{render()}catch(e){}gateAI();return live||tier==="trial"||(b.clubUntil||0)>Date.now()}catch(e){}}
   {const _ip2=isPro;isPro=function(){if(S.pro&&S.pro.paid&&(S.pro.until||0)<Date.now()&&!((S.rw&&S.rw.passUntil||0)>Date.now()))return false;return _ip2()}}
   document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#proCancel");if(c&&S.pro&&S.pro.paid){e.preventDefault();e.stopImmediatePropagation();maPortal()}},true);
   (async()=>{const q=new URLSearchParams(location.search).get("checkout");

@@ -2,7 +2,7 @@
 // using the caller's verified sign-in. Club docs (col "clubs") have uid null, so only this service-role code writes them.
 // POST {action, code?, id?, name?, on?} + Authorization: Bearer <token>
 //   create (name [, code to register an older club]) | join | leave | get | list | approve | decline | remove | unban | rename | lock | co | transfer | disband
-import { json, getUser, SB_URL } from "./_lib/common.mjs";
+import { json, getUser, SB_URL, reconcileClubBilling } from "./_lib/common.mjs";
 import { svc } from "./_lib/mail.mjs";
 import { ClubErr, CODE_RE, MAX, apply, cleanName, eduDomain, emailConfirmed, make, newCode, view } from "./_lib/clubs.mjs";
 
@@ -66,7 +66,14 @@ export default async (req) => {
       if (!club) throw new ClubErr(404, "Club not found. Ask the officer to open M&A Prep once so it shows up.", { unregistered: true });
       if (action === "get") return json(200, { club: view(club, me.id) });
       const next = apply(club, action, me.id, b, now);
-      if (await saveClub(club, next)) return json(200, { club: view(next, me.id) });
+      if (await saveClub(club, next)) {
+        // These actions can change who holds a paid seat or who owns/pays for the club plan: keep the plan in step (never throws).
+        if (["remove", "leave", "transfer", "disband"].includes(action)) {
+          const billing = await reconcileClubBilling(next);
+          if (billing.canceled || billing.error || billing.dropped) return json(200, { club: view(next, me.id), billing });
+        }
+        return json(200, { club: view(next, me.id) });
+      }
     }
     throw new ClubErr(409, "Busy, try again");
   } catch (e) {

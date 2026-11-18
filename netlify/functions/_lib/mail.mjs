@@ -74,3 +74,12 @@ export async function confirmedEmail(uid) {
   const u = await r.json();
   return u && u.email && (u.email_confirmed_at || u.confirmed_at) ? u.email : null;
 }
+
+// One-off account email (receipts, plan confirmations). Not marketing, so no unsubscribe link or list headers.
+export async function sendOne({ to, subject, html }) {
+  const k = process.env.RESEND_API_KEY; if (!k) throw new Error("RESEND_API_KEY not set");
+  if (!isEmail(to)) throw new Error("bad recipient");
+  const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${k}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ from: FROM(), to: [to], subject, html }), signal: AbortSignal.timeout(10000) });
+  if (!r.ok) throw new Error("send failed " + r.status + " " + (await r.text()));
+}

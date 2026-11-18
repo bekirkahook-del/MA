@@ -5,6 +5,8 @@ const users = { tokA: { id: "00000000-0000-0000-0000-00000000000a", email: "a@os
   tokC: { id: "00000000-0000-0000-0000-00000000000c", email: "c@gmail.com", email_confirmed_at: "x" },
   tokD: { id: "00000000-0000-0000-0000-00000000000d", email: "d@osu.edu" } }; // signed up, email NOT confirmed
 const docs = new Map(); // "col/id" -> {col,id,uid,data}
+const stripeCalls = [];
+process.env.STRIPE_SECRET_KEY = "sk_test_x";
 docs.set("players/" + users.tokA.id, { col: "players", id: users.tokA.id, data: { club: "oldone", clubOfficer: true } });
 const R = (b, s = 200) => ({ ok: s < 300, status: s, json: async () => b, text: async () => JSON.stringify(b) });
 globalThis.fetch = async (url, o = {}) => {
@@ -15,7 +17,8 @@ globalThis.fetch = async (url, o = {}) => {
   const match = d => { for (const [k, v] of Object.entries(q)) { if (k.startsWith("data->>")) { const f = k.slice(7), want = v.replace("eq.", ""), val = d.data[f];
       if (v === "is.null" ? val != null : (v.startsWith("eq.") && String(val) !== want)) return false; } } return d.col === col && (!idq || d.id === idq); };
   if (m === "GET") { const out = [...docs.values()].filter(match).map(d => ({ id: d.id, data: d.data })); return R(out); }
-  if (m === "POST") { const b = JSON.parse(o.body), k = b.col + "/" + b.id; if (docs.has(k)) return R([]); docs.set(k, b); return R([b]); }
+  if (u.hostname === "api.stripe.com") { stripeCalls.push({ url: String(url), method: m, body: o.body }); return R({}); }
+  if (m === "POST") { const b = JSON.parse(o.body), k = b.col + "/" + b.id; if (docs.has(k) && !String((o.headers || {}).Prefer || "").includes("merge-duplicates")) return R([]); docs.set(k, b); return R([b]); }
   if (m === "PATCH") { const b = JSON.parse(o.body), hit = [...docs.values()].filter(match); hit.forEach(d => d.data = b.data); return R(hit); }
   return R({}, 404);
 };
@@ -45,4 +48,22 @@ r = await call("tokA", { action: "get", code }); assert.deepEqual(r.j.club.ban, 
 r = await call("tokC", { action: "get", code }); assert.equal(r.j.club.ban, undefined); // outsiders don't see officer lists
 r = await call("tokA", { action: "get", code: "nope22" }); assert.equal(r.s, 404); assert.equal(r.j.unregistered, true);
 r = await call("tokA", { action: "disband", code }); assert.equal(r.j.club.gone, true);
+// A paid club plan follows the club: removing a member frees the seat now, disbanding stops the plan at period end
+{
+  const A = users.tokA.id, B = users.tokB.id;
+  r = await call("tokA", { action: "create", name: "Paid Club" }); assert.equal(r.s, 200); const pc = r.j.club.code;
+  r = await call("tokB", { action: "join", code: pc }); assert.equal(r.s, 200);
+  docs.set("clubbilling/" + pc, { col: "clubbilling", id: pc, uid: A, data: { officer: A, owner: A, seats: 10, members: [A, B], status: "active", sub: "sub_x", until: Date.now() + 1e9 } });
+  docs.set("billing/" + B, { col: "billing", id: B, uid: B, data: { clubUntil: Date.now() + 1e9 } });
+  r = await call("tokA", { action: "remove", code: pc, id: B }); assert.equal(r.s, 200); assert.equal(r.j.billing.dropped, 1);
+  assert.equal(docs.get("billing/" + B).data.clubUntil, 0, "removed member loses club Pro immediately");
+  assert.deepEqual(docs.get("clubbilling/" + pc).data.members, [A]);
+  r = await call("tokA", { action: "disband", code: pc }); assert.equal(r.s, 200); assert.equal(r.j.club.gone, true); assert.equal(r.j.billing.canceled, true);
+  const c = stripeCalls.find((x) => x.method === "POST" && x.url.endsWith("/subscriptions/sub_x"));
+  assert.ok(c && new URLSearchParams(c.body).get("cancel_at_period_end") === "true", "Stripe told to stop the plan at period end");
+  assert.equal(docs.get("clubbilling/" + pc).data.cancelAtEnd, true);
+  // a club with no paid plan behaves exactly as before (no billing field)
+  r = await call("tokA", { action: "create", name: "Free Club" }); const fc = r.j.club.code;
+  r = await call("tokA", { action: "disband", code: fc }); assert.equal(r.s, 200); assert.equal(r.j.billing, undefined);
+}
 console.log("club-admin tests ok");

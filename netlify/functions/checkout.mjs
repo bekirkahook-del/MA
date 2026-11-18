@@ -1,5 +1,5 @@
 // Starts a Stripe Checkout for a signed-in user. Prices live here, so no Stripe dashboard setup is needed.
-import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP, hitLimit, tooMany, getClub, clubActive, clubPlayers, clubCodeOk } from "./_lib/common.mjs";
+import { json, getUser, stripe, getBilling, SITE, foundingCount, FOUNDING_CAP, hitLimit, tooMany, getClub, clubActive, getClubRec, clubCodeOk } from "./_lib/common.mjs";
 import { clubQuote } from "./_lib/clubprice.mjs";
 
 const PLANS = {
@@ -24,13 +24,15 @@ export default async (req) => {
     if (!q.ok) return json(400, { error: q.error, contact: !!q.contact });
     const code = String(reqBody.code || "").toLowerCase();
     if (!clubCodeOk(code)) return json(400, { error: "Create your club in the app first, then come back to subscribe." });
-    // The buyer must be an officer of that club (their own player doc says so) and nobody else may already hold a plan on it.
-    const me = (await clubPlayers(code)).find((p) => p.id === user.id);
-    if (!me || !me.data || !me.data.clubOfficer) return json(403, { error: "Only the club's officer can subscribe. Open your club in the app and try again." });
+    // The buyer must be the club's owner on the server's club record (not a flag in their own profile), and nobody else may already hold a plan on it.
+    let rec; try { rec = await getClubRec(code); } catch (e) { console.error("checkout club read", String(e)); return json(503, { error: "Couldn't check your club. Try again in a minute." }); }
+    if (!rec) return json(400, { error: "We can't find that club yet. Open your club in the app once, then try again." });
+    if (rec.gone) return json(400, { error: "That club was disbanded." });
+    if (rec.owner !== user.id) return json(403, { error: "Only the club's owner can subscribe. Open your club in the app and try again." });
     const existing = await getClub(code);
-    if (existing && existing.officer !== user.id && clubActive(existing)) return json(409, { error: "This club already has a plan." });
+    if (existing && existing.officer !== user.id && clubActive(existing) && !existing.cancelAtEnd) return json(409, { error: "This club already has a plan, paid by a previous owner. You can start your own once it ends." });
     if (existing && existing.officer === user.id && clubActive(existing) && !existing.cancelAtEnd) return json(409, { error: "Your club already has an active plan. Use Manage billing to change it." });
-    const name = String((me.data && me.data.clubName) || "Club").slice(0, 40);
+    const name = String(rec.name || "Club").slice(0, 40);
     P = { name: `M&A Pro Club Plan (${q.seats} seats)${name ? " · " + name : ""}`, amount: q.totalCents, interval: "month" };
     clubMeta = { club: code, seats: String(q.seats) };
   }

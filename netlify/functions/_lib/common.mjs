@@ -139,6 +139,26 @@ export async function clubPlayers(code) {
   const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.players&data->>club=eq.${code}&select=id,data&limit=1000`, { headers: svcH() });
   return r.ok ? await r.json() : [];
 }
+// The real club record kept by club-admin.mjs (col "clubs"): the only trusted answer to "who is a member / the owner".
+// Throws if the database can't be read, so callers fail closed instead of treating "can't tell" as "no club".
+export async function getClubRec(code) {
+  if (!clubCodeOk(code)) return null;
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.clubs&id=eq.${code}&select=data`, { headers: svcH() });
+  if (!r.ok) throw new Error("clubs read failed " + r.status);
+  const rows = await r.json();
+  return (rows[0] && rows[0].data) || null;
+}
+// Approved, current member: not waiting for approval, not removed, club not disbanded.
+export const clubMemberOk = (rec, uid) => !!rec && !rec.gone && !!(rec.members || {})[uid] && !(rec.ban || []).includes(uid) && !(rec.pending || []).includes(uid);
+// Clubs a person pays for (uid column) or currently owns (data.owner). Both can manage seats; only the payer has a Stripe customer.
+export async function clubsOfUser(uid) {
+  if (!UUID.test(String(uid))) return [];
+  const get = async (q) => { const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.clubbilling&${q}&select=id,data&limit=10`, { headers: svcH() }); return r.ok ? r.json() : []; };
+  const [a, b] = await Promise.all([get(`uid=eq.${uid}`), get(`data->>owner=eq.${uid}`)]);
+  const seen = new Set(), out = [];
+  for (const x of [...a, ...b]) if (!seen.has(x.id)) { seen.add(x.id); out.push({ code: x.id, ...x.data }); }
+  return out;
+}
 export const clubActive = (c, now = Date.now()) => !!c && ["active", "trialing", "past_due"].includes(c.status) && (c.until || 0) > now;
 // Writes clubUntil onto each member's own billing doc, so tierOf() and the Pro list just work. until = 0 removes it.
 export async function setMemberAccess(uids, until) {
@@ -149,6 +169,35 @@ export async function setMemberAccess(uids, until) {
       await setBilling(u, { ...b, clubUntil: until });
     }));
   }
+}
+
+// Keeps a club's paid plan in step with the club record after an officer action (remove, leave, transfer, disband).
+// - anyone no longer an approved member loses their seat and club Pro right away
+// - ownership moves with the club (the person who pays stays the payer)
+// - a disbanded club's subscription is set to stop at the end of the period already paid for (the payer keeps access until then)
+// Returns { dropped, canceled, error? }. Never throws: the club change itself has already been saved.
+export async function reconcileClubBilling(rec) {
+  const out = { dropped: 0, canceled: false };
+  try {
+    const club = rec && (await getClub(rec.code));
+    if (!club) return out;
+    let changed = false;
+    if (!rec.gone && rec.owner && club.owner !== rec.owner) { club.owner = rec.owner; changed = true; }
+    const keep = (club.members || []).filter((u) => (rec.gone ? u === club.officer : clubMemberOk(rec, u)));
+    const dropped = (club.members || []).filter((u) => !keep.includes(u));
+    if (dropped.length) { club.members = keep; changed = true; }
+    const cancel = rec.gone && club.sub && clubActive(club) && !club.cancelAtEnd;
+    if (cancel) { club.cancelAtEnd = true; changed = true; }
+    if (changed) await setClub(rec.code, club); // saved before Stripe is told, so the webhook that follows reads the trimmed list
+    if (dropped.length) await setMemberAccess(dropped, 0);
+    out.dropped = dropped.length;
+    if (cancel) {
+      try { await stripe("POST", `subscriptions/${encodeURIComponent(club.sub)}`, { cancel_at_period_end: "true" }); out.canceled = true; }
+      catch (e) { console.error("club cancel failed", rec.code, String(e)); club.cancelAtEnd = false; await setClub(rec.code, club).catch(() => {}); out.error = "cancel_failed"; }
+    }
+    if (dropped.length || cancel) await rebuildProList().catch((e) => console.error("pro list", e));
+  } catch (e) { console.error("reconcileClubBilling", String(e)); out.error = "sync_failed"; }
+  return out;
 }
 
 // Public list of verified Pro members (views/_pro). Written only by the server, so leaderboard badges can't be faked.

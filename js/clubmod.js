@@ -15,13 +15,21 @@
       return{status:r.status,j:await r.json().catch(()=>({}))}}
     catch(e){return{status:0,j:{error:"Couldn't reach the server. Try again."}}}}
 
+  /* a paid club plan: ask for my seat as soon as I'm in (rewards.js), and tell the owner what happened to the plan */
+  const claimSeat=()=>{if(typeof window.maClubClaim==="function")setTimeout(()=>{try{window.maClubClaim()}catch(e){}},300)};
+  const billingNote=j=>{const b=j&&j.billing;if(!b)return;try{
+    if(b.error)toast("Heads up: we couldn't update your club plan automatically. Open Manage billing on the Pro page to check it.");
+    else if(b.canceled)toast("Your club plan won't renew. You keep access until the end of the period you paid for.")}catch(e){}};
+
   /* mirror the server's answer into my local club state */
   function adopt(v){
     if(!v)return;
     if(v.gone||(v.me&&v.me.banned)){
       if(S.club&&S.club.code===v.code){S.club=null;save();try{syncProfile()}catch(e){}try{toast(v.gone?"This club was disbanded":"An officer removed you from the club")}catch(e){}}
       CLUB=null;prevCode="";return}
+    const wasMember=CLUB&&CLUB.code===v.code&&CLUB.me?!!CLUB.me.member:null; /* null = first look at this club */
     CLUB=v;
+    if(wasMember===false&&v.me.member)claimSeat(); /* just approved */
     if(S.club&&S.club.code===v.code){const o=!!v.me.owner,co=!!v.me.co;
       if(S.club.name!==v.name||S.club.officer!==o||!!S.club.isCo!==co||S.club.sd!==v.sd){S.club.name=v.name;S.club.officer=o;S.club.isCo=co;S.club.sd=v.sd;save();try{syncProfile()}catch(e){}}}}
 
@@ -38,7 +46,7 @@
       }else if(r.status===200&&r.j.club){
         adopt(r.j.club);
         const v=r.j.club;
-        if(code()===c&&v&&!v.gone&&!v.me.member&&!v.me.pending&&!v.me.banned){const j=await call("join",{code:c});if(j.status===200)adopt(j.j.club);else if(j.j&&j.j.banned)adopt({code:c,me:{banned:true}})}
+        if(code()===c&&v&&!v.gone&&!v.me.member&&!v.me.pending&&!v.me.banned){const j=await call("join",{code:c});if(j.status===200){adopt(j.j.club);if(j.j.club&&j.j.club.me&&j.j.club.me.member)claimSeat()}else if(j.j&&j.j.banned)adopt({code:c,me:{banned:true}})}
       }}
     finally{busy=false}
     tick()}
@@ -51,10 +59,11 @@
     c=String(c||"").trim().toLowerCase();
     if(!/^[a-z0-9]{4,8}$/.test(c))return{ok:false,error:"Enter the code your club officer shared."};
     const r=await call("join",{code:c});
-    if(r.status===200&&r.j.club){const v=r.j.club;S.club={code:v.code,name:v.name,officer:false,sd:v.sd};adopt(v);save();try{syncProfile()}catch(e){}tick();return{ok:true,pending:!!v.me.pending}}
+    if(r.status===200&&r.j.club){const v=r.j.club;S.club={code:v.code,name:v.name,officer:false,sd:v.sd};adopt(v);save();try{syncProfile()}catch(e){}tick();if(v.me.member)claimSeat();return{ok:true,pending:!!v.me.pending}}
     return{ok:false,error:r.j.error||"Couldn't join the club",banned:!!r.j.banned}}
   async function leave(c){ /* the browser already cleared S.club; tell the server, and undo if it says no (e.g. owner with members) */
     const r=await call("leave",{code:c});
+    if(r.status===200)billingNote(r.j);
     if(r.status!==200){const g=await call("get",{code:c});if(g.status===200&&g.j.club&&g.j.club.me.member){const v=g.j.club;S.club={code:v.code,name:v.name,officer:!!v.me.owner,sd:v.sd};adopt(v);save();try{syncProfile()}catch(e){}tick()}
       try{toast(r.j.error||"Couldn't leave the club")}catch(e){}}}
 
@@ -69,7 +78,7 @@
   /* ---------- Manage panel (owner + co-officers) ---------- */
   async function act(action,id,extra){
     const r=await call(action,{code:code(),id,...(extra||{})});
-    if(r.status===200&&r.j.club){adopt(r.j.club);tick();openManage()}else try{toast(r.j.error||"That didn't work")}catch(e){}}
+    if(r.status===200&&r.j.club){adopt(r.j.club);tick();billingNote(r.j);openManage()}else try{toast(r.j.error||"That didn't work")}catch(e){}}
   async function openManage(){
     if(!CLUB||!(CLUB.me.owner||CLUB.me.co)||typeof openPanel!=="function")return;
     const v=CLUB,owns=v.me.owner,ids=[...new Set([...v.members,...(v.pending||[]),...(v.ban||[])])];

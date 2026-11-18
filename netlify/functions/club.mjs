@@ -1,14 +1,16 @@
 // Club plan seats. POST { action }
 //   quote  { members }  -> price for N members (no sign-in needed)
-//   claim               -> a member (who joined with the club code) takes a seat on a paid club plan
-//   status              -> the officer sees seats used, renewal date and who holds a seat
-import { json, getUser, getClub, setClub, clubPlayers, clubActive, clubByOfficer, setMemberAccess, clubCodeOk, rebuildProList } from "./_lib/common.mjs";
+//   claim  { code }     -> an approved member of a paid club takes a seat
+//   status              -> the club's owner (and whoever pays) sees seats used, renewal date and billing access
+// Who counts as a member comes from the club record kept by club-admin.mjs (col "clubs"), never from a player's own doc.
+import { json, getUser, getClub, setClub, clubsOfUser, clubActive, setMemberAccess, clubCodeOk, rebuildProList, getClubRec, clubMemberOk } from "./_lib/common.mjs";
 import { clubQuote } from "./_lib/clubprice.mjs";
 
-// Drops seat holders who left the club (their player doc no longer has this code) and frees the seat.
-async function prune(code, club) {
-  const here = new Set((await clubPlayers(code)).map((p) => p.id));
-  const keep = (club.members || []).filter((u) => here.has(u) || u === club.officer);
+// Drops seat holders who are no longer approved members (left, removed, disbanded) and frees their seats.
+// The payer keeps a seat on a disbanded club until the period they paid for ends.
+async function prune(code, club, rec) {
+  if (!rec) return club; // club not registered with club-admin: nothing to compare against, change nothing
+  const keep = (club.members || []).filter((u) => (rec.gone ? u === club.officer : clubMemberOk(rec, u)));
   const gone = (club.members || []).filter((u) => !keep.includes(u));
   if (gone.length) { club.members = keep; await setClub(code, club); await setMemberAccess(gone, 0); }
   return club;
@@ -23,18 +25,30 @@ export default async (req) => {
   if (!user || !user.id) return json(401, { error: "Sign in first" });
 
   if (body.action === "claim") {
-    // Which club does this person say they are in? Read from their own player doc, not from the request.
-    const mine = (await clubPlayers(String(body.code || "").toLowerCase())).find((p) => p.id === user.id);
-    const code = mine && mine.data && mine.data.club;
+    const code = String(body.code || "").toLowerCase();
     if (!clubCodeOk(code)) return json(200, { ok: false, reason: "no_club" });
-    let club = await getClub(code);
+    let rec, club;
+    try { rec = await getClubRec(code); club = await getClub(code); } catch (e) { console.error("club claim read", String(e)); return json(503, { error: "Try again in a minute" }); }
+    if (!rec) return json(200, { ok: false, reason: "not_registered" });
     if (!clubActive(club)) return json(200, { ok: false, reason: "no_plan" });
-    club.members = club.members || [];
-    if (!club.members.includes(user.id)) {
-      club = await prune(code, club);
+    if (!clubMemberOk(rec, user.id)) { // waiting for approval, removed, left, or the club is gone: no seat, and any seat they held is freed
+      await prune(code, club, rec).catch((e) => console.error("club prune", String(e)));
+      await rebuildProList().catch(() => {});
+      return json(200, { ok: false, reason: rec.gone ? "gone" : (rec.pending || []).includes(user.id) ? "pending" : "not_member" });
+    }
+    // Take a seat. The plan doc has no version check, so write, read back, and retry if a simultaneous claim overwrote ours.
+    for (let attempt = 0; attempt < 3; attempt++) {
+      club = attempt ? await getClub(code) : club;
+      if (!clubActive(club)) return json(200, { ok: false, reason: "no_plan" });
+      club.members = club.members || [];
+      if (club.members.includes(user.id)) break;
+      club = await prune(code, club, rec);
       if (club.members.length >= club.seats) return json(200, { ok: false, reason: "full", seats: club.seats });
       club.members.push(user.id);
       await setClub(code, club);
+      const check = await getClub(code);
+      if (check && (check.members || []).includes(user.id)) { club = check; break; }
+      if (attempt === 2) return json(503, { error: "Busy, try again" });
     }
     await setMemberAccess([user.id], club.until);
     await rebuildProList().catch(() => {});
@@ -42,12 +56,15 @@ export default async (req) => {
   }
 
   if (body.action === "status") {
-    const mine = await clubByOfficer(user.id);
+    const mine = await clubsOfUser(user.id);
     if (!mine.length) return json(200, { ok: true, clubs: [] });
     const out = [];
     for (const c of mine) {
-      const fresh = await prune(c.code, { ...c, code: undefined });
-      out.push({ code: c.code, name: fresh.name, seats: fresh.seats, used: (fresh.members || []).length, status: fresh.status, until: fresh.until, cancelAtEnd: !!fresh.cancelAtEnd });
+      const { code, ...data } = c;
+      let fresh = data;
+      try { fresh = await prune(code, data, await getClubRec(code)); } catch (e) { console.error("club status", String(e)); }
+      out.push({ code, name: fresh.name, seats: fresh.seats, used: (fresh.members || []).length, status: fresh.status, until: fresh.until,
+        cancelAtEnd: !!fresh.cancelAtEnd, canBill: fresh.officer === user.id, owner: (fresh.owner || fresh.officer) === user.id });
     }
     return json(200, { ok: true, clubs: out });
   }

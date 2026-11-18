@@ -66,13 +66,35 @@
 .ms-search{font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--rule);border-radius:9px;background:var(--paper);color:var(--ink);width:200px}
 .ms-ins{border:1px solid var(--rule);border-left:3px solid var(--brass);border-radius:10px;padding:10px 14px;background:var(--paper);font-size:13.5px;line-height:1.55}.ms-ins li{margin:2px 0}
 @media (max-width:620px){.ms-tiles,.ms-tiles.five{grid-template-columns:repeat(2,minmax(0,1fr))}.ms-grid2{grid-template-columns:1fr}.ms-search{width:100%}}`;document.head.appendChild(st);
+  const st2=document.createElement("style");st2.textContent=`
+#msBody>.ms-sec,#msBody>.ms-grid2>.ms-sec{background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 18px -12px rgba(0,0,0,.18)}
+#msBody>.ms-grid2{margin-top:22px}#msBody>.ms-grid2>.ms-sec{margin-top:0}
+#msBody .ms-tile{background:color-mix(in srgb,var(--ink) 3%,var(--paper));transition:transform .15s,box-shadow .15s,border-color .15s}
+#msBody .ms-tile:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px rgba(0,0,0,.35);border-color:color-mix(in srgb,var(--cobalt) 45%,var(--rule))}
+.ms-tile svg.sp{display:block;width:100%;height:22px;margin-top:6px}.ms-tile svg.sp polyline{fill:none;stroke:var(--cobalt);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.ms-chart{position:relative}.ms-svg{width:100%;height:auto;display:block;touch-action:pan-y;cursor:crosshair}
+.ms-gr{stroke:var(--rule);stroke-width:1}.ms-ax{fill:var(--ink-2);font:10px var(--mono)}
+.ms-ln{fill:none;stroke:var(--cobalt);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:msDraw .9s ease forwards}
+.ms-pv{fill:none;stroke:var(--ink-2);stroke-width:1.5;stroke-dasharray:4 4;opacity:.55}
+.ms-cross{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 3;transition:opacity .1s}.ms-pt{fill:var(--paper);stroke:var(--cobalt);stroke-width:2.6;transition:opacity .1s}
+@keyframes msDraw{to{stroke-dashoffset:0}}
+.ms-leg span.pv:before{background:none;border-top:2px dashed var(--ink-2);height:0;width:14px;border-radius:0;vertical-align:3px}
+#msTip{position:fixed;z-index:2147483000;pointer-events:none;background:var(--ink);color:var(--paper);padding:8px 11px;border-radius:10px;font-size:12px;line-height:1.45;box-shadow:0 10px 26px -8px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;max-width:260px}
+#msTip b{font-family:var(--mono);font-size:15px}#msTip .tt-d{font-weight:700;margin-bottom:2px}#msTip .tt-p{opacity:.7;font-size:11.5px}#msTip .tt-c{font-family:var(--mono);font-size:11px;opacity:.85}
+.ms-row.clk{cursor:pointer;border-radius:8px;padding:4px 6px;margin:0 -6px;transition:background .12s}.ms-row.clk:hover,.ms-row.clk:focus-visible{background:color-mix(in srgb,var(--cobalt) 8%,transparent);outline:none}
+.ms-row.on{background:color-mix(in srgb,var(--cobalt) 14%,transparent);font-weight:600}
+.ms-chip{font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px;border:1px solid var(--cobalt);background:color-mix(in srgb,var(--cobalt) 10%,var(--paper));color:var(--ink);cursor:pointer}
+.ms-hint{font-size:12px;color:var(--ink-2);margin:10px 0 0}
+.ms-bars .ms-bar i{transform-origin:bottom;animation:msGrow .5s ease backwards;transition:filter .12s}.ms-bar:hover i{filter:brightness(1.2)}
+@keyframes msGrow{from{transform:scaleY(0)}}
+@media (prefers-reduced-motion:reduce){.ms-ln{animation:none;stroke-dashoffset:0}.ms-bars .ms-bar i{animation:none}#msBody .ms-tile{transition:none}}`;document.head.appendChild(st2);
 
   const ago=ms=>{const m=Math.round((Date.now()-ms)/60000);if(m<1)return"just now";if(m<60)return m+"m ago";const h=Math.round(m/60);if(h<24)return h+"h ago";return Math.round(h/24)+"d ago"};
   const dayStr=d=>d.toLocaleDateString("en-CA",{timeZone:"America/New_York"});
   const SRC_NAME={tiktok:"TikTok",instagram:"Instagram","l.instagram.com":"Instagram","instagram.com":"Instagram","tiktok.com":"TikTok","google.com":"Google","bing.com":"Bing","linkedin.com":"LinkedIn","lnkd.in":"LinkedIn","t.co":"X / Twitter","x.com":"X / Twitter",social:"Social posts","duckduckgo.com":"DuckDuckGo","reddit.com":"Reddit","facebook.com":"Facebook","m.facebook.com":"Facebook","l.facebook.com":"Facebook","chatgpt.com":"ChatGPT","chat.openai.com":"ChatGPT",chatgpt:"ChatGPT","perplexity.ai":"Perplexity","claude.ai":"Claude","gemini.google.com":"Gemini","copilot.microsoft.com":"Copilot","snapchat.com":"Snapchat","discord.com":"Discord","groupme.com":"GroupMe"};
   const srcName=s=>s?(SRC_NAME[s]||s):"Direct / typed in";
   const TAB_NAME={home:"Home",learn:"Learn",practice:"Practice",compete:"Compete",career:"Career",pro:"Pro",news:"News"};
-  const rows=(pairs,total)=>{const mx=Math.max(1,...pairs.map(p=>p[1]));return pairs.length?pairs.map(([k,v])=>`<div class="ms-row"><span>${esc(k)}</span><span class="tr"><i style="width:${(v/mx*100).toFixed(0)}%"></i></span><b>${v}</b></div>`).join(""):`<p class="note">Nothing yet.</p>`};
+  const rows=(pairs,total,fk)=>{const mx=Math.max(1,...pairs.map(p=>p[1]));return pairs.length?pairs.map(([k,v])=>`<div class="ms-row${fk?" clk"+(FILT[fk]===k?" on":""):""}"${fk?` data-fk="${fk}" data-fv="${esc(k)}" tabindex="0" role="button" aria-pressed="${FILT[fk]===k}"`:""}><span>${esc(k)}</span><span class="tr"><i style="width:${(v/mx*100).toFixed(0)}%"></i></span><b>${v}</b></div>`).join(""):`<p class="note">Nothing yet.</p>`};
   const tally=(arr,fn,n=6)=>{const m={};arr.forEach(x=>{const k=fn(x);if(k)m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,n)};
 
   function drawLive(){const el=document.getElementById("msLive");if(!el)return;
@@ -86,6 +108,33 @@
   const hr=h=>h===0?"12a":h<12?h+"a":h===12?"12p":(h-12)+"p";
   const pct=(a,b)=>b?Math.round(a/b*100):0;
   const chg=(cur,prev)=>{if(!prev)return cur?'<span class="ch up">new</span>':"";const c=Math.round((cur-prev)/prev*100);return c===0?"":`<span class="ch ${c>0?"up":"dn"}">${c>0?"+":""}${c}%</span>`};
+
+  /* ---------- interactive helpers: tooltip, sparkline, line chart ---------- */
+  let FILT={src:"",dev:""},METRIC="visits";
+  const MET={visits:"Visits",people:"Unique people",new:"New people"};
+  const tipEl=document.createElement("div");tipEl.id="msTip";tipEl.setAttribute("role","tooltip");document.body.appendChild(tipEl);
+  const tip=(h,x,y)=>{tipEl.innerHTML=h;tipEl.style.opacity=1;const w=tipEl.offsetWidth,hh=tipEl.offsetHeight;let l=x+14,t=y-hh-12;if(l+w>innerWidth-8)l=x-w-14;if(t<8)t=y+18;tipEl.style.left=Math.max(8,l)+"px";tipEl.style.top=t+"px"};
+  const untip=()=>{tipEl.style.opacity=0};
+  document.addEventListener("pointermove",e=>{const t=e.target;if(!t||!t.closest)return;const el=t.closest("[data-tip]");if(el)tip(esc(el.dataset.tip),e.clientX,e.clientY);else if(!t.closest(".ms-chart"))untip()});
+  window.addEventListener("blur",untip);
+  const spark=a=>{if(a.length<2)return"";const m=Math.max(1,...a),w=100,h=22;return `<svg class="sp" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><polyline vector-effect="non-scaling-stroke" points="${a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+","+(h-2-(v/m)*(h-4)).toFixed(1)).join(" ")}"/></svg>`};
+  const scroller=el=>{let p=el.parentElement;while(p&&p!==document.body){if(/(auto|scroll)/.test(getComputedStyle(p).overflowY)&&p.scrollHeight>p.clientHeight)return p;p=p.parentElement}return null};
+  function lineChart(cur,prv,labs,name){
+    const W=720,H=210,L=36,R=12,T=12,B=26,n=cur.length;
+    const m0=Math.max(1,...cur,...prv),raw=m0/4,pw=Math.pow(10,Math.floor(Math.log10(raw))),st=Math.max(1,[1,2,2.5,5,10].map(k=>k*pw).find(q=>q>=raw)),mx=st*4;
+    const x=i=>L+(n<2?0:i/(n-1)*(W-L-R)),y=v=>T+(1-v/mx)*(H-T-B);
+    const pth=a=>a.map((v,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)).join("");
+    const grid=[0,1,2,3,4].map(k=>{const v=st*k,yy=y(v).toFixed(1);return `<line class="ms-gr" x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}"/><text class="ms-ax" x="${L-6}" y="${(y(v)+3).toFixed(1)}" text-anchor="end">${v}</text>`}).join("");
+    const k=Math.ceil(n/8),xl=labs.map((l,i)=>(n-1-i)%k===0?`<text class="ms-ax" x="${x(i).toFixed(1)}" y="${H-8}" text-anchor="${i===n-1&&n>1?"end":"middle"}">${l.slice(5).replace("-","/")}</text>`:"").join("");
+    const html=`<div class="ms-chart" id="msLine"><svg class="ms-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(name)} per day compared with the previous period"><defs><linearGradient id="msG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--cobalt);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--cobalt);stop-opacity:0"/></linearGradient></defs>${grid}${xl}<path d="${pth(cur)}L${x(n-1).toFixed(1)} ${y(0).toFixed(1)}L${x(0).toFixed(1)} ${y(0).toFixed(1)}Z" fill="url(#msG)"/>${prv.some(v=>v)?`<path class="ms-pv" d="${pth(prv)}"/>`:""}<path class="ms-ln" pathLength="1" d="${pth(cur)}"/><line class="ms-cross" y1="${T}" y2="${H-B}" style="opacity:0"/><circle class="ms-pt" r="5" style="opacity:0"/></svg></div>`;
+    const bind=root=>{if(!root)return;const svg=root.querySelector("svg"),cr=svg.querySelector(".ms-cross"),pt=svg.querySelector(".ms-pt");
+      const at=e=>{const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*W;let i=n<2?0:Math.round((px-L)/(W-L-R)*(n-1));i=Math.max(0,Math.min(n-1,i));
+        cr.setAttribute("x1",x(i));cr.setAttribute("x2",x(i));pt.setAttribute("cx",x(i));pt.setAttribute("cy",y(cur[i]));cr.style.opacity=1;pt.style.opacity=1;
+        const dl=new Date(labs[i]+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}),pv=prv[i],df=pv?Math.round((cur[i]-pv)/pv*100):null;
+        tip(`<div class="tt-d">${dl}</div><div><b>${cur[i]}</b> ${name.toLowerCase()}${df===null?"":` <span class="tt-c">${df>=0?"+":""}${df}%</span>`}</div><div class="tt-p">${pv} in the previous period</div>`,e.clientX,e.clientY)};
+      svg.addEventListener("pointermove",at);svg.addEventListener("pointerdown",at);
+      svg.addEventListener("pointerleave",()=>{cr.style.opacity=0;pt.style.opacity=0;untip()})};
+    return{html,bind}}
 
   async function load(){
     const since=new Date(Date.now()-62*864e5).toISOString();
@@ -155,7 +204,7 @@
     const content=`<div class="ms-grid2"><div class="ms-sec"><h3>Guides &amp; search <small>visits that landed on a page</small></h3>
       <div class="ms-tiles"><div class="ms-tile"><b>${g.length}</b><span>Landed on a guide</span></div><div class="ms-tile"><b>${sch.length}</b><span>School guides</span></div></div>
       <div style="margin-top:8px">${rows(tally(g,v=>PAGE_NAME(v.p).replace("Guide: ",""),8))}</div></div>
-      <div class="ms-sec"><h3>Day of week <small>${N===1?"today":N+" days"}</small></h3><div class="ms-bars" style="height:110px">${dow.map((n,i)=>`<div class="ms-bar" title="${DN[i]}: ${n}"><em>${n||""}</em><i style="height:${(n/dm*100).toFixed(0)}%"></i></div>`).join("")}</div><div class="ms-days">${DN.map(d=>`<span>${d}</span>`).join("")}</div></div></div>
+      <div class="ms-sec"><h3>Day of week <small>${N===1?"today":N+" days"}</small></h3><div class="ms-bars" style="height:110px">${dow.map((n,i)=>`<div class="ms-bar" data-tip="${DN[i]}: ${n} visit${n===1?"":"s"} · ${pct(n,Math.max(1,cur.length))}% of total"><em>${n||""}</em><i style="height:${(n/dm*100).toFixed(0)}%"></i></div>`).join("")}</div><div class="ms-days">${DN.map(d=>`<span>${d}</span>`).join("")}</div></div></div>
       <div class="ms-sec"><h3>Every guide visited <small>${(()=>{const n=new Set(g.map(v=>(v.p||"").replace(/\/$/,""))).size;return n+" guide"+(n===1?"":"s")+" · "+(N===1?"today":N+" days")})()}</small></h3>${(()=>{const gm={};g.forEach(v=>{const k=(v.p||"").replace(/\/$/,"");const o=gm[k]=gm[k]||{n:0,p:new Set(),s:{},ph:0};o.n++;o.p.add(v.vid);if(v.dev==="Phone")o.ph++;const c=srcName(v.src||v.ref);o.s[c]=(o.s[c]||0)+1});const L=Object.entries(gm).sort((a,b)=>b[1].n-a[1].n);return L.length?`<div style="max-height:460px;overflow:auto"><table class="ms-tbl"><thead><tr><th>Guide</th><th>Visits</th><th>People</th><th>Phones</th><th>Where they came from</th></tr></thead><tbody>${L.map(([k,o])=>`<tr><td><a href="${esc(k)}/" target="_blank" rel="noopener">${esc(PAGE_NAME(k).replace("Guide: ",""))}</a></td><td>${o.n}</td><td>${o.p.size}</td><td>${pct(o.ph,o.n)}%</td><td>${Object.entries(o.s).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([c,n])=>esc(c)+" <b>"+n+"</b>").join(" · ")}</td></tr>`).join("")}</tbody></table></div>`:`<p class="note">No guide visits in this range yet.</p>`})()}<p class="note" style="margin-top:6px">Counts the first page each person opens per day, so this is where they landed from.</p></div>
       `;
     const L=[["Google Search Console","https://search.google.com/search-console?resource_id=sc-domain%3Amnaprep.com"],["Bing Webmaster","https://www.bing.com/webmasters/home?siteUrl=https://mnaprep.com/"],["Metricool (all socials)","https://app.metricool.com/evolution/web?blogId=7259200"],["TikTok Studio","https://www.tiktok.com/tiktokstudio"],["Instagram insights","https://www.instagram.com/mnaprep/"],["YouTube Studio","https://studio.youtube.com/channel/UCecz_zgUGiksG2HpJEt0cTg"],["Pinterest analytics","https://www.pinterest.com/business/hub/"],["Stripe","https://dashboard.stripe.com/"],["Netlify","https://app.netlify.com/"],["Supabase","https://supabase.com/dashboard/project/nbakxpnhcfzdosbzbupd"],["Resend (emails)","https://resend.com/emails"],["Discord server","https://discord.com/channels/1529231349494452365"],["Product Hunt","https://www.producthunt.com/products/m-a-prep"],["AlternativeTo","https://alternativeto.net/software/manda-prep/"],["Quora profile","https://www.quora.com/profile/Bekir-Kahook"]];
@@ -170,16 +219,21 @@
     try{const sb=window.MA_AUTH&&MA_AUTH.sb,s=sb&&(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/grant",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(s?s.access_token:"")},body:JSON.stringify({uid:b.dataset.grant,days})});
       const j=await r.json().catch(()=>({}));b.textContent=r.ok?"✓ Done":(j.error||"Failed")}catch(x){b.textContent="Failed"}});
   function draw(){const body=document.getElementById("msBody");if(!body||!CACHE)return;
-    const {V,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
+    const {V:V0,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
     const cut=n=>dayStr(new Date(Date.now()-(n-1)*864e5));
+    const fl=(a,skip)=>a.filter(v=>(skip==="src"||!FILT.src||srcName(v.src||v.ref)===FILT.src)&&(skip==="dev"||!FILT.dev||v.dev===FILT.dev));
+    const V=fl(V0);
     const cur=V.filter(v=>v.d>=cut(N)),prev=V.filter(v=>v.d>=cut(2*N)&&v.d<cut(N));
     const people=a=>new Set(a.map(v=>v.vid)).size,fresh=a=>a.filter(v=>v.first===v.d).length;
     const signed=a=>a.filter(v=>v.acct).length,phone=a=>a.filter(v=>v.dev==="Phone").length;
-    const days=[];for(let i=N-1;i>=0;i--){const d=dayStr(new Date(Date.now()-i*864e5)),dv=V.filter(v=>v.d===d);days.push([d,dv.length,fresh(dv)])}
-    const mx=Math.max(1,...days.map(d=>d[1]));
+    const CN=Math.max(N,7),dayS=i=>dayStr(new Date(Date.now()-i*864e5));
+    const days=[];for(let i=CN-1;i>=0;i--){const d=dayS(i),dv=V.filter(v=>v.d===d);days.push([d,dv.length,fresh(dv),people(dv)])}
+    const metOf=dv=>METRIC==="visits"?dv.length:METRIC==="people"?people(dv):fresh(dv);
+    const curS=days.map(d=>METRIC==="visits"?d[1]:METRIC==="people"?d[3]:d[2]),prvS=[];for(let i=CN-1;i>=0;i--)prvS.push(metOf(V.filter(v=>v.d===dayS(i+CN))));
+    const LC=lineChart(curS,prvS,days.map(d=>d[0]),MET[METRIC]);
     const hours=Array(24).fill(0);cur.forEach(v=>{const h=etHour(v.t);if(h>=0)hours[h]++});const hm=Math.max(1,...hours);
     const peak=hours.indexOf(Math.max(...hours));
-    const srcs=tally(cur,v=>srcName(v.src||v.ref),8);
+    const srcs=tally(cur,v=>srcName(v.src||v.ref),8),srcsU=tally(fl(V0.filter(v=>v.d>=cut(N)),"src"),v=>srcName(v.src||v.ref),8),devsU=tally(fl(V0.filter(v=>v.d>=cut(N)),"dev"),v=>v.dev);
     const tk=cur.filter(v=>/tiktok/.test(v.src||v.ref||"")).length;
     const newAccts=accts.filter(a=>a.first>=cut(N)).length,prevAccts=accts.filter(a=>a.first>=cut(2*N)&&a.first<cut(N)).length;
     const act=ms=>accts.filter(a=>Date.now()-a.t<ms).length;
@@ -191,20 +245,22 @@
       if(tk)ins.push(`TikTok sent <b>${tk}</b> visits${CACHE&&cur.some(v=>v.cmp)?`. Best post: <b>${esc(tally(cur.filter(v=>v.cmp),v=>v.cmp,1)[0][0])}</b>`:""}.`);
       if(hours[peak])ins.push(`Busiest hour: <b>${hr(peak)}–${hr((peak+1)%24)} ET</b>.`);
       ins.push(`${pct(returning,cur.length)}% of visits were people coming back; ${pct(phone(cur),cur.length)}% were on phones.`)}
-    const t5=(label,val,c)=>`<div class="ms-tile"><b>${val}${c||""}</b><span>${label}</span></div>`;
+    const t5=(label,val,c,sp)=>`<div class="ms-tile"><b>${val}${c||""}</b><span>${label}</span>${sp||""}</div>`;
+    const sp0=scroller(body),sc0=sp0?sp0.scrollTop:0;
     body.innerHTML=`
      <div class="ms-top"><div class="ms-seg" role="group" aria-label="Date range">${[[1,"Today"],[7,"7 days"],[14,"14 days"],[30,"30 days"],[60,"60 days"]].map(([n,l])=>`<button type="button" data-r="${n}" aria-pressed="${n===N}">${l}</button>`).join("")}</div>
       <div style="display:flex;gap:8px"><button class="btn sm" id="msCsv">Download CSV</button><button class="btn sm" id="msRefresh">Refresh</button></div></div>
+     ${(FILT.src||FILT.dev)?`<div class="ms-sec" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="note" style="margin:0">Filtering visits (accounts and money aren't filtered):</span>${FILT.src?`<button type="button" class="ms-chip" data-clr="src">${esc(FILT.src)} ✕</button>`:""}${FILT.dev?`<button type="button" class="ms-chip" data-clr="dev">${esc(FILT.dev)} ✕</button>`:""}</div>`:`<p class="ms-hint">Tip: tap a traffic source or device below to filter the whole page.</p>`}
      ${ins.length?`<div class="ms-sec"><div class="ms-ins"><ul style="margin:0;padding-left:18px">${ins.map(x=>`<li>${x}</li>`).join("")}</ul></div></div>`:""}
      ${holistic(cur,prev,N,cut)}
-     <div class="ms-sec"><h3>Visitors <small>last ${N} days vs the ${N} before · ET</small></h3>
-      <div class="ms-tiles five">${t5("Unique people",people(cur),chg(people(cur),people(prev)))}${t5("Visits",cur.length,chg(cur.length,prev.length))}${t5("New people",fresh(cur),chg(fresh(cur),fresh(prev)))}
+     <div class="ms-sec"><h3>Visitors <small>last ${CN} days vs the ${CN} before · ET · hover or tap the chart</small></h3>
+      <div class="ms-tiles five">${t5("Unique people",people(cur),chg(people(cur),people(prev)),spark(days.map(d=>d[3])))}${t5("Visits",cur.length,chg(cur.length,prev.length),spark(days.map(d=>d[1])))}${t5("New people",fresh(cur),chg(fresh(cur),fresh(prev)),spark(days.map(d=>d[2])))}
        ${t5("Today",V.filter(v=>v.d===today).length,chg(V.filter(v=>v.d===today).length,V.filter(v=>v.d===yest).length))}${t5("Signed in",pct(signed(cur),cur.length)+"%")}</div>
-      <div class="ms-bars" role="img" aria-label="Visitors per day">${days.map(([d,n,f])=>`<div class="ms-bar" title="${d}: ${n} visitors (${f} new, ${n-f} returning)"><em>${n||""}</em><span class="stk" style="height:${(n/mx*100).toFixed(0)}%">${f?`<i class="nw" style="height:${(f/Math.max(1,n)*100).toFixed(0)}%"></i>`:""}<i style="flex:1"></i></span></div>`).join("")}</div>
-      <div class="ms-days">${days.map(([d])=>`<span>${N>14?(+d.slice(8)%2?"":+d.slice(8)):+d.slice(8)}</span>`).join("")}</div>
-      <div class="ms-leg"><span class="nw">New</span><span>Returning</span></div></div>
+      <div class="ms-top" style="margin:12px 0 6px"><div class="ms-seg ms-mseg" role="group" aria-label="Chart metric">${Object.entries(MET).map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===METRIC}">${l}</button>`).join("")}</div></div>
+      ${LC.html}
+      <div class="ms-leg"><span>${MET[METRIC]}</span><span class="pv">Previous ${CN} days</span></div></div>
      <div class="ms-sec"><h3>When they visit <small>hour of day, ET · ${N} days</small></h3>
-      <div class="ms-bars ms-hrs">${hours.map((n,h)=>`<div class="ms-bar" title="${hr(h)}: ${n} visits"><em>${n||""}</em><i style="height:${(n/hm*100).toFixed(0)}%"></i></div>`).join("")}</div>
+      <div class="ms-bars ms-hrs">${hours.map((n,h)=>`<div class="ms-bar" data-tip="${hr(h)}–${hr((h+1)%24)} ET: ${n} visit${n===1?"":"s"} · ${pct(n,Math.max(1,cur.length))}% of total"><em>${n||""}</em><i style="height:${(n/hm*100).toFixed(0)}%"></i></div>`).join("")}</div>
       <div class="ms-days">${hours.map((_,h)=>`<span>${h%3?"":hr(h)}</span>`).join("")}</div></div>
      ${(()=>{const agg={};let tot=0;const ppl=new Set();cur.forEach(v=>{if(!v.time)return;ppl.add(v.vid);for(const [k,x] of Object.entries(v.time)){const a=agg[k]=agg[k]||{s:0,p:new Set()};a.s+=+x||0;a.p.add(v.vid);tot+=+x||0}});
        const nice=k=>{const L=(typeof PANE_LABEL!=="undefined"&&PANE_LABEL)||{};const cap=w=>w.charAt(0).toUpperCase()+w.slice(1);return k.split(" › ").map((w,i)=>i?(L[w]||cap(w)):cap(w)).join(" › ")};
@@ -217,12 +273,12 @@
         <div class="ms-tiles"><div class="ms-tile"><b>${fm(tot/Math.max(1,ppl.size))}</b><span>Avg time per visitor</span></div><div class="ms-tile"><b>${fm(tot)}</b><span>Total time on site</span></div><div class="ms-tile"><b>${esc(nice(most[0].k).split(" › ").pop())}</b><span>Most-used section</span></div><div class="ms-tile"><b>${list.length}</b><span>Sections visited</span></div></div>
         <div class="ms-grid2" style="margin-top:12px"><div><h3 style="font-size:14px">🔥 Most time spent</h3>${most.map(row).join("")}</div><div><h3 style="font-size:14px">🧊 Least time spent</h3>${least.map(row).join("")}</div></div></div>`})()}
      <div class="ms-grid2">
-      <div class="ms-sec"><h3>Where they come from <small>${N} days</small></h3>${rows(srcs)}</div>
+      <div class="ms-sec"><h3>Where they come from <small>${N} days</small></h3>${rows(srcsU,0,"src")}</div>
       <div class="ms-sec"><h3>TikTok posts <small>visits by QR / link tag</small></h3>${rows(tally(cur.filter(v=>v.cmp),v=>v.cmp,8))}</div>
       <div class="ms-sec"><h3>First page they landed on</h3>${rows(tally(cur,v=>PAGE_NAME(v.p),8))}</div>
       <div class="ms-sec"><h3>Where they are</h3>${rows(tally(cur,v=>v.cc==="US"?(v.region||"United States"):(v.country||v.cc),8))}</div>
       <div class="ms-sec"><h3>Top cities</h3>${rows(tally(cur,v=>v.city?(v.city+(v.cc==="US"&&v.region?", "+v.region:"")):"",8))}</div>
-      <div class="ms-sec"><h3>Device</h3>${rows(tally(cur,v=>v.dev))}</div></div>
+      <div class="ms-sec"><h3>Device</h3>${rows(devsU,0,"dev")}</div></div>
      <div class="ms-sec"><h3>Accounts</h3>
       <div class="ms-tiles five">${t5("Total accounts",accts.length)}${t5(`New, ${N} days`,newAccts,chg(newAccts,prevAccts))}${t5("Active 24h",act(864e5))}${t5("Active 7 days",act(7*864e5))}${t5("Paying Pro",pro)}</div>
       <p class="note" style="margin-top:8px">${cur.length?`About <b>${pct(newAccts,Math.max(1,fresh(cur)))}%</b> of new visitors made an account in this period.`:""}</p></div>
@@ -233,7 +289,7 @@
        const start=all[0],list=[];for(let t=Date.parse(start+"T12:00:00");t<=Date.now();t+=864e5){const d=dayStr(new Date(t));list.push([d,accts.filter(a=>a.days.includes(d)).length,accts.filter(a=>a.first===d).length])}
        const L=list.slice(-Math.max(N,14)),m=Math.max(1,...L.map(x=>x[1]));const tot=accts.filter(a=>a.first).length;
        return `<div class="ms-tiles"><div class="ms-tile"><b>${start.slice(5).replace("-","/")}</b><span>First activity</span></div><div class="ms-tile"><b>${tot}</b><span>Accounts that used it</span></div><div class="ms-tile"><b>${Math.max(...list.map(x=>x[1]))}</b><span>Best day (active)</span></div><div class="ms-tile"><b>${(accts.reduce((n,a)=>n+a.days.length,0)/Math.max(1,tot)).toFixed(1)}</b><span>Avg days active</span></div></div>
-       <div class="ms-bars" role="img" aria-label="Active accounts per day">${L.map(([d,n,f])=>`<div class="ms-bar" title="${d}: ${n} active, ${f} new"><em>${n||""}</em><span class="stk" style="height:${(n/m*100).toFixed(0)}%">${f?`<i class="nw" style="height:${(f/Math.max(1,n)*100).toFixed(0)}%"></i>`:""}<i style="flex:1"></i></span></div>`).join("")}</div>
+       <div class="ms-bars" role="img" aria-label="Active accounts per day">${L.map(([d,n,f])=>`<div class="ms-bar" data-tip="${d}: ${n} active · ${f} new · ${n-f} returning"><em>${n||""}</em><span class="stk" style="height:${(n/m*100).toFixed(0)}%">${f?`<i class="nw" style="height:${(f/Math.max(1,n)*100).toFixed(0)}%"></i>`:""}<i style="flex:1"></i></span></div>`).join("")}</div>
        <div class="ms-days">${L.map(([d])=>`<span>${L.length>14?(+d.slice(8)%2?"":+d.slice(8)):+d.slice(8)}</span>`).join("")}</div>
        <div class="ms-leg"><span class="nw">New accounts</span><span>Returning accounts</span></div>`})()}</div>
      <div class="ms-sec"><h3><span>All accounts <small>${accts.length}</small></span><input class="ms-search" id="msFind" type="search" placeholder="Search name or school"></h3>
@@ -244,7 +300,13 @@
       return L.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Days active</th><th class="n">First seen</th><th class="n">Last seen</th><th></th></tr></thead><tbody>${L.slice(0,100).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.days.length}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td><td><button class="ghost outline sm" data-grant="${esc(a.uid)}" data-days="30" title="Give 30 days of Pro">+Pro</button></td></tr>`}).join("")}</tbody></table>${L.length>100?`<p class="note">Showing 100 of ${L.length}. Search to narrow it down.</p>`:""}`:`<p class="note">${q?"No matches.":"No accounts yet."}</p>`};
     const acc=document.getElementById("msAcc");acc.innerHTML=accRows("");
     document.getElementById("msFind").oninput=e=>{acc.innerHTML=accRows(e.target.value)};
-    body.querySelectorAll(".ms-seg button").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});
+    body.querySelectorAll(".ms-seg:not(.ms-mseg) button").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});
+    body.querySelectorAll(".ms-mseg button").forEach(b=>b.onclick=()=>{METRIC=b.dataset.m;draw()});
+    body.querySelectorAll("[data-fk]").forEach(r=>{const go=()=>{const k=r.dataset.fk,v=r.dataset.fv;FILT[k]=FILT[k]===v?"":v;draw()};r.onclick=go;r.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}}});
+    body.querySelectorAll("[data-clr]").forEach(b=>b.onclick=()=>{FILT[b.dataset.clr]="";draw()});
+    LC.bind(document.getElementById("msLine"));
+    if(sp0)sp0.scrollTop=sc0;
+    if(!matchMedia("(prefers-reduced-motion:reduce)").matches)body.querySelectorAll(".ms-tile b").forEach(b=>{const tn=b.firstChild;if(!tn||tn.nodeType!==3||!/^\d[\d,]*$/.test(tn.nodeValue))return;const to=+tn.nodeValue.replace(/,/g,""),com=tn.nodeValue.includes(","),t0=performance.now();if(to<2)return;const tk=t=>{const k=Math.min(1,(t-t0)/600),v=Math.round(to*(1-Math.pow(1-k,3)));tn.nodeValue=com?v.toLocaleString():String(v);if(k<1)requestAnimationFrame(tk)};requestAnimationFrame(tk)});
     document.getElementById("msRefresh").onclick=openStats;
     {const tb=document.getElementById("msTestMail");if(tb)tb.onclick=async()=>{const msg=document.getElementById("msTestMsg");tb.disabled=true;msg.textContent="Sending…";
       try{const tok=A.session&&A.session.access_token||(await sb.auth.getSession()).data.session.access_token;const r=await fetch("/.netlify/functions/email-test",{method:"POST",headers:{Authorization:"Bearer "+tok}});const j=await r.json().catch(()=>({}));

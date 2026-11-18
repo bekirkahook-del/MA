@@ -54,7 +54,7 @@
 .hl-vis{margin:6px 0 2px;padding:10px 12px 8px;border:1px solid var(--rule,#e3e6ee);border-radius:12px;background:color-mix(in srgb,var(--cobalt,#2547d8) 3%,transparent);color:var(--ink,#0b1b3a)}
 .hl-vis svg{display:block;width:100%;height:auto;overflow:visible}
 .hl-vis text{font:500 10.5px "IBM Plex Mono",ui-monospace,monospace;fill:var(--ink-2,#55607a);letter-spacing:.02em}
-.hl-vis figcaption{margin-top:4px;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2,#55607a)}
+.hl-vis figcaption{margin-top:4px;font:500 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2,#55607a)}
 .hl-vis .hv-line{stroke-dasharray:1;stroke-dashoffset:1;animation:hvDraw 1.8s cubic-bezier(.3,.7,.2,1) .25s forwards}
 .hl-vis .hv-area{opacity:0;animation:hvFade .9s ease 1.2s forwards}
 .hl-vis .hv-node{opacity:0;animation:hvFade .5s ease var(--d) forwards}

@@ -419,7 +419,7 @@ body{background:var(--sheet)}
 .tab[aria-selected="true"]{border-bottom-color:var(--ink)}
 .col{gap:48px}.view{gap:48px}
 .card,.track,.firm{background:none;border:0;border-radius:0;padding:0}
-.label{font-size:10.5px;letter-spacing:.14em}
+.label{font-size:11px;letter-spacing:.14em}
 .hero{gap:48px;align-items:end}
 .hero h1{font-size:clamp(30px,4.6vw,50px);font-weight:700;font-stretch:78%}
 .hero h1 em{color:var(--ink);font-weight:700;box-shadow:inset 0 -0.18em 0 var(--cobalt-soft)}
@@ -1769,6 +1769,12 @@ button,a,.btn,.ghost,.chip,.opt,.tab,.hl,.primary,input[type=checkbox],input[typ
 .sl input[type=range]::-webkit-slider-thumb{width:28px;height:28px}
 .sl input[type=range]::-moz-range-thumb{width:26px;height:26px}
 }
+/* a11y: 44px touch targets without changing the look */
+@media (pointer:coarse),(max-width:760px){
+.iconbtn,.palbtn,.avbtn,.probtn,.authbtn,.tape-btn,.brand{position:relative}
+.iconbtn::after,.palbtn::after,.avbtn::after,.probtn::after,.authbtn::after,.tape-btn::after,.brand::after{content:"";position:absolute;inset:-7px}
+footer a{display:inline-block;padding:10px 2px;margin:-10px 0}
+}
 </style>
 
 <div class="wrap">
@@ -2007,7 +2013,7 @@ button,a,.btn,.ghost,.chip,.opt,.tab,.hl,.primary,input[type=checkbox],input[typ
   
   </div>
 
-  <footer><span>Progress saves to your account when you sign in. Pay and timelines are typical ranges.</span> <a href="/guides/" style="margin-left:6px">Free interview guides</a> · <a href="/tools/">Free tools</a> · <a href="/deals/">Deal database</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund/">Refunds</a> · <a href="/cookies/">Cookies</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/accessibility/">Accessibility</a> · <a href="mailto:hello@mnaprep.com">Contact</a><div style="margin-top:6px;font-size:12px;opacity:.8">M&amp;A Prep is independent and not affiliated with any firm or school mentioned. Education only, not financial advice. © 2026 M&amp;A Prep.</div></footer>
+  <footer><span>Progress saves to your account when you sign in. Pay and timelines are typical ranges.</span> <a href="/guides/" style="margin-left:6px">Free interview guides</a> · <a href="/tools/">Free tools</a> · <a href="/deals/">Deal database</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund/">Refunds</a> · <a href="/cookies/">Cookies</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/accessibility/">Accessibility</a> · <a href="mailto:hello@mnaprep.com">Contact</a><div style="margin-top:6px;font-size:12px">M&amp;A Prep is independent and not affiliated with any firm or school mentioned. Education only, not financial advice. © 2026 M&amp;A Prep.</div></footer>
 </div>
 
 <div class="drawer-bg" id="drawerBg" hidden></div>

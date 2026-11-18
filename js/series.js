@@ -102,7 +102,7 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
 
 .sr-ban{display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px;padding:12px 16px;margin:0 0 14px;border-radius:14px}
 .sr-ban .sr-l{flex:1 1 280px;min-width:0}
-.sr-ban .sr-top{font-size:10.5px;gap:8px}
+.sr-ban .sr-top{font-size:11px;gap:8px}
 .sr-ban .sr-live{padding:2px 8px}
 .sr-h{margin:5px 0 0;font-size:19px;line-height:1.15;font-weight:900;letter-spacing:-.01em;color:#fff}
 .sr-h em{font-style:normal;color:#f5b83d}
@@ -110,10 +110,10 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
 .sr-ban .sr-clock{margin:0;gap:6px}
 .sr-ban .sr-box{min-width:44px;max-width:54px;padding:4px 2px;border-radius:9px}
 .sr-ban .sr-box b{font-size:18px}
-.sr-ban .sr-box span{font-size:8.5px}
+.sr-ban .sr-box span{font-size:10px}
 .sr-ban .sr-act{margin:0;gap:8px;flex-wrap:nowrap}
 .sr-ban .sr-btn{font-size:13.5px;padding:9px 14px;border-radius:9px;white-space:nowrap}
-@media(max-width:560px){.sr-ban{padding:10px 12px}.sr-ban .sr-clock{order:3}.sr-ban .sr-act{order:2}.sr-h{font-size:17px}}
+@media(max-width:560px){.sr-ban{padding:9px 12px}.sr-ban .sr-clock{order:3;gap:4px}.sr-ban .sr-act{order:2}.sr-h{font-size:17px;margin-top:3px}.sr-h small{font-size:11.5px;line-height:1.3;margin-top:2px}.sr-ban .sr-top{letter-spacing:.06em}.sr-ban .sr-box{min-width:38px;padding:3px 2px}.sr-ban .sr-box b{font-size:15px}.sr-ban .sr-btn{padding:8px 12px;font-size:13px}}
 `;document.head.appendChild(st);
 
   /* ---------- home banner ---------- */

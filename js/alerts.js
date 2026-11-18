@@ -22,7 +22,7 @@
     const pro=(()=>{try{return isPro()}catch(e){return false}})(),fm=(()=>{try{return S.alertFirm||""}catch(e){return""}})();
     c.innerHTML=pro||on()&&!fm?`<div><span class="k">Pro</span><b>🔔 Instant application alerts</b><span>${on()?"On. You'll get an email the day a new internship application opens.":"Get an email the day a new internship application opens, before spots fill up."}</span></div><button class="${on()?"ghost":"btn"}" id="alBtn">${on()?"Turn off":"Turn on alerts"}</button>`
       :on()?`<div><span class="k">Free</span><b>🔔 Alert on: ${String(fm).replace(/[<>&"]/g,"")}</b><span>We'll email you the day ${String(fm).replace(/[<>&"]/g,"")} opens an application. Pro adds alerts for every firm.</span></div><button class="ghost" id="alBtn">Turn off</button>`
-      :`<div><span class="k">Free</span><b>🔔 Get alerted when one firm opens</b><span>Type a firm and we'll email you the day its application opens. Pro covers every firm.</span><input id="alFirm" placeholder="e.g. Evercore" maxlength="60" style="display:block;margin-top:8px;width:100%;max-width:260px"></div><button class="btn" id="alBtn">Alert me</button>`;
+      :`<div><span class="k">Free</span><b>🔔 Get alerted when one firm opens</b><span>Type a firm and we'll email you the day its application opens. Pro covers every firm.</span><input id="alFirm" aria-label="Firm name" placeholder="e.g. Evercore" maxlength="60" style="display:block;margin-top:8px;width:100%;max-width:260px"></div><button class="btn" id="alBtn">Alert me</button>`;
     document.getElementById("alBtn").onclick=e=>toggle(e.currentTarget)}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(draw,300));else setTimeout(draw,300);
 })();

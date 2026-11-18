@@ -200,7 +200,7 @@
     {const ff=$("#ffChart");if(ff&&!ff.dataset.pnFf){ff.dataset.pnFf="1";const lb=ff.previousElementSibling;const nx=ff.nextElementSibling;
       const d=document.createElement("details");d.className="pn-fold";d.innerHTML="<summary>📊 Football field: valuation range</summary>";ff.parentNode.insertBefore(d,lb&&lb.classList.contains("label")?lb:ff);
       [lb&&lb.classList.contains("label")?lb:null,ff,nx&&nx.tagName==="P"?nx:null].filter(Boolean).forEach(x=>d.appendChild(x))}}
-    fold($('[data-view="home"] .lw'),"📰 Live this week");
+    fold($('[data-view="home"] .lw'),'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M4 4h12v16H6a2 2 0 0 1-2-2z"/><path d="M16 8h4v10a2 2 0 0 1-2 2"/><path d="M8 8h4M8 12h4M8 16h4"/></svg>Live this week');
     fold($("#lb"),"🏆 Top players");
     fold($("#lboTbl"),"Year-by-year table");
     fold($("#dcfTbl"),"Projection table");

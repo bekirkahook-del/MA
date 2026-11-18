@@ -4257,7 +4257,7 @@ html.calm .pl-enter .pg-stage,html.calm .pl-enter .pg-cell,html.calm .pl-swap,ht
 .pl-blk{scroll-snap-align:start;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-top:5px solid var(--c);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0;transition:transform .15s,box-shadow .15s}
 .pl-blk:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
 .pl-blk b{font-size:13px;line-height:1.2}
-.pl-blk small,.pl-age{font-family:var(--mono);font-size:10.5px;color:var(--ink-2)}
+.pl-blk small,.pl-age{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
 .pl-blk.sch{background:var(--paper)}
 .pl-add{flex:0 0 74px;border:1.5px dashed var(--rule);border-radius:8px;background:none;color:var(--ink-2);font-size:13px}
 .pl-add:hover{border-color:var(--cobalt);color:var(--cobalt)}
@@ -4351,7 +4351,7 @@ function homeGauntletCard(){const wk=isoWeek(),g=(S.gauntlet||{})[wk];
 .hl-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:4px}
 .hl-go{padding:13px 22px;font-size:15.5px;font-weight:600;background:var(--cobalt)!important;color:#fff!important;border-radius:9px;box-shadow:0 8px 22px color-mix(in srgb,var(--cobalt) 35%,transparent);transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
 .hl-go:hover{transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--cobalt) 45%,transparent);opacity:1!important}
-.hl-2{font-size:14.5px!important;color:var(--ink)!important;font-weight:500}
+.hl-2{font-size:14.5px!important;color:var(--ink)!important;font-weight:500;border:1px solid var(--rule)!important;border-radius:9px!important;padding:12px 18px!important}
 .hl-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-top:10px}
 .hl-proof div{padding:12px 4px;display:flex;flex-direction:column;gap:2px;animation:plIn .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*80ms + 150ms)}
 .hl-proof b{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
@@ -4570,4 +4570,4 @@ try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
 const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
 initCompete();
-setTimeout(()=>{if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining&&(!h||h==="home"))onboarding()},900);
+(function waitOnb(n){let pend=false;try{pend=!localStorage.getItem("ma-notice")}catch(e){}if(pend&&n<20){setTimeout(()=>waitOnb(n+1),400);return}if(ov.hidden&&!S.plan&&!S.onboardSkip&&!joining&&(!h||h==="home"))onboarding()})(0);

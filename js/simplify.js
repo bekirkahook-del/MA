@@ -90,7 +90,7 @@ footer{flex-direction:column;align-items:center}
 .lw-row{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:10px}
 .lw-c{font:inherit;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-top:3px solid var(--ac,var(--cobalt));border-radius:12px;padding:12px 14px;cursor:pointer;color:inherit;display:flex;flex-direction:column;gap:4px;transition:transform .15s,box-shadow .15s}
 .lw-c:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(19,32,59,.08)}
-.lw-c span{font-family:var(--mono,monospace);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac,var(--cobalt))}
+.lw-c span{font-family:var(--mono,monospace);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac,var(--cobalt))}
 .lw-c b{font-size:14px;line-height:1.35;color:var(--ink)}.lw-c em{font-style:normal;font-size:12px;color:var(--ink-2)}
 @media(max-width:620px){.lw-row{grid-template-columns:1fr!important}}
 .hero:not(:has(.hl-land)) .lw{order:98}
@@ -162,7 +162,7 @@ footer{flex-direction:column;align-items:center}
     const esc2=t=>String(t||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
     const cards=[`<button class="lw-c" style="--ac:var(--cobalt)" data-go="news"><span>Top story · ${esc2(N[0].d)}</span><b>${esc2(N[0].h)}</b><em>Read on The Wire →</em></button>`];
     if(deal)cards.push(`<button class="lw-c" style="--ac:#7357F6" data-go="deal"><span>Newest deal · ${esc2(deal.value)}</span><b>${esc2(deal.buyer)} → ${esc2(deal.target)}</b><em>Break it down →</em></button>`);
-    if(app)cards.push(`<button class="lw-c" style="--ac:#16A06A" data-go="apps"><span>Applications open${app[6]?" · closes "+esc2(app[6].slice(5).replace("-","/")):""}</span><b>${esc2(app[0])}: ${esc2(app[1])}</b><em>See all openings →</em></button>`);
+    if(app)cards.push(`<button class="lw-c" style="--ac:#0B7A4D" data-go="apps"><span>Applications open${app[6]?" · closes "+esc2(app[6].slice(5).replace("-","/")):""}</span><b>${esc2(app[0])}: ${esc2(app[1])}</b><em>See all openings →</em></button>`);
     const html=`<p class="lw-h"><i></i>Live this week</p><div class="lw-row" style="--n:${cards.length}">${cards.join("")}</div>`;
     if(!el){el=document.createElement("section");el.className="lw";const side=hero.querySelector(".hero-side");if(!side)return;side.insertBefore(el,side.querySelector(".side-daily"))}
     if(el.dataset.h!==html){el.innerHTML=html;el.dataset.h=html;

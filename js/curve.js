@@ -76,7 +76,7 @@
 
   function daily(){const [q,a,t,u,s1,s2]=dq(),c=st(),done=c.day===today();
     return `<div class="cb-card" id="cbDaily"><div class="cb-k">Curveball of the day · no calculator</div><div class="cb-q">${q}</div>
-      <div class="cb-row"><input class="cb-in" id="cbIn" inputmode="decimal" placeholder="Your answer" ${done?"disabled":""}><button class="cb-btn p" id="cbGo" ${done?"disabled":""}>Check</button><button class="cb-btn" id="cbShow">Show answer</button></div>
+      <div class="cb-row"><input class="cb-in" id="cbIn" aria-label="Your answer" inputmode="decimal" placeholder="Your answer" ${done?"disabled":""}><button class="cb-btn p" id="cbGo" ${done?"disabled":""}>Check</button><button class="cb-btn" id="cbShow">Show answer</button></div>
       <div class="cb-res" id="cbRes">${done?result(c.dayOk,a,u,s1,s2):""}</div></div>`}
   function result(good,a,u,s1,s2){return `<b class="${good?"cb-good":"cb-bad"}">${good?"Nailed it. +10 XP":"Answer: "+fmt(a,u)}</b>${good?" ("+fmt(a,u)+")":""}<ol><li>${s1}</li><li>${s2}</li></ol><div class="cb-meta" style="margin-top:8px">New curveball tomorrow.</div>`}
   function bindDaily(){const go=$("#cbGo"),inp=$("#cbIn"),res=$("#cbRes"),sh=$("#cbShow");if(!go)return;
@@ -98,7 +98,7 @@
   function sprint(){const best=st().best||0;
     return `<div class="cb-card" id="cbSprint"><div class="cb-sp"><div><div class="cb-k" style="color:var(--brass)">Mental math sprint</div><div class="cb-meta" style="margin-top:6px">60 seconds. As many as you can. Best: <b id="cbBest">${best}</b></div></div><button class="cb-btn p" id="cbStart">Start</button></div>
       <div id="cbPlay" hidden style="margin-top:16px"><div class="cb-sp"><div class="cb-big" id="cbProb"></div><div class="cb-meta"><b id="cbT">60</b>s · <b id="cbN">0</b> right</div></div>
-      <div class="cb-row" style="margin-top:12px"><input class="cb-in" id="cbA" inputmode="decimal" placeholder="Answer + Enter" autocomplete="off"><button class="cb-btn" id="cbSkip">Skip</button></div></div>
+      <div class="cb-row" style="margin-top:12px"><input class="cb-in" id="cbA" aria-label="Your answer" inputmode="decimal" placeholder="Answer + Enter" autocomplete="off"><button class="cb-btn" id="cbSkip">Skip</button></div></div>
       <div class="cb-res" id="cbSRes"></div></div>`}
   function bindSprint(){const b=$("#cbStart");if(!b)return;
     b.onclick=()=>{if(sp)return;sp={n:0,t:60,p:gen()};$("#cbPlay").hidden=false;$("#cbSRes").textContent="";b.disabled=true;show();$("#cbA").focus();

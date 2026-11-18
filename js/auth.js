@@ -23,39 +23,69 @@
 @media (max-width:620px){.authbtn{padding:5px 10px;font-size:12px}}
 @media (max-width:480px){.top-r{flex-wrap:nowrap!important;gap:8px!important}}`;document.head.appendChild(st);
 
+  /* One-field sign up: email -> magic link (confirms the email AND signs them in). Password stays as an option. */
+  const MAILS=[[/^(gmail|googlemail)\.com$/,"Gmail","https://mail.google.com/"],[/^(outlook|hotmail|live|msn)\.com$/,"Outlook","https://outlook.live.com/mail/"],[/^(yahoo|ymail)\.com$/,"Yahoo Mail","https://mail.yahoo.com/"],[/^(icloud|me|mac)\.com$/,"iCloud Mail","https://www.icloud.com/mail"]];
+  const mailFor=e=>{const d=(e.split("@")[1]||"").toLowerCase();for(const m of MAILS)if(m[0].test(d))return{name:m[1],url:m[2]};return null};
+  const okEmail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
   function openAuth(mode){mode=mode||"in";
     const ov=document.createElement("div");ov.className="auth-ov";
+    let view="magic",email="",cd=0,cdT=null;
+    const agree=`By continuing you confirm you're 13 or older and agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a> and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.`;
     const draw=()=>{const up=mode==="up";
+      if(view==="sent"){
+        const m=mailFor(email);
+        ov.innerHTML=`<div class="auth-box"><button type="button" class="auth-x" aria-label="Close">×</button>
+         <h2>Check your email</h2>
+         <p>We sent a sign-in link to <b id="auTo"></b>. Tap it and you're in. No password needed.</p>
+         ${m?`<a class="auth-go" style="text-align:center;text-decoration:none" href="${m.url}" target="_blank" rel="noopener">Open ${m.name}</a>`:""}
+         <p style="font-size:12.5px">Nothing yet? Check spam or promotions.</p>
+         <div class="auth-msg" id="auM"></div>
+         <button type="button" class="auth-sw" id="auRe"></button>
+         <button type="button" class="auth-sw" id="auCh">Wrong email? Change it</button></div>`;
+        ov.querySelector("#auTo").textContent=email;
+        const re=ov.querySelector("#auRe"),msg=ov.querySelector("#auM");
+        const tick=()=>{re.disabled=cd>0;re.textContent=cd>0?"Resend link in "+cd+"s":"Resend the link"};tick();
+        clearInterval(cdT);cdT=setInterval(()=>{if(!ov.isConnected){clearInterval(cdT);return}if(cd>0){cd--;tick()}},1000);
+        re.onclick=async()=>{if(cd>0)return;re.disabled=true;const r=await sendLink(email);msg.textContent=r?r:"Sent again.";msg.className="auth-msg "+(r?"err":"ok");cd=60;tick()};
+        ov.querySelector("#auCh").onclick=()=>{view="magic";draw()};
+        ov.querySelector(".auth-x").onclick=()=>ov.remove();return}
+      const pw=view==="pw";
       ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button>
-       <h2>${up?"Create your account":"Welcome back"}</h2>
-       <p>${up?"Free. Your progress comes with you.":"Sign in to sync your progress and unlock everything."}</p>
-       ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
-       ${up?`<label>Your name<input id="auN" autocomplete="name" placeholder="Jane Smith"></label>`:""}
-       <label>Email<input id="auE" type="email" autocomplete="email" placeholder="you@school.edu" required></label>
-       <label>Password<input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="${up?"At least 6 characters":""}" required></label>
-       ${up?`<label class="auth-agree" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;margin:6px 0"><input id="auT" type="checkbox" required style="width:auto;margin-top:2px"><span>I'm 13 or older and agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a> and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>`:""}
-       <button class="auth-go" type="submit">${up?"Create account":"Sign in"}</button>
+       <h2>${pw?(up?"Create your account":"Sign in with password"):(up?"Join free in 10 seconds":"Welcome back")}</h2>
+       <p>${pw?"":(up?"Just your email. We'll send a link, no password to remember.":"Enter your email and we'll send a sign-in link.")}</p>
+       ${up&&!pw?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
+       <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
+       ${pw?`<label>Password<input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="${up?"At least 6 characters":""}" required></label>`:""}
+       <button class="auth-go" type="submit">${pw?(up?"Create account":"Sign in"):"Email me a link"}</button>
+       ${up||!pw?`<p style="font-size:12px;line-height:1.4">${agree}</p>`:""}
        <div class="auth-msg" id="auM"></div>
-       <button type="button" class="auth-sw" id="auSw">${up?"Already have an account? Sign in":"New here? Create a free account"}</button>
-       ${up?"":`<button type="button" class="auth-sw" id="auF">Forgot password?</button>`}</form>`;
-      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go");
+       <button type="button" class="auth-sw" id="auPw">${pw?"Use an email link instead":"Use a password instead"}</button>
+       ${pw?`<button type="button" class="auth-sw" id="auSw">${up?"Already have an account? Sign in":"New here? Create a free account"}</button>`:""}
+       ${pw&&!up?`<button type="button" class="auth-sw" id="auF">Forgot password?</button>`:""}</form>`;
+      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE");
+      ei.value=email;
       const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
-      ov.querySelector("#auSw").onclick=()=>{mode=up?"in":"up";draw()};
-      const fp=ov.querySelector("#auF");if(fp)fp.onclick=async()=>{const e=ov.querySelector("#auE").value.trim();if(!e){say("Type your email first.");return}
+      ov.querySelector("#auPw").onclick=()=>{email=ei.value.trim();view=pw?"magic":"pw";draw()};
+      const sw=ov.querySelector("#auSw");if(sw)sw.onclick=()=>{email=ei.value.trim();mode=up?"in":"up";draw()};
+      const fp=ov.querySelector("#auF");if(fp)fp.onclick=async()=>{const e=ei.value.trim();if(!e){say("Type your email first.");return}
         const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};
-      f.onsubmit=async ev=>{ev.preventDefault();const e=ov.querySelector("#auE").value.trim(),p=ov.querySelector("#auP").value;
-        if(!e||!p){say("Enter your email and password.");return}
-        if(up&&!ov.querySelector("#auT").checked){say("Please agree to the Terms and Privacy Policy to continue.");return}
+      f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim();email=e;
+        if(!okEmail(e)){say("Enter a valid email.");return}
         go.disabled=true;say("");
-        try{if(up){const n=(ov.querySelector("#auN").value||"").trim();
-            if(n)try{const k="ma-progress-v1",s=JSON.parse(localStorage.getItem(k)||"{}");s.profile=s.profile||{};if(!s.profile.name){s.profile.name=n;localStorage.setItem(k,JSON.stringify(s))}}catch(x){}
-            const {data,error}=await sb.auth.signUp({email:e,password:p,options:{data:{full_name:n},emailRedirectTo:location.origin}});
+        try{
+          if(!pw){const err=await sendLink(e);if(err)throw new Error(err);cd=60;view="sent";draw();return}
+          const p=ov.querySelector("#auP").value;if(!p){say("Enter your password.");return}
+          if(up){const {data,error}=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin}});
             if(error)throw error;if(!data.session)say("Almost done. Check your email to confirm, then sign in.",true)}
           else{const {error}=await sb.auth.signInWithPassword({email:e,password:p});if(error)throw error;say("Signed in. Loading…",true)}}
         catch(x){say(/Invalid login/i.test(x.message)?"Wrong email or password.":x.message||"Something went wrong.")}
         finally{go.disabled=false}};
-      setTimeout(()=>{const i=ov.querySelector(up?"#auN":"#auE");i&&i.focus()},30)};
+      setTimeout(()=>{if(!ei.value)ei.focus()},30)};
+    /* returns "" on success, or a friendly error */
+    async function sendLink(e){try{const {error}=await sb.auth.signInWithOtp({email:e,options:{shouldCreateUser:true,emailRedirectTo:location.origin}});
+      if(!error)return "";if(/rate|seconds|too many/i.test(error.message))return "Just a sec, we already sent one. Check your inbox, or try again in a minute.";return error.message||"Couldn't send the link."}
+      catch(x){return "Couldn't reach the server. Check your connection and try again."}}
     draw();ov.addEventListener("mousedown",e=>{if(e.target===ov)ov.remove()});
     document.addEventListener("keydown",function k(e){if(e.key==="Escape"){ov.remove();document.removeEventListener("keydown",k)}});
     document.body.appendChild(ov)}

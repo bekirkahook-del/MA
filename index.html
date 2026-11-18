@@ -1769,6 +1769,13 @@ button,a,.btn,.ghost,.chip,.opt,.tab,.hl,.primary,input[type=checkbox],input[typ
 .sl input[type=range]::-webkit-slider-thumb{width:28px;height:28px}
 .sl input[type=range]::-moz-range-thumb{width:26px;height:26px}
 }
+/* a11y dark mode: dark text on the pale accent fill */
+html[data-theme="dark"] .pn-tabs button[aria-pressed="true"],html[data-theme="dark"] .authbtn.cta,html[data-theme="dark"] .btn.hl-go,html[data-theme="dark"] button.go{color:#0E1424!important}
+html[data-theme="dark"] .lw-c span{color:color-mix(in srgb,var(--ac) 45%,#fff)}
+@media (prefers-color-scheme:dark){
+html:not([data-theme="light"]) .pn-tabs button[aria-pressed="true"],html:not([data-theme="light"]) .authbtn.cta,html:not([data-theme="light"]) .btn.hl-go,html:not([data-theme="light"]) button.go{color:#0E1424!important}
+html:not([data-theme="light"]) .lw-c span{color:color-mix(in srgb,var(--ac) 45%,#fff)}
+}
 /* a11y round 2: bigger hit areas + readable micro-text */
 .tab{min-width:44px;text-align:center}
 .node,.rel{position:relative}

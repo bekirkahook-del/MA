@@ -1,0 +1,1 @@
+[{"key":"oddq-halfup","question":"A stock falls <b>50%</b>, then rises <b>50%</b>. Are you back to even?","emoji":"🤨","answer":"No. Down 25%","steps":["Start at <b>$100</b>","Down 50% → <b>$50</b>","Up 50% of $50 → <b>$75</b>. You need +100% to get back to $100"],"tip":"Losses hurt more than gains help. That's why investors care so much about drawdowns."}]

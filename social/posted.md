@@ -102,3 +102,8 @@
 - 2026-11-24 apple-bull — [Presenter video] Why we're bullish on Apple, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:47pm
 - 2026-11-27 starbucks-bull — [Presenter video] Why we're bullish on Starbucks, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:21pm
 - 2026-11-30 disney-bull — [Presenter video] Why we're bullish on Disney, QA 14/14 incl. fact check, score 86/100. TikTok + IG trial A/B + YT Short + FB Reel + Pinterest, 7:16pm
+- 2026-11-21 oddq-24x25 — [Interview Q] 24 × 25 = 600 (×100 ÷ 4)
+- 2026-11-22 bc-rent1br — [Blue Chip] Top 6 cities by median 1-bedroom rent, Oct 2026 (Zumper Oct 27 2026; NYC $4,610 ≈ 3x US $1,519)
+- 2026-11-22 goodwill — [Quiz] Goodwill: $500M price − $350M fair value net assets = $150M (C), curveball $100M, impairment not amortization
+- 2026-11-22 oddq-halfup — [Interview Q] Stock −50% then +50% → down 25%
+- 2026-11-22 q3evni — 3-question challenge: market cap $1B (B), EV/EBITDA 8.0x (C), interest +$20M at 25% tax → NI $85M (D)

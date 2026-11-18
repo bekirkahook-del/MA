@@ -98,14 +98,16 @@
   /* ---- listening ---- */
   function setLive(t){const el=$("#ccLive");if(el)el.textContent=t||""}
   function stopListen(silent){clearTimeout(silenceT);if(rec){try{rec.onresult=rec.onerror=rec.onend=null;rec.abort()}catch(e){}rec=null}listening=false;finalTxt="";interim="";if(!silent)render()}
-  function startListen(){if(!voiceOK||!chat||chat.done||busy||speaking||listening)return;
+  let retry=0;
+  function startListen(auto){if(!voiceOK||!chat||chat.done||busy||speaking||listening)return;
+    if(auto!==true)retry=0;
     finalTxt="";interim="";gotSpeech=false;
     try{rec=new SR();rec.lang="en-US";rec.interimResults=true;rec.continuous=true;rec.maxAlternatives=1}catch(e){S.coffeeMode="text";render();return}
     rec.onresult=e=>{gotSpeech=true;let fin="",tmp="";for(let i=0;i<e.results.length;i++){const r=e.results[i];(r.isFinal?(fin+=r[0].transcript+" "):(tmp+=r[0].transcript))}
       finalTxt=fin;interim=tmp;setLive((finalTxt+interim).trim());clearTimeout(silenceT);silenceT=setTimeout(()=>endTurn(),2400)};
-    rec.onerror=e=>{const c=e&&e.error;if(c==="not-allowed"||c==="service-not-allowed"){stopListen(true);S.coffeeMode="text";try{save()}catch(x){}if(typeof toast==="function")toast("Mic is blocked. Switched to typing. Allow the mic in your browser to use voice.");render()}
+    rec.onerror=e=>{const c=e&&e.error;if(c==="not-allowed"||c==="service-not-allowed"){stopListen(true);S.coffeeMode="text";if(typeof toast==="function")toast("Mic is blocked. Switched to typing. Allow the mic in your browser to use voice.");render()}
       else if(c==="no-speech"||c==="aborted"){/* handled in onend */}else if(c==="network"){if(typeof toast==="function")toast("Voice needs an internet connection.")}};
-    rec.onend=()=>{if(rec){endTurn()}};
+    rec.onend=()=>{if(!rec)return;if(!gotSpeech&&!(finalTxt+interim).trim()&&retry<1){retry++;const old=rec;rec=null;listening=false;try{old.onresult=old.onerror=old.onend=null}catch(e){}setTimeout(()=>{if(chat&&!chat.done&&!busy&&!speaking&&modeNow()==="voice")startListen(true);else render()},250);return}endTurn()};
     try{rec.start();listening=true;render()}catch(e){rec=null;listening=false}}
   function endTurn(){if(!listening&&!rec)return;const t=(finalTxt+" "+interim).trim();const r=rec;clearTimeout(silenceT);
     if(r){try{r.onresult=r.onerror=r.onend=null;r.stop()}catch(e){}}rec=null;listening=false;finalTxt="";interim="";
@@ -122,7 +124,13 @@
 
   const statusTxt=()=>busy?`${chat.p.first} is thinking…`:speaking?`${chat.p.first} is talking · tap the mic to jump in`:listening?"Listening… tap the mic when you're done":"Your turn · tap the mic and talk";
 
+  /* every state change rebuilds the whole box; keep the page where it was and the Captions fold open */
   function render(){const box=$("#ccBox");if(!box)return;
+    const y=window.scrollY,f=box.querySelector(".cc-fold"),open=!!(f&&f.open);
+    render0();
+    if(open){const g=box.querySelector(".cc-fold");if(g)g.open=true}
+    if(Math.abs(window.scrollY-y)>2)window.scrollTo(0,y)}
+  function render0(){const box=$("#ccBox");if(!box)return;
     if(!chat){const hist=(S.coffee||[]);const best=hist.reduce((m,h)=>Math.max(m,h.sc||0),0);const md=modeNow();
       box.innerHTML=`<div class="cc-wrap">
         <details class="cc-how"><summary>How it works &amp; tips</summary><p style="margin:0">Practice a real networking call, out loud. You'll talk to a made-up banker for up to ${MAX} turns, and they talk back. Then AI grades the whole call: your intro, questions, listening, tone and close. Keep their <b>Rapport</b> meter climbing.</p><ul class="cc-tips"><li>They open by asking about you. Have a 30-second intro ready.</li><li>Ask about their path, their work and their group. Follow up on what they say.</li><li>Close well: thank them and ask who else you should talk to.</li></ul></details>
@@ -155,7 +163,7 @@
       <div class="cc-meta"><span>${left} turn${left===1?"":"s"} left · this is a made-up person</span><span style="display:flex;gap:8px">${voiceOK?`<button class="ghost" id="ccMode">${voice?"Type instead":"Use voice"}</button>`:""}<button class="ghost" id="ccQuit">Quit</button><button class="ghost outline" id="ccEnd" ${chat.n<2||busy?"disabled":""}>End call &amp; grade</button></span></div>`}</div>`;
     const lg=$("#ccLog");if(lg)lg.scrollTop=lg.scrollHeight;
     if(chat.done){showGrade();return}
-    const ta=$("#ccMsg");if(ta&&!busy){ta.focus();ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();const t=(ta.value||"").trim();if(t)send(t)}}}
+    const ta=$("#ccMsg");if(ta&&!busy){if(document.activeElement!==ta)ta.focus({preventScroll:true});ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();const t=(ta.value||"").trim();if(t)send(t)}}}
     const sb=$("#ccSend");if(sb)sb.onclick=()=>{const x=$("#ccMsg");const t=(x&&x.value||"").trim();if(t)send(t)};
     const mic=$("#ccMic");if(mic)mic.onclick=micTap;
     const md=$("#ccMode");if(md)md.onclick=()=>{stopAudio();S.coffeeMode=voice?"text":"voice";try{save()}catch(e){}render();if(!voice&&!busy&&!chat.done)startListenSoon()};

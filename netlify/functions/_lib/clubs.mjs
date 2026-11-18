@@ -15,6 +15,8 @@ export function eduDomain(user) {
   if (!(user && (user.email_confirmed_at || user.confirmed_at)) || !/@[^@]+\.edu$/.test(em)) return "";
   return em.split("@")[1].split(".").slice(-2).join(".");
 }
+// Any CONFIRMED email counts for joining/creating a club (not just .edu); .edu only decides the club's school + Series eligibility.
+export const emailConfirmed = user => !!(user && user.email && (user.email_confirmed_at || user.confirmed_at));
 export const cleanName = n => String(n || "").replace(/[\r\n\t<>]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
 
 export const isOwner = (c, id) => c.owner === id;

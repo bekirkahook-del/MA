@@ -2,7 +2,8 @@
 import assert from "node:assert";
 const users = { tokA: { id: "00000000-0000-0000-0000-00000000000a", email: "a@osu.edu", email_confirmed_at: "x" },
   tokB: { id: "00000000-0000-0000-0000-00000000000b", email: "b@osu.edu", email_confirmed_at: "x" },
-  tokC: { id: "00000000-0000-0000-0000-00000000000c", email: "c@gmail.com", email_confirmed_at: "x" } };
+  tokC: { id: "00000000-0000-0000-0000-00000000000c", email: "c@gmail.com", email_confirmed_at: "x" },
+  tokD: { id: "00000000-0000-0000-0000-00000000000d", email: "d@osu.edu" } }; // signed up, email NOT confirmed
 const docs = new Map(); // "col/id" -> {col,id,uid,data}
 docs.set("players/" + users.tokA.id, { col: "players", id: users.tokA.id, data: { club: "oldone", clubOfficer: true } });
 const R = (b, s = 200) => ({ ok: s < 300, status: s, json: async () => b, text: async () => JSON.stringify(b) });
@@ -30,6 +31,10 @@ r = await call("tokA", { action: "create", name: "Old Club", code: "oldone" }); 
 r = await call("tokA", { action: "create", name: "Again", code: "oldone" }); assert.equal(r.s, 409);
 // join / list / approval / remove / banned rejoin
 r = await call("tokB", { action: "join", code }); assert.equal(r.s, 200); assert(r.j.club.me.member);
+r = await call("tokD", { action: "join", code }); assert.equal(r.s, 403); assert.equal(r.j.needEmail, true); // unconfirmed email can't join
+r = await call("tokD", { action: "create", name: "Nope Club" }); assert.equal(r.s, 403);
+r = await call("tokC", { action: "join", code }); assert.equal(r.s, 200); assert(r.j.club.me.member); // any confirmed email can join (non-.edu too)
+r = await call("tokC", { action: "leave", code }); assert.equal(r.s, 200);
 r = await call("tokB", { action: "list" }); assert.equal(r.j.sd, "osu.edu"); assert(r.j.clubs.some(c => c.code === code));
 r = await call("tokC", { action: "list" }); assert.deepEqual(r.j.clubs, []); // non-.edu: no school clubs
 r = await call("tokB", { action: "remove", code, id: users.tokA.id }); assert.equal(r.s, 403);

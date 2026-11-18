@@ -4,7 +4,7 @@
 //   create (name [, code to register an older club]) | join | leave | get | list | approve | decline | remove | unban | rename | lock | co | transfer | disband
 import { json, getUser, SB_URL } from "./_lib/common.mjs";
 import { svc } from "./_lib/mail.mjs";
-import { ClubErr, CODE_RE, MAX, apply, cleanName, eduDomain, make, newCode, view } from "./_lib/clubs.mjs";
+import { ClubErr, CODE_RE, MAX, apply, cleanName, eduDomain, emailConfirmed, make, newCode, view } from "./_lib/clubs.mjs";
 
 const H = () => svc();
 async function getClub(code) {
@@ -41,6 +41,7 @@ export default async (req) => {
   let b = {}; try { b = await req.json(); } catch (e) {}
   const action = String(b.action || ""), code = String(b.code || "").toLowerCase(), now = Date.now();
   try {
+    if ((action === "join" || action === "create") && !emailConfirmed(me)) throw new ClubErr(403, "Confirm your email first. Check your inbox for the link, then try again.", { needEmail: true });
     if (action === "list") { // clubs at the caller's verified school
       const sd = eduDomain(me);
       if (!sd) return json(200, { clubs: [], sd: "" });

@@ -76,7 +76,7 @@
 .pn-ic svg{width:28px;height:28px}
 .pn-tx{flex:1;min-width:150px}.pn-tx h2{margin:0;font-size:18px;line-height:1.2;color:#fff;letter-spacing:0}.pn-tx p{margin:3px 0 0;font-size:13.5px;line-height:1.35;color:rgba(255,255,255,.9)}
 .pn-chips{display:flex;gap:6px;flex-wrap:wrap}.pn-chip{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:5px 10px;border-radius:10px;background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);line-height:1.1}
-.pn-chip b{font-size:16px;font-weight:800}.pn-chip span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+.pn-chip b{font-size:16px;font-weight:800}.pn-chip span{font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
 .pn-xp{display:inline-block;margin-top:7px;font-size:12px;font-weight:800;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.95);color:#1b2233;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .pane>.hint,.pane .hint{font-size:13px;color:var(--ink-2);margin:0 0 10px}
 [data-pane="interview"]>.pane-meta{display:none}

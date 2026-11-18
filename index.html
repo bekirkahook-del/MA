@@ -60,8 +60,8 @@ body .page-head h1::after,body .page-head h2::after{content:"";display:block;wid
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */
 :root{
   --paper:#EEF1F5; --sheet:#FFFFFF; --ink:#13203B; --ink-2:#4A5672; --rule:#D3D9E4;
-  --cobalt:#2448D8; --cobalt-soft:#E3E9FC; --brass:#A97A1E; --brass-soft:#F5EBD6;
-  --good:#1E7F4F; --bad:#B4362F; --lock:#A3ACBD; --warn:#B86B00;
+  --cobalt:#2448D8; --cobalt-soft:#E3E9FC; --brass:#7D590E; --brass-soft:#F5EBD6;
+  --good:#1E7F4F; --bad:#B4362F; --lock:#5C6884; --warn:#B86B00;
   --display:"Archivo","Arial Narrow",Arial,sans-serif;
   --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -69,11 +69,11 @@ body .page-head h1::after,body .page-head h2::after{content:"";display:block;wid
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#0E1424; --sheet:#161E33; --ink:#E6EAF3; --ink-2:#9AA5BE; --rule:#2A3550;
   --cobalt:#7C97FF; --cobalt-soft:#1E2A52; --brass:#DDB056; --brass-soft:#3A2F17;
-  --good:#4FC48A; --bad:#F07B72; --lock:#4F5B76; --warn:#F0A846; color-scheme:dark}}
+  --good:#4FC48A; --bad:#F07B72; --lock:#8A97B3; --warn:#F0A846; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0E1424; --sheet:#161E33; --ink:#E6EAF3; --ink-2:#9AA5BE; --rule:#2A3550;
   --cobalt:#7C97FF; --cobalt-soft:#1E2A52; --brass:#DDB056; --brass-soft:#3A2F17;
-  --good:#4FC48A; --bad:#F07B72; --lock:#4F5B76; --warn:#F0A846; color-scheme:dark}
+  --good:#4FC48A; --bad:#F07B72; --lock:#8A97B3; --warn:#F0A846; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -147,7 +147,7 @@ a{color:var(--cobalt)}
 .sec-head p{margin:4px 0 0;color:var(--ink-2);font-size:14px;max-width:64ch}
 .tracks{display:flex;flex-direction:column;gap:18px}
 .track{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:20px 20px 22px}
-.track.locked{opacity:.72}
+.track.locked{opacity:1}
 .track-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:start}
 .track-head h3{font-size:24px;font-weight:800;font-stretch:88%}
 .track-head p{margin:4px 0 0;color:var(--ink-2);font-size:14px;max-width:60ch}
@@ -244,7 +244,7 @@ td.base{background:var(--cobalt);color:#fff;font-weight:600}
 .chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--rule);font-size:14px}
 .chk:last-child{border-bottom:0}
 .chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--good);padding:0}
-.chk .auto{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--cobalt);margin-left:6px;white-space:nowrap}
+.chk .auto{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--cobalt);margin-left:6px;white-space:nowrap}
 .chk.done span.t{color:var(--ink-2);text-decoration:line-through}
 .crm-stats{display:flex;gap:10px;flex-wrap:wrap}
 .crm-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
@@ -441,7 +441,7 @@ body{background:var(--sheet)}
 .sec-head h2{font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--ink-2)}
 .sec-head{border-bottom:1px solid var(--rule);padding-bottom:10px}
 .sec-head p{font-size:13.5px}
-.pill{background:none!important;padding:0;font-size:10.5px}
+.pill{background:none!important;padding:0;font-size:11px}
 .pill.go{color:var(--cobalt)}.pill.win{color:var(--brass)}
 
 /* daily inline */
@@ -1051,7 +1051,7 @@ html.dense .wrap{gap:14px}
 .probtn:hover{background:var(--brass);color:var(--sheet)}
 .probtn.on{border:0;padding:0}
 .probtn.on:hover{background:none}
-.probadge{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;background:var(--brass);color:var(--sheet);border-radius:4px;padding:2px 5px;vertical-align:middle}
+.probadge{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;background:var(--brass);color:var(--sheet);border-radius:4px;padding:2px 5px;vertical-align:middle}
 .founder{display:inline-block;font-size:11px;font-weight:500;color:var(--brass);border:1px solid var(--brass);border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:middle}
 .gopro{color:var(--brass)!important;padding:0!important;font-weight:500}
 .li-id .gopro{display:block;margin-top:12px}
@@ -1471,7 +1471,7 @@ body{overflow-x:clip}
 .pipe{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--rule);border-radius:var(--r-card,10px);overflow:hidden}
 .pipe div{padding:10px 6px;text-align:center;border-right:1px solid var(--rule);min-width:0}
 .pipe div:last-child{border-right:0}
-.pipe b{display:block;font-size:20px;font-weight:600;color:var(--lock)}.pipe span{font-size:10.5px;color:var(--ink-2);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pipe b{display:block;font-size:20px;font-weight:600;color:var(--lock)}.pipe span{font-size:11px;color:var(--ink-2);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pipe .on b{color:var(--ink)}.pipe .ok.on b{color:var(--good)}.pipe .no.on b{color:var(--bad)}
 .apStage{padding:4px 6px;font-size:12.5px;width:auto}
 .packs .chip{font-size:11.5px}
@@ -1769,6 +1769,14 @@ button,a,.btn,.ghost,.chip,.opt,.tab,.hl,.primary,input[type=checkbox],input[typ
 .sl input[type=range]::-webkit-slider-thumb{width:28px;height:28px}
 .sl input[type=range]::-moz-range-thumb{width:26px;height:26px}
 }
+/* a11y round 2: bigger hit areas + readable micro-text */
+.tab{min-width:44px;text-align:center}
+.node,.rel{position:relative}
+.node::after{content:"";position:absolute;inset:-4px}
+.rel::after{content:"";position:absolute;inset:-10px -4px}
+.pill,.auto,.probadge,.sr-box span,.sr-ban .sr-box span{font-size:11px}
+body nav.subnav:has(>:nth-child(5))>*{flex:0 0 auto!important;padding-left:12px!important;padding-right:12px!important;white-space:nowrap}
+@media(max-width:760px){label.chk{min-height:44px;display:flex;align-items:center;gap:8px}}
 /* a11y: 44px touch targets without changing the look */
 @media (pointer:coarse),(max-width:760px){
 .iconbtn,.palbtn,.avbtn,.probtn,.authbtn,.tape-btn,.brand{position:relative}

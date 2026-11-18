@@ -110,10 +110,10 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
 .sr-ban .sr-clock{margin:0;gap:6px}
 .sr-ban .sr-box{min-width:44px;max-width:54px;padding:4px 2px;border-radius:9px}
 .sr-ban .sr-box b{font-size:18px}
-.sr-ban .sr-box span{font-size:10px}
+.sr-ban .sr-box span{font-size:11px}
 .sr-ban .sr-act{margin:0;gap:8px;flex-wrap:nowrap}
 .sr-ban .sr-btn{font-size:13.5px;padding:9px 14px;border-radius:9px;white-space:nowrap}
-@media(max-width:560px){.sr-ban{padding:9px 12px}.sr-ban .sr-clock{order:3;gap:4px}.sr-ban .sr-act{order:2}.sr-h{font-size:17px;margin-top:3px}.sr-h small{font-size:11.5px;line-height:1.3;margin-top:2px}.sr-ban .sr-top{letter-spacing:.06em}.sr-ban .sr-box{min-width:38px;padding:3px 2px}.sr-ban .sr-box b{font-size:15px}.sr-ban .sr-btn{padding:8px 12px;font-size:13px}}
+@media(max-width:560px){.sr-wk{display:none}.sr-ban{padding:9px 12px}.sr-ban .sr-clock{order:3;gap:4px}.sr-ban .sr-act{order:2}.sr-h{font-size:17px;margin-top:3px}.sr-h small{font-size:11.5px;line-height:1.3;margin-top:2px}.sr-ban .sr-top{letter-spacing:.06em}.sr-ban .sr-box{min-width:38px;padding:3px 2px}.sr-ban .sr-box b{font-size:15px}.sr-ban .sr-btn{padding:8px 12px;font-size:13px}}
 `;document.head.appendChild(st);
 
   /* ---------- home banner ---------- */
@@ -123,7 +123,7 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
     const btn=p==="ended"?`<button class="sr-btn" data-sr="board">Final results</button>`
       :done?`<button class="sr-btn" data-sr="hub">${p==="live"?"Enter":"You're in"}</button>`
       :`<button class="sr-btn" data-sr="begin">${n===1&&!sess()?"Begin":"Continue · step "+n+" of 4"}</button>`;
-    return `<div class="sr-l"><div class="sr-top">${badge}<span>${E(SERIES.name)} · 2 weeks only</span></div>
+    return `<div class="sr-l"><div class="sr-top">${badge}<span>${E(SERIES.name)}<span class="sr-wk"> · 2 weeks only</span></span></div>
       <div class="sr-h">Rep your school. <em>Win the Cup.</em><small>Case comp + stock pitch. .edu sign-in and official club required.</small></div></div>
       ${clock}<div class="sr-act">${btn}${p==="ended"?"":`<button class="sr-btn ghost" data-sr="board">Leaderboard</button>`}</div>`}
   function paintBanner(){const home=q('section.view[data-view="home"]');if(!home)return;let b=q("#seriesBanner");

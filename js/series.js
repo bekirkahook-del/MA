@@ -196,7 +196,7 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
       if(!q("#srOff").checked){err("Only an officer or founder can register a club. Everyone else joins one.");return}
       if(list.some(c=>c.name.toLowerCase()===n.toLowerCase())){err("That club already exists. Join it above.");return}
       if(window.maClubMod){maClubMod.create(n).then(r=>{if(!r.ok){err(r.error);return}onboard()});return}
-      S.club={code:typeof randCode==="function"?randCode(6):Math.random().toString(36).slice(2,8),name:n,officer:true,sd:domain()};save();try{syncProfile()}catch(e){}onboard()}}
+      S.club={code:typeof randCode==="function"?randCode(6):Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>"abcdefghjkmnpqrstuvwxyz23456789"[b%31]).join(""),name:n,officer:true,sd:domain()};save();try{syncProfile()}catch(e){}onboard()}}
 
   function stepGo(){ser().joined=ser().joined||Date.now();save();
     const p=phase();

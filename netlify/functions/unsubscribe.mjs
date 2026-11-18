@@ -1,5 +1,6 @@
 // One-click unsubscribe (link in every email, plus the List-Unsubscribe header).
 import { getSub, putSub } from "./_lib/mail.mjs";
+import { safeEqual } from "./_lib/security.mjs";
 
 const page = (msg) => new Response(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>M&amp;A Prep</title>
 <body style="font-family:Arial,sans-serif;background:#EEF1F5;color:#13203B;display:grid;place-items:center;min-height:90vh;margin:0">
@@ -10,7 +11,7 @@ export default async (req) => {
   const u = new URL(req.url), id = u.searchParams.get("id") || "", t = u.searchParams.get("t") || "";
   if (!/^[a-f0-9]{32}$/.test(id) || !/^[a-f0-9]{32}$/.test(t)) return page("That link doesn't look right.");
   const s = await getSub(id).catch(() => null);
-  if (!s || s.token !== t) return page("That link doesn't look right.");
+  if (!s || !safeEqual(s.token, t)) return page("That link doesn't look right.");
   if (s.status !== "unsubscribed") await putSub(id, { ...s, status: "unsubscribed", unsubAt: new Date().toISOString() });
   return page("You're unsubscribed. No more emails.");
 };

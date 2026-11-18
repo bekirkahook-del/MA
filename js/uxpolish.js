@@ -132,3 +132,13 @@
     pal.appendChild(f);
   }
 })();
+
+/* Friendly message when a server rate limit (429) is hit, instead of a silent fail. */
+(function(){
+  var of=window.fetch,last=0;if(!of)return;
+  window.fetch=function(u,o){return of.apply(this,arguments).then(function(r){
+    try{if(r&&r.status===429&&String(typeof u==="string"?u:(u&&u.url)||"").indexOf("/.netlify/functions/")>-1&&Date.now()-last>8000){
+      last=Date.now();var ra=+r.headers.get("retry-after")||0;
+      if(window.toast)window.toast(ra&&ra<120?"Slow down a little. Try again in "+ra+"s.":"You're going fast. Wait a minute and try again.")}}catch(e){}
+    return r})};
+})();

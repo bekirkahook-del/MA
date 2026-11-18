@@ -17,7 +17,7 @@ export function eduDomain(user) {
 }
 // Any CONFIRMED email counts for joining/creating a club (not just .edu); .edu only decides the club's school + Series eligibility.
 export const emailConfirmed = user => !!(user && user.email && (user.email_confirmed_at || user.confirmed_at));
-export const cleanName = n => String(n || "").replace(/[\r\n\t<>]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
+export const cleanName = n => String(n || "").normalize("NFKC").replace(/[\u200b-\u200f\u2028-\u202e\u2060\ufeff]/g, "").replace(/[\r\n\t<>]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
 
 export const isOwner = (c, id) => c.owner === id;
 export const isCo = (c, id) => (c.co || []).includes(id);

@@ -71,3 +71,6 @@ c = apply(c, "disband", A, {}, ++t); assert(c.gone); throws(() => apply(c, "join
 // every change bumps the version (used for compare-and-swap)
 const v0 = make("Version Club", "vers11", OWN, "", t); assert.equal(apply(v0, "join", A, {}, ++t).v, v0.v + 1);
 console.log("clubs tests ok");
+// club names: NFKC-normalized and stripped of zero-width characters (blocks lookalike / invisible-name tricks)
+{ const { cleanName } = await import("../netlify/functions/_lib/clubs.mjs");
+  assert.equal(cleanName("Ｂuckeye​ Capital"), "Buckeye Capital"); console.log("clubs name tests ok"); }

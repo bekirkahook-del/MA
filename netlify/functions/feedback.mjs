@@ -17,7 +17,7 @@ export default async (req, context) => {
   if (b.website) return json(200, { ok: true }); // honeypot for bots
   if (!(await hitLimit("feedback", clientIp(req, context), 30, 3600))) return tooMany();
   const user = await getUser(req).catch(() => null);
-  const id = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const id = `${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
   const data = {
     kind,
     text,

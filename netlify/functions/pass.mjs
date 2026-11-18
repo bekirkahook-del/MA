@@ -1,8 +1,8 @@
-// Free Pro days earned by ranking up (Analyst 1, VP 2, Director 3, MD 7). Each rank pays out once per account.
+// Free Pro days earned by reaching Managing Director (rank index 6): 3 days, once per account.
 // Ranks are earned in the browser (XP lives client-side), so the server can only cap the damage: confirmed email,
 // one payout per rank per account, a rate limit, and a back-dating window of the pass length.
 import { json, getUser, getBilling, setBilling, rebuildProList, isConfirmed, hitLimit, tooMany } from "./_lib/common.mjs";
-const DAYS = { 1: 1, 2: 2, 3: 3, 4: 7 };
+const DAYS = { 6: 3 }; // 6 = Managing Director (index in RANKS)
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const user = await getUser(req);

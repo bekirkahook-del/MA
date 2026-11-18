@@ -52,13 +52,17 @@ test("trial: no token -> 401; unconfirmed email -> 409", async () => {
   assert.equal((await h(post("trial", {}, "tok2"))).status, 409);
 });
 test("trial: new account's backdated legacyStart is ignored (3 days from now)", async () => {
-  const h = await F("trial"), r = await h(post("trial", { legacyStart: Date.UTC(2026, 10, 11) }, "fresh")), j = await r.json();
+  const h = await F("trial"), r = await h(post("trial", { legacyStart: Date.now() - 864e5 }, "fresh")), j = await r.json();
   assert.equal(r.status, 200);
   assert.ok(Math.abs(j.trialUntil - (Date.now() + 3 * 864e5)) < 10_000);
 });
 test("trial: OLD account's real legacy trial (before cutoff) is honored", async () => {
-  const h = await F("trial"), ls = Date.UTC(2026, 10, 11), r = await h(post("trial", { legacyStart: ls }, "old")), j = await r.json();
-  assert.equal(r.status, 200); assert.equal(j.trialStart, ls);
+  // The legacy path only lives for 7 days after the Nov 12 cutoff, so pin the clock to Nov 14.
+  const realNow = Date.now; Date.now = () => Date.UTC(2026, 10, 14);
+  try {
+    const h = await F("trial"), ls = Date.UTC(2026, 10, 11), r = await h(post("trial", { legacyStart: ls }, "old")), j = await r.json();
+    assert.equal(r.status, 200); assert.equal(j.trialStart, ls);
+  } finally { Date.now = realNow; }
 });
 test("trial: only once per account", async () => {
   const h = await F("trial");
@@ -69,13 +73,13 @@ test("trial: only once per account", async () => {
 // ---- rank pass ----
 test("pass: prototype keys and junk ranks rejected", async () => {
   const h = await F("pass");
-  for (const rank of ["__proto__", "constructor", "toString", 0, 9, null]) assert.equal((await h(post("pass", { rank }, "tok1"))).status, 400, String(rank));
+  for (const rank of ["__proto__", "constructor", "toString", 0, 1, 2, 4, 5, 9, null]) assert.equal((await h(post("pass", { rank }, "tok1"))).status, 400, String(rank));
 });
 test("pass: valid claim works once, second claim 409, unconfirmed 409", async () => {
   const h = await F("pass");
-  assert.equal((await h(post("pass", { rank: 1 }, "tok1"))).status, 200);
-  assert.equal((await h(post("pass", { rank: 1 }, "tok1"))).status, 409);
-  assert.equal((await h(post("pass", { rank: 1 }, "tok2"))).status, 409);
+  assert.equal((await h(post("pass", { rank: 6 }, "tok1"))).status, 200);
+  assert.equal((await h(post("pass", { rank: 6 }, "tok1"))).status, 409);
+  assert.equal((await h(post("pass", { rank: 6 }, "tok2"))).status, 409);
 });
 
 // ---- grant (owner only) ----

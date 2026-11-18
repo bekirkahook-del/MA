@@ -6,11 +6,11 @@
   const LADDER=[
     {ring:0,perks:[["🎓","Your training starts","Every track, the daily question and Rapid Fire. Free forever."]]},
     {ring:1,accent:"emerald",perks:[["🥉","Bronze ring","A bronze ring around your photo everywhere you appear."],["🎨","Emerald theme","A new accent color for the whole site."]]},
-    {ring:1,shields:1,pass:1,perks:[["⭐","1 day of Pro, free","Try unlimited AI grading on us."],["🛡️","1 Streak Shield","Miss a day and your streak survives. Used automatically."]]},
+    {ring:1,shields:1,perks:[["🛡️","1 Streak Shield","Miss a day and your streak survives. Used automatically."]]},
     {ring:2,accent:"plum",perks:[["🥈","Silver ring","Upgrade from bronze. Shows on every board."],["🎨","Plum theme","Another accent color to make it yours."]]},
-    {ring:2,shields:2,pass:2,perks:[["⭐","2 days of Pro, free","Every Pro feature, plus 20 AI uses a day."],["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
-    {ring:3,accent:"crimson",pass:3,perks:[["🥇","Gold ring","Rare air. Only a few reach Director."],["⭐","3 days of Pro, free","Every Pro feature, unlocked automatically."],["🎨","Crimson theme","A bold new accent color."]]},
-    {ring:4,accent:"gold",pass:7,shields:3,perks:[["💎","Animated MD ring","The top ring on the site."],["⭐","7 days of Pro, free","A full week of every Pro feature, plus 20 AI uses a day."],["🛡️","3 more Streak Shields","Plus 1 more every Prestige level after this."]]}
+    {ring:2,shields:2,perks:[["🛡️","2 more Streak Shields","Protects your streak through a busy week."]]},
+    {ring:3,accent:"crimson",perks:[["🥇","Gold ring","Rare air. Only a few reach Director."],["🎨","Crimson theme","A bold new accent color."]]},
+    {ring:4,accent:"gold",pass:3,shields:3,perks:[["💎","Animated MD ring","The top ring on the site."],["⭐","3 days of Pro, free","Three days of every Pro feature, plus 20 AI uses a day."],["🛡️","3 more Streak Shields","Plus 1 more every Prestige level after this."]]}
   ];
   const ACCENTS={cobalt:["Cobalt",0,"#2448D8","#E3E9FC","#7C97FF","#1E2A52"],emerald:["Emerald",1,"#0F7A55","#DDF3EA","#4FD1A0","#123A2D"],plum:["Plum",3,"#7A2FB5","#F0E4FA","#C79BFF","#33204A"],crimson:["Crimson",5,"#C0283C","#FBE3E6","#FF7D8C","#4A1A22"],gold:["Gold",6,"#A87B10","#F6ECD2","#E6BE5A","#3D3114"]};
   const RW=()=>{S.rw=S.rw||{};S.rw.got=S.rw.got||{};S.rw.shields=S.rw.shields||0;S.rw.used=S.rw.used||[];return S.rw};
@@ -108,7 +108,7 @@
       ${pro?"":`<div class="pro2-cta"><button class="btn pro2-go" id="proTrial">Try Pro free for 3 days</button><span>No card needed · nothing to cancel</span></div>`}
     </section>
     <section class="pro2-why">${[["∞","AI grading on every answer","Every mock interview answer gets a score out of 10 and specific feedback on what to fix.","Most-used Pro feature"],["4×","Real Superday rounds","Back-to-back interviewers, timed, then a full debrief across all 4 rounds.","Closest thing to the real day"],["🎯","A plan built on your gaps","Pro tracks your scores by section and builds each week around your weakest topics.","Adapts every week"]].map(([n,t,d,tag],i)=>`<div class="pro2-card" style="--i:${i}"><div class="pro2-n">${n}</div><b>${t}</b><p>${d}</p><span>${tag}</span></div>`).join("")}</section>
-    <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Earn free Pro days as you get promoted: 1 at Analyst, 2 at VP, 3 at Director, 7 at MD. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
+    <section class="pro2-earn"><div><span class="label">Or earn it</span><b>Rank up and Pro is on us</b><p>Reach Managing Director and get 3 days of Pro, free. You're ${esc(RANKS[r][0])} now.</p></div><button class="ghost outline" id="proLadder">See the career ladder</button></section>
     <section class="pro2-earn"><div><span class="label">Invite friends</span><b>Invite 3 friends, get a week of Pro</b><p>Share your link. Every 3 friends who make a free account earns you 7 days of Pro (up to 4 weeks). <span id="refStat"></span></p></div><button class="ghost outline" id="refBtn">Copy my invite link</button></section>
     <section><div class="sec-head"><h2>Simple, student pricing</h2></div>
      <div class="plans pro2-plans">${plans.map(([k,n,p,per,d,tag])=>`<div class="plan ${k==="yearly"?"best":""}">${tag?`<span class="plan-tag">${tag}</span>`:""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${k==="yearly"?"btn":"ghost outline"}" data-plan="${k}">${pro&&plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>

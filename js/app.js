@@ -1456,7 +1456,7 @@ function renderMock(){if(!mockQ||!playable().includes(mockQ))pickMock();renderPr
      <div class="qpane">${mockQ?`<div class="mock-bar"><span class="label">${mockQ.c} · ${DIFF[mockQ.d]}</span><span class="clock" id="clock">0:00</span></div>
        <div class="mock-q">${esc(mockQ.q)}</div><p class="note">Answer the way you'd say it out loud. ${S.mockBest[mockQ.id]?`Your best: ${S.mockBest[mockQ.id]}/10.`:""}${SEC_LEVEL[mockQ.c]?` <button class="flink" data-act="lvl|${SEC_LEVEL[mockQ.c][0]}|${SEC_LEVEL[mockQ.c][1]}">Review: ${T(SEC_LEVEL[mockQ.c][0]).levels[SEC_LEVEL[mockQ.c][1]].n}</button>`:""}${mockQ.c==="LBO & PE"?` · <button class="flink" data-act="tool|lbo">LBO builder</button>`:mockQ.c==="Valuation & DCF"?` · <button class="flink" data-act="tool|dcf">DCF builder</button>`:""}</p>
        <textarea id="mockAns" placeholder="Type your answer…" aria-label="Your answer"></textarea>
-       ${speakMode?`<p class="speak-tip"><b>Speak it:</b> tap the box, then use your device's dictation (Mac: press Fn twice · iPhone: mic key on the keyboard · Windows: Win + H). Talk like you're in the room. The timer measures your pace.</p>`:""}
+       ${speakMode?`<p class="speak-tip"><b>Speak it:</b> ${window.dictateOK?`tap <b>Start talking</b> and answer like you're in the room. Your words appear in the box and the timer measures your pace. <button class="ghost sm" type="button" id="dictBtn" aria-pressed="false">🎙 Start talking</button>`:`tap the box, then use your device's dictation (Mac: press Fn twice · iPhone: mic key on the keyboard · Windows: Win + H). Talk like you're in the room. The timer measures your pace.`}</p>`:""}
        <div class="actions" style="margin-top:10px"><button class="btn" id="gradeBtn">Grade my answer</button><button class="ghost ${speakMode?"on":""}" id="speakBtn" aria-pressed="${speakMode}">🎙 Speak it</button><button class="ghost" id="skipBtn">Random in filter</button><button class="ghost" id="keysBtn">What they want to hear</button></div>
        <div id="mockOut" aria-live="polite"></div>`:""}</div>
    </div>`;
@@ -1464,7 +1464,8 @@ function renderMock(){if(!mockQ||!playable().includes(mockQ))pickMock();renderPr
   $("#mock").querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{mockSec=b.dataset.s;renderMock()});
   $("#mock").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{mockDiff=+b.dataset.d;renderMock()});
   $("#mock").querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{if(b.dataset.pk&&!isPro()){upgrade("Firm packs are part of Pro");return}mockPack=b.dataset.pk;mockQ=null;renderMock()});
-  if($("#speakBtn"))$("#speakBtn").onclick=()=>{speakMode=!speakMode;renderMock();$("#mockAns")&&$("#mockAns").focus()};
+  if($("#speakBtn"))$("#speakBtn").onclick=()=>{if(window.dictateStop)dictateStop();speakMode=!speakMode;renderMock();$("#mockAns")&&$("#mockAns").focus()};
+  if(speakMode&&window.dictateBind&&$("#dictBtn"))dictateBind($("#dictBtn"),$("#mockAns"));
   $("#mock").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const nq=MOCK_QS.find(q=>q.id===b.dataset.q);if((nq.d===3||nq.f)&&!isPro()){upgrade(nq.f?"Firm packs are part of Pro":"Advanced questions are part of Pro");return}mockQ=nq;qBrowseOpen=false;renderMock();$("#mockAns")&&$("#mockAns").focus({preventScroll:true});$(".qpane").scrollIntoView({block:"start",behavior:"smooth"})});
   bindRel($("#mock"));
   if(!mockQ)return;
@@ -1474,7 +1475,7 @@ function renderMock(){if(!mockQ||!playable().includes(mockQ))pickMock();renderPr
   mockT0=0;clearInterval(mockClock);
   $("#mockAns").addEventListener("input",()=>{if(!mockT0){mockT0=Date.now();mockClock=setInterval(()=>{const el=$("#clock");if(!el)return clearInterval(mockClock);const s=Math.floor((Date.now()-mockT0)/1000);el.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");el.classList.toggle("over",s>(+S.settings.tgt||150))},1000)}})}
 const keysHTML=()=>`<div class="keysbox"><div class="label">A strong answer covers</div><ul class="keys">${mockQ.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>`;
-async function grade(){const ans=$("#mockAns").value.trim();const out=$("#mockOut");const q=mockQ;
+async function grade(){if(window.dictateStop)dictateStop();const ans=$("#mockAns").value.trim();const out=$("#mockOut");const q=mockQ;
   if(q.c==="Brain Teasers"?!ans:ans.split(/\s+/).length<15){out.innerHTML=`<p class="note" style="color:var(--warn)">${q.c==="Brain Teasers"?"Type an answer first, even just a number.":"Write a bit more so there's something to grade."}</p>`;return}
   if(!isPro()&&gradesToday()>=FREE_GRADES){out.innerHTML=`<div class="upsell"><b>You've used today's ${FREE_GRADES} free grades.</b><span>They reset tomorrow. Pro members get unlimited grading.</span><div class="actions" style="margin-top:8px"><button class="btn sm" id="upG">Start free trial</button><button class="ghost" id="upK">See key points instead</button></div></div>`;$("#upG").onclick=()=>startPlan("trial");$("#upK").onclick=()=>{out.innerHTML=keysHTML()};return}
   clearInterval(mockClock);const deliv=speakMode?deliveryStats(ans,mockT0?Math.round((Date.now()-mockT0)/1000):0):null;await samplePromise;

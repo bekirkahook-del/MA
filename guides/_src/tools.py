@@ -6,7 +6,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 base = open(os.path.join(ROOT, "guides", "dcf-interview-questions", "index.html"), encoding="utf-8").read()
 STYLE = base[base.index("<style>"):base.index("</style>") + 8]
 FONTS = base[base.index('<link rel="preconnect"'):base.index("<style>")]
-NUNITO = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&text=M%26A&display=swap">'
+NUNITO = '<link rel="stylesheet" href="/fonts/fonts.css">'
 TODAY = datetime.date.today().isoformat()
 e = lambda s: html.escape(s, quote=True)
 SITE = "https://mnaprep.com"

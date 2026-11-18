@@ -79,7 +79,7 @@ def pdf_html():
             n += 1; rows += f'<div class="q"><div class="qn">{n}</div><div><b>{e(q)}</b><p>{e(a)}</p></div></div>'
         sec += f'<section><h2>{e(cat)} <span>{len(items)}</span></h2>{rows}</section>'
     return f"""<!doctype html><html><head><meta charset="utf-8"><title>50 Investment Banking Interview Questions | M&amp;A Prep</title>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>@page{{size:Letter;margin:0.55in 0.6in 0.65in}}@page:first{{margin:0}}body{{font:10.5pt/1.45 'IBM Plex Sans',sans-serif;color:#13203B;margin:0}}
 .cover{{height:11in;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;break-after:page;background:linear-gradient(135deg,#0F172A,#1E2B5C);color:#fff;padding:0 0.9in;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .cover .k{{font:500 11pt 'IBM Plex Mono',monospace;color:#8EA8FF;letter-spacing:.12em}}.cover h1{{font:800 46pt/1.05 Archivo,sans-serif;margin:14px 0 18px}}
@@ -103,7 +103,7 @@ PAGE = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name
 <link rel="canonical" href="https://mnaprep.com/cheat-sheet/"><meta property="og:title" content="50 Investment Banking Interview Questions (Free PDF)">
 <meta property="og:description" content="The accounting, valuation, LBO, M&amp;A and fit questions that come up again and again, with short answers."><meta property="og:url" content="https://mnaprep.com/cheat-sheet/"><meta property="og:type" content="website">
 <meta name="theme-color" content="#13203B">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>:root{{--paper:#EEF1F5;--sheet:#fff;--ink:#13203B;--ink-2:#4A5672;--rule:#D3D9E4;--cobalt:#2448D8}}*{{box-sizing:border-box}}
 body{{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 'IBM Plex Sans',system-ui,sans-serif}}a{{color:var(--cobalt)}}
 .top{{background:var(--sheet);border-bottom:1px solid var(--rule)}}.wrap{{max-width:760px;margin:0 auto;padding:0 18px}}.top .wrap{{display:flex;justify-content:space-between;align-items:center;height:60px}}

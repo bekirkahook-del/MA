@@ -163,6 +163,7 @@ Call Metricool `getScheduledPosts` (brandId 7259200, today 00:00–23:59, timezo
 - Need = target − existing for each type (Blue Chip 4, interview-question 3, quiz/tip 3). Media URLs are rewritten to static.metricool.com once scheduled, so classify existing posts by caption/title. If all are 0, stop: "Nothing needed today."
 
 ## 2b. Check engagement (keep it quick)
+**First run `python3 gen/stats.py --top`** (added 2026-11-19). It pulls TikTok stats straight from the Metricool API (token is a network secret on this environment), fills the blank 48h columns in punch-log.md, and prints the top/bottom 3 posts by (likes + 3×comments + 2×shares) per view. Only if it errors (e.g. 401), fall back to the MCP call below.
 Call Metricool `getAnalyticsDataByMetrics` (brandId 7259200, last 7 days, metrics TKPO02, TKPO05, TKPO07, TKPO08, TKPO09, TKPO10) to get each recent post's views, likes, comments and shares. Rank them by (likes + 3×comments + 2×shares) per view. Note the top 2 and bottom 2 topics/formats, then pick today's topics and hooks to be more like the winners. Add one dated line to `social/insights.md` (e.g. "2026-11-08: CEO pay 4.1k views, best; quiz formats lag"). If Metricool returns no rows (stats sync can lag), skip this and go by the "What works" notes above.
 
 ## 3. Pick topics

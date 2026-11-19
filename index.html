@@ -56,6 +56,50 @@ body nav.tabs,body nav.subnav{justify-content:space-around!important;gap:0!impor
 body .page-head{text-align:center}body .prof-row{display:flex;justify-content:center}body .prof-row .prof-menu{left:50%;translate:-50% 0}
 body .page-head h1::after,body .page-head h2::after{content:"";display:block;width:36px;height:3px;border-radius:2px;margin:8px auto 0;background:linear-gradient(90deg,var(--c-blue),var(--c-violet))}
 </style>
+<style id="polish">
+/* Polish layer (Nov 19, 2026): soft shadows, lift on hover, tidier footer + resume page. Safe to remove as one block. */
+:root{--sh-1:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.07);--sh-2:0 1px 3px rgba(16,24,40,.05),0 8px 22px -6px rgba(16,24,40,.12);--sh-3:0 2px 6px rgba(16,24,40,.06),0 18px 38px -10px rgba(16,24,40,.2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sh-1:0 1px 2px rgba(0,0,0,.35);--sh-2:0 6px 16px -4px rgba(0,0,0,.45);--sh-3:0 14px 30px -8px rgba(0,0,0,.55)}}
+:root[data-theme="dark"]{--sh-1:0 1px 2px rgba(0,0,0,.35);--sh-2:0 6px 16px -4px rgba(0,0,0,.45);--sh-3:0 14px 30px -8px rgba(0,0,0,.55)}
+/* cards */
+.card,.plan,.daily,.quests,.weak,.wire,.ws,.track,.firm,.mk-tile,.sub-card,.final-card,.upsell,.retest,.xpl-out,.sd-card,.rd-hero,.cg,.res-cats,.brief-card,.focus-card,.pl-quick,.tbl-wrap,.dl,.op-row,.ru-card,.share-cv,.pe-impbox,.palette,details.year,.mock-more,.qbrowse,.more-tools,.sr-ban,.hl-vis,.hl-trust,.side-daily,.rv,.pn-fold,.pv-o,.hl-step{box-shadow:var(--sh-2)}
+.pn-fold{border-radius:12px}.sr-ban{box-shadow:var(--sh-3)}
+.card,.firm,.mk-tile,.track,.op-row,.dl,.sd-card,.sub-card{transition:box-shadow .2s ease,transform .2s ease}
+@media (hover:hover){.firm:hover,.mk-tile:hover,.track:hover,.op-row:hover,.sub-card:hover,.pv-o:hover,.hl-step:hover,.pn-fold:hover{box-shadow:var(--sh-3);transform:translateY(-1px)}}
+details.year,.op-row,.dl{border-radius:12px}
+.panel{box-shadow:var(--sh-3),0 30px 80px rgba(0,0,0,.18)}
+/* buttons */
+.btn{box-shadow:var(--sh-1);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+@media (hover:hover){.btn:hover{box-shadow:var(--sh-2);transform:translateY(-1px);filter:brightness(1.05)}}
+.btn:active{transform:translateY(0);box-shadow:var(--sh-1)}
+.ghost.outline,.chip,.seg button{transition:box-shadow .15s ease,border-color .15s ease}
+/* inputs */
+input[type=text],input[type=email],input[type=search],input[type=number],input[type=date],select,textarea{box-shadow:var(--sh-1)}
+/* footer: legal links in one tidy row */
+footer{flex-direction:row!important;flex-wrap:wrap;justify-content:center!important;gap:4px 14px!important;text-align:center}
+footer>a,footer>span{display:inline-block!important}footer>details,footer>div{flex-basis:100%}
+footer a{padding:4px 2px!important;margin:0!important}
+/* resume page */
+#resume .hint{font-size:14.5px;line-height:1.55;max-width:760px;color:var(--ink-2);margin:4px 0 14px}
+#resume .pe-drop{border:2px dashed color-mix(in srgb,var(--cobalt) 45%,var(--rule));background:color-mix(in srgb,var(--cobalt) 5%,var(--sheet));box-shadow:var(--sh-1);padding:28px 16px;border-radius:16px}
+#resume .pe-drop:hover,#resume .pe-drop.on{border-color:var(--cobalt);background:color-mix(in srgb,var(--cobalt) 9%,var(--sheet));box-shadow:var(--sh-2)}
+#resume .pe-drop svg{width:34px;height:34px;color:var(--cobalt)}#resume .pe-drop b{font-size:17px}
+#resume .res-top{margin:14px 0 6px}#resume .res-top select{min-width:280px}
+#resume .res-paste{margin:6px 0 2px}
+#resume .actions{flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+#resOut{margin-top:6px}#resOut>.label{margin:0 0 10px}
+.res-out{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:20px;box-shadow:var(--sh-2)}
+.res-out .score{flex:none}.res-out .score>div{display:flex;flex-direction:column;align-items:center;line-height:1}
+.res-out .score small{margin-top:4px!important}
+.res-cats{box-shadow:none;margin-top:6px}
+@media (max-width:560px){#resume .res-top select{min-width:0;width:100%}.res-out{padding:14px}}
+/* skeleton loading: main sections show shimmering placeholder cards until their content renders (pure CSS, :empty) */
+#tracks:empty,#openings:empty,#road:empty,#firmGrid:empty,#deals:empty,#cal:empty,#apps:empty,#resume:empty,#board:empty,#proPage:empty{min-height:250px;border-radius:14px;
+  background:linear-gradient(100deg,transparent 30%,color-mix(in srgb,var(--sheet) 70%,transparent) 50%,transparent 70%) -150% 0/60% 100% no-repeat,
+  repeating-linear-gradient(180deg,color-mix(in srgb,var(--rule) 70%,transparent) 0 72px,transparent 72px 88px);animation:skel-sh 1.3s ease-in-out infinite}
+@keyframes skel-sh{to{background-position:250% 0,0 0}}
+@media (prefers-reduced-motion:reduce){#tracks:empty,#openings:empty,#road:empty,#firmGrid:empty,#deals:empty,#cal:empty,#apps:empty,#resume:empty,#board:empty,#proPage:empty{animation:none}}
+</style>
 </head><body><a href="#main" class="ma-skip">Skip to main content</a>
 <style>
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */

@@ -33,7 +33,7 @@
     return h+"</div>";
   }
   function isLoadingNote(el){
-    return el&&el.nodeType===1&&el.matches&&el.matches("p.note")&&/^Loading(…|\.\.\.)?$/.test((el.textContent||"").trim());
+    return el&&el.nodeType===1&&el.matches&&el.matches("p.note")&&!el.id&&/^(Loading|Reading|Writing|Reviewing|Getting|Checking)\b[^.]{0,40}(…|\.\.\.)$/.test((el.textContent||"").trim());
   }
   function swapLoading(root){
     var list=[];

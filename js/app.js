@@ -2506,7 +2506,7 @@ function renderOpenings(){const el=$("#openings");if(!el)return;const t=today();
 
 /* ---------- 4. AI resume review ---------- */
 function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.resumeLog||{})[today()]||0,canRun=isPro()||usedToday<1;
-  el.innerHTML=`<p class="hint">Upload your resume as a PDF or Word file and it's graded out of 100 against the standard Wall Street template, the way a banking recruiter would. The file is read in your browser; only the text is sent to Claude when you press Review. Your saved resume stays private to you.</p>
+  el.innerHTML=`<p class="hint">Upload your resume as a PDF or Word file and it's graded out of 100 against the standard Wall Street template, the way a banking recruiter would. The file is read in your browser and your saved resume stays private to you.</p>
    <label class="pe-drop" id="resDrop"><input type="file" id="resFile" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6m-3 3 3-3 3 3"/></svg>
      <b id="resDropT">${((S.profile||{}).resume||{}).text?"Replace your resume":"Upload your resume"}</b><small>PDF, Word (.docx) or text · or drop it here</small></label>

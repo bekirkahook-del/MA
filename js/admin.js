@@ -136,15 +136,19 @@
       svg.addEventListener("pointerleave",()=>{cr.style.opacity=0;pt.style.opacity=0;untip()})};
     return{html,bind}}
 
+  /* The database API returns at most ~1000 rows per request, whatever .limit() says, so read in pages until a page comes back empty. */
+  async function pageAll(make,max){const out=[];let from=0;
+    while(from<max){const r=await make().range(from,from+999);if(r.error)return{data:out,error:r.error};const n=(r.data||[]).length;if(!n)break;out.push(...r.data);from+=n}
+    return{data:out,error:null}}
   async function load(){
     const since=new Date(Date.now()-62*864e5).toISOString();
     const [vr,pr,nr,plr,br,er,fr,rr,qr]=await Promise.all([
-      sb.from("docs").select("id,data").eq("col","visits").gte("updated_at",since).limit(20000),
-      sb.from("docs").select("col,updated_at,data").like("col","data/users/%").eq("id","progress").limit(5000),
-      sb.from("docs").select("id,data").eq("col","names").limit(5000),
-      sb.from("docs").select("id,data").eq("col","players").limit(5000),
-      sb.from("docs").select("id,data").eq("col","billing").limit(5000),
-      sb.from("docs").select("id,data").eq("col","subscribers").limit(20000),
+      pageAll(()=>sb.from("docs").select("id,data").eq("col","visits").gte("updated_at",since).order("updated_at",{ascending:false}).order("id"),60000),
+      pageAll(()=>sb.from("docs").select("col,updated_at,data").like("col","data/users/%").eq("id","progress").order("col"),20000),
+      pageAll(()=>sb.from("docs").select("id,data").eq("col","names").order("id"),20000),
+      pageAll(()=>sb.from("docs").select("id,data").eq("col","players").order("id"),20000),
+      pageAll(()=>sb.from("docs").select("id,data").eq("col","billing").order("id"),20000),
+      pageAll(()=>sb.from("docs").select("id,data").eq("col","subscribers").order("id"),60000),
       sb.from("docs").select("id,data,updated_at").eq("col","feedback").order("updated_at",{ascending:false}).limit(200),
       sb.from("docs").select("id,data").eq("col","reviews").limit(1000),
       sb.from("docs").select("id,data,updated_at").eq("col","requests").order("updated_at",{ascending:false}).limit(200)]);
@@ -176,8 +180,8 @@
     const subsA=(C.subs||[]).filter(x=>x.status==="active").length;
     const steps=[["Visitors",ppl(cur)],["Cleared a level",evP(cur,"level_clear")],["Saw a sign-up nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_shown||v.ev.bar_shown||v.ev.guide_cta_shown||v.ev.p_any_shown)).map(v=>v.vid)).size],["Clicked a nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_click||v.ev.bar_click||v.ev.guide_cta_click||v.ev.p_any_click)).map(v=>v.vid)).size],["New accounts",newA],["Paying Pro (now)",C.pro]];
     const top=Math.max(1,steps[0][1]);
-    const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · sign-up nudges started Nov 12</small></h3>
-      ${steps.map(([l,n],i)=>`<div class="ms-row" style="grid-template-columns:minmax(0,1fr) 160px 70px"><span>${l}</span><span class="tr"><i style="width:${Math.max(2,n/top*100).toFixed(0)}%"></i></span><b>${n}${i?` <small style="color:var(--ink-2)">${pct(n,steps[i-1][1])}%</small>`:""}</b></div>`).join("")}
+    const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · sign-up nudges started Nov 12 · % = share of visitors (clicks: share who saw one)</small></h3>
+      ${steps.map(([l,n],i)=>`<div class="ms-row" style="grid-template-columns:minmax(0,1fr) 160px 70px"><span>${l}</span><span class="tr"><i style="width:${Math.max(2,n/top*100).toFixed(0)}%"></i></span><b>${n}${i&&i<5?` <small style="color:var(--ink-2)">${pct(n,i===3?steps[2][1]:steps[0][1])}%</small>`:""}</b></div>`).join("")}
       <div class="ms-tiles" style="margin-top:10px">
        <div class="ms-tile"><b>${evN(cur,"prompt_shown")} → ${evN(cur,"prompt_click")}</b><span>Level pop-up: shown → clicked</span></div>
        <div class="ms-tile"><b>${evN(cur,"bar_shown")} → ${evN(cur,"bar_click")}</b><span>"Only on this device" bar</span></div>
@@ -240,7 +244,7 @@
     const returning=cur.length-fresh(cur);
     /* plain-English takeaways */
     const ins=[];
-    if(cur.length){ins.push(`<b>${people(cur)}</b> different people visited in the last ${N} days${prev.length?`, ${people(cur)>=people(prev)?"up":"down"} from ${people(prev)} the ${N} days before`:""}.`);
+    if(cur.length){ins.push(`<b>${people(cur)}</b> different people visited ${N===1?"today so far":"in the last "+N+" days"}${prev.length?`, ${people(cur)>=people(prev)?"up":"down"} from ${people(prev)} ${N===1?"yesterday (full day)":"the "+N+" days before"}`:""}.`);
       if(srcs[0])ins.push(`Most came from <b>${esc(srcs[0][0])}</b> (${pct(srcs[0][1],cur.length)}% of visits).`);
       if(tk)ins.push(`TikTok sent <b>${tk}</b> visits${CACHE&&cur.some(v=>v.cmp)?`. Best post: <b>${esc(tally(cur.filter(v=>v.cmp),v=>v.cmp,1)[0][0])}</b>`:""}.`);
       if(hours[peak])ins.push(`Busiest hour: <b>${hr(peak)}–${hr((peak+1)%24)} ET</b>.`);

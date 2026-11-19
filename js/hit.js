@@ -20,7 +20,7 @@
     const body=JSON.stringify({v,f,a,p:location.pathname,r:document.referrer,src:q.get("utm_source")||"",cmp:q.get("utm_campaign")||""});
     const go=()=>fetch("/.netlify/functions/hit",{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true})
       .then(r=>{if(r.ok)localStorage.setItem("ma-vday",day)}).catch(()=>{});
-    setTimeout(go,1500);
+    setTimeout(go,400);
   }catch(e){}
 })();
 /* Time spent: counts active seconds per section (only while the tab is visible and the visitor did something in the

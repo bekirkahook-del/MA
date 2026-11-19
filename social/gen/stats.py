@@ -3,6 +3,7 @@
 
   python3 gen/stats.py               # fill punch-log rows that are 2+ days old and still blank
   python3 gen/stats.py --days 14 --top   # also print the top/bottom posts of the last 14 days (for insights.md)
+  python3 gen/stats.py --from-json rows.json --top   # same, from Metricool MCP getAnalyticsDataByMetrics rows (if the API 401s)
 
 Auth: the X-Mc-Auth token is injected by this environment's network proxy for app.metricool.com
 (saved as a network secret, never in the repo). If you run it somewhere else, set METRICOOL_USER_TOKEN.
@@ -54,13 +55,19 @@ def posts(network, d0, d1):
                     "shares": int(pick(o, "shareCount", "shares") or 0)})
     return out
 
-STOP = set("the a an of to in by and for on at is vs your you what how top best most this that it's".split())
-def words(s): return {w for w in re.findall(r"[a-z0-9$%.]+", s.lower()) if w not in STOP and len(w) > 2}
+STOP = set("the a an of to in by and for on at is vs your you what how top best most this that it's guess before swipe comment question first number contrast steps which would one".split())
+def words(s): return {w for w in re.findall(r"[a-z]+", s.lower()) if w not in STOP and len(w) > 2}
+def nums(s): return {n for n in re.findall(r"\d+(?:\.\d+)?", s.replace(",", "")) if n not in {"2025", "2026", "2027"}}
+def sim(topic, hook, text):
+    """Hook numbers ($3.22B, 6.8%, 688) count most, since the hook is what the caption repeats; words count 1 each.
+    Numbers in the topic (sources, years) are ignored: they caused false matches."""
+    n = nums(hook) & nums(text)
+    return sum(3 if len(x) > 1 else 1 for x in n) + len(words(topic + " " + hook) & words(text))
 
 def fill(tt):
     lines = open(LOG, encoding="utf-8").read().split("\n")
     cutoff = (date.today() - timedelta(days=2)).isoformat()
-    changed = 0
+    changed = 0; used = set()
     for i, ln in enumerate(lines):
         c = [x.strip() for x in ln.strip().strip("|").split("|")]
         if not re.match(r"\d{4}-\d{2}-\d{2}$", c[0]) or c[0] > cutoff: continue
@@ -68,10 +75,12 @@ def fill(tt):
         last = max(j for j, x in enumerate(c) if x)
         if len(c) - 1 - last < 4: continue
         # match by posting day (±1) and word overlap between the log's topic + hook and the TikTok caption
-        d = date.fromisoformat(c[0]); key = words(c[1] + " " + c[last])
-        cand = [p for p in tt if p["t"] and abs((p["t"].date() - d).days) <= 1]
-        best = max(cand, key=lambda p: len(key & words(p["text"])), default=None)
-        if not best or len(key & words(best["text"])) < 2: print(f"no match: {c[0]} {c[1][:50]}"); continue
+        d = date.fromisoformat(c[0]); f = lambda p: sim(c[1], c[last], p["text"])
+        cand = sorted((p for p in tt if p["t"] and abs((p["t"].date() - d).days) <= 1 and p["url"] + p["text"] not in used),
+                      key=f, reverse=True)
+        top = f(cand[0]) if cand else 0; second = f(cand[1]) if len(cand) > 1 else 0
+        if top < 2 or top <= second: print(f"no clear match (skipped): {c[0]} {c[1][:50]}"); continue
+        best = cand[0]; used.add(best["url"] + best["text"])
         c[last + 1:last + 5] = [str(best["views"]), str(best["likes"]), str(best["comments"]), str(best["shares"])]
         lines[i] = "| " + " | ".join(c) + " |"; changed += 1
         print(f"filled: {c[0]} {c[1][:50]} → {best['views']} views")
@@ -83,7 +92,15 @@ def score(p): return (p["likes"] + 3 * p["comments"] + 2 * p["shares"]) / max(p[
 if __name__ == "__main__":
     a = sys.argv[1:]; days = int(a[a.index("--days") + 1]) if "--days" in a else 14
     d1 = date.today(); d0 = d1 - timedelta(days=days)
-    tt = posts("tiktok", d0, d1)
+    if "--from-json" in a:
+        # fallback when the direct API is blocked: rows exported from the Metricool MCP tool
+        # getAnalyticsDataByMetrics (TikTok post metrics) = [day, yyyymmddHHMMSS (UTC), url, cover, text, views, likes, comments, shares]
+        rows = json.load(open(a[a.index("--from-json") + 1], encoding="utf-8"))
+        rows = rows.get("rows", rows) if isinstance(rows, dict) else rows
+        tt = [{"net": "tiktok", "t": datetime.strptime(r[1], "%Y%m%d%H%M%S") - timedelta(hours=5), "text": r[4], "url": r[2],
+               "views": int(r[5] or 0), "likes": int(r[6] or 0), "comments": int(r[7] or 0), "shares": int(r[8] or 0)} for r in rows]
+    else:
+        tt = posts("tiktok", d0, d1)
     print(f"{len(tt)} TikTok posts in the last {days} days")
     fill(tt)
     if "--top" in a:

@@ -53,7 +53,7 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
       async profiles(ids){const out={};if(!ids.length)return out;const {data}=await sb.from("docs").select("id,data").eq("col","names").in("id",ids.slice(0,500));(data||[]).forEach(r=>out[r.id]={name:(r.data&&r.data.name)||""});return out}}}
   async function makeSample(){const s=await ready;if(!s)return null;
     return{async json(prompt,opts){const cur=(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/ai",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(cur?cur.access_token:"")},body:JSON.stringify({prompt,json:true,tier:(opts&&opts.modelTier)||"default"})});
-      const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||"AI request failed");e.code=j.code||r.status;throw e}return j.result}}}
+      const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||(r.status>=500?"AI took too long. Try again.":"AI request failed"));e.code=j.code||r.status;throw e}return j.result}}}
   const downloads={async save({filename,data}){const url=URL.createObjectURL(data instanceof Blob?data:new Blob([data]));const a=document.createElement("a");a.href=url;a.download=filename||"download";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},500)}};
   window.claude={use(name){
     if(name==="db")return makeDB();if(name==="user")return makeUser();if(name==="sample")return makeSample();

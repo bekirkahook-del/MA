@@ -3,11 +3,16 @@
 // AI_GLOBAL_DAILY (optional, hard cap on AI calls per day across ALL users, default 3000),
 // AI_MODEL_QUICK / AI_MODEL_DEFAULT / AI_MODEL_COMPLEX (optional overrides).
 import { json, getUser, getBilling, tierOf, AI_LIMITS, isOwnerUser, isConfirmed, bump, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
+// Netlify cuts synchronous functions off at ~10s, so a slow model writing a long JSON answer got killed mid-request
+// (interview grading, coffee chat, resume review "never worked"). Everything now runs on the fast model by default;
+// set AI_MODEL_DEFAULT / AI_MODEL_COMPLEX to override only if the function timeout has been raised.
+const FAST = process.env.AI_MODEL_QUICK || "claude-haiku-5-5";
 const MODELS = {
-  quick: process.env.AI_MODEL_QUICK || "claude-haiku-5-5",
-  default: process.env.AI_MODEL_DEFAULT || "claude-sonnet-5-5",
-  complex: process.env.AI_MODEL_COMPLEX || "claude-sonnet-5-5",
+  quick: FAST,
+  default: process.env.AI_MODEL_DEFAULT || FAST,
+  complex: process.env.AI_MODEL_COMPLEX || FAST,
 };
+const BUDGET_MS = Number(process.env.AI_TIMEOUT_MS || 9000); // finish (or fail cleanly) before Netlify's limit
 const GLOBAL_DAILY = Number(process.env.AI_GLOBAL_DAILY || 3000);
 const hasSvc = () => !!(process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY);
 
@@ -48,24 +53,31 @@ export default async (req, context) => {
   } catch (e) { console.error("ai limit", String(e)); return json(503, { error: "AI is unavailable right now. Try again in a minute.", code: "upstream" }); }
 
   const model = Object.hasOwn(MODELS, body.tier) ? MODELS[body.tier] : MODELS.default;
+  const t0 = Date.now();
+  const call = (m, ms) => fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "x-api-key": (process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA), "anthropic-version": "2023-06-01", "content-type": "application/json" },
+    body: JSON.stringify({
+      model: m,
+      max_tokens: 2000,
+      system: "Reply with valid JSON only. No markdown fences, no text before or after the JSON. Keep it concise.",
+      messages: [{ role: "user", content: prompt }],
+    }),
+    signal: AbortSignal.timeout(ms),
+  });
   let r;
-  try {
-    r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": (process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA), "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({
-        model,
-        max_tokens: 4000,
-        system: "Reply with valid JSON only. No markdown fences, no text before or after the JSON.",
-        messages: [{ role: "user", content: prompt }],
-      }),
-      signal: AbortSignal.timeout(25000),
-    });
-  } catch (e) { console.error("Anthropic fetch", String(e)); return json(504, { error: "AI took too long. Try again.", code: "upstream" }); }
+  try { r = await call(model, BUDGET_MS); }
+  catch (e) { console.error("Anthropic fetch", model, String(e)); r = null; }
+  // slow/unavailable model or bad model id: retry once on the fast model if there's time left
+  if ((!r || !r.ok) && model !== FAST && Date.now() - t0 < BUDGET_MS - 4000) {
+    if (r) console.error("Anthropic error", model, r.status, (await r.text()).slice(0, 300));
+    try { r = await call(FAST, BUDGET_MS - (Date.now() - t0)); } catch (e) { console.error("Anthropic fetch", FAST, String(e)); r = null; }
+  }
+  if (!r) return json(504, { error: "AI took too long. Try again.", code: "upstream" });
   if (!r.ok) {
     const t = await r.text();
     console.error("Anthropic error", r.status, t.slice(0, 500));
-    return json(502, { error: "AI service error", code: "upstream" });
+    return json(502, { error: r.status === 401 || r.status === 403 ? "AI isn't set up correctly (API key)." : r.status === 429 || r.status === 529 ? "AI is busy right now. Try again in a minute." : "AI service error", code: "upstream" });
   }
   const out = await r.json();
   const text = (out.content || []).filter((c) => c.type === "text").map((c) => c.text).join("");

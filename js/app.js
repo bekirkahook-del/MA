@@ -2392,10 +2392,17 @@ let APP_OPEN=[
  ["Bain","Associate Consultant Intern","Consulting","exp","2027-03-05","Early Mar 2027 (est.)","",""],
  ["BCG","Associate Intern","Consulting","exp","2027-04-15","Mid-Apr 2027 (est.)","",""]
 ];
-const APP_SRC=[["Extern (updated Oct 9)","https://www.extern.com/post/investment-banking-internships-2028-guide"],["Trackr (Sep 9)","https://the-trackr.com/blog/us-finance-summer-2028-timeline/"],["Superday AI (Sep 5)","https://www.superdayai.com/blog/summer-2028-ib-recruiting-timeline"]];
-let openCat=null;
+const APP_SRC=[["Adventis tracker (Nov 16)","https://www.adventiscg.com/class-of-2029-recruiting-timeline"],["Extern program guides (Nov 17)","https://www.extern.com/post/sophomore-internships-2027-guide"],["Extern (updated Oct 9)","https://www.extern.com/post/investment-banking-internships-2028-guide"],["Trackr (Sep 9)","https://the-trackr.com/blog/us-finance-summer-2028-timeline/"],["Superday AI (Sep 5)","https://www.superdayai.com/blog/summer-2028-ib-recruiting-timeline"]];
+let openCat=null,openYr="All",openWho="All";
+/* who it's for + internship year: r[8] = "Summer 2027" (juniors) or a program tag (Freshman / Sophomore / Freshman & sophomore); untagged rows are Summer 2028 */
+const opWho=r=>{const t=r[8]||"";return t==="Summer 2027"||/^2027\b/.test(r[1])?["Junior"]:t==="Freshman"?["Freshman"]:t==="Freshman & sophomore"?["Freshman","Sophomore"]:["Sophomore"]};
+const opYear=r=>{const t=r[8]||"";return t==="Summer 2027"||/^2027\b/.test(r[1])?"Summer 2027":/^(Freshman|Sophomore)/.test(t)?"2027 programs":"Summer 2028"};
+const OP_WHO=[["All","Everyone"],["Freshman","Freshmen"],["Sophomore","Sophomores"],["Junior","Juniors"]];
+const OP_YEARS=[["All","Any year"],["Summer 2027","Summer 2027 internships"],["Summer 2028","Summer 2028 internships"],["2027 programs","Insight & early programs (2027)"]];
+const opLive=(r,t)=>!(r[3]==="open"&&r[6]&&r[6]<t);
 function renderOpenings(){const el=$("#openings");if(!el)return;const t=today();if(openCat===null)openCat=(typeof prof==="function"&&prof().openCat)||"All";
-  const list=APP_OPEN.filter(r=>openCat==="All"||r[2]===openCat||(openCat==="Starred"&&Object.values(S.targets||{}).length&&S.targets[r[0]]));
+  const base=APP_OPEN.filter(r=>opLive(r,t));
+  const list=base.filter(r=>(openYr==="All"||opYear(r)===openYr)&&(openWho==="All"||opWho(r).includes(openWho))&&(openCat==="All"||r[2]===openCat||(openCat==="Starred"&&Object.values(S.targets||{}).length&&S.targets[r[0]])));
   const open=list.filter(r=>r[3]==="open").sort((a,b)=>(a[6]||"9999").localeCompare(b[6]||"9999"));
   const exp=list.filter(r=>r[3]!=="open").sort((a,b)=>a[4].localeCompare(b[4]));
   const months={};exp.forEach(r=>{const k=r[4]<t?"due":r[4].slice(0,7);(months[k]=months[k]||[]).push(r)});
@@ -2405,14 +2412,19 @@ function renderOpenings(){const el=$("#openings");if(!el)return;const t=today();
     return `<div class="op-row ${r[3]==="open"?"is-open":""}"><div class="op-main"><b>${inFirms?`<button class="flink op-f" data-act="firm|${esc(r[0])}">${esc(r[0])}</button>`:esc(r[0])}</b><span>${esc(r[1])}${r[7]?` · ${esc(r[7])}`:""}</span></div>
       <div class="op-when">${r[3]==="open"?`<span class="op-chip open">Open</span><small>${esc(r[5])}${r[6]?` · closes ${new Date(r[6]+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}${n!==null&&n>=0?` <em class="${n<=14?"hot":""}">${n}d left</em>`:""}`:""}</small>`:`<span class="op-chip">${esc(r[5])}</span>`}</div>
       <button class="op-add" data-op="${esc(key)}" aria-pressed="${added.has(key)}">${added.has(key)?"✓ On calendar":"+ Calendar"}</button></div>`};
-  const cats=["All","IB","Buy side","Consulting"];
-  el.innerHTML=`<div class="op-head"><p class="note" style="margin:0">Summer 2028 internships, the cycle current sophomores are recruiting for. Banks open applications on a rolling basis, often more than a year ahead. Consulting firms usually open in the spring.</p></div>
+  const cats=["All","IB","Buy side","Markets","Consulting","Other"].filter(c=>c==="All"||APP_OPEN.some(r=>r[2]===c));
+  const wc=k=>base.filter(r=>(k==="All"||opWho(r).includes(k))&&(openYr==="All"||opYear(r)===openYr)).length,yc=k=>base.filter(r=>(k==="All"||opYear(r)===k)&&(openWho==="All"||opWho(r).includes(openWho))).length;
+  el.innerHTML=`<div class="op-head"><p class="note" style="margin:0">${openWho==="Junior"?"Juniors (class of 2028) recruit for Summer 2027. Most big-bank spots are filled, but firms keep posting into the spring.":openWho==="Sophomore"?"Sophomores (class of 2029) recruit for Summer 2028 now, more than a year ahead, plus sophomore insight programs.":openWho==="Freshman"?"Freshmen: insight days and early programs are the best way in before sophomore recruiting.":"Every class year in one place. Pick who you are and the internship year. Banks open applications on a rolling basis, often more than a year ahead."}</p></div>
+   <div class="cats" role="group" aria-label="Who it's for">${OP_WHO.map(([k,l])=>`<button class="chip" data-ow="${k}" aria-pressed="${k===openWho}">${l} <em>${wc(k)}</em></button>`).join("")}</div>
+   <div class="cats" role="group" aria-label="Internship year">${OP_YEARS.map(([k,l])=>`<button class="chip" data-oy="${k}" aria-pressed="${k===openYr}">${l} <em>${yc(k)}</em></button>`).join("")}</div>
    <div class="cats" role="group" aria-label="Filter">${cats.map(c=>`<button class="chip" data-oc="${c}" aria-pressed="${c===openCat}">${c}</button>`).join("")}</div>
    ${open.length?`<div class="op-sec"><h3><span class="op-dot"></span>Open now <em>${open.length}</em></h3>${open.map(row).join("")}</div>`:""}
    ${Object.keys(months).sort((a,b)=>a==="due"?-1:b==="due"?1:a.localeCompare(b)).map(k=>`<div class="op-sec"><h3>${mLabel(k)} <em>${months[k].length}</em></h3>${months[k].map(row).join("")}</div>`).join("")}
    <p class="note">"Open" means a confirmed posting. Other dates are estimates based on when each firm opened last cycle, so check the firm's careers page. Updated ${APP_OPEN_DATE}. Sources: ${APP_SRC.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`).join(", ")}.</p>`;
   bindRel(el);
   el.querySelectorAll("[data-oc]").forEach(b=>b.onclick=()=>{openCat=b.dataset.oc;renderOpenings()});
+  el.querySelectorAll("[data-oy]").forEach(b=>b.onclick=()=>{openYr=b.dataset.oy;renderOpenings()});
+  el.querySelectorAll("[data-ow]").forEach(b=>b.onclick=()=>{openWho=b.dataset.ow;renderOpenings()});
   el.querySelectorAll("[data-op]").forEach(b=>b.onclick=()=>{const key=b.dataset.op;const r=APP_OPEN.find(x=>x[0]+"|"+x[1]===key);if(!r)return;
     if((S.deadlines||[]).some(d=>d.src===key)){S.deadlines=S.deadlines.filter(d=>d.src!==key);toast("Removed from your calendar")}
     else{const isOpen=r[3]==="open";const date=isOpen?(r[6]||today()):r[4];S.deadlines=(S.deadlines||[]).concat({id:"dl"+Date.now(),src:key,t:isOpen?(r[6]?`Apply by: ${r[1]}`:`Apply: ${r[1]}`):`Opens (est.): ${r[1]}`,f:r[0],date,k:"Application"});toast(isOpen?"Added. Apply soon":"Added to your calendar")}
@@ -2427,7 +2439,7 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
    <p class="note" id="resNote" aria-live="polite">${((S.profile||{}).resume||{}).text?"Saved: "+esc(S.profile.resume.name||"Resume"):""}</p>
    <div class="res-top"><label>Applying for<select id="resRole">${["Investment banking internship","Private equity","Hedge fund / equity research","Sales & trading","Restructuring","Consulting internship"].map(o=>`<option ${({ib:"Investment banking internship",pe:"Private equity",hf:"Hedge fund / equity research",rx:"Restructuring",mc:"Consulting internship"})[profKey()]===o?"selected":""}>${o}</option>`).join("")}</select></label></div>
    <textarea id="resTxt" style="min-height:240px" placeholder="Paste your resume here…" aria-label="Resume text"></textarea>
-   <div class="actions"><button class="btn" id="resGo">Review my resume</button><span class="note">${isPro()?"Unlimited with Pro.":usedToday?"Free review used today. Pro is unlimited.":"1 free review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
+   <div class="actions"><button class="btn" id="resGo">Review my resume</button><span class="note">${isPro()?"Instant check + unlimited AI reviews.":usedToday?"Instant check is unlimited. Free AI review used today.":"Instant check is unlimited, plus 1 free AI review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
   const resLoad=async f=>{const note=$("#resNote");note.textContent="Reading your resume…";
     try{if(!window.maResume)throw new Error("The resume reader didn't load. Refresh and try again.");
       const x=await maResume.readFile(f),t=String(x.text||"").replace(/\u00a0/g," ").trim();
@@ -2438,17 +2450,22 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
   $("#resFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)resLoad(f)});
   {const dz=$("#resDrop");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("on")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("on")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)resLoad(f)})}
   $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<60){toast("Paste your full resume (at least a few sections)");return}
-    if(!canRun&&!isPro()){upgrade("Unlimited resume reviews are part of Pro");return}
-    await samplePromise;if(!SAMPLE){$("#resOut").innerHTML=`<p class="note">${aiLock("AI resume review")}</p>`;return}
-    const b=$("#resGo");b.disabled=true;b.textContent="Reviewing…";
+    /* instant rule-based check first: always works, no AI, no limit */
+    const inst=window.maResumeCheck?maResumeCheck(txt,$("#resRole").value):null;
+    const showInst=extra=>{if(!inst)return;$("#resOut").innerHTML=`<div class="label">Instant check</div>${resumeHTML(inst)}${extra?`<p class="note" style="margin-top:10px">${extra}</p>`:""}`};
+    showInst("");
+    if(!canRun&&!isPro()){showInst("You've used today's free AI review, so this is the instant check. Pro adds unlimited AI reviews.");return}
+    await samplePromise;if(!SAMPLE){showInst(aiLock("The deeper AI review"));if(!inst)$("#resOut").innerHTML=`<p class="note">${aiLock("AI resume review")}</p>`;return}
+    const b=$("#resGo");b.disabled=true;b.textContent="Reviewing…";if(inst)$("#resOut").insertAdjacentHTML("beforeend",`<p class="note" id="resAiNote" style="margin-top:10px">Getting the deeper AI review…</p>`);
     const prompt=`You are ${(typeof prof==="function"&&prof().recruiter)||"a recruiter at a top investment bank"} reviewing a college student's resume for a ${$("#resRole").value} role. Be direct and specific, like a mentor who wants them to get the interview. Banking resumes should be one page, use strong action verbs, quantify results, and lead with education.
 
 Resume:
-"""${txt.slice(0,9000)}"""
+"""${txt.slice(0,6000)}"""
 
-Return ONLY JSON: {"score": integer 1-10, "headline": one-sentence overall verdict, "strengths": [2-3 short strings], "top_fixes": [3 specific, prioritized fixes], "bullets": [up to 4 objects {"original": a weak bullet quoted from the resume, "issue": short reason, "rewrite": stronger version keeping only facts present in the original}], "formatting": [1-3 short formatting notes]}`;
-    try{const r=await SAMPLE.json(prompt,{modelTier:"default"});S.resumeLog=S.resumeLog||{};S.resumeLog[today()]=usedToday+1;S.resumeLast={...r,date:today()};save();$("#resOut").innerHTML=resumeHTML(r)}
-    catch(e){$("#resOut").innerHTML=`<p class="note">${e&&e.code==="rate_limited"?"Busy right now. Try again in a minute.":"The review didn't go through. Try again."}</p>`}
+Return ONLY JSON: {"score": integer 1-10, "headline": one-sentence overall verdict, "strengths": [2-3 short strings], "top_fixes": [3 specific, prioritized fixes], "bullets": [up to 3 objects {"original": a weak bullet quoted from the resume, "issue": short reason, "rewrite": stronger version keeping only facts present in the original}], "formatting": [1-3 short formatting notes]}`;
+    try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.resumeLog=S.resumeLog||{};S.resumeLog[today()]=usedToday+1;S.resumeLast={...r,date:today()};save();$("#resOut").innerHTML=`<div class="label">AI review</div>`+resumeHTML(r)}
+    catch(e){const why=e&&["limit","unconfirmed","not_granted","capacity"].includes(e.code)?e.message:e&&(e.code===429||e.code==="rate_limited")?"AI is busy right now. Try again in a minute.":"The AI review didn't go through"+(e&&e.message&&e.message!=="AI request failed"?` (${e.message})`:"")+". Try again in a minute.";
+      if(inst){const n=$("#resAiNote");if(n)n.textContent=why+" Your instant check is above.";else showInst(why)}else $("#resOut").innerHTML=`<p class="note">${esc(why)}</p>`}
     finally{if(document.contains(b)){b.disabled=false;b.textContent="Review again"}}}}
 function resumeHTML(r,old){const sc=Math.max(1,Math.min(10,Math.round(+r.score||0))),col=sc>=7?"var(--good)":sc>=5?"var(--warn)":"var(--bad)";
   return `<div class="res-out">${old?`<div class="label">Last review · ${esc(r.date||"")}</div>`:""}<div class="grade"><div class="score" style="border-color:${col};color:${col}"><div>${sc}<small>/10</small></div></div><div><h4>${esc(r.headline||"")}</h4>

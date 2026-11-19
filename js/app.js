@@ -1729,7 +1729,7 @@ const resetBox=document.createElement("div");
 function resetIdle(){resetBox.innerHTML='<button class="ghost" id="resetBtn">Reset progress</button>';$("#resetBtn").onclick=()=>{
   resetBox.innerHTML='<div class="confirm"><span>Erase XP and levels?</span><button class="ghost" id="rYes" style="color:var(--bad);border-color:var(--bad)">Erase</button><button class="ghost" id="rNo">Cancel</button></div>';
   $("#rYes").onclick=()=>{Object.assign(S,{best:{},rapid:0,daily:{},newsq:{},mock:0,mockXP:0,mockBest:{}});save();render();resetIdle();toast("Progress reset. Contacts and checklist kept.")};$("#rNo").onclick=resetIdle;$("#rNo").focus()}}
-let toastT;function toast(m){let el=$(".toast");if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=m;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2400)}
+let toastT;function toast(m){let el=$(".toast");if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=m;el.onclick=null;el.style.cursor="";el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2400)}
 
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{const g=b.dataset.go;if(g==="tracks"){showTab("learn");showSub("learn","tracks")}else if(g==="lb"){showTab("practice");showSub("practice","rapid")}else{const t=$("#"+g);if(t)t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}});
 function toggleWire(open,silent){const w=$("#wire"),bg=$("#drawerBg");if(!open&&w.hidden)return;if(open)renderNews();else{S.wireHeads=NEWS.map(n=>n.h);save();setTimeout(wireDot,0)}w.hidden=bg.hidden=!open;$("#newsBtn").setAttribute("aria-expanded",open);document.body.style.overflow=open?"hidden":"";if(open)$("#wireClose").focus();else if(!silent)$("#newsBtn").focus()}
@@ -4018,7 +4018,7 @@ function renderPathMoney(rows,endAge){const el=$("#plMoney");if(!el)return;const
 const saveState=()=>save();
 let pathSel=null;
 function pathEmpty(el,P){window._plSig=null;
-  el.innerHTML=`<div class="sec-head"><div><h2>Plan your path</h2><p>Map out where you want to be each year, and see what each move costs you and what you get.</p></div></div>
+  el.innerHTML=`<div class="pl-head"><div><h2 class="pl-title">Plan your path</h2><p class="note">Map out where you want to be each year, and see what each move costs you and what you get.</p></div></div>
   <div class="pl-in">
     <label>Age<input type="number" id="plAge" min="12" max="45" value="${esc(P.age)}"></label>
     <label>Right now<select id="plStat">${Object.entries(PATH_STAT).map(([k,v])=>`<option value="${k}"${k===P.status?" selected":""}>${v}</option>`).join("")}</select></label>
@@ -4050,7 +4050,11 @@ function renderPath(){
   const plSig=JSON.stringify(rows.map(r=>[r.k,r.y,r.age])),plSigNew=plSig!==window._plSig;window._plSig=plSig;
   const detailHTML=sel=>`  <article class="card pl-det pl-swap" style="--c:${PATH_CAT[sel.c][1]}">
     <div class="pl-ch"><div><span class="label">Age ${sel.age}–${sel.age+sel.y} · ${sel.year}–${sel.year+sel.y}</span>${sel.school?`<h3>${esc(sel.n)}</h3>`:`<h3><button class="pl-tt" data-edit="${sel.idx}" title="Edit this step">${esc(sel.n)} <span aria-hidden="true">✎</span></button></h3>`}</div>
-      <div class="pl-acts">${pathSel>0?`<button class="ghost sm" data-nav="-1" aria-label="Previous step">←</button>`:""}${pathSel<rows.length-1?`<button class="ghost sm" data-nav="1" aria-label="Next step">→</button>`:""}${sel.school?"":`<button class="ghost sm" data-edit="${sel.idx}">Edit step</button>`}</div></div>
+      <div class="pl-acts">${pathSel>0?`<button class="ghost sm" data-nav="-1" aria-label="Previous step">←</button>`:""}${pathSel<rows.length-1?`<button class="ghost sm" data-nav="1" aria-label="Next step">→</button>`:""}</div></div>
+    ${sel.school?"":(()=>{const P=pathState(),st=P.steps[sel.idx]||{},prev=P.steps[sel.idx-1],from=prev?PATH_ROLES[prev.r]:null;const common=from?from.next:["ib_an","rx_an","cons","st","er","am","corpdev","startup"];const others=Object.keys(PATH_ROLES).filter(k=>!common.includes(k));const o=k=>`<option value="${k}"${k===st.r?" selected":""}>${esc(PATH_ROLES[k].n)}</option>`;
+      return `<div class="pl-quick"><label class="pl-qr"><span class="note">Role</span><select data-qr="${sel.idx}" aria-label="Role for this step"><optgroup label="${from?"Common after "+esc(from.n.toLowerCase()):"Common first jobs"}">${common.map(o).join("")}</optgroup><optgroup label="Other">${others.map(o).join("")}</optgroup></select></label>
+       <span class="pl-yrs"><span class="note">Years</span><span><button type="button" class="ghost sm" data-qy="-1" aria-label="One year less"${st.y<=1?" disabled":""}>−</button><b>${st.y}</b><button type="button" class="ghost sm" data-qy="1" aria-label="One year more"${st.y>=12?" disabled":""}>+</button></span></span>
+       <span class="pl-qb"><button type="button" class="ghost sm" data-qadd="${sel.idx}">+ Step after</button>${P.steps.length>1?`<button type="button" class="ghost sm" data-qdel="${sel.idx}">Remove</button>`:""}<button type="button" class="ghost sm" data-edit="${sel.idx}">Pay & more…</button></span></div>`})()}
     <div class="pl-pc"><div><h4>What you get</h4><ul>${sel.pros.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div><div><h4>What it costs</h4><ul>${sel.cons.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div></div>
     ${sel.school&&sel.k!=="c3"?"":`<p class="pl-pay">${sel.k==="mba"?`Costs about <b>${pathFmt(-PATH_PAY.mba[0])}</b> a year in tuition and living costs`:`Typical pay: about <b>${pathFmt(pathPayAt(sel,0))}</b>${sel.school?" for the summer internship":" in year one"}${sel.school?"":` (about <b>${pathFmt(pathPayAt(sel,0)*(1-pathTax(pathPayAt(sel,0))))}</b> take-home)`}${!sel.school&&sel.y>1?`, about <b>${pathFmt(pathPayAt(sel,sel.y-1))}</b> by year ${sel.y}`:""}`}${PATH_SRC[sel.k]&&sel.payK==null?` <span class="note">(${esc(PATH_SRC[sel.k])})</span>`:sel.payK!=null?` <span class="note">(your number)</span>`:""}</p>`}
     <h4>Do this</h4><ul class="pl-do">${sel.do.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
@@ -4058,7 +4062,7 @@ function renderPath(){
   </article>
 `;
   el.innerHTML=`
-  <div class="sec-head"><div><h2>Plan your path</h2><p>Pick a goal, then tap any job to change it. Its costs and benefits show below.</p></div><button class="ghost pl-restart" id="plRestart">↺ Start over</button></div>
+  <div class="pl-head"><div><h2 class="pl-title">Plan your path</h2><p class="note">Tap any step to see what it costs and what you get. Change it right below, or use ← → to move between steps.</p></div><button class="ghost pl-restart" id="plRestart">↺ Start over</button></div>
   <div class="pl-in">
     <label>Age<input type="number" id="plAge" min="12" max="45" value="${esc(P.age)}"></label>
     <label>Right now<select id="plStat">${Object.entries(PATH_STAT).map(([k,v])=>`<option value="${k}"${k===P.status?" selected":""}>${v}</option>`).join("")}</select></label>
@@ -4083,12 +4087,23 @@ function renderPath(){
   $("#plStat").onchange=e=>{P.status=e.target.value;const def={hs9:14,hs10:15,hs11:16,hs12:17,c1:18,c2:19,c3:20,c4:21}[P.status];if(def&&Math.abs(P.age-def)>3)P.age=def;pathSel=null;upd()};
   $("#plGoal").onchange=e=>{if(!PATH_GOALS[e.target.value])return;P.goal=e.target.value;P.steps=PATH_GOALS[P.goal][1].map(([r,y])=>({r,y}));pathSel=null;upd()};
   $("#plLeave").onchange=e=>{const v=Math.round(+e.target.value);P.leave=v>=18&&v<=70?v:"";upd()};
+  const keepSel=fn=>{fn();save();renderPath()};
   const bindDet=()=>{const d=$("#plDet");d.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>selectStep(pathSel+ +b.dataset.nav));
-    d.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>pathEdit(+b.dataset.edit));d.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>showTab("learn"))};
+    d.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>pathEdit(+b.dataset.edit));d.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>showTab("learn"));
+    const q=d.querySelector("[data-qr]");if(q){const ix=+q.dataset.qr,st=P.steps[ix];
+      q.onchange=()=>keepSel(()=>{st.r=q.value;st.y=PATH_ROLES[q.value].dur;delete st.payK});
+      d.querySelectorAll("[data-qy]").forEach(b=>b.onclick=()=>keepSel(()=>{st.y=Math.max(1,Math.min(12,st.y+ +b.dataset.qy))}));
+      const a=d.querySelector("[data-qadd]");if(a)a.onclick=()=>{const R=PATH_ROLES[st.r];const nx=(R.next||[])[0]||"exec";P.steps.splice(ix+1,0,{r:nx,y:PATH_ROLES[nx].dur});pathSel=pathSel+1;save();renderPath();toast("Step added. Pick its role below")};
+      const del=d.querySelector("[data-qdel]");if(del)del.onclick=()=>{const gone=P.steps.splice(ix,1)[0];pathSel=Math.max(0,pathSel-1);save();renderPath();
+        try{toast(`Removed ${PATH_ROLES[gone.r].n}. Tap here to undo`);const tt=document.querySelector(".toast");if(tt){tt.style.cursor="pointer";tt.onclick=()=>{tt.onclick=null;tt.hidden=true;P.steps.splice(ix,0,gone);save();renderPath()};clearTimeout(toastT);toastT=setTimeout(()=>tt.hidden=true,5000)}}catch(e){}}}};
   const selectStep=i=>{if(i<0||i>=rows.length)return;pathSel=i;el.querySelectorAll(".pg-stage").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
-    el.querySelectorAll(".pg-cell").forEach(c=>c.classList.toggle("on",+c.dataset.i===i));$("#plDet").innerHTML=detailHTML(rows[i]);bindDet()};
+    el.querySelectorAll(".pg-cell").forEach(c=>c.classList.toggle("on",+c.dataset.i===i));$("#plDet").innerHTML=detailHTML(rows[i]);bindDet();
+    {const w=el.querySelector(".pg-wrap"),b=el.querySelector(`.pg-stage[data-i="${i}"]`);if(w&&b&&w.scrollWidth>w.clientWidth){const x=b.offsetLeft-w.clientWidth/2+b.offsetWidth/2;w.scrollTo({left:Math.max(0,x),behavior:fxCalm()?"auto":"smooth"})}}};
   bindDet();
-  el.querySelectorAll(".pg-stage").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;selectStep(i);const r=rows[i];if(r&&!r.school)pathEdit(r.idx)});
+  el.querySelectorAll(".pg-stage").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;selectStep(i);if(innerWidth<700)$("#plDet").scrollIntoView({block:"nearest",behavior:fxCalm()?"auto":"smooth"})});
+  el.querySelectorAll(".pg-cell").forEach(c=>c.onclick=()=>selectStep(+c.dataset.i));
+  if(!window._plKeys){window._plKeys=1;document.addEventListener("keydown",e=>{const pp=$("#pathPlan");if(!pp||!pp.offsetParent||/INPUT|SELECT|TEXTAREA/.test((document.activeElement||{}).tagName||"")||document.querySelector("#overlay:not([hidden])"))return;
+    if(e.key==="ArrowRight"||e.key==="ArrowLeft"){const b=pp.querySelector(`[data-nav="${e.key==="ArrowRight"?1:-1}"]`);if(b){e.preventDefault();b.click()}}})}
   $("#plAdd").onclick=()=>{const lastR=PATH_ROLES[(P.steps.slice(-1)[0]||{}).r]||PATH_ROLES.ib_an;const nx=(lastR.next||[])[0]||"exec";P.steps.push({r:nx,y:PATH_ROLES[nx].dur});pathSel=null;upd();pathEdit(P.steps.length-1)};
   {const rb=$("#plRestart");let armed=0,tm;rb.onclick=()=>{if(!armed){armed=1;rb.classList.add("armed");rb.textContent="Tap again to clear everything";tm=setTimeout(()=>{armed=0;rb.classList.remove("armed");rb.textContent="↺ Start over"},3000);return}
     clearTimeout(tm);const keep={age:P.age,status:P.status,share:P.share,save:P.save,ret:P.ret};S.path={...keep,goal:"",steps:[],leave:""};pathSel=null;plMoneyPrev=null;save();try{syncSoon()}catch(e){}renderPath();toast("Plan cleared")}}

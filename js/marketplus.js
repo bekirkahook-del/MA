@@ -97,6 +97,22 @@
         body.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){sel=b.dataset.r;draw()}});
       };
       draw();
+      /* live: refresh the price every 60s while this panel is open and the tab is visible.
+         Tape symbols reuse the tape's own live prices; others ask the ticker function (edge-cached 60s). */
+      var fmtT=function(){return new Date().toLocaleTimeString("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"2-digit"})+" ET"};
+      var tick=function(){
+        if(!box.isConnected){clearInterval(iv);return}
+        if(document.hidden)return;
+        var t=null;try{t=(typeof TICKER!=="undefined"?TICKER:[]).find(function(x){return x[0]===sym})}catch(e){}
+        var use=function(row){if(!row||!row[1])return;var p=parseFloat(String(row[1]).replace(/[$,%]/g,""));if(!isFinite(p)||p<=0)return;
+          var ch=typeof row[2]==="number"?row[2]/100:null;
+          if(Math.abs(p-last)>1e-9||ch!=null){last=p;if(ch!=null)day=ch;asof=(window.TAPE_LIVE?"Live · ":"Updated ")+fmtT();var keep=sel;sel=keep;draw()}};
+        if(t&&window.TAPE_LIVE)return use(t);
+        if(!/^[A-Z][A-Z.\-]{0,6}$/.test(sym))return;
+        fetch("/.netlify/functions/ticker?s="+encodeURIComponent(sym)).then(function(r){return r.ok?r.json():null})
+          .then(function(j){if(j&&Array.isArray(j.tape))use(j.tape.find(function(x){return x[0]===sym}))}).catch(function(){});
+      };
+      var iv=setInterval(tick,60000);setTimeout(tick,1500);
       var panel=box.closest("#panel"),note=panel&&[].slice.call(panel.querySelectorAll("p.note")).filter(function(p){return /closing prices only/i.test(p.textContent)})[0];
       if(note)note.textContent="Live price from Yahoo Finance (can lag a few minutes). Check filings here:";
     }).catch(function(){body.innerHTML='<p class="note" style="margin:0">Price data isn\'t available for '+E(sym)+' right now.</p>'});

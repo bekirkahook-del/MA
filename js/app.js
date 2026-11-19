@@ -1711,7 +1711,7 @@ function upgrade(reason){openPanel(`<div class="label">M&A Pro</div><h2>${esc(re
 
 function renderPro(){const el=$("#proPage");if(!el)return;const pro=isPro();
   const plans=[["monthly","Monthly","$9","per month","Full Pro, billed monthly."],["yearly","Yearly","$69","per year","Under $6 a month. Best for a full recruiting cycle.",true],["season","Season Pass","$29","4 months","Built around recruiting season. No renewal."]];
-  const rows=[["Every training track",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, leaderboards, follows and endorsements",1,1],["LBO and DCF builders, firm pay ladders, The Wire",1,1],["AI uses per day (grading, resume, emails, explanations)","3","Unlimited (fair use)"],["AI-graded mock interviews",`${FREE_GRADES} a day`,"Unlimited"],["Interview bank","Basic and Intermediate","Every level"],["Pro League: monthly invite-only Gauntlet",0,1],["Unlimited final-round grading",0,1],["Interview stats by section",1,1],["Pro badge and custom profile banners",0,1],["Voice-style Speak it mode with pace and filler-word scoring",1,1],["Firm-style interview packs: elite boutique, PE, restructuring and markets",0,1],["Weekly focus plan that adapts to your weak spots",0,1],["Full modeling library (12 challenges and growing)","5","All"],["Who viewed your profile","Count","Names"],["Application tracker","5 apps","Unlimited"],["AI networking email drafts","1 a day","Unlimited"],["Get Seen: opt-in visibility to recruiting partners",0,1]];
+  const rows=[["Every training track",1,1],["Daily question, Rapid Fire, weekly Gauntlet",1,1],["Profile, leaderboards, follows and endorsements",1,1],["LBO and DCF builders, firm pay ladders, The Wire",1,1],["AI uses per day (grading, resume review, debriefs, judging)","3","Unlimited (fair use)"],["AI-graded mock interviews",`${FREE_GRADES} a day`,"Unlimited"],["Interview bank","Basic and Intermediate","Every level"],["Pro League: monthly invite-only Gauntlet",0,1],["Unlimited final-round grading",0,1],["Interview stats by section",1,1],["Pro badge and custom profile banners",0,1],["Voice-style Speak it mode with pace and filler-word scoring",1,1],["Firm-style interview packs: elite boutique, PE, restructuring and markets",0,1],["Weekly focus plan that adapts to your weak spots",0,1],["Full modeling library (12 challenges and growing)","5","All"],["Who viewed your profile","Count","Names"],["Application tracker","5 apps","Unlimited"],["AI networking email drafts","1 a day","Unlimited"],["Get Seen: opt-in visibility to recruiting partners",0,1]];
   const cell=v=>v===1?'<span class="yes">✓</span>':v===0?'<span class="no">–</span>':esc(v);
   el.innerHTML=`<div class="pro-hero"><div class="label">M&A Pro</div><h1>Everything you need to learn is free.<br>Pro is for winning the seat.</h1>
      <p>Unlimited interview reps, a tougher league, and a profile that stands out when it counts.</p>
@@ -2809,14 +2809,8 @@ function draftEmail(c){const used=(S.drafts||{})[today()]||0;
    <label class="note" style="display:block;margin-top:12px">Anything to mention?<input id="emExtra" placeholder="e.g. we talked about their restructuring group"></label>
    <div class="actions"><button class="btn" id="emGo">Write it</button><span class="note">${isPro()?"Unlimited with Pro.":used?"Free draft used today.":"1 free draft a day."}</span></div><div id="emOut"></div>`);
   let type="intro";panel.querySelectorAll("[data-em]").forEach(b=>b.onclick=()=>{type=b.dataset.em;panel.querySelectorAll("[data-em]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}await samplePromise;if(!SAMPLE){$("#emOut").innerHTML=`<p class="note">${aiLock("AI email drafting")}</p>`;return}
-    const b=$("#emGo");b.disabled=true;b.textContent="Writing…";const pr=S.profile;
-    const kinds={intro:"a short cold networking email asking for a 15-minute call",follow:"a short follow-up to an earlier email that got no reply",thanks:"a thank-you note sent within 24 hours of a call",referral:"a polite email asking whether they'd be comfortable referring the student for an internship"};
-    const prompt=`Write ${kinds[type]} from a college student to ${(typeof prof==="function"&&prof().pro)||"a finance professional"}. Under 110 words, warm, specific, no flattery clichés. Use only facts given here; do not invent shared experiences.
-Sender: ${myName||"the student"}${pr.school?", "+pr.school:""}${pr.grad?", class of "+pr.grad:""}${pr.major?", studying "+pr.major:""}${pr.target?", targeting "+pr.target:""}.
-Recipient: ${c.name}${c.role?", "+c.role:""}${c.firm?" at "+c.firm:""}. Connection: ${c.conn||"none given"}. Status: ${c.status}. Notes: ${c.notes||"none"}. Extra: ${$("#emExtra").value||"none"}.
-Return ONLY JSON: {"subject": string, "body": string}`;
-    try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.drafts=S.drafts||{};S.drafts[today()]=used+1;save();
+  $("#emGo").onclick=async()=>{if(!isPro()&&used>=1){upgrade("Unlimited email drafts are part of Pro");return}const b=$("#emGo");const pr=S.profile;
+    try{const r=MA_SF.email(type,{...c,extra:$("#emExtra").value},{name:myName,school:pr.school,grad:pr.grad,major:pr.major,target:pr.target});S.drafts=S.drafts||{};S.drafts[today()]=used+1;save();
       $("#emOut").innerHTML=`<label class="note" style="display:block;margin-top:14px">Subject<input id="emSub" value="${esc(r.subject||"")}"></label><label class="note" style="display:block;margin-top:8px">Body<textarea id="emBody" style="min-height:200px">${esc(r.body||"")}</textarea></label><div class="actions"><button class="btn sm" id="emCopy">Copy email</button><button class="ghost" id="emLog">Log as emailed</button></div>`;
       $("#emCopy").onclick=async()=>{try{await navigator.clipboard.writeText(`Subject: ${$("#emSub").value}\n\n${$("#emBody").value}`);toast("Email copied")}catch(e){$("#emBody").select()}};
       $("#emLog").onclick=()=>{const x=S.contacts.find(y=>y.id===c.id);if(x){x.status=type==="thanks"?"Chatted":"Emailed";x.last=today();x.next=addDays(type==="intro"?7:5);delete x.ex;save();renderCRM()}toast("Contact updated");closePanel()}}
@@ -3201,20 +3195,9 @@ function addExplain(raw){const fb=$("#fb");if(!fb||fb.querySelector(".xpl"))retu
   why.insertAdjacentHTML("afterend",`<div class="xpl"><button class="ghost xpl-b" type="button">Why was my answer wrong?</button></div>`);
   fb.querySelector(".xpl-b").onclick=async()=>{const box=fb.querySelector(".xpl");const key=raw[0]+"|"+pick.textContent;
     if(_expCache.has(key)){box.innerHTML=_expCache.get(key);return}
-    if(!SAMPLE){box.innerHTML=`<p class="note">${aiLock("AI mistake explanations")}</p>`;return}
     if(!isPro()&&explainsToday()>=EXPLAIN_FREE){box.innerHTML=`<p class="note">You've used today's ${EXPLAIN_FREE} free mistake explanations. They reset tomorrow, or go unlimited with Pro.</p>`;return}
-    box.innerHTML=`<p class="note xpl-load">Looking at your answer…</p>`;
-    const strip=x=>String(x).replace(/<[^>]+>/g,"");
-    const prompt=`A college student practicing for finance interviews (investment banking, private equity, markets, consulting) answered a multiple-choice question wrong.
-Question: ${strip(raw[0])}
-They chose: ${pick.textContent}
-Correct answer: ${right.textContent}
-Teacher's explanation: ${strip(raw[3]||"")}
-Explain the specific reasoning mistake behind their choice: why it's tempting and exactly where it goes wrong. Use plain language a freshman understands, no jargon without a quick definition, at most 2 short sentences. Then give one short memory trick for next time.
-Return JSON: {"mistake":"...","trick":"..."}`;
-    try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.explains=S.explains||{};S.explains[today()]=explainsToday()+1;save();
-      const h=`<div class="xpl-out"><div><span class="label">Your mistake</span><p>${esc(r.mistake||"")}</p></div>${r.trick?`<div><span class="label">Remember it</span><p>${esc(r.trick)}</p></div>`:""}</div>`;_expCache.set(key,h);if(box.isConnected)box.innerHTML=h}
-    catch(e){if(box.isConnected)box.innerHTML=`<p class="note">Couldn't get an explanation right now. Try again in a moment.</p>`}}}
+    const r=window.MA_SF?MA_SF.explain(raw,pick.textContent,right.textContent):{mistake:"",trick:""};S.explains=S.explains||{};S.explains[today()]=explainsToday()+1;save();
+    const h=`<div class="xpl-out"><div><span class="label">Your mistake</span><p>${esc(r.mistake||"")}</p></div>${r.trick?`<div><span class="label">Remember it</span><p>${esc(r.trick)}</p></div>`:""}</div>`;_expCache.set(key,h);box.innerHTML=h}}
 
 /* surfaces */
 function renderWeakCard(){const el=$("#weakCard");if(!el)return;const n=weakCount(),due=dueReviews().length;
@@ -3522,7 +3505,7 @@ function editProfile(){
         </section>
         <section class="pe-sec" id="pe-about"><h3>About</h3>
           ${field("pAbout","About you",P.about,{area:true,rows:6,max:600,cls:"full",ph:"What pulled you into finance, what you're working on now, and what you're looking for.",hint:"Aim for 3 or 4 sentences: your hook, your proof, your goal."})}
-          <div class="pe-ai full"><button type="button" class="ghost outline" id="aiAbout">✦ ${P.about?"Tighten with Claude":"Draft with Claude"}</button><span class="note" id="aiAboutNote"></span></div>
+          <div class="pe-ai full"><button type="button" class="ghost outline" id="aiAbout">✦ ${P.about?"Tighten it":"Draft it for me"}</button><span class="note" id="aiAboutNote"></span></div>
         </section>
         <section class="pe-sec" id="pe-exp"><h3>Experience <span class="pe-n" id="expN"></span></h3>
           <div id="expRows" class="full"></div>
@@ -3625,20 +3608,13 @@ function editProfile(){
   scroller.addEventListener("scroll",spy,{passive:true});
   $p("#pePrevBtn").onclick=()=>{const on=panel.classList.toggle("pe-showprev");$p("#pePrevBtn").textContent=on?"Back to editing":"Preview"};
   /* AI */
-  const aiCall=async(prompt,note)=>{if(!SAMPLE){note.innerHTML=aiLock("AI writing help");return null}if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
-    note.textContent="Writing…";try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.aiEdits=S.aiEdits||{};S.aiEdits[today()]=((S.aiEdits||{})[today()]||0)+1;save();note.textContent=isPro()?"Done. Edit it to sound like you.":`Done. ${peAiLeft()} free assist${peAiLeft()===1?"":"s"} left today.`;return r}catch(e){note.textContent="Couldn't reach Claude right now. Try again in a moment.";return null}};
-  $p("#aiAbout").onclick=async()=>{const exp=readExpSafe();const cur=($p("#pAbout").value||"").trim();
-    const prompt=`Write the "About" section of a college student's public profile on a finance recruiting site. First person, plain and confident, no buzzwords, no exclamation marks, 3 or 4 short sentences, under 550 characters. Don't invent facts beyond what's given; if something is missing, leave it out.
-Facts: name ${name}; school ${P.school||"not given"}; class year ${P.grad||"not given"}; major ${P.major||"not given"}; target career ${P.target||"not given"}; open to ${P.open||"not given"}; experience: ${exp.map(e=>`${e.t} at ${e.o}${e.d?` (${e.d})`:""}`).join("; ")||"none listed"}; skills: ${P.skills.join(", ")||"none listed"}.
-${cur?`Their current draft, which you should tighten and keep their voice: """${cur.slice(0,800)}"""`:""}
-Return JSON: {"about":"..."}`;
-    const r=await aiCall(prompt,$p("#aiAboutNote"));if(r&&r.about){$p("#pAbout").value=String(r.about).slice(0,600);P.about=$p("#pAbout").value;$p('.pe-c[data-for="pAbout"]').textContent=`${P.about.length}/600`;$p("#aiAbout").textContent="✦ Tighten with Claude";changed()}};
-  const aiBullet=async i=>{P.exp=readExp();const e=P.exp[i];const note=panel.querySelector(`[data-ainote="${i}"]`);if(!e||!(e.d||e.t)){note.textContent="Add a title and a few words about what you did first.";return}
-    const prompt=`Rewrite this college student's experience description for a finance recruiting profile as one results-focused line: strong verb first, what they did, and a concrete result or number if one is given. Under 220 characters, no buzzwords, don't invent numbers or facts that aren't given.
-Role: ${e.t||""} at ${e.o||""}
-Their description: """${(e.d||"").slice(0,400)}"""
-Return JSON: {"line":"..."}`;
-    const r=await aiCall(prompt,note);if(r&&r.line){const ta=panel.querySelectorAll(".pe-exp")[i].querySelector('[data-f="d"]');ta.value=String(r.line).slice(0,300);ta.dispatchEvent(new Event("input"))}};
+  const aiCall=(fn,note)=>{if(peAiLeft()<=0){note.textContent=`You've used today's ${PE_AI_FREE} free writing assists. Pro is unlimited.`;return null}
+    const r=fn();if(r&&r.tip&&!(r.about||r.line)){note.textContent=r.tip;return null}S.aiEdits=S.aiEdits||{};S.aiEdits[today()]=((S.aiEdits||{})[today()]||0)+1;save();
+    note.textContent=(r&&r.tip?r.tip+" ":"")+(isPro()?"Edit it to sound like you.":`${peAiLeft()} free assist${peAiLeft()===1?"":"s"} left today.`);return r};
+  $p("#aiAbout").onclick=()=>{const exp=readExpSafe();const cur=($p("#pAbout").value||"").trim();
+    const r=aiCall(()=>MA_SF.about(P,name,exp,cur),$p("#aiAboutNote"));if(r&&r.about){$p("#pAbout").value=String(r.about).slice(0,600);P.about=$p("#pAbout").value;$p('.pe-c[data-for="pAbout"]').textContent=`${P.about.length}/600`;$p("#aiAbout").textContent="✦ Tighten it";changed()}};
+  const aiBullet=i=>{P.exp=readExp();const e=P.exp[i];const note=panel.querySelector(`[data-ainote="${i}"]`);if(!e||!(e.d||e.t)){note.textContent="Add a title and a few words about what you did first.";return}
+    const r=aiCall(()=>MA_SF.bullet(e),note);if(r&&r.line){const ta=panel.querySelectorAll(".pe-exp")[i].querySelector('[data-f="d"]');ta.value=String(r.line).slice(0,300);ta.dispatchEvent(new Event("input"))}};
   /* save */
   const doSave=()=>{if(!validate()){toast("Fix the highlighted fields first");return}clearTimeout(dT);const exp=readExpSafe().slice(0,5).map(({cur,...e})=>e);
     const nsChk=$p("#pNoSchool").checked,hdChk=$p("#pHidden").checked;S.settings.noSchool=nsChk;S.settings.hidden=hdChk;

@@ -203,7 +203,7 @@ Return ONLY JSON: {"reply": what ${p.first} says next, "rapport": integer 0-100}
     try{const r=await SAMPLE.json(prompt,{modelTier:"default"});reply=String(r.reply||"Sorry, go on.").slice(0,800);
       const rp=Math.max(0,Math.min(100,Math.round(+r.rapport)));if(isFinite(rp)&&r.rapport!==undefined){chat.rapport=rp;chat.peak=Math.max(chat.peak,rp)}
       chat.log.push({who:"them",t:reply})}
-    catch(e){chat.n--;chat.log.pop();const c=e&&e.code;if(typeof toast==="function")toast(c==="rate_limited"?"Busy right now. Try again in a minute.":c==="limit"?"You've used today's AI uses.":"That didn't go through. Try again.");
+    catch(e){chat.n--;chat.log.pop();const c=e&&e.code;if(typeof toast==="function")toast(c==="rate_limited"||c===429?"Busy right now. Try again in a minute.":(e&&e.message&&e.message!=="AI request failed")?e.message:"That didn't go through. Try again.");
       busy=false;render();const ta=$("#ccMsg");if(ta)setTimeout(()=>{const x=$("#ccMsg");if(x)x.value=t},0);return}
     busy=false;
     if(reply!==null)bankerSays(reply,()=>{if(modeNow()==="voice"&&chat&&!chat.done)startListen()})}

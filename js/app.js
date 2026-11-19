@@ -1505,7 +1505,7 @@ Return ONLY JSON: {"score": integer 1-10, "verdict": one short sentence, "streng
     $("#mock").querySelectorAll(`[data-q="${q.id}"]`).forEach(b=>{let e=b.querySelector(".qb");if(!e){e=document.createElement("span");b.appendChild(e)}e.className="qb"+(S.mockBest[q.id]>=7?" ok":"");e.textContent=S.mockBest[q.id]});
     $("#mockCount").textContent=`${Object.keys(S.mockBest).length}/${MOCK_QS.length} answered`;
     $("#nextMock").onclick=()=>{pickMock();renderMock();$("#mockAns")&&$("#mockAns").focus()}}
-  catch(e){const code=e&&e.code;out.innerHTML=`<p class="note">${code==="rate_limited"?"Grading is busy right now. Wait a minute and try again.":code==="not_granted"?"AI grading is turned off for this page. Compare against the key points instead:":"Grading didn't go through. Compare against the key points:"}</p>`+(code==="rate_limited"?"":keysHTML())}
+  catch(e){const code=e&&e.code;out.innerHTML=`<p class="note">${code==="rate_limited"?"Grading is busy right now. Wait a minute and try again.":code==="not_granted"?"AI grading is turned off for this page. Compare against the key points instead:":(e&&e.message&&e.message!=="AI request failed")?esc(e.message)+" Compare against the key points meanwhile:":"Grading didn't go through. Compare against the key points:"}</p>`+(code==="rate_limited"?"":keysHTML())}
   finally{if(document.contains(btn)){btn.disabled=false;btn.textContent="Grade again"}}}
 
 /* ---------- roadmap ---------- */

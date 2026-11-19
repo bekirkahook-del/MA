@@ -2363,8 +2363,26 @@ function openChal(c){if(c.pro&&!isPro()){upgrade("The full modeling library is p
 
 /* ---------- 8. recruiting calendar ---------- */
 const TYPICAL=[["Freshman · Fall","Join an investment or finance club, build a one-page resume, start meeting alumni."],["Freshman · Winter–Spring","Many firms run early-insight and diversity programs for first- and second-years. Applications often open in winter."],["Freshman · Summer","Any finance-adjacent internship helps. Start the technical tracks here."],["Sophomore · Fall","Heavy networking season. Some boutiques and middle-market banks open junior-summer applications as early as September."],["Sophomore · Winter–Spring","Most large banks open junior-summer applications, often in December or January, and fill seats quickly. See Career → Openings for this cycle's dates."],["Junior · Summer","The internship. Strong interns usually receive return offers by the end of summer."],["Junior · Fall","Full-time recruiting for those still looking. Large-fund PE on-cycle can start within the first year as an analyst."]];
+let calM=null,calDay=null,calOpen=true;
+function calGrid(dl){const t=today();if(!calM)calM=t.slice(0,7);const [Y,M]=calM.split("-").map(Number);const first=new Date(Y,M-1,1),days=new Date(Y,M,0).getDate(),lead=first.getDay();
+  const ev={};const add=(d,o)=>{(ev[d]=ev[d]||[]).push(o)};
+  dl.forEach(d=>add(d.date,{k:d.k||"Other",t:d.t,f:d.f,mine:1}));
+  if(calOpen&&typeof APP_OPEN!=="undefined")APP_OPEN.forEach(r=>{if(r[3]==="exp"&&r[4])add(r[4],{k:"Opens",t:"Opens (est.): "+r[1],f:r[0]});if(r[6])add(r[6],{k:"Closes",t:"Closes: "+r[1],f:r[0]})});
+  const cls={Application:"ap",Interview:"iv",Networking:"nw",Other:"ot",Opens:"op",Closes:"cl"};
+  const cells=[];for(let i=0;i<lead;i++)cells.push(`<div class="cg-d out"></div>`);
+  for(let d=1;d<=days;d++){const k=`${calM}-${String(d).padStart(2,"0")}`,e=ev[k]||[],mine=e.filter(x=>x.mine),oth=e.filter(x=>!x.mine);
+    cells.push(`<button type="button" class="cg-d${k===t?" today":""}${k===calDay?" sel":""}${k<t?" past":""}" data-day="${k}" aria-label="${k}: ${e.length} item${e.length===1?"":"s"}"><span class="cg-n">${d}</span>
+      ${mine.slice(0,2).map(x=>`<span class="cg-e ${cls[x.k]||"ot"}">${esc(x.f||x.t)}</span>`).join("")}${oth.length?`<span class="cg-dots">${oth.slice(0,4).map(x=>`<i class="${cls[x.k]}"></i>`).join("")}${oth.length>4?`<small>+${oth.length-4}</small>`:""}</span>`:""}${mine.length>2?`<small class="cg-more">+${mine.length-2}</small>`:""}</button>`)}
+  const sel=calDay&&ev[calDay]||[];
+  return `<div class="cg"><div class="cg-top"><button type="button" class="ghost sm" data-cm="-1" aria-label="Previous month">‹</button><b>${first.toLocaleDateString("en-US",{month:"long",year:"numeric"})}</b><button type="button" class="ghost sm" data-cm="1" aria-label="Next month">›</button><button type="button" class="ghost sm" data-cm="0">Today</button>
+    <label class="cg-tg"><input type="checkbox" id="cgOpen" ${calOpen?"checked":""}> Internship open/close dates</label></div>
+   <div class="cg-wk">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<span>${x}</span>`).join("")}</div><div class="cg-g">${cells.join("")}</div>
+   <div class="cg-leg"><span><i class="ap"></i>Application</span><span><i class="iv"></i>Interview</span><span><i class="nw"></i>Networking</span><span><i class="op"></i>Opens (est.)</span><span><i class="cl"></i>Closes</span></div>
+   ${calDay?`<div class="cg-day"><div class="cg-dh"><b>${new Date(calDay+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}</b><button type="button" class="ghost sm" id="cgAdd">+ Add on this day</button></div>${sel.length?`<ul>${sel.map(x=>`<li><i class="${cls[x.k]||"ot"}"></i><b>${esc(x.f||"")}</b> ${esc(x.t)}</li>`).join("")}</ul>`:`<p class="note">Nothing on this day.</p>`}</div>`:""}</div>`}
 function renderCal(){const el=$("#cal");if(!el)return;const dl=(S.deadlines||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
-  el.innerHTML=`<div class="sec-head"><h2>Your deadlines</h2><button class="ghost" id="dlAdd" style="padding:0">+ Add deadline</button></div>
+  el.innerHTML=`<div class="sec-head"><h2>Calendar</h2><button class="ghost" id="dlAdd" style="padding:0">+ Add deadline</button></div>
+   ${calGrid(dl)}
+   <div class="sec-head" style="margin-top:22px"><h2>Your deadlines</h2></div>
    <form id="dlForm" class="crm-form" hidden autocomplete="off"><label>What<input id="dlT" required placeholder="Junior summer application"></label><label>Firm<input id="dlF" placeholder="Firm"></label><label>Date<input type="date" id="dlD" required></label><label>Type<select id="dlK"><option>Application</option><option>Interview</option><option>Networking</option><option>Other</option></select></label><label>&nbsp;<button class="btn sm" type="submit">Save</button></label></form>
    ${dl.length?`<div class="dl-list">${dl.map(d=>{const n=daysUntil(d.date);return `<div class="dl ${n<0?'past':n<=7?'soon':''}"><div class="dl-date"><b>${new Date(d.date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}</b><span>${n<0?"passed":n===0?"today":n===1?"tomorrow":"in "+n+" days"}</span></div><div><b>${esc(d.t)}</b><span>${esc([d.f,d.k].filter(Boolean).join(" · "))}</span></div><span>${d.f&&FIRMS.find(f=>f[0]===d.f)?`<button class="flink" data-act="firm|${esc(d.f)}">Profile</button> `:""}<button class="rowbtn" data-del="${esc(d.id)}">Remove</button></span></div>`}).join("")}</div>`:`<p class="note">Add application and interview dates. Anything due within a week shows up on Home.</p>`}
    <div class="sec-head" style="margin-top:28px"><h2>Typical timeline</h2></div>
@@ -2372,6 +2390,10 @@ function renderCal(){const el=$("#cal");if(!el)return;const dl=(S.deadlines||[])
    <p class="note">Typical patterns, not official dates. Always confirm on each firm's careers page.</p>`;
   bindRel(el);
   $("#dlAdd").onclick=()=>{$("#dlForm").hidden=!$("#dlForm").hidden;if(!$("#dlForm").hidden)$("#dlT").focus()};
+  el.querySelectorAll("[data-cm]").forEach(b=>b.onclick=()=>{const v=+b.dataset.cm;if(!v){calM=today().slice(0,7);calDay=today()}else{const [y,m]=calM.split("-").map(Number);const d=new Date(y,m-1+v,1);calM=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`}renderCal()});
+  el.querySelectorAll("[data-day]").forEach(b=>b.onclick=()=>{calDay=calDay===b.dataset.day?null:b.dataset.day;renderCal()});
+  {const o=$("#cgOpen");if(o)o.onchange=()=>{calOpen=o.checked;renderCal()}}
+  {const a=$("#cgAdd");if(a)a.onclick=()=>{$("#dlForm").hidden=false;$("#dlD").value=calDay;$("#dlT").focus();$("#dlForm").scrollIntoView({block:"center",behavior:fxCalm()?"auto":"smooth"})}}
   $("#dlForm").onsubmit=e=>{e.preventDefault();S.deadlines=(S.deadlines||[]).concat({id:"dl"+Date.now(),t:$("#dlT").value.trim(),f:$("#dlF").value.trim(),date:$("#dlD").value,k:$("#dlK").value});save();renderCal();renderHome();toast("Deadline added")};
   el.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{S.deadlines=S.deadlines.filter(d=>d.id!==b.dataset.del);save();renderCal();renderHome()})}
 
@@ -4081,7 +4103,7 @@ function renderPath(){
   <div id="plDet">${detailHTML(sel)}</div>
   <div id="plMoney"></div>
   <div id="plShare"></div>
-  <div class="card pl-ai"><div><h3>Pressure-test my plan</h3><p class="note">Claude checks what's realistic, the biggest risks and what to do this year.${isPro()?"":` ${pathAiLeft()} of ${PATH_PLAN_FREE} free today.`}</p></div><button class="btn" id="plAi">Review my plan</button><div id="plAiOut"></div></div>
+  <div class="card pl-ai"><div><h3>Pressure-test my plan</h3><p class="note">Graded out of 100: recruiting timing, path logic, burnout risk, goal fit and exit options, with the reason for every point lost.${isPro()?"":` ${pathAiLeft()} of ${PATH_PLAN_FREE} free today.`}</p></div><button class="btn" id="plAi">Review my plan</button><div id="plAiOut"></div></div>
   <p class="note">Saves automatically · <button class="ghost sm" id="plCopy">Copy as text</button> <button class="ghost sm" id="plReset">Reset steps</button></p>`;
   const upd=()=>{save();renderPath()};
   $("#plAge").onchange=e=>{const v=Math.round(+e.target.value);if(v>=12&&v<=45){P.age=v;upd()}};
@@ -4131,23 +4153,58 @@ function pathEdit(i){const P=pathState(),st=P.steps[i];if(!st)return;const prev=
   const d=$("#peDel");if(d)d.onclick=()=>{P.steps.splice(i,1);save();closePanel();renderPath()};
   const u=$("#peUp");if(u)u.onclick=()=>{[P.steps[i-1],P.steps[i]]=[P.steps[i],P.steps[i-1]];save();closePanel();renderPath()}}
 
-async function pathReview(rows,warns){const out=$("#plAiOut"),btn=$("#plAi");
-  if(pathAiLeft()<=0){out.innerHTML=`<p class="note">You've used today's free reviews. Pro makes them unlimited.</p>`;return}
-  await samplePromise;if(!SAMPLE){out.innerHTML=`<p class="note">${aiLock("AI plan reviews")} Meanwhile, check the warnings above and each step's costs.</p>`;return}
-  btn.disabled=true;btn.textContent="Reviewing…";const P=pathState();
+/* plan pressure test: instant /100 code grade (always works) + AI grade on top, same layout as the resume review */
+const PATH_NOW={hs9:["Take honors math and an economics class if your school has one","Start a simple stock watchlist and read one business story a week"],hs10:["Join or start an investing or business club","Learn Excel basics and keep your grades up"],hs11:["Aim for a strong GPA and SAT/ACT; target business programs","Do a summer program or job that shows initiative"],hs12:["Pick a college with finance recruiting access","Learn the three financial statements before freshman year"],c1:["Get a 3.5+ GPA and join a finance club in your first semester","Apply to freshman insight programs (Goldman Possibilities, JPMorgan Freshman Focus) in spring","Start coffee chats with alumni"],c2:["Apply to Summer 2028 internships now; many banks open Dec–Jan","Prepare accounting and valuation technicals","Network weekly with alumni at target firms"],c3:["Lock down a Summer 2027 internship; mid-market banks are still posting","Practice Superday questions until they're automatic","Turn your internship into a return offer"],c4:["Convert your internship or recruit for full-time roles this fall","Keep networking for off-cycle openings"],work:["Talk to headhunters early if you want the buy side","Build the skills your next role screens for"]};
+function pathGrade(rows,warns,P){const cats=[],cat=(name,max)=>{const c={name,max,got:max,notes:[]};cats.push(c);return c},lose=(c,n,why)=>{n=Math.min(Math.round(n),c.got);if(n>0){c.got-=n;c.notes.push({pts:-n,why})}},ok=(c,why)=>c.notes.push({pts:0,why});
+  const car=rows.filter(r=>!r.school),first=car[0];const wt=warns.map(w=>w[1]);
+  const T=cat("Recruiting timing",25);
+  wt.filter(m=>/after \d+ year is unusual|straight from school/i.test(m)).forEach(m=>lose(T,10,m));
+  if(first&&first.age<20)lose(T,6,`First job at ${first.age} is very early for finance recruiting.`);
+  if(T.got===25)ok(T,"Your steps line up with normal recruiting windows.");
+  const L=cat("Path logic",25);
+  wt.filter(m=>/uncommon move/i.test(m)).forEach(m=>lose(L,6,m));
+  wt.filter(m=>/MBA at/i.test(m)).forEach(m=>lose(L,/early/.test(m)?8:4,m));
+  if(car.length<2)lose(L,6,"Only one career step. Add where you'd go next so you can see the full path.");
+  if(L.got===25)ok(L,"Every move is a common, well-trodden step.");
+  const B=cat("Sustainability",15);
+  wt.filter(m=>/straight years of the most intense/i.test(m)).forEach(m=>lose(B,8,m));
+  const hard=car.filter(r=>r.hrs>=4).reduce((a,r)=>a+r.y,0);if(hard>10)lose(B,4,`${hard} high-intensity years in total. Plan a lighter stretch.`);
+  if(B.got===15)ok(B,"Hours look sustainable.");
+  const G=cat("Goal fit",20),goal=PATH_GOALS[P.goal];
+  if(!goal)lose(G,5,"No goal picked. Choose one so the plan can be checked against it.");
+  else{const target=goal[1][goal[1].length-1][0];if(!car.some(r=>r.k===target))lose(G,12,`The plan never reaches ${PATH_ROLES[target].n}, the end point of "${goal[0]}".`);else ok(G,`Reaches ${PATH_ROLES[target].n}.`);
+    const buyGoal=goal[1].some(([r])=>PATH_ROLES[r]&&PATH_ROLES[r].c==="buy");if(buyGoal&&!car.some(r=>r.c==="buy"))lose(G,6,"Your goal is on the buy side, but no step gets you there.")}
+  const M=cat("Pay & options",15),opt=car.length?car.reduce((a,r)=>a+(r.opt||0)*r.y,0)/Math.max(1,car.reduce((a,r)=>a+r.y,0)):0;
+  if(opt<2.5)lose(M,6,"Few exit options along this path. A banking or consulting stop keeps more doors open.");
+  if(car.some(r=>r.k==="mba")&&!car.some((r,i)=>r.k==="mba"&&car[i+1]&&car[i+1].c==="buy"||car[i+1]&&car[i+1].pay>=4))lose(M,4,"The MBA isn't followed by a higher-paying step, so it's hard to justify the cost.");
+  if(M.got===15)ok(M,"Strong pay and exit options.");
+  const score100=cats.reduce((a,c)=>a+c.got,0);
+  const top_fixes=cats.flatMap(c=>c.notes.filter(n=>n.pts<0).map(n=>({...n,c:c.name}))).sort((x,y)=>x.pts-y.pts).slice(0,4).map(n=>`${n.why} (${n.pts} pts, ${n.c})`);
+  const this_year=(PATH_NOW[P.status]||[]).concat(first&&first.do?first.do.slice(0,1):[]).slice(0,4);
+  return {score100,categories:cats,headline:score100>=85?"Realistic plan. A few tweaks and it's solid.":score100>=70?"Doable, but fix the flagged steps.":score100>=55?"Some parts aren't realistic yet. Start with the biggest point losses.":"This plan needs rework before you rely on it.",top_fixes,this_year,instant:true}}
+function pathGradeHTML(r){const s=Math.max(0,Math.min(100,Math.round(+r.score100||0))),col=s>=80?"var(--good)":s>=60?"var(--warn)":"var(--bad)",L=a=>(Array.isArray(a)?a:[]).map(x=>`<li>${esc(x)}</li>`).join("");
+  const cats=(r.categories||[]).filter(c=>c&&c.name&&+c.max>0);
+  return `<div class="res-out"><div class="grade"><div class="score" style="border-color:${col};color:${col}"><div>${s}<small>/100</small></div></div><div><h4>${esc(r.headline||r.verdict||"")}</h4>
+   ${(r.top_fixes||[]).length?`<div class="label" style="margin-top:8px">Fix first</div><ol>${L(r.top_fixes)}</ol>`:""}${r.change?`<div class="label">Biggest change</div><p>${esc(r.change)}</p>`:""}
+   ${(r.this_year||[]).length?`<div class="label">Do this year</div><ul>${L(r.this_year)}</ul>`:""}</div></div>
+   ${cats.length?`<div class="label" style="margin-top:14px">Score breakdown</div><div class="res-cats">${cats.map(c=>{const g=Math.max(0,Math.min(+c.max,Math.round(+c.got||0))),pc=Math.round(g/c.max*100),cc=pc>=85?"var(--good)":pc>=60?"var(--warn)":"var(--bad)";
+     return `<details class="res-cat" ${pc<85?"open":""}><summary><span>${esc(c.name)}</span><span class="res-bar"><i style="width:${pc}%;background:${cc}"></i></span><b>${g}/${c.max}</b></summary><ul>${(c.notes||[]).map(n=>`<li class="${+n.pts<0?"lost":"ok"}">${+n.pts<0?`<b>${Math.round(+n.pts)}</b> `:"✓ "}${esc(n.why||"")}</li>`).join("")||`<li class="ok">✓ Nothing to fix here.</li>`}</ul></details>`}).join("")}</div>`:""}</div>`}
+async function pathReview(rows,warns){const out=$("#plAiOut"),btn=$("#plAi"),P=pathState();
+  const inst=pathGrade(rows,warns,P);out.innerHTML=`<div class="label">Instant check</div>`+pathGradeHTML(inst);
+  if(pathAiLeft()<=0){out.insertAdjacentHTML("beforeend",`<p class="note" style="margin-top:8px">You've used today's free AI reviews, so this is the instant check. Pro makes AI reviews unlimited.</p>`);return}
+  await samplePromise;if(!SAMPLE){out.insertAdjacentHTML("beforeend",`<p class="note" style="margin-top:8px">${aiLock("The deeper AI review")}</p>`);return}
+  btn.disabled=true;btn.textContent="Reviewing…";out.insertAdjacentHTML("beforeend",`<p class="note" id="plAiNote" style="margin-top:8px">Getting the deeper AI review…</p>`);
   const plan=rows.map(r=>`- Age ${r.age} to ${r.age+r.y} (${r.year}): ${r.n}`).join("\n");
-  const prompt=`You are a blunt, practical career coach for students aiming at high finance (investment banking, private equity, hedge funds, private credit, consulting). Review this student's career plan. They are ${P.age} and currently: ${PATH_STAT[P.status]}. Goal: ${(PATH_GOALS[P.goal]||["their own custom plan"])[0]}.${P.leave?" They want to leave finance at age "+P.leave+".":""}
+  const prompt=`You are a blunt, practical career coach for students aiming at high finance (investment banking, private equity, hedge funds, private credit, consulting). Grade this student's career plan out of 100. They are ${P.age} and currently: ${PATH_STAT[P.status]}. Goal: ${(PATH_GOALS[P.goal]||["their own custom plan"])[0]}.${P.leave?" They want to leave finance at age "+P.leave+".":""}
 Plan:
 ${plan}
 ${warns.length?"Automatic checks flagged: "+warns.map(w=>w[1]).join(" "):""}
-Be specific and realistic about timing, recruiting windows and trade-offs. Don't invent salary numbers. Plain English, short sentences.
-Return JSON: {"verdict": one sentence on how realistic the plan is, "score": integer 1-10 realism, "strengths": [1-3 short strings], "risks": [2-3 short, specific risks], "change": one concrete change that would most improve the plan, "this_year": [2-3 specific actions to take in the next 12 months]}`;
-  try{const r=await SAMPLE.json(prompt,{modelTier:"default"});S.pathAi=S.pathAi||{};S.pathAi[today()]=(S.pathAi[today()]||0)+1;save();
-    const sc=Math.max(1,Math.min(10,Math.round(+r.score||0)));const col=sc>=7?"var(--good)":sc>=5?"var(--warn)":"var(--bad)";const L=a=>(Array.isArray(a)?a:[]).map(x=>`<li>${esc(x)}</li>`).join("");
-    out.innerHTML=`<div class="grade"><div class="score" style="border-color:${col}">${sc}<small>/10</small></div><div><h4>${esc(r.verdict||"")}</h4>
-     ${r.strengths?`<b>Strengths</b><ul>${L(r.strengths)}</ul>`:""}<b>Risks</b><ul>${L(r.risks)}</ul>${r.change?`<b>Change this</b><p>${esc(r.change)}</p>`:""}<b>Do this year</b><ul>${L(r.this_year)}</ul></div></div>`}
-  catch(e){out.innerHTML=`<p class="note">The review didn't come through. Try again in a moment.</p>`}
-  btn.disabled=false;btn.textContent="Review again"}
+Use exactly these categories and maximums: Recruiting timing 25, Path logic 25, Sustainability 15, Goal fit 20, Pay & options 15. For every point you take off, give the reason. Be specific about recruiting windows and trade-offs. Don't invent salary numbers. Plain English, short sentences.
+Return JSON: {"score100": integer 0-100 (sum of categories), "categories": [{"name": category, "max": its maximum, "got": points, "notes": [{"pts": negative points lost, "why": short reason}]}], "headline": one sentence on how realistic the plan is, "change": one concrete change that would most improve it, "this_year": [2-3 specific actions for the next 12 months]}`;
+  try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.pathAi=S.pathAi||{};S.pathAi[today()]=(S.pathAi[today()]||0)+1;save();
+    if(!(+r.score100>=0))throw new Error("The AI answer was incomplete.");out.innerHTML=`<div class="label">AI review</div>`+pathGradeHTML(r)}
+  catch(e){const n=$("#plAiNote");const why=e&&["limit","unconfirmed","not_granted","capacity"].includes(e.code)?e.message:"The AI review didn't go through"+(e&&e.message&&e.message!=="AI request failed"?` (${e.message})`:"")+". Your instant check is above.";if(n)n.textContent=why}
+  finally{btn.disabled=false;btn.textContent="Review again"}}
 
 /* ---------- plan sharing + compare ---------- */
 let pathCmp=null;

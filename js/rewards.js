@@ -116,7 +116,7 @@
      <div class="founding"><div><b>Founding Member · $49 a year, locked for life</b><span>For the first 500 members. Permanent founder badge, and your price never goes up.</span></div><button class="ghost outline" data-plan="founding">${pro&&plan==="founding"?"You're a founder":"Claim founding price"}</button></div></section>
     <section class="pro2-promise"><div class="sec-head"><h2>Our promise</h2></div><div class="pro2-pg">${promise.map(([i,t,d])=>`<div><span>${i}</span><b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
     <section><div class="sec-head"><h2>Free vs Pro</h2></div><div class="tbl-wrap"><table class="cmp"><thead><tr><th></th><th>Free</th><th>Pro</th></tr></thead><tbody>${rows.map(([f,a,b])=>`<tr><td>${f}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join("")}</tbody></table></div><p class="note">Free members get 3 AI uses a day and can check any answer against the key points. Pro removes the daily limits. The 3-day trial and Pro days you earn by ranking up include 20 AI uses a day.</p></section>
-    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>Everyone gets Pro, plus a club leaderboard and an officer view. Get a quote for your club.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
+    <div class="club"><div><div class="label">For finance clubs</div><b>Club plan · priced by your member count</b><p>Every member gets Pro (15 AI uses a day each), plus a club leaderboard and an officer view. Get a quote for your club.</p></div><button class="ghost outline" id="clubBtn">Get a quote</button></div>
     <div id="reviews" class="reviews"></div>
     <div class="faq">${[["Can I cancel anytime?","Yes. One click in Settings. You keep Pro until the end of what you paid for."],["Will Pro charge extra for new content?","No. New tracks, packs and features are included as they launch."],["Does Pro help my leaderboard rank?","Never. Rankings are earned. Pro gets you reps and feedback, not points."],["Is the free version limited?","Every track, the daily question, Rapid Fire, the Gauntlet, friends, clubs and your profile stay free forever. AI features are capped at 3 uses a day."]].map(([q,a])=>`<details><summary>${q}<span class="chev"></span></summary><p>${a}</p></details>`).join("")}</div>`;
     if($("#proTrial"))$("#proTrial").onclick=()=>startPlan("trial");
@@ -195,7 +195,7 @@
     try{const {data}=await A.sb.from("docs").select("data").eq("col","billing").eq("id",s.user.id).maybeSingle();const b=(data&&data.data)||{};
       if(!again&&await claimPasses(b))return syncBilling(true);
       if(!again&&S.club&&S.club.code&&tierOf(b)==="free"&&Date.now()-(+localStorage.getItem("maClubTry")||0)>6e4){try{localStorage.setItem("maClubTry",Date.now())}catch(e){}
-        const cr=await authed("club",{action:"claim",code:S.club.code});if(cr.j&&cr.j.ok)return syncBilling(true);if(cr.j&&cr.j.reason==="full")toast("Your club's seats are full. Ask your officer to add more.")}
+        const cr=await authed("club",{action:"claim",code:S.club.code});if(cr.j&&cr.j.ok)return syncBilling(true);if(cr.j&&cr.j.reason==="full")toast("Your club's seats are full. Ask your officer to give you one or add more.");else if(cr.j&&cr.j.reason==="held")toast("Your officer has the Pro seat for someone else. Ask them for one.")}
       const tier=tierOf(b);window.MA_TIER=tier;const live=(tier==="pro"||tier==="season")&&!(((b.grantUntil||0)>Date.now()||(b.clubUntil||0)>Date.now())&&!((b.until||0)>Date.now()));
       if(!live&&(b.clubUntil||0)>Date.now()&&(b.clubUntil||0)>=(b.grantUntil||0)){S.pro={plan:"club",start:b.start||Date.now(),paid:true,until:b.clubUntil};S.proEver=true}
       else if(!live&&(b.grantUntil||0)>Date.now()){S.pro={plan:"granted",start:b.grantStart||Date.now(),paid:true,until:b.grantUntil};S.proEver=true}
@@ -217,7 +217,7 @@
 
   /* AI is Pro-only: hide the AI client from non-Pro users */
   /* AI works for every signed-in account; the server caps uses per day by tier (free 3, trial 20, season 40, pro 100) */
-  let REAL_AI=null;const AI_WRAP={async json(p,o){try{return await REAL_AI.json(p,o)}catch(e){if(e.code==="limit"){try{upgrade(MA_TIER==="free"?"You've used today's free AI uses. Pro is unlimited":"You've hit today's AI limit for your plan")}catch(x){}}throw e}}};
+  let REAL_AI=null;const AI_WRAP={async json(p,o){try{return await REAL_AI.json(p,o)}catch(e){if(e.code==="limit"){try{upgrade(MA_TIER==="free"?"You've used today's free AI uses. Pro is unlimited":(S.pro&&S.pro.plan==="club"?"You've used today's 15 club AI uses. They reset tomorrow":"You've hit today's AI limit for your plan"))}catch(x){}}throw e}}};
   function gateAI(){try{SAMPLE=REAL_AI&&window.MA_AUTH&&MA_AUTH.session?AI_WRAP:null}catch(e){}}
   samplePromise.then(s=>{REAL_AI=s;gateAI()});setInterval(gateAI,1500);
   /* paid plans always go through Stripe; the free trial works once per account */

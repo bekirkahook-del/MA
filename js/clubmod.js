@@ -85,20 +85,25 @@
     try{await loadNames(ids)}catch(e){}
     const P=id=>(typeof PLAYERS!=="undefined"?PLAYERS:[]).find(p=>p.id===id)||{id},co=new Set(v.co);
     const stat=p=>`<td>${RANKS[p.rank||0][0]}</td><td>${p.xp||0}</td><td>${p.levels||0}</td><td>${p.mockN?p.mockAvg:"–"}</td><td>${p.gWeek===isoWeek()?p.gScore:"–"}</td><td>${p.streak||0}</td><td>${p.updated?ago(p.updated):"–"}</td>`;
+    let SEATS=null;try{const A=window.MA_AUTH,ss=A&&A.sb&&(await A.sb.auth.getSession()).data.session;
+      if(ss){const rr=await fetch("/.netlify/functions/club",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ss.access_token},body:JSON.stringify({action:"seats",code:v.code})});const jj=await rr.json().catch(()=>({}));if(jj&&jj.ok)SEATS=jj}}catch(e){}
+    const holds=SEATS?new Set(SEATS.holders):null;
     const mem=v.members.map(P).sort((a,b)=>(b.xp||0)-(a.xp||0));
     const btn=(a,id,t,cls)=>`<button class="${cls||"flink"}" data-cm="${a}" data-id="${esc(id)}">${t}</button>`;
     openPanel(`<div class="label">Manage club</div><h2>${esc(v.name)}</h2>
       ${owns?`<div class="actions" style="margin:8px 0;flex-wrap:wrap"><input id="cmName" maxlength="40" value="${esc(v.name)}" aria-label="Club name"><button class="ghost outline sm" id="cmRen">Rename</button>
         <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="cmLock"${v.lock?" checked":""}> Require my approval to join</label></div>`:`<p class="note">You're a co-officer. The owner controls rename, approval and officers.</p>`}
       ${(v.pending||[]).length?`<h3>Waiting for approval (${v.pending.length})</h3><div class="tbl-wrap"><table><tbody>${v.pending.map(id=>`<tr><td class="nm" data-id="${esc(id)}"></td><td>${P(id).xp||0} XP</td><td>${btn("approve",id,"Approve","btn sm")} ${btn("decline",id,"Decline","ghost sm")}</td></tr>`).join("")}</tbody></table></div>`:""}
-      <h3>Members (${mem.length})</h3>
-      <div class="tbl-wrap"><table><thead><tr><th>Member</th><th>Title</th><th>XP</th><th>Levels</th><th>Interview avg</th><th>Gauntlet</th><th>Streak</th><th>Active</th><th></th></tr></thead><tbody>${mem.map(p=>`<tr><td class="nm" data-id="${esc(p.id)}"></td>${stat(p)}<td>${p.id===v.owner?"Owner":p.id===myId?"You":`${owns?btn("co",p.id,co.has(p.id)?"Remove co-officer":"Make co-officer")+" "+btn("transfer",p.id,"Make owner")+" ":""}${btn("remove",p.id,"Remove")}`}</td></tr>`).join("")}</tbody></table></div>
+      <h3>Members (${mem.length})</h3>${SEATS?`<p class="note">Pro seats: ${SEATS.holders.length} of ${SEATS.seats} used. Members who are not in the club take a seat when they join, until your seats run out. You can give or take back a seat here.</p>`:""}
+      <div class="tbl-wrap"><table><thead><tr><th>Member</th><th>Title</th><th>XP</th><th>Levels</th><th>Interview avg</th><th>Gauntlet</th><th>Streak</th><th>Active</th>${SEATS?"<th>Pro seat</th>":""}<th></th></tr></thead><tbody>${mem.map(p=>`<tr><td class="nm" data-id="${esc(p.id)}"></td>${stat(p)}${SEATS?`<td>${holds.has(p.id)?"✓ ":"– "}${p.id===v.owner?"":btn("seat:"+(holds.has(p.id)?"off":"on"),p.id,holds.has(p.id)?"Take back":"Give seat")}</td>`:""}<td>${p.id===v.owner?"Owner":p.id===myId?"You":`${owns?btn("co",p.id,co.has(p.id)?"Remove co-officer":"Make co-officer")+" "+btn("transfer",p.id,"Make owner")+" ":""}${btn("remove",p.id,"Remove")}`}</td></tr>`).join("")}</tbody></table></div>
       ${(v.ban||[]).length?`<h3>Removed (${v.ban.length})</h3><div class="tbl-wrap"><table><tbody>${v.ban.map(id=>`<tr><td class="nm" data-id="${esc(id)}"></td><td>${btn("unban",id,"Allow back")}</td></tr>`).join("")}</tbody></table></div>`:""}
       ${owns?`<p style="margin-top:14px"><button class="ghost danger sm" id="cmDis">Disband club</button></p>`:""}
       <p class="note">Removed people can't rejoin with the code until you allow them back.</p>`);
     panel.classList.add("wide");
     panel.querySelectorAll(".nm[data-id]").forEach(n=>n.textContent=displayName(n.dataset.id));
     panel.querySelectorAll("[data-cm]").forEach(b=>b.onclick=()=>{const a=b.dataset.cm,id=b.dataset.id;
+      if(a.startsWith("seat:")){(async()=>{try{const A=window.MA_AUTH,ss=(await A.sb.auth.getSession()).data.session;const rr=await fetch("/.netlify/functions/club",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+ss.access_token},body:JSON.stringify({action:"seat",code:v.code,uid:id,on:a==="seat:on"})});const jj=await rr.json().catch(()=>({}));
+        if(jj.ok)toast(a==="seat:on"?"Seat given":"Seat taken back");else toast(jj.reason==="full"?"All seats are used. Take one back first.":jj.reason==="payer"?"The person paying always keeps a seat.":jj.error||"That didn't work")}catch(e){try{toast("That didn't work")}catch(x){}}openManage()})();return}
       if(a==="transfer"&&!confirm("Make them the owner? You'll become a co-officer."))return;
       act(a,id,a==="co"?{on:!co.has(id)}:null)});
     if(owns){

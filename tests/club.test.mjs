@@ -123,6 +123,21 @@ assert.equal(c3.ok, true); assert.equal(c4.ok, false); assert.ok(billingClub().m
 assert.deepEqual([...billingClub().members].sort(), [OFFICER, M2, M3].sort());
 billingClub().seats = 10;
 
+// ---- officers choose who holds the seats ----
+const seatCall = async (tok, uid, on) => j(await call(CLUBS, { action: "seat", code: "abc123", uid, on }, tok));
+assert.equal((await j(await call(CLUBS, { action: "seats", code: "abc123" }, "tok2"))).status, 403, "a plain member can't see or change seats");
+assert.equal((await seatCall("tok2", M3, false)).status, 403);
+let sv = await j(await call(CLUBS, { action: "seats", code: "abc123" }, "tokO"));
+assert.deepEqual([...sv.holders].sort(), [OFFICER, M2, M3].sort());
+assert.equal((await seatCall("tokO", M3, false)).ok, true); assert.equal(tierOf(await getBilling(M3)), "free", "seat taken back");
+assert.equal((await claim("tok3")).reason, "held", "a taken-back seat is not re-claimed automatically");
+assert.equal((await seatCall("tokO", OFFICER, false)).reason, "payer", "the payer always keeps a seat");
+billingClub().seats = 2;
+assert.equal((await seatCall("tokO", M3, true)).reason, "full");
+billingClub().seats = 10;
+assert.equal((await seatCall("tokO", M3, true)).ok, true); assert.equal(tierOf(await getBilling(M3)), "club"); assert.deepEqual(billingClub().held, []);
+assert.equal((await seatCall("tokO", M4, true)).reason, "not_member", "only approved members can be given a seat");
+
 // ---- status ----
 let st = await j(await call(CLUBS, { action: "status" }, "tokO"));
 assert.equal(st.clubs[0].used, 3); assert.equal(st.clubs[0].canBill, true); assert.equal(st.clubs[0].owner, true); assert.equal(st.clubs[0].name, "Fisher Finance");

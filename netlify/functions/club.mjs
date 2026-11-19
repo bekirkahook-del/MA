@@ -1,9 +1,11 @@
 // Club plan seats. POST { action }
 //   quote  { members }  -> price for N members (no sign-in needed)
 //   claim  { code }     -> an approved member of a paid club takes a seat
+//   seats  { code }     -> an officer sees who holds a seat
+//   seat   { code, uid, on } -> an officer gives or takes back one member's seat
 //   status              -> the club's owner (and whoever pays) sees seats used, renewal date and billing access
 // Who counts as a member comes from the club record kept by club-admin.mjs (col "clubs"), never from a player's own doc.
-import { json, getUser, getClub, setClub, clubsOfUser, clubActive, setMemberAccess, clubCodeOk, rebuildProList, getClubRec, clubMemberOk } from "./_lib/common.mjs";
+import { json, getUser, UUID, getClub, setClub, clubsOfUser, clubActive, setMemberAccess, clubCodeOk, rebuildProList, getClubRec, clubMemberOk } from "./_lib/common.mjs";
 import { clubQuote } from "./_lib/clubprice.mjs";
 
 // Drops seat holders who are no longer approved members (left, removed, disbanded) and frees their seats.
@@ -36,6 +38,7 @@ export default async (req) => {
       await rebuildProList().catch(() => {});
       return json(200, { ok: false, reason: rec.gone ? "gone" : (rec.pending || []).includes(user.id) ? "pending" : "not_member" });
     }
+    if ((club.held || []).includes(user.id)) return json(200, { ok: false, reason: "held" }); // an officer took this seat back: they must hand it out again
     // Take a seat. The plan doc has no version check, so write, read back, and retry if a simultaneous claim overwrote ours.
     for (let attempt = 0; attempt < 3; attempt++) {
       club = attempt ? await getClub(code) : club;
@@ -53,6 +56,42 @@ export default async (req) => {
     await setMemberAccess([user.id], club.until);
     await rebuildProList().catch(() => {});
     return json(200, { ok: true, until: club.until });
+  }
+
+  if (body.action === "seats" || body.action === "seat") { // officers choose who holds the paid seats
+    const code = String(body.code || "").toLowerCase();
+    if (!clubCodeOk(code)) return json(200, { ok: false, reason: "no_club" });
+    let rec, club;
+    try { rec = await getClubRec(code); club = await getClub(code); } catch (e) { console.error("club seats read", String(e)); return json(503, { error: "Try again in a minute" }); }
+    if (!rec || !(rec.owner === user.id || (rec.co || []).includes(user.id))) return json(403, { error: "Only club officers can do that" });
+    if (!clubActive(club)) return json(200, { ok: false, reason: "no_plan" });
+    club = await prune(code, club, rec);
+    club.members = club.members || [];
+    if (body.action === "seat") {
+      const t = String(body.uid || "");
+      if (!UUID.test(t)) return json(400, { error: "Bad member" });
+      if (body.on) {
+        if (!clubMemberOk(rec, t)) return json(200, { ok: false, reason: "not_member" });
+        if (!club.members.includes(t)) {
+          if (club.members.length >= club.seats) return json(200, { ok: false, reason: "full", seats: club.seats });
+          club.members.push(t);
+        }
+        club.held = (club.held || []).filter((u) => u !== t);
+        await setClub(code, club);
+        await setMemberAccess([t], club.until);
+      } else {
+        if (t === club.officer || t === club.owner) return json(200, { ok: false, reason: "payer" }); // the person paying always keeps a seat
+        club.members = club.members.filter((u) => u !== t);
+        club.held = [...new Set([...(club.held || []), t])].slice(-500);
+        await setClub(code, club);
+        await setMemberAccess([t], 0);
+      }
+      const check = await getClub(code);
+      if (!check || (check.members || []).includes(t) !== !!body.on) return json(503, { error: "Busy, try again" });
+      club = check;
+      await rebuildProList().catch(() => {});
+    }
+    return json(200, { ok: true, seats: club.seats, holders: club.members, held: club.held || [] });
   }
 
   if (body.action === "status") {

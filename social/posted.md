@@ -111,3 +111,4 @@
 - 2026-11-23 punch-deals26 — [Ranking video, no voice] Biggest deals of 2026 so far (Dealroom, Nov 2026; SpaceX+xAI ~$250B, Paramount+WBD $110B, EQR+AvalonBay ~$70B, SpaceX+Cursor ~$60B, McCormick+Unilever Foods ~$45B)
 - 2026-11-23 type2-perp — [Teaser video, type2.js, no voice] $100/yr forever at 5% → $2,000 (perpetuity)
 - 2026-11-23 oddq-pctswap — [Interview Q] 35% of 60 = 60% of 35 = 21 (percent swap)
+- 2026-11-19 9:07pm ad-liquid-ps2 — [Ad, Bekir's cloned voice (AI), PS2-style host, liquid morph, real app clips] 28s M&A Prep ad: levels, Rapid Fire, mock interview (301 Qs), deal breakdowns, leaderboards. TikTok + IG Reel + YouTube Short + FB Reel, all AI-labeled. Bekir asked to post tonight

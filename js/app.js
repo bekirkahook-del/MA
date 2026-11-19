@@ -835,7 +835,50 @@ const FIRMS=[
  ["Oliver Wyman","Consulting","New York","Strategy firm with a strong financial services practice. Now part of Marsh (formerly Marsh McLennan).",["Financial services","Strategy"]],
  ["L.E.K. Consulting","Consulting","London / Boston","Strategy firm known for healthcare and private equity diligence work.",["Healthcare","PE diligence"]],
  ["Kearney","Consulting","Chicago","Strategy and operations firm known for supply chain and procurement work.",["Operations","Supply chain"]],
- ["Deloitte","Consulting","New York","Largest of the Big 4. Its consulting arm, including Monitor Deloitte strategy, hires large undergrad classes.",["Big 4","Technology","Strategy"]]
+ ["Deloitte","Consulting","New York","Largest of the Big 4. Its consulting arm, including Monitor Deloitte strategy, hires large undergrad classes.",["Big 4","Technology","Strategy"]],
+ ["Barclays","Bulge bracket","London / New York","British universal bank with a large U.S. investment bank built from the Lehman Brothers acquisition. Strong in leveraged finance and debt.",["Leveraged finance","DCM","M&A"]],
+ ["Deutsche Bank","Bulge bracket","Frankfurt / New York","Germany's largest bank, with a sizable U.S. presence in debt financing and markets.",["Leveraged finance","Sales & trading","DCM"]],
+ ["UBS","Bulge bracket","Zurich / New York","Swiss bank that absorbed Credit Suisse in 2023. Best known for global wealth management.",["Wealth management","M&A","ECM"]],
+ ["Wells Fargo","Bulge bracket","San Francisco / Charlotte","One of the four largest U.S. banks, steadily building its investment banking franchise.",["Leveraged finance","DCM","M&A"]],
+ ["Perella Weinberg","Elite boutique","New York","Independent advisory firm known for M&A and a strong restructuring practice; owns energy bank TPH.",["M&A","Restructuring","Energy"]],
+ ["Rothschild & Co","Elite boutique","Paris / London","Family-controlled global advisory firm and one of the most active M&A advisors in Europe.",["M&A","Restructuring","Debt advisory"]],
+ ["Greenhill","Elite boutique","New York","Advisory boutique known for M&A and restructuring; acquired by Mizuho in 2023.",["M&A","Restructuring","Capital advisory"]],
+ ["LionTree","Elite boutique","New York","Boutique focused on media, telecom and technology deals.",["Media","Tech","M&A"]],
+ ["Ducera Partners","Elite boutique","New York","Advisory firm known for restructuring and liability management work.",["Restructuring","Liability management","M&A"]],
+ ["Baird","Middle market","Milwaukee","Employee-owned firm with a strong middle-market M&A practice.",["M&A","Industrials","Healthcare"]],
+ ["Lincoln International","Middle market","Chicago","Global mid-market advisor that works heavily with private equity clients, plus a valuation practice.",["M&A","PE coverage","Valuations"]],
+ ["Piper Sandler","Middle market","Minneapolis","Mid-market bank known for healthcare, financial institutions and restructuring.",["Healthcare","FIG","M&A"]],
+ ["Raymond James","Middle market","St. Petersburg, FL","Full-service firm with a broad middle-market investment bank and a big wealth business.",["M&A","ECM","Industrials"]],
+ ["Stifel","Middle market","St. Louis","Middle-market bank that grew through acquisitions such as Keefe, Bruyette & Woods.",["FIG","M&A","ECM"]],
+ ["RBC Capital Markets","Middle market","Toronto / New York","Investment bank of Royal Bank of Canada, Canada's largest bank, with a large U.S. platform.",["Leveraged finance","Energy","M&A"]],
+ ["Guggenheim Securities","Middle market","New York","Investment bank of Guggenheim Partners, known for large M&A assignments and healthcare.",["M&A","Healthcare","Restructuring"]],
+ ["TD Securities","Middle market","Toronto / New York","Investment bank of TD Bank; bought Cowen in 2023 to grow U.S. equities and advisory.",["ECM","M&A","Sales & trading"]],
+ ["Truist Securities","Middle market","Atlanta","Investment bank of Truist Financial, focused on middle-market companies and sponsors.",["Leveraged finance","M&A","DCM"]],
+ ["KeyBanc Capital Markets","Middle market","Cleveland","Investment bank of KeyCorp serving middle-market companies.",["M&A","Leveraged finance","Industrials"]],
+ ["TPG","Private equity","Fort Worth / San Francisco","Global alternative asset manager known for growth, healthcare and impact investing.",["Buyouts","Growth","Impact"]],
+ ["Warburg Pincus","Private equity","New York","Pioneer of growth investing with a global footprint.",["Growth equity","Buyouts","Financial services"]],
+ ["Vista Equity Partners","Private equity","Austin","Private equity firm that invests only in enterprise software.",["Software","Buyouts","Tech"]],
+ ["Thoma Bravo","Private equity","Chicago","Software-focused buyout firm and one of the largest tech investors.",["Software","Cybersecurity","Take-privates"]],
+ ["Hellman & Friedman","Private equity","San Francisco","Concentrated buyout firm that makes a small number of large investments.",["Buyouts","Software","Financial services"]],
+ ["Silver Lake","Private equity","Menlo Park","Technology-focused firm investing in large-scale tech buyouts and growth deals.",["Tech","Buyouts","Growth"]],
+ ["Advent International","Private equity","Boston","Global buyout firm with deep sector teams in Europe and the U.S.",["Buyouts","Industrials","Consumer"]],
+ ["General Atlantic","Private equity","New York","Growth equity investor backing fast-growing private companies.",["Growth equity","Tech","Healthcare"]],
+ ["Ares Management","Private equity","Los Angeles","Alternative asset manager best known for private credit, plus private equity and real estate.",["Private credit","Buyouts","Real estate"]],
+ ["EQT","Private equity","Stockholm","Europe's largest private equity firm, active in infrastructure and buyouts.",["Buyouts","Infrastructure","Healthcare"]],
+ ["CVC Capital Partners","Private equity","Luxembourg / London","Large European buyout firm, publicly listed since 2024.",["Buyouts","Consumer","Sports"]],
+ ["D.E. Shaw","Hedge fund","New York","Multi-strategy firm founded by a computer scientist; mixes quantitative and discretionary investing.",["Quant","Multi-strategy","Macro"]],
+ ["Point72","Hedge fund","Stamford, CT","Steve Cohen's multi-manager firm with a well-known analyst training Academy.",["Long/short equity","Multi-manager","Quant"]],
+ ["Two Sigma","Hedge fund","New York","Quantitative firm that relies on data science and engineering.",["Quant","Data science","Tech"]],
+ ["Renaissance Technologies","Hedge fund","East Setauket, NY","Quant pioneer known for its Medallion fund, mostly closed to outside investors.",["Quant","Math","Statistics"]],
+ ["Balyasny","Hedge fund","Chicago","Multi-strategy, multi-manager platform.",["Multi-manager","Long/short equity","Macro"]],
+ ["AQR","Hedge fund","Greenwich, CT","Quant firm rooted in academic factor research.",["Quant","Factors","Research"]],
+ ["Baupost","Hedge fund","Boston","Value investor led by Seth Klarman, known for deep, patient research.",["Value investing","Distressed","Long-only"]],
+ ["Man Group","Hedge fund","London","One of the largest publicly listed hedge fund firms, strong in systematic strategies.",["Quant","Systematic","Credit"]],
+ ["Accenture Strategy","Consulting","Dublin / New York","Strategy arm of the world's largest professional services firm, tied closely to technology projects.",["Strategy","Technology","Transformation"]],
+ ["EY-Parthenon","Consulting","Boston","EY's strategy consulting unit, active in deal and transaction work.",["Strategy","Transactions","Due diligence"]],
+ ["Strategy&","Consulting","New York","PwC's strategy consulting business, formerly Booz & Company.",["Strategy","Operations","Deals"]],
+ ["Alvarez & Marsal","Consulting","New York","Firm known for turnaround, restructuring and performance improvement.",["Restructuring","Turnaround","Performance"]],
+ ["Roland Berger","Consulting","Munich","Largest strategy consultancy of European origin.",["Strategy","Industrials","Automotive"]],
 ];
 /* ---------- state ---------- */
 const KEY="ma-progress-v1";
@@ -2454,7 +2497,7 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
     catch(e){note.textContent=e&&e.message||"Couldn't read that file. Try a PDF or Word (.docx), or paste the text."}};
   $("#resFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)resLoad(f)});
   {const dz=$("#resDrop");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("on")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("on")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)resLoad(f)})}
-  $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<60){toast("Paste your full resume (at least a few sections)");return}
+  $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<35){toast("Paste your full resume (at least a few sections)");return}
     /* instant rule-based check first: always works, no AI, no limit */
     const inst=window.maResumeCheck?maResumeCheck(txt,$("#resRole").value):null;
     const showInst=extra=>{if(!inst)return;$("#resOut").innerHTML=`<div class="label">Instant check</div>${resumeHTML(inst)}${extra?`<p class="note" style="margin-top:10px">${extra}</p>`:""}`};
@@ -2467,15 +2510,22 @@ function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.r
 Resume:
 """${txt.slice(0,6000)}"""
 
-Return ONLY JSON: {"score": integer 1-10, "headline": one-sentence overall verdict, "strengths": [2-3 short strings], "top_fixes": [3 specific, prioritized fixes], "bullets": [up to 3 objects {"original": a weak bullet quoted from the resume, "issue": short reason, "rewrite": stronger version keeping only facts present in the original}], "formatting": [1-3 short formatting notes]}`;
+Grade it out of 100 against the standard Wall Street one-page resume template (Education first, then Experience, Leadership & Activities, Skills & Interests; one page; quantified bullets that start with action verbs). Use exactly these categories and maximums: Header & contact 5, Education 20, Experience & bullets 35, Leadership & activities 10, Skills & interests 10, Format & length 20. For every point you take off, give the reason.
+
+Return ONLY JSON: {"score100": integer 0-100 (the sum of the category scores), "categories": [{"name": category name, "max": its maximum, "got": points earned, "notes": [{"pts": negative number of points lost, "why": short specific reason}]}], "score": integer 1-10, "headline": one-sentence overall verdict, "strengths": [2-3 short strings], "top_fixes": [3 specific, prioritized fixes], "bullets": [up to 3 objects {"original": a weak bullet quoted from the resume, "issue": short reason, "rewrite": stronger version keeping only facts present in the original}], "formatting": [1-3 short formatting notes]}`;
     try{const r=await SAMPLE.json(prompt,{modelTier:"quick"});S.resumeLog=S.resumeLog||{};S.resumeLog[today()]=usedToday+1;S.resumeLast={...r,date:today()};save();$("#resOut").innerHTML=`<div class="label">AI review</div>`+resumeHTML(r)}
     catch(e){const why=e&&["limit","unconfirmed","not_granted","capacity"].includes(e.code)?e.message:e&&(e.code===429||e.code==="rate_limited")?"AI is busy right now. Try again in a minute.":"The AI review didn't go through"+(e&&e.message&&e.message!=="AI request failed"?` (${e.message})`:"")+". Try again in a minute.";
       if(inst){const n=$("#resAiNote");if(n)n.textContent=why+" Your instant check is above.";else showInst(why)}else $("#resOut").innerHTML=`<p class="note">${esc(why)}</p>`}
     finally{if(document.contains(b)){b.disabled=false;b.textContent="Review again"}}}}
-function resumeHTML(r,old){const sc=Math.max(1,Math.min(10,Math.round(+r.score||0))),col=sc>=7?"var(--good)":sc>=5?"var(--warn)":"var(--bad)";
-  return `<div class="res-out">${old?`<div class="label">Last review · ${esc(r.date||"")}</div>`:""}<div class="grade"><div class="score" style="border-color:${col};color:${col}"><div>${sc}<small>/10</small></div></div><div><h4>${esc(r.headline||"")}</h4>
+function resumeHTML(r,old){const has100=r.score100!=null&&isFinite(+r.score100);const s100=has100?Math.max(0,Math.min(100,Math.round(+r.score100))):null;
+  const sc=has100?Math.round(s100/10):Math.max(1,Math.min(10,Math.round(+r.score||0))),col=sc>=8?"var(--good)":sc>=6?"var(--warn)":"var(--bad)";
+  const cats=Array.isArray(r.categories)?r.categories.filter(c=>c&&c.name&&+c.max>0):[];
+  return `<div class="res-out">${old?`<div class="label">Last review · ${esc(r.date||"")}</div>`:""}<div class="grade"><div class="score" style="border-color:${col};color:${col}"><div>${has100?s100:sc}<small>${has100?"/100":"/10"}</small></div></div><div><h4>${esc(r.headline||"")}</h4>
+   ${has100?`<p class="note" style="margin:2px 0 8px">Graded against the standard Wall Street one-page template.</p>`:""}
    <div class="label" style="margin-top:10px">Fix first</div><ol>${(r.top_fixes||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ol>
-   <div class="label">Working well</div><ul>${(r.strengths||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
+   ${(r.strengths||[]).length?`<div class="label">Working well</div><ul>${(r.strengths||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}</div></div>
+   ${cats.length?`<div class="label" style="margin-top:16px">Score breakdown</div><div class="res-cats">${cats.map(c=>{const g=Math.max(0,Math.min(+c.max,Math.round(+c.got||0))),pc=Math.round(g/c.max*100),cc=pc>=85?"var(--good)":pc>=60?"var(--warn)":"var(--bad)";
+     return `<details class="res-cat" ${pc<85?"open":""}><summary><span>${esc(c.name)}</span><span class="res-bar"><i style="width:${pc}%;background:${cc}"></i></span><b>${g}/${c.max}</b></summary><ul>${(c.notes||[]).map(n=>`<li class="${+n.pts<0?"lost":"ok"}">${+n.pts<0?`<b>${Math.round(+n.pts)}</b> `:"✓ "}${esc(n.why||"")}</li>`).join("")||`<li class="ok">✓ Nothing to fix here.</li>`}</ul></details>`}).join("")}</div>`:""}
    ${(r.bullets||[]).length?`<div class="label" style="margin-top:16px">Bullet rewrites</div>${r.bullets.map(b=>`<div class="bul"><p class="was">${esc(b.original)}</p><p class="why2">${esc(b.issue)}</p><p class="now">${esc(b.rewrite)}</p></div>`).join("")}`:""}
    ${(r.formatting||[]).length?`<div class="label" style="margin-top:16px">Formatting</div><ul>${r.formatting.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}</div>`}
 

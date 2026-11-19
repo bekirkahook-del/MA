@@ -513,6 +513,12 @@ textarea,input,select{border-width:1px;border-radius:6px;background:var(--sheet)
 .chip:hover{border-color:var(--ink-2)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
 .road{gap:0 48px}
+.res-cats{border:1px solid var(--rule);border-radius:12px;overflow:hidden}.res-cat{border-bottom:1px solid var(--rule)}.res-cat:last-child{border-bottom:0}
+.res-cat summary{display:grid;grid-template-columns:minmax(0,1fr) 110px 56px;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;font-size:14.5px;color:var(--ink);list-style:none}
+.res-cat summary::-webkit-details-marker{display:none}.res-cat summary b{text-align:right;font-variant-numeric:tabular-nums}
+.res-bar{height:6px;border-radius:99px;background:var(--rule);overflow:hidden}.res-bar i{display:block;height:100%;border-radius:99px}
+.res-cat ul{margin:0;padding:0 14px 10px 30px;font-size:14px;line-height:1.5}.res-cat li.lost b{color:var(--bad)}.res-cat li.ok{color:var(--ink-2);list-style:none;margin-left:-16px}
+@media(max-width:560px){.res-cat summary{grid-template-columns:minmax(0,1fr) 60px 48px;gap:8px}}
 .rd-hero{border:1px solid var(--rule);border-radius:16px;background:var(--sheet);padding:18px 20px 16px;margin:0 0 22px}
 .rd-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
 .rd-k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}

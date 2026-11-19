@@ -1,0 +1,25 @@
+{
+  "_note": "Machine-readable copy of the hard rules in social/DAILY.md, used by check.py. When Bekir adds or changes a rule, update it here too.",
+  "window": ["12:00", "23:00"],
+  "min_gap_min": 60,
+  "caps": [
+    {"network": "tiktok", "max": 5, "from": "2026-11-13", "to": "2026-11-30"},
+    {"network": "tiktok", "max": 10, "from": "2026-12-01", "to": "2099-12-31"}
+  ],
+  "blackout_dates": ["2026-11-12"],
+  "no_mention": [
+    {"from": "2026-11-11", "to": "2026-11-13", "except": ["quora"], "pattern": "mnaprep|m&a prep|m&amp;a prep|link in bio|free practice"}
+  ],
+  "video_share_max": 0.5,
+  "no_mix_networks": ["pinterest", "youtube", "quora"],
+  "hashtags": {
+    "tiktok": [3, 5],
+    "instagram": [5, 8],
+    "pool": ["finance", "financetok", "wallstreet", "investmentbanking", "privateequity", "moneytok", "careertok", "collegelife", "college", "businessschool", "stocks", "investing", "learnontiktok", "interviewtips", "mentalmath", "brainteaser", "money", "salary", "jobs", "internship", "highschool", "studytok", "economics", "financialliteracy", "mergersandacquisitions"]
+  },
+  "tiktok_photo_ext": [".jpg", ".jpeg"],
+  "no_repeat_days": 30,
+  "styles": ["glow", "paper", "neon", "terminal"],
+  "video_score_min": 78,
+  "banned_phrases": ["guaranteed", "like if", "share or", "share if", "qr code"]
+}

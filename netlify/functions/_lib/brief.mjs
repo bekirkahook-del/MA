@@ -1,5 +1,5 @@
 // Weekly market brief for the Sunday email: last week's moves (Yahoo Finance prices), top stories and
-// the week ahead (from The Wire's data/wire.json), plus a short plain-English recap written by Claude.
+// the week ahead (from The Wire's data/wire.json), plus a short plain-English recap built from the numbers (template, no AI).
 // Every part is optional: if a source fails, that section is simply left out.
 const SYMS = [["^GSPC", "S&P 500", "idx"], ["^IXIC", "Nasdaq", "idx"], ["^DJI", "Dow", "idx"], ["^TNX", "10-year Treasury yield", "yld"], ["CL=F", "Oil (WTI)", "usd"], ["BTC-USD", "Bitcoin", "usd"]];
 const WIRE = "https://raw.githubusercontent.com/bekirkahook-del/MA/main/data/wire.json";
@@ -25,16 +25,27 @@ const parseCal = (s, now) => { // "Wed Nov 4" -> Date
   return d;
 };
 
-async function recap(moves, stories) {
-  const key = process.env.ANTHROPIC_API_KEY; if (!key || !moves.length) return "";
-  const facts = moves.map(m => `${m.name}: ${m.kind === "yld" ? `${fmt(m.last, 2)}%, ${m.ch >= 0 ? "+" : ""}${fmt(m.ch)} basis points` : `${m.ch >= 0 ? "+" : ""}${fmt(m.ch, 1)}%`} this week`).join("\n");
-  const prompt = `Write a 2-3 sentence recap of last week in the markets for high school and college students interested in finance. Plain words, friendly but not slangy, no hype, no advice to buy or sell. Use ONLY the facts below; do not add any numbers, causes or events that are not listed. If you mention a cause, it must come from the headlines.\n\nWeekly moves:\n${facts}\n\nHeadlines:\n${stories.map(s => "- " + s).join("\n") || "(none)"}`;
-  try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", { method: "POST", headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: process.env.AI_MODEL_QUICK || "claude-haiku-5-5", max_tokens: 220, messages: [{ role: "user", content: prompt }] }) });
-    if (!r.ok) return "";
-    const j = await r.json(); return ((j.content || []).map(c => c.text || "").join("").trim()).replace(/[<>]/g, "");
-  } catch (e) { return ""; }
+// Plain-English recap built from the numbers (no AI): it can only say what the data says.
+function recap(moves) {
+  const by = n => moves.find(m => m.name === n);
+  const pct = m => `${fmt(Math.abs(m.ch), 1)}%`;
+  const verb = m => (m.ch >= 0 ? "rose" : "fell");
+  const idx = ["S&P 500", "Nasdaq", "Dow"].map(by).filter(Boolean);
+  const out = [];
+  if (idx.length) {
+    const up = idx.filter(m => m.ch >= 0), dn = idx.filter(m => m.ch < 0);
+    const list = ms => ms.map((m, i) => `${i ? "the " : ""}${m.name} ${i ? "" : (m.ch >= 0 ? "gained" : "lost") + " "}${pct(m)}`).reduce((acc, x, i, a) => acc + (i === 0 ? "" : i === a.length - 1 ? " and " : ", ") + x, "");
+    if (!dn.length) out.push(`Stocks rose last week: the ${list(up)}.`);
+    else if (!up.length) out.push(`Stocks fell last week: the ${list(dn)}.`);
+    else out.push(`Stocks were mixed last week: the ${up.map(m => `${m.name} rose ${pct(m)}`).join(" and the ")}, while the ${dn.map(m => `${m.name} fell ${pct(m)}`).join(" and the ")}.`);
+  }
+  const y = by("10-year Treasury yield");
+  if (y) out.push(Math.abs(y.ch) < 1 ? `The 10-year Treasury yield barely moved, ending at ${fmt(y.last, 2)}%.`
+    : `The 10-year Treasury yield ${y.ch > 0 ? "rose" : "fell"} ${fmt(Math.abs(y.ch))} basis points to ${fmt(y.last, 2)}% (${y.ch > 0 ? "higher yields mean borrowing costs more" : "lower yields mean borrowing gets cheaper"}).`);
+  const o = by("Oil (WTI)"), c = by("Bitcoin");
+  const rest = [o && `oil ${verb(o)} ${pct(o)}`, c && `Bitcoin ${verb(c)} ${pct(c)}`].filter(Boolean);
+  if (rest.length) out.push(rest.join(" and ").replace(/^./, x => x.toUpperCase()) + ".");
+  return out.join(" ");
 }
 
 export async function marketBrief(now = new Date()) {
@@ -45,7 +56,7 @@ export async function marketBrief(now = new Date()) {
   const end = new Date(now.getTime() + 7 * 864e5), todayStr = now.toISOString().slice(0, 10), endStr = end.toISOString().slice(0, 10);
   const earn = w ? (w.EARN || []).filter(e => e[0] > todayStr && e[0] <= endStr) : [];
   const cal = w ? (w.CAL || []).map(c => [parseCal(c[0], now), c]).filter(([d]) => d && d > now && d <= end) : [];
-  const text = await recap(moves, stories);
+  const text = recap(moves);
   const sum = moves.find(m => m.name === "S&P 500");
   const H = (t, c) => `<p style="font-size:12px;letter-spacing:.1em;color:${c};font-weight:bold;margin:0 0 8px">${t}</p>`;
   let html = "";

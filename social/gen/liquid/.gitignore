@@ -1,0 +1,9 @@
+cb-env/
+voicelab/
+still_*.png
+*.mp4
+*.wav
+dl/
+clips/
+node_modules/
+shots/

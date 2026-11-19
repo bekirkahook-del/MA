@@ -1,0 +1,12 @@
+{"end": 22,
+ "scenes": [
+  {"t": 0.0, "y": 760, "lines": [["WANT A JOB IN", "IX", 92, "#B9C4E0"], ["INVESTMENT", "IB", 150, "#FFFFFF", 0], ["BANKING?", "IB", 150, "#FFFFFF"]]},
+  {"t": 2.6, "y": 780, "lines": [["Most people prep with", "IS", 74, "#B9C4E0"], ["a giant PDF", "IB", 140, "#FFFFFF"]]},
+  {"t": 5.0, "y": 780, "lines": [["...and forget it all", "IB", 108, "#FFFFFF"], ["by the interview", "IS", 80, "#B9C4E0"]]},
+  {"t": 7.6, "y": 740, "lines": [["M&A PREP", "IB", 176, "#FFFFFF"], ["turns it into a game", "IX", 86, "#7CF0C8"]]},
+  {"t": 10.2, "y": 800, "lines": [["5-minute", "IB", 170, "#FFFFFF", 0], ["levels", "IB", 170, "#7CF0C8"]]},
+  {"t": 11.8, "y": 800, "lines": [["Real interview", "IB", 140, "#FFFFFF", 0], ["questions", "IB", 140, "#7CF0C8"]]},
+  {"t": 13.8, "y": 640, "lines": [["Banking", "IB", 120, "#FFFFFF", 4], ["Private equity", "IB", 120, "#FFFFFF", 4], ["Hedge funds", "IB", 120, "#FFFFFF", 4], ["Consulting", "IB", 120, "#FFFFFF"]]},
+  {"t": 17.0, "y": 800, "lines": [["And it's", "IX", 110, "#B9C4E0", 0], ["FREE.", "IB", 230, "#7CF0C8"]]},
+  {"t": 18.8, "y": 760, "lines": [["mnaprep.com", "IB", 150, "#FFFFFF"], ["Free IB & PE interview prep", "IS", 60, "#B9C4E0"]]}
+ ]}

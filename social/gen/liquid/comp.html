@@ -1,0 +1,92 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#070B18}
+#bg{position:absolute;left:0;top:0;width:1080px;height:1920px;border:0}
+#phone{position:absolute;width:560px;height:1120px;border-radius:64px;background:#05070d;padding:16px;box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 0 3px rgba(255,255,255,.18) inset;opacity:0}
+#phone img{width:560px;height:1120px;border-radius:50px;display:block;object-fit:cover;object-position:top}
+#ch{position:absolute;width:540px;height:960px;image-rendering:pixelated}
+#tag{position:absolute;left:0;top:0;padding:10px 22px;border-radius:14px;background:#0B1532;border:3px solid #7CF0C8;color:#fff;font:800 34px Inter;opacity:0;letter-spacing:.5px}
+</style><style>@font-face{font-family:Inter;src:url(file:///usr/share/fonts/opentype/inter/Inter-ExtraBold.otf);font-weight:800}</style></head><body>
+<iframe id="bg" src="liquid.html"></iframe>
+<div id="phone"><img id="scr"></div>
+<canvas id="ch" width="216" height="384"></canvas>
+<div id="tag"></div>
+<script src="node_modules/three/build/three.min.js"></script>
+<script>
+// ---------- PS2-style low-poly host ----------
+const cv=document.getElementById('ch');
+const R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:false,preserveDrawingBuffer:true});R.setPixelRatio(1);R.setSize(216,384,false);
+const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(30,216/384,.1,50);cam.position.set(0,1.55,7.2);cam.lookAt(0,1.45,0);
+sc.add(new THREE.HemisphereLight(0xcfe0ff,0x2a2040,1.1));const dl=new THREE.DirectionalLight(0xffffff,1.3);dl.position.set(-2,4,5);sc.add(dl);
+const rim=new THREE.DirectionalLight(0x7CF0C8,.8);rim.position.set(3,2,-3);sc.add(rim);
+const M=c=>new THREE.MeshLambertMaterial({color:c,flatShading:true});
+const snap=m=>{m.onBeforeCompile=s=>{s.vertexShader=s.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\n gl_Position.xy=floor(gl_Position.xy/gl_Position.w*vec2(108.,192.))/vec2(108.,192.)*gl_Position.w;')};return m};
+const mesh=(g,c,x,y,z,p)=>{const o=new THREE.Mesh(g,snap(M(c)));o.position.set(x,y,z);(p||sc).add(o);return o};
+const root=new THREE.Group();sc.add(root);
+const SKIN=0xe2ad86,NAVY=0x1b2a55,HAIR=0x3a2618,PANT=0x2b2f3a;
+const hips=new THREE.Group();hips.position.y=1.0;root.add(hips);
+const torso=mesh(new THREE.CylinderGeometry(.5,.4,1.05,6),NAVY,0,.55,0,hips);
+mesh(new THREE.BoxGeometry(.32,.6,.05),0xf2f2f2,0,.72,.36,hips);
+const tie=mesh(new THREE.BoxGeometry(.09,.5,.06),0x16A06A,0,.68,.4,hips);
+const neck=new THREE.Group();neck.position.y=1.12;hips.add(neck);
+mesh(new THREE.CylinderGeometry(.13,.15,.2,6),SKIN,0,.05,0,neck);
+const head=new THREE.Group();head.position.y=.45;neck.add(head);
+const hg=new THREE.IcosahedronGeometry(.37,1);hg.scale(1,1.18,1);mesh(hg,SKIN,0,0,0,head);
+const hair=new THREE.IcosahedronGeometry(.39,1);hair.scale(1.02,.7,1.04);mesh(hair,HAIR,0,.2,-.03,head);
+mesh(new THREE.BoxGeometry(.66,.18,.5),HAIR,0,.3,.06,head);
+for(const s of[-1,1]){mesh(new THREE.BoxGeometry(.09,.07,.04),0x111111,s*.13,.04,.33,head);mesh(new THREE.BoxGeometry(.14,.035,.04),HAIR,s*.13,.14,.33,head);
+ mesh(new THREE.BoxGeometry(.08,.14,.1),SKIN,s*.37,0,0,head);}
+mesh(new THREE.BoxGeometry(.06,.1,.08),0xd29a74,0,-.04,.37,head);
+const mouth=mesh(new THREE.BoxGeometry(.16,.05,.05),0x5a1f1f,0,-.19,.32,head);
+const arm=s=>{const sh=new THREE.Group();sh.position.set(s*.52,.98,0);hips.add(sh);
+ mesh(new THREE.CylinderGeometry(.12,.1,.55,5),NAVY,0,-.27,0,sh);const el=new THREE.Group();el.position.y=-.55;sh.add(el);
+ mesh(new THREE.CylinderGeometry(.1,.085,.5,5),NAVY,0,-.25,0,el);mesh(new THREE.BoxGeometry(.13,.15,.11),SKIN,0,-.56,0,el);return[sh,el]};
+const [shL,elL]=arm(-1),[shR,elR]=arm(1);
+const leg=s=>{const hp=new THREE.Group();hp.position.set(s*.2,0,0);hips.add(hp);mesh(new THREE.CylinderGeometry(.15,.12,.95,5),PANT,0,-.47,0,hp);
+ mesh(new THREE.BoxGeometry(.2,.12,.36),0x111111,0,-.97,.08,hp);return hp};
+const lgL=leg(-1),lgR=leg(1);
+function pose(t,o){ // o: {walk, point, wave, amp, face, jump}
+ const w=o.walk||0,ph=t*9;
+ lgL.rotation.x=Math.sin(ph)*.55*w;lgR.rotation.x=-Math.sin(ph)*.55*w;
+ hips.position.y=1.0+Math.abs(Math.sin(ph))*.07*w+(o.jump||0);
+ shL.rotation.x=-Math.sin(ph)*.45*w;shL.rotation.z=-.12;elL.rotation.x=-.25*w;
+ const idle=Math.sin(t*2.1);
+ // right arm: point toward phone (screen right) or wave or swing
+ const pt=o.point||0,wv=o.wave||0;
+ shR.rotation.z=.12+pt*1.35+wv*2.6;shR.rotation.x=Math.sin(ph)*.45*w*(1-pt)-pt*.25;elR.rotation.x=-.2*(1-pt)-wv*(.3+.4*Math.sin(t*10));
+ shL.rotation.z+=-(o.hand||0)*.7;elL.rotation.x-=(o.hand||0)*1.1*(.8+.2*Math.sin(t*5));
+ root.rotation.y=(o.face||0)+Math.sin(t*.9)*.08;
+ hips.rotation.z=Math.sin(ph)*.04*w+idle*.015;
+ head.rotation.y=Math.sin(t*1.3)*.12+(o.look||0);head.rotation.x=Math.sin(t*2.6)*.05-(o.amp||0)*.12;head.rotation.z=Math.sin(t*1.7)*.04;
+ mouth.scale.y=1+(o.amp||0)*5.5;mouth.position.y=-.19-(o.amp||0)*.06;
+ R.render(sc,cam)}
+// ---------- timeline ----------
+let SPEC,AMP,CLIPS={},imgs={};
+const lerp=(a,b,k)=>a+(b-a)*k,ez=k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+window.setup=async(spec,amp,clips)=>{SPEC=spec;AMP=amp;CLIPS=clips;
+ await new Promise(r=>{const f=document.getElementById('bg');if(f.contentWindow.setup)r();else f.onload=r});
+ await document.getElementById('bg').contentWindow.setup(spec.scenes);
+ // preload clip frames
+ const ps=[];for(const [k,c] of Object.entries(clips)){imgs[k]=c.files.map(fn=>{const im=new Image();ps.push(new Promise(r=>{im.onload=im.onerror=r}));im.src=fn;return im})}
+ await Promise.all(ps);await document.fonts.ready;return true};
+// character keyframes: [t, cx(center px), cy(feet px), face, mode]
+window.frame=(t)=>{const E=SPEC.end;document.getElementById('bg').contentWindow.frame(t,E);
+ const sc_=SPEC.scenes;let i=0;sc_.forEach((s,j)=>{if(t>=s.t)i=j});const s=sc_[i];
+ // phone
+ const ph=document.getElementById('phone'),img=document.getElementById('scr');
+ let show=0,cur=null;sc_.forEach(x=>{if(x.clip&&t>=x.t-.2&&t<x.tEnd+.25){cur=x;}});
+ if(cur){const k=Math.min(1,(t-cur.t+.2)/.45),k2=Math.min(1,(cur.tEnd+.25-t)/.4);show=ez(Math.max(0,Math.min(k,k2)));
+  const c=CLIPS[cur.clip],lt=Math.max(0,(t-cur.t)*(c.rate||1)+(c.off||0));let f=0;while(f<c.times.length-1&&c.times[f+1]<=lt)f++;const im=imgs[cur.clip][f];if(img.src!==im.src)img.src=im.src}
+ const PX=470,PY=640;ph.style.opacity=show;ph.style.left=(PX+(1-show)*500)+'px';ph.style.top=PY+'px';ph.style.transform=`rotate(${(1-show)*12+Math.sin(t*.8)*1.2}deg)`;
+ // character position from keyframes
+ const K=SPEC.char;let a=K[0],b=K[0];for(let j=0;j<K.length;j++){if(K[j][0]<=t)a=K[j];if(K[j][0]>t){b=K[j];break}b=K[j]}
+ const kk=b[0]>a[0]?ez(Math.min(1,(t-a[0])/(b[0]-a[0]))):1;const moving=b[0]>a[0]&&Math.abs(b[1]-a[1])>5&&kk<1;
+ const cx=lerp(a[1],b[1],kk),cy=lerp(a[2],b[2],kk),sz=lerp(a[5]||1,b[5]||1,kk);
+ const fi=Math.min(AMP.length-1,Math.floor(t*30)),amp=AMP[fi]||0;
+ const mode=a[4]||'';const hop=mode==='hop'?Math.max(0,Math.sin((t-a[0])*Math.PI/.6))*.35*(t-a[0]<.6):0;
+ const face=moving?(b[1]>a[1]?.9:-.9):(a[3]||0);
+ pose(t,{walk:moving?1:0,point:mode==='point'&&!moving?1:0,wave:mode==='wave'&&!moving?1:0,hand:(mode==='talk'&&!moving)?.6+.4*Math.sin(t*3):0,amp,face,jump:hop,look:mode==='point'?.35:0});
+ const W_=540*sz,H_=960*sz;cv.style.width=W_+'px';cv.style.height=H_+'px';cv.style.left=(cx-W_/2)+'px';cv.style.top=(cy-H_*.97)+'px';
+ // name tag
+ const tg=document.getElementById('tag');const tv=s.tag&&t-s.t<2.6?Math.min(1,(t-s.t)/.25,(2.6-(t-s.t))/.25):0;tg.style.opacity=tv;if(s.tag){tg.textContent=s.tag;tg.style.left=(PX+40)+'px';tg.style.top=(PY-80+(1-tv)*20)+'px'}
+ return true};
+</script></body></html>

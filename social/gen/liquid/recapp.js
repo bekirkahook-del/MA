@@ -16,9 +16,13 @@ const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/6
   const tap = t => tapL(vis(t));
   const scroll = (dy, ms) => p.evaluate(([dy, ms]) => new Promise(r => { const s = scrollY, t = performance.now(); const f = n => { const k = Math.min(1, (n - t) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; scrollTo(0, s + dy * e); k < 1 ? requestAnimationFrame(f) : r() }; requestAnimationFrame(f) }), [dy, ms]);
   const right = async () => { // tap the correct option of the open question
-    const j = await p.evaluate(() => { const os = [...document.querySelectorAll('button')].filter(b => b.offsetParent && /^[A-D]\s/.test(b.innerText.trim())).map(b => b.innerText.trim().slice(1).trim());
-      for (const tr of TRACKS) for (const L of tr.levels) for (const q of (L.q || [])) if (q[1] && q[1][0] === os[0] && q[1][1] === os[1]) return q[2]; return 0; });
-    const opts = p.locator('button:visible').filter({ hasText: /^[A-D]\s/ }); await tapL(opts.nth(j)); };
+    const r = await p.evaluate(() => { const bs = [...document.querySelectorAll('button')].filter(b => b.offsetParent && /^[A-D]\s/.test(b.innerText.trim()));
+      const os = bs.map(b => b.innerText.trim().slice(1).trim()); let j = 0;
+      for (const tr of TRACKS) for (const L of tr.levels) for (const q of (L.q || [])) if (q[1] && q[1][0] === os[0] && q[1][1] === os[1]) j = q[2];
+      const e = bs[j]; if (!e) return null; const bb = e.getBoundingClientRect(); return [bb.x + bb.width / 2, bb.y + bb.height / 2]; });
+    if (!r) { console.log('no options'); return; }
+    await p.evaluate(([x, y]) => { let d = document.getElementById('tapdot'); if (!d) { d = document.createElement('div'); d.id = 'tapdot'; document.body.appendChild(d); } d.style.left = x + 'px'; d.style.top = y + 'px'; d.classList.add('on'); setTimeout(() => d.classList.remove('on'), 420); }, r);
+    await W(200); await p.mouse.click(r[0], r[1]); };
   let rec = null;
   const start = name => { const dir = `clips/${name}`; fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
     rec = { dir, t0: Date.now(), times: [], on: true };

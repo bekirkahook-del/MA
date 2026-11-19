@@ -24,7 +24,7 @@ float field(vec2 q){ // metaballs, q in aspect space (x 0..AR, y 0..1)
  // edge pools so the frame always has liquid at top/bottom
  f+=.010/pow(max(q.y,.001),2.)*0.+ .018/pow(max(1.-q.y+.05*sin(q.x*9.+T),.02),2.)*.25;
  f+=.018/pow(max(q.y+.05*sin(q.x*7.-T*1.3),.02),2.)*.25;
- float band=exp(-pow((q.y-.56)/.16,2.)); f*=mix(1.,.38,band*(1.-surge));
+ float band=exp(-pow((q.y-.84)/.12,2.)); f*=mix(1.,.38,band*(1.-surge));
  return f;}
 float hgt(vec2 q){float f=field(q);return clamp(1.-1./max(f,.001),0.,1.);}
 void main(){

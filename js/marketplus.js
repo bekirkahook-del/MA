@@ -159,3 +159,60 @@
   new MutationObserver(function(){var p=document.getElementById("panel");if(!p||$p(".pc",p))return;var h=$p(".q-head h2",p);
     if(h&&$p(".co-facts",p))mount(h.textContent.trim())}).observe(document.body,{childList:true,subtree:true});
 })();
+
+/* ---------- company logos everywhere a stock appears (Nov 19, 2026) ----------
+   Served by /.netlify/functions/logo (our own domain, CDN-cached 30 days), so visitors never contact a third party.
+   Shows on: market list rows, company search results, quote/company/lookup panels, the ticker tape and the
+   Ctrl K palette. If a logo doesn't exist the image removes itself and the letter avatar stays. */
+(function(){
+  "use strict";
+  var NOT={"DOW":1,"S&P 500":1,"NASDAQ":1,"RUSSELL 2000":1,"VIX":1,"10Y YIELD":1,"WTI":1,"BRENT":1,"GOLD":1,"SILVER":1,"BITCOIN":1};
+  var dead={};
+  function isStock(sym){
+    if(!sym||NOT[sym]||!/^[A-Z][A-Z0-9.\-]{0,9}$/.test(sym))return false;
+    try{if(typeof tInfo==="function"){var t=tInfo(sym)[1];if(t&&t!=="Stocks")return false}}catch(e){}
+    return true;
+  }
+  var url=function(s){return "/.netlify/functions/logo?s="+encodeURIComponent(s)};
+  function img(sym,cls){
+    var i=document.createElement("img");i.className="ma-logo "+(cls||"");i.alt="";i.loading="lazy";i.decoding="async";
+    i.referrerPolicy="no-referrer";i.src=url(sym);i.onerror=function(){dead[sym]=1;i.remove()};
+    i.onload=function(){if(i.naturalWidth<8){dead[sym]=1;i.remove()}};return i;
+  }
+  var st=document.createElement("style");
+  st.textContent=
+    ".mk-av{position:relative;overflow:hidden}"+
+    ".mk-av .ma-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;box-sizing:border-box;border-radius:inherit}"+
+    ".q-head .ma-logo{width:44px;height:44px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--rule,#d9dde6);padding:5px;box-sizing:border-box;flex:none;margin-right:12px}"+
+    ".q-head>.ma-lw{display:flex!important;flex-direction:row!important;align-items:center;min-width:0}"+
+    ".tk .ma-logo{width:14px;height:14px;border-radius:3px;object-fit:contain;background:#fff;align-self:center;margin-right:-2px}"+
+    ".pal-i .ma-logo{width:18px;height:18px;border-radius:4px;object-fit:contain;background:#fff;border:1px solid var(--rule,#d9dde6);margin-right:8px;vertical-align:middle;flex:none}";
+  document.head.appendChild(st);
+
+  function rows(root){
+    /* market list + company results: the symbol sits on the row's main button */
+    root.querySelectorAll(".mk-av:not([data-lg])").forEach(function(av){
+      av.dataset.lg="1";var b=av.closest("[data-q],[data-co]");if(!b)return;var s=b.dataset.q||b.dataset.co;
+      if((b.dataset.co||isStock(s))&&!dead[s])av.appendChild(img(s));
+    });
+    /* ticker tape */
+    root.querySelectorAll(".tk[data-sym]:not([data-lg])").forEach(function(tk){
+      tk.dataset.lg="1";var s=tk.dataset.sym;if(!isStock(s)||dead[s])return;var b=tk.querySelector("b");if(b)tk.insertBefore(img(s),b);
+    });
+    /* Ctrl K palette */
+    root.querySelectorAll(".pal-i:not([data-lg])").forEach(function(it){
+      it.dataset.lg="1";var x=null;try{x=palItems[+it.dataset.i]}catch(e){}
+      var m=x&&/^(co|quote)\|(.+)$/.exec(x.act||"");if(!m||!isStock(m[2])||dead[m[2]])return;it.insertBefore(img(m[2]),it.firstChild);
+    });
+    /* quote / company / lookup panel header */
+    var p=document.getElementById("panel");
+    if(p&&p.contains(root)||root===document.body){var h=p&&p.querySelector(".q-head:not([data-lg])");
+      if(h){h.dataset.lg="1";var h2=h.querySelector("h2");var s=h2&&h2.textContent.trim();
+        if(s&&isStock(s)&&!dead[s]){var first=h.firstElementChild;var w=document.createElement("div");w.className="ma-lw";
+          h.insertBefore(w,first);w.appendChild(img(s,"big"));w.appendChild(first)}}}
+  }
+  var queued=false;
+  new MutationObserver(function(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;rows(document.body)})})
+    .observe(document.body,{childList:true,subtree:true});
+  rows(document.body);
+})();

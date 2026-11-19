@@ -119,7 +119,7 @@ def build_page(sc, pf):
     return {"slug": slug, "short": f"{pf['label']} from {name}",
             "title": f"How to Get Into {pf['label'].title().replace('And','and')} From {name}" + (f" ({full})" if full else ""),
             "h1": f"How to get into {pf['noun']} from {name}",
-            "desc": f"How {name} students can break into {pf['noun']}: the path, what interviews test, and the clubs and programs to know at {name}, in plain English.",
+            "desc": f"How {name} students can break into {pf['noun']}: the path, what interviews test, and the clubs and programs to know at {name}.",
             "related": [ib] + pf["related"], "lede": pf["lede"](name), "body": body}
 
 NEW = {pf["key"]: [build_page(sc, pf) for sc in SCHOOLS] for pf in PROFS}

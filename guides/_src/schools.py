@@ -1,6 +1,6 @@
 # School pages: "How to get into investment banking from <school>". Facts about each school's clubs and
 # programs come from the sources listed on each page (checked 2026-11-10). Build with: python3 guides/_src/extra.py
-S = lambda pairs: "Sources: " + " · ".join(f'<a href="{u}" rel="nofollow">{n}</a>' for n, u in pairs)
+S = lambda pairs: "Sources: " + " · ".join(f'<a href="{u}" rel="nofollow">{n}</a>' if u else n for n, u in pairs)  # empty url = page went dead, keep the name
 
 def timeline(school):
     return [("h2", f"Your timeline at {school}"),
@@ -92,7 +92,7 @@ SCHOOLS = [
    ("qa", "Is Penn State good for investment banking?", "Students recruit for banking every year, helped by a large alumni network and programs like the Nittany Lion Fund. Your own preparation and networking still decide most of it."),
    ("qa", "Does the Nittany Lion Fund help with banking?", "It gives you real investing experience and strong interview stories, which help for banking, equity research and asset management roles."),
    CTA,
-   ("p", S([("Smeal: The Nittany Lion Fund", "https://www.smeal.psu.edu/finance/the-nittany-lion-fund")]))]},
+   ("p", S([("Smeal: The Nittany Lion Fund", "")]))]},
 
 {"slug": "wisconsin-investment-banking", "short": "Investment banking from Wisconsin",
  "title": "How to Get Into Investment Banking From Wisconsin (WSB)",

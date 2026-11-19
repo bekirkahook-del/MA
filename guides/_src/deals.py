@@ -29,7 +29,7 @@ faqs = [
  ("How do I talk about a deal in an interview?", "Lead with the buyer, target and price, then the strategic reason, then one risk or what you'd watch. Keep it under a minute."),
 ]
 os.makedirs(os.path.join(ROOT, "deals"), exist_ok=True)
-page = shell("", f"Biggest M&A Deals of the Last 12 Months ({len(D)} Deals, Searchable)", "The biggest M&A deals of the last 12 months",
+page = shell("", f"Biggest M&A Deals of the Last 12 Months ({len(D)} Deals)", "The biggest M&A deals of the last 12 months",
   f"A searchable list of {len(D)} of the most important mergers and acquisitions announced in the last 12 months: buyer, target, value, industry and why each deal happened.",
   [f"{len(D)} of the most relevant mergers and acquisitions announced over the last 12 months, sorted by size. Search by company, industry or deal type.",
    "Each one has a plain-English line on why it happened, so you can talk about it in an interview."], body, faqs, js, kind="Dataset")

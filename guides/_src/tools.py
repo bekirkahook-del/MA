@@ -259,7 +259,7 @@ TOOLS = [
   ["Enter your graduation year and what you're aiming for. You'll get a month-by-month plan and a countdown to your main application window.",
    "Banking recruiting now runs about 1.5–2 years ahead of the internship, so most students are surprised how soon it starts."],
   T1_BODY, T1_FAQ, T1_JS),
- ("superday-readiness-test", "Superday Readiness Test: 12 Investment Banking Interview Questions", "Superday readiness test",
+ ("superday-readiness-test", "Superday Readiness Test: 12 IB Interview Questions", "Superday readiness test",
   "Are you ready for an investment banking Superday? Take a free 12-question test on accounting, valuation, LBOs, M&A and fit, with instant explanations and a score.",
   ["12 real-style questions from investment banking final rounds: accounting, enterprise value, valuation, LBOs, M&amp;A, quick math and a deal question.",
    "Answer them all, then see your score and why each answer is right."],

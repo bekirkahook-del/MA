@@ -108,7 +108,7 @@ mk("vanderbilt", "Vanderbilt", None,
  ["Apply to Vandy in Finance the spring of your freshman year.", "Network with Vanderbilt alumni in New York and Nashville."],
  [("Is Vanderbilt good for investment banking?", "Yes. Vanderbilt students recruit for banking every year, and Vandy in Finance helps them learn the technicals early."),
   ("Do I need a business major at Vanderbilt?", "No. Many Vanderbilt students recruit from economics and other majors.")],
- [("Vandy in Finance announcement", "https://vanderbilt.edu/undergraduatebusiness/2024/04/30/vandy-in-finance-preparation-pathway-program")]),
+ [("Vandy in Finance announcement", "")]),
 
 mk("wake-forest", "Wake Forest", None,
  "How Wake Forest students break into investment banking: the Pre-Wall Street Career Track, the recruiting timeline and how to stand out.",

@@ -306,7 +306,7 @@ $('#see').onclick=()=>{const n=Object.keys(ans).length;if(n<QZ.length){$('#out')
 """, short="quiz")
 
 # ---------------------------------------------------------------- 10. Networking email generator
-tool("networking-email-generator", "Finance Networking Email Generator (Cold Email + LinkedIn Templates)", "Networking email generator",
+tool("networking-email-generator", "Finance Networking Email Generator (Free Templates)", "Networking email generator",
  "Free cold email generator for finance students. Fill in a few details and get a networking email, a LinkedIn note, a follow-up and a thank-you note for coffee chats.",
  ["Networking is how most students get their first interview in finance. Fill this in and get four ready-to-edit messages.",
   "Always add one real, specific detail. That's what gets replies."],

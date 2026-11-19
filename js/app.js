@@ -847,7 +847,8 @@ let cloudOn=false,cloudT=null,cloudState="off",cloudAt=0;
 function save(){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(()=>{cloudT=null;cloudPush()},1500)}}
 const cloudDoc=()=>DB.collection("data/users/"+myId).doc("progress");
 async function cloudPush(){if(!DB||!myId)return;try{const body=JSON.stringify(S);if(body.length>900000){cloudState="toobig";renderSyncRow();return}
-  await cloudDoc().set({v:1,t:S._t||Date.now(),s:body});cloudAt=Date.now();cloudState="synced"}catch(e){cloudState="error"}renderSyncRow()}
+  await cloudDoc().set({v:1,t:S._t||Date.now(),s:body});cloudAt=Date.now();cloudState="synced"}catch(e){cloudState="error";if(!cloudRetry)cloudRetry=setTimeout(()=>{cloudRetry=null;cloudPush()},8000)}renderSyncRow()}
+let cloudRetry=null;
 /* Merge instead of "newest copy wins". Old behavior lost work: any save() on page load stamped a fresh
    time, so a stale device could overwrite newer progress from another device, and guest work was dropped
    on sign-in. Progress only goes up (numbers take the max, finished = true wins, objects merge key by key);
@@ -862,6 +863,8 @@ function mergeVal(a,b,aNew,k){if(a===undefined||a===null)return b===undefined?a:
   if(Array.isArray(a)&&Array.isArray(b)&&aNew&&a.length===0&&b.length)return b;
   return aNew?a:b}
 function mergeState(L,R,lNew){const o={};for(const k of new Set([...Object.keys(L),...Object.keys(R)])){
+    if(k==="profile"){ /* the profile follows its own save time: opening the app on a device must not make its stale copy "newer" */
+      const lt=(L.profile||{})._t||0,rt=(R.profile||{})._t||0;o[k]=((lt===rt?lNew:lt>rt)?L[k]:R[k])??L[k]??R[k];continue}
     o[k]=MERGE_WHOLE.has(k)?((lNew?L[k]:R[k])??L[k]??R[k]):mergeVal(L[k],R[k],lNew,k)}
   o._t=Math.max(L._t||0,R._t||0);return o}
 const stateSig=x=>{try{const c=Object.assign({},x);delete c._t;delete c._synced;return JSON.stringify(c)}catch(e){return ""}};
@@ -3638,7 +3641,9 @@ Return JSON: {"line":"..."}`;
     const nsChk=$p("#pNoSchool").checked,hdChk=$p("#pHidden").checked;S.settings.noSchool=nsChk;S.settings.hidden=hdChk;
     S.profile={...S.profile,banner:isPro()?(P.banner??null):(S.profile.banner??null),headline:(P.headline||"").trim(),school:(P.school||"").trim(),grad:P.grad||"",major:(P.major||"").trim(),location:(P.location||"").trim(),target:P.target||"",open:P.open||"",about:(P.about||"").trim(),linkedin:(P.linkedin||"").trim(),handshake:(P.handshake||"").trim(),photo:P.photo||"",resume:P.resume&&P.resume.text?P.resume:null,exp,skills:P.skills.slice(0,10),_t:Date.now()};
     {const nmv=(($p("#peName")||{}).value||"").trim().slice(0,40);S.profile.name=nmv;myName=nmv;}
-    delete S.profileDraft;save();syncProfile();syncPhoto();dirty=false;sfx("ok");toast(dbState==="on"?"Profile saved and posted":"Profile saved on this device");showPlayer({id:myId||"me",...myStats()});renderCompete();try{render()}catch(e){}};
+    delete S.profileDraft;save();syncProfile();syncPhoto();dirty=false;sfx("ok");
+    if(cloudOn){clearTimeout(cloudT);cloudT=null;toast("Saving…");cloudPush().then(()=>toast(cloudState==="synced"?"Profile saved to your account":"Saved on this device. Couldn't reach your account yet, retrying…"))}
+    else toast("Profile saved on this device. Sign in to keep it on every device");showPlayer({id:myId||"me",...myStats()});renderCompete();try{render()}catch(e){}};
   $p("#pSave").onclick=doSave;
   if($p("#peName"))$p("#peName").addEventListener("input",()=>{try{changed()}catch(e){}});
   $p("#pCancel").onclick=()=>{closePanel();if(dirty)toast("Your unsaved changes are kept as a draft")};

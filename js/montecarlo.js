@@ -31,6 +31,7 @@
 
   /* ---------- math ---------- */
   function stats(pts){
+    if(pts.length<21)return null;   // a brand-new listing: no reliable estimate yet
     var r=[];for(var i=1;i<pts.length;i++)r.push(Math.log(pts[i][1]/pts[i-1][1]));
     var n=r.length,m=0;r.forEach(function(x){m+=x});m/=n;
     var v=0;r.forEach(function(x){v+=(x-m)*(x-m)});v/=(n-1);
@@ -58,7 +59,7 @@
     var lo=Math.min.apply(null,all),hi=Math.max.apply(null,all);r.bands.forEach(function(b){if(b.p5<lo)lo=b.p5;if(b.p95>hi)hi=b.p95});
     var pad=(hi-lo)*.06||1;lo=Math.max(0,lo-pad);hi+=pad;
     var mid=L+(W-L-R)/2,X=function(f){return L+f*(W-L-R)},Y=function(v){return T+(1-(v-lo)/(hi-lo))*(H-T-B)};
-    var hx=function(i){return X(i/(hist.length-1)*0.5)},fx=function(t){return mid+t*(W-R-mid)};
+    var hx=function(i){return X(hist.length<2?0.5:i/(hist.length-1)*0.5)},fx=function(t){return mid+t*(W-R-mid)};
     var line=hist.map(function(p,i){return (i?"L":"M")+hx(i).toFixed(1)+" "+Y(p[1]).toFixed(1)}).join("");
     var band=function(a,b){return r.bands.map(function(x,i){return (i?"L":"M")+fx(x.t).toFixed(1)+" "+Y(x[a]).toFixed(1)}).join("")+r.bands.slice().reverse().map(function(x){return "L"+fx(x.t).toFixed(1)+" "+Y(x[b]).toFixed(1)}).join("")+"Z"};
     var med=r.bands.map(function(x,i){return (i?"L":"M")+fx(x.t).toFixed(1)+" "+Y(x.p50).toFixed(1)}).join("");
@@ -91,18 +92,19 @@
 
   function load(sym,box){
     var body=$p(".mc-body",box),btn=$p('[data-mc="go"]',box);btn.disabled=true;btn.textContent="Loading…";
-    var got=cache[sym]?Promise.resolve(cache[sym]):fetch("/.netlify/functions/history?s="+encodeURIComponent(sym)).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()});
+    var got=cache[sym]?Promise.resolve(cache[sym]):(window.maHist?window.maHist(sym):fetch("/.netlify/functions/history?s="+encodeURIComponent(sym)).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}));
     got.then(function(d){cache[sym]=d;btn.remove();form(sym,d,box)}).catch(function(){
       btn.disabled=false;btn.textContent="Try again";body.innerHTML='<p class="note">Couldn\'t load price history for '+E(sym)+'. It may be too new or not covered.</p>'});
   }
 
   function form(sym,d,box){
-    var s=stats(d.pts),body=$p(".mc-body",box);
-    body.innerHTML='<div class="mc-f">'+
-      '<label>Expected return / yr (%)<input type="number" step="0.5" data-mc="mu" value="'+(s.mu*100).toFixed(1)+'"></label>'+
-      '<label>Volatility / yr (%)<input type="number" step="0.5" min="1" max="300" data-mc="sig" value="'+(s.sig*100).toFixed(1)+'"></label>'+
+    var s=stats(d.pts),body=$p(".mc-body",box),young=!s;
+    if(young)s={mu:NaN,sig:NaN,ppy:252};
+    body.innerHTML=(young?'<p class="note" style="margin:8px 0 0">Only '+d.pts.length+' trading day'+(d.pts.length===1?"":"s")+' of history, too few to estimate. Enter your own assumptions, for example the volatility of similar stocks.</p>':"")+'<div class="mc-f">'+
+      '<label>Expected return / yr (%)<input type="number" step="0.5" data-mc="mu" placeholder="e.g. 8" value="'+(young?"":(s.mu*100).toFixed(1))+'"></label>'+
+      '<label>Volatility / yr (%)<input type="number" step="0.5" min="1" max="300" data-mc="sig" placeholder="e.g. 40" value="'+(young?"":(s.sig*100).toFixed(1))+'"></label>'+
       '<label>Paths<select data-mc="n"><option>1000</option><option selected>2000</option><option>5000</option></select></label></div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-mc="run">Run</button><button class="ghost outline" data-mc="reset">Use past-year numbers</button></div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-mc="run">Run</button>'+(young?"":'<button class="ghost outline" data-mc="reset">Use past-year numbers</button>')+'</div>'+
       '<div class="mc-out"></div>';
     var run=function(){
       var mu=parseFloat($p('[data-mc="mu"]',body).value)/100,sig=parseFloat($p('[data-mc="sig"]',body).value)/100,n=+$p('[data-mc="n"]',body).value;
@@ -124,14 +126,15 @@
         '<div class="ang" style="margin-top:10px"><b>Interview angle</b>Banks and funds use Monte Carlo for VaR, option pricing and LBO returns. Be ready to explain why higher volatility widens the range and why the median ends below the mean.</div>';
     };
     $p('[data-mc="run"]',body).onclick=run;
-    $p('[data-mc="reset"]',body).onclick=function(){$p('[data-mc="mu"]',body).value=(s.mu*100).toFixed(1);$p('[data-mc="sig"]',body).value=(s.sig*100).toFixed(1);run()};
-    run();
+    if($p('[data-mc="reset"]',body))$p('[data-mc="reset"]',body).onclick=function(){$p('[data-mc="mu"]',body).value=(s.mu*100).toFixed(1);$p('[data-mc="sig"]',body).value=(s.sig*100).toFixed(1);run()};
+    if(!young)run();
   }
 
   /* ---------- hook into the quote and company panels ---------- */
   function wrap(name){
     var orig=window[name];if(typeof orig!=="function")return;
-    window[name]=function(sym){var out=orig.apply(this,arguments);try{mount(sym)}catch(e){}return out};
+    window[name]=function(sym){var out=orig.apply(this,arguments);try{if(window.CO_RAW||name==="showQuote")mount(sym)}catch(e){}return out};
   }
   wrap("showQuote");wrap("showCompany");
+  window.maMountMC=mount;
 })();

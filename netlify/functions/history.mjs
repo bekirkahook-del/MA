@@ -1,5 +1,5 @@
 // One year of daily closing prices for the Market search Monte Carlo, from Yahoo Finance's chart API.
-// Netlify's CDN caches each symbol for 6 hours, so a popular symbol costs about 4 Yahoo calls a day.
+// Also feeds the price card on quote/company panels. Netlify's CDN caches each symbol for 30 minutes.
 const MAP = {
   "DOW": "^DJI", "S&P 500": "^GSPC", "NASDAQ": "^IXIC", "RUSSELL 2000": "^RUT", "VIX": "^VIX",
   "WTI": "CL=F", "BRENT": "BZ=F", "GOLD": "GC=F", "SILVER": "SI=F", "BITCOIN": "BTC-USD",
@@ -10,8 +10,8 @@ const out = (status, body, cache) => new Response(JSON.stringify(body), {
   status,
   headers: {
     "content-type": "application/json",
-    "cache-control": cache ? "public, max-age=3600" : "no-store",
-    ...(cache ? { "netlify-cdn-cache-control": "public, s-maxage=21600, stale-while-revalidate=86400" } : {}),
+    "cache-control": cache ? "public, max-age=600" : "no-store",
+    ...(cache ? { "netlify-cdn-cache-control": "public, s-maxage=1800, stale-while-revalidate=21600" } : {}),
   },
 });
 
@@ -27,9 +27,12 @@ export default async (req) => {
     const ts = res?.timestamp || [], cl = res?.indicators?.quote?.[0]?.close || [];
     const pts = [];
     ts.forEach((t, i) => { const c = cl[i]; if (typeof c === "number" && c > 0) pts.push([t, Math.round(c * 1e4) / 1e4]); });
-    if (pts.length < 60) return out(404, { error: "not enough history" });
+    if (!pts.length) return out(404, { error: "no history" }); // new listings (IPOs) may have only a few days
     const last = res.meta?.regularMarketPrice;
-    return out(200, { s: raw, y, cur: res.meta?.currency || "USD", last: typeof last === "number" ? last : pts[pts.length - 1][1], pts }, true);
+    const m = res.meta || {};
+    return out(200, { s: raw, y, cur: m.currency || "USD", last: typeof last === "number" ? last : pts[pts.length - 1][1], pts,
+      name: m.longName || m.shortName || "", ex: m.fullExchangeName || m.exchangeName || "", t: m.regularMarketTime || null,
+      hi52: m.fiftyTwoWeekHigh ?? null, lo52: m.fiftyTwoWeekLow ?? null }, true);
   } catch (e) {
     return out(502, { error: "fetch failed" });
   }

@@ -2951,6 +2951,7 @@ const TINFO={"DOW":["Dow Jones Industrial Average","Index","30 large U.S. blue-c
  "SILVER":["Silver","Commodities","Price per ounce. Used in industry and as a store of value.",["silver"]],
  "BITCOIN":["Bitcoin","Crypto","The largest cryptocurrency by market value.",["Bitcoin","crypto"]],
  "TSLA":["Tesla","Stocks","Electric vehicles, batteries and energy storage.",["Tesla"]],
+ "ANT":["Anthropic","Stocks","AI company that builds the Claude models. Listed on Nasdaq in November 2026.",["Anthropic","Claude"]],
  "SPCX":["SpaceX","Stocks","Rockets, satellites and the Starlink internet service.",["SpaceX"]],
  "AXP":["American Express","Stocks","Credit cards and payments, focused on higher-spending customers.",["American Express","Amex"]],
  "RHI":["Robert Half","Stocks","Staffing and recruiting firm.",["Robert Half"]],

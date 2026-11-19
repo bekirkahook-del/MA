@@ -6,7 +6,7 @@ const MAP = [
   ["VIX", "^VIX", "num"], ["10Y YIELD", "^TNX", "yld"], ["WTI", "CL=F", "usd"], ["GOLD", "GC=F", "usd0"],
   ["SILVER", "SI=F", "usd"], ["BITCOIN", "BTC-USD", "usd0"],
 ];
-const CORE = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "JPM", "GS", "MS"];
+const CORE = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "JPM", "GS", "MS", "ANT"]; // ANT = Anthropic (Nasdaq IPO, Nov 2026)
 const OK = /^[A-Z][A-Z.\-]{0,6}$/;
 
 const fmt = (n, d) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });

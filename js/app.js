@@ -2480,24 +2480,25 @@ function renderOpenings(){const el=$("#openings");if(!el)return;const t=today();
 
 /* ---------- 4. AI resume review ---------- */
 function renderResume(){const el=$("#resume");if(!el)return;const usedToday=(S.resumeLog||{})[today()]||0,canRun=isPro()||usedToday<1;
-  el.innerHTML=`<p class="hint">Upload your resume as a PDF or Word file (or paste the text). Claude reviews it the way a banking recruiter would. The file is read in your browser; only the text is sent to Claude when you press Review. Your saved resume stays private to you.</p>
+  el.innerHTML=`<p class="hint">Upload your resume as a PDF or Word file and it's graded out of 100 against the standard Wall Street template, the way a banking recruiter would. The file is read in your browser; only the text is sent to Claude when you press Review. Your saved resume stays private to you.</p>
    <label class="pe-drop" id="resDrop"><input type="file" id="resFile" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6m-3 3 3-3 3 3"/></svg>
      <b id="resDropT">${((S.profile||{}).resume||{}).text?"Replace your resume":"Upload your resume"}</b><small>PDF, Word (.docx) or text · or drop it here</small></label>
    <p class="note" id="resNote" aria-live="polite">${((S.profile||{}).resume||{}).text?"Saved: "+esc(S.profile.resume.name||"Resume"):""}</p>
    <div class="res-top"><label>Applying for<select id="resRole">${["Investment banking internship","Private equity","Hedge fund / equity research","Sales & trading","Restructuring","Consulting internship"].map(o=>`<option ${({ib:"Investment banking internship",pe:"Private equity",hf:"Hedge fund / equity research",rx:"Restructuring",mc:"Consulting internship"})[profKey()]===o?"selected":""}>${o}</option>`).join("")}</select></label></div>
-   <textarea id="resTxt" style="min-height:240px" placeholder="Paste your resume here…" aria-label="Resume text"></textarea>
-   <div class="actions"><button class="btn" id="resGo">Review my resume</button><span class="note">${isPro()?"Instant check + unlimited AI reviews.":usedToday?"Instant check is unlimited. Free AI review used today.":"Instant check is unlimited, plus 1 free AI review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
+   <details class="res-paste"${((S.profile||{}).resume||{}).text?"":""}><summary class="note" style="cursor:pointer">Can't upload the file? Paste the text instead</summary><textarea id="resTxt" style="min-height:200px;margin-top:8px" placeholder="Paste your resume here…" aria-label="Resume text"></textarea></details>
+   <div class="actions"><button class="btn" id="resGo">${((S.profile||{}).resume||{}).text?"Review my saved resume":"Review my resume"}</button><span class="note">${isPro()?"Instant check + unlimited AI reviews.":usedToday?"Instant check is unlimited. Free AI review used today.":"Instant check is unlimited, plus 1 free AI review a day."}</span></div><div id="resOut" aria-live="polite">${S.resumeLast?resumeHTML(S.resumeLast,true):""}</div>`;
   const resLoad=async f=>{const note=$("#resNote");note.textContent="Reading your resume…";
     try{if(!window.maResume)throw new Error("The resume reader didn't load. Refresh and try again.");
       const x=await maResume.readFile(f),t=String(x.text||"").replace(/\u00a0/g," ").trim();
       if(t.split(/\s+/).length<20)throw new Error("Couldn't find much text in that file. Try the Word version, or paste the text.");
       $("#resTxt").value=t.slice(0,15000);S.profile=S.profile||{};S.profile.resume={text:t.slice(0,15000),name:(f.name||"Resume").slice(0,80),at:Date.now()};save();
-      $("#resDropT").textContent="Replace your resume";note.textContent="Loaded "+(f.name||"your resume")+". Press Review my resume.";$("#resGo").focus()}
+      $("#resDropT").textContent="Replace your resume";note.textContent="Loaded "+(f.name||"your resume")+". Reviewing it now…";$("#resGo").click()}
     catch(e){note.textContent=e&&e.message||"Couldn't read that file. Try a PDF or Word (.docx), or paste the text."}};
   $("#resFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)resLoad(f)});
   {const dz=$("#resDrop");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("on")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("on")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)resLoad(f)})}
-  $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(txt.split(/\s+/).length<35){toast("Paste your full resume (at least a few sections)");return}
+  if(((S.profile||{}).resume||{}).text)$("#resTxt").value=S.profile.resume.text;
+  $("#resGo").onclick=async()=>{const txt=$("#resTxt").value.trim();if(!txt){toast("Upload your resume (PDF or Word) first");$("#resDrop").focus();return}if(txt.split(/\s+/).length<35){toast("Paste your full resume (at least a few sections)");return}
     /* instant rule-based check first: always works, no AI, no limit */
     const inst=window.maResumeCheck?maResumeCheck(txt,$("#resRole").value):null;
     const showInst=extra=>{if(!inst)return;$("#resOut").innerHTML=`<div class="label">Instant check</div>${resumeHTML(inst)}${extra?`<p class="note" style="margin-top:10px">${extra}</p>`:""}`};

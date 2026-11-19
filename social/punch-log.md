@@ -12,3 +12,5 @@
 | 2026-11-21 | Q3 2026 bond (FICC) trading revenue by bank, sequel to equities | 5 | neon + photo bg | 104 (pace 4, slow ~18s) | contrast "Goldman won stocks. Bonds?" | | | | | |
 | 2026-11-20 | 25 horses puzzle (story.js) | 4 steps | story | 116 | "Find the fastest 3" | | | | | |
 | 2026-11-20 | Coin flips until heads = 2 (type.js) | 4 steps | typewriter | 100 | question-first "Average flips?" | | | | | |
+| 2026-11-23 | Biggest M&A deals of 2026 so far (Dealroom, Nov 2026) | 5 | paper, no photo | 132 (pace 2, fast ~9.5s) | "One company shows up TWICE" | | | | | |
+| 2026-11-23 | Perpetuity $100/yr at 5% = $2,000 (type2.js) | 4 steps | timeline | 112 | question-first "Worth today?" | | | | | |

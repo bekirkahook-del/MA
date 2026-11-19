@@ -107,3 +107,7 @@
 - 2026-11-22 goodwill — [Quiz] Goodwill: $500M price − $350M fair value net assets = $150M (C), curveball $100M, impairment not amortization
 - 2026-11-22 oddq-halfup — [Interview Q] Stock −50% then +50% → down 25%
 - 2026-11-22 q3evni — 3-question challenge: market cap $1B (B), EV/EBITDA 8.0x (C), interest +$20M at 25% tax → NI $85M (D)
+- 2026-11-23 capstack — [Quiz] Capital stack: $500M sale, $300M senior loans, $250M bonds → bonds get $200M (B), 80% recovery
+- 2026-11-23 punch-deals26 — [Ranking video, no voice] Biggest deals of 2026 so far (Dealroom, Nov 2026; SpaceX+xAI ~$250B, Paramount+WBD $110B, EQR+AvalonBay ~$70B, SpaceX+Cursor ~$60B, McCormick+Unilever Foods ~$45B)
+- 2026-11-23 type2-perp — [Teaser video, type2.js, no voice] $100/yr forever at 5% → $2,000 (perpetuity)
+- 2026-11-23 oddq-pctswap — [Interview Q] 35% of 60 = 60% of 35 = 21 (percent swap)

@@ -2123,7 +2123,8 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
         :onTime?`At ${per} levels a week, you'll finish in about <b>${weeksToFinish} weeks</b>, before recruiting starts. 👍`
         :`The full plan takes about <b>${weeksToFinish} weeks</b> at your pace, and recruiting is closer than that. So your first <b>${focus} track${focus>1?"s":""}</b> (${focusLv} levels) are the ones interviews test most. Do those first; the rest can come after.`} Your daily XP goal is ${S.settings.goal}.${score?` Placement test: ${score[0]}/${score[1]}${placedN?`, ${placedN} level${placedN>1?"s":""} skipped`:""}.`:""}</p>
       <ol class="ob-plan">${order.map((t,i)=>`<li${i>=focus?' style="opacity:.55"':""}><b>${T(t).name}</b><span>${rem(t)} level${rem(t)===1?"":"s"}${rem(t)<T(t).levels.length?" left":""}${i===focus-1&&focus<order.length?" · before recruiting":""}${i>=focus?" · after":""}</span></li>`).join("")}</ol>
-      <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)} →</button>`:""}<button class="ghost" id="obDone">Go to Home</button></div></div>`;bindClose();
+      <div class="actions">${nx?`<button class="btn" id="obGo">Start: ${esc(nx.tr.levels[nx.i].n)} →</button>`:""}<button class="ghost" id="obDone">Go to Home</button>${S.profile.headline?"":`<button class="ghost" id="obProf">Set up your profile (1 min)</button>`}</div></div>`;bindClose();
+    if($("#obProf"))$("#obProf").onclick=()=>editProfile();
     if($("#obGo"))$("#obGo").onclick=()=>{closePanel();showBrief(nx.tr,nx.i)};$("#obDone").onclick=()=>{closePanel();showTab("home")};(($("#obGo")||$("#obDone"))).focus()};
   draw()}
 function nextPlanLevel(){const order=S.plan?S.plan.order:ORDER;for(const t of order){const tr=T(t);if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(t,i))return{tr,i}}return nextLevel()}
@@ -3476,9 +3477,11 @@ function editProfile(){
   if(S.profileDraft&&S.profileDraft.t>(S.profile._t||0)){Object.assign(base,S.profileDraft.p);restored=true}
   const P={...base,exp:(base.exp&&base.exp.length?base.exp:[]).map(e=>({...e})),skills:[...(base.skills||[])]};
   const name=myName||"Your name";
+  if(!P.grad&&S.profile.year){const now=new Date(),ay=now.getFullYear()+(now.getMonth()>=5?1:0),off={Freshman:3,Sophomore:2,Junior:1,Senior:0}[S.profile.year];if(off!==undefined)P.grad=String(ay+off)} /* class year from the onboarding answer */
+  const quick=!(S.profile.headline||S.profile.about||(S.profile.exp&&S.profile.exp.length)||(S.profile.skills&&S.profile.skills.length)||S.profile._t); /* first visit: just the essentials */
   const field=(id,label,val,opts={})=>`<label class="pe-f ${opts.cls||""}"><span class="pe-l">${label}${opts.max?`<em class="pe-c" data-for="${id}">${String(val||"").length}/${opts.max}</em>`:""}</span>${opts.select?`<select id="${id}">${opts.select.map(o=>`<option value="${esc(o)}" ${o===(val||"")?"selected":""}>${esc(o||opts.none||"Choose…")}</option>`).join("")}</select>`:opts.area?`<textarea id="${id}" ${opts.max?`maxlength="${opts.max}"`:""} rows="${opts.rows||4}" placeholder="${esc(opts.ph||"")}">${esc(val||"")}</textarea>`:`<input id="${id}" ${opts.max?`maxlength="${opts.max}"`:""} ${opts.type?`type="${opts.type}"`:""} ${opts.im?`inputmode="${opts.im}"`:""} placeholder="${esc(opts.ph||"")}" value="${esc(val||"")}" autocomplete="off">`}${opts.hint||opts.hintId?`<small class="pe-h" ${opts.hintId?`id="${opts.hintId}"`:""}>${opts.hint||""}</small>`:""}</label>`;
   const secs=[["basics","Basics"],["resume","Resume"],["about","About"],["exp","Experience"],["skills","Skills"],["look","Look & privacy"]];
-  openPanel(`<div class="pe">
+  openPanel(`<div class="pe${quick?" pe-quick":""}">
     <div class="pe-top"><div><div class="label">Public profile</div><h2>Edit profile</h2></div>
       <div class="pe-meter" id="peMeter"></div></div>
     ${restored?`<div class="pe-restore">Restored your unsaved changes. <button type="button" class="ghost" id="peDiscard">Discard them</button></div>`:""}
@@ -3498,6 +3501,7 @@ function editProfile(){
           ${field("pTarget","Target career",P.target,{select:PE_TARGETS})}
           ${field("pOpen","Open to",P.open,{select:OPEN_TO,none:"Not right now"})}
         </section>
+        ${quick?`<button type="button" class="ghost outline pe-more" id="peMore">Add about, experience, skills and look →</button>`:""}
         <section class="pe-sec" id="pe-resume"><h3>Resume</h3>
           <div class="full pe-res">
             <label class="pe-drop" id="peDrop"><input type="file" id="peResFile" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
@@ -3694,6 +3698,8 @@ Return JSON: {"headline":"","school":"","grad":"","major":"","location":"","abou
       const r=await aiCall(prompt,$p("#peImpNote"));if(!r)return;
       peReview(r,$p("#peImpOut"),"Review what Claude found",()=>{box.hidden=true})}};
   drawExp();drawSkills();drawSugg();drawPreview();validate();
+  if($p("#peMore"))$p("#peMore").onclick=()=>{$p(".pe").classList.remove("pe-quick");$p("#peMore").remove()};
+  if(quick&&!P.headline&&(P.school||P.target)){const f=$p("#peSugg [data-hl]");if(f){f.click();$p("#pHead").dispatchEvent(new Event("input"))}} /* pre-fill the best headline; one tap to change */
   setTimeout(()=>{const h=$p("#pHead");if(h)h.focus({preventScroll:true})},60)}
 
 /* LinkedIn button on the public profile */

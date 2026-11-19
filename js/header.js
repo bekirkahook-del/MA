@@ -16,6 +16,9 @@
 .top-r .nb-dot{top:7px!important;right:auto!important;left:22px!important;width:7px!important;height:7px!important;box-shadow:0 0 0 2px var(--paper)}
 .top-r .probtn{height:30px;padding:0 12px!important;border-radius:99px!important;border:1px solid color-mix(in srgb,var(--brass) 55%,transparent)!important;color:var(--brass)!important;font-size:12px!important;font-weight:700!important;letter-spacing:.04em;background:color-mix(in srgb,var(--brass) 8%,transparent)!important;margin:0 2px}
 .top-r .probtn:hover{background:color-mix(in srgb,var(--brass) 16%,transparent)!important}
+.top-r .probtn.on,.top-r .probtn.on:hover{display:inline-flex;align-items:center;gap:5px;border:0!important;background:linear-gradient(135deg,#F6D987,#CFA033)!important;color:#3A2705!important;padding:0 12px 0 10px!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.18)}
+.top-r .probtn.on::before{content:"\\2605";font-size:11px;line-height:1}
+.top-r .probtn.on .probadge{background:none;color:inherit;border-radius:0;padding:0;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.08em}
 .top-r .iconbtn,.top-r .nbell{width:36px!important;height:36px!important;padding:0!important;border-radius:10px!important;display:grid!important;place-items:center;color:var(--ink-2)!important;background:none;transition:background .15s,color .15s}
 .top-r .iconbtn:hover,.top-r .nbell:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)!important;color:var(--ink)!important}
 .top-r .avbtn{width:34px!important;height:34px!important;margin-left:4px;box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--rule);border-radius:50%}

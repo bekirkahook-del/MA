@@ -513,6 +513,30 @@ textarea,input,select{border-width:1px;border-radius:6px;background:var(--sheet)
 .chip:hover{border-color:var(--ink-2)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
 .road{gap:0 48px}
+.rd-hero{border:1px solid var(--rule);border-radius:16px;background:var(--sheet);padding:18px 20px 16px;margin:0 0 22px}
+.rd-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.rd-k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.rd-h{display:block;font-size:18px;color:var(--ink);margin-top:3px}
+.rd-pct{font-size:28px;font-weight:800;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.rd-bar{height:8px;border-radius:99px;background:var(--rule);overflow:hidden;margin:12px 0 16px}
+.rd-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--good,#16a06a);transition:width .5s ease}
+.rd-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:relative}
+.rd-steps:before{content:"";position:absolute;left:8%;right:8%;top:15px;height:2px;background:var(--rule)}
+.rd-steps li{position:relative;text-align:center}
+.rd-steps button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;border-radius:10px;padding:0 2px 4px}
+.rd-steps button:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.rd-steps li.rd-goal{display:flex;flex-direction:column;align-items:center;gap:4px}
+.rd-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;position:relative;z-index:1;color:var(--ink-2);
+  background:radial-gradient(closest-side,var(--sheet) 72%,transparent 74% 100%),conic-gradient(var(--good,#16a06a) var(--p,0%),var(--rule) 0)}
+.rd-steps li.done .rd-dot{background:var(--good,#16a06a);color:#fff}
+.rd-steps li.cur .rd-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--cobalt) 22%,transparent)}
+.rd-steps li.rd-goal .rd-dot{background:var(--paper);border:2px dashed var(--rule);color:var(--brass)}
+.rd-steps li.rd-goal.done .rd-dot{background:var(--brass);border-color:var(--brass);color:#fff}
+.rd-y{font-size:13px;font-weight:600;color:var(--ink)}
+.rd-steps li.cur .rd-y{color:var(--cobalt)}
+.rd-n{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.rd-y .sh{display:none}
+@media(max-width:560px){.rd-y .lg{display:none}.rd-y .sh{display:inline}.rd-hero{padding:14px 14px 12px}.rd-y{font-size:11.5px}.rd-n{font-size:10px}.rd-dot{width:26px;height:26px;font-size:12px}.rd-steps:before{top:13px}}
 details.year{border-bottom:1px solid var(--rule)}
 details.year>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 4px}
 details.year>summary::-webkit-details-marker{display:none}
@@ -1981,8 +2005,8 @@ footer a{display:inline-block;padding:10px 2px;margin:-10px 0}
     <div class="prof-row" role="tablist" aria-label="Career path"></div>
     <nav class="seg sub subnav" role="tablist" aria-label="Career sections"><button data-sub="road" aria-pressed="true">Roadmap</button><button data-sub="open" aria-pressed="false">Openings</button><button data-sub="apps" aria-pressed="false">Applications</button><button data-sub="cal" aria-pressed="false">Calendar</button><button data-sub="net" aria-pressed="false">Networking</button><button data-sub="res" aria-pressed="false">Resume</button><button data-sub="firms" aria-pressed="false">Firms</button></nav>
     <div data-pane="road" class="pane">
-    <div class="sec-head"><h2>High school to offer</h2><span class="pill" id="roadPct">0%</span></div>
-    <div class="bar" style="margin:0"><i id="roadBar"></i></div>
+    <div class="rd-hero" id="roadHero"><div class="rd-top"><div><span class="rd-k">High school to offer</span><b class="rd-h" id="roadSum">Your path to the offer</b></div><span class="rd-pct" id="roadPct">0%</span></div>
+    <div class="rd-bar"><i id="roadBar"></i></div><ol class="rd-steps" id="roadSteps"></ol></div>
     <div class="road" id="road"></div>
     </div>
     <div data-pane="open" class="pane" hidden><div id="openings"></div></div>

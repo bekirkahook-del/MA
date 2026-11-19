@@ -1,3 +1,11 @@
+/* Cloudflare Web Analytics: cookieless page-view counts. Skipped for the owner's browser and for GPC / Do Not Track visitors. */
+(function(){
+  try{
+    if(localStorage.getItem("ma-notrack")||navigator.globalPrivacyControl||navigator.doNotTrack==="1")return;
+    const s=document.createElement("script");s.defer=true;s.src="https://static.cloudflareinsights.com/beacon.min.js";
+    s.setAttribute("data-cf-beacon",'{"token": "38fdc8ce664b46db9b6eae0572c776cc"}');document.head.appendChild(s);
+  }catch(e){}
+})();
 /* Counts one visit per visitor per day for the owner's stats page. No cookies, no third parties:
    a random id in localStorage, the page, where they came from, and the device type. */
 (function(){

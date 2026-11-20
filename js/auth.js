@@ -87,7 +87,7 @@
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
       oauthBtns().then(list=>{const box=ov.querySelector("#auO");if(!box||!list.length)return;
         box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn auth-o" data-o="${id}">${LOGO[id]||""}<span>Continue with ${name}</span></button>`).join("")+`<div class="auth-or">or use email</div>`;box.style.display="flex";
-        box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin}});if(error){b.disabled=false;say(error.message)}})});
+        box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin+"/"}});if(error){b.disabled=false;say(error.message)}})});
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
         say("Sending…",true);let ok=false;try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"reset"})});const j=await r.json().catch(()=>({}));if(r.status===429){say("Too many tries. Wait a minute and try again.");return}ok=!!j.ok}catch(_){}
         if(!ok){const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});if(error){say(error.message);return}}

@@ -83,3 +83,23 @@ export async function sendOne({ to, subject, html }) {
     body: JSON.stringify({ from: FROM(), to: [to], subject, html }), signal: AbortSignal.timeout(10000) });
   if (!r.ok) throw new Error("send failed " + r.status + " " + (await r.text()));
 }
+
+// Sign-in / password links made server-side and sent through Resend (Supabase's built-in mailer is capped at a few emails an hour).
+// type: "magiclink" (one-tap sign in) or "recovery" (sign in, then set a password). Returns null if the account doesn't exist.
+export async function actionLink(type, email, redirect) {
+  const r = await fetch(`${SB_URL}/auth/v1/admin/generate_link`, { method: "POST", headers: svc(), signal: AbortSignal.timeout(8000),
+    body: JSON.stringify({ type, email, redirect_to: redirect || SITE, options: { redirect_to: redirect || SITE } }) }).catch(() => null);
+  if (!r || !r.ok) return null;
+  const j = await r.json();
+  return j.action_link || (j.properties && j.properties.action_link) || null;
+}
+export function plainMail(title, bodyHtml, foot) {
+  return `<!doctype html><html><body style="margin:0;background:#EEF1F5;font-family:Arial,Helvetica,sans-serif;color:#13203B">
+<div style="max-width:560px;margin:0 auto;padding:24px 16px">
+<div style="font-weight:900;letter-spacing:.06em;font-size:22px;margin-bottom:14px">M<span style="color:#2448D8">&amp;</span>A Prep</div>
+<div style="background:#fff;border:1px solid #D3D9E4;border-radius:14px;padding:22px 20px;font-size:16px;line-height:1.55">
+<h1 style="font-size:22px;margin:0 0 10px">${title}</h1>${bodyHtml}</div>
+<p style="font-size:12px;color:#4A5672;line-height:1.5;margin-top:16px;text-align:center">${foot || "You're getting this because someone asked to sign in to M&amp;A Prep with this email. If it wasn't you, ignore it."}</p>
+</div></body></html>`;
+}
+export const btn = (href, t) => `<a href="${href}" style="display:inline-block;background:#2448D8;color:#fff;text-decoration:none;font-weight:bold;padding:13px 22px;border-radius:10px">${t}</a>`;

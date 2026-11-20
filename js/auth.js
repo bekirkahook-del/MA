@@ -27,7 +27,8 @@
   const MAILS=[[/^(gmail|googlemail)\.com$/,"Gmail","https://mail.google.com/"],[/^(outlook|hotmail|live|msn)\.com$/,"Outlook","https://outlook.live.com/mail/"],[/^(yahoo|ymail)\.com$/,"Yahoo Mail","https://mail.yahoo.com/"],[/^(icloud|me|mac)\.com$/,"iCloud Mail","https://www.icloud.com/mail"]];
   const mailFor=e=>{const d=(e.split("@")[1]||"").toLowerCase();for(const m of MAILS)if(m[0].test(d))return{name:m[1],url:m[2]};return null};
   const okEmail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
-  function openAuth(mode){mode=mode||"in";
+  const mev=n=>{try{window.maEv&&maEv(n)}catch(_){}};
+  function openAuth(mode){mode=mode||"in";mev("auth_open");
     const ov=document.createElement("div");ov.className="auth-ov";
     let view="main",email="",cd=0,cdT=null;
     const agree=`By continuing you confirm you're 13 or older and agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a> and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.`;
@@ -68,12 +69,14 @@
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
-        const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};
-      f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim(),p=pi.value;email=e;
+        say("Sending…",true);let ok=false;try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"reset"})});const j=await r.json().catch(()=>({}));if(r.status===429){say("Too many tries. Wait a minute and try again.");return}ok=!!j.ok}catch(_){}
+        if(!ok){const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});if(error){say(error.message);return}}
+        say("Check your email for a link to set your password.",true);mev("auth_reset")};
+      f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim(),p=pi.value;mev("auth_submit");email=e;
         if(!okEmail(e)){say("Enter a valid email.");ei.focus();return}
         if(p.length<6){say("Password needs at least 6 characters.");pi.focus();return}
         go.disabled=true;go.textContent="One sec…";say("");
-        const done=t=>{say(t,true);try{window.gtag&&gtag("event",t.startsWith("Account")?"sign_up":"login",{method:"password"})}catch(_){}setTimeout(()=>ov.remove(),700)};
+        const done=t=>{say(t,true);mev(t.startsWith("Account")?"auth_new":"auth_in");try{window.gtag&&gtag("event",t.startsWith("Account")?"sign_up":"login",{method:"password"})}catch(_){}setTimeout(()=>ov.remove(),700)};
         try{
           let r=await sb.auth.signInWithPassword({email:e,password:p});
           if(!r.error){done("Signed in. Loading…");return}
@@ -82,7 +85,7 @@
           if(r.error){if(/already|registered|exists/i.test(r.error.message))throw new Error("WRONGPW");throw r.error}
           if(r.data&&r.data.session){done("Account created. You're in!");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+r.data.session.access_token},keepalive:true}).catch(()=>{});return}
           throw new Error("WRONGPW")}
-        catch(x){
+        catch(x){mev(x.message==="WRONGPW"?"auth_wrongpw":"auth_err");
           if(x.message==="WRONGPW")say("That email already has an account and the password doesn't match. Tap Forgot password, or get a sign-in link below.");
           else if(/rate|too many/i.test(x.message||""))say("Too many tries. Wait a minute and try again.");
           else if(/fetch|network/i.test(x.message||""))say("Couldn't reach the server. Check your connection and try again.");
@@ -124,13 +127,25 @@
         finally{go.disabled=false}};
       setTimeout(()=>{if(!ei.value)ei.focus()},30)};
     /* returns "" on success, or a friendly error */
-    async function sendLink(e){try{const {error}=await sb.auth.signInWithOtp({email:e,options:{shouldCreateUser:true,emailRedirectTo:location.origin}});
+    async function sendLink(e){try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"magic"})});const j=await r.json().catch(()=>({}));if(r.status===429)return "Just a sec, we already sent one. Check your inbox, or try again in a minute.";if(j.ok)return ""}catch(_){}
+    try{const {error}=await sb.auth.signInWithOtp({email:e,options:{shouldCreateUser:true,emailRedirectTo:location.origin}});
       if(!error)return "";if(/rate|seconds|too many/i.test(error.message))return "Just a sec, we already sent one. Check your inbox, or try again in a minute.";return error.message||"Couldn't send the link."}
       catch(x){return "Couldn't reach the server. Check your connection and try again."}}
     draw();ov.addEventListener("mousedown",e=>{if(e.target===ov)ov.remove()});
     document.addEventListener("keydown",function k(e){if(e.key==="Escape"){ov.remove();document.removeEventListener("keydown",k)}});
     document.body.appendChild(ov)}
   window.maOpenAuth=openAuth;
+  function setPw(){const ov=document.createElement("div");ov.className="auth-ov";
+    ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button><h2>Pick your password</h2>
+     <p>You're signed in. Set a password so next time it's just email + password.</p>
+     <label>New password<input id="auN" type="password" autocomplete="new-password" placeholder="6+ characters" required></label>
+     <button class="auth-go" type="submit">Save password</button><div class="auth-msg" id="auM" role="status" aria-live="polite"></div></form>`;
+    const m=ov.querySelector("#auM"),i=ov.querySelector("#auN");ov.querySelector(".auth-x").onclick=()=>ov.remove();
+    ov.querySelector("form").onsubmit=async e=>{e.preventDefault();if(i.value.length<6){m.textContent="Password needs at least 6 characters.";m.className="auth-msg err";return}
+      const {error}=await sb.auth.updateUser({password:i.value});m.textContent=error?error.message:"Saved. You're all set.";m.className="auth-msg "+(error?"err":"ok");if(!error){mev("auth_pwset");setTimeout(()=>ov.remove(),900)}};
+    document.body.appendChild(ov);setTimeout(()=>i.focus(),30)}
+  try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")setTimeout(setPw,400)})}catch(_){}
+  if(/type=recovery/.test(location.hash))A.ready.then(s=>{if(s)setTimeout(setPw,600)});
 
   A.ready.then(s=>{const top=document.querySelector(".top-r");if(!top)return;
     const b=document.createElement("button");b.className="authbtn"+(s?"":" cta");b.id="authBtn";b.type="button";

@@ -288,7 +288,7 @@
       <p class="note" style="margin-top:8px">${cur.length?`About <b>${pct(newAccts,Math.max(1,fresh(cur)))}%</b> of new visitors made an account in this period.`:""}</p></div>
      <div class="ms-sec"><h3>Email list <small>Sunday curveball email</small></h3>${(()=>{const S2=CACHE.subs||[],act2=S2.filter(x=>x.status==="active"),nw=act2.filter(x=>(x.t||"").slice(0,10)>=cut(N)).length;
        return `<div class="ms-tiles"><div class="ms-tile"><b>${act2.length}</b><span>Subscribers</span></div><div class="ms-tile"><b>${nw}</b><span>New, ${N} days</span></div><div class="ms-tile"><b>${S2.length-act2.length}</b><span>Unsubscribed</span></div><div class="ms-tile"><b>${(tally(act2,x=>(x.src||"").split(":")[0],1)[0]||["–"])[0]}</b><span>Top signup spot</span></div></div>
-       <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" id="msTestMail">Send me this week's email</button><span class="note" id="msTestMsg"></span></div>`})()}</div>
+       <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" id="msTestMail">Send me this week's email</button><span class="note" id="msTestMsg"></span> <button class="btn sm" type="button" id="msStuck">Stuck sign-ups</button><span class="note" id="msStuckMsg"></span></div>`})()}</div>
      <div class="ms-sec"><h3>Account history <small>rebuilt from saved progress · back to launch</small></h3>${(()=>{const all=[...new Set(accts.flatMap(a=>a.days))].sort();if(!all.length)return`<p class="note">No dated activity yet.</p>`;
        const start=all[0],list=[];for(let t=Date.parse(start+"T12:00:00");t<=Date.now();t+=864e5){const d=dayStr(new Date(t));list.push([d,accts.filter(a=>a.days.includes(d)).length,accts.filter(a=>a.first===d).length])}
        const L=list.slice(-Math.max(N,14)),m=Math.max(1,...L.map(x=>x[1]));const tot=accts.filter(a=>a.first).length;
@@ -315,6 +315,9 @@
     {const tb=document.getElementById("msTestMail");if(tb)tb.onclick=async()=>{const msg=document.getElementById("msTestMsg");tb.disabled=true;msg.textContent="Sending…";
       try{const tok=A.session&&A.session.access_token||(await sb.auth.getSession()).data.session.access_token;const r=await fetch("/.netlify/functions/email-test",{method:"POST",headers:{Authorization:"Bearer "+tok}});const j=await r.json().catch(()=>({}));
         msg.textContent=r.ok?`Sent to ${j.to}. Check your inbox.`:(j.error||"Couldn't send.")}catch(e){msg.textContent="Couldn't send."}tb.disabled=false}}
+    {const sb2=document.getElementById("msStuck");if(sb2)sb2.onclick=async()=>{const msg=document.getElementById("msStuckMsg");msg.textContent="Checking…";
+      try{const tok=A.session&&A.session.access_token||(await sb.auth.getSession()).data.session.access_token;const r=await fetch("/.netlify/functions/stuck",{headers:{Authorization:"Bearer "+tok}});const j=await r.json();
+        msg.textContent=r.ok?`${j.stuck} of ${j.total} accounts never got in${j.stuck?": "+j.list.map(x=>x.email).join(", "):""}`:(j.error||"Couldn't check.")}catch(e){msg.textContent="Couldn't check."}}}
     document.getElementById("msCsv").onclick=()=>{const cols=["d","t","p","src","cmp","ref","dev","country","region","city","first","acct"];
       const csv=[cols.join(",")].concat(cur.map(v=>cols.map(c=>`"${String(v[c]??"").replace(/"/g,'""')}"`).join(","))).join("\n");
       const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`mnaprep-visits-${N}d-${today}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}}

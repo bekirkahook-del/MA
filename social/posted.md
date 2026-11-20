@@ -112,3 +112,6 @@
 - 2026-11-23 type2-perp — [Teaser video, type2.js, no voice] $100/yr forever at 5% → $2,000 (perpetuity)
 - 2026-11-23 oddq-pctswap — [Interview Q] 35% of 60 = 60% of 35 = 21 (percent swap)
 - 2026-11-19 9:07pm ad-liquid-ps2 — [Ad, Bekir's cloned voice (AI), PS2-style host, liquid morph, real app clips] 28s M&A Prep ad: levels, Rapid Fire, mock interview (301 Qs), deal breakdowns, leaderboards. TikTok + IG Reel + YouTube Short + FB Reel, all AI-labeled. Bekir asked to post tonight
+- 2026-11-24 defrev — [Quiz] Deferred revenue: $120 prepaid Dec 1 for 12 months → revenue $10 (C), cash +$120, deferred revenue $110
+- 2026-11-24 story-monty — [Teaser video, story.js, no voice] Monty Hall: switching wins 2/3, staying 1/3
+- 2026-11-24 oddq-999x7 — [Interview Q] 999 × 7 = 6,993 (1,000 − 1 trick)

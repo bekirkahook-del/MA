@@ -4,7 +4,7 @@
   # Every production deploy costs 15 Netlify credits. Skip the deploy when a push only changes
   # things visitors never load: news data (read straight from GitHub), social/, notes (*.md),
   # guide source scripts, database setup, tests and the YouTube/Discord tooling.
-  ignore = '''C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && ! printf '%s\n' "$C" | grep -qvE '^(data/wire\.json|social/|guides/_src/|supabase/|tests/)|\.md$' '''
+  ignore = '''[ -n "$BRANCH" ] && [ "$BRANCH" != "main" ] && exit 0; C=$(git diff --name-only "$CACHED_COMMIT_REF" "$COMMIT_REF" 2>/dev/null); [ -n "$C" ] && ! printf '%s\n' "$C" | grep -qvE '^(data/wire\.json|social/|guides/_src/|supabase/|tests/)|\.md$' '''
 
 # ---------------------------------------------------------------------------------------------------------------
 # Security headers for every page (added Nov 17, 2026).

@@ -29,7 +29,7 @@
   const okEmail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
   function openAuth(mode){mode=mode||"in";
     const ov=document.createElement("div");ov.className="auth-ov";
-    let view="magic",email="",cd=0,cdT=null;
+    let view="main",email="",cd=0,cdT=null;
     const agree=`By continuing you confirm you're 13 or older and agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a> and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.`;
     const draw=()=>{const up=mode==="up";
       if(view==="sent"){
@@ -41,14 +41,55 @@
          <p style="font-size:12.5px">Nothing yet? Check spam or promotions.</p>
          <div class="auth-msg" id="auM"></div>
          <button type="button" class="auth-sw" id="auRe"></button>
-         <button type="button" class="auth-sw" id="auCh">Wrong email? Change it</button></div>`;
+         <button type="button" class="auth-sw" id="auCh">Wrong email? Change it</button><button type="button" class="auth-sw" id="auBk">Use a password instead (instant)</button></div>`;
         ov.querySelector("#auTo").textContent=email;
         const re=ov.querySelector("#auRe"),msg=ov.querySelector("#auM");
         const tick=()=>{re.disabled=cd>0;re.textContent=cd>0?"Resend link in "+cd+"s":"Resend the link"};tick();
         clearInterval(cdT);cdT=setInterval(()=>{if(!ov.isConnected){clearInterval(cdT);return}if(cd>0){cd--;tick()}},1000);
         re.onclick=async()=>{if(cd>0)return;re.disabled=true;const r=await sendLink(email);msg.textContent=r?r:"Sent again.";msg.className="auth-msg "+(r?"err":"ok");cd=60;tick()};
-        ov.querySelector("#auCh").onclick=()=>{view="magic";draw()};
+        ov.querySelector("#auCh").onclick=()=>{view="magic";draw()};ov.querySelector("#auBk").onclick=()=>{view="main";draw()};
         ov.querySelector(".auth-x").onclick=()=>ov.remove();return}
+      /* Main view: email + password, no email confirmation needed (project auto-confirms). One button signs in OR creates the account. */
+      if(view==="main"){const up=mode==="up";
+      ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button>
+       <h2>${up?"Join free in 10 seconds":"Sign in or join free"}</h2>
+       <p>Email and a password. No email link, you're in right away.</p>
+       ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
+       <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
+       <label>Password<span style="position:relative;display:block"><input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="6+ characters" required style="width:100%;box-sizing:border-box;padding-right:58px"><button type="button" id="auEye" class="auth-sw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12.5px">Show</button></span></label>
+       <button class="auth-go" type="submit">Continue</button>
+       <p style="font-size:12px;line-height:1.4">New here? This creates your free account. ${agree}</p>
+       <div class="auth-msg" id="auM" role="status" aria-live="polite"></div>
+       <button type="button" class="auth-sw" id="auF">Forgot password?</button>
+       <button type="button" class="auth-sw" id="auMl">Email me a sign-in link instead</button></form>`;
+      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP");
+      ei.value=email;const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
+      ov.querySelector(".auth-x").onclick=()=>ov.remove();
+      ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
+      ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
+      ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
+        const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};
+      f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim(),p=pi.value;email=e;
+        if(!okEmail(e)){say("Enter a valid email.");ei.focus();return}
+        if(p.length<6){say("Password needs at least 6 characters.");pi.focus();return}
+        go.disabled=true;go.textContent="One sec…";say("");
+        const done=t=>{say(t,true);try{window.gtag&&gtag("event",t.startsWith("Account")?"sign_up":"login",{method:"password"})}catch(_){}setTimeout(()=>ov.remove(),700)};
+        try{
+          let r=await sb.auth.signInWithPassword({email:e,password:p});
+          if(!r.error){done("Signed in. Loading…");return}
+          if(!/invalid login|invalid credentials/i.test(r.error.message||""))throw r.error;
+          r=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin}});
+          if(r.error){if(/already|registered|exists/i.test(r.error.message))throw new Error("WRONGPW");throw r.error}
+          if(r.data&&r.data.session){done("Account created. You're in!");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+r.data.session.access_token},keepalive:true}).catch(()=>{});return}
+          throw new Error("WRONGPW")}
+        catch(x){
+          if(x.message==="WRONGPW")say("That email already has an account and the password doesn't match. Tap Forgot password, or get a sign-in link below.");
+          else if(/rate|too many/i.test(x.message||""))say("Too many tries. Wait a minute and try again.");
+          else if(/fetch|network/i.test(x.message||""))say("Couldn't reach the server. Check your connection and try again.");
+          else say(x.message||"Something went wrong. Try again.")}
+        finally{go.disabled=false;go.textContent="Continue"}};
+      setTimeout(()=>{(ei.value?pi:ei).focus()},30);return}
+
       const pw=view==="pw";
       ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button>
        <h2>${pw?(up?"Create your account":"Sign in with password"):(up?"Join free in 10 seconds":"Welcome back")}</h2>
@@ -66,7 +107,7 @@
       ei.value=email;
       const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
-      ov.querySelector("#auPw").onclick=()=>{email=ei.value.trim();view=pw?"magic":"pw";draw()};
+      ov.querySelector("#auPw").onclick=()=>{email=ei.value.trim();view="main";draw()};
       const sw=ov.querySelector("#auSw");if(sw)sw.onclick=()=>{email=ei.value.trim();mode=up?"in":"up";draw()};
       const fp=ov.querySelector("#auF");if(fp)fp.onclick=async()=>{const e=ei.value.trim();if(!e){say("Type your email first.");return}
         const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};

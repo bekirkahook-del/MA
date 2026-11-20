@@ -100,6 +100,55 @@ footer a{padding:4px 2px!important;margin:0!important}
 @keyframes skel-sh{to{background-position:250% 0,0 0}}
 @media (prefers-reduced-motion:reduce){#tracks:empty,#openings:empty,#road:empty,#firmGrid:empty,#deals:empty,#cal:empty,#apps:empty,#resume:empty,#board:empty,#proPage:empty{animation:none}}
 </style>
+<style>/* Settings redesign (Nov 20, 2026) */
+[data-view=settings] .sec-head{display:none}
+.set-body label.srow{flex-direction:row!important;align-items:center!important}
+.settings{grid-template-columns:230px minmax(0,1fr)!important;gap:28px!important;max-width:1060px!important}
+.set-hero{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:20px 22px;border-radius:20px;background:linear-gradient(135deg,var(--cobalt) 0%,#5a44f0 60%,#16A06A 140%);color:#fff;box-shadow:0 14px 34px rgba(36,72,216,.25);flex-wrap:wrap}
+.sh-av{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);font-size:22px;font-weight:800;flex:none}
+.sh-txt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.sh-txt b{font-size:19px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.sh-txt span{font-size:13px;opacity:.88;overflow:hidden;text-overflow:ellipsis}
+.sh-act{display:flex;gap:8px;flex-wrap:wrap}
+.set-hero .btn{background:#fff!important;color:var(--cobalt)!important;border:0!important;font-weight:700}
+.set-hero .ghost{color:#fff!important;border-color:rgba(255,255,255,.6)!important;background:transparent!important}
+.set-nav{gap:4px!important;background:var(--sheet);border:1px solid var(--rule);border-radius:18px;padding:10px}
+.set-nav input{border-radius:10px!important;padding:9px 12px!important;font-size:14px!important;margin-bottom:6px!important}
+.set-nav button{display:flex;align-items:center;gap:10px;padding:10px 12px!important;border-radius:11px!important;font-size:14px!important;font-weight:500;transition:background .12s,color .12s}
+.set-nav button svg{opacity:.75;flex:none}
+.set-nav button[aria-current="true"]{background:var(--cobalt-soft)!important;color:var(--cobalt)!important;font-weight:700!important}
+.set-nav button[aria-current="true"] svg{opacity:1}
+.set-body .sgroup{display:none;background:var(--sheet);border:1px solid var(--rule)!important;border-radius:20px!important;padding:6px 24px 10px!important;box-shadow:0 8px 28px rgba(19,32,59,.06);animation:sgIn .22s ease both}
+.set-body .sgroup.on,.set-body.q .sgroup{display:block}
+.set-body .sgroup h3{display:flex;align-items:center;gap:14px;padding:20px 0 14px!important;margin:0 0 4px!important;border-bottom:1px solid var(--rule);font-size:20px!important;font-weight:800!important;letter-spacing:-.01em}
+.set-body .sgroup h3 small{display:block;font-size:13px;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-top:2px}
+.sg-ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--cobalt-soft);color:var(--cobalt);flex:none}
+.sg-ic svg{width:21px;height:21px}
+.set-body .srow{padding:17px 0!important;gap:24px}
+.set-body .srow>span:first-child b{font-size:15px!important;font-weight:650!important;margin-bottom:2px}
+.set-body .srow>span:first-child span{font-size:13px!important;line-height:1.45}
+.set-body .sub-h{margin:18px 0 2px;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt)}
+.set-body .sw{width:46px;height:27px}
+.set-body .sw::after{width:21px;height:21px;top:3px;left:3px}
+.set-body .sw:checked{background:var(--cobalt)}
+.set-body .sw:checked::after{transform:translateX(19px)}
+.set-body .seg{border-radius:12px!important;background:var(--paper);border:1px solid var(--rule);padding:3px;gap:2px}
+.set-body .seg button{border:0!important;border-radius:9px;padding:7px 14px!important;font-size:13px!important;font-weight:600;color:var(--ink-2)}
+.set-body .seg button[aria-pressed="true"]{background:var(--sheet)!important;color:var(--ink)!important;box-shadow:0 1px 3px rgba(19,32,59,.15)}
+.set-body .preview{border-radius:16px}
+@keyframes sgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:860px){.settings{grid-template-columns:1fr!important;gap:14px!important}
+ .set-hero{padding:16px;border-radius:18px}.sh-av{width:46px;height:46px;font-size:19px}.sh-act{width:100%}
+ .set-nav{flex-direction:row!important;border:0;background:none;padding:0;overflow-x:auto;scrollbar-width:none;position:sticky!important;top:0;z-index:5}
+ .set-nav::-webkit-scrollbar{display:none}
+ .set-nav button{flex:none;white-space:nowrap;background:var(--sheet)!important;border:1px solid var(--rule)!important;border-radius:999px!important;padding:8px 14px!important}
+ .set-nav button[aria-current="true"]{background:var(--cobalt)!important;color:#fff!important;border-color:var(--cobalt)!important}
+ .set-nav button svg{display:none}
+ .set-body .sgroup{padding:4px 16px 8px!important;border-radius:18px!important}
+ .set-body .sgroup h3{font-size:18px!important}.sg-ic{width:38px;height:38px}}
+@media (prefers-reduced-motion:reduce){.set-body .sgroup{animation:none}}
+html.calm .set-body .sgroup{animation:none}
+</style>
 </head><body><a href="#main" class="ma-skip">Skip to main content</a>
 <style>
 /* Layout: pitchbook-style tabs (Train · Tools · Interview · Recruit · Firms) in a main column, The Wire news rail sticky on the right */

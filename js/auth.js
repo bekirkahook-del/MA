@@ -5,22 +5,30 @@
 .authbtn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;white-space:nowrap;transition:border-color .2s,background .2s}
 .authbtn:hover{border-color:var(--ink)}
 .authbtn.cta{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
-.auth-ov{position:fixed;inset:0;z-index:9999;background:rgba(10,12,20,.45);display:grid;place-items:center;padding:16px;animation:authIn .2s ease both}
-.auth-box{width:100%;max-width:380px;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:16px;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:12px;position:relative}
-.auth-box h2{margin:0;font-family:var(--body);font-size:22px;font-weight:700;text-transform:none}
-.auth-box p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
-.auth-box label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
-.auth-box input{font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--rule);border-radius:9px;background:var(--paper);color:var(--ink)}
-.auth-box input:focus{outline:none;border-color:var(--cobalt);box-shadow:0 0 0 3px var(--cobalt-soft)}
-.auth-go{font:inherit;font-size:15px;font-weight:600;padding:11px;border:0;border-radius:9px;background:var(--cobalt);color:#fff;cursor:pointer}
-.auth-go:disabled{opacity:.6;cursor:default}
-.auth-sw{background:none;border:0;font:inherit;font-size:13px;color:var(--cobalt);cursor:pointer;padding:0;text-align:left}
-.auth-msg{font-size:13px;min-height:1em}.auth-msg.err{color:var(--bad,#c0392b)}.auth-msg.ok{color:var(--good,#1e8e3e)}
-.auth-x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:22px;color:var(--ink-2);cursor:pointer}
+.auth-ov{position:fixed;inset:0;z-index:9999;background:rgba(8,12,28,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;animation:authIn .2s ease both}
+.auth-box{width:100%;max-width:400px;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:22px;padding:30px 26px 22px;box-shadow:0 30px 80px rgba(10,20,60,.35);display:flex;flex-direction:column;gap:13px;position:relative;overflow:hidden;animation:authUp .28s cubic-bezier(.2,.9,.3,1.2) both}
+.auth-box::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,#2448D8,#7357F6,#16A06A)}
+.auth-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#2448D8,#7357F6);color:#fff;font-weight:900;font-size:15px;letter-spacing:.02em;box-shadow:0 8px 20px rgba(36,72,216,.35)}
+.auth-box h2{margin:2px 0 0;font-family:var(--body);font-size:25px;font-weight:800;letter-spacing:-.02em;text-transform:none;line-height:1.15}
+.auth-box p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.5}
+.auth-box label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink-2);letter-spacing:.01em}
+.auth-box input{font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.auth-box input:focus{outline:none;border-color:var(--cobalt);box-shadow:0 0 0 4px var(--cobalt-soft)}
+.auth-go{font:inherit;font-size:16px;font-weight:700;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#2448D8,#5a44f0);color:#fff;cursor:pointer;box-shadow:0 8px 22px rgba(36,72,216,.32);transition:transform .12s,box-shadow .12s}
+.auth-go:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(36,72,216,.4)}.auth-go:active{transform:translateY(0)}
+.auth-go:disabled{opacity:.6;cursor:default;transform:none}
+.auth-sw{background:none;border:0;font:inherit;font-size:13.5px;font-weight:600;color:var(--cobalt);cursor:pointer;padding:0;text-align:left}
+.auth-links{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.auth-or{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-2)}.auth-or::before,.auth-or::after{content:"";flex:1;height:1px;background:var(--rule)}
+.auth-msg{font-size:13.5px;min-height:1em;font-weight:600}.auth-msg.err{color:var(--bad,#c0392b)}.auth-msg.ok{color:var(--good,#1e8e3e)}
+.auth-msg:empty{display:none}
+.auth-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:var(--paper);border:0;font-size:20px;line-height:1;color:var(--ink-2);cursor:pointer}
+.auth-perks{list-style:none;margin:0;padding:12px 14px;display:grid;gap:7px;font-size:13.5px;background:var(--paper);border-radius:12px}
+.auth-perks li::before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:50%;background:#16A06A;color:#fff;font-size:11px;font-weight:800}
+.auth-fine{font-size:11.5px!important;line-height:1.45!important;opacity:.85}
+@keyframes authUp{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
 .auth-o{display:flex;align-items:center;justify-content:center;gap:10px;padding:11px!important;font-size:15px!important;border-radius:9px!important;background:#fff!important;color:#1f1f1f!important;border:1px solid #c7cdd8!important;font-weight:600}
 .auth-o:hover{background:#f6f8fb!important}.auth-o svg{flex:none}
-.auth-perks{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px}
-.auth-perks li::before{content:"✓ ";color:var(--good,#1e8e3e);font-weight:700}
 @keyframes authIn{from{opacity:0}to{opacity:1}}
 @media (max-width:620px){.authbtn{padding:5px 10px;font-size:12px}}
 @media (max-width:480px){.top-r{flex-wrap:nowrap!important;gap:8px!important}}`;document.head.appendChild(st);
@@ -61,6 +69,7 @@
       /* Main view: email + password, no email confirmation needed (project auto-confirms). One button signs in OR creates the account. */
       if(view==="main"){const up=mode==="up";
       ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button>
+       <div class="auth-mark" aria-hidden="true">M&amp;A</div>
        <h2>${up?"Join free in 10 seconds":"Sign in or join free"}</h2>
        <p>One tap with Google, or email + password. You're in right away.</p>
        ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
@@ -68,17 +77,16 @@
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
        <label>Password<span style="position:relative;display:block"><input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="6+ characters" required style="width:100%;box-sizing:border-box;padding-right:58px"><button type="button" id="auEye" class="auth-sw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12.5px">Show</button></span></label>
        <button class="auth-go" type="submit">Continue</button>
-       <p style="font-size:12px;line-height:1.4">New here? This creates your free account. ${agree}</p>
+       <p class="auth-fine">New here? This creates your free account. ${agree}</p>
        <div class="auth-msg" id="auM" role="status" aria-live="polite"></div>
-       <button type="button" class="auth-sw" id="auF">Forgot password?</button>
-       <button type="button" class="auth-sw" id="auMl">Email me a sign-in link instead</button></form>`;
+       <div class="auth-links"><button type="button" class="auth-sw" id="auF">Forgot password?</button><button type="button" class="auth-sw" id="auMl">Email me a link instead</button></div></form>`;
       const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP");
       ei.value=email;const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
       oauthBtns().then(list=>{const box=ov.querySelector("#auO");if(!box||!list.length)return;
-        box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn auth-o" data-o="${id}">${LOGO[id]||""}<span>Continue with ${name}</span></button>`).join("")+`<p style="text-align:center;font-size:12.5px">or use email</p>`;box.style.display="flex";
+        box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn auth-o" data-o="${id}">${LOGO[id]||""}<span>Continue with ${name}</span></button>`).join("")+`<div class="auth-or">or use email</div>`;box.style.display="flex";
         box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin}});if(error){b.disabled=false;say(error.message)}})});
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
         say("Sending…",true);let ok=false;try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"reset"})});const j=await r.json().catch(()=>({}));if(r.status===429){say("Too many tries. Wait a minute and try again.");return}ok=!!j.ok}catch(_){}

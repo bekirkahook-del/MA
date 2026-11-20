@@ -28,6 +28,8 @@
   const mailFor=e=>{const d=(e.split("@")[1]||"").toLowerCase();for(const m of MAILS)if(m[0].test(d))return{name:m[1],url:m[2]};return null};
   const okEmail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
   const mev=n=>{try{window.maEv&&maEv(n)}catch(_){}};
+  /* Google / Apple buttons show only once the provider is switched on in Supabase (Auth > Providers). */
+  let OAUTH=null;const oauthBtns=()=>OAUTH||(OAUTH=fetch((sb.supabaseUrl||"")+"/auth/v1/settings",{headers:{apikey:sb.supabaseKey||""}}).then(r=>r.json()).then(j=>[["google","Google"],["apple","Apple"]].filter(([k])=>j.external&&j.external[k])).catch(()=>[]));
   function openAuth(mode){mode=mode||"in";mev("auth_open");
     const ov=document.createElement("div");ov.className="auth-ov";
     let view="main",email="",cd=0,cdT=null;
@@ -56,6 +58,7 @@
        <h2>${up?"Join free in 10 seconds":"Sign in or join free"}</h2>
        <p>Email and a password. No email link, you're in right away.</p>
        ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
+       <div id="auO" style="display:none;flex-direction:column;gap:8px"></div>
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
        <label>Password<span style="position:relative;display:block"><input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="6+ characters" required style="width:100%;box-sizing:border-box;padding-right:58px"><button type="button" id="auEye" class="auth-sw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12.5px">Show</button></span></label>
        <button class="auth-go" type="submit">Continue</button>
@@ -68,6 +71,9 @@
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
+      oauthBtns().then(list=>{const box=ov.querySelector("#auO");if(!box||!list.length)return;
+        box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn" data-o="${id}" style="padding:11px;font-size:15px;border-radius:9px">Continue with ${name}</button>`).join("")+`<p style="text-align:center;font-size:12.5px">or use email</p>`;box.style.display="flex";
+        box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin}});if(error){b.disabled=false;say(error.message)}})});
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
         say("Sending…",true);let ok=false;try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"reset"})});const j=await r.json().catch(()=>({}));if(r.status===429){say("Too many tries. Wait a minute and try again.");return}ok=!!j.ok}catch(_){}
         if(!ok){const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});if(error){say(error.message);return}}
@@ -147,6 +153,7 @@
   try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")setTimeout(setPw,400)})}catch(_){}
   if(/type=recovery/.test(location.hash))A.ready.then(s=>{if(s)setTimeout(setPw,600)});
 
+  A.ready.then(s=>{try{if(s&&Date.now()-Date.parse(s.user.created_at)<30*60*1000&&!localStorage.getItem("ma-welc")){localStorage.setItem("ma-welc","1");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+s.access_token}}).catch(()=>{})}}catch(e){}});
   A.ready.then(s=>{const top=document.querySelector(".top-r");if(!top)return;
     const b=document.createElement("button");b.className="authbtn"+(s?"":" cta");b.id="authBtn";b.type="button";
     b.textContent=s?"Sign out":"Sign in";if(s)b.title="Signed in as "+s.user.email;

@@ -19,6 +19,9 @@ export function eduDomain(user) {
 export const emailConfirmed = user => !!(user && user.email && (user.email_confirmed_at || user.confirmed_at));
 export const cleanName = n => String(n || "").normalize("NFKC").replace(/[\u200b-\u200f\u2028-\u202e\u2060\ufeff]/g, "").replace(/[\r\n\t<>]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
 
+export const DOMAIN_RE = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/;
+// "osu.edu" matches name@osu.edu and name@buckeyemail.osu.edu
+export const domMatch = (email, req) => { const d = String(email || "").toLowerCase().split("@")[1] || ""; return !!req && (d === req || d.endsWith("." + req)); };
 export const isOwner = (c, id) => c.owner === id;
 export const isCo = (c, id) => (c.co || []).includes(id);
 export const isOfficer = (c, id) => isOwner(c, id) || isCo(c, id);
@@ -35,7 +38,7 @@ export function view(c, uid) {
   if (!c) return null;
   if (c.gone) return { code: c.code, gone: true };
   const off = isOfficer(c, uid);
-  const out = { code: c.code, name: c.name, sd: c.sd, owner: c.owner, co: c.co || [], lock: !!c.lock,
+  const out = { code: c.code, name: c.name, sd: c.sd, owner: c.owner, co: c.co || [], lock: !!c.lock, req: c.req || "",
     members: Object.keys(c.members || {}), me: { member: !!(c.members || {})[uid], pending: (c.pending || []).includes(uid), banned: (c.ban || []).includes(uid), owner: isOwner(c, uid), co: isCo(c, uid) } };
   if (off) { out.pending = c.pending || []; out.ban = c.ban || []; }
   return out;
@@ -56,6 +59,7 @@ export function apply(club, action, uid, b, now) {
       if ((c.ban || []).includes(uid)) E(403, "An officer removed you from this club", { banned: true });
       if ((c.members || {})[uid]) break;
       if (Object.keys(c.members).length >= MAX.members) E(409, "This club is full");
+      if (c.req && !domMatch(b._verifiedEmail, c.req)) E(403, `This club is only for @${c.req} emails.`, { needDomain: c.req, verify: domMatch(b._email, c.req) });
       if (c.lock) { c.pending = push(c.pending, uid, MAX.pending); break; }
       c.members[uid] = now; c.pending = drop(c.pending, uid); break;
     }
@@ -79,6 +83,7 @@ export function apply(club, action, uid, b, now) {
     }
     case "unban": { need(c, uid); c.ban = drop(c.ban, target()); break; }
     case "rename": { need(c, uid, true); const n = cleanName(b.name); if (n.length < 3) E(400, "Name needs 3+ characters"); c.name = n; break; }
+    case "req": { need(c, uid, true); const r = String(b.req || "").toLowerCase().trim().replace(/^.*@/, ""); if (r && (!DOMAIN_RE.test(r) || r.length > 60)) E(400, "Enter a domain like osu.edu"); c.req = r; break; }
     case "lock": { need(c, uid, true); c.lock = !!b.on; if (!c.lock) { /* turning approval off lets everyone waiting in */ for (const p of c.pending || []) c.members[p] = now; c.pending = []; } break; }
     case "co": {
       need(c, uid, true); const t = target();

@@ -74,3 +74,19 @@ console.log("clubs tests ok");
 // club names: NFKC-normalized and stripped of zero-width characters (blocks lookalike / invisible-name tricks)
 { const { cleanName } = await import("../netlify/functions/_lib/clubs.mjs");
   assert.equal(cleanName("Ｂuckeye​ Capital"), "Buckeye Capital"); console.log("clubs name tests ok"); }
+
+// email requirement: owner sets it, only proven matching emails join
+{
+  const { apply: ap, make: mk, domMatch } = await import("../netlify/functions/_lib/clubs.mjs");
+  const O = "11111111-1111-1111-1111-111111111111", X = "22222222-2222-2222-2222-222222222222", Y = "33333333-3333-3333-3333-333333333333";
+  let k = mk("Req Club", "reqclb", O, "", 1);
+  let threw = false; try { ap(k, "req", X, { req: "osu.edu" }, 2); } catch (e) { threw = e.status === 403; } if (!threw) throw new Error("non-owner set req");
+  k = ap(k, "req", O, { req: "@OSU.edu" }, 3); if (k.req !== "osu.edu") throw new Error("req not normalized");
+  threw = false; try { ap(k, "req", O, { req: "bad domain" }, 3); } catch (e) { threw = e.status === 400; } if (!threw) throw new Error("bad domain accepted");
+  let err = null; try { ap(k, "join", X, { _email: "a@gmail.com", _verifiedEmail: "a@gmail.com" }, 4); } catch (e) { err = e; } if (!err || err.extra.verify) throw new Error("gmail joined");
+  err = null; try { ap(k, "join", X, { _email: "a@osu.edu", _verifiedEmail: "" }, 4); } catch (e) { err = e; } if (!err || !err.extra.verify) throw new Error("unproven osu joined");
+  k = ap(k, "join", Y, { _email: "b@buckeyemail.osu.edu", _verifiedEmail: "b@buckeyemail.osu.edu" }, 5); if (!k.members[Y]) throw new Error("osu sub-domain refused");
+  k = ap(k, "req", O, { req: "" }, 6); k = ap(k, "join", X, {}, 7); if (!k.members[X]) throw new Error("open club refused");
+  if (domMatch("x@notosu.edu", "osu.edu")) throw new Error("lookalike domain matched");
+  console.log("email requirement ok");
+}

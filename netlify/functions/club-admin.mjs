@@ -34,6 +34,19 @@ async function ownsLegacy(uid, code) { // an older, browser-only club: the calle
   return !!(d && d.club === code && d.clubOfficer);
 }
 
+// An email counts as proven once the person has signed in through a link sent to it (sign-up auto-confirms, so a typed
+// address alone proves nothing). Remembered per account in docs col "verified_email".
+async function verifiedEmail(me, req) {
+  const em = String(me.email || "").toLowerCase();
+  const got = await fetch(`${SB_URL}/rest/v1/docs?col=eq.verified_email&id=eq.${me.id}&select=data`, { headers: H() }).then(r => r.ok ? r.json() : []).catch(() => []);
+  if (got[0] && got[0].data && got[0].data.email === em) return em;
+  let amr = [];
+  try { const t = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").split(".")[1]; amr = (JSON.parse(Buffer.from(t, "base64url").toString()).amr || []).map(x => x.method); } catch (e) {}
+  if (!amr.some(m => ["otp", "magiclink", "recovery", "email/signup", "invite"].includes(m))) return "";
+  await fetch(`${SB_URL}/rest/v1/docs?on_conflict=col,id`, { method: "POST", headers: { ...H(), Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify({ col: "verified_email", id: me.id, uid: null, data: { email: em, at: new Date().toISOString() }, updated_at: new Date().toISOString() }) }).catch(() => {});
+  return em;
+}
 export default async (req) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const me = await getUser(req);
@@ -65,6 +78,7 @@ export default async (req) => {
       const club = await getClub(code);
       if (!club) throw new ClubErr(404, "Club not found. Ask the officer to open M&A Prep once so it shows up.", { unregistered: true });
       if (action === "get") return json(200, { club: view(club, me.id) });
+      if (action === "join") { delete b._verifiedEmail; b._email = me.email; if (club.req) b._verifiedEmail = await verifiedEmail(me, req); }
       const next = apply(club, action, me.id, b, now);
       if (await saveClub(club, next)) {
         // These actions can change who holds a paid seat or who owns/pays for the club plan: keep the plan in step (never throws).

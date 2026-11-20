@@ -60,6 +60,11 @@
     if(!/^[a-z0-9]{4,8}$/.test(c))return{ok:false,error:"Enter the code your club officer shared."};
     const r=await call("join",{code:c});
     if(r.status===200&&r.j.club){const v=r.j.club;S.club={code:v.code,name:v.name,officer:false,sd:v.sd};adopt(v);save();try{syncProfile()}catch(e){}tick();if(v.me.member)claimSeat();return{ok:true,pending:!!v.me.pending}}
+    if(r.j.needDomain&&r.j.verify){ /* their email matches, they just haven't proven they own it yet: email a one-tap link */
+      let sent=false;try{const A=window.MA_AUTH,s=A&&A.sb&&(await A.sb.auth.getSession()).data.session;
+        const q=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:s.user.email,type:"magic"})});sent=q.ok&&(await q.json().catch(()=>({}))).ok}catch(e){}
+      return{ok:false,error:sent?`This club is for @${r.j.needDomain} emails. We just emailed you a link to confirm yours. Tap it, then join again.`:`This club is for @${r.j.needDomain} emails. Confirm yours: sign out, then use "Email me a sign-in link", then join again.`}}
+    if(r.j.needDomain)return{ok:false,error:`This club is only for @${r.j.needDomain} emails. Sign in with your @${r.j.needDomain} email to join.`};
     return{ok:false,error:r.j.error||"Couldn't join the club",banned:!!r.j.banned}}
   async function leave(c){ /* the browser already cleared S.club; tell the server, and undo if it says no (e.g. owner with members) */
     const r=await call("leave",{code:c});
@@ -92,7 +97,8 @@
     const btn=(a,id,t,cls)=>`<button class="${cls||"flink"}" data-cm="${a}" data-id="${esc(id)}">${t}</button>`;
     openPanel(`<div class="label">Manage club</div><h2>${esc(v.name)}</h2>
       ${owns?`<div class="actions" style="margin:8px 0;flex-wrap:wrap"><input id="cmName" maxlength="40" value="${esc(v.name)}" aria-label="Club name"><button class="ghost outline sm" id="cmRen">Rename</button>
-        <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="cmLock"${v.lock?" checked":""}> Require my approval to join</label></div>`:`<p class="note">You're a co-officer. The owner controls rename, approval and officers.</p>`}
+        <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="cmLock"${v.lock?" checked":""}> Require my approval to join</label>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;margin-top:6px"><span>Only emails ending in @</span><input id="cmReq" maxlength="60" style="width:150px" placeholder="${esc(v.sd||"osu.edu")}" value="${esc(v.req||"")}" aria-label="Required email domain"><button class="ghost outline sm" id="cmReqS">Save</button><span class="note">${v.req?"On: only @"+esc(v.req)+" emails can join":"Off: anyone can join"}. Leave empty to allow any email.</span></div></div>`:`<p class="note">You're a co-officer. The owner controls rename, approval and officers.</p>`}
       ${(v.pending||[]).length?`<h3>Waiting for approval (${v.pending.length})</h3><div class="tbl-wrap"><table><tbody>${v.pending.map(id=>`<tr><td class="nm" data-id="${esc(id)}"></td><td>${P(id).xp||0} XP</td><td>${btn("approve",id,"Approve","btn sm")} ${btn("decline",id,"Decline","ghost sm")}</td></tr>`).join("")}</tbody></table></div>`:""}
       <h3>Members (${mem.length})</h3>${SEATS?`<p class="note">Pro seats: ${SEATS.holders.length} of ${SEATS.seats} used. Members who are not in the club take a seat when they join, until your seats run out. You can give or take back a seat here.</p>`:""}
       <div class="tbl-wrap"><table><thead><tr><th>Member</th><th>Title</th><th>XP</th><th>Levels</th><th>Interview avg</th><th>Gauntlet</th><th>Streak</th><th>Active</th>${SEATS?"<th>Pro seat</th>":""}<th></th></tr></thead><tbody>${mem.map(p=>`<tr><td class="nm" data-id="${esc(p.id)}"></td>${stat(p)}${SEATS?`<td>${holds.has(p.id)?"✓ ":"– "}${p.id===v.owner?"":btn("seat:"+(holds.has(p.id)?"off":"on"),p.id,holds.has(p.id)?"Take back":"Give seat")}</td>`:""}<td>${p.id===v.owner?"Owner":p.id===myId?"You":`${owns?btn("co",p.id,co.has(p.id)?"Remove co-officer":"Make co-officer")+" "+btn("transfer",p.id,"Make owner")+" ":""}${btn("remove",p.id,"Remove")}`}</td></tr>`).join("")}</tbody></table></div>
@@ -109,6 +115,7 @@
     if(owns){
       panel.querySelector("#cmRen").onclick=()=>act("rename","",{name:panel.querySelector("#cmName").value});
       panel.querySelector("#cmLock").onchange=e=>act("lock","",{on:e.target.checked});
+      {const rs=panel.querySelector("#cmReqS");if(rs)rs.onclick=()=>act("req","",{req:panel.querySelector("#cmReq").value.trim()})}
       panel.querySelector("#cmDis").onclick=()=>{if(confirm("Disband this club for everyone? This can't be undone."))act("disband","")}}}
 
   /* ---------- club card ---------- */

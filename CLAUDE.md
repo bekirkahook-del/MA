@@ -5,6 +5,7 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 ## Repo and deploys
 - GitHub `bekirkahook-del/MA`, branch `main`. Netlify auto-deploys on push.
 - **Every production deploy costs 15 Netlify credits (plan: 1,000/month).**
+- **ALWAYS ASK BEKIR BEFORE ANY DEPLOY (Bekir, Nov 20, 2026, in caps).** Never push site changes to `main` or run `tools/deploy.sh` until he says "deploy" in that conversation. After queuing work, end by asking: "Want me to deploy? (~15 credits)"
 - **DEPLOY QUEUE (Bekir, Nov 20, 2026): site changes never go straight to `main`.** Commit and push them to the `staging` branch (Netlify ignores it, free). They wait there until Bekir says "deploy"; then run `sh tools/deploy.sh` (merges staging into main = one deploy). `sh tools/queue.sh` lists what's waiting. When you finish a change, tell Bekir it's queued, not live.
   - Exception: content that never triggers a build (`social/`, `data/wire.json`, `guides/_src/`, `supabase/`, `tests/`, `*.md`) can still go straight to `main`.
 - `netlify.toml` `ignore` skips deploys when a push only touches `data/wire.json`, `social/`, `guides/_src/`, `supabase/` or `*.md`.

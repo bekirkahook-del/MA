@@ -17,6 +17,8 @@
 .auth-sw{background:none;border:0;font:inherit;font-size:13px;color:var(--cobalt);cursor:pointer;padding:0;text-align:left}
 .auth-msg{font-size:13px;min-height:1em}.auth-msg.err{color:var(--bad,#c0392b)}.auth-msg.ok{color:var(--good,#1e8e3e)}
 .auth-x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:22px;color:var(--ink-2);cursor:pointer}
+.auth-o{display:flex;align-items:center;justify-content:center;gap:10px;padding:11px!important;font-size:15px!important;border-radius:9px!important;background:#fff!important;color:#1f1f1f!important;border:1px solid #c7cdd8!important;font-weight:600}
+.auth-o:hover{background:#f6f8fb!important}.auth-o svg{flex:none}
 .auth-perks{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px}
 .auth-perks li::before{content:"✓ ";color:var(--good,#1e8e3e);font-weight:700}
 @keyframes authIn{from{opacity:0}to{opacity:1}}
@@ -28,8 +30,12 @@
   const mailFor=e=>{const d=(e.split("@")[1]||"").toLowerCase();for(const m of MAILS)if(m[0].test(d))return{name:m[1],url:m[2]};return null};
   const okEmail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
   const mev=n=>{try{window.maEv&&maEv(n)}catch(_){}};
+  const LOGO={google:'<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.5 0 20.1 0 24s1 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.2C6.6 42.6 14.6 48 24 48z"/></svg>',
+    azure:'<svg width="18" height="18" viewBox="0 0 23 23" aria-hidden="true"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#7FBA00" d="M12 1h10v10H12z"/><path fill="#00A4EF" d="M1 12h10v10H1z"/><path fill="#FFB900" d="M12 12h10v10H12z"/></svg>',
+    apple:'<svg width="18" height="20" viewBox="0 0 17 20" aria-hidden="true"><path fill="currentColor" d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9s-2-.9-3.4-.9C3.6 4.8 2 5.8 1.1 7.3c-1.8 3.2-.5 7.9 1.3 10.5.9 1.3 1.9 2.7 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.4.8 2.2-1.3 3.1-2.6c1-1.4 1.4-2.9 1.4-3-.1 0-2.7-1-2.7-4.2zM11.6 3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z"/></svg>',
+    linkedin_oidc:'<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>'};
   /* Google / Apple buttons show only once the provider is switched on in Supabase (Auth > Providers). */
-  let OAUTH=null;const oauthBtns=()=>OAUTH||(OAUTH=fetch((sb.supabaseUrl||"")+"/auth/v1/settings",{headers:{apikey:sb.supabaseKey||""}}).then(r=>r.json()).then(j=>[["google","Google"],["apple","Apple"]].filter(([k])=>j.external&&j.external[k])).catch(()=>[]));
+  let OAUTH=null;const oauthBtns=()=>OAUTH||(OAUTH=fetch((sb.supabaseUrl||"")+"/auth/v1/settings",{headers:{apikey:sb.supabaseKey||""}}).then(r=>r.json()).then(j=>[["google","Google"],["azure","Microsoft"],["apple","Apple"],["linkedin_oidc","LinkedIn"]].filter(([k])=>j.external&&j.external[k])).catch(()=>[]));
   function openAuth(mode){mode=mode||"in";mev("auth_open");
     const ov=document.createElement("div");ov.className="auth-ov";
     let view="main",email="",cd=0,cdT=null;
@@ -56,7 +62,7 @@
       if(view==="main"){const up=mode==="up";
       ov.innerHTML=`<form class="auth-box" novalidate><button type="button" class="auth-x" aria-label="Close">×</button>
        <h2>${up?"Join free in 10 seconds":"Sign in or join free"}</h2>
-       <p>Email and a password. No email link, you're in right away.</p>
+       <p>One tap with Google, or email + password. You're in right away.</p>
        ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
        <div id="auO" style="display:none;flex-direction:column;gap:8px"></div>
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
@@ -72,7 +78,7 @@
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
       oauthBtns().then(list=>{const box=ov.querySelector("#auO");if(!box||!list.length)return;
-        box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn" data-o="${id}" style="padding:11px;font-size:15px;border-radius:9px">Continue with ${name}</button>`).join("")+`<p style="text-align:center;font-size:12.5px">or use email</p>`;box.style.display="flex";
+        box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn auth-o" data-o="${id}">${LOGO[id]||""}<span>Continue with ${name}</span></button>`).join("")+`<p style="text-align:center;font-size:12.5px">or use email</p>`;box.style.display="flex";
         box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin}});if(error){b.disabled=false;say(error.message)}})});
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}
         say("Sending…",true);let ok=false;try{const r=await fetch("/.netlify/functions/signin-link",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,type:"reset"})});const j=await r.json().catch(()=>({}));if(r.status===429){say("Too many tries. Wait a minute and try again.");return}ok=!!j.ok}catch(_){}

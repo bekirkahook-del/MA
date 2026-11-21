@@ -13,6 +13,7 @@
 .sd-card .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}.sd-card b{display:block;font-size:18px;margin:4px 0;color:var(--ink)}.sd-card p{margin:0;font-size:14px;color:var(--ink-2)}
 .sd-who{display:flex;align-items:center;gap:10px;margin:6px 0 10px}.sd-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--cobalt);flex:none}
 .sd-q{font-size:18px;line-height:1.4;font-weight:600;color:var(--ink);margin:6px 0 12px}.sd-fu{border-left:3px solid var(--brass);padding:4px 0 4px 12px;margin:0 0 12px;font-size:16px;color:var(--ink)}
+.sd-mic{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 0}.sd-mic #dictBtn{background:var(--cobalt,#2448D8);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:700}.sd-mic #dictBtn.on{background:#c62828;color:#fff;border-color:#c62828}.sd-kb{margin-left:auto}@media(max-width:560px){.sd-kb{display:none}}
 .sd-dec{font-size:26px;font-weight:800;margin:4px 0}.sd-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:14px}.sd-row b{white-space:nowrap}
 .sd-list{margin:6px 0 0;padding-left:18px;font-size:14.5px;line-height:1.5}.sd-best{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:14.5px;line-height:1.5}
 @media(max-width:560px){.sd-card{flex-direction:column;align-items:flex-start}}`;
@@ -67,17 +68,22 @@ Return JSON: {"score": integer 1-10, "note": "one sentence verdict", "missed": [
       <div id="sdIv"><div class="sd-who"><span class="sd-av">${R[i].r[0]}</span><div><b>${R[i].r}</b><div class="note">${esc(qs[i].c)}</div></div></div></div>`;
     const draw=(busy)=>{const q=qs[i],L=log[i];clearInterval(tick);
       openPanel(`${head()}<div class="sd-q">${esc(q.q)}</div>${phase?`<div class="note" style="margin:-4px 0 8px">You said: ${esc(L.a.length>140?L.a.slice(0,140)+"…":L.a)}</div><div class="sd-fu">${esc(L.fu)}</div>`:""}
-        <textarea id="sdA" aria-label="Your answer" placeholder="Answer as you would out loud…" ${busy?"disabled":""}>${esc(phase?L.fa:L.a)}</textarea>
+        <textarea id="sdA" aria-label="Your answer" placeholder="${window.dictateOK?"Tap 🎙 and answer out loud, or type here…":"Answer as you would out loud…"}" ${busy?"disabled":""}>${esc(phase?L.fa:L.a)}</textarea>
+        ${window.dictateOK&&!busy?`<div class="sd-mic"><button class="ghost" type="button" id="dictBtn" aria-pressed="false">🎙 Start talking</button><span id="dictNote" class="note" aria-live="polite"></span><span class="note sd-kb">Ctrl + Enter to send</span></div>`:`<p class="note sd-kb" style="margin:6px 0 0">${busy?"":"Ctrl + Enter to send. Tip: use your keyboard's dictation to answer out loud."}</p>`}
         <div class="actions"><button class="btn" id="sdNext" ${busy?"disabled":""}>${busy?"The interviewer is thinking…":phase?(i<R.length-1?"Next interviewer →":"Finish and get the decision →"):"Answer →"}</button><button class="ghost" id="sdQuit">Save and exit</button></div>`);
       try{panel.classList.add("wide")}catch(e){}
       /* live interviewer: reads the question (or follow-up) out loud once, then nods while you answer */
       let iv=null;const ivEl=document.getElementById("sdIv");
-      if(window.maInterviewer&&ivEl){iv=maInterviewer(ivEl,{name:R[i].r+(firm?` · ${firm}`:""),role:qs[i].c});
-        const key=i+"|"+phase;if(busy)iv.think();else if(spoken!==key){spoken=key;iv.say(phase?L.fu:q.q)}}
-      $("#sdQuit").onclick=()=>{clearInterval(tick);persist();toast("Saved. Resume it from the Superday card.");closePanel()};
-      if(busy)return;$("#sdA").focus();t0=Date.now();if(iv)iv.listen($("#sdA"));
+      if(window.maInterviewer&&ivEl){iv=maInterviewer(ivEl,{name:R[i].r+(firm?` · ${firm}`:""),role:qs[i].c,roleKey:R[i].r});
+        const key=i+"|"+phase;if(busy)iv.think();else if(spoken!==key){spoken=key;
+          const ack=["Okay.","Got it.","Mm, okay.","Alright.","Sure."][Math.floor(Math.random()*5)];
+          iv.say(phase?`${ack} ${L.fu}`:(i===0?`Hi, thanks for coming in. ${q.q}`:q.q))}}
+      $("#sdQuit").onclick=()=>{clearInterval(tick);if(window.dictateStop)dictateStop();try{speechSynthesis.cancel()}catch(e){}persist();toast("Saved. Resume it from the Superday card.");closePanel()};
+      if(busy){if(window.dictateStop)dictateStop();return}$("#sdA").focus();t0=Date.now();if(iv)iv.listen($("#sdA"));
+      if(window.dictateBind&&$("#dictBtn"))dictateBind($("#dictBtn"),$("#sdA"));
+      $("#sdA").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();$("#sdNext").click()}});
       if(clock)tick=setInterval(()=>{const e=document.getElementById("sdT");if(!e){clearInterval(tick);return}const s=Math.round((Date.now()-t0)/1000);e.textContent=fmtT(s);e.style.color=s>150?"var(--bad)":s>110?"var(--warn)":""},500);
-      $("#sdNext").onclick=async()=>{const v=$("#sdA").value.trim();if(v.split(/\s+/).length<4){toast("Give a real answer first");return}
+      $("#sdNext").onclick=async()=>{if(window.dictateStop)dictateStop();const v=$("#sdA").value.trim();if(v.split(/\s+/).length<4){toast("Give a real answer first");return}
         clearInterval(tick);L.secs+=Math.round((Date.now()-t0)/1000);
         if(!phase){L.a=v;draw(true);
           try{const r=await ai(`You are ${R[i].who} at ${firm||"an investment bank"} running one part of a ${goal()} Superday. Your style: ${R[i].style}.
@@ -85,9 +91,11 @@ You asked: "${q.q}". Strong answers cover: ${(q.k||[]).join("; ")}.
 The candidate answered: """${v.slice(0,1500)}"""
 Ask ONE short, natural follow-up question (max 30 words) that probes the weakest or most interesting part of their answer, the way a real interviewer would. If the answer was wrong, gently push on the mistake. No praise, no feedback, just the question.
 Return JSON: {"followup":"..."}`,"quick");L.fu=String((r&&r.followup)||"").slice(0,240)}catch(e){}
-          if(!L.fu){const miss=keyHits(q,v).find(h=>!h.ok);L.fu=miss?`You didn't really get into this part: ${miss.k.replace(/\.$/,"")}. Can you walk me through it?`:"Good. Can you go one level deeper on that?"}
+          if(!L.fu){const miss=keyHits(q,v).find(h=>!h.ok);L.fu=miss?["Let me push on that. You left out a key piece. Walk me through it step by step.","Okay, but you skipped something important there. Can you fill in the gap?","Take me one level deeper. What are you missing in that answer?"][Math.floor(Math.random()*3)]:["Can you go one level deeper on that?","Why does that matter for the deal?","How would that change if rates went up 2%?"][Math.floor(Math.random()*3)]}
           phase=1;persist();draw()}
-        else{L.fa=v;gradeRound(i);if(i<R.length-1){i++;phase=0;persist();draw()}else debrief()}}};
+        else{L.fa=v;gradeRound(i);if(i<R.length-1){i++;phase=0;persist();
+            if(window.maInterviewerJoin){openPanel(`<div id="sdJoin"></div>`);try{panel.classList.add("wide")}catch(e){}await maInterviewerJoin(document.getElementById("sdJoin"),R[i].r+(firm?` · ${firm}`:""))}
+            draw()}else debrief()}}};
 
     const debrief=async()=>{clearInterval(tick);openPanel(`<div class="label">Superday complete</div><h2>The team is deciding…</h2><p class="sub">Your interviewers are comparing notes.</p>`);
       const gs=await Promise.all(R.map((_,j)=>grades[j]||Promise.resolve(log[j].g||codeGrade(qs[j],log[j]))));
@@ -103,7 +111,7 @@ Return JSON: {"headline":"one sentence on why","strengths":["2 short bullets"],"
       S.superdays=S.superdays||[];S.superdays.push({date:new Date().toISOString().slice(0,10),overall:ov,decision,firm,sim:1,n:R.length});S.sdDraft=null;save();
       const col=decision==="Offer"?"var(--good)":decision==="Callback"?"var(--brass)":"var(--bad)";
       const prev=S.superdays.filter(x=>x.sim).slice(-6,-1);
-      openPanel(`<div class="label">Superday result${firm?` · ${esc(firm)}`:""}</div><div class="sd-dec" style="color:${col}">${esc(decision)} · ${ov}/10</div><p class="sub">${esc((sum&&sum.headline)||(decision==="Offer"?"Consistent across every interview.":decision==="Callback"?"Close. One or two weaker rounds held you back.":"Several rounds missed what interviewers were listening for."))}</p>
+      openPanel(`<div id="sdIv2"></div><div class="label">Superday result${firm?` · ${esc(firm)}`:""}</div><div class="sd-dec" style="color:${col}">${esc(decision)} · ${ov}/10</div><p class="sub">${esc((sum&&sum.headline)||(decision==="Offer"?"Consistent across every interview.":decision==="Callback"?"Close. One or two weaker rounds held you back.":"Several rounds missed what interviewers were listening for."))}</p>
         ${R.map((ro,j)=>`<div class="sd-row"><span><b>${esc(ro.r)}</b> · ${esc(gs[j].note)}${log[j].secs?` <span class="note">(${fmtT(log[j].secs)}${log[j].secs>300?", too long":""})</span>`:""}</span><b>${scores[j]}/10</b></div>`).join("")}
         ${prev.length?`<p class="note" style="margin-top:8px">Your last ${prev.length}: ${prev.map(x=>`${x.overall}/10`).join(" → ")} → <b>${ov}/10</b></p>`:""}
         ${strengths.length?`<h3 class="cs-h" style="margin-top:16px">What went well</h3><ul class="sd-list">${strengths.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
@@ -112,6 +120,8 @@ Return JSON: {"headline":"one sentence on why","strengths":["2 short bullets"],"
         <h3 class="cs-h">What each interviewer was listening for</h3>
         ${R.map((ro,j)=>{const h=keyHits(qs[j],log[j].a+" "+log[j].fa);return `<details class="sd-row" style="display:block"><summary><b>${esc(ro.r)}:</b> ${esc(qs[j].q)}</summary><ul class="sd-list">${h.map(x=>`<li>${x.ok?"✓":"✗"} ${esc(x.k)}</li>`).join("")}</ul><p class="note">You said: ${esc(log[j].a)}${log[j].fa?` / Follow-up: ${esc(log[j].fa)}`:""}</p></details>`}).join("")}
         <div class="actions"><button class="btn" id="sdAgain">Run another Superday</button><button class="ghost" id="sdDone">Done</button></div>`);
+      try{const e2=document.getElementById("sdIv2");if(window.maInterviewer&&e2){const md=R[R.length-1];const v=maInterviewer(e2,{name:md.r+(firm?` · ${firm}`:""),role:"Decision",roleKey:md.r});
+        v.say(decision==="Offer"?`Congratulations. The team was impressed, and we'd like to extend you an offer.`:decision==="Callback"?`Thanks for today. You were close. We'd like to bring you back for one more conversation.`:`Thank you for coming in. We won't be moving forward this time, but here's exactly what to work on.`)}}catch(e){}
       $("#sdAgain").onclick=start;$("#sdDone").onclick=closePanel;try{renderSdCard()}catch(e){}};
     if(resume&&i>=R.length)debrief();else draw()}
 

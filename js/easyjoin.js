@@ -12,6 +12,9 @@
   const hasS = () => typeof S !== "undefined" && S && S.profile;
   const persist = () => { try { save() } catch (e) {} try { syncProfile() } catch (e) {} try { render() } catch (e) {} };
 
+const st = document.createElement("style"); st.textContent = `.ej-g{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9996;width:min(460px,calc(100% - 24px));background:#13203B;color:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.3);font-size:14.5px}
+.ej-g b{display:block;margin-bottom:8px}.ej-g .r{display:flex;gap:6px;flex-wrap:wrap}.ej-g button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border:0;border-radius:9px;background:#2448D8;color:#fff;cursor:pointer}
+.ej-g button.s{background:none;color:#B8C2DA;text-decoration:underline;font-weight:400}`; document.head.appendChild(st);
   /* ---- 2) profile auto-fill ---- */
   const EDU = { "osu.edu":"The Ohio State University","buckeyemail.osu.edu":"The Ohio State University","umich.edu":"University of Michigan","upenn.edu":"University of Pennsylvania",
     "wharton.upenn.edu":"University of Pennsylvania","nyu.edu":"New York University","stern.nyu.edu":"New York University","columbia.edu":"Columbia University","harvard.edu":"Harvard University",
@@ -48,15 +51,17 @@
   /* ---- 3) one-tap grad year ---- */
   function askGrad(){ if (!hasS() || S.profile.grad || S.profile.year || LS.get("ma-gradask")) return;
     const now = new Date(), y0 = now.getFullYear() + (now.getMonth() >= 5 ? 1 : 0), ys = [y0, y0 + 1, y0 + 2, y0 + 3];
-    const st = document.createElement("style"); st.textContent = `.ej-g{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9996;width:min(460px,calc(100% - 24px));background:#13203B;color:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.3);font-size:14.5px}
-.ej-g b{display:block;margin-bottom:8px}.ej-g .r{display:flex;gap:6px;flex-wrap:wrap}.ej-g button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border:0;border-radius:9px;background:#2448D8;color:#fff;cursor:pointer}
-.ej-g button.s{background:none;color:#B8C2DA;text-decoration:underline;font-weight:400}`; document.head.appendChild(st);
+
     const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Graduation year");
     d.innerHTML = `<b>What year do you graduate? We'll tailor your recruiting timeline.</b><div class="r">${ys.map(y => `<button data-y="${y}">${y}</button>`).join("")}<button class="s" data-y="">Skip</button></div>`;
     d.onclick = e => { const b = e.target.closest("button"); if (!b) return; LS.set("ma-gradask", "1"); if (b.dataset.y) { S.profile.grad = b.dataset.y; persist(); ev("af_grad") } else ev("af_grad_skip"); d.remove() };
     setTimeout(() => document.body.appendChild(d), 2500) }
 
   /* ---- 1) Google One Tap ---- */
+  let tapReady = false;
+  window.maQuickJoin = mode => { const box = () => window.maOpenAuth && maOpenAuth(mode || "up");
+    if (!tapReady || !window.google || !google.accounts) return box(); ev("quickjoin_tap");
+    try { google.accounts.id.prompt(n => { try { if (n.isNotDisplayed() || n.isSkippedMoment()) box() } catch (e) { box() } }) } catch (e) { box() } };
   async function oneTap(){ if (!GCID || LS.get("ma-1tap-off")) return; ev("onetap_load");
     const raw = [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, "0")).join("");
     const hashed = [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw)))].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -64,8 +69,25 @@
     sc.onload = () => { try { google.accounts.id.initialize({ client_id: GCID, nonce: hashed, use_fedcm_for_prompt: true, itp_support: true, cancel_on_tap_outside: true, context: "signup",
         callback: async r => { ev("onetap_ok"); const { error } = await A.sb.auth.signInWithIdToken({ provider: "google", token: r.credential, nonce: raw });
           if (error) { console.warn("One Tap", error.message); return } try { window.maCloudFlush && await maCloudFlush() } catch (e) {} location.reload() } });
-      google.accounts.id.prompt() } catch (e) {} };
+      tapReady = true; google.accounts.id.prompt() } catch (e) {} };
     document.head.appendChild(sc) }
+
+  /* ---- 4) install as an app (after the 2nd visit, once a week at most) ---- */
+  try { if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {}) } catch (e) {}
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  const visits = (+LS.get("ma-visits") || 0) + 1; LS.set("ma-visits", String(visits));
+  const canAsk = () => !standalone && visits >= 2 && Date.now() - (+LS.get("ma-inst-ask") || 0) > 7 * 864e5 && !document.querySelector(".ej-g,.gw-ov,.gw-tc");
+  function bar(html, onGo){ const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Install app");
+    d.innerHTML = html + `<div class="r">${onGo ? '<button class="go">Install</button>' : ""}<button class="s">Not now</button></div>`;
+    d.onclick = e => { const b = e.target.closest("button"); if (!b) return; if (b.classList.contains("go")) onGo(); else ev("install_no"); d.remove() };
+    LS.set("ma-inst-ask", String(Date.now())); ev("install_shown"); document.body.appendChild(d) }
+  let deferred = null;
+  addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferred = e;
+    setTimeout(() => { if (!canAsk()) return; bar("<b>Add M&A Prep to your home screen. Opens like an app, one tap to practice.</b>",
+      async () => { ev("install_click"); try { deferred.prompt(); const r = await deferred.userChoice; if (r && r.outcome === "accepted") ev("install_ok") } catch (x) {} deferred = null }) }, 20000) });
+  const iOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && /safari/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent);
+  if (iOS) setTimeout(() => { if (canAsk()) bar("<b>Get the app: tap the Share button below, then “Add to Home Screen”.</b>", null) }, 25000);
+  addEventListener("appinstalled", () => ev("install_ok"));
 
   A.ready.then(s => { if (s) autofill(s); else setTimeout(oneTap, 6000) });
   try { A.sb.auth.onAuthStateChange((e, s) => { if (e === "SIGNED_IN" && s) setTimeout(() => autofill(s), 800) }) } catch (e) {}

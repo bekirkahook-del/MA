@@ -118,7 +118,7 @@
       <ul class="gw-list"><li>Keep your XP, streak and levels on any device</li><li>Get ranked on the leaderboard and your school's board</li><li>Free forever. No card needed</li></ul>
       <button class="gw-go" type="button">Save my progress (free)</button><button class="gw-no" type="button">Not now</button></div>`;
     const close=()=>{ov.remove();document.removeEventListener("keydown",esc)};const esc=e=>{if(e.key==="Escape"){ev("prompt_dismiss");close()}};
-    ov.querySelector(".gw-go").onclick=()=>{ev("prompt_click");ev("prompt"+n+"_click");close();LS.set("ma-gw-from","prompt"+n);if(window.maOpenAuth)window.maOpenAuth("up")};
+    ov.querySelector(".gw-go").onclick=()=>{ev("prompt_click");ev("prompt"+n+"_click");close();LS.set("ma-gw-from","prompt"+n);(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};
     ov.querySelector(".gw-no").onclick=ov.querySelector(".gw-x").onclick=()=>{ev("prompt_dismiss");close()};
     ov.addEventListener("click",e=>{if(e.target===ov){ev("prompt_dismiss");close()}});document.addEventListener("keydown",esc);
     document.body.appendChild(ov);ov.querySelector(".gw-go").focus();ev("prompt_shown");ev("prompt"+n+"_shown")}
@@ -135,7 +135,7 @@
     if(!show){if(bar){bar.remove();bar=null}return}
     if(!bar){bar=document.createElement("div");bar.className="gw-bar";bar.setAttribute("role","status");
       bar.innerHTML=`<span>⚠️ Your <b class="n"></b> XP<span class="sk"></span> only lives on this device. Save it free and keep your rank.</span><button class="go" type="button">Save it free</button><button class="x" type="button" aria-label="Hide">×</button>`;
-      bar.querySelector(".go").onclick=()=>{ev("bar_click");LS.set("ma-gw-from","bar");if(window.maOpenAuth)window.maOpenAuth("up")};
+      bar.querySelector(".go").onclick=()=>{ev("bar_click");LS.set("ma-gw-from","bar");(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};
       bar.querySelector(".x").onclick=()=>{SS.set("ma-gw-barx","1");ev("bar_dismiss");drawBar()};
       document.body.insertBefore(bar,document.body.firstChild);if(!SS.get("ma-gw-barseen")){SS.set("ma-gw-barseen","1");ev("bar_shown")}}
     bar.querySelector(".n").textContent=xp();try{const k=typeof streak==="function"?streak():0;bar.querySelector(".sk").textContent=k>1?" and "+k+"-day streak":""}catch(e){}}
@@ -151,12 +151,12 @@
     const d=document.createElement("div");d.className="gw-tc";d.setAttribute("role","status");
     d.innerHTML=`<span class="ic">${icon}</span><span class="m">${msg}</span><button class="go" type="button">${btn}</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
     let t=0;const close=()=>{clearTimeout(t);d.remove()};
-    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);close();if(window.maOpenAuth)window.maOpenAuth("up")};
+    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);close();(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};
     d.querySelector(".x").onclick=()=>{ev("p_"+key+"_dismiss");close()};
     document.body.appendChild(d);ev("p_"+key+"_shown");ev("p_any_shown");t=setTimeout(close,14000);return true}
   function mkStrip(key,html,btn){const d=document.createElement("div");d.className="gw-strip";d.dataset.gw=key;
     d.innerHTML=`<span>${html}</span><button class="go" type="button">${btn}</button>`;
-    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);if(window.maOpenAuth)window.maOpenAuth("up")};return d}
+    d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};return d}
   function putStrip(host,where,key,html,btn){if(!host)return;document.querySelectorAll(`.gw-strip[data-gw="${key}"]`).forEach(x=>x.remove());
     if(!guest())return;host.insertAdjacentElement(where,mkStrip(key,html,btn));
     if(!SS.get("ma-gws-"+key)){SS.set("ma-gws-"+key,"1");ev("p_"+key+"_shown");ev("p_any_shown")}}
@@ -184,7 +184,7 @@
     el.querySelectorAll("[data-deal]").forEach(b=>{if(b.parentNode.querySelector(".gw-save"))return;const id=b.dataset.deal;
       const on=!!((S.savedDeals||{})[id]);const s=document.createElement("button");s.type="button";s.className="ghost gw-save";s.setAttribute("aria-pressed",String(on));s.textContent=on?"★ Saved":"☆ Save deal";
       s.onclick=e=>{e.stopPropagation();
-        if(guest()){ev("p_deal_click");ev("p_any_click");LS.set("ma-gw-from","deal");if(window.maOpenAuth)window.maOpenAuth("up");return}
+        if(guest()){ev("p_deal_click");ev("p_any_click");LS.set("ma-gw-from","deal");(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up");return}
         S.savedDeals=S.savedDeals||{};if(S.savedDeals[id])delete S.savedDeals[id];else S.savedDeals[id]=Date.now();try{save()}catch(x){}
         const n=!!S.savedDeals[id];s.setAttribute("aria-pressed",String(n));s.textContent=n?"★ Saved":"☆ Save deal";dealCount()};
       b.after(s)});

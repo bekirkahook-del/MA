@@ -35,7 +35,7 @@
     const SS={get:k=>{try{return sessionStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{sessionStorage.setItem(k,v)}catch(e){}}};
     if(done()||SS.get("ma-em-sl")||Date.now()-(+LS.get("ma-em-x")||0)<6048e5)return;
     const ev=n=>{try{window.maEv&&window.maEv(n)}catch(e){}};let shown=false;
-    const show=()=>{if(shown||done()||document.querySelector(".gw-ov,.em-sl"))return;shown=true;SS.set("ma-em-sl","1");
+    const show=()=>{if(shown||done()||document.querySelector(".gw-ov,.em-sl,.gw-gate"))return; /* one ask at a time: skip while the guide sign-up gate is up */shown=true;SS.set("ma-em-sl","1");
       const w=document.createElement("div");w.className="em-sl";w.setAttribute("role","complementary");
       const b=window.maEmailBox("cheatsheet:slide-"+slug,{k:"Free · Cheat sheet",h:"Get the 50 IB interview questions cheat sheet",p:"Short answers you can say out loud, emailed as a PDF. Plus one curveball question every Sunday.",btn:"Email it to me",doneH:"Cheat sheet on its way."});
       b.id="emSlide";const x=document.createElement("button");x.type="button";x.className="em-x";x.setAttribute("aria-label","Close");x.textContent="×";

@@ -112,7 +112,7 @@ mk("vanderbilt", "Vanderbilt", None,
 
 mk("wake-forest", "Wake Forest", None,
  "How Wake Forest students break into investment banking: the Pre-Wall Street Career Track, the recruiting timeline and how to stand out.",
- ["Wake Forest built a four-year program specifically for students aiming at Wall Street: the Pre-Wall Street Career Track. Its goal is to make Wake a top-15 school for placing students at top investment firms.",
+ ["Wake Forest built a four-year program specifically for students aiming at Wall Street: the Pre-Wall Street Career Track. Its goal is to make Wake a top-15 school for developing talent for top-tier investment firms.",
   "If you're a first-year interested in banking, it's the program to apply for."],
  [("Pre-Wall Street Career Track", ["Selects 35 first-year students through a competitive process, open to any major.", "Starts second semester of freshman year and runs four years: weekly sessions, mentoring, coursework and skills training.", "Includes firm visits in New York (May of first year) and Charlotte (October of sophomore year).", "Requires a 3.4+ GPA and a B or better in finance classes to stay in."], "35 per year"),
   ("Charlotte and New York", ["Wake is close to Charlotte, a major U.S. banking hub. Use it for networking."])],

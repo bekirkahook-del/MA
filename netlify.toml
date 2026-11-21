@@ -22,7 +22,7 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Cross-Origin-Opener-Policy = "same-origin-allow-popups"
-    Permissions-Policy = "camera=(), microphone=(self), geolocation=(), payment=(), usb=(), serial=(), bluetooth=(), interest-cohort=()"
+    Permissions-Policy = "camera=(), microphone=(self), geolocation=(), payment=(), usb=(), serial=(), interest-cohort=()"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' blob: data:; connect-src 'self' https://cloudflareinsights.com https://nbakxpnhcfzdosbzbupd.supabase.co wss://nbakxpnhcfzdosbzbupd.supabase.co https://raw.githubusercontent.com https://accounts.google.com/gsi/; worker-src 'self' blob:; frame-src https://accounts.google.com/gsi/; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
 
 # API responses: never cached by browsers or the CDN
@@ -126,6 +126,18 @@
 
 [[redirects]]
   from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/deploy.sh"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/queue.sh"
   to = "/404.html"
   status = 404
   force = true

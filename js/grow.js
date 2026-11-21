@@ -66,7 +66,10 @@
          content for Google), and "Keep reading" always unlocks it, so nothing is truly blocked. */
       let gate=LS.get("ma-gate");if(gate!=="g"&&gate!=="c"){gate=Math.random()<.5?"g":"c";LS.set("ma-gate",gate)}
       const isGuide=/^\/guides\//.test(location.pathname);
-      if(isGuide&&gate==="g"&&hs.length>=3){const mid=hs[Math.floor(hs.length/2)],par=mid.parentNode;
+      /* halfway point: the middle section heading, or for short guides (under 2 sections) the middle content block */
+      const midEl=(()=>{if(hs.length>=2)return hs[Math.floor(hs.length/2)];const a=hs[0]||main.querySelector("p");const pp=a?a.parentNode:main;
+        const kids=[...pp.children].filter(n=>!/^(SCRIPT|STYLE)$/.test(n.tagName)&&!(n.tagName==="H2"&&/more free guides/i.test(n.textContent)));return kids.length>=4?kids[Math.floor(kids.length/2)]:null})();
+      if(isGuide&&gate==="g"&&midEl){const mid=midEl,par=mid.parentNode;
         const stopAt=[...par.children].find(n=>n.tagName==="H2"&&/more free guides/i.test(n.textContent)&&(mid.compareDocumentPosition(n)&4));
         const w=document.createElement("div");w.className="gw-pw lock";par.insertBefore(w,mid);
         let n=mid;while(n&&n!==stopAt){const nx=n.nextSibling;w.appendChild(n);n=nx}
@@ -77,7 +80,7 @@
         g.querySelector(".skip").onclick=()=>{w.classList.remove("lock");g.remove();ev("guide_gate_skip")};
         try{const ld=document.createElement("script");ld.type="application/ld+json";ld.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":document.title,"isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".gw-pw"}});document.head.appendChild(ld)}catch(e){}
         ev("guide_gate_shown")}
-      else if(hs.length>=3){const mid=hs[Math.floor(hs.length/2)];mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
+      else if(midEl){const mid=midEl;mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
       const more=[...main.querySelectorAll("h2")].find(h=>/more free guides/i.test(h.textContent));
       const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
       if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")};

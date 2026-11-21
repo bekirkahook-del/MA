@@ -19,13 +19,17 @@
 .dl-school{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--paper);border:1px solid var(--rule);font-size:13.5px;color:var(--ink)}
 .dl-school b{color:var(--cobalt)}
 .dl-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.dl-empty{font-size:14px;color:var(--ink-2);margin:10px 0 0}`;
+.dl-empty{font-size:14px;color:var(--ink-2);margin:10px 0 0}
+.dl-v{display:inline-block;font:700 10px/1.4 var(--mono,monospace);letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:1px}
+.dl-v.ok{background:#e6f5ec;color:#1f6b40}.dl-v.rp{background:#fff3dc;color:#8a5a00}.dl-v.ex{background:var(--paper);color:var(--ink-2);border:1px solid var(--rule)}
+.dl-foot{font-size:12px;color:var(--ink-2);margin:10px 0 0}`;
   document.head.appendChild(st);
   const E=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const ev=n=>{try{window.maEv&&maEv(n)}catch(e){}};
   const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
   const days=(a,b)=>Math.round((Date.parse(b+"T12:00:00")-Date.parse(a+"T12:00:00"))/864e5);
   const fmt=iso=>{const d=new Date(iso+"T12:00:00");return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})};
+  const TAG={confirmed:' <span class="dl-v ok">Confirmed</span>',reported:' <span class="dl-v rp">Reported</span>',expected:' <span class="dl-v ex">Estimate</span>',listed:""};
   const ROLE={"Investment banking":["IB"],"Restructuring":["IB"],"Private equity":["Buy side"],"Hedge funds & markets":["Buy side","Markets"],"Equity research":["Markets","IB"],"Consulting":["Consulting"]};
   function who(){if(typeof S==="undefined")return null;const yr=(S.plan&&S.plan.year)||(S.profile&&S.profile.year)||"";
     const target=(S.plan&&S.plan.target)||"";const school=(S.profile&&S.profile.school)||"";if(!yr)return null;return {yr,target,school}}
@@ -38,9 +42,12 @@
     return false}
   function matches(){const w=who();if(!w||typeof APP_OPEN==="undefined")return {w,items:[]};const t=today(),types=ROLE[w.target];
     const items=APP_OPEN.filter(r=>fitsYear(r,w.yr)&&(!types||types.includes(r[2]))).map(r=>{
-      if(r[3]==="open"&&r[6]){const n=days(t,r[6]);if(n<0)return null;return {r,rank:n,cls:n<=3?"hot":n<=14?"soon":"open",when:n===0?"Closes today":n===1?"Closes tomorrow":`Closes in ${n}d`,sub:`Closes ${fmt(r[6])}${r[7]?" · "+r[7]:""}`}}
-      if(r[3]==="open")return {r,rank:1000,cls:"open",when:"Open now",sub:(r[5]||"Open")+(r[7]?" · "+r[7]:"")};
-      if(r[3]==="exp"&&r[4]){const n=days(t,r[4]);return {r,rank:2000+Math.max(0,n),cls:"exp",when:n>0?`Opens ~${fmt(r[4])}`:"Opening soon",sub:"Expected"+(r[7]?" · "+r[7]:"")}}
+      /* only dates we checked are shown as deadlines (r[8] = "confirmed" or "reported"); everything else says what it is */
+      const ver=r[8]||"";const asOf=(typeof APP_OPEN_DATE!=="undefined"&&APP_OPEN_DATE)||"";
+      if(r[3]==="open"&&r[6]&&(ver==="confirmed"||ver==="reported")){const n=days(t,r[6]);if(n<0)return null;return {r,ver,rank:n,cls:n<=3?"hot":n<=14?"soon":"open",when:n===0?"Closes today":n===1?"Closes tomorrow":`Closes in ${n}d`,sub:`Closes ${fmt(r[6])}${r[7]?" · "+r[7]:""}`}}
+      if(r[3]==="open"&&r[6]&&r[6]<t)return null;
+      if(r[3]==="open")return {r,ver:ver==="confirmed"?"confirmed":"listed",rank:1000,cls:"open",when:"Open now",sub:(ver==="confirmed"&&r[7]?r[7]:`Listed open${asOf?" as of "+asOf:""} · no deadline published${r[7]?" · "+r[7]:""}`)};
+      if(r[3]==="exp"&&r[4]&&ver!=="unconfirmed"){const n=days(t,r[4]);return {r,ver:"expected",rank:2000+Math.max(0,n),cls:"exp",when:n>0?`Opens ~${fmt(r[4])}`:"Opening soon",sub:"Expected, based on last year's timing"+(r[7]?" · "+r[7]:"")}}
       return null}).filter(Boolean).sort((a,b)=>a.rank-b.rank);
     return {w,items}}
   function schoolStep(w){try{if(!w.school||!window.maRoadSchool||!maRoadSchool())return null;const name=maRoadSchool()[0];
@@ -57,12 +64,13 @@
     const roleTxt=w.target&&w.target!=="Not sure yet"?w.target.toLowerCase():"all roles";
     const sc=schoolStep(w);const top=items.slice(0,5);
     card.innerHTML=`<div class="dl-top"><b>⏰ Your deadlines</b><small>${E(w.yr)} · ${E(roleTxt)}${w.school?" · "+E(w.school):""}</small></div>
-      ${top.length?`<ul class="dl-list">${top.map(x=>`<li><span class="dl-when ${x.cls}">${E(x.when)}</span><span><span class="dl-f">${E(x.r[0])}</span> <span class="dl-r">${E(x.r[1])}</span><br><span class="dl-r">${E(x.sub)}</span></span></li>`).join("")}</ul>`
+      ${top.length?`<ul class="dl-list">${top.map(x=>`<li><span class="dl-when ${x.cls}">${E(x.when)}</span><span><span class="dl-f">${E(x.r[0])}</span> <span class="dl-r">${E(x.r[1])}</span>${TAG[x.ver]||""}<br><span class="dl-r">${E(x.sub)}</span></span></li>`).join("")}</ul>`
         :`<p class="dl-empty">${w.yr==="Freshman"||w.yr==="High school"?"Main internship applications open in your sophomore year. Early-insight programs for your year will show here as they're announced.":"Nothing matching your year and role is open right now. New openings show here the day they're added."}</p>`}
       ${sc?`<div class="dl-school">At <b>${E(sc.name)}</b>: ${E(sc.t)}</div>`:""}
+      <p class="dl-foot"><b>Confirmed</b> = on the firm's own site or 2+ sources. <b>Reported</b> = one outside source. <b>Estimate</b> = last year's timing. Always apply on the firm's site.</p>
       <div class="dl-acts">${items.length>5?`<button class="ghost" type="button" id="dlAll">See all ${items.length}</button>`:""}<button class="ghost" type="button" id="dlOpen">All openings</button><button class="ghost" type="button" id="dlEdit">Change year or role</button></div>`;
     const all=card.querySelector("#dlAll");if(all)all.onclick=()=>{ev("deadlines_all");const ul=card.querySelector(".dl-list");if(!ul)return;
-      ul.innerHTML=items.map(x=>`<li><span class="dl-when ${x.cls}">${E(x.when)}</span><span><span class="dl-f">${E(x.r[0])}</span> <span class="dl-r">${E(x.r[1])}</span><br><span class="dl-r">${E(x.sub)}</span></span></li>`).join("");all.remove()};
+      ul.innerHTML=items.map(x=>`<li><span class="dl-when ${x.cls}">${E(x.when)}</span><span><span class="dl-f">${E(x.r[0])}</span> <span class="dl-r">${E(x.r[1])}</span>${TAG[x.ver]||""}<br><span class="dl-r">${E(x.sub)}</span></span></li>`).join("");all.remove()};
     card.querySelector("#dlOpen").onclick=()=>{ev("deadlines_openings");try{showTab("career");showSub("career","open")}catch(e){}};
     card.querySelector("#dlEdit").onclick=()=>{ev("deadlines_edit");try{if(typeof onboarding==="function")onboarding(true)}catch(e){}};
     if(!card.dataset.seen){card.dataset.seen="1";ev("deadlines_shown")}

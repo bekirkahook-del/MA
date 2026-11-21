@@ -34,8 +34,8 @@
     try{const r=await fetch(SRC+"?t="+Math.floor(Date.now()/300000),{cache:"no-store"});if(!r.ok)return;
       const w=await r.json();if(apply(w)){try{const c=JSON.parse(localStorage.getItem(TK)||"null");if(c&&Date.now()-c.at<4*864e5)mergeTape(c)}catch(e){}refresh();if(liveAt)live();try{localStorage.setItem(CK,JSON.stringify(w))}catch(e){}}}catch(e){}}
   setTimeout(pull,300);
-  /* Live prices: /.netlify/functions/ticker returns current quotes (cached 60s at Netlify's edge).
-     They overwrite the prices from wire.json, so the tape is never stale. Refreshes every 60s while visible. */
+  /* Live prices: /.netlify/functions/ticker returns current quotes (cached 15s at Netlify's edge).
+     They overwrite the prices from wire.json, so the tape is never stale. Refreshes every 15s while visible. */
   const ET=d=>d.toLocaleString("en-US",{timeZone:"America/New_York",month:"short",day:"numeric"});
   const ETT=d=>d.toLocaleString("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"2-digit"}).replace(" ","").toLowerCase();
   let liveAt=0;const TK="ma-tape";
@@ -61,7 +61,7 @@
       try{localStorage.setItem(TK,JSON.stringify({asOf:j.asOf,tape:j.tape,at:Date.now()}))}catch(e){}
       refresh()}catch(e){}}
   setTimeout(live,600);
-  setInterval(()=>{if(!document.hidden&&Date.now()-liveAt>55000)live()},15000);
+  setInterval(()=>{if(!document.hidden&&Date.now()-liveAt>14000)live()},5000);
 
   document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-last>15*60000)pull()});
 })();

@@ -831,7 +831,7 @@ const ROAD=[
   {id:"se9",p:["ib","rx"],g:"Recruiting",t:"Map your 2-year plan: PE on-cycle, staying in banking, or a hedge fund"},
   {id:"se12",g:"Recruiting",t:"Sort out your start: city, housing and a first-year budget"}]}
 ];
-const roadBase=g=>{const k=typeof profKey==="function"?profKey():"all";return g.items.filter(it=>k==="all"||!it.p||it.p.includes(k))};
+const roadBase=g=>{const k=typeof profKey==="function"?profKey():"all",ks=k==="er"?["er","hf","ib"]:[k];return g.items.filter(it=>k==="all"||!it.p||it.p.some(x=>ks.includes(x)))};
 /* js/schoolplan.js adds steps for the student's school and fills the plan to an even 100 */
 const roadItems=g=>{const b=roadBase(g);try{return window.maRoadExtra?maRoadExtra(g,b,roadBase):b}catch(e){return b}};
 const roadYear=()=>{const y=S.plan&&S.plan.year;return ROAD.some(g=>g.y===y)?y:null};
@@ -1340,7 +1340,7 @@ function editProfile(){const pr=S.profile;const exp=(pr.exp&&pr.exp.length?pr.ex
     <label>Class year<input id="pGrad" maxlength="4" inputmode="numeric" value="${esc(pr.grad||"")}"></label>
     <label>Major<input id="pMajor" maxlength="60" value="${esc(pr.major||"")}" placeholder="Finance"></label>
     <label>Location<input id="pLoc" maxlength="40" value="${esc(pr.location||"")}" placeholder="City, State"></label>
-    <label>Target<select id="pTarget">${["","Investment banking","Private equity","Hedge funds","Sales & trading","Restructuring","Not sure yet"].map(o=>`<option ${o===(pr.target||"")?"selected":""} value="${o}">${o||"Choose…"}</option>`).join("")}</select></label>
+    <label>Target<select id="pTarget">${["","Investment banking","Private equity","Hedge funds","Equity research","Sales & trading","Restructuring","Not sure yet"].map(o=>`<option ${o===(pr.target||"")?"selected":""} value="${o}">${o||"Choose…"}</option>`).join("")}</select></label>
     <label>Open to<select id="pOpen">${OPEN_TO.map(o=>`<option ${o===(pr.open||"")?"selected":""} value="${o}">${o||"Not now"}</option>`).join("")}</select></label>
     <div class="full"><div class="label" style="margin-bottom:8px">Profile banner ${isPro()?"":"(Pro)"}</div><div class="bannerpick" id="bPick">${[[null,"Default"],[210,"Navy"],[150,"Forest"],[280,"Plum"],[350,"Crimson"],[30,"Copper"],["gold","Gold"]].map(([v,n])=>`<button type="button" class="bp ${v==="gold"?"gold":""}" data-b="${v}" aria-pressed="${(S.profile.banner??null)===v}" aria-label="${n}" title="${n}" style="--h:${typeof v==="number"?v:hueOf(myId||"me")}" ${isPro()?"":"disabled"}></button>`).join("")}</div>${isPro()?"":`<button type="button" class="ghost" id="bPro" style="padding-left:0">Unlock custom banners with Pro →</button>`}</div>
     <label class="full">About<textarea id="pAbout" maxlength="600" placeholder="What draws you to finance, what you're working on, what you're looking for.">${esc(pr.about||"")}</textarea></label>
@@ -2165,7 +2165,7 @@ const addDaysKey=(n)=>{const d=new Date();d.setDate(d.getDate()+n);return d.toLo
 const daysUntil=k=>Math.round((new Date(k+"T12:00:00")-new Date(today()+"T12:00:00"))/864e5);
 
 /* ---------- 1. onboarding + plan ---------- */
-const PLAN_ORDER={"Investment banking":["f","b","ib","x","pm"],"Private equity":["f","ib","pe","x","b"],"Hedge funds & markets":["f","pm","b","x"],"Restructuring":["f","rx","ib","b"],"Consulting":["f","mc","b","x"],"Not sure yet":["f","b","ib","pm"]};
+const PLAN_ORDER={"Investment banking":["f","b","ib","x","pm"],"Private equity":["f","ib","pe","x","b"],"Hedge funds & markets":["f","pm","b","x"],"Restructuring":["f","rx","ib","b"],"Consulting":["f","mc","b","x"],"Equity research":["f","pm","ib","b","x"],"Not sure yet":["f","b","ib","pm"]};
 function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.plan||{};let step=-1;
   const a={year:p.year||"",target:p.target||"",weeks:p.weeks||"",know:p.know||"",mins:p.mins||"",school:p.school||S.profile.school||""};
   const Q=[["year","What year are you in?",["High school","Freshman","Sophomore","Junior","Senior","Grad / other"],"So we start you at the right level."],
@@ -2178,7 +2178,7 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
   let tested=false,placedN=0,score=null;
   const next=()=>{if(step<Q.length-1){if(Q[step+1][0]==="school"&&!tested){tested=true;if(a.know!=="Brand new"){placement(()=>{step++;draw()});return}}step++;draw()}else finish()};
   /* placement test: 8 real questions from their path, weighted by year; correct answers in a row test them out of early levels */
-  const placement=done=>{const PATH={"Investment banking":"ib","Private equity":"pe","Hedge funds & markets":"pm","Restructuring":"rx","Consulting":"mc","Not sure yet":"ib"};
+  const placement=done=>{const PATH={"Investment banking":"ib","Private equity":"pe","Hedge funds & markets":"pm","Restructuring":"rx","Consulting":"mc","Equity research":"pm","Not sure yet":"ib"};
     const path=PATH[a.target]||"ib",early=["High school","Freshman"].includes(a.year),mid=a.year==="Sophomore";
     const plan=[["f",early?5:mid?4:3],[path,early?3:mid?4:5]],items=[];
     plan.forEach(([t,n])=>{const L=T(t).levels;n=Math.min(n,L.length);const idx=[...new Set(Array.from({length:n},(_,i)=>n<2?0:Math.round(i*(L.length-1)/(n-1))))];
@@ -2236,7 +2236,7 @@ function onboarding(force){if(!force&&(S.plan||S.onboardSkip))return;const p=S.p
     if($("#obProf"))$("#obProf").onclick=()=>editProfile();
     if($("#obGo"))$("#obGo").onclick=()=>{closePanel();showBrief(nx.tr,nx.i)};$("#obDone").onclick=()=>{closePanel();showTab("home")};(($("#obGo")||$("#obDone"))).focus()};
   draw()}
-function nextPlanLevel(){const order=S.plan?S.plan.order:ORDER;for(const t of order){const tr=T(t);if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(t,i))return{tr,i}}return nextLevel()}
+function nextPlanLevel(){const order=(S.plan&&Array.isArray(S.plan.order)&&S.plan.order)||(S.plan&&PLAN_ORDER[S.plan.target])||ORDER;for(const t of order){const tr=T(t);if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(t,i))return{tr,i}}return nextLevel()}
 function weekStart(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return d.toLocaleDateString("en-CA")}
 function renderPlan(){const el=$("#planCard");if(!el)return;if(!S.plan){el.innerHTML=`<button class="ghost gopro" id="planMake" style="margin-top:14px">Set a weekly study goal →</button>`;$("#planMake").onclick=()=>onboarding(true);return}
   const ws=weekStart(),done=Object.values(S.clearDates||{}).filter(d=>d>=ws).length,goal=S.plan.perWeek;
@@ -2830,6 +2830,7 @@ const PROFS=[
  ["ib","Investment Banking",{short:"IB",firms:["Bulge bracket","Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top investment bank",pro:"an investment banker",learnTracks:["f","ib","b","x"],secs:["Behavioral","Accounting","Enterprise Value","Valuation & DCF","M&A","Brain Teasers"],chal:["c1","c2","c4","c5","c6","c7","c8","c10","c12","c13","c15","c16"],subs:["interview","coffee","curve","chal","dcf","lbo","cases","rapid"],tracks:["f","ib","b","x"],packs:[0,1],blurb:"Accounting, valuation, M&A and fit questions, plus DCF and merger modeling."}],
  ["pe","Private Equity",{short:"PE",firms:["Private equity"],openCat:"Buy side",ladder:"pe",recruiter:"a recruiter at a large private equity firm",pro:"a private equity investor",learnTracks:["f","pe","b","x"],secs:["LBO & PE","Valuation & DCF","Accounting","Behavioral"],chal:["c3","c9","c14","c17","c6","c7","c8"],subs:["interview","coffee","curve","lbo","chal","cases","rapid"],tracks:["f","pe","b"],packs:[2],blurb:"Paper LBOs, returns math, deal judgment and investment cases."}],
  ["hf","Hedge Funds & Markets",{short:"Markets",firms:["Hedge fund"],openCat:"Buy side",ladder:"hf",recruiter:"a hiring manager at a top hedge fund",pro:"a hedge fund analyst",learnTracks:["f","pm","b","x"],secs:["Markets & Hedge Funds","Valuation & DCF","Brain Teasers","Behavioral"],chal:["c20","c6","c7","c8","c10","c13"],subs:["interview","coffee","curve","dcf","chal","rapid"],tracks:["f","pm","b"],packs:[4],blurb:"Stock pitches, market questions, mental math and valuation."}],
+ ["er","Equity Research",{short:"ER",firms:["Bulge bracket","Middle market"],openCat:"Markets",ladder:"hf",recruiter:"a director of research at a top bank",pro:"an equity research analyst",learnTracks:["f","pm","ib","b","x"],secs:["Valuation & DCF","Markets & Hedge Funds","Accounting","Behavioral"],chal:["c6","c7","c8","c10"],subs:["interview","coffee","curve","dcf","chal","rapid"],tracks:["f","pm","ib","b"],packs:[4],blurb:"Stock pitches, earnings, valuation and writing a clear call on a company."}],
  ["rx","Restructuring",{short:"RX",firms:["Elite boutique","Middle market"],openCat:"IB",ladder:"ib",recruiter:"a recruiter at a top restructuring advisory firm",pro:"a restructuring banker",learnTracks:["f","rx","b","x"],secs:["Restructuring","Enterprise Value","Accounting","Behavioral"],chal:["c11","c17","c16","c9","c4"],subs:["interview","coffee","curve","chal","cases","dcf","rapid"],tracks:["f","rx","b"],packs:[3],blurb:"Capital structures, recoveries, bankruptcy and distressed cases."}],
  ["mc","Consulting",{short:"Consulting",firms:["Consulting"],openCat:"Consulting",ladder:"mc",recruiter:"a recruiter at a top strategy consulting firm",pro:"a management consultant",learnTracks:["f","mc","b"],secs:["Consulting","Brain Teasers","Behavioral"],chal:["c18","c19"],subs:["interview","coffee","curve","chal","cases","rapid"],tracks:["mc","b"],packs:[],blurb:"Case interviews, market sizing, profitability and fit questions."}]
 ];
@@ -2837,9 +2838,9 @@ const PROF_BLURB={
  learn:{all:"Tracks, final rounds and real deals, explained simply.",ib:"Accounting, valuation and how banks run deals.",pe:"How funds buy, build and exit, plus the banking base it rests on.",hf:"Markets, stock pitches and the valuation behind them.",rx:"Distressed companies, the capital stack and bankruptcy.",mc:"How consulting works and how to crack the case interview."},
  compete:{all:"Your rank, your school's team and this week's Gauntlet.",ib:"The IB Gauntlet, banking leaderboards and your school's team.",pe:"The PE Gauntlet, buy-side leaderboards and your school's team.",hf:"The Markets Gauntlet, leaderboards and your school's team.",rx:"The Restructuring Gauntlet, leaderboards and your school's team.",mc:"The Consulting Gauntlet, leaderboards and your school's team."},
  career:{all:"Everything between you and the offer.",ib:"Your path to a junior-summer banking offer.",pe:"Your path into private equity, usually through banking first.",hf:"Your path to a hedge fund or markets seat.",rx:"Your path into restructuring advisory.",mc:"Your path to a consulting offer."}};
-const DEAL_LENS={all:"",ib:"Focus on the rationale, the premium and how it was paid. That's what M&A interviews ask about.",pe:"Deals with a private equity buyer or seller are marked. Look at who sold to whom and why the exit made sense.",hf:"Think like an investor: who wins, who loses, and how should each stock trade on the news?",rx:"Watch how deals are financed. Heavily debt-funded deals are where future restructurings come from.",mc:"Ask the strategy question: why does this deal make sense, and what would you need to believe for it to work?"};
+const DEAL_LENS={all:"",er:"Read it like an analyst: what does this deal do to the buyer's earnings and stock price, and would you change your rating?",ib:"Focus on the rationale, the premium and how it was paid. That's what M&A interviews ask about.",pe:"Deals with a private equity buyer or seller are marked. Look at who sold to whom and why the exit made sense.",hf:"Think like an investor: who wins, who loses, and how should each stock trade on the news?",rx:"Watch how deals are financed. Heavily debt-funded deals are where future restructurings come from.",mc:"Ask the strategy question: why does this deal make sense, and what would you need to believe for it to work?"};
 const PE_NAMES=/KKR|CD&R|Clayton, Dubilier|Sycamore|Warburg|Berkshire Partners|Hg\b|General Atlantic|EQT|Blackstone|Apollo|Carlyle|Bain Capital|Ares|TPG|Vista/;
-const PLAN_TO_PROF={"Investment banking":"ib","Private equity":"pe","Hedge funds & markets":"hf","Restructuring":"rx","Consulting":"mc"};
+const PLAN_TO_PROF={"Investment banking":"ib","Private equity":"pe","Hedge funds & markets":"hf","Restructuring":"rx","Consulting":"mc","Equity research":"er"};
 const profKey=()=>{const k=S.settings.prof||(S.plan&&PLAN_TO_PROF[S.plan.target])||"all";return PROFS.some(p=>p[0]===k)?k:"all"};
 const prof=()=>PROFS.find(p=>p[0]===profKey())[2];
 const profSecs=()=>prof().secs||null;
@@ -3637,7 +3638,7 @@ function openDeal(d){showSub("learn","deals");dealTab=dealTier(d);try{renderDeal
 setTimeout(()=>{try{renderNews()}catch(e){}},0);
 
 /* ================= PROFILE EDITOR v61 ================= */
-const PE_TARGETS=["","Investment banking","Private equity","Hedge funds","Sales & trading","Restructuring","Consulting","Not sure yet"];
+const PE_TARGETS=["","Investment banking","Private equity","Hedge funds","Equity research","Sales & trading","Restructuring","Consulting","Not sure yet"];
 const PE_MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const peToMonth=s=>{const m=String(s||"").match(/([A-Za-z]{3})[a-z]*\.?\s+(\d{4})/);if(!m)return"";const i=PE_MON.findIndex(x=>x.toLowerCase()===m[1].toLowerCase());return i<0?"":`${m[2]}-${String(i+1).padStart(2,"0")}`};
 const peFromMonth=v=>{const m=String(v||"").match(/^(\d{4})-(\d{2})$/);return m?`${PE_MON[+m[2]-1]} ${m[1]}`:""};

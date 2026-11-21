@@ -2465,14 +2465,36 @@ function calGrid(dl){const t=today();if(!calM)calM=t.slice(0,7);const [Y,M]=calM
    <div class="cg-wk">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<span>${x}</span>`).join("")}</div><div class="cg-g">${cells.join("")}</div>
    <div class="cg-leg"><span><i class="ap"></i>Application</span><span><i class="iv"></i>Interview</span><span><i class="nw"></i>Networking</span><span><i class="op"></i>Opens (est.)</span><span><i class="cl"></i>Closes</span></div>
    ${calDay?`<div class="cg-day"><div class="cg-dh"><b>${new Date(calDay+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}</b><button type="button" class="ghost sm" id="cgAdd">+ Add on this day</button></div>${sel.length?`<ul>${sel.map(x=>`<li><i class="${cls[x.k]||"ot"}"></i><b>${esc(x.f||"")}</b> ${esc(x.t)}</li>`).join("")}</ul>`:`<p class="note">Nothing on this day.</p>`}</div>`:""}</div>`}
+/* next 3 things on the calendar (your deadlines + internship closes), as big countdown cards */
+function calNextUp(dl){const t=today(),items=[];(dl||[]).forEach(d=>{if(d.date>=t)items.push({d:d.date,t:d.t,f:d.f,k:d.k||"Other",mine:1})});
+  if(typeof APP_OPEN!=="undefined")APP_OPEN.forEach(r=>{if(r[6]&&r[6]>=t&&r[3]==="open")items.push({d:r[6],t:"Applications close",f:r[0]+" · "+r[1],k:"Closes"})});
+  items.sort((a,b)=>a.d.localeCompare(b.d)||(b.mine||0)-(a.mine||0));const top=items.slice(0,3);if(!top.length)return "";
+  return `<div class="sec-head" style="margin-top:22px"><h2>Next up</h2></div><div class="nu">${top.map(x=>{const n=daysUntil(x.d);return `<div class="nu-c ${n<=3?"hot":n<=7?"warm":""}"><div class="nu-n"><b>${n===0?"Today":n}</b>${n===0?"":`<span>day${n===1?"":"s"}</span>`}</div><div class="nu-t"><b>${esc(x.f||x.t)}</b><span>${esc(x.mine?x.t:x.t)} · ${new Date(x.d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></div></div>`}).join("")}</div>`}
+(function(){const st=document.createElement("style");st.textContent=`.nu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.nu-c{display:flex;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:14px;padding:12px 14px;background:var(--sheet)}
+.nu-n{min-width:58px;text-align:center;border-radius:12px;padding:6px 4px;background:var(--cobalt-soft,#E3E9FC);color:var(--cobalt)}.nu-n b{display:block;font-size:24px;line-height:1}.nu-n span{font-size:11px;font-weight:600}
+.nu-c.warm .nu-n{background:color-mix(in srgb,var(--warn,#B7791F) 16%,transparent);color:var(--warn,#B7791F)}.nu-c.hot .nu-n{background:color-mix(in srgb,var(--bad,#C2362F) 14%,transparent);color:var(--bad,#C2362F)}
+.nu-t{min-width:0}.nu-t b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nu-t span{font-size:12.5px;color:var(--ink-2)}
+.cal-sync{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px;border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--cobalt-soft,#E3E9FC),transparent);border:1px solid var(--rule)}
+.cal-sync b{display:block;font-size:15px}.cal-sync span{font-size:13px;color:var(--ink-2)}.cal-sync-b{display:flex;gap:8px}.cal-sync-b a{text-decoration:none}
+.tl2{position:relative;margin:6px 0 10px;padding-left:4px}.tl2:before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--rule)}
+.tl2-s{position:relative;display:flex;gap:14px;padding:8px 0;animation:tl2In .4s ease both;animation-delay:calc(var(--i)*40ms)}@keyframes tl2In{from{opacity:0;transform:translateY(6px)}}
+.tl2-dot{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--mono,monospace);background:var(--sheet);border:2px solid var(--rule);color:var(--ink-2);z-index:1}
+.tl2-s.now .tl2-dot{background:var(--cobalt);border-color:var(--cobalt);color:#fff;box-shadow:0 0 0 5px color-mix(in srgb,var(--cobalt) 18%,transparent)}
+.tl2-c{flex:1;border:1px solid var(--rule);border-radius:12px;padding:10px 12px;background:var(--sheet)}.tl2-s.now .tl2-c{border-color:var(--cobalt)}
+.tl2-c b{font-size:14.5px}.tl2-c p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.45}.tl2-here{margin-left:8px;font:700 10.5px/1 var(--mono,monospace);letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--cobalt);padding:3px 7px;border-radius:999px}
+@media(prefers-reduced-motion:reduce){.tl2-s{animation:none}}`;document.head.appendChild(st)})();
 function renderCal(){const el=$("#cal");if(!el)return;const dl=(S.deadlines||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
   el.innerHTML=`<div class="sec-head"><h2>Calendar</h2><button class="ghost" id="dlAdd" style="padding:0">+ Add deadline</button></div>
    ${calGrid(dl)}
-   <div class="sec-head" style="margin-top:22px"><h2>Your deadlines</h2></div>
+   ${calNextUp(dl)}
+   <div class="cal-sync"><div><b>📅 Put all of this in your own calendar</b><span>Internship open and close dates update by themselves. One tap, never miss a deadline.</span></div>
+     <div class="cal-sync-b"><a class="btn sm" href="https://calendar.google.com/calendar/render?cid=${encodeURIComponent("webcal://mnaprep.com/calendar.ics")}" target="_blank" rel="noopener">Google</a><a class="ghost outline sm" href="webcal://mnaprep.com/calendar.ics">Apple / Outlook</a></div></div>
+   <div class="sec-head" style="margin-top:22px"><h2>Your deadlines</h2><span class="pill">${dl.filter(d=>daysUntil(d.date)>=0).length} upcoming</span></div>
    <form id="dlForm" class="crm-form" hidden autocomplete="off"><label>What<input id="dlT" required placeholder="Junior summer application"></label><label>Firm<input id="dlF" placeholder="Firm"></label><label>Date<input type="date" id="dlD" required></label><label>Type<select id="dlK"><option>Application</option><option>Interview</option><option>Networking</option><option>Other</option></select></label><label>&nbsp;<button class="btn sm" type="submit">Save</button></label></form>
    ${dl.length?`<div class="dl-list">${dl.map(d=>{const n=daysUntil(d.date);return `<div class="dl ${n<0?'past':n<=7?'soon':''}"><div class="dl-date"><b>${new Date(d.date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}</b><span>${n<0?"passed":n===0?"today":n===1?"tomorrow":"in "+n+" days"}</span></div><div><b>${esc(d.t)}</b><span>${esc([d.f,d.k].filter(Boolean).join(" · "))}</span></div><span>${d.f&&FIRMS.find(f=>f[0]===d.f)?`<button class="flink" data-act="firm|${esc(d.f)}">Profile</button> `:""}<button class="rowbtn" data-del="${esc(d.id)}">Remove</button></span></div>`}).join("")}</div>`:`<p class="note">Add application and interview dates. Anything due within a week shows up on Home.</p>`}
-   <div class="sec-head" style="margin-top:28px"><h2>Typical timeline</h2></div>
-   <div class="timeline">${TYPICAL.map(([w,d])=>`<div class="tl ${S.plan&&w.startsWith(S.plan.year)?'now':''}"><b>${w}</b><p>${d}</p></div>`).join("")}</div>
+   <div class="sec-head" style="margin-top:28px"><h2>Your recruiting timeline</h2></div>
+   <div class="tl2">${TYPICAL.map(([w,d],i)=>{const mo=new Date().getMonth(),season=mo>=7&&mo<=10?"Fall":mo>=5&&mo<=6?"Summer":"Winter";const now=S.plan&&w.startsWith(S.plan.year)&&w.includes(season);return `<div class="tl2-s ${now?"now":""}" style="--i:${i}"><span class="tl2-dot">${now?"★":i+1}</span><div class="tl2-c"><b>${esc(w)}</b>${now?`<span class="tl2-here">You are here</span>`:""}<p>${d}</p></div></div>`}).join("")}</div>
    <p class="note">Typical patterns, not official dates. Always confirm on each firm's careers page.</p>`;
   bindRel(el);
   $("#dlAdd").onclick=()=>{$("#dlForm").hidden=!$("#dlForm").hidden;if(!$("#dlForm").hidden)$("#dlT").focus()};

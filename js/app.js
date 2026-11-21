@@ -1769,9 +1769,42 @@ function wireTop(n,seen){return `<article class="wr-top" style="--kc:${WIRE_KC[n
 .wr-card h3{font-size:15.5px;line-height:1.3;margin:8px 0 6px}.wr-why{font-size:13.5px;color:var(--ink-2);line-height:1.45;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .wr-more{font-size:12.5px;font-weight:700;color:var(--kc)}.wr-card[open] .wr-more,.wr-card[open] .wr-why{display:none}
 .wr-card .story-body{padding:0 14px 14px}.wr-card[open]{grid-column:1/-1}`;document.head.appendChild(st)})();
+(function(){const st=document.createElement("style");st.textContent=`
+#wire{--np:#F6F1E6;--np-ink:#1B1A17;--np-rule:#1B1A17;--np-mute:#5C574D;background:var(--np)!important;color:var(--np-ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #wire{--np:#1C1A16;--np-ink:#EDE6D6;--np-rule:#EDE6D6;--np-mute:#B3AA98}}
+:root[data-theme="dark"] #wire{--np:#1C1A16;--np-ink:#EDE6D6;--np-rule:#EDE6D6;--np-mute:#B3AA98}
+#wire,#wire h2,#wire h3,#wire p{font-family:Georgia,"Times New Roman",Times,serif}
+#wire .wire-head{background:var(--np);border-bottom:0}
+#wire .np-dateline{display:flex;justify-content:space-between;font:600 11px/1 Georgia,serif;letter-spacing:.08em;text-transform:uppercase;color:var(--np-mute);border-bottom:1px solid var(--np-rule);padding:0 0 6px;margin-bottom:6px}
+#wire .np-mast{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;font:900 clamp(34px,6vw,46px)/1 "Old English Text MT","UnifrakturMaguntia",Georgia,serif!important;letter-spacing:-.01em;text-transform:none;color:var(--np-ink);margin:0;padding:6px 0 8px;border-bottom:4px double var(--np-rule)}
+#wire .np-mast small{position:absolute;left:0;bottom:10px;font:italic 400 11.5px/1 Georgia,serif;color:var(--np-mute);letter-spacing:0}
+#wire .np-mast .close{position:absolute!important;right:0;top:50%;transform:translateY(-50%)}
+#wire .cats{justify-content:center;border-bottom:1px solid var(--np-rule);padding:6px 0;margin:0}
+#wire .cats .chip{font-family:Georgia,serif;text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;border-radius:0;border:0;background:none;color:var(--np-ink)}
+#wire .cats .chip[aria-pressed=true]{background:var(--np-ink);color:var(--np)}
+#wire .wr-top{background:none;border:0;border-bottom:1px solid var(--np-rule);border-radius:0;padding:14px 0 12px}
+#wire .wr-top:before{display:none}
+#wire .wr-top h2{font:700 clamp(24px,4vw,32px)/1.12 Georgia,serif;letter-spacing:-.01em;color:var(--np-ink);text-align:center;margin:6px 0 10px}
+#wire .wr-top>p{font-size:15.5px;line-height:1.55;hyphens:auto}
+#wire .wr-top>p::first-letter{float:left;font:700 48px/.8 Georgia,serif;padding:4px 6px 0 0;color:var(--np-ink)}
+#wire .wr-meta{justify-content:center}
+#wire .wr-k{background:none;color:var(--np-ink);border:1px solid var(--np-rule);border-radius:0;font-family:Georgia,serif}
+#wire .wr-matters{background:none;border-top:1px solid var(--np-rule);border-bottom:1px solid var(--np-rule);border-radius:0;font-style:italic}
+#wire .wr-matters b{color:var(--np-ink);font-style:normal}
+#wire .ang{background:none;border-left:3px solid var(--np-ink);border-radius:0}
+#wire .wr-label{text-align:center;font-family:Georgia,serif;letter-spacing:.2em;color:var(--np-ink);border-bottom:1px solid var(--np-rule);padding-bottom:6px}
+#wire .wr-grid{gap:0;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+#wire .wr-card{border:0;border-top:0;border-radius:0;background:none;border-right:1px solid color-mix(in srgb,var(--np-rule) 30%,transparent);border-bottom:1px solid color-mix(in srgb,var(--np-rule) 30%,transparent)}
+#wire .wr-card h3{font:700 17px/1.2 Georgia,serif;color:var(--np-ink)}
+#wire .wr-card .wr-why{font-style:italic;color:var(--np-mute)}
+#wire .wr-more{color:var(--np-ink);text-decoration:underline;font-family:Georgia,serif}
+#wire .src,#wire .src a{color:var(--np-mute);font-style:italic}
+#wire .new{background:#B3261E;color:#fff;border-radius:0}
+#wire .wr-card{border-right:0}#wire .wr-card summary,#wire .wr-card .story-body{padding-left:0;padding-right:0}
+`;document.head.appendChild(st)})();
 function renderNews(){const list=NEWS.filter(n=>newsFilter==="All"||n.k===newsFilter),seen=wireSeen();
   const cnt=c=>c==="All"?NEWS.length:NEWS.filter(n=>n.k===c).length;const cats=WIRE_CATS.filter(c=>c==="All"||cnt(c));
-  $("#wire").innerHTML=`<div class="wire-head"><h2>The Wire <small>${esc(wireAgo())}</small><button class="close" id="wireClose" aria-label="Close news" style="position:static">×</button></h2>
+  $("#wire").innerHTML=`<div class="wire-head"><div class="np-dateline"><span>${new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"})}</span><span>Free edition</span></div><h2 class="np-mast">The Wire <small>${esc(wireAgo())}</small><button class="close" id="wireClose" aria-label="Close news" style="position:static">×</button></h2>
    <div class="cats" role="group" aria-label="Filter news">${cats.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${c===newsFilter}">${c==="PE"?"PE & Funds":c} <small>${cnt(c)}</small></button>`).join("")}</div></div>
    ${newsFilter==="All"?wireSnap()+wireCal()+wireEarn():""}
    <div id="wq"></div>

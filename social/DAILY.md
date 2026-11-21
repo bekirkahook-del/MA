@@ -2,6 +2,16 @@
 
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
+## EVERY DAY: 3-4 A+ POSTS TO ALL SOCIALS (Bekir, 2026-11-21: "EVERY DAY 3-4 slides or videos to all socials from now on all A+ content with visuals and interesting financial ideas")
+This overrides the 10/day target and the 50/50 picture/video split below. Every day, 3-4 new posts, each one going to **every connected network**: Instagram, TikTok, Facebook, YouTube Shorts (videos only; brand channel UCecz_zgUGiksG2HpJEt0cTg) and Pinterest (pictures/covers).
+- **Format:** a carousel ("slides") or a short video. Mix them; at least 1 video a day.
+- **A+ only:** every post must have strong visuals (no plain text cards) and one genuinely interesting financial idea: a surprising number, a deal or market story that just happened, a ranking with a twist, a "most people get this wrong" concept. Real current numbers, source on screen. No filler, no recycled topics.
+- **Proven winners to lean on:** RANKED conference series with original mascots (Big Ten 923 IG views; ACC next, then Big 12, Ivy, Pac/others), school rankings (US News list 6.8K TikTok), live market/deal stories (Anthropic IPO 1.2K IG), interview questions with a twist.
+- **Timing:** spread from 12pm to 10pm ET, never two within 2 hours. Check getScheduledPosts first; old queued posts marked draft stay drafts (they don't count).
+- **AI voice = label it:** TikTok isAigc, IG isAiGenerated, YouTube isAiGeneratedContent true.
+- **Clicks:** every caption ends with a reason to visit mnaprep.com (link in bio); add a first comment with mnaprep.com where the network allows.
+- Log each post in punch-log.md / posted.md and score it 48h later.
+
 ## QUALITY FLOOR: NOTHING BELOW 78/100 (Bekir, 2026-11-17: "THIS IS THE LOWEST QUALITY VIDEO WE WILL EVER POST FROM NOW ON" / "never create something below that score again")
 The reference is `social/vid/2026-11-20/resume-mistakes-a.mp4` ("4 resume mistakes", animated male presenter), scored **78/100**. Every new video must score at least 78 on this rubric, or it doesn't get made or posted. If a video can't reach it, fix it or drop it and tell Bekir.
 | Part (weight) | What 78 looks like |

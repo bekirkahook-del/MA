@@ -34,7 +34,12 @@
   body.has-bb .toast,body.has-bb .ux-toast,body.has-bb .bdg-toast,body.has-bb .em-sl{bottom:calc(76px + env(safe-area-inset-bottom,0px))!important}
 }`;
   document.head.appendChild(st);
+  /* Bottom bar switched OFF (Nov 21, 2026): on Bekir's iPhone the tabs disappeared completely, which can't be reproduced
+     in Chromium. The main tabs stay at the top (the layout that works everywhere) until it's verified on a real iPhone.
+     Set BOTTOM_BAR=true to bring it back. */
+  const BOTTOM_BAR=false;
   function setup(){const nav=document.querySelector("nav.tabs");if(!nav)return false;
+    if(!BOTTOM_BAR)return true;
     document.body.classList.add("has-bb");
     nav.querySelectorAll(".tab").forEach(b=>{if(b.querySelector(".tb-ic"))return;const k=b.dataset.tab;if(!IC[k])return;
       b.insertAdjacentHTML("afterbegin",`<svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`)});

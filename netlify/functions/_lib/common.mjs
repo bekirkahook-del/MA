@@ -44,6 +44,11 @@ export async function getBilling(uid) {
   const rows = r.ok ? await r.json() : [];
   return (rows[0] && rows[0].data) || null;
 }
+export async function getDoc(col, id) {
+  const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.${encodeURIComponent(col)}&id=eq.${encodeURIComponent(id)}&select=data`, { headers: svcH(), signal: AbortSignal.timeout(6000) });
+  const rows = r.ok ? await r.json() : [];
+  return (rows[0] && rows[0].data) || null;
+}
 export async function setBilling(uid, data) {
   const r = await fetch(`${SB_URL}/rest/v1/docs`, {
     method: "POST",

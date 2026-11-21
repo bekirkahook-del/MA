@@ -20,7 +20,7 @@
       if(document.querySelector(".ra-card,.gw-tc,.ej-g"))return false;return true}catch(e){return false}}
   function ask(){if(!eligible())return;LS.set(K,String(Date.now()));ev("review_ask_shown");
     const d=document.createElement("div");d.className="ra-card";d.setAttribute("role","status");
-    d.innerHTML=`<span class="m">Nice work. How's M&amp;A Prep helping you so far? An honest rating helps other students.</span><button class="go" type="button">Rate it</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
+    d.innerHTML=`<span class="m">Nice work. Rate M&amp;A Prep honestly (any rating counts) and get <b>1 day of Pro free</b>.</span><button class="go" type="button">Rate it</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
     let t=0;const close=()=>{clearTimeout(t);d.remove()};
     d.querySelector(".go").onclick=()=>{ev("review_ask_click");close();try{closePanel()}catch(e){}try{writeReview(null)}catch(e){}};
     d.querySelector(".x").onclick=()=>{ev("review_ask_dismiss");close()};
@@ -28,17 +28,33 @@
   /* after a level with 2+ stars: questEvt("level") fires only for c>=2 */
   (function hook(n){const q=window.questEvt;if(typeof q!=="function"){if(n<40)setTimeout(()=>hook(n+1),250);return}if(q.__ra)return;
     const w=function(k){const r=q.apply(this,arguments);try{if(k==="level")setTimeout(ask,2600)}catch(e){}return r};w.__ra=1;window.questEvt=w})(0);
+
+  /* 1 free Pro day for a review: claimed on the server (review-reward.mjs checks the review, account, device and network) */
+  const devId=()=>{let d=LS.get("ma-dev");if(!d||d.length<16){d=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+Date.now().toString(36)+String(Math.random()).slice(2));LS.set("ma-dev",d)}return d};
+  const fpr=()=>{try{return [navigator.userAgent,screen.width+"x"+screen.height,screen.colorDepth,devicePixelRatio,Intl.DateTimeFormat().resolvedOptions().timeZone,navigator.language,navigator.hardwareConcurrency||0,navigator.maxTouchPoints||0].join("|")}catch(e){return ""}};
+  let claiming=false;
+  async function claim(){if(claiming||LS.get("ma-rev-claim"))return;const mine=revs().find(r=>r.id===me());if(!mine)return;claiming=true;
+    try{const A=window.MA_AUTH;const s=A&&await A.ready;if(!s){claiming=false;return}
+      const r=await fetch("/.netlify/functions/review-reward",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({device:devId(),fp:fpr()})});
+      const j=await r.json().catch(()=>({}));
+      if(r.ok){LS.set("ma-rev-claim","1");ev("review_reward");try{window.maClubClaim&&maClubClaim()}catch(e){}try{toast("⭐ Thanks for the review! 1 day of Pro added.")}catch(e){}}
+      else if(j.code==="used"||j.code==="device_used"||j.code==="network_used"){LS.set("ma-rev-claim","1");if(j.code!=="used")try{toast(j.error)}catch(e){}}
+      else if(j.code==="short"){try{toast("Add a sentence or two to your review to get your free Pro day.")}catch(e){}}
+    }catch(e){}claiming=false}
+  /* disclosure on the reviews section (required when reviews are rewarded) */
+  function disclose(){const el=document.getElementById("reviews");if(!el||el.querySelector(".ra-disc"))return;const p=document.createElement("p");p.className="note ra-disc";
+    p.textContent="Reviewers get 1 free day of Pro for leaving a review, whatever rating they give.";el.prepend(p)}
   /* homepage strip with the real average, only from 10+ real reviews */
   function strip(){const list=revs().filter(r=>r.rating>=1&&r.rating<=5);const el=document.getElementById("raStrip");
     if(list.length<MIN_SHOW){if(el)el.remove();return}
     const avg=list.reduce((a,r)=>a+r.rating,0)/list.length;const host=document.querySelector('[data-view="home"] .hl-land h1')||document.querySelector('[data-view="home"] .hero h1');if(!host)return;
     const html=`<b>${avg.toFixed(1)}</b><span class="s" aria-hidden="true">${"★".repeat(Math.round(avg))}${"☆".repeat(5-Math.round(avg))}</span><span>from ${list.length} student reviews</span>`;
     if(el){el.innerHTML=html;return}
-    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
+    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.title="Reviewers get 1 free Pro day for any rating";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
     b.onclick=()=>{ev("review_strip_click");try{showTab("pro");setTimeout(()=>{const r=document.getElementById("reviews");r&&r.scrollIntoView({behavior:"smooth"})},300)}catch(e){}};
     host.after(b)}
   (function hookRender(n){if(typeof renderReviews!=="function"){if(n<40)setTimeout(()=>hookRender(n+1),250);return}if(renderReviews.__ra)return;
-    const o=renderReviews;renderReviews=function(){const r=o.apply(this,arguments);try{strip()}catch(e){}return r};renderReviews.__ra=1;try{strip()}catch(e){}})(0);
+    const o=renderReviews;renderReviews=function(){const r=o.apply(this,arguments);try{strip();disclose();claim()}catch(e){}return r};renderReviews.__ra=1;try{strip();disclose();claim()}catch(e){}})(0);
   (function hookHome(n){if(typeof renderHome!=="function"){if(n<40)setTimeout(()=>hookHome(n+1),250);return}if(renderHome.__ra)return;
     const o=renderHome;renderHome=function(){const r=o.apply(this,arguments);try{strip()}catch(e){}return r};renderHome.__ra=1})(0);
 })();

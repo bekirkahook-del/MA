@@ -1,5 +1,5 @@
 // Live market tape for the site: current price and % change vs. the previous close, straight from
-// Yahoo Finance's chart API. Netlify's CDN caches the response for 15s, so this costs at most four
+// Yahoo Finance's chart API. Netlify's CDN caches the response for 30s, so this costs at most two
 // Yahoo round-trips per minute no matter how many people are on the site.
 const MAP = [
   ["DOW", "^DJI", "idx"], ["S&P 500", "^GSPC", "idx"], ["NASDAQ", "^IXIC", "idx"], ["RUSSELL 2000", "^RUT", "idx"],
@@ -83,8 +83,8 @@ export default async (req) => {
   return new Response(JSON.stringify({ asOf: t ? new Date(t * 1000).toISOString() : null, tape: out.filter(Boolean), stale }), {
     headers: {
       "content-type": "application/json",
-      "cache-control": "public, max-age=10",
-      "netlify-cdn-cache-control": "public, s-maxage=15, stale-while-revalidate=30",
+      "cache-control": "public, max-age=20",
+      "netlify-cdn-cache-control": "public, s-maxage=30, stale-while-revalidate=60",
     },
   });
 };

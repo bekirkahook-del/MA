@@ -29,18 +29,10 @@
   (function hook(n){const q=window.questEvt;if(typeof q!=="function"){if(n<40)setTimeout(()=>hook(n+1),250);return}if(q.__ra)return;
     const w=function(k){const r=q.apply(this,arguments);try{if(k==="level")setTimeout(ask,2600)}catch(e){}return r};w.__ra=1;window.questEvt=w})(0);
 
-  /* 1 free Pro day for a review: claimed on the server (review-reward.mjs checks the review, account, device and network) */
-  const devId=()=>{let d=LS.get("ma-dev");if(!d||d.length<16){d=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+Date.now().toString(36)+String(Math.random()).slice(2));LS.set("ma-dev",d)}return d};
-  const fpr=()=>{try{return [navigator.userAgent,screen.width+"x"+screen.height,screen.colorDepth,devicePixelRatio,Intl.DateTimeFormat().resolvedOptions().timeZone,navigator.language,navigator.hardwareConcurrency||0,navigator.maxTouchPoints||0].join("|")}catch(e){return ""}};
+  /* 1 free Pro day for a review (rewards.js claims it on the server via reward.mjs) */
   let claiming=false;
-  async function claim(){if(claiming||LS.get("ma-rev-claim"))return;const mine=revs().find(r=>r.id===me());if(!mine)return;claiming=true;
-    try{const A=window.MA_AUTH;const s=A&&await A.ready;if(!s){claiming=false;return}
-      const r=await fetch("/.netlify/functions/review-reward",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({device:devId(),fp:fpr()})});
-      const j=await r.json().catch(()=>({}));
-      if(r.ok){LS.set("ma-rev-claim","1");ev("review_reward");try{window.maClubClaim&&maClubClaim()}catch(e){}try{toast("⭐ Thanks for the review! 1 day of Pro added.")}catch(e){}}
-      else if(j.code==="used"||j.code==="device_used"||j.code==="network_used"){LS.set("ma-rev-claim","1");if(j.code!=="used")try{toast(j.error)}catch(e){}}
-      else if(j.code==="short"){try{toast("Add a sentence or two to your review to get your free Pro day.")}catch(e){}}
-    }catch(e){}claiming=false}
+  async function claim(){if(claiming||LS.get("ma-rw-review")||!window.maReward)return;if(!revs().find(r=>r.id===me()))return;claiming=true;
+    try{await maReward("review","⭐ Thanks for the review! 1 day of Pro added.")}catch(e){}claiming=false}
   /* disclosure on the reviews section (required when reviews are rewarded) */
   function disclose(){const el=document.getElementById("reviews");if(!el||el.querySelector(".ra-disc"))return;const p=document.createElement("p");p.className="note ra-disc";
     p.textContent="Reviewers get 1 free day of Pro for leaving a review, whatever rating they give.";el.prepend(p)}

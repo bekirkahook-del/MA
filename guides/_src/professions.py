@@ -32,7 +32,7 @@ PROFS = [
    "Investment judgment: the market, business quality, returns (entry price, leverage, value-creation plan, exit) and what could go wrong.",
    "A case study or \"pick a public company you'd take private\" question."],
   faqs=lambda n: [(f"Can I get into private equity from {n}?", f"Most people start in investment banking for about 2 years and then interview for PE associate jobs, so the first goal is a banking internship. See the {n} IB guide linked above for the clubs and programs that feed that step."),
-                  ("Is private equity the same as venture capital?", "No. Venture capital invests in young startups. PE usually buys established, profitable companies."),
+                  ("Is private equity the same as venture capital?", "No. Venture capital invests in young startups. Buyout funds, the biggest part of PE, usually buy established, profitable companies."),
                   ("What is a leveraged buyout?", "An LBO is when a PE firm buys a company using a lot of borrowed money. More in " + L("what-is-an-lbo", "what is an LBO") + ".")],
   links=[("private-equity-interview-questions", "Private equity interview questions"), ("what-is-private-equity", "What is private equity?"), ("what-is-an-lbo", "What is an LBO?"), ("irr-moic-cheat-sheet", "IRR and MOIC cheat sheet")],
   related=["private-equity-interview-questions", "what-is-private-equity", "private-equity-vs-investment-banking"]),

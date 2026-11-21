@@ -40,7 +40,7 @@ PAGES = [
 "desc": "What investment bankers actually do, the main types of banks, the job titles from analyst to managing director, and what the job is really like, in plain English for high school and college students.",
 "related": ["how-to-get-into-investment-banking", "bulge-bracket-vs-elite-boutique", "investment-banking-interview-questions", "why-investment-banking-answer","corporate-finance-vs-investment-banking"],
 "lede": ["Investment bankers help companies with big money moves: buying or selling another company (M&amp;A), raising money by selling stock (like an IPO), or borrowing money by selling bonds. Companies hire banks for these deals because they're rare, complicated and huge.",
-         "Bankers get paid a fee when the deal closes, which is why the job is so intense and so well paid."],
+         "Most of a banker's fee is a success fee paid when the deal closes, which is why the job is so intense and so well paid."],
 "body": [
  ("h2", "What bankers actually do"),
  ("card", "Mergers and acquisitions (M&amp;A)", "Advising a company that wants to buy another company, or helping an owner sell. This is the most famous part of banking.", "Advisory"),

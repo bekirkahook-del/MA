@@ -1743,6 +1743,27 @@ function wireEarn(){if(!EARN||!EARN.length)return"";const today=new Date().toLoc
    ${days.length>3?`<button class="flink" id="weMore">${wireEarnAll?"Show less":`Show all ${days.length} days →`}</button>`:""}
    <p class="we-src">EPS est. = what analysts expect per share. Beat it and the stock often jumps. Dates can change. Source: ${(EARN_SRC||[]).map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(", ")}</p></details>`}
 let wireEarnAll=false;
+/* The Wire: category colors, the big top story */
+const WIRE_KC={Markets:"#2448D8",Deals:"#0F7A55",Banks:"#7A2FB5",PE:"#A87B10",Economy:"#C0283C"};
+function wireTop(n,seen){return `<article class="wr-top" style="--kc:${WIRE_KC[n.k]||"var(--cobalt)"}"><div class="wr-meta"><span class="wr-k">Top story · ${n.k==="PE"?"PE & Funds":n.k}</span><span>${n.d}</span>${seen&&!seen.includes(n.h)?'<span class="new">New</span>':""}</div>
+  <h2>${n.h}</h2><p>${linkFirms(n.w)}</p>${n.chart?feeChart():""}
+  <div class="wr-matters"><b>Why it matters</b>${linkFirms(n.m)}</div>
+  ${n.a?`<div class="ang"><b>Interview angle</b>${n.a} ${NEWS_SEC[n.k]?`<button class="flink" data-act="int|${NEWS_SEC[n.k]}">Practice ${NEWS_SEC[n.k]} →</button>`:""}</div>`:""}
+  <span class="src">Source: ${n.s.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(", ")}</span></article>`}
+(function(){const st=document.createElement("style");st.textContent=`.wr-top{position:relative;margin:16px 0 8px;padding:18px 18px 14px 22px;border-radius:18px;border:1px solid var(--rule);background:linear-gradient(160deg,color-mix(in srgb,var(--kc) 10%,var(--sheet)),var(--sheet) 60%);overflow:hidden}
+.wr-top:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--kc)}
+.wr-top h2{font-size:clamp(20px,3.2vw,26px);line-height:1.2;margin:8px 0 10px;color:var(--ink);font-family:var(--body);text-transform:none;letter-spacing:0}
+.wr-top p{font-size:15px;line-height:1.55;margin:0 0 12px}
+.wr-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
+.wr-k{font:700 11px/1 var(--mono,monospace);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--kc);padding:4px 8px;border-radius:999px}
+.wr-matters{border-radius:12px;padding:10px 12px;background:color-mix(in srgb,var(--kc) 8%,transparent);margin:0 0 10px;font-size:14.5px;line-height:1.5}.wr-matters b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--kc);margin-bottom:2px}
+.wr-label{font:700 11.5px/1 var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin:18px 0 8px}
+.wr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.wr-card{border:1px solid var(--rule);border-radius:14px;background:var(--sheet);border-top:4px solid var(--kc);padding:0}
+.wr-card>summary{display:block;list-style:none;cursor:pointer;padding:12px 14px}.wr-card>summary>*{display:block}.wr-card .wr-meta{display:flex}.wr-card>summary::-webkit-details-marker{display:none}
+.wr-card h3{font-size:15.5px;line-height:1.3;margin:8px 0 6px}.wr-why{font-size:13.5px;color:var(--ink-2);line-height:1.45;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wr-more{font-size:12.5px;font-weight:700;color:var(--kc)}.wr-card[open] .wr-more,.wr-card[open] .wr-why{display:none}
+.wr-card .story-body{padding:0 14px 14px}.wr-card[open]{grid-column:1/-1}`;document.head.appendChild(st)})();
 function renderNews(){const list=NEWS.filter(n=>newsFilter==="All"||n.k===newsFilter),seen=wireSeen();
   const cnt=c=>c==="All"?NEWS.length:NEWS.filter(n=>n.k===c).length;const cats=WIRE_CATS.filter(c=>c==="All"||cnt(c));
   $("#wire").innerHTML=`<div class="wire-head"><h2>The Wire <small>${esc(wireAgo())}</small><button class="close" id="wireClose" aria-label="Close news" style="position:static">×</button></h2>
@@ -1750,9 +1771,10 @@ function renderNews(){const list=NEWS.filter(n=>newsFilter==="All"||n.k===newsFi
    ${newsFilter==="All"?wireSnap()+wireCal()+wireEarn():""}
    <div id="wq"></div>
    ${list.length?"":`<p class="note" style="margin-top:14px">No ${esc(newsFilter)} stories this week.</p>`}
-   ${list.map((n,i)=>`<details class="story" ${i===0?"open":""}><summary><div><div class="meta"><span class="k">${n.k==="PE"?"PE & Funds":n.k}</span><span>${n.d}</span>${seen&&!seen.includes(n.h)?'<span class="new">New</span>':""}</div><h3>${n.h}</h3></div><span class="chev" aria-hidden="true" style="margin-top:8px"></span></summary><div class="story-body"><p>${linkFirms(n.w)}</p>${n.chart?feeChart():""}
-   <p class="so"><b>Why it matters:</b> ${linkFirms(n.m)}</p>${n.a?`<div class="ang"><b>Interview angle</b>${n.a} ${NEWS_SEC[n.k]?`<button class="flink" data-act="int|${NEWS_SEC[n.k]}">Practice ${NEWS_SEC[n.k]} →</button>`:""}</div>`:""}
-   <span class="src">Source: ${n.s.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(", ")}</span></div></details>`).join("")}`;
+   ${list.length?wireTop(list[0],seen):""}
+   ${list.length>1?`<div class="wr-label">More stories</div><div class="wr-grid">${list.slice(1).map(n=>`<details class="wr-card" style="--kc:${WIRE_KC[n.k]||"var(--cobalt)"}"><summary><div class="wr-meta"><span class="wr-k">${n.k==="PE"?"PE & Funds":n.k}</span><span>${n.d}</span>${seen&&!seen.includes(n.h)?'<span class="new">New</span>':""}</div><h3>${n.h}</h3><p class="wr-why">${linkFirms(n.m)}</p><span class="wr-more">Read the story</span></summary>
+     <div class="story-body"><p>${linkFirms(n.w)}</p>${n.chart?feeChart():""}${n.a?`<div class="ang"><b>Interview angle</b>${n.a} ${NEWS_SEC[n.k]?`<button class="flink" data-act="int|${NEWS_SEC[n.k]}">Practice ${NEWS_SEC[n.k]} →</button>`:""}</div>`:""}
+     <span class="src">Source: ${n.s.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(", ")}</span></div></details>`).join("")}</div>`:""}`;
   $("#wire").querySelectorAll(".wire-head .chip").forEach(b=>b.onclick=()=>{newsFilter=b.dataset.c;renderNews();$("#wire").querySelector(`.chip[data-c="${newsFilter}"]`).focus()});
   $("#wire").querySelectorAll(".ws-cell").forEach(b=>b.onclick=()=>{toggleWire(false,true);openMarkets(b.dataset.sym)});
   const wa=$("#wsAll");if(wa)wa.onclick=()=>{toggleWire(false,true);openMarkets()};
@@ -3680,7 +3702,7 @@ setTimeout(()=>{try{renderFinalCards()}catch(e){}},0);
 document.documentElement.dataset.view=(document.querySelector(".view:not([hidden])")||{dataset:{}}).dataset.view||"home";
 function dealForNews(n){const h=(n.h+" "+n.w).toLowerCase();return DEALS.find(d=>{const t=d.target.split(/[ ,']/)[0].toLowerCase(),b=d.buyer.split(/[ ,]/)[0].toLowerCase();return t.length>2&&h.includes(t)&&h.includes(b)})}
 function openDeal(d){showSub("learn","deals");dealTab=dealTier(d);try{renderDeals()}catch(e){}setTimeout(()=>{const el=[...document.querySelectorAll("details.deal")].find(x=>(x.querySelector("summary b")||{}).textContent===d.buyer+" → "+d.target);if(el){el.open=true;el.scrollIntoView({block:"center",behavior:fxCalm()?"auto":"smooth"})}},380)}
-{const _rn=renderNews;renderNews=function(){_rn();try{document.querySelectorAll("#wire details.story").forEach((st,i)=>{const h=(st.querySelector("h3")||{}).textContent||"";const n=NEWS.find(x=>x.h===h);if(!n)return;const d=dealForNews(n);if(!d)return;const body=st.querySelector(".story-body");if(!body||body.dataset.dealified)return;body.dataset.dealified="1";
+{const _rn=renderNews;renderNews=function(){_rn();try{document.querySelectorAll("#wire details.story, #wire .wr-card, #wire .wr-top").forEach((st,i)=>{const h=(st.querySelector("h3,h2")||{}).textContent||"";const n=NEWS.find(x=>x.h===h);if(!n)return;const d=dealForNews(n);if(!d)return;const body=st.querySelector(".story-body")||(st.classList.contains("wr-top")?st:null);if(!body||body.dataset.dealified)return;body.dataset.dealified="1";
   body.innerHTML=`<p>${esc(n.w.split(". ")[0].replace(/\.$/,""))}.</p><div class="story-deal"><span class="note">The full breakdown, with terms, rationale and a quiz, is in Deals.</span><button class="ghost outline" type="button">Open the deal breakdown →</button></div>`;
   body.querySelector("button").onclick=()=>{toggleWire(false);openDeal(d)}})}catch(e){console.warn(e)}}}
 setTimeout(()=>{try{renderNews()}catch(e){}},0);

@@ -48,13 +48,28 @@ const st = document.createElement("style"); st.textContent = `.ej-g{position:fix
     if (changed) persist();
     askGrad() }
 
-  /* ---- 3) one-tap grad year ---- */
-  function askGrad(){ if (!hasS() || S.profile.grad || S.profile.year || LS.get("ma-gradask")) return;
+  /* ---- 3) one small card for whatever's still missing: school (LinkedIn/Google don't share it) + grad year ---- */
+  function askGrad(){ if (!hasS() || LS.get("ma-gradask")) return;
+    const needSchool = !S.profile.school && !(S.settings && S.settings.noSchool), needGrad = !S.profile.grad && !S.profile.year;
+    if (!needSchool && !needGrad) return;
     const now = new Date(), y0 = now.getFullYear() + (now.getMonth() >= 5 ? 1 : 0), ys = [y0, y0 + 1, y0 + 2, y0 + 3];
-
-    const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Graduation year");
-    d.innerHTML = `<b>What year do you graduate? We'll tailor your recruiting timeline.</b><div class="r">${ys.map(y => `<button data-y="${y}">${y}</button>`).join("")}<button class="s" data-y="">Skip</button></div>`;
-    d.onclick = e => { const b = e.target.closest("button"); if (!b) return; LS.set("ma-gradask", "1"); if (b.dataset.y) { S.profile.grad = b.dataset.y; persist(); ev("af_grad") } else ev("af_grad_skip"); d.remove() };
+    const names = [...new Set(Object.values(EDU))].sort();
+    const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Finish your profile");
+    d.innerHTML = `<b>${needSchool ? "Finish your profile in 5 seconds" : "What year do you graduate? We'll tailor your recruiting timeline."}</b>` +
+      (needSchool ? `<input class="ej-s" list="ejSchools" maxlength="80" placeholder="Your school (e.g. Ohio State)" aria-label="Your school" style="width:100%;box-sizing:border-box;font:inherit;padding:8px 10px;border-radius:9px;border:0;margin:0 0 8px"><datalist id="ejSchools">${names.map(n => `<option value="${n.replace(/"/g, "&quot;")}">`).join("")}</datalist>` : "") +
+      (needGrad ? `<div class="r" style="margin-bottom:6px"><span style="align-self:center;color:#B8C2DA">Class of</span>${ys.map(y => `<button data-y="${y}">${y}</button>`).join("")}</div>` : "") +
+      `<div class="r">${needSchool ? '<button class="go">Save</button>' : ""}<button class="s" data-y="">Skip</button></div>`;
+    let grad = "";
+    const saveAll = () => { const si = d.querySelector(".ej-s"); const sc = si ? si.value.trim().slice(0, 80) : "";
+      if (sc) { S.profile.school = sc; try { S.settings.noSchool = false } catch (e) {} ev("af_school_typed") }
+      if (grad) { S.profile.grad = grad; ev("af_grad") }
+      if (sc || grad) persist(); LS.set("ma-gradask", "1"); d.remove() };
+    d.onclick = e => { const b = e.target.closest("button"); if (!b) return;
+      if (b.classList.contains("s")) { LS.set("ma-gradask", "1"); ev("af_grad_skip"); d.remove(); return }
+      if (b.dataset.y) { grad = b.dataset.y; d.querySelectorAll("[data-y]").forEach(x => x.style.outline = x === b ? "2px solid #fff" : "");
+        if (!needSchool || (d.querySelector(".ej-s") || {}).value) saveAll(); return }
+      if (b.classList.contains("go")) saveAll() };
+    d.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList.contains("ej-s")) { e.preventDefault(); saveAll() } });
     setTimeout(() => document.body.appendChild(d), 2500) }
 
   /* ---- 1) Google One Tap ---- */

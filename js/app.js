@@ -1921,7 +1921,7 @@ Return ONLY JSON: {"overall": integer 1-10, "decision": "Offer" | "Borderline" |
 /* pro league */
 function leagueQs(){const r=seeded("league"+monthKey());const p=allQs().slice();for(let i=p.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[p[i],p[j]]=[p[j],p[i]]}return p.slice(0,15)}
 function renderLeague(){const el=$("#league");if(!el)return;const pro=isPro(),done=(S.league||{})[monthKey()];const mName=new Date().toLocaleDateString("en-US",{month:"long"});
-  el.innerHTML=`<div class="g-head"><div><div class="label">Pro League · ${mName} ${proBadge()}</div><h3>15 questions. Pro members only. One shot a month.</h3><p class="note">Same scoring as the Gauntlet, with a 450-point speed bonus. The ${mName} champion gets a featured profile spot.</p></div>
+  el.innerHTML=`<div class="g-head"><div><div class="label">Pro League · ${mName} ${proBadge()}</div><h3>15 questions, Pro only, one shot a month</h3><p class="note">Same scoring as the Gauntlet, with a 450-point speed bonus. The ${mName} champion gets a featured profile spot.</p></div>
     <div>${done?`<div class="g-score"><b>${done.score}</b><span>${done.correct}/15 · ${fmtSec(done.secs)}</span></div>`:`<button class="${pro?"btn":"ghost gopro"}" id="lgBtn">${pro?"Enter the League":"Included with Pro →"}</button>`}</div></div>`;
   if(!done)$("#lgBtn").onclick=()=>pro?runLeague():upgrade("Compete in the Pro League")}
 function runLeague(){const Q=leagueQs().map(shuffleOpts);let n=0,correct=0;const t0=Date.now(),mk=monthKey();S.league=S.league||{};S.league[mk]={score:0,correct:0,secs:0};save();
@@ -4658,9 +4658,8 @@ function homeLanding(){
   const proof=[[nqR.toLocaleString()+"+","interview-style questions"],[nt,"tracks, from basics to Superday"],[nd,"live deal breakdowns"]].concat(np>=10?[[np,"students training"]]:[]);
   const nx=nextLevel();
   return `<div class="hl-land">
-   <span class="label">Free · Built for students chasing finance jobs</span>
-   <h1>Get Superday-ready <br><em>5 minutes at a time.</em></h1>
-   <p>Free prep for investment banking, private equity and hedge fund interviews. Clear short levels, see how you rank against other students, and always know what to do next.</p>
+   <h1>Get Superday-ready <br><em>5 minutes at a time</em></h1>
+   <p>Free prep for investment banking, private equity and hedge fund interviews. Short levels, a leaderboard, and always a clear next step.</p>
    <div class="hl-cta"><button class="btn hl-go" id="landGo">${nx?`Start Level 1 · 5 min`:"Start training"} →</button><button class="ghost hl-2" id="landPlan">Plan my path</button></div>
    <div class="hl-proof n${proof.length}">${proof.map(([n,l],i)=>`<div style="--i:${i}"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>
    <div class="hl-how">${[["1","Learn","Short levels that teach the 3 statements, valuation, LBOs and more.","learn"],["2","Practice","Rapid Fire, mock interviews, DCF and LBO builders.","practice"],["3","Land it","Plan your path, track deadlines and network like a pro.","career"]].map(([n,t,d,v],i)=>`<button class="hl-step" data-v="${v}" style="--i:${i}"><span class="hl-n">${n}</span><b>${t}</b><span>${d}</span></button>`).join("")}</div>

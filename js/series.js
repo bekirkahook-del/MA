@@ -200,7 +200,7 @@ textarea.sr-in{min-height:120px;resize:vertical;line-height:1.45}
 
   function stepGo(){ser().joined=ser().joined||Date.now();save();
     const p=phase();
-    openPanel(`<div class="sr-pn"><div class="label">${E(SERIES.name)}</div>${prog(4)}<h2>You're in. Pick your event.</h2>
+    openPanel(`<div class="sr-pn"><div class="label">${E(SERIES.name)}</div>${prog(4)}<h2>You're in, pick your event</h2>
       <p class="sr-kv"><b>${E(S.profile.school)}</b> · ${E(S.club.name||"your club")} <span class="sr-ok">✓ verified</span></p>
       ${p==="pre"?`<p class="sr-msg">Registered. Competition opens ${new Date(SERIES.start).toLocaleString([],{weekday:"long",hour:"numeric",minute:"2-digit",timeZoneName:"short"})}. Come back then.</p>`:""}
       ${p==="ended"?`<p class="sr-msg">The Series has ended. See the final results.</p>`:""}

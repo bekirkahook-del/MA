@@ -53,7 +53,7 @@
       log=R.map(()=>({a:"",fu:"",fa:"",secs:0}));i=0;phase=0;S.sdSeen=(S.sdSeen||[]).concat(qs.map(q=>q.q)).slice(-60)}
     const grades=R.map((_,j)=>log[j].g?Promise.resolve(log[j].g):null);
     const persist=()=>{S.sdDraft={t:Date.now(),firm,n:R.length,qs:qs.map(q=>q.q),log,i,phase,clock};save()};
-    let t0=Date.now(),tick=null;
+    let t0=Date.now(),tick=null,spoken="";
     const gradeRound=j=>{const q=qs[j],L=log[j];
       grades[j]=ai(`You are ${R[j].who} at ${firm||"an investment bank"} grading one Superday interview for a ${goal()} summer analyst. Be strict but fair, like a real banker.
 Question: "${q.q}". Strong answers cover: ${(q.k||[]).join("; ")}.
@@ -64,14 +64,18 @@ Return JSON: {"score": integer 1-10, "note": "one sentence verdict", "missed": [
         .then(r=>({score:Math.max(1,Math.min(10,Math.round(+r.score||0)))||codeGrade(q,L).score,note:String(r.note||""),missed:(r.missed||[]).slice(0,2),src:"ai"}))
         .catch(()=>codeGrade(q,L)).then(g=>{L.g=g;persist();return g})};
     const head=()=>`<div class="label">Superday${firm?` · ${esc(firm)}`:""} · Interview ${i+1} of ${R.length}${clock?` · <span id="sdT">0:00</span>`:""}</div><div class="dots">${R.map((_,j)=>`<i class="${j<i?'ok':j===i?'cur':''}"></i>`).join("")}</div>
-      <div class="sd-who"><span class="sd-av">${R[i].r[0]}</span><div><b>${R[i].r}</b><div class="note">${esc(qs[i].c)}</div></div></div>`;
+      <div id="sdIv"><div class="sd-who"><span class="sd-av">${R[i].r[0]}</span><div><b>${R[i].r}</b><div class="note">${esc(qs[i].c)}</div></div></div></div>`;
     const draw=(busy)=>{const q=qs[i],L=log[i];clearInterval(tick);
       openPanel(`${head()}<div class="sd-q">${esc(q.q)}</div>${phase?`<div class="note" style="margin:-4px 0 8px">You said: ${esc(L.a.length>140?L.a.slice(0,140)+"…":L.a)}</div><div class="sd-fu">${esc(L.fu)}</div>`:""}
         <textarea id="sdA" aria-label="Your answer" placeholder="Answer as you would out loud…" ${busy?"disabled":""}>${esc(phase?L.fa:L.a)}</textarea>
         <div class="actions"><button class="btn" id="sdNext" ${busy?"disabled":""}>${busy?"The interviewer is thinking…":phase?(i<R.length-1?"Next interviewer →":"Finish and get the decision →"):"Answer →"}</button><button class="ghost" id="sdQuit">Save and exit</button></div>`);
       try{panel.classList.add("wide")}catch(e){}
+      /* live interviewer: reads the question (or follow-up) out loud once, then nods while you answer */
+      let iv=null;const ivEl=document.getElementById("sdIv");
+      if(window.maInterviewer&&ivEl){iv=maInterviewer(ivEl,{name:R[i].r+(firm?` · ${firm}`:""),role:qs[i].c});
+        const key=i+"|"+phase;if(busy)iv.think();else if(spoken!==key){spoken=key;iv.say(phase?L.fu:q.q)}}
       $("#sdQuit").onclick=()=>{clearInterval(tick);persist();toast("Saved. Resume it from the Superday card.");closePanel()};
-      if(busy)return;$("#sdA").focus();t0=Date.now();
+      if(busy)return;$("#sdA").focus();t0=Date.now();if(iv)iv.listen($("#sdA"));
       if(clock)tick=setInterval(()=>{const e=document.getElementById("sdT");if(!e){clearInterval(tick);return}const s=Math.round((Date.now()-t0)/1000);e.textContent=fmtT(s);e.style.color=s>150?"var(--bad)":s>110?"var(--warn)":""},500);
       $("#sdNext").onclick=async()=>{const v=$("#sdA").value.trim();if(v.split(/\s+/).length<4){toast("Give a real answer first");return}
         clearInterval(tick);L.secs+=Math.round((Date.now()-t0)/1000);

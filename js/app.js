@@ -2284,13 +2284,35 @@ function renderClub(){const el=$("#clubCard");if(!el)return;
 function ago(t){const m=Math.round((Date.now()-t)/6e4);return m<60?m+"m ago":m<1440?Math.round(m/60)+"h ago":Math.round(m/1440)+"d ago"}
 
 /* ---------- 5. live duels ---------- */
-let ROOM=null,DUEL=null;const roomPromise=capUse("room").then(r=>ROOM=r);
+let ROOM=null,DUEL=null;
+/* Live rooms on the real site: Supabase Realtime presence (free, no tables needed). Same interface the duel code
+   used before (join -> presence(obj) / onPeers(cb, onLost) / leave), so duels work on mnaprep.com, not just in previews. */
+function sbRoom(){const sb=window.MA_AUTH&&MA_AUTH.sb;if(!sb||typeof sb.channel!=="function")return null;
+  const me=(typeof myId!=="undefined"&&myId)||("g"+Math.random().toString(36).slice(2,10));
+  return {join:name=>new Promise((res,rej)=>{const key=me+"-"+Math.random().toString(36).slice(2,6);
+    let ch=null,mine={by:(typeof myId!=="undefined"&&myId)||null},cbs=[],lost=null,done=false,left=false,tries=0,retryT=null;
+    const peers=()=>{if(!ch)return[];const st=ch.presenceState();return Object.entries(st).map(([k,arr])=>{const p=arr[arr.length-1]||{};return {key:k,sameTab:k===key,kind:"viewer",presence:p,by:p.by||null}})};
+    const api={presence:async o=>{mine={...mine,...o};if(ch)try{await ch.track(mine)}catch(e){}},onPeers:(f,l)=>{cbs.push(f);lost=l;f({peers:peers()})},
+      leave:()=>{if(left)return;left=true;clearTimeout(retryT);const c=ch;ch=null;if(c){try{c.untrack()}catch(e){}try{sb.removeChannel(c)}catch(e){}}}};
+    /* (Re)connect. Background tabs and phone sleep can drop the socket: rejoin the same room with the same
+       presence (score so far) instead of ending the duel. Give up only after several tries. */
+    function connect(){if(left)return;const c=sb.channel("ma-"+name,{config:{presence:{key}}});ch=c;
+      c.on("presence",{event:"sync"},()=>{if(ch!==c)return;const ps=peers();cbs.forEach(f=>{try{f({peers:ps})}catch(e){}})});
+      c.subscribe(s=>{if(left||ch!==c)return;
+        if(s==="SUBSCRIBED"){tries=0;if(!done){done=true;clearTimeout(to);res(api)}c.track(mine).catch(()=>{});return}
+        if(!done){if(s==="CHANNEL_ERROR"||s==="TIMED_OUT"){done=true;clearTimeout(to);rej(new Error(s))}return}
+        if(++tries>6){if(lost){const l=lost;lost=null;try{l()}catch(e){}}return}
+        ch=null;try{sb.removeChannel(c)}catch(e){}clearTimeout(retryT);retryT=setTimeout(connect,Math.min(800*tries,4000))})}
+    const to=setTimeout(()=>{if(!done){done=true;left=true;try{ch&&sb.removeChannel(ch)}catch(e){}rej(new Error("timeout"))}},10000);
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden&&done&&!left&&!ch){clearTimeout(retryT);connect()}});
+    connect()})}}
+const roomPromise=capUse("room").then(r=>ROOM=r);
 function renderDuel(){const el=$("#duelCard");if(!el)return;
   if(DUEL){el.innerHTML=`<div class="label">Live duel</div><h3>Duel in progress</h3><p class="note">Code <b class="code">${esc(DUEL.code)}</b></p><button class="btn sm" id="duelOpen">Return to duel</button>`;$("#duelOpen").onclick=drawDuel;return}
   el.innerHTML=`<div class="label">Live duel</div><h3>Challenge a friend</h3><p class="note">Same 10 questions, live. Most correct wins; ties go to the faster player.</p>
     <div class="club-forms"><div><button class="btn sm" id="duelNew">Start a duel</button></div><div><input id="duelCode" maxlength="6" placeholder="Duel code" aria-label="Duel code"><button class="ghost outline" id="duelJoin">Join</button></div></div>`;
   $("#duelNew").onclick=()=>startDuel(randCode(5),true);$("#duelJoin").onclick=()=>{const c=$("#duelCode").value.trim().toLowerCase();if(!/^[a-z0-9]{5}$/.test(c)){toast("Enter the 5-character code");return}startDuel(c,false)}}
-async function startDuel(code,host){await roomPromise;if(!ROOM){toast("Live duels: coming soon.");return}
+async function startDuel(code,host){await roomPromise;if(!ROOM)ROOM=sbRoom();if(!ROOM){toast("Live duels need a connection. Refresh and try again.");return}
   let r;try{r=await ROOM.join("duel-"+code)}catch(e){toast(e&&e.code==="not_permitted"?"Duels aren't available for your account here.":"Couldn't connect. Try again.");return}
   DUEL={code,host,room:r,seed:host?randCode(8):null,state:"lobby",n:0,correct:0,t0:0,opp:null};
   await r.presence({role:host?"host":"guest",seed:DUEL.seed,n:0,correct:0,done:false,ready:true});
@@ -2323,7 +2345,7 @@ function drawDuel(){if(!DUEL)return;const o=DUEL.opp,op=o?o.presence:{};const is
     DUEL.room.presence({n:DUEL.n,correct:DUEL.correct,done:fin,secs:fin?DUEL.secs:null}).catch(()=>{});
     setTimeout(()=>{if(!DUEL)return;if(fin)DUEL.state="done";drawDuel()},ok?300:700)});
   const f=panel.querySelector(".opt,.btn");if(f&&!isOpen)f.focus()}
-function endDuelRoom(){if(DUEL&&DUEL.room){try{DUEL.room.leave()}catch(e){}}DUEL=null;renderDuel()}
+function endDuelRoom(){const d=DUEL;DUEL=null;if(d&&d.room){try{d.room.leave()}catch(e){}}renderDuel()}
 
 /* ---------- 6. deal breakdowns ---------- */
 let DEALS=[

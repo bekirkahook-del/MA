@@ -1592,9 +1592,14 @@ Return ONLY JSON: {"score": integer 1-10, "verdict": one short sentence, "streng
   finally{if(document.contains(btn)){btn.disabled=false;btn.textContent="Grade again"}}}
 
 /* ---------- roadmap ---------- */
+(function(){const st=document.createElement("style");st.textContent=`#road .road-g{display:flex;align-items:center;gap:8px;margin:14px 0 6px;font:700 11.5px/1 var(--mono,monospace);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+#road .rg-ic{font-size:16px;width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:var(--cobalt-soft,#E3E9FC)}
+#road .chk-row{border:1px solid var(--rule);border-radius:12px;padding:4px 8px;margin:6px 0;background:var(--sheet);transition:transform .15s}
+#road .chk-row:hover{transform:translateX(2px)}#road .chk-row.rd-sch{border-color:var(--cobalt);background:color-mix(in srgb,var(--cobalt) 5%,var(--sheet))}
+#road .rd-sb{background:var(--cobalt)!important;color:#fff!important}`;document.head.appendChild(st)})();
 function renderRoad(){let tot=0,dn=0;if(!YOPEN.size&&!renderRoad._o){renderRoad._o=1;YOPEN.add(roadYear()||"Freshman")}
-  $("#road").innerHTML=ROAD.map(g=>{let gd=0;const items=ROAD_G.map(G=>{const its=roadItems(g).filter(it=>(it.g||"Recruiting")===G);if(!its.length)return"";return `<div class="road-g">${G}</div>`+its.map(it=>{const a=it.auto?it.auto():false,ck=it.auto?a:!!S.road[it.id];tot++;if(ck){dn++;gd++}
-    const go=it.go||ROAD_GO[it.id];return `<div class="chk-row"><label class="chk ${ck?'done':''} ${window._justR===it.id?'just':''}"><input type="checkbox" data-r="${it.id}" ${ck?"checked":""} ${it.auto?"disabled":""}><span><span class="t">${it.t}</span>${it.auto?'<span class="auto">auto</span>':""}</span></label>${go&&!ck?`<button class="rel sm" data-act="${go}" aria-label="Go: ${esc(it.t)}">Go →</button>`:""}</div>`}).join("")}).join("");
+  $("#road").innerHTML=ROAD.map(g=>{let gd=0;const items=ROAD_G.map(G=>{const its=roadItems(g).filter(it=>(it.g||"Recruiting")===G);if(!its.length)return"";return `<div class="road-g"><span class="rg-ic">${({Academics:"🎓",Skills:"🧠",Networking:"🤝",Recruiting:"🎯"})[G]||"•"}</span>${G}</div>`+its.map(it=>{const a=it.auto?it.auto():false,ck=it.auto?a:!!S.road[it.id];tot++;if(ck){dn++;gd++}
+    const go=it.go||ROAD_GO[it.id];return `<div class="chk-row ${it.school?"rd-sch":""}"><label class="chk ${ck?'done':''} ${window._justR===it.id?'just':''}"><input type="checkbox" data-r="${it.id}" ${ck?"checked":""} ${it.auto?"disabled":""}><span><span class="t">${it.t}</span>${it.auto?'<span class="auto">auto</span>':""}${it.school?'<span class="auto rd-sb">Your school</span>':""}</span></label>${go&&!ck?`<button class="rel sm" data-act="${go}" aria-label="Go: ${esc(it.t)}">Go →</button>`:""}</div>`}).join("")}).join("");
     return `<details class="year" data-y="${g.y}" ${YOPEN.has(g.y)?"open":""}><summary><h3>${g.y}${roadYear()===g.y?'<span class="you-here">You are here</span>':""}</h3><span class="yr-meta">${gd}/${roadItems(g).length}<span class="yr-bar"><i style="width:${Math.round(gd/roadItems(g).length*100)}%"></i></span><span class="tr-dots">${roadItems(g).map((_,i)=>`<i class="${i<gd?'on':''}"></i>`).join("")}</span><span class="chev"></span></span></summary><div class="year-body">${items}</div></details>`}).join("");
   $("#road").querySelectorAll("details.year").forEach(d=>d.addEventListener("toggle",()=>{d.open?YOPEN.add(d.dataset.y):YOPEN.delete(d.dataset.y)}));
   const p=Math.round(dn/tot*100);$("#roadPct").textContent=p+"%";$("#roadBar").style.width=p+"%";
@@ -2287,6 +2292,16 @@ function runReview(){const items=dueReviews().slice(0,15);if(!items.length)retur
 /* ---------- 2. clubs ---------- */
 const randCode=n=>Array.from({length:n},()=>"abcdefghjkmnpqrstuvwxyz23456789"[rint(31)]).join("");
 function clubMembers(){const c=S.club&&S.club.code;if(!c)return[];const list=PLAYERS.filter(p=>p.club===c);if(myId&&!list.find(p=>p.id===myId))list.push({id:myId,...myStats()});return list}
+(function(){const st=document.createElement("style");st.textContent=`.cl2-ban{display:flex;align-items:center;gap:14px;margin:-4px -4px 12px;padding:16px;border-radius:16px;color:#fff;background:linear-gradient(135deg,hsl(var(--ch) 60% 38%),hsl(calc(var(--ch) + 40) 55% 28%))}
+.cl2-crest{flex:none;width:58px;height:66px;display:grid;place-items:center;font:800 22px/1 var(--body,system-ui);color:hsl(var(--ch) 60% 30%);background:#fff;clip-path:polygon(50% 0,100% 15%,100% 60%,50% 100%,0 60%,0 15%)}
+.cl2-hd h3{margin:2px 0 4px;color:#fff;font-size:20px}.cl2-code{font-size:13px;opacity:.9}.cl2-code .code{background:rgba(255,255,255,.18);color:#fff;padding:2px 6px;border-radius:6px}
+.cl2-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.cl2-stats div{border:1px solid var(--rule);border-radius:12px;padding:10px;text-align:center;background:var(--sheet)}.cl2-stats b{display:block;font-size:20px}.cl2-stats span{font-size:12px;color:var(--ink-2)}
+.cl2-goal{margin-bottom:14px}.cl2-goal>div:first-child{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px}.cl2-goal span{color:var(--ink-2)}
+.cl2-bar{height:10px;border-radius:5px;background:var(--rule);overflow:hidden}.cl2-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cobalt),var(--good,#1E7F4F));border-radius:5px}
+.cl2-pod{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin:6px 0 12px}.cl2-p{display:flex;flex-direction:column;align-items:center;gap:4px;width:110px;text-align:center}
+.cl2-p .nm{font-size:13px;font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cl2-p b{font-size:12px;color:var(--ink-2)}
+.cl2-stand{width:100%;display:grid;place-items:center;font:800 18px/1 var(--mono,monospace);color:#fff;border-radius:10px 10px 0 0}.p1 .cl2-stand{height:56px;background:linear-gradient(#E6BE5A,#B8902E)}.p2 .cl2-stand{height:40px;background:linear-gradient(#C9CED6,#8E959E)}.p3 .cl2-stand{height:30px;background:linear-gradient(#D9A27A,#9C6440)}
+.cl2-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}`;document.head.appendChild(st)})();
 function renderClub(){const el=$("#clubCard");if(!el)return;
   if(!S.club||!S.club.code){el.innerHTML=`<div class="label">Clubs</div><h3>Compete with your club</h3><p class="note">A private leaderboard, the weekly Gauntlet as a club, and an officer view of everyone's progress.</p>
      <div class="club-forms"><div><input id="clubName" maxlength="40" placeholder="Club name" aria-label="Club name"><button class="btn sm" id="clubCreate">Create club</button></div><div><input id="clubCode" maxlength="8" placeholder="Join code" aria-label="Club code"><button class="ghost outline" id="clubJoin">Join</button></div></div>`;
@@ -2295,12 +2310,16 @@ function renderClub(){const el=$("#clubCard");if(!el)return;
   const mem=clubMembers(),name=S.club.name||(PLAYERS.find(p=>p.club===S.club.code&&p.clubOfficer)||{}).clubName||"Your club";
   if(!S.club.name&&name!=="Your club"){S.club.name=name;save()}
   const top=mem.slice().sort((a,b)=>(b.xp||0)-(a.xp||0)).slice(0,5),gw=mem.filter(p=>p.gWeek===isoWeek()).sort((a,b)=>b.gScore-a.gScore);
-  el.innerHTML=`<div class="label">Your club${S.club.officer?" · Officer":""}</div><h3>${esc(name)}</h3>
-    <div class="club-meta"><span>${mem.length} member${mem.length===1?"":"s"}</span><span>Code <b class="code">${esc(S.club.code)}</b> <button class="flink" id="clubCopy">Copy</button></span></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="btn sm" id="clubInvFr">Invite friends</button><button class="ghost outline sm" id="clubInvite">Invite by email</button></div>
-    <ol class="mini-board">${top.map((p,i)=>`<li><span>${i+1}</span><span class="nm" data-id="${esc(p.id)}"></span><b>${p.xp||0} XP</b></li>`).join("")}</ol>
-    <p class="note">${gw.length?`Gauntlet leader this week: <b class="gl"></b> with ${gw[0].gScore}.`:"No one in the club has played this week's Gauntlet yet."}</p>
-    <div class="actions" style="margin-top:8px">${S.club.officer?`<button class="btn sm" id="clubOfficer">Officer view</button>`:""}<button class="ghost" id="clubLeave">Leave club</button></div>`;
+  const totXP=mem.reduce((s,p)=>s+(p.xp||0),0),wk=mem.reduce((s,p)=>s+(p.wk===isoWeek()?(p.wkXP||0):0),0),goal=Math.max(500,Math.ceil(mem.length*250/100)*100),gp=Math.min(100,Math.round(wk/goal*100));
+  const hue=[...S.club.code].reduce((h,c)=>h+c.charCodeAt(0)*37,0)%360,ini=name.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+  const pod=top.slice(0,3),rest=mem.slice().sort((a,b)=>(b.xp||0)-(a.xp||0)).slice(3,8);
+  el.innerHTML=`<div class="cl2-ban" style="--ch:${hue}"><div class="cl2-crest">${esc(ini||"C")}</div><div class="cl2-hd"><span class="label" style="color:rgba(255,255,255,.8)">Your club${S.club.officer?" · Officer":""}</span><h3>${esc(name)}</h3><span class="cl2-code">Code <b class="code">${esc(S.club.code)}</b> <button class="flink" id="clubCopy" style="color:#fff">Copy</button></span></div></div>
+    <div class="cl2-stats"><div><b>${mem.length}</b><span>Member${mem.length===1?"":"s"}</span></div><div><b>${totXP.toLocaleString()}</b><span>Club XP</span></div><div><b>${wk.toLocaleString()}</b><span>XP this week</span></div></div>
+    <div class="cl2-goal"><div><b>Weekly club goal</b><span>${wk.toLocaleString()} / ${goal.toLocaleString()} XP${gp>=100?" · Goal hit! 🎉":""}</span></div><div class="cl2-bar"><i style="width:${gp}%"></i></div></div>
+    ${pod.length?`<div class="cl2-pod">${[1,0,2].filter(i=>pod[i]).map(i=>{const p=pod[i];return `<div class="cl2-p p${i+1}">${avatar(p.id,displayName(p.id),i===0?64:52)}<span class="nm" data-id="${esc(p.id)}"></span><b>${(p.xp||0).toLocaleString()} XP</b><div class="cl2-stand">${i+1}</div></div>`}).join("")}</div>`:""}
+    ${rest.length?`<ol class="mini-board" start="4">${rest.map((p,i)=>`<li><span>${i+4}</span><span class="nm" data-id="${esc(p.id)}"></span><b>${p.xp||0} XP</b></li>`).join("")}</ol>`:""}
+    <p class="note">${gw.length?`🏆 Gauntlet leader this week: <b class="gl"></b> with ${gw[0].gScore}.`:"No one in the club has played this week's Gauntlet yet. Be first."}</p>
+    <div class="cl2-acts"><button class="btn sm" id="clubInvFr">+ Invite members</button><button class="ghost outline sm" id="clubInvite">Invite by email</button>${S.club.officer?`<button class="ghost outline sm" id="clubOfficer">Officer view</button>`:""}<button class="ghost sm" id="clubLeave">Leave club</button></div>`;
   el.querySelectorAll(".nm[data-id]").forEach(n=>n.textContent=displayName(n.dataset.id));if(gw.length)el.querySelector(".gl").textContent=displayName(gw[0].id);
   $("#clubInvite").onclick=()=>inviteClub(name);
   $("#clubCopy").onclick=async()=>{try{await navigator.clipboard.writeText(S.club.code);toast("Code copied")}catch(e){toast("Code: "+S.club.code)}};

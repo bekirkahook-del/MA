@@ -2153,7 +2153,8 @@ function renderSettings(keep){const st=S.settings;const el=$("#settings");const 
   $("#setSearch").oninput=e=>{setQuery=e.target.value;filt()};filt();
   {const sb=el.querySelector(".set-body");const q0=filt;filt=()=>{q0();sb.classList.toggle("q",!!setQuery.trim())};filt()}
   renderSubUI();renderSyncRow();if($("#syncNow"))$("#syncNow").onclick=async()=>{const b=$("#syncNow");b.disabled=true;b.textContent="Syncing…";if(cloudOn)await cloudPush();else await cloudPull();b.disabled=false;b.textContent="Sync now";toast(cloudState==="synced"?"Synced":"Couldn't sync right now")};
-  if(keep)window.scrollTo(0,scrollY);
+  /* always keep the reader's spot when settings re-draws while open (signed-in syncs re-draw it too) */
+  {const v=document.querySelector('[data-view="settings"]');if(keep||(v&&!v.hidden&&v.offsetParent))window.scrollTo({top:scrollY,left:0,behavior:"instant"})}
   if($("#proCancel"))$("#proCancel").onclick=()=>{S.pro={};save();applyProUI();render();renderMock();renderSettings(true);syncSoon();toast("Pro canceled. Everything free stays yours.")};
   if($("#proGo"))$("#proGo").onclick=()=>showTab("pro");
   if($("#proRev"))$("#proRev").onclick=()=>{if(dbState!=="on"){toast("Reviews are available when you sign in");return}writeReview(REVIEWS.find(r=>r.id===myId))};

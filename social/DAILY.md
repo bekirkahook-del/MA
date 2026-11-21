@@ -11,6 +11,7 @@ This overrides the 10/day target and the 50/50 picture/video split below. Every 
 - **AI voice = label it:** TikTok isAigc, IG isAiGenerated, YouTube isAiGeneratedContent true.
 - **Clicks:** every caption ends with a reason to visit mnaprep.com (link in bio); add a first comment with mnaprep.com where the network allows.
 - Log each post in punch-log.md / posted.md and score it 48h later.
+- **DOUBLE DOWN ON WINNERS (Bekir, 2026-11-21):** read `social/winners.md` before picking topics. At least 2 of the 3-4 daily posts come from the top 3 winning idea types; max 1 test slot. Log every post there 48h later; 3 flops in a row = the idea goes to LOSERS and stops.
 
 ## QUALITY FLOOR: NOTHING BELOW 78/100 (Bekir, 2026-11-17: "THIS IS THE LOWEST QUALITY VIDEO WE WILL EVER POST FROM NOW ON" / "never create something below that score again")
 The reference is `social/vid/2026-11-20/resume-mistakes-a.mp4` ("4 resume mistakes", animated male presenter), scored **78/100**. Every new video must score at least 78 on this rubric, or it doesn't get made or posted. If a video can't reach it, fix it or drop it and tell Bekir.

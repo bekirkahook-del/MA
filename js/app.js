@@ -191,6 +191,36 @@ TRACKS.push(
        ["Your data is incomplete at the end of a case. You should:",["Refuse to answer","Give a recommendation and name the key risks and next steps","Ask for more time","Pick randomly"],1,"Decisive answers with caveats beat no answer."],
        ["Which is NOT usually graded in a case interview?",["Structure","Math","Business judgment","Your GPA"],3,"Case grading focuses on how you think and communicate."]]}
   ]},
+ {id:"t",name:"Technical Questions",tag:"Interview-ready technicals",desc:"The follow-up technical questions interviewers actually ask, a step past Foundations. Optional bonus practice, open any time.",req:null,
+  levels:[
+   {n:"Accounting Curveballs",sub:"The follow-ups they love",
+    brief:["Walk every change through <b>income statement → cash flow → balance sheet</b>.","<b>Non-cash</b> expenses (depreciation, stock-based pay, write-downs) lower net income but get added back on the cash flow statement. The only cash effect is the tax saved.","<b>Working capital:</b> when an asset like inventory or accounts receivable goes up, cash goes down. When a liability like accounts payable goes up, cash goes up."],
+    q:[["A company buys $20 of extra inventory with cash. Cash from operations changes by:",["−$20","+$20","$0","−$15"],0,"More inventory is a working-capital increase, so it uses $20 of cash."],
+       ["Accounts payable rises by $15 (the company pays suppliers later). Cash:",["Rises $15","Falls $15","Doesn't change","Rises $11.25"],0,"Paying bills later keeps $15 of cash in the business for now."],
+       ["A company records $10 of stock-based compensation, with a 25% tax rate. Net income changes by:",["−$7.50","−$10","$0","+$2.50"],0,"Pre-tax income falls $10, taxes fall $2.50, so net income falls $7.50."],
+       ["Same $10 of stock-based compensation, 25% tax. Cash from operations changes by:",["+$2.50","−$7.50","$0","−$10"],0,"Net income −$7.50, then add back the non-cash $10: +$2.50, the tax saved."],
+       ["A company writes down $40 of inventory, 25% tax, and the write-down is tax-deductible. Cash changes by:",["+$10","−$40","$0","−$30"],0,"The write-down is non-cash. Taxes fall 25% × $40 = $10, so cash rises $10."]]},
+   {n:"Valuation Follow-Ups",sub:"Why, not just how",
+    brief:["Similar companies trade at different multiples because of <b>growth, margins and risk</b>.","<b>EV/EBITDA</b> compares companies with different amounts of debt fairly, because EBITDA is before interest.","Know what moves <b>enterprise value</b>: issuing stock or borrowing and keeping the cash leaves it unchanged."],
+    q:[["A company issues $100 of new stock and keeps the cash. Enterprise value:",["Stays the same","Rises $100","Falls $100","Rises $200"],0,"Equity value +$100 and cash +$100 cancel out."],
+       ["A company pays a $50 cash dividend. Enterprise value:",["Stays the same","Falls $50","Rises $50","Falls $100"],0,"Equity value falls $50 and cash falls $50, so EV doesn't change."],
+       ["Why compare companies on EV/EBITDA instead of P/E when their debt levels differ?",["EBITDA is before interest, so financing choices don't distort it","EBITDA includes taxes","P/E can't be calculated for public companies","EV ignores debt"],0,"Interest sits below EBITDA, so a heavily indebted company isn't penalized on the metric."],
+       ["A company trades at 12x EBITDA while peers trade at 8x. The most likely reason:",["Faster growth or higher margins than peers","It has more debt","It has fewer shares","It pays no dividend"],0,"Investors pay higher multiples for growth, margins and lower risk."],
+       ["Precedent transactions usually come in higher than trading comps because:",["Buyers pay a control premium","They use older data","They exclude debt","They only use small companies"],0,"Buyers pay extra to control the whole company."]]},
+   {n:"DCF Deep Dive",sub:"Build it in your head",
+    brief:["<b>Unlevered free cash flow</b> = EBIT × (1 − tax rate) + D&amp;A − capex − increase in working capital.","Discount it at <b>WACC</b>. Terminal value with perpetuity growth = next year's FCF ÷ (WACC − growth).","A higher WACC or slower growth means a lower value."],
+    q:[["EBIT $200, tax rate 25%, D&amp;A $40, capex $60, increase in working capital $20. Unlevered free cash flow:",["$110","$150","$170","$130"],0,"200 × 0.75 = 150, + 40 − 60 − 20 = $110."],
+       ["Final-year FCF $100, growth 3%, WACC 9%. Terminal value is about:",["$1,717","$1,111","$3,333","$1,667"],0,"Next year's FCF is $103. 103 ÷ (9% − 3%) ≈ $1,717."],
+       ["60% equity at 12%, 40% debt at 6% pre-tax, tax rate 25%. WACC:",["9.0%","9.6%","8.4%","10.0%"],0,"0.6 × 12% = 7.2%, plus 0.4 × 6% × 0.75 = 1.8%, total 9.0%."],
+       ["A standard DCF uses unlevered free cash flow because:",["It's cash for all investors, so it matches WACC","It excludes taxes","It's always larger","It includes interest payments"],0,"Unlevered FCF belongs to lenders and shareholders, and WACC is their blended required return."],
+       ["Which change raises a DCF value?",["A lower WACC","Higher capex","A higher tax rate","Slower growth"],0,"A lower discount rate makes future cash worth more today."]]},
+   {n:"LBO &amp; Merger Math",sub:"Fast returns and EPS math",
+    brief:["<b>LBO:</b> entry equity → debt paydown → exit equity. Benchmarks: 2x in 5 years ≈ 15% IRR, 3x in 5 years ≈ 25%.","<b>Accretion/dilution:</b> compare the buyer's profit per share before and after the deal.","Synergies (cost savings from combining) can turn a dilutive deal accretive."],
+    q:[["Entry: EBITDA $100 at 10x, 60% debt. Exit in year 5: EBITDA $150 at 10x, $300 of debt left. MOIC:",["3.0x","2.5x","1.5x","2.0x"],0,"Equity in = $400. Exit equity = 1,500 − 300 = $1,200. 1,200 ÷ 400 = 3.0x."],
+       ["In that deal, you triple your money in 5 years. The IRR is roughly:",["25%","15%","60%","40%"],0,"Tripling in five years compounds to about 25% a year (not 60%: returns compound)."],
+       ["Buyer: net income $500, 100 shares. It issues 25 new shares to buy a target earning $100. Pro forma EPS:",["$4.80","$5.00","$6.00","$4.00"],0,"(500 + 100) ÷ (100 + 25) = $4.80."],
+       ["In that deal, the buyer's EPS went from $5.00 to $4.80. The deal is:",["Dilutive","Accretive","Neutral","Impossible to tell"],0,"EPS fell, so it's dilutive."],
+       ["Holding the exit multiple the same, which helps an LBO's returns most?",["Paying down more debt","Paying a higher entry price","Adding more fees","Lower EBITDA"],0,"Every dollar of debt repaid becomes a dollar of equity value at exit."]]}]},
  {id:"x",name:"Excel Shortcuts",tag:"Analyst speed",desc:"The keystrokes every analyst is expected to know (Windows Excel; Mac uses different keys). Open from day one.",req:null,
   levels:[
    {n:"Navigation",sub:"Move without the mouse",
@@ -296,7 +326,7 @@ let WIRE_UPDATED="2026-11-04T05:50:00Z",RECAP={"d":"Nov 3","t":"Chip stocks push
 ],EARN_SRC=[["Portfolio Terminal","https://portfolio-terminal.com/earnings-calendar/november-2026"],["Earnings Watcher","https://earnings-watcher.com/earnings-this-week"]];
 /*WIRE_END*/
 
-const ORDER=["f","b","x","ib","pe","pm","rx","mc"];
+const ORDER=["f","b","x","t","ib","pe","pm","rx","mc"];
 /* ---------- deeper tracks: advanced levels ---------- */
 const DEEP_LEVELS={
  ib:[
@@ -944,7 +974,9 @@ const lid=(t,l)=>t+"-"+l;
 const cleared=(t,l)=>(S.best[lid(t,l)]||0)>=2||!!(S.placed&&S.placed[lid(t,l)]);
 const clearedCount=t=>T(t).levels.filter((_,i)=>cleared(t,i)).length;
 /* Foundations is the one prerequisite for every other track */
-TRACKS.forEach(t=>{if(t.id!=="f"&&t.id!=="me")t.req={t:"f",l:T("f").levels.length,why:"Finish Foundations to unlock"}});
+/* Specialized tracks need all of Foundations first. Bonus tracks (Technical Questions, Behavioral, Excel) are optional and open any time. */
+const BONUS_TRACKS=["t","b","x"];
+TRACKS.forEach(t=>{if(t.id!=="f"&&t.id!=="me"&&!BONUS_TRACKS.includes(t.id))t.req={t:"f",l:T("f").levels.length,why:"Finish Foundations to unlock"}});
 const trackUnlocked=tr=>!tr.req||clearedCount(tr.req.t)>=tr.req.l;
 const levelOpen=(tr,i)=>trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1));
 const allQs=()=>TRACKS.flatMap(t=>t.levels.flatMap(l=>l.q));
@@ -987,10 +1019,11 @@ function render(){
   $("#ladder").innerHTML=RANKS.map((k,i)=>`<div class="rung ${i<r?'done':i===r?'now':''}" title="${k[0]} · ${k[1]} XP">${k[0].replace("Managing Director","MD").replace("Summer Analyst","Summer")}</div>`).join("");
   let lv=0,st=0;for(const tr of TRACKS)tr.levels.forEach((_,i)=>{const b=S.best[lid(tr.id,i)]||0;if(b>=2){lv++;st+=b}});
   fxNum($("#sLevels"),lv);fxNum($("#sStars"),st);fxNum($("#sStreak"),streak());fxNum($("#sRapid"),S.rapid||0);fxFlame();
-  const relT=["f","b","x"];const pathT=((typeof prof==="function"&&prof().learnTracks)||[]).filter(t=>!relT.includes(t));const ordered=relT.concat(pathT,ORDER.filter(t=>!relT.includes(t)&&!pathT.includes(t))).map(T);
+  /* Foundations first (required), then specialized tracks, then optional bonus tracks (Behavioral, Excel) at the bottom. */
+  const relT=["f"],bonusT=BONUS_TRACKS;const pathT=((typeof prof==="function"&&prof().learnTracks)||[]).filter(t=>!relT.includes(t)&&!bonusT.includes(t));const ordered=relT.concat(pathT,ORDER.filter(t=>!relT.includes(t)&&!pathT.includes(t)&&!bonusT.includes(t)),bonusT).map(T);
   $("#mini").innerHTML=ordered.map(tr=>{const c=clearedCount(tr.id),p=Math.round(c/tr.levels.length*100);return `<div class="mini-row"><span>${tr.name}</span><div class="t"><i style="width:${p}%"></i></div><b>${c}/${tr.levels.length}</b></div>`}).join("");
   if(!OPEN.size){const first=ordered.find(t=>trackUnlocked(t)&&clearedCount(t.id)<t.levels.length);if(first)OPEN.add(first.id)}
-  $("#tracks").innerHTML=ordered.map((tr,ti)=>{const divider=relT&&ti===relT.length?`<div class="tr-divider">Specialized tracks</div>`:"";return divider+(()=>{
+  $("#tracks").innerHTML=ordered.map((tr,ti)=>{const divider=ti===relT.length?`<div class="tr-divider">Specialized tracks</div>`:ti===ordered.length-bonusT.length?`<div class="tr-divider">Bonus tracks · optional</div>`:"";return divider+(()=>{
     const un=trackUnlocked(tr),c=clearedCount(tr.id),done=c===tr.levels.length;
     const pill=!un?'<span class="pill">Locked</span>':done?'<span class="pill win">Complete</span>':c?`<span class="pill">${c}/${tr.levels.length}</span>`:'<span class="pill go">Start</span>';
     const steps=tr.levels.map((lvl,i)=>{const b=S.best[lid(tr.id,i)]||0,cl=b>=2,op=levelOpen(tr,i);const cls=cl?"cleared":op?"open":"locked";

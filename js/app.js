@@ -1146,7 +1146,7 @@ function keyDrill(tr,i){
 const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 const lvlStars=(tr,raw)=>lvlN(tr)===3?raw:(raw>=lvlN(tr)-1?3:raw>=Math.ceil(lvlN(tr)*.7)?2:raw>=Math.ceil(lvlN(tr)*.4)?1:0);
-function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);
+function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
   quiz({title:L.n,qs:L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
     const xp0=totalXP(),r0=rankOf(xp0);if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
@@ -2006,7 +2006,9 @@ function badgesFor(p){const use=(!p.id||p.id===myId||p.id==="me")?Object.keys(S.
   return use.map(id=>BADGES.find(b=>b[0]===id)).filter(Boolean).map(b=>b[1])}
 
 /* ---------- home ---------- */
-function nextLevel(){for(const tr of ORDER.map(T)){if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(tr.id,i))return{tr,i}}return null}
+/* Continue = next unfinished level in the track you used last (S.lastTrack), else the first unfinished in order. */
+function nextLevel(){const lt=S.lastTrack&&T(S.lastTrack);if(lt&&trackUnlocked(lt)){for(let i=0;i<lt.levels.length;i++)if(!cleared(lt.id,i))return{tr:lt,i}}
+  for(const tr of ORDER.map(T)){if(!trackUnlocked(tr))continue;for(let i=0;i<tr.levels.length;i++)if(!cleared(tr.id,i))return{tr,i}}return null}
 function renderHome(){if(!$("#greet"))return;const hr=new Date().getHours(),first=(myName||"").split(" ")[0];
   $("#greet").textContent=(hr>=5&&hr<12?"Good morning":hr>=12&&hr<17?"Good afternoon":hr>=17&&hr<22?"Good evening":"Good night")+(first?", "+first:"");if(!window.__greetT)window.__greetT=setInterval(()=>{if($("#greet"))renderHome()},60000);
   $("#homeDate").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});

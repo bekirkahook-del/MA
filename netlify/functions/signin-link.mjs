@@ -1,7 +1,7 @@
 // Emails a one-tap sign-in link (type "magic") or a set-password link (type "reset") through Resend.
 import { json, hitLimit, tooMany, SITE } from "./_lib/common.mjs";
 import { isEmail, clientIp } from "./_lib/security.mjs";
-import { actionLink, sendOne, plainMail, btn } from "./_lib/mail.mjs";
+import { actionLinkCode, sendOne, plainMail, btn } from "./_lib/mail.mjs";
 
 export default async (req, context) => {
   if (req.method !== "POST") return json(405, { error: "POST only" });
@@ -13,11 +13,13 @@ export default async (req, context) => {
   // so every sign-in/reset email got a 429 and fell back to Supabase's capped mailer (or was never sent).
   if (!(await hitLimit("signlink-ip", clientIp(req, context), 8, 3600))) return tooMany();
   if (!(await hitLimit("signlink-em", email, 3, 3600))) return tooMany();
-  const link = await actionLink(reset ? "recovery" : "magiclink", email, SITE + "/");
-  if (!link) return json(200, { ok: false, fallback: true }); // no account yet: client falls back to Supabase
+  const got = await actionLinkCode(reset ? "recovery" : "magiclink", email, SITE + "/");
+  if (!got) return json(200, { ok: false, fallback: true }); // no account yet: client falls back to Supabase
+  const { link, code } = got;
+  const codeHtml = code ? `<p style="margin:18px 0 6px;color:#4A5672;font-size:14px">Or type this code on the site:</p><p style="margin:0;font:700 30px/1.2 Menlo,Consolas,monospace;letter-spacing:.18em">${code}</p>` : "";
   const html = plainMail(reset ? "Set your new password" : "Your sign-in link",
-    `<p style="margin:0 0 18px">${reset ? "Tap below. You'll be signed in and asked to pick a new password." : "Tap below and you're signed in. The link works once."}</p><p style="margin:0">${btn(link, reset ? "Set my password →" : "Sign me in →")}</p>`);
-  try { await sendOne({ to: email, subject: reset ? "Reset your M&A Prep password" : "Your M&A Prep sign-in link", html }); }
+    `<p style="margin:0 0 18px">${reset ? "Tap below. You'll be signed in and asked to pick a new password." : "Tap below and you're signed in. The link works once."}</p><p style="margin:0">${btn(link, reset ? "Set my password →" : "Sign me in →")}</p>${codeHtml}`);
+  try { await sendOne({ to: email, subject: reset ? "Reset your M&A Prep password" : (code ? `${code} is your M&A Prep sign-in code` : "Your M&A Prep sign-in link"), html }); }
   catch (e) { console.error("signin-link", String(e)); return json(200, { ok: false, fallback: true }); }
   return json(200, { ok: true });
 };

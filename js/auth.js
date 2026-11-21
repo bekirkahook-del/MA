@@ -53,8 +53,9 @@
         const m=mailFor(email);
         ov.innerHTML=`<div class="auth-box"><button type="button" class="auth-x" aria-label="Close">×</button>
          <h2>Check your email</h2>
-         <p>We sent a sign-in link to <b id="auTo"></b>. Tap it and you're in. No password needed.</p>
+         <p>We sent a sign-in link and code to <b id="auTo"></b>. Tap the link or type the code. No password needed.</p>
          ${m?`<a class="auth-go" style="text-align:center;text-decoration:none" href="${m.url}" target="_blank" rel="noopener">Open ${m.name}</a>`:""}
+         <form id="auCodeF" novalidate style="margin:12px 0 4px"><label>Or type the code from the email<input id="auCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="10" placeholder="123456" style="letter-spacing:.2em;font-size:20px;text-align:center"></label></form>
          <p style="font-size:12.5px">Nothing yet? Check spam or promotions.</p>
          <div class="auth-msg" id="auM"></div>
          <button type="button" class="auth-sw" id="auRe"></button>
@@ -64,6 +65,16 @@
         const tick=()=>{re.disabled=cd>0;re.textContent=cd>0?"Resend link in "+cd+"s":"Resend the link"};tick();
         clearInterval(cdT);cdT=setInterval(()=>{if(!ov.isConnected){clearInterval(cdT);return}if(cd>0){cd--;tick()}},1000);
         re.onclick=async()=>{if(cd>0)return;re.disabled=true;const r=await sendLink(email);msg.textContent=r?r:"Sent again.";msg.className="auth-msg "+(r?"err":"ok");cd=60;tick()};
+        /* 6-digit code: typed, pasted or auto-filled from the email. Signs in on this page, no tab switching. */
+        const ci=ov.querySelector("#auCode");let busy=false;
+        const tryCode=async()=>{const c=ci.value.replace(/\D/g,"");if(c.length<6||busy)return;busy=true;msg.textContent="Checking…";msg.className="auth-msg ok";
+          let {error}=await sb.auth.verifyOtp({email,token:c,type:"email"});
+          if(error)({error}=await sb.auth.verifyOtp({email,token:c,type:"magiclink"}));
+          busy=false;if(error){msg.textContent=/expired|invalid/i.test(error.message)?"That code didn't work. Check it, or send a new one.":error.message;msg.className="auth-msg err";return}
+          mev("auth_code_ok");msg.textContent="Signed in. Loading…";setTimeout(()=>ov.remove(),700)};
+        let cT=0;ci.oninput=()=>{clearTimeout(cT);if(ci.value.replace(/\D/g,"").length>=6)cT=setTimeout(tryCode,700)};
+        ov.querySelector("#auCodeF").onsubmit=e=>{e.preventDefault();tryCode()};
+        setTimeout(()=>ci.focus(),60);
         ov.querySelector("#auCh").onclick=()=>{view="magic";draw()};ov.querySelector("#auBk").onclick=()=>{view="main";draw()};
         ov.querySelector(".auth-x").onclick=()=>ov.remove();return}
       /* Main view: email + password, no email confirmation needed (project auto-confirms). One button signs in OR creates the account. */

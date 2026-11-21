@@ -86,6 +86,18 @@ export async function sendOne({ to, subject, html }) {
 
 // Sign-in / password links made server-side and sent through Resend (Supabase's built-in mailer is capped at a few emails an hour).
 // type: "magiclink" (one-tap sign in) or "recovery" (sign in, then set a password). Returns null if the account doesn't exist.
+// Same as actionLink, plus the one-time code Supabase makes with every link (email_otp). Students can type the
+// code instead of tapping the link, which helps when the link opens in the wrong browser or app on a phone.
+export async function actionLinkCode(type, email, redirect) {
+  const r = await fetch(`${SB_URL}/auth/v1/admin/generate_link`, { method: "POST", headers: svc(), signal: AbortSignal.timeout(8000),
+    body: JSON.stringify({ type, email, redirect_to: redirect || SITE, options: { redirect_to: redirect || SITE } }) }).catch(() => null);
+  if (!r || !r.ok) return null;
+  const j = await r.json(), pr = j.properties || {};
+  const h = j.hashed_token || pr.hashed_token;
+  const link = h ? `${SITE}/?th=${encodeURIComponent(h)}&tt=${type === "recovery" ? "recovery" : "magiclink"}` : (j.action_link || pr.action_link || null);
+  const code = String(j.email_otp || pr.email_otp || "");
+  return link ? { link, code: /^\d{6,10}$/.test(code) ? code : "" } : null;
+}
 export async function actionLink(type, email, redirect) {
   const r = await fetch(`${SB_URL}/auth/v1/admin/generate_link`, { method: "POST", headers: svc(), signal: AbortSignal.timeout(8000),
     body: JSON.stringify({ type, email, redirect_to: redirect || SITE, options: { redirect_to: redirect || SITE } }) }).catch(() => null);

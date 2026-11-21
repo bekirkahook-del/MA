@@ -51,7 +51,7 @@
   background-image:radial-gradient(color-mix(in srgb,var(--ink,#0b1b3a) 14%,transparent) 1px,transparent 1.2px);background-size:18px 18px;
   -webkit-mask-image:linear-gradient(180deg,#000 0,transparent 70%);mask-image:linear-gradient(180deg,#000 0,transparent 70%);opacity:.7}
 /* hero chart */
-.hl-vis{margin:6px 0 2px;padding:10px 12px 8px;border:1px solid var(--rule,#e3e6ee);border-radius:12px;background:color-mix(in srgb,var(--cobalt,#2547d8) 3%,transparent);color:var(--ink,#0b1b3a)}
+.hl-vis{margin:6px 0 2px;padding:10px 12px 8px;border:1px solid var(--rule,#e3e6ee);border-radius:4px;background:color-mix(in srgb,var(--cobalt,#2547d8) 3%,transparent);color:var(--ink,#0b1b3a)}
 .hl-vis svg{display:block;width:100%;height:auto;overflow:visible}
 .hl-vis text{font:500 10.5px "IBM Plex Mono",ui-monospace,monospace;fill:var(--ink-2,#55607a);letter-spacing:.02em}
 .hl-vis figcaption{margin-top:4px;font:500 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2,#55607a)}
@@ -63,7 +63,7 @@
 @media (prefers-reduced-motion:reduce){.hl-vis .hv-line{animation:none;stroke-dashoffset:0}.hl-vis .hv-area,.hl-vis .hv-node{animation:none;opacity:1}}
 /* tab header icons */
 .page-head h1{display:flex;align-items:center;gap:12px}
-.ph-ic{display:inline-grid;place-items:center;flex:none;width:38px;height:38px;border-radius:10px;color:var(--cobalt,#2547d8);
+.ph-ic{display:inline-grid;place-items:center;flex:none;width:38px;height:38px;border-radius:4px;color:var(--cobalt,#2547d8);
   background:color-mix(in srgb,var(--cobalt,#2547d8) 9%,transparent);border:1px solid color-mix(in srgb,var(--cobalt,#2547d8) 18%,transparent)}
 .ph-ic svg{width:21px;height:21px}
 .page-head{position:relative;padding-bottom:12px;border-bottom:1px solid var(--rule,#e3e6ee)}

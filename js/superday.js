@@ -9,13 +9,13 @@
     {r:"Vice President",who:"a VP who runs deals day to day",cats:null,style:"applies concepts to a real deal or the student's path"},
     {r:"Managing Director",who:"a senior MD deciding whether to hire",cats:["Behavioral"],style:"story, motivation, judgment, why this firm"}];
   const PATHCAT={"Private equity":"LBO & PE","Hedge funds & markets":"Markets & Hedge Funds","Restructuring":"Restructuring","Consulting":"Consulting"};
-  const css=`.sd-card{border:1px solid var(--rule);border-radius:16px;background:var(--sheet);padding:18px 20px;margin:0 0 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  const css=`.sd-card{border:1px solid var(--rule);border-radius:6px;background:var(--sheet);padding:18px 20px;margin:0 0 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .sd-card .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}.sd-card b{display:block;font-size:18px;margin:4px 0;color:var(--ink)}.sd-card p{margin:0;font-size:14px;color:var(--ink-2)}
 .sd-who{display:flex;align-items:center;gap:10px;margin:6px 0 10px}.sd-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--cobalt);flex:none}
 .sd-q{font-size:18px;line-height:1.4;font-weight:600;color:var(--ink);margin:6px 0 12px}.sd-fu{border-left:3px solid var(--brass);padding:4px 0 4px 12px;margin:0 0 12px;font-size:16px;color:var(--ink)}
 .sd-mic{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 0}.sd-mic #dictBtn{background:var(--cobalt,#2448D8);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:700}.sd-mic #dictBtn.on{background:#c62828;color:#fff;border-color:#c62828}.sd-kb{margin-left:auto}@media(max-width:560px){.sd-kb{display:none}}
 .sd-dec{font-size:26px;font-weight:800;margin:4px 0}.sd-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:14px}.sd-row b{white-space:nowrap}
-.sd-list{margin:6px 0 0;padding-left:18px;font-size:14.5px;line-height:1.5}.sd-best{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:14.5px;line-height:1.5}
+.sd-list{margin:6px 0 0;padding-left:18px;font-size:14.5px;line-height:1.5}.sd-best{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;font-size:14.5px;line-height:1.5}
 @media(max-width:560px){.sd-card{flex-direction:column;align-items:flex-start}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
   const pick=(f,avoid)=>{let p=MOCK_QS.filter(x=>f(x)&&!(avoid||[]).includes(x.q));if(!p.length)p=MOCK_QS.filter(f);return p[Math.floor(Math.random()*p.length)]};
@@ -37,7 +37,7 @@
     openPanel(`<div class="label">Superday simulator · Pro</div><h2>Your final round</h2>
       <p class="sub">Back-to-back interviewers. Each asks a question, then follows up on what you actually said. You're graded after every interview, and at the end you get the team's decision and a scorecard.</p>
       ${dr?`<div class="sd-best" style="margin:0 0 14px"><b>You have an unfinished Superday</b>${dr.firm?` at ${esc(dr.firm)}`:""} (interview ${dr.i+1} of ${dr.qs.length}). <button class="btn sm" id="sdResume" style="margin-left:8px">Resume</button></div>`:""}
-      <label class="note" for="sdFirm">Which firm are you interviewing with? (optional)</label><input id="sdFirm" type="text" maxlength="40" placeholder="e.g. Evercore" style="width:100%;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink);margin:6px 0 10px">
+      <label class="note" for="sdFirm">Which firm are you interviewing with? (optional)</label><input id="sdFirm" type="text" maxlength="40" placeholder="e.g. Evercore" style="width:100%;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink);margin:6px 0 10px">
       <div class="seg" role="group" aria-label="Length" id="sdLen"><button data-n="4" aria-pressed="true">Standard · 4 interviews (~15 min)</button><button data-n="6" aria-pressed="false">Full day · 6 interviews (~25 min)</button></div>
       <label class="note" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="sdClock" checked> Show a clock (real interviews give you about 2 minutes per answer)</label>
       <p class="note">Path: <b>${esc(goal())}</b>. Type your answers like you'd say them out loud.</p>

@@ -1,6 +1,6 @@
 /* Pro: instant application alerts toggle on Career → Openings. The daily server job emails new openings. */
 (function(){
-  const css=`.al-card{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--rule);border-left:3px solid var(--good);border-radius:12px;background:var(--sheet);padding:14px 16px;margin:0 0 18px}
+  const css=`.al-card{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--rule);border-left:3px solid var(--good);border-radius:4px;background:var(--sheet);padding:14px 16px;margin:0 0 18px}
 .al-card b{display:block;font-size:15.5px;color:var(--ink)}.al-card span{font-size:13.5px;color:var(--ink-2)}.al-card .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--brass);text-transform:uppercase}
 @media(max-width:560px){.al-card{flex-direction:column;align-items:flex-start}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);

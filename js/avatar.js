@@ -96,13 +96,13 @@
     draw()}
   window.maAvatarEditor=editor;
   /* ---------- show it ---------- */
-  const st=document.createElement("style");st.textContent=`.avx-card{display:flex;align-items:center;gap:16px;margin:0 0 14px;padding:14px;border:1px solid var(--rule);border-radius:18px;background:var(--sheet)}
-.avx-card svg{flex:none;border-radius:24px;box-shadow:0 8px 22px rgba(20,32,59,.15)}.avx-card b{display:block;font-size:16px}.avx-card p{margin:4px 0 10px;font-size:13.5px;color:var(--ink-2)}
-.avx-ed{display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start}.avx-prev{position:sticky;top:0;text-align:center}.avx-prev svg{border-radius:28px;box-shadow:0 10px 30px rgba(20,32,59,.18)}
+  const st=document.createElement("style");st.textContent=`.avx-card{display:flex;align-items:center;gap:16px;margin:0 0 14px;padding:14px;border:1px solid var(--rule);border-radius:6px;background:var(--sheet)}
+.avx-card svg{flex:none;border-radius:6px;box-shadow:0 8px 22px rgba(20,32,59,.15)}.avx-card b{display:block;font-size:16px}.avx-card p{margin:4px 0 10px;font-size:13.5px;color:var(--ink-2)}
+.avx-ed{display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start}.avx-prev{position:sticky;top:0;text-align:center}.avx-prev svg{border-radius:6px;box-shadow:0 10px 30px rgba(20,32,59,.18)}
 .avx-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.avx-cats button{font:inherit;font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}.avx-cats button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .avx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px;max-height:46vh;overflow:auto}
-.avx-it{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border:2px solid var(--rule);border-radius:14px;background:var(--paper);cursor:pointer;font:inherit;color:var(--ink)}
-.avx-it svg{border-radius:14px}.avx-it span{font-size:12px;font-weight:600;text-align:center;line-height:1.2}.avx-it small{font-size:10.5px;color:var(--ink-2);text-align:center;line-height:1.2}
+.avx-it{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border:2px solid var(--rule);border-radius:6px;background:var(--paper);cursor:pointer;font:inherit;color:var(--ink)}
+.avx-it svg{border-radius:6px}.avx-it span{font-size:12px;font-weight:600;text-align:center;line-height:1.2}.avx-it small{font-size:10.5px;color:var(--ink-2);text-align:center;line-height:1.2}
 .avx-it.on{border-color:var(--cobalt);box-shadow:0 0 0 3px color-mix(in srgb,var(--cobalt) 18%,transparent)}.avx-it.lock{opacity:.6;cursor:not-allowed}.avx-it.lock svg{filter:grayscale(1)}
 .av.avx-av{background:none!important;overflow:hidden;padding:0}.av.avx-av svg{display:block;width:100%;height:100%}
 @media(max-width:640px){.avx-ed{grid-template-columns:1fr}.avx-prev svg{width:150px;height:150px}}`;document.head.appendChild(st);
@@ -127,8 +127,8 @@
 
 /* Home: "next unlock" card. Shows your character already wearing the next rank's gear, and how far away it is. */
 (function(){
-  const st=document.createElement("style");st.textContent=`.avx-next{display:flex;align-items:center;gap:14px;margin:12px 0;padding:12px 14px;border:1px solid var(--rule);border-radius:16px;background:linear-gradient(120deg,color-mix(in srgb,var(--cobalt) 8%,var(--sheet)),var(--sheet));cursor:pointer;text-align:left;width:100%;font:inherit;color:var(--ink)}
-.avx-next svg{flex:none;border-radius:18px}.avx-next b{display:block;font-size:15px}.avx-next span{display:block;font-size:13px;color:var(--ink-2)}
+  const st=document.createElement("style");st.textContent=`.avx-next{display:flex;align-items:center;gap:14px;margin:12px 0;padding:12px 14px;border:1px solid var(--rule);border-radius:6px;background:linear-gradient(120deg,color-mix(in srgb,var(--cobalt) 8%,var(--sheet)),var(--sheet));cursor:pointer;text-align:left;width:100%;font:inherit;color:var(--ink)}
+.avx-next svg{flex:none;border-radius:6px}.avx-next b{display:block;font-size:15px}.avx-next span{display:block;font-size:13px;color:var(--ink-2)}
 .avx-bar{height:6px;border-radius:3px;background:var(--rule);margin-top:8px;overflow:hidden}.avx-bar i{display:block;height:100%;background:var(--cobalt)}`;document.head.appendChild(st);
   function card(){try{const home=document.querySelector('[data-view="home"]');if(!home||home.classList.contains("home-new"))return;const cont=document.getElementById("continue");if(!cont)return;
     let el=document.getElementById("avxNext");const x=totalXP(),r=rankOf(x),nx=RANKS[r+1];

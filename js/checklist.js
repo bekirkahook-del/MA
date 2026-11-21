@@ -16,7 +16,7 @@
 .ck-row.done{color:var(--ink-2);cursor:default}.ck-row.done .ck-dot{background:var(--ink);border-color:var(--ink)}
 .ck-row.next{font-weight:600}.ck-row.next .ck-dot{border-color:var(--ink)}
 .ck-row .go{margin-left:auto;flex:none;font-size:13px;color:var(--ink-2)}
-.ck-f{display:flex;gap:8px;margin:0 0 12px 32px}.ck-f input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink)}
+.ck-f{display:flex;gap:8px;margin:0 0 12px 32px}.ck-f input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
 .ck-m{margin:-6px 0 12px 32px;font-size:12.5px;color:var(--ink-2)}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 

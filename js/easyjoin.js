@@ -12,8 +12,8 @@
   const hasS = () => typeof S !== "undefined" && S && S.profile;
   const persist = () => { try { save() } catch (e) {} try { syncProfile() } catch (e) {} try { render() } catch (e) {} };
 
-const st = document.createElement("style"); st.textContent = `.ej-g{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9996;width:min(460px,calc(100% - 24px));background:#13203B;color:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.3);font-size:14.5px}
-.ej-g b{display:block;margin-bottom:8px}.ej-g .r{display:flex;gap:6px;flex-wrap:wrap}.ej-g button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border:0;border-radius:9px;background:#2448D8;color:#fff;cursor:pointer}
+const st = document.createElement("style"); st.textContent = `.ej-g{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9996;width:min(460px,calc(100% - 24px));background:#13203B;color:#fff;border-radius:6px;padding:12px 14px;box-shadow:0 14px 40px rgba(0,0,0,.3);font-size:14.5px}
+.ej-g b{display:block;margin-bottom:8px}.ej-g .r{display:flex;gap:6px;flex-wrap:wrap}.ej-g button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border:0;border-radius:4px;background:#2448D8;color:#fff;cursor:pointer}
 .ej-g button.s{background:none;color:#B8C2DA;text-decoration:underline;font-weight:400}`; document.head.appendChild(st);
   /* ---- 2) profile auto-fill ---- */
   const EDU = { "osu.edu":"The Ohio State University","buckeyemail.osu.edu":"The Ohio State University","umich.edu":"University of Michigan","upenn.edu":"University of Pennsylvania",
@@ -56,7 +56,7 @@ const st = document.createElement("style"); st.textContent = `.ej-g{position:fix
     const names = [...new Set(Object.values(EDU))].sort();
     const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Finish your profile");
     d.innerHTML = `<b>${needSchool ? "Finish your profile in 5 seconds" : "What year do you graduate? We'll tailor your recruiting timeline."}</b>` +
-      (needSchool ? `<input class="ej-s" list="ejSchools" maxlength="80" placeholder="Your school (e.g. Ohio State)" aria-label="Your school" style="width:100%;box-sizing:border-box;font:inherit;padding:8px 10px;border-radius:9px;border:0;margin:0 0 8px"><datalist id="ejSchools">${names.map(n => `<option value="${n.replace(/"/g, "&quot;")}">`).join("")}</datalist>` : "") +
+      (needSchool ? `<input class="ej-s" list="ejSchools" maxlength="80" placeholder="Your school (e.g. Ohio State)" aria-label="Your school" style="width:100%;box-sizing:border-box;font:inherit;padding:8px 10px;border-radius:4px;border:0;margin:0 0 8px"><datalist id="ejSchools">${names.map(n => `<option value="${n.replace(/"/g, "&quot;")}">`).join("")}</datalist>` : "") +
       (needGrad ? `<div class="r" style="margin-bottom:6px"><span style="align-self:center;color:#B8C2DA">Class of</span>${ys.map(y => `<button data-y="${y}">${y}</button>`).join("")}</div>` : "") +
       `<div class="r">${needSchool ? '<button class="go">Save</button>' : ""}<button class="s" data-y="">Skip</button></div>`;
     let grad = "";

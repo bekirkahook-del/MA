@@ -4,14 +4,14 @@
   const MIN=5;
   const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\b(the|university|univ|of|college)\b/g,"").replace(/\s+/g," ").trim();
   const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const css=`.sc-card{border:1px solid var(--rule);border-radius:14px;background:var(--sheet);padding:18px 20px;margin-bottom:20px}
+  const css=`.sc-card{border:1px solid var(--rule);border-radius:6px;background:var(--sheet);padding:18px 20px;margin-bottom:20px}
 .sc-k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
 .sc-h{font-size:22px;font-weight:700;margin:6px 0 4px;color:var(--ink);line-height:1.25}.sc-h b{color:var(--cobalt)}
 .sc-sub{font-size:13.5px;color:var(--ink-2);margin:0}
 .sc-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
-.sc-stat{border:1px solid var(--rule);border-radius:10px;padding:10px 12px;background:var(--paper)}.sc-stat b{display:block;font-family:var(--mono);font-size:20px;color:var(--ink)}.sc-stat span{font-size:11.5px;color:var(--ink-2)}
+.sc-stat{border:1px solid var(--rule);border-radius:4px;padding:10px 12px;background:var(--paper)}.sc-stat b{display:block;font-family:var(--mono);font-size:20px;color:var(--ink)}.sc-stat span{font-size:11.5px;color:var(--ink-2)}
 .sc-top{display:flex;flex-direction:column;gap:6px;margin:4px 0 14px}.sc-top div{display:flex;justify-content:space-between;font-size:14px}.sc-top em{font-style:normal;font-family:var(--mono);color:var(--ink-2)}
-.sc-btn{font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:10px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.sc-btn{font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
 @media(max-width:520px){.sc-stats{grid-template-columns:1fr 1fr}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
   const players=()=>{try{return Array.isArray(PLAYERS)?PLAYERS:[]}catch(e){return[]}};

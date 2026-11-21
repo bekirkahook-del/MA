@@ -5,7 +5,7 @@
   "use strict";
   var st = document.createElement("style");
   st.textContent = "svg[data-hv]{touch-action:pan-y;cursor:crosshair;outline:none}svg[data-hv]:focus-visible{box-shadow:0 0 0 2px var(--cobalt,#2448D8);border-radius:6px}" +
-    ".hv-tip{position:fixed;z-index:9999;pointer-events:none;background:#13203B;color:#fff;font:600 12.5px/1.35 var(--mono,ui-monospace,monospace);padding:6px 9px;border-radius:8px;white-space:pre;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:translate(-50%,-100%);margin-top:-10px}";
+    ".hv-tip{position:fixed;z-index:9999;pointer-events:none;background:#13203B;color:#fff;font:600 12.5px/1.35 var(--mono,ui-monospace,monospace);padding:6px 9px;border-radius:4px;white-space:pre;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:translate(-50%,-100%);margin-top:-10px}";
   document.head.appendChild(st);
   var tip = null, cur = null; // cur = {svg, pts, i}
   function data(svg){ if (svg._hv) return svg._hv; try { svg._hv = JSON.parse(svg.getAttribute("data-hv")) } catch (e) { svg._hv = [] } return svg._hv }

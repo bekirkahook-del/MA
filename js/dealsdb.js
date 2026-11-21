@@ -182,8 +182,8 @@ const IND=["All",...[...new Set(D.map(x=>x[5]))].sort()],KIND=["All","Strategic"
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mon=m=>/^\d{4}-\d{2}$/.test(m)?new Date(m+"-15T12:00:00").toLocaleDateString("en-US",{month:"short",year:"numeric"}):/Q\d/.test(m)?m.slice(5)+" "+m.slice(0,4):m;
 const css=`.ddb{margin:0 0 28px}.ddb-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 12px}
-.ddb-bar input{flex:1;min-width:200px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--sheet);color:var(--ink)}
-.ddb-bar select{font:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--rule);border-radius:10px;background:var(--sheet);color:var(--ink)}
+.ddb-bar input{flex:1;min-width:200px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.ddb-bar select{font:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);color:var(--ink)}
 .ddb-n{font-size:13px;color:var(--ink-2);margin-bottom:6px}
 .ddb-t{width:100%;border-collapse:collapse;font-size:14px}.ddb-t th{text-align:left;font-size:12px;color:var(--ink-2);font-weight:600;padding:8px 6px;border-bottom:1px solid var(--rule);cursor:pointer;white-space:nowrap}
 .ddb-t td{padding:9px 6px;border-bottom:1px solid var(--rule);vertical-align:top}.ddb-t tr.r{cursor:pointer}.ddb-t tr.r:hover td{background:color-mix(in srgb,var(--cobalt) 5%,transparent)}

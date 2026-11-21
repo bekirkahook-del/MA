@@ -4,10 +4,10 @@
    - Search everyone on M&A Prep and add (Friends) or invite (Club) them in one click; they get it in-app
    window.maInvite({mode:"friends"|"club"|"team", title, text}) */
 (function(){
-  const st=document.createElement("style");st.textContent=`.iv2-link{display:flex;gap:8px;margin:12px 0}.iv2-link input{flex:1;min-width:0;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink)}
+  const st=document.createElement("style");st.textContent=`.iv2-link{display:flex;gap:8px;margin:12px 0}.iv2-link input{flex:1;min-width:0;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
 .iv2-quick{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.iv2-quick a{font-size:13.5px;text-decoration:none;border:1px solid var(--rule);border-radius:999px;padding:6px 12px;color:var(--ink)}
 .iv2-list{display:flex;flex-direction:column;gap:8px;margin:10px 0 0;max-height:46vh;overflow:auto}
-.iv2-row{display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:12px;padding:8px 12px;background:var(--sheet)}
+.iv2-row{display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:4px;padding:8px 12px;background:var(--sheet)}
 .iv2-row .t{flex:1;min-width:0;display:flex;flex-direction:column}.iv2-row b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.iv2-row small{font-size:12px;color:var(--ink-2)}
 .iv2-row .ok{color:var(--good)!important;border-color:var(--good)!important}`;document.head.appendChild(st);
   const E=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));

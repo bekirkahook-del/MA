@@ -1,11 +1,11 @@
 /* Weekly email signup box. Shows on guide pages (above "More free guides") and on Practice → Curveballs. */
 (function(){
   const done=()=>{try{return localStorage.getItem("ma-sub")==="1"}catch(e){return false}};
-  const css=`.em-box{border:1px solid var(--rule,#D3D9E4);border-radius:14px;background:var(--sheet,#fff);padding:18px 20px;margin:26px 0}
+  const css=`.em-box{border:1px solid var(--rule,#D3D9E4);border-radius:6px;background:var(--sheet,#fff);padding:18px 20px;margin:26px 0}
 .em-k{font-size:11.5px;letter-spacing:.1em;font-weight:700;color:#A97A1E;text-transform:uppercase}
 .em-h{font-size:19px;font-weight:700;margin:6px 0 4px;color:var(--ink,#13203B)}.em-p{font-size:14.5px;color:var(--ink-2,#4A5672);margin:0 0 12px}
-.em-f{display:flex;gap:8px;flex-wrap:wrap}.em-f input[type=email]{flex:1;min-width:200px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--rule,#D3D9E4);border-radius:10px;background:var(--paper,#EEF1F5);color:var(--ink,#13203B)}
-.em-f button{font:inherit;font-size:15px;font-weight:600;padding:10px 18px;border:0;border-radius:10px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer}
+.em-f{display:flex;gap:8px;flex-wrap:wrap}.em-f input[type=email]{flex:1;min-width:200px;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--rule,#D3D9E4);border-radius:4px;background:var(--paper,#EEF1F5);color:var(--ink,#13203B)}
+.em-f button{font:inherit;font-size:15px;font-weight:600;padding:10px 18px;border:0;border-radius:4px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer}
 .em-f button:disabled{opacity:.6}.em-msg{font-size:13.5px;margin-top:8px;color:var(--ink-2,#4A5672)}.em-hp{position:absolute;left:-9999px}
 .em-sl{position:fixed;right:16px;bottom:16px;z-index:9996;width:min(360px,calc(100% - 24px));box-shadow:0 14px 40px rgba(0,0,0,.28);animation:emUp .25s ease}
 .em-sl .em-box{margin:0;padding:16px 16px 14px;position:relative}.em-sl .em-h{font-size:17px}.em-sl .em-p{font-size:13.5px;margin-bottom:10px}

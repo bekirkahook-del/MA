@@ -210,7 +210,7 @@
     ".ls-step{animation:lsIn .38s cubic-bezier(.2,.7,.2,1)}@keyframes lsIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}" +
     ".ls-kind{font-size:11.5px;letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--cobalt,#2448D8);margin-bottom:4px}" +
     ".ls-body{font-size:16px;line-height:1.6}.ls-body ul{padding-left:20px;margin:8px 0}.ls-body li{margin:6px 0}.ls-body p{margin:8px 0}" +
-    ".ls-ex{border:1px solid var(--rule,#d9dde6);border-left:4px solid var(--cobalt,#2448D8);border-radius:12px;padding:12px 14px;margin:8px 0 10px;font-family:var(--mono,monospace);font-size:14px;line-height:1.7;background:var(--paper,#fff)}" +
+    ".ls-ex{border:1px solid var(--rule,#d9dde6);border-left:4px solid var(--cobalt,#2448D8);border-radius:4px;padding:12px 14px;margin:8px 0 10px;font-family:var(--mono,monospace);font-size:14px;line-height:1.7;background:var(--paper,#fff)}" +
     "@media (prefers-reduced-motion:reduce){.ls-step{animation:none}.ls-bar i{transition:none}}";
   document.head.appendChild(st);
 

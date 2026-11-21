@@ -8,19 +8,19 @@
   /* ---------- styles ---------- */
   var css=document.createElement("style");
   css.textContent=
-    ".skel{display:block;border-radius:8px;background:linear-gradient(90deg,var(--rule) 25%,color-mix(in srgb,var(--rule) 45%,var(--sheet)) 50%,var(--rule) 75%);background-size:200% 100%;animation:skelSh 1.2s linear infinite}"+
+    ".skel{display:block;border-radius:4px;background:linear-gradient(90deg,var(--rule) 25%,color-mix(in srgb,var(--rule) 45%,var(--sheet)) 50%,var(--rule) 75%);background-size:200% 100%;animation:skelSh 1.2s linear infinite}"+
     "@keyframes skelSh{to{background-position:-200% 0}}"+
     ".skel-wrap{display:grid;gap:10px;padding:4px 0}"+
     ".skel-row{display:flex;gap:10px;align-items:center}"+
     ".skel-row .skel:first-child{width:22px;height:22px;border-radius:50%;flex:none}"+
     ".skel-row .skel+.skel{height:14px;flex:1}"+
     "html.calm .skel{animation:none}@media (prefers-reduced-motion:reduce){.skel{animation:none}}"+
-    ".ux-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.25)}"+
+    ".ux-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:4px;font-size:14px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.25)}"+
     ".ux-hint{margin-left:auto;display:inline-flex;gap:3px;flex:none}"+
     ".pal-i{display:flex;align-items:center;gap:8px}"+
     ".ux-sc{position:fixed;inset:0;z-index:9998;display:grid;place-items:center;background:rgba(10,16,30,.55)}"+
     ".ux-sc[hidden]{display:none}"+
-    ".ux-sc>div{background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:14px;padding:20px 22px;width:min(420px,calc(100% - 24px));box-shadow:0 24px 70px rgba(0,0,0,.35)}"+
+    ".ux-sc>div{background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;width:min(420px,calc(100% - 24px));box-shadow:0 24px 70px rgba(0,0,0,.35)}"+
     ".ux-sc h3{margin:0 0 12px;font-size:17px}"+
     ".ux-sc dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0;font-size:14px}"+
     ".ux-sc dt{white-space:nowrap}.ux-sc dd{margin:0;color:var(--ink-2)}";

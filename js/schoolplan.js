@@ -60,9 +60,9 @@
 
 /* ---- Logged-out landing: "your plan" hook. Pick school + year -> see your tailored plan -> sign up to unlock all 100. ---- */
 (function(){
-  const st=document.createElement("style");st.textContent=`.sp-card{margin:18px auto 6px;max-width:560px;text-align:left;border:1px solid var(--rule);background:var(--sheet);border-radius:16px;padding:16px 18px;box-shadow:0 10px 30px rgba(20,32,59,.08)}
+  const st=document.createElement("style");st.textContent=`.sp-card{margin:18px auto 6px;max-width:560px;text-align:left;border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:16px 18px;box-shadow:0 10px 30px rgba(20,32,59,.08)}
 .sp-card .k{font:700 11px/1 var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}.sp-card b{display:block;font-size:18px;margin:6px 0 10px;color:var(--ink)}
-.sp-card input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);color:var(--ink)}
+.sp-card input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
 .sp-yrs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px}.sp-yrs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}
 .sp-yrs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .sp-list{list-style:none;padding:0;margin:12px 0}.sp-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}

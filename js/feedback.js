@@ -3,11 +3,11 @@
   const st=document.createElement("style");st.textContent=`
 .qflag{display:inline-flex;align-items:center;gap:5px;margin-top:14px;background:none;border:0;padding:2px 0;font:inherit;font-size:12px;color:var(--ink-2);cursor:pointer;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
 .qflag:hover{color:var(--ink)}
-.qflag-box{margin-top:12px;border:1px solid var(--rule);border-radius:12px;padding:12px;background:var(--paper);display:flex;flex-direction:column;gap:8px}
+.qflag-box{margin-top:12px;border:1px solid var(--rule);border-radius:4px;padding:12px;background:var(--paper);display:flex;flex-direction:column;gap:8px}
 .qflag-box .chips{display:flex;flex-wrap:wrap;gap:6px}
 .qflag-box .chips button{border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:99px;padding:4px 11px;font:inherit;font-size:12.5px;cursor:pointer}
 .qflag-box .chips button[aria-pressed="true"]{border-color:var(--cobalt);color:var(--cobalt);font-weight:600}
-.qflag-box textarea,.fb-box textarea{width:100%;min-height:70px;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--rule);border-radius:9px;background:var(--sheet);color:var(--ink);resize:vertical;box-sizing:border-box}
+.qflag-box textarea,.fb-box textarea{width:100%;min-height:70px;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);color:var(--ink);resize:vertical;box-sizing:border-box}
 .qflag-box .row,.fb-box .row{display:flex;gap:8px;align-items:center;justify-content:flex-end}
 .fb-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 footer .fb-link{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-left:6px}`;document.head.appendChild(st);
@@ -35,7 +35,7 @@ footer .fb-link{background:none;border:0;padding:0;font:inherit;color:inherit;te
   /* general feedback */
   window.maFeedback=function(){openPanel(`<div class="label">Feedback</div><h2>Tell us what to fix or add</h2><p class="sub">Bugs, wrong answers, ideas, anything. We read every message.</p>
      <form class="fb-box" style="display:flex;flex-direction:column;gap:10px;margin-top:6px"><textarea id="fbT" maxlength="2000" placeholder="What happened, or what would make M&amp;A better?" style="min-height:130px"></textarea>
-     ${window.MA_AUTH&&MA_AUTH.session?"":`<input id="fbE" type="email" placeholder="Your email (optional, if you want a reply)" style="font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--rule);border-radius:9px;background:var(--sheet);color:var(--ink)">`}
+     ${window.MA_AUTH&&MA_AUTH.session?"":`<input id="fbE" type="email" placeholder="Your email (optional, if you want a reply)" style="font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);color:var(--ink)">`}
      <p class="note" style="font-size:12px;margin:0">We use your message (and email, if you add one) only to improve the site and reply. See our <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.</p><input class="fb-hp" id="fbH" tabindex="-1" autocomplete="off" aria-hidden="true"><div class="row"><button class="btn" id="fbGo">Send feedback</button></div></form>`);
     setTimeout(()=>{const t=$("#fbT");t&&t.focus()},50);
     document.querySelector(".fb-box").onsubmit=async e=>{e.preventDefault();const t=$("#fbT").value.trim();if(!t){toast("Write something first");return}const g=$("#fbGo");g.disabled=true;g.textContent="Sending…";

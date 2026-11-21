@@ -20,7 +20,7 @@
         "#seriesBanner .sr-box b{font-size:14px!important}"+
         "#seriesBanner .sr-box span{font-size:8.5px!important;letter-spacing:.06em!important}"+
         "#seriesBanner .sr-act{order:3!important;margin-left:auto!important;gap:6px!important}"+
-        "#seriesBanner .sr-btn{font-size:12.5px!important;padding:7px 11px!important;border-radius:8px!important}"+
+        "#seriesBanner .sr-btn{font-size:12.5px!important;padding:7px 11px!important;border-radius:4px!important}"+
       "}";
     document.head.appendChild(st);
 

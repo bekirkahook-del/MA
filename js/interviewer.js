@@ -8,17 +8,17 @@
 (function(){
   const st=document.createElement("style");
   st.textContent=`.ivx{display:flex;gap:16px;align-items:center;margin:6px 0 12px}
-.ivx-cam{position:relative;width:150px;height:150px;flex:none;border-radius:18px;overflow:hidden;background:#0b1830;box-shadow:0 10px 28px rgba(10,20,50,.28)}
+.ivx-cam{position:relative;width:150px;height:150px;flex:none;border-radius:6px;overflow:hidden;background:#0b1830;box-shadow:0 10px 28px rgba(10,20,50,.28)}
 .ivx-face{position:absolute;inset:-6%;background:url(/img/interviewer.jpg) 0 0/600% 100% no-repeat;transform-origin:50% 85%;will-change:transform}
 .ivx-live{position:absolute;left:8px;top:8px;font:700 10px/1 var(--mono,monospace);letter-spacing:.08em;color:#fff;background:rgba(220,40,40,.92);padding:3px 6px;border-radius:5px}
 .ivx-tag{position:absolute;left:8px;bottom:8px;right:8px;font:600 11.5px/1.2 system-ui,sans-serif;color:#fff;background:rgba(8,14,30,.62);padding:4px 7px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ivx-ring{position:absolute;inset:0;border-radius:18px;box-shadow:inset 0 0 0 3px #3ad07a;opacity:0;transition:opacity .2s}
+.ivx-ring{position:absolute;inset:0;border-radius:6px;box-shadow:inset 0 0 0 3px #3ad07a;opacity:0;transition:opacity .2s}
 .ivx-cam.talk .ivx-ring{opacity:1}
 .ivx-side{min-width:0}.ivx-side b{display:block;font-size:16px;color:var(--ink)}.ivx-state{font-size:13.5px;color:var(--ink-2);margin-top:2px;display:flex;align-items:center;gap:6px}
 .ivx-dot{width:8px;height:8px;border-radius:50%;background:#9aa5be;flex:none}.ivx-state.on .ivx-dot{background:#3ad07a;animation:ivxP 1.2s infinite}
 @keyframes ivxP{50%{opacity:.35}}
 .ivx-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.ivx-btns button{font:inherit;font-size:12.5px;background:none;border:1px solid var(--rule);color:var(--ink-2);border-radius:8px;padding:4px 9px;cursor:pointer}
+.ivx-btns button{font:inherit;font-size:12.5px;background:none;border:1px solid var(--rule);color:var(--ink-2);border-radius:4px;padding:4px 9px;cursor:pointer}
 .ivx-join{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:260px;text-align:center}
 .ivx-join .ivx-cam{width:120px;height:120px;filter:grayscale(.6) brightness(.8);animation:ivxJ 1.3s ease-in-out infinite}
 @keyframes ivxJ{50%{filter:none}}

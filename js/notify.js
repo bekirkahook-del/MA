@@ -10,9 +10,9 @@
   const st=document.createElement("style");st.textContent=`
 .nbell{position:relative;background:none;border:0;padding:0;width:30px;height:30px;display:grid;place-items:center;color:var(--ink-2);cursor:pointer;border-radius:50%;transition:color .2s,background .2s}
 .nbell:hover{color:var(--ink);background:var(--paper)}
-.nbell b{position:absolute;top:-2px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#e5484d;color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;line-height:1;box-shadow:0 0 0 2px var(--sheet);animation:nPop .35s cubic-bezier(.2,1.4,.4,1) both}
+.nbell b{position:absolute;top:-2px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:4px;background:#e5484d;color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;line-height:1;box-shadow:0 0 0 2px var(--sheet);animation:nPop .35s cubic-bezier(.2,1.4,.4,1) both}
 .nbell b[hidden]{display:none}
-.npanel{position:fixed;z-index:9000;width:min(360px,calc(100vw - 24px));max-height:min(480px,70vh);overflow:auto;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:14px;box-shadow:0 18px 48px rgba(0,0,0,.18);animation:nIn .18s ease both}
+.npanel{position:fixed;z-index:9000;width:min(360px,calc(100vw - 24px));max-height:min(480px,70vh);overflow:auto;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:6px;box-shadow:0 18px 48px rgba(0,0,0,.18);animation:nIn .18s ease both}
 .npanel h3{margin:0;padding:14px 16px 10px;font-family:var(--body);font-size:16px;font-weight:700;text-transform:none;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--rule)}
 .npanel h3 button{background:none;border:0;font:inherit;font-size:12.5px;font-weight:500;color:var(--cobalt);cursor:pointer;padding:0}
 .n-row{display:flex;gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.4}

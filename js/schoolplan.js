@@ -62,6 +62,7 @@
 (function(){
   const st=document.createElement("style");st.textContent=`.sp-card{margin:18px auto 6px;max-width:560px;text-align:left;border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:16px 18px;box-shadow:0 10px 30px rgba(20,32,59,.08)}
 .sp-card .k{font:700 11px/1 var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}.sp-card b{display:block;font-size:18px;margin:6px 0 10px;color:var(--ink)}
+.sp-tip{font-size:13.5px;font-weight:600;color:var(--cobalt);margin:8px 0 2px}
 .sp-card input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
 .sp-yrs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px}.sp-yrs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}
 .sp-yrs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -76,6 +77,8 @@
   // who's signed in: drives the landing (signed-out visitors always get the onboarding landing)
   (function wait(n){if(window.MA_AUTH&&MA_AUTH.ready){MA_AUTH.ready.then(s=>{window.MA_SIGNED=!!s;try{renderHome()}catch(e){}});
       try{MA_AUTH.sb.auth.onAuthStateChange((e,s)=>{window.MA_SIGNED=!!s})}catch(e){}}else if(n<40)setTimeout(()=>wait(n+1),250)})(0);
+  /* arrived from a school guide ("Get this as a plan for Ohio State"): prefill the school and point at the year buttons */
+  let fromGuide=null;try{const q=new URLSearchParams(location.search);fromGuide=q.get("plan");if(fromGuide){q.delete("plan");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}
   function card(){const land=document.getElementById("homeLand");if(!land||!land.dataset.on||land.querySelector(".sp-card")||window.MA_SIGNED)return;
     const cta=land.querySelector(".hl-cta");if(!cta)return;
     const names=(window.maSchoolNames||[]);
@@ -86,6 +89,9 @@
       <div class="sp-yrs" role="group" aria-label="Your year">${YRS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===yr}">${y==="High school"?"High school":y}</button>`).join("")}</div>
       <button class="btn" id="spGo" style="width:100%">See my plan →</button>`;
     cta.after(d);
+    if(fromGuide){const m=(window.maSchoolFind&&maSchoolFind(fromGuide))||null;const nm=(m&&m[0])||fromGuide.slice(0,80);d.querySelector("#spSch").value=nm;
+      const tip=document.createElement("div");tip.className="sp-tip";tip.textContent=`Pick your year to see your ${nm} plan.`;d.querySelector(".sp-yrs").before(tip);
+      fromGuide=null;ev("plan_from_guide");setTimeout(()=>{d.scrollIntoView({block:"center",behavior:"smooth"});const f=d.querySelector("[data-y]");if(f)f.focus({preventScroll:true})},350)}
     d.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{yr=b.dataset.y;d.querySelectorAll("[data-y]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
     d.querySelector("#spGo").onclick=()=>{const sc=d.querySelector("#spSch").value.trim();
       if(!sc){d.querySelector("#spSch").focus();return}if(!yr){yr="Freshman"}
@@ -100,8 +106,10 @@
       <p class="sub">${r?`${sc} steps are built around ${esc(r[0])}'s own clubs and programs.`:"Built for your year. Add a school we cover to get school-specific steps."} Here's where you start:</p>
       <ul class="sp-list">${mine.slice(0,showN).map(li).join("")}</ul>
       <div class="sp-lock"><ul class="sp-list">${mine.slice(showN,showN+5).map((it,i)=>li(it,i+showN)).join("")}</ul>
-        <div class="sp-over"><b>${all.length-showN} more steps, saved and checked off as you go</b><button class="btn" id="spJoin">Sign up free to unlock my plan →</button><span class="note">One tap with Google. No card.</span></div></div>`);
-    document.getElementById("spJoin").onclick=()=>{ev("plan_teaser_join");try{closePanel()}catch(e){}(window.maQuickJoin||window.maOpenAuth)("up")}}
+        <div class="sp-over"><b>${all.length-showN} more steps, saved and checked off as you go</b><button class="btn" id="spJoin">Sign up free to unlock my plan →</button><button class="ghost" id="spTry" type="button">Try Level 1 first, no account</button><span class="note">One tap with Google. No card.</span></div></div>`);
+    document.getElementById("spJoin").onclick=()=>{ev("plan_teaser_join");try{closePanel()}catch(e){}(window.maQuickJoin||window.maOpenAuth)("up")};
+    document.getElementById("spTry").onclick=()=>{ev("plan_teaser_try");try{closePanel()}catch(e){}try{window._spAfterL1=1}catch(e){}
+      const go=document.getElementById("landGo");if(go)go.click();else if(typeof nextLevel==="function"){try{nextLevel()}catch(e){}}}}
   window.maPlanPreview=preview;
   // land is (re)rendered by app.js: keep the card mounted
   const obs=new MutationObserver(()=>{try{card()}catch(e){}});

@@ -56,6 +56,7 @@
   if(!isApp&&/^\/(guides|tools|cheat-sheet)\//.test(location.pathname)){
     const slug=(location.pathname.split("/").filter(Boolean).pop()||"page").slice(0,40);
     const href=src=>`/?signup=1&utm_source=guide&utm_campaign=${encodeURIComponent(slug)}&cta=${src}`;
+    const E0=x=>String(x).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
     const mk=(src,h,p,btn)=>{const d=document.createElement("div");d.className="gw-cta";d.dataset.cta=src;
       d.innerHTML=`<div><div class="k">Free account</div><div class="h">${h}</div><p>${p}</p></div><a href="${href(src)}">${btn}</a>`;
       d.querySelector("a").addEventListener("click",()=>{ev("guide_cta_click");flush()});return d};
@@ -80,7 +81,14 @@
         g.querySelector(".skip").onclick=()=>{w.classList.remove("lock");g.remove();ev("guide_gate_skip")};
         try{const ld=document.createElement("script");ld.type="application/ld+json";ld.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":document.title,"isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".gw-pw"}});document.head.appendChild(ld)}catch(e){}
         ev("guide_gate_shown")}
-      else if(midEl){const mid=midEl;mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
+      else if(midEl){const mid=midEl;
+        /* school guides ("...from Ohio State"): offer this guide as a step-by-step plan for that school, straight into the
+           guest plan preview on the homepage (no account needed to see it) */
+        const h1=(document.querySelector("h1")||{}).textContent||"";const sm=isGuide&&h1.match(/\b(?:from|at)\s+(.{2,60}?)\s*$/i);
+        if(sm){const school=sm[1].trim();const d=document.createElement("div");d.className="gw-cta";d.dataset.cta="plan";
+          d.innerHTML=`<div><div class="k">Free · 30 seconds</div><div class="h">Get this as a step-by-step plan for ${E0(school)}</div><p>Pick your year and see your first steps, built around ${E0(school)}'s own clubs and programs. No account needed to look.</p></div><a href="/?plan=${encodeURIComponent(school)}&utm_source=guide&utm_campaign=${encodeURIComponent(slug)}&cta=plan">See my plan →</a>`;
+          d.querySelector("a").addEventListener("click",()=>{ev("guide_plan_click");flush()});mid.parentNode.insertBefore(d,mid);ev("guide_plan_shown")}
+        else mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
       const more=[...main.querySelectorAll("h2")].find(h=>/more free guides/i.test(h.textContent));
       const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
       if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")};
@@ -157,6 +165,7 @@
     d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);close();(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};
     d.querySelector(".x").onclick=()=>{ev("p_"+key+"_dismiss");close()};
     document.body.appendChild(d);ev("p_"+key+"_shown");ev("p_any_shown");t=setTimeout(close,14000);return true}
+  window.maGrowToast=toastCard;
   function mkStrip(key,html,btn){const d=document.createElement("div");d.className="gw-strip";d.dataset.gw=key;
     d.innerHTML=`<span>${html}</span><button class="go" type="button">${btn}</button>`;
     d.querySelector(".go").onclick=()=>{ev("p_"+key+"_click");ev("p_any_click");LS.set("ma-gw-from",key);(window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};return d}

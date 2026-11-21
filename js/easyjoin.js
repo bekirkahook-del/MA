@@ -91,7 +91,7 @@ const st = document.createElement("style"); st.textContent = `.ej-g{position:fix
   try { if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {}) } catch (e) {}
   const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
   const visits = (+LS.get("ma-visits") || 0) + 1; LS.set("ma-visits", String(visits));
-  const canAsk = () => !standalone && visits >= 2 && Date.now() - (+LS.get("ma-inst-ask") || 0) > 7 * 864e5 && !document.querySelector(".ej-g,.gw-ov,.gw-tc");
+  const canAsk = () => !standalone && visits >= 2 && Date.now() - (+LS.get("ma-inst-ask") || 0) > 7 * 864e5 && !document.querySelector(".ej-g,.gw-ov,.gw-tc,.ma-cn") && (()=>{const o=document.getElementById("overlay");return !o||o.hidden})();
   function bar(html, onGo){ const d = document.createElement("div"); d.className = "ej-g"; d.setAttribute("role", "dialog"); d.setAttribute("aria-label", "Install app");
     d.innerHTML = html + `<div class="r">${onGo ? '<button class="go">Install</button>' : ""}<button class="s">Not now</button></div>`;
     d.onclick = e => { const b = e.target.closest("button"); if (!b) return; if (b.classList.contains("go")) onGo(); else ev("install_no"); d.remove() };

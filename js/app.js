@@ -1940,7 +1940,8 @@ function runLeague(){const Q=leagueQs().map(shuffleOpts);let n=0,correct=0;const
 let REVIEWS=[],revSort="new",ownerView=false;
 function initReviews(){if(!DB)return;try{USER&&USER.isOwner&&Promise.resolve(USER.isOwner()).then(v=>{ownerView=!!v;renderReviews()}).catch(()=>{})}catch(e){}
   DB.collection("reviews").limit(200).onSnapshot(async snap=>{REVIEWS=snap.docs.map(d=>({id:d.id,...d.data()})).filter(r=>r.rating>=1&&r.rating<=5&&r.text);await loadNames(REVIEWS.map(r=>r.id));renderReviews()},()=>{})}
-const canReview=()=>!!(S.proEver||isPro());
+/* any member who has actually used the site (3+ levels cleared) can review, not only Pro (Nov 21) */
+const canReview=()=>{if(S.proEver||isPro())return true;try{return (myStats().levels||0)>=3}catch(e){return false}};
 const starsOf=n=>`<span class="rstars" aria-label="${n} out of 5 stars">${"★".repeat(n)}<span>${"★".repeat(5-n)}</span></span>`;
 function renderReviews(){const el=$("#reviews");if(!el)return;const list=REVIEWS.slice();const mine=myId&&list.find(r=>r.id===myId);
   const n=list.length,avg=n?list.reduce((a,r)=>a+r.rating,0)/n:0;
@@ -1948,8 +1949,8 @@ function renderReviews(){const el=$("#reviews");if(!el)return;const list=REVIEWS
   const dist=[5,4,3,2,1].map(k=>[k,list.filter(r=>r.rating===k).length]);
   el.innerHTML=`<div class="sec-head"><h2>What members say</h2>${n?`<div class="cats" role="group" aria-label="Sort reviews"><button class="chip" data-rs="new" aria-pressed="${revSort==="new"}">Newest</button><button class="chip" data-rs="top" aria-pressed="${revSort==="top"}">Highest rated</button></div>`:""}</div>
    <div class="rv-top">${n?`<div class="rv-sum"><b>${avg.toFixed(1)}</b>${starsOf(Math.round(avg))}<span>${n} review${n===1?"":"s"}</span></div><div class="rv-dist">${dist.map(([k,c])=>`<div><span>${k}★</span><span class="gbar"><i style="width:${n?c/n*100:0}%"></i></span><span>${c}</span></div>`).join("")}</div>`:`<p class="note" style="margin:0">No reviews yet. ${canReview()?"Be the first to share what Pro is like.":"Members can review Pro after trying it."}</p>`}
-   <div class="rv-cta">${canReview()?(dbState==="on"?`<button class="${mine?'ghost outline':'btn'}" id="revWrite">${mine?"Edit your review":"Write a review"}</button>`:`<span class="note">Reviews are available when you sign in.</span>`):`<button class="ghost outline" id="revTry">Try Pro to leave a review</button>`}</div></div>
-   ${sorted.length?`<div class="rv-list">${sorted.map(r=>`<article class="rv-card"><div class="rv-h">${avatar(r.id,realName(r.id),36)}<div><b class="rv-name" data-id="${esc(r.id)}"></b><span>${esc(r.plan||"Pro member")} · ${r.updated?new Date(r.updated).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):""}</span></div>${starsOf(r.rating)}</div>${r.title?`<h4>${esc(r.title)}</h4>`:""}<p>${esc(r.text)}</p><div class="rv-foot"><span class="note">Reviewed during the Pro preview</span>${ownerView&&r.id!==myId?`<button class="rowbtn" data-rdel="${esc(r.id)}">Remove</button>`:""}${r.id===myId?`<button class="rowbtn" id="revDelMine">Delete my review</button>`:""}</div></article>`).join("")}</div>`:""}`;
+   <div class="rv-cta">${canReview()?(dbState==="on"?`<button class="${mine?'ghost outline':'btn'}" id="revWrite">${mine?"Edit your review":"Write a review"}</button>`:`<span class="note">Reviews are available when you sign in.</span>`):`<span class="note">Clear 3 levels to leave a review.</span>`}</div></div>
+   ${sorted.length?`<div class="rv-list">${sorted.map(r=>`<article class="rv-card"><div class="rv-h">${avatar(r.id,realName(r.id),36)}<div><b class="rv-name" data-id="${esc(r.id)}"></b><span>${esc(r.plan||"Pro member")}${r.school?" · "+esc(r.school):""} · ${r.updated?new Date(r.updated).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):""}</span></div>${starsOf(r.rating)}</div>${r.title?`<h4>${esc(r.title)}</h4>`:""}<p>${esc(r.text)}</p><div class="rv-foot"><span class="note">Reviewed during the Pro preview</span>${ownerView&&r.id!==myId?`<button class="rowbtn" data-rdel="${esc(r.id)}">Remove</button>`:""}${r.id===myId?`<button class="rowbtn" id="revDelMine">Delete my review</button>`:""}</div></article>`).join("")}</div>`:""}`;
   el.querySelectorAll(".rv-name").forEach(x=>x.textContent=x.dataset.id===myId?(myName||"You"):realName(x.dataset.id));
   el.querySelectorAll("[data-rs]").forEach(b=>b.onclick=()=>{revSort=b.dataset.rs;renderReviews()});
   if($("#revWrite"))$("#revWrite").onclick=()=>writeReview(mine);
@@ -1957,19 +1958,20 @@ function renderReviews(){const el=$("#reviews");if(!el)return;const list=REVIEWS
   if($("#revDelMine"))$("#revDelMine").onclick=()=>{const b=$("#revDelMine");b.outerHTML=`<span class="confirm">Delete? <button class="rowbtn" id="rdY" style="color:var(--bad)">Yes</button><button class="rowbtn" id="rdN">No</button></span>`;$("#rdY").onclick=async()=>{try{await DB.doc("reviews/"+myId).delete();toast("Review deleted")}catch(e){toast("Couldn't delete. Try again.")}};$("#rdN").onclick=renderReviews};
   el.querySelectorAll("[data-rdel]").forEach(b=>b.onclick=async()=>{try{await DB.doc("reviews/"+b.dataset.rdel).delete();toast("Review removed")}catch(e){toast("Couldn't remove it")}})}
 function writeReview(mine){let rating=mine?mine.rating:0;
-  openPanel(`<div class="label">M&A Pro</div><h2>${mine?"Edit your review":"Review M&A Pro"}</h2><p class="sub">Your review shows on the Pro page with your name, to everyone who can open this site.</p>
+  openPanel(`<div class="label">M&A Pro</div><h2>${mine?"Edit your review":"Rate M&A Prep"}</h2><p class="sub">Your honest review shows on the site with your name${S.profile&&S.profile.school&&!S.settings.noSchool?" and school":""}, to everyone who can open it.</p>
    <form id="revForm" class="pform" style="grid-template-columns:1fr">
     <div><div class="label" style="margin-bottom:6px">Your rating</div><div class="rate-pick" id="ratePick" role="radiogroup" aria-label="Rating">${[1,2,3,4,5].map(k=>`<button type="button" role="radio" data-r="${k}" aria-checked="${k===rating}" aria-label="${k} star${k>1?"s":""}">★</button>`).join("")}</div></div>
     <label>Headline<input id="revTitle" maxlength="70" value="${esc(mine?mine.title||"":"")}" placeholder="Sum it up in a few words"></label>
-    <label>Your review<textarea id="revText" maxlength="600" placeholder="What helped most? Final rounds, unlimited grading, the Pro League…">${esc(mine?mine.text:"")}</textarea></label>
+    <label>Your review<textarea id="revText" maxlength="600" placeholder="What helped most? Lessons, practice, the roadmap, deadlines…">${esc(mine?mine.text:"")}</textarea></label>
     <div class="actions"><button class="btn" type="submit">${mine?"Save changes":"Post review"}</button><button class="ghost" type="button" id="revCancel">Cancel</button></div>
    </form>`);
   const paint=()=>panel.querySelectorAll("#ratePick button").forEach(b=>{const k=+b.dataset.r;b.classList.toggle("on",k<=rating);b.setAttribute("aria-checked",k===rating)});paint();
   panel.querySelectorAll("#ratePick button").forEach(b=>{b.onclick=()=>{rating=+b.dataset.r;paint()};b.onmouseenter=()=>panel.querySelectorAll("#ratePick button").forEach(x=>x.classList.toggle("hov",+x.dataset.r<=+b.dataset.r));b.onmouseleave=()=>panel.querySelectorAll("#ratePick button").forEach(x=>x.classList.remove("hov"))});
   $("#revCancel").onclick=closePanel;
   $("#revForm").onsubmit=async e=>{e.preventDefault();const text=$("#revText").value.trim();if(!rating){toast("Pick a star rating");return}if(text.split(/\s+/).length<5){toast("Write at least a sentence");$("#revText").focus();return}
-    const plan=isPro()?({monthly:"Pro Monthly",yearly:"Pro Yearly",founding:"Founding Member",season:"Season Pass",trial:"Pro trial"})[S.pro.plan]||"Pro member":"Former Pro member";
-    try{await DB.doc("reviews/"+myId).set({rating,title:$("#revTitle").value.trim(),text,plan,updated:Date.now()});closePanel();showTab("pro");toast(mine?"Review updated":"Thanks. Your review is posted.")}
+    const plan=isPro()?({monthly:"Pro Monthly",yearly:"Pro Yearly",founding:"Founding Member",season:"Season Pass",trial:"Pro trial"})[S.pro.plan]||"Pro member":S.proEver?"Former Pro member":"Free member";
+    const school=S.settings.noSchool?"":String(S.profile.school||"").slice(0,80);
+    try{await DB.doc("reviews/"+myId).set({rating,title:$("#revTitle").value.trim(),text,plan,school,updated:Date.now()});closePanel();showTab("pro");toast(mine?"Review updated":"Thanks. Your review is posted.")}
     catch(e){toast(e&&e.code==="invalid_argument"?"Posting reviews needs contributor access to this page.":"Couldn't post. Try again.")}};
   $("#revTitle").focus()}
 

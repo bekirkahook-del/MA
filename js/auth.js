@@ -164,8 +164,14 @@
     ov.querySelector("form").onsubmit=async e=>{e.preventDefault();if(i.value.length<6){m.textContent="Password needs at least 6 characters.";m.className="auth-msg err";return}
       const {error}=await sb.auth.updateUser({password:i.value});m.textContent=error?error.message:"Saved. You're all set.";m.className="auth-msg "+(error?"err":"ok");if(!error){mev("auth_pwset");setTimeout(()=>ov.remove(),900)}};
     document.body.appendChild(ov);setTimeout(()=>i.focus(),30)}
-  try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")setTimeout(setPw,400)})}catch(_){}
-  if(/type=recovery/.test(location.hash))A.ready.then(s=>{if(s)setTimeout(setPw,600)});
+  /* Reset links: Supabase signs the user in and wipes the URL hash before this file runs, so also check the hash
+     saved at page start (MA_START_HASH) and the flag set in backend.js. Show the box once. */
+  let pwShown=false;const showPw=()=>{if(pwShown)return;pwShown=true;setTimeout(setPw,400)};
+  try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")showPw()})}catch(_){}
+  const h0=String(window.MA_START_HASH||"")+location.hash;
+  if(window.MA_RECOVERY||/type=recovery/.test(h0))A.ready.then(s=>{if(s)showPw()});
+  /* Expired or already-used reset/sign-in link: say so instead of failing silently */
+  if(/error_code=otp_expired|error=access_denied/.test(h0))setTimeout(()=>{openAuth("in");const m=document.querySelector(".auth-box .auth-msg");if(m){m.textContent="That link expired or was already used. Send yourself a new one below.";m.className="auth-msg err"}},500);
 
   A.ready.then(s=>{try{if(s&&Date.now()-Date.parse(s.user.created_at)<30*60*1000&&!localStorage.getItem("ma-welc")){localStorage.setItem("ma-welc","1");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+s.access_token}}).catch(()=>{})}}catch(e){}});
   A.ready.then(s=>{const top=document.querySelector(".top-r");if(!top)return;

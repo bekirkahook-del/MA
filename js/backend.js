@@ -15,6 +15,8 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
       if(loc&&loc._synced&&loc._synced!==uid){localStorage.setItem(KEY,JSON.stringify({settings:loc.settings||{},seeded:true,onboardSkip:true}));
         ["ma-notif-v1"].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}})}}}catch(e){}
   let sb=null;try{sb=window.supabase&&window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true},global:{fetch:(u,o)=>{o=o||{};const n=typeof o.body==="string"?o.body.length:0;/* keepalive lets a save finish even if the tab is closing (browser limit ~64KB) */return fetch(u,n&&n<60000?Object.assign({},o,{keepalive:true}):o)}}})}catch(e){console.warn("Supabase init failed",e)}
+  /* catch the reset-link event before anything else subscribes (Supabase fires it once, then wipes the URL hash) */
+  if(sb)try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")window.MA_RECOVERY=1})}catch(e){}
   const ready=sb?sb.auth.getSession().then(r=>r.data&&r.data.session||null).catch(()=>null):Promise.resolve(null);
   window.MA_AUTH={sb,ready,session:null};
   let loadUid=null,reloading=false;

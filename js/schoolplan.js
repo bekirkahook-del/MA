@@ -70,6 +70,11 @@
 .sp-mini li.sc span:last-child{font-weight:600}.sp-mini li.lk span:last-child{filter:blur(3.5px);user-select:none;color:var(--ink-2)}.sp-mini li.more{color:var(--ink-2);font-size:13.5px}
 .sp-card .sp-all{display:block;width:100%;margin-top:8px;font-size:14px}
 @media(max-width:520px){.sp-row{grid-template-columns:1fr}}
+.hl-cta.sp-hidecta{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sp-first .sp-card{margin-top:14px;border-color:var(--cobalt);box-shadow:0 14px 40px rgba(36,72,216,.14)}
+@media(max-width:700px){body.sp-firstvisit #tape{display:none!important}.sp-first .hl-land>p{display:none}.sp-first .hl-land h1{margin-bottom:4px}
+  .ma-cn{flex-wrap:nowrap!important;justify-content:space-between!important;gap:8px!important;font-size:11.5px!important;padding-top:6px!important;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))!important}
+  .ma-cn>span{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.ma-cn div{flex-direction:column;gap:4px!important}.ma-cn button{padding:5px 9px!important;min-height:28px!important;font-size:11.5px!important;white-space:nowrap}}
 .sp-card input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
 .sp-yrs{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 0}.sp-yrs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}
 .sp-yrs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -106,6 +111,9 @@
       <button class="btn" id="spGo" style="width:100%">Save my plan and start Level 1 →</button>
       <button class="ghost sp-all" id="spAll" type="button">See all my steps</button>`;
     cta.after(d);
+    /* first time on the site (no saved plan yet): building the plan IS the first screen. The card replaces the
+       "Start Level 1 / Plan my path" buttons (its own button starts Level 1); returning guests keep the buttons. */
+    const first=!(S.plan&&S.plan.order);if(first){cta.classList.add("sp-hidecta");land.classList.add("sp-first");document.body.classList.add("sp-firstvisit")}
     const sch=d.querySelector("#spSch"),mini=d.querySelector("#spMini");
     const apply=()=>{S.profile=S.profile||{};const sc=sch.value.trim();if(sc)S.profile.school=sc.slice(0,80);S.profile.year=yr;
       S.plan=S.plan||{};S.plan.year=yr;S.plan.target=role;try{save()}catch(e){}};
@@ -130,6 +138,7 @@
       S.plan={...(S.plan||{}),year:yr,target:role,order:order||(S.plan&&S.plan.order),focus:order?order.length:(S.plan&&S.plan.focus),perWeek:(S.plan&&S.plan.perWeek)||5,created:(S.plan&&S.plan.created)||new Date().toISOString().slice(0,10)};
       if(role!=="Not sure yet"&&!S.profile.target)S.profile.target=role.replace("Hedge funds & markets","Hedge funds");
       try{save()}catch(e){}try{maRoadBust()}catch(e){}ev("plan_teaser");ev("plan_teaser_try");try{window._spAfterL1=1}catch(e){}
+      cta.classList.remove("sp-hidecta");land.classList.remove("sp-first");document.body.classList.remove("sp-firstvisit");
       const go=document.getElementById("landGo");if(go)go.click();else if(typeof nextLevel==="function"){try{nextLevel()}catch(e){}}};
     d.querySelector("#spAll").onclick=()=>{apply();ev("plan_teaser");preview(yr)}}
   function preview(yr){const r=window.maRoadSchool&&maRoadSchool(),all=ROAD.flatMap(g=>roadItems(g).map(it=>({...it,y:g.y})));

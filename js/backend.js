@@ -20,7 +20,14 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
   /* Email links (reset / magic) put tokens in the URL hash. The app can rewrite the hash to #home before Supabase
      reads it, so if no session came through, sign in from the hash saved at page start. */
   const hp=new URLSearchParams(String(window.MA_START_HASH||"").replace(/^#/,""));
-  const ready=sb?sb.auth.getSession().then(async r=>{let s=r.data&&r.data.session||null;
+  /* Sign-in / reset email links land on /?th=<token hash>&tt=magiclink|recovery (see netlify/functions/_lib/mail.mjs).
+     Redeem the token here, then clean the URL. */
+  const sq=new URLSearchParams(location.search),th=sq.get("th"),tt=sq.get("tt");
+  const linkIn=(sb&&th)?sb.auth.verifyOtp({token_hash:th,type:tt==="recovery"?"recovery":"magiclink"}).then(x=>{
+      if(x.error)window.MA_LINK_ERR=x.error.message||"expired";else if(tt==="recovery")window.MA_RECOVERY=1;
+      try{sq.delete("th");sq.delete("tt");const q=sq.toString();history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash)}catch(e){}
+    }).catch(()=>{window.MA_LINK_ERR="failed"}):Promise.resolve();
+  const ready=sb?linkIn.then(()=>sb.auth.getSession()).then(async r=>{let s=r.data&&r.data.session||null;
       const at=hp.get("access_token"),rt=hp.get("refresh_token");
       if(!s&&at&&rt){try{const x=await sb.auth.setSession({access_token:at,refresh_token:rt});s=x.data&&x.data.session||null}catch(e){}}
       if(s&&hp.get("type")==="recovery")window.MA_RECOVERY=1;

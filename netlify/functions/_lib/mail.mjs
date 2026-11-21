@@ -91,6 +91,12 @@ export async function actionLink(type, email, redirect) {
     body: JSON.stringify({ type, email, redirect_to: redirect || SITE, options: { redirect_to: redirect || SITE } }) }).catch(() => null);
   if (!r || !r.ok) return null;
   const j = await r.json();
+  /* Link to our own page with the token hash instead of Supabase's one-time verify URL. Email scanners
+     (school Outlook "Safe Links", antivirus) open links to check them, which used up the one-time token before
+     the student clicked. They don't run page scripts, so the token now survives until the real click:
+     js/backend.js redeems it with verifyOtp. Falls back to Supabase's own link if no hash came back. */
+  const h = j.hashed_token || (j.properties && j.properties.hashed_token);
+  if (h) return `${SITE}/?th=${encodeURIComponent(h)}&tt=${type === "recovery" ? "recovery" : "magiclink"}`;
   return j.action_link || (j.properties && j.properties.action_link) || null;
 }
 export function plainMail(title, bodyHtml, foot) {

@@ -171,7 +171,7 @@
   const h0=String(window.MA_START_HASH||"")+location.hash;
   A.ready.then(s=>{if(s&&(window.MA_RECOVERY||/type=recovery/.test(h0)))showPw()});
   /* Expired or already-used reset/sign-in link: say so instead of failing silently */
-  if(/error_code=otp_expired|error=access_denied/.test(h0))setTimeout(()=>{openAuth("in");const m=document.querySelector(".auth-box .auth-msg");if(m){m.textContent="That link expired or was already used. Send yourself a new one below.";m.className="auth-msg err"}},500);
+  A.ready.then(()=>{if(window.MA_LINK_ERR||/error_code=otp_expired|error=access_denied/.test(h0))setTimeout(()=>{openAuth("in");const m=document.querySelector(".auth-box .auth-msg");if(m){m.textContent="That link expired or was already used. Send yourself a new one below.";m.className="auth-msg err"}},500);});
 
   A.ready.then(s=>{try{if(s&&Date.now()-Date.parse(s.user.created_at)<30*60*1000&&!localStorage.getItem("ma-welc")){localStorage.setItem("ma-welc","1");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+s.access_token}}).catch(()=>{})}}catch(e){}});
   A.ready.then(s=>{const top=document.querySelector(".top-r");if(!top)return;

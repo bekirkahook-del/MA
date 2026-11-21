@@ -17,7 +17,14 @@ window.MA_START_HASH=location.hash; /* before the app rewrites it */
   let sb=null;try{sb=window.supabase&&window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true},global:{fetch:(u,o)=>{o=o||{};const n=typeof o.body==="string"?o.body.length:0;/* keepalive lets a save finish even if the tab is closing (browser limit ~64KB) */return fetch(u,n&&n<60000?Object.assign({},o,{keepalive:true}):o)}}})}catch(e){console.warn("Supabase init failed",e)}
   /* catch the reset-link event before anything else subscribes (Supabase fires it once, then wipes the URL hash) */
   if(sb)try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")window.MA_RECOVERY=1})}catch(e){}
-  const ready=sb?sb.auth.getSession().then(r=>r.data&&r.data.session||null).catch(()=>null):Promise.resolve(null);
+  /* Email links (reset / magic) put tokens in the URL hash. The app can rewrite the hash to #home before Supabase
+     reads it, so if no session came through, sign in from the hash saved at page start. */
+  const hp=new URLSearchParams(String(window.MA_START_HASH||"").replace(/^#/,""));
+  const ready=sb?sb.auth.getSession().then(async r=>{let s=r.data&&r.data.session||null;
+      const at=hp.get("access_token"),rt=hp.get("refresh_token");
+      if(!s&&at&&rt){try{const x=await sb.auth.setSession({access_token:at,refresh_token:rt});s=x.data&&x.data.session||null}catch(e){}}
+      if(s&&hp.get("type")==="recovery")window.MA_RECOVERY=1;
+      return s}).catch(()=>null):Promise.resolve(null);
   window.MA_AUTH={sb,ready,session:null};
   let loadUid=null,reloading=false;
   ready.then(s=>{window.MA_AUTH.session=s;loadUid=s?s.user.id:null;

@@ -169,7 +169,7 @@
   let pwShown=false;const showPw=()=>{if(pwShown)return;pwShown=true;setTimeout(setPw,400)};
   try{sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")showPw()})}catch(_){}
   const h0=String(window.MA_START_HASH||"")+location.hash;
-  if(window.MA_RECOVERY||/type=recovery/.test(h0))A.ready.then(s=>{if(s)showPw()});
+  A.ready.then(s=>{if(s&&(window.MA_RECOVERY||/type=recovery/.test(h0)))showPw()});
   /* Expired or already-used reset/sign-in link: say so instead of failing silently */
   if(/error_code=otp_expired|error=access_denied/.test(h0))setTimeout(()=>{openAuth("in");const m=document.querySelector(".auth-box .auth-msg");if(m){m.textContent="That link expired or was already used. Send yourself a new one below.";m.className="auth-msg err"}},500);
 

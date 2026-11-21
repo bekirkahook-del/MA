@@ -1,5 +1,5 @@
 // AI proxy for M&A. Keeps the Anthropic key on the server and only answers signed-in users.
-// Netlify env vars: ANTHROPIC_API_KEY (required), SUPABASE_SERVICE_ROLE_KEY (required: the daily limit fails closed without it),
+// Netlify env vars: ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL (injected by Netlify AI Gateway; or set your own key), SUPABASE_SERVICE_ROLE_KEY (required: the daily limit fails closed without it),
 // AI_GLOBAL_DAILY (optional, hard cap on AI calls per day across ALL users, default 3000),
 // AI_MODEL_QUICK / AI_MODEL_DEFAULT / AI_MODEL_COMPLEX (optional overrides).
 import { json, getUser, getBilling, tierOf, AI_LIMITS, isOwnerUser, isConfirmed, bump, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
@@ -54,7 +54,9 @@ export default async (req, context) => {
 
   const model = Object.hasOwn(MODELS, body.tier) ? MODELS[body.tier] : MODELS.default;
   const t0 = Date.now();
-  const call = (m, ms) => fetch("https://api.anthropic.com/v1/messages", {
+  // Netlify AI Gateway injects ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL (billed in Netlify credits) when no own key is set.
+  const base = (process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com").replace(/\/+$/, "");
+  const call = (m, ms) => fetch(base + "/v1/messages", {
     method: "POST",
     headers: { "x-api-key": (process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA), "anthropic-version": "2023-06-01", "content-type": "application/json" },
     body: JSON.stringify({

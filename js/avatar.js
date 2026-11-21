@@ -139,5 +139,5 @@
     const html=`${maAvatarSVG({...(S.profile.av||{}),...PREV},72,"nx")}<div style="flex:1;min-width:0"><b>${nx[1]-x} XP to ${nx[0]}</b><span>Unlocks: ${ITEMS_NEXT.join(", ")}</span><div class="avx-bar"><i style="width:${pct}%"></i></div></div>`;
     if(!el){el=document.createElement("button");el.type="button";el.id="avxNext";el.className="avx-next";el.onclick=()=>maAvatarEditor();cont.after(el)}
     if(el.dataset.h!==html){el.innerHTML=html;el.dataset.h=html}}catch(e){}}
-  setInterval(card,3000);setTimeout(card,1500);
+  /* removed: home 'next unlock' avatar card (Bekir, Nov 21) */
 })();

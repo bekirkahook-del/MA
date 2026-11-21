@@ -7,7 +7,7 @@
   try{
     var st=document.createElement("style");
     st.textContent=
-      "@media (max-width:760px){.ma-cn{bottom:84px!important}}"+
+      /* (Nov 21) cookie bar is now a thin bar flush with the bottom; the old 84px lift for the Netlify badge is gone */
       ".hl-land .label{display:block;text-wrap:balance;max-width:36ch;margin-inline:auto}"+
       "@media (max-width:560px){"+
         "#seriesBanner{gap:8px 10px!important;padding:10px 12px!important;margin:0 0 10px!important}"+

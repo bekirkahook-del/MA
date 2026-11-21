@@ -63,8 +63,15 @@
   const st=document.createElement("style");st.textContent=`.sp-card{margin:18px auto 6px;max-width:560px;text-align:left;border:1px solid var(--rule);background:var(--sheet);border-radius:6px;padding:16px 18px;box-shadow:0 10px 30px rgba(20,32,59,.08)}
 .sp-card .k{font:700 11px/1 var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}.sp-card b{display:block;font-size:18px;margin:6px 0 10px;color:var(--ink)}
 .sp-tip{font-size:13.5px;font-weight:600;color:var(--cobalt);margin:8px 0 2px}
+.sp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sp-f{display:flex;flex-direction:column;gap:4px;margin-top:8px}.sp-f>span{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.sp-card select{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 11px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
+.sp-mini{list-style:none;padding:0;margin:12px 0 12px;border-top:1px solid var(--rule)}.sp-mini li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:14.5px;color:var(--ink)}
+.sp-mini .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);display:grid;place-items:center;font:700 11px/1 var(--mono,monospace);color:var(--cobalt)}
+.sp-mini li.sc span:last-child{font-weight:600}.sp-mini li.lk span:last-child{filter:blur(3.5px);user-select:none;color:var(--ink-2)}.sp-mini li.more{color:var(--ink-2);font-size:13.5px}
+.sp-card .sp-all{display:block;width:100%;margin-top:8px;font-size:14px}
+@media(max-width:520px){.sp-row{grid-template-columns:1fr}}
 .sp-card input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 13px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);color:var(--ink)}
-.sp-yrs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px}.sp-yrs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}
+.sp-yrs{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 0}.sp-yrs button{font:inherit;font-size:14px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:none;color:var(--ink);cursor:pointer}
 .sp-yrs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .sp-list{list-style:none;padding:0;margin:12px 0}.sp-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px}
 .sp-list li .n{font:700 12px/1.6 var(--mono,monospace);color:var(--ink-2);min-width:28px}.sp-list li.sc b{color:var(--cobalt)}
@@ -79,24 +86,52 @@
       try{MA_AUTH.sb.auth.onAuthStateChange((e,s)=>{window.MA_SIGNED=!!s})}catch(e){}}else if(n<40)setTimeout(()=>wait(n+1),250)})(0);
   /* arrived from a school guide ("Get this as a plan for Ohio State"): prefill the school and point at the year buttons */
   let fromGuide=null;try{const q=new URLSearchParams(location.search);fromGuide=q.get("plan");if(fromGuide){q.delete("plan");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}
+  /* prototype-v2 onboarding (Bekir liked it, Nov 21): school + target role + year, a live preview of the first steps
+     right in the card (no tap needed), and one button: save my plan and start Level 1 as a guest. */
+  const ROLES=["Investment banking","Private equity","Equity research","Hedge funds & markets","Consulting","Restructuring","Not sure yet"];
+  function steps(yr){try{maRoadBust()}catch(e){}const all=ROAD.flatMap(g=>roadItems(g).map(it=>({...it,y:g.y})));
+    const yi=Math.max(0,YRS.indexOf(yr)),cur=all.filter(it=>it.y===yr),later=all.filter(it=>YRS.indexOf(it.y)>yi),earlier=all.filter(it=>YRS.indexOf(it.y)<yi);
+    return {all,mine:cur.filter(it=>it.school).concat(cur.filter(it=>!it.school),later,earlier)}}
   function card(){const land=document.getElementById("homeLand");if(!land||!land.dataset.on||land.querySelector(".sp-card")||window.MA_SIGNED)return;
     const cta=land.querySelector(".hl-cta");if(!cta)return;
     const names=(window.maSchoolNames||[]);
     const d=document.createElement("div");d.className="sp-card";
-    let yr=(S.plan&&S.plan.year)||"";
-    d.innerHTML=`<span class="k">Free · 30 seconds</span><b>Get your 100-step plan for your school</b>
-      <input id="spSch" list="spSchL" maxlength="80" placeholder="Your school (e.g. Ohio State)" autocomplete="organization" value="${esc((S.profile&&S.profile.school)||"")}"><datalist id="spSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
-      <div class="sp-yrs" role="group" aria-label="Your year">${YRS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===yr}">${y==="High school"?"High school":y}</button>`).join("")}</div>
-      <button class="btn" id="spGo" style="width:100%">See my plan →</button>`;
+    let yr=(S.plan&&S.plan.year)||(S.profile&&S.profile.year)||"Sophomore",role=(S.plan&&S.plan.target)||"Investment banking";
+    d.innerHTML=`<span class="k">Your plan · free · 30 seconds</span><b>See your first milestones</b>
+      <div class="sp-row"><label class="sp-f"><span>School</span><input id="spSch" list="spSchL" maxlength="80" placeholder="e.g. Ohio State" autocomplete="organization" value="${esc((S.profile&&S.profile.school)||"")}"></label>
+        <label class="sp-f"><span>Target role</span><select id="spRole">${ROLES.map(r=>`<option ${r===role?"selected":""}>${esc(r)}</option>`).join("")}</select></label></div>
+      <datalist id="spSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
+      <div class="sp-f"><span>Year</span><div class="sp-yrs" role="group" aria-label="Your year">${YRS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===yr}">${y}</button>`).join("")}</div></div>
+      <ol class="sp-mini" id="spMini" aria-live="polite"></ol>
+      <button class="btn" id="spGo" style="width:100%">Save my plan and start Level 1 →</button>
+      <button class="ghost sp-all" id="spAll" type="button">See all my steps</button>`;
     cta.after(d);
-    if(fromGuide){const m=(window.maSchoolFind&&maSchoolFind(fromGuide))||null;const nm=(m&&m[0])||fromGuide.slice(0,80);d.querySelector("#spSch").value=nm;
-      const tip=document.createElement("div");tip.className="sp-tip";tip.textContent=`Pick your year to see your ${nm} plan.`;d.querySelector(".sp-yrs").before(tip);
-      fromGuide=null;ev("plan_from_guide");setTimeout(()=>{d.scrollIntoView({block:"center",behavior:"smooth"});const f=d.querySelector("[data-y]");if(f)f.focus({preventScroll:true})},350)}
-    d.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{yr=b.dataset.y;d.querySelectorAll("[data-y]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-    d.querySelector("#spGo").onclick=()=>{const sc=d.querySelector("#spSch").value.trim();
-      if(!sc){d.querySelector("#spSch").focus();return}if(!yr){yr="Freshman"}
-      S.profile=S.profile||{};S.profile.school=sc.slice(0,80);S.plan=S.plan||{};S.plan.year=yr;try{save()}catch(e){}
-      try{maRoadBust()}catch(e){}ev("plan_teaser");preview(yr)}}
+    const sch=d.querySelector("#spSch"),mini=d.querySelector("#spMini");
+    const apply=()=>{S.profile=S.profile||{};const sc=sch.value.trim();if(sc)S.profile.school=sc.slice(0,80);S.profile.year=yr;
+      S.plan=S.plan||{};S.plan.year=yr;S.plan.target=role;try{save()}catch(e){}};
+    /* preview only: borrow the choices for the roadmap calculation, then put the student's state back (nothing saved) */
+    const draw=()=>{S.profile=S.profile||{};const p0=S.plan,s0=S.profile.school,sc=sch.value.trim();
+      S.plan={...(p0||{}),year:yr,target:role};if(sc)S.profile.school=sc.slice(0,80);
+      let r;try{r=steps(yr)}catch(e){r=null}S.plan=p0;S.profile.school=s0;try{maRoadBust()}catch(e){}
+      if(!r){mini.innerHTML="";return}const m=r.mine,sh=3;
+      mini.innerHTML=m.slice(0,sh).map((it,i)=>`<li class="${it.school?"sc":""}"><span class="n">${i+1}</span><span>${esc(it.t)}</span></li>`).join("")
+        +m.slice(sh,sh+2).map((it,i)=>`<li class="lk"><span class="n">${i+sh+1}</span><span>${esc(it.t)}</span></li>`).join("")
+        +`<li class="more"><span class="n">+</span><span>${Math.max(0,r.all.length-sh-2)} more steps, paced to your timeline</span></li>`};
+    let tmr=0;sch.addEventListener("input",()=>{clearTimeout(tmr);tmr=setTimeout(draw,350)});
+    d.querySelector("#spRole").onchange=e=>{role=e.target.value;draw()};
+    d.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{yr=b.dataset.y;d.querySelectorAll("[data-y]").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()});
+    draw();
+    if(fromGuide){const m=(window.maSchoolFind&&maSchoolFind(fromGuide))||null;const nm=(m&&m[0])||fromGuide.slice(0,80);sch.value=nm;draw();
+      const tip=document.createElement("div");tip.className="sp-tip";tip.textContent=`Here's your ${nm} plan. Pick your year and role.`;d.querySelector(".sp-row").before(tip);
+      fromGuide=null;ev("plan_from_guide");setTimeout(()=>{d.scrollIntoView({block:"center",behavior:"smooth"})},350)}
+    /* save the plan (complete it so the plan card works) and start the first level as a guest */
+    d.querySelector("#spGo").onclick=()=>{apply();
+      const order=(typeof PLAN_ORDER!=="undefined"&&PLAN_ORDER[role])||undefined;
+      S.plan={...(S.plan||{}),year:yr,target:role,order:order||(S.plan&&S.plan.order),focus:order?order.length:(S.plan&&S.plan.focus),perWeek:(S.plan&&S.plan.perWeek)||5,created:(S.plan&&S.plan.created)||new Date().toISOString().slice(0,10)};
+      if(role!=="Not sure yet"&&!S.profile.target)S.profile.target=role.replace("Hedge funds & markets","Hedge funds");
+      try{save()}catch(e){}try{maRoadBust()}catch(e){}ev("plan_teaser");ev("plan_teaser_try");try{window._spAfterL1=1}catch(e){}
+      const go=document.getElementById("landGo");if(go)go.click();else if(typeof nextLevel==="function"){try{nextLevel()}catch(e){}}};
+    d.querySelector("#spAll").onclick=()=>{apply();ev("plan_teaser");preview(yr)}}
   function preview(yr){const r=window.maRoadSchool&&maRoadSchool(),all=ROAD.flatMap(g=>roadItems(g).map(it=>({...it,y:g.y})));
     const yi=Math.max(0,YRS.indexOf(yr)),cur=all.filter(it=>it.y===yr),later=all.filter(it=>YRS.indexOf(it.y)>yi),earlier=all.filter(it=>YRS.indexOf(it.y)<yi);
     const mine=cur.filter(it=>it.school).concat(cur.filter(it=>!it.school),later,earlier);

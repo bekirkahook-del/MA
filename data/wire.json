@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T21:48:00Z",
+ "updated": "2026-11-21T15:00:00Z",
  "TICKER_DATE": "Nov 10",
  "TICKER": [
   [
@@ -125,7 +125,7 @@
  ],
  "RECAP": {
   "d": "Nov 20",
-  "t": "Nov 20 close (Reuters via MarketScreener, preliminary data): the S&P 500 fell 3.59% to 6,918.45, the Nasdaq Composite fell 5.13% to 22,654.15 and the Dow fell 1.85% to 48,188.18. The S&P 500 and Dow both confirmed corrections (down 10% or more from their highs)."
+  "t": "Nov 20 close: the S&P 500 fell 3.69% to 6,910.39, the Nasdaq Composite fell 5.28% to 22,617.73 and the Dow fell 1.93% to 48,147.33. The S&P 500 and Dow both confirmed corrections (down 10% or more from their highs)."
  },
  "CAL": [
   [
@@ -180,11 +180,15 @@
   {
    "k": "Markets",
    "d": "Nov 20",
-   "h": "Nasdaq falls 5.13% and the S&P 500 and Dow confirm corrections as the AI selloff deepens",
-   "w": "Reuters, via MarketScreener, reported preliminary closes of 6,918.45 for the S&P 500 (-3.59%), 22,654.15 for the Nasdaq Composite (-5.13%) and 48,188.18 for the Dow (-1.85%). It said Anthropic's debut fell flat and its shares posted a steep loss Friday. Fed Governor Lisa Cook said the policy rate is not high enough to deal with inflation levels, and CME FedWatch showed a near-certain quarter-point hike at the December meeting.",
+   "h": "Nasdaq falls 5.28% and the S&P 500 and Dow confirm corrections as the AI selloff deepens",
+   "w": "Final closes Friday: the S&P 500 fell 3.69% to 6,910.39, the Nasdaq Composite fell 5.28% to 22,617.73 and the Dow fell 1.93% to 48,147.33. Reuters said Anthropic's debut fell flat and its shares posted a steep loss Friday. Fed Governor Lisa Cook said the policy rate is not high enough to deal with inflation levels, and CME FedWatch showed a near-certain quarter-point hike at the December meeting.",
    "m": "A correction means an index is down at least 10% from its high. With rate hikes priced in and AI stocks falling together, valuations are being repriced across the market.",
    "a": "Interview point: explain why higher rates hit long-duration growth stocks hardest (think of the discount rate in a DCF).",
    "s": [
+    [
+     "CNBC market wrap (Nov 20 close)",
+     "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html"
+    ],
     [
      "Reuters via MarketScreener (Nov 20 close)",
      "https://www.marketscreener.com/news/wall-st-ends-sharply-lower-on-ai-selloff-s-p-500-dow-in-correction-ce785ed3dd80f527"
@@ -250,14 +254,14 @@
   {
    "k": "Markets",
    "d": "Nov 19",
-   "h": "AMD falls 7.72% to $489.19 after a Hunterbrook report questions its customer financing",
-   "w": "TradingKey reported AMD fell 7.72% to $489.19 after Hunterbrook published a report arguing AMD gives customers lease guarantees, backstops unsold cloud capacity and takes equity stakes in customers, and that its commitments as a share of revenue exceed Nvidia's while its cash reserves are smaller.",
-   "m": "Vendor financing can make sales look stronger than real demand, so investors punish it when questioned.",
+   "h": "AMD falls 7.72% to $489.19 after a short seller alleges China exposure",
+   "w": "CNBC reported AMD closed down 7.72% at $489.19 after short seller Hunterbrook Media, which disclosed a short position, alleged that blacklisted Chinese server maker IEIT Systems kept receiving newer AMD firmware and that AMD bills over 20% of revenue to customers in China and Hong Kong. AMD said the claims misrepresent its business practices and that it complies with U.S. export controls. CNBC did not independently verify the allegations.",
+   "m": "A short seller profits if the stock falls, so its claims are a reason to dig in, not proof. Export-rule risk matters because it can cut off a big share of revenue.",
    "a": "Interview point: explain why vendor financing raises revenue-quality questions.",
    "s": [
     [
-     "TradingKey close report (Nov 19)",
-     "https://www.tradingkey.com/analysis/stocks/us-stocks/262313953-us-stock-nasdaq-falls-anthropic-ipo-debut-amd-short-report-tradingkey"
+     "CNBC (Nov 19)",
+     "https://www.cnbc.com/2026/11/19/amd-falls-on-short-seller-report-of-alleged-china-exposure.html"
     ]
    ]
   },
@@ -708,7 +712,7 @@
    "target": "Greenfire Resources",
    "value": "~$1.9B",
    "usd": 1.91,
-   "date": "Nov 9, 2026",
+   "date": "Nov 8, 2026",
    "terms": [
     "Cash or stock election",
     "C$11.00 cash or 0.25 Strathcona shares per Greenfire share",
@@ -891,7 +895,7 @@
    "target": "El Dorado Savings Bank",
    "value": "~$506M",
    "usd": 0.506,
-   "date": "Oct 29, 2026",
+   "date": "Oct 27, 2026",
    "terms": [
     "~52% cash, ~48% UMB stock",
     "13.553 UMB shares + $1,958.88 cash per share",

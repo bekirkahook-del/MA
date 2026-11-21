@@ -9,8 +9,10 @@ export default async (req, context) => {
   const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
   if (!isEmail(email)) return json(400, { error: "Enter a valid email." });
   const reset = b.type === "reset";
-  if (await hitLimit("signlink-ip", clientIp(req, context), 8, 3600)) return tooMany();
-  if (await hitLimit("signlink-em", email, 3, 3600)) return tooMany();
+  // hitLimit returns true when the request is ALLOWED (it counted it). Before Nov 21, 2026 this was inverted,
+  // so every sign-in/reset email got a 429 and fell back to Supabase's capped mailer (or was never sent).
+  if (!(await hitLimit("signlink-ip", clientIp(req, context), 8, 3600))) return tooMany();
+  if (!(await hitLimit("signlink-em", email, 3, 3600))) return tooMany();
   const link = await actionLink(reset ? "recovery" : "magiclink", email, SITE + "/");
   if (!link) return json(200, { ok: false, fallback: true }); // no account yet: client falls back to Supabase
   const html = plainMail(reset ? "Set your new password" : "Your sign-in link",

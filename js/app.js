@@ -1547,7 +1547,12 @@ function renderMock(){if(!mockQ||!playable().includes(mockQ))pickMock();renderPr
   $("#mock").querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{mockSec=b.dataset.s;renderMock()});
   $("#mock").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{mockDiff=+b.dataset.d;renderMock()});
   $("#mock").querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{if(b.dataset.pk&&!isPro()){upgrade("Firm packs are part of Pro");return}mockPack=b.dataset.pk;mockQ=null;renderMock()});
-  if($("#speakBtn"))$("#speakBtn").onclick=()=>{if(window.dictateStop)dictateStop();speakMode=!speakMode;renderMock();$("#mockAns")&&$("#mockAns").focus()};
+  if($("#speakBtn"))$("#speakBtn").onclick=()=>{if(window.dictateStop)dictateStop();
+    /* keep the answer, the timer and the scroll spot when switching to Speak it (re-render used to wipe them) */
+    const keep=$("#mockAns")?$("#mockAns").value:"",t0=mockT0,y=window.scrollY;speakMode=!speakMode;renderMock();
+    const ta=$("#mockAns");if(ta){ta.value=keep;ta.focus({preventScroll:true});ta.setSelectionRange(keep.length,keep.length)}
+    if(t0){mockT0=t0;clearInterval(mockClock);mockClock=setInterval(()=>{const el=$("#clock");if(!el)return clearInterval(mockClock);const s=Math.floor((Date.now()-mockT0)/1000);el.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");el.classList.toggle("over",s>(+S.settings.tgt||150))},1000)}
+    window.scrollTo(0,y);if(speakMode&&$("#dictBtn"))$("#dictBtn").click()};
   if(speakMode&&window.dictateBind&&$("#dictBtn"))dictateBind($("#dictBtn"),$("#mockAns"));
   $("#mock").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const nq=MOCK_QS.find(q=>q.id===b.dataset.q);if((nq.d===3||nq.f)&&!isPro()){upgrade(nq.f?"Firm packs are part of Pro":"Advanced questions are part of Pro");return}mockQ=nq;qBrowseOpen=false;renderMock();$("#mockAns")&&$("#mockAns").focus({preventScroll:true});$(".qpane").scrollIntoView({block:"start",behavior:"smooth"})});
   bindRel($("#mock"));

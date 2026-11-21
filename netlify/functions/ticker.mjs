@@ -18,14 +18,41 @@ function show(kind, p) {
   return "$" + fmt(p, 2);
 }
 
+// Yahoo has two public hosts. Try query1, then query2, each with a short timeout, so one slow or failing
+// host never leaves the tape on old prices.
+const HOSTS = ["https://query1.finance.yahoo.com", "https://query2.finance.yahoo.com"];
 async function one(sym) {
-  const r = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=5m`,
-    { headers: { "User-Agent": "Mozilla/5.0" } });
-  if (!r.ok) throw new Error(sym + " " + r.status);
-  const m = (await r.json()).chart.result[0].meta;
-  const p = m.regularMarketPrice, prev = m.chartPreviousClose ?? m.previousClose;
-  if (typeof p !== "number" || typeof prev !== "number" || !prev) throw new Error(sym + " no price");
-  return { p, ch: Math.round((p / prev - 1) * 10000) / 100, t: m.regularMarketTime };
+  let err;
+  for (const h of HOSTS) {
+    try {
+      const r = await fetch(`${h}/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=5m`,
+        { headers: { "User-Agent": "Mozilla/5.0" }, signal: AbortSignal.timeout(4000) });
+      if (!r.ok) throw new Error(sym + " " + r.status);
+      const m = (await r.json()).chart.result[0].meta;
+      const p = m.regularMarketPrice, prev = m.chartPreviousClose ?? m.previousClose;
+      if (typeof p !== "number" || typeof prev !== "number" || !(p > 0) || !(prev > 0)) throw new Error(sym + " no price");
+      // Sanity check: a move over 60% in a day on an index, commodity or mega-cap is almost always a bad tick.
+      if (Math.abs(p / prev - 1) > 0.6) throw new Error(sym + " bad tick");
+      return { p, ch: Math.round((p / prev - 1) * 10000) / 100, t: m.regularMarketTime };
+    } catch (e) { err = e; }
+  }
+  throw err;
+}
+
+/* Last good prices, kept server-side (Supabase docs, col "views", id "_tape"; only the server writes it).
+   If Yahoo fails for a symbol, the tape uses that symbol's last good live price instead of dropping it,
+   so the site never falls back to the weeks-old prices baked into wire.json. */
+const SB = "https://nbakxpnhcfzdosbzbupd.supabase.co";
+const svcH = () => { const k = process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+  return { apikey: k, "Content-Type": "application/json", ...(k.startsWith("eyJ") ? { Authorization: `Bearer ${k}` } : {}) }; };
+async function loadLast() {
+  try { const r = await fetch(`${SB}/rest/v1/docs?col=eq.views&id=eq._tape&select=data`, { headers: svcH(), signal: AbortSignal.timeout(3000) });
+    const rows = r.ok ? await r.json() : []; return (rows[0] && rows[0].data) || null; } catch (e) { return null; }
+}
+async function saveLast(data) {
+  try { await fetch(`${SB}/rest/v1/docs?on_conflict=col,id`, { method: "POST", signal: AbortSignal.timeout(3000),
+    headers: { ...svcH(), Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify({ col: "views", id: "_tape", uid: null, data, updated_at: new Date().toISOString() }) }); } catch (e) {}
 }
 
 export default async (req) => {
@@ -34,16 +61,26 @@ export default async (req) => {
   const stocks = [...new Set([...CORE, ...extra])].map(s => [s, s, "usd"]);
   const all = [...MAP, ...stocks];
   const res = await Promise.allSettled(all.map(([, y]) => one(y)));
-  const out = [];
-  let t = 0;
+  const out = [], fresh = {};
+  let t = 0, missing = 0;
   res.forEach((x, i) => {
-    if (x.status !== "fulfilled") return;
     const [name, , kind] = all[i];
-    const v = x.value;
-    out.push([name, show(kind, v.p), kind === "yld" ? null : v.ch]);
+    if (x.status !== "fulfilled") { missing++; out.push(null); return; }
+    const v = x.value, row = [name, show(kind, v.p), kind === "yld" ? null : v.ch];
+    out.push(row); fresh[name] = { row, t: v.t };
     if (kind === "idx" && v.t > t) t = v.t; // stock indexes decide the "as of" time
   });
-  return new Response(JSON.stringify({ asOf: t ? new Date(t * 1000).toISOString() : null, tape: out }), {
+  // Fill any symbol Yahoo didn't return from the last good copy (if it's under 4 days old), and remember this run.
+  const last = await loadLast();
+  const keep = (last && last.syms) || {};
+  const stale = [];
+  out.forEach((row, i) => {
+    if (row) return;
+    const name = all[i][0], k = keep[name];
+    if (k && Date.now() / 1000 - k.t < 4 * 86400) { out[i] = k.row; stale.push(name); }
+  });
+  if (Object.keys(fresh).length) saveLast({ syms: { ...keep, ...fresh }, at: Date.now() });
+  return new Response(JSON.stringify({ asOf: t ? new Date(t * 1000).toISOString() : null, tape: out.filter(Boolean), stale }), {
     headers: {
       "content-type": "application/json",
       "cache-control": "public, max-age=30",

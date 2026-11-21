@@ -15,3 +15,5 @@
 | 2026-11-23 | Biggest M&A deals of 2026 so far (Dealroom, Nov 2026) | 5 | paper, no photo | 132 (pace 2, fast ~9.5s) | "One company shows up TWICE" | | | | | |
 | 2026-11-23 | Perpetuity $100/yr at 5% = $2,000 (type2.js) | 4 steps | timeline | 112 | question-first "Worth today?" | | | | | |
 | 2026-11-24 | Monty Hall switch or stay (story.js) | 4 steps | story | 108 (pace 4, slow ~18s) | question-first "Switch or stay?" | | | | |
+| 2026-11-25 | Die pays $1–$6, fair price $3.50 (type.js) | 4 steps | typewriter | 132 (fast ~19.5s) | question-first "Fair price?" | | | | |
+| 2026-11-25 | 2 eggs 100 floors = 14 drops (story.js) | 4 steps | story (paper) | 124 (pace 3, ~13.5s) | question-first "Fewest drops?" | | | | |

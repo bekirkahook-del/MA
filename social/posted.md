@@ -115,3 +115,9 @@
 - 2026-11-24 defrev — [Quiz] Deferred revenue: $120 prepaid Dec 1 for 12 months → revenue $10 (C), cash +$120, deferred revenue $110
 - 2026-11-24 story-monty — [Teaser video, story.js, no voice] Monty Hall: switching wins 2/3, staying 1/3
 - 2026-11-24 oddq-999x7 — [Interview Q] 999 × 7 = 6,993 (1,000 − 1 trick)
+- 2026-11-24 12:23pm defrev — TikTok rescheduled (Nov 24 queue was missing the TikTok copy; IG + pin were already queued)
+- 2026-11-25 q3lev — 3-question challenge: gross margin 40% (B), leverage 4.0x (D), buyback EPS $2.00 → $2.50 (C)
+- 2026-11-25 type-dice — [Teaser video, type.js, no voice] Die pays $1–$6 → fair price $3.50
+- 2026-11-25 speed3 — [Carousel, speed round] $200 jacket 25% then 20% off = $120; 15% of 80 + 15% of 20 = 15; average of 1–100 = 50.5
+- 2026-11-25 story-eggs — [Teaser video, story.js, no voice] 2 eggs, 100 floors → 14 drops (14+13+…+1 = 105)
+- 2026-11-25 oddq-save5 — [Interview Q] $5 a day for a year = $1,825

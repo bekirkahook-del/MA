@@ -1,0 +1,1 @@
+[{"key": "oddq-save5", "question": "Save <b>$5 a day</b>. How much do you have after 1 year?", "emoji": "🐷", "answer": "$1,825", "steps": ["$5 × 365 days. Split it up:", "$5 × 300 = <b>$1,500</b>, and $5 × 65 = <b>$325</b>", "$1,500 + $325 = <b>$1,825</b>. Before any interest 👀"], "tip": "Interviewers care about how you split the math, not just the number."}]

@@ -1,0 +1,34 @@
+{
+"date": "2026-11-25",
+"decks": {
+"q3lev": {
+"guide": "https://mnaprep.com/",
+"ctaHead": "Intern to MD, <em>free</em>",
+"ctaSub": "1,000+ interview questions at mnaprep.com.",
+"slides": [
+"<div class=\"kicker\">3-question challenge</div><h1>3 questions. Intern to <em>MD</em>. Can you get all 3?</h1><p class=\"lede\">Each one is harder. Keep score.</p>",
+"<div class=\"kicker\">Q1 · Intern</div><h2>Revenue is <em>$200M</em>. Cost of goods sold is <em>$120M</em>. Gross margin?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>60%</div><div class=\"opt\"><i>B</i>40%</div><div class=\"opt\"><i>C</i>80%</div><div class=\"opt\"><i>D</i>25%</div></div><p class=\"note\">Pick one, then swipe.</p>",
+"<div class=\"kicker\">Answer 1</div><div class=\"big\">B. 40%</div><p class=\"lede\">($200M − $120M) ÷ $200M = $80M ÷ $200M.</p>",
+"<div class=\"kicker\">Q2 · Analyst</div><h2>EBITDA is <em>$60M</em>. Net debt is <em>$240M</em>. What's the leverage?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>2.5x</div><div class=\"opt\"><i>B</i>6.0x</div><div class=\"opt\"><i>C</i>0.25x</div><div class=\"opt\"><i>D</i>4.0x</div></div><p class=\"note\">Pick one, then swipe.</p>",
+"<div class=\"kicker\">Answer 2</div><div class=\"big\">D. 4.0x</div><p class=\"lede\">Leverage = net debt ÷ EBITDA = $240M ÷ $60M. Lenders watch this number closely.</p>",
+"<div class=\"kicker\">Q3 · MD 🔥</div><h2>Net income <em>$100M</em>, <em>50M</em> shares. The company buys back <em>10M</em> shares with cash. New EPS?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$2.00</div><div class=\"opt\"><i>B</i>$2.25</div><div class=\"opt\"><i>C</i>$2.50</div><div class=\"opt\"><i>D</i>$3.00</div></div><p class=\"note\">Ignore lost interest on the cash.</p>",
+"<div class=\"kicker\">Answer 3</div><div class=\"big\">C. $2.50</div><p class=\"lede\">$100M ÷ 40M shares. EPS goes up 25% without earning one extra dollar.</p>",
+"<div class=\"kicker\">Your score</div><table><thead><tr><th>SCORE</th><th>YOU'RE A...</th></tr></thead><tbody><tr><td>3/3</td><td class=\"hot\">MD 🔥</td></tr><tr><td>2/3</td><td>VP</td></tr><tr><td>1/3</td><td>Analyst</td></tr><tr><td>0/3</td><td>Intern</td></tr></tbody></table><p class=\"lede\">Comment your score 👇</p>"
+]
+},
+"speed3": {
+"guide": "https://mnaprep.com/",
+"ctaHead": "Faster mental math, <em>free</em>",
+"ctaSub": "Daily drills at mnaprep.com.",
+"slides": [
+"<div class=\"kicker\">Speed round</div><h1>3 questions. <em>5 seconds</em> each. No calculator.</h1><p class=\"lede\">Say your answer before you swipe.</p>",
+"<div class=\"kicker\">Question 1</div><h2>A <em>$200</em> jacket is 25% off, then another <em>20%</em> off. Final price?</h2><p class=\"note\">5 seconds. Go.</p>",
+"<div class=\"kicker\">Answer 1</div><div class=\"big\">$120</div><p class=\"lede\">$200 × 0.75 = $150, then × 0.8 = $120. Not $110: the second discount hits a smaller price.</p>",
+"<div class=\"kicker\">Question 2</div><h2>What's 15% of <em>80</em> plus 15% of <em>20</em>?</h2><p class=\"note\">5 seconds. Go.</p>",
+"<div class=\"kicker\">Answer 2</div><div class=\"big\">15</div><p class=\"lede\">Same rate, so add first: 15% of (80 + 20) = 15% of 100.</p>",
+"<div class=\"kicker\">Question 3</div><h2>What's the average of every number from <em>1 to 100</em>?</h2><p class=\"note\">5 seconds. Go.</p>",
+"<div class=\"kicker\">Answer 3</div><div class=\"big\">50.5</div><p class=\"lede\">Pair them: 1 + 100, 2 + 99... every pair is 101. Average = 101 ÷ 2.</p><p class=\"note\">How many did you get? 👇</p>"
+]
+}
+}
+}

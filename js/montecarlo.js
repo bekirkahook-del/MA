@@ -25,6 +25,9 @@
     ".mc-k b{font-family:var(--mono,monospace);font-size:16px}"+
     ".mc-lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-2,#555);margin-top:6px}"+
     ".mc-lg i{display:inline-block;width:12px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}"+
+    ".mc-ch{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}.mc-ch span{font-size:12px;color:var(--ink-2,#555);font-weight:600}"+
+    ".mc .mc-ch button{font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--rule,#d9dde6);background:var(--paper,#fff);color:var(--ink,#111);cursor:pointer;line-height:1.3}"+
+    ".mc .mc-ch button:hover{border-color:var(--cobalt,#2448D8);color:var(--cobalt,#2448D8)}.mc-ch span{min-width:0}"+
     ".mc .up{color:var(--good,#1e8e3e)}.mc .dn{color:var(--bad,#c0392b)}"+
     "@media(max-width:560px){.mc-f{grid-template-columns:1fr 1fr}.mc-k{grid-template-columns:1fr 1fr}}";
   document.head.appendChild(st);
@@ -124,13 +127,13 @@
     var s=stats(d.pts),body=$p(".mc-body",box),young=!s;
     if(young)s={mu:NaN,sig:NaN,ppy:252};
     body.innerHTML=(young?'<p class="note" style="margin:8px 0 0">Only '+d.pts.length+' trading day'+(d.pts.length===1?"":"s")+' of history, too few to estimate. Enter your own assumptions, for example the volatility of similar stocks.</p>':"")+'<div class="mc-f">'+
-      '<label>Expected return / yr (%)<input type="number" step="0.5" data-mc="mu" placeholder="e.g. 10" value="'+(MARKET*100).toFixed(1)+'"></label>'+
-      '<label>Volatility / yr (%)<input type="number" step="0.5" min="1" max="300" data-mc="sig" placeholder="e.g. 40" value="'+(young?"":(s.sig*100).toFixed(1))+'"></label>'+
+      '<label>Return / yr (%)<input type="number" step="0.5" data-mc="mu" placeholder="e.g. 10" value="'+(MARKET*100).toFixed(1)+'"></label>'+
+      '<label>Volatility (%)<input type="number" step="0.5" min="1" max="300" data-mc="sig" placeholder="e.g. 40" value="'+(young?"":(s.sig*100).toFixed(1))+'"></label>'+
       '<label>Paths (paired)<select data-mc="n"><option value="2000">2,000</option><option value="10000" selected>10,000</option><option value="20000">20,000</option></select></label>'+
-      '<label>Model<select data-mc="m"><option value="gbm">Normal moves (GBM)</option><option value="t">Fat tails (crash-prone)</option>'+(young?"":'<option value="boot" selected>Replay real past days</option>')+'</select></label></div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-mc="run">Run</button><button class="ghost outline" data-mc="new">New random draw</button>'+
-      '<button class="ghost outline" data-mc="mkt">Market avg return ('+(MARKET*100).toFixed(0)+'%)</button>'+
-      (young?"":'<button class="ghost outline" data-mc="trend">Past-year trend ('+pct(s.mu)+')</button><button class="ghost outline" data-mc="ew">Recent volatility ('+(s.ewma*100).toFixed(0)+'%)</button><button class="ghost outline" data-mc="reset">1-yr volatility ('+(s.sig*100).toFixed(0)+'%)</button>')+'</div>'+
+      '<label>Model<select data-mc="m"><option value="gbm">Normal (GBM)</option><option value="t">Fat tails</option>'+(young?"":'<option value="boot" selected>Real days</option>')+'</select></label></div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" data-mc="run">Run</button><button class="ghost outline" data-mc="new">New random draw</button></div>'+
+      '<div class="mc-ch" role="group" aria-label="Return presets"><span>Return:</span><button type="button" data-mc="mkt">Market '+(MARKET*100).toFixed(0)+'%</button>'+(young?"":'<button type="button" data-mc="trend">Past year '+pct(s.mu)+'</button>')+'</div>'+
+      (young?"":'<div class="mc-ch" role="group" aria-label="Volatility presets"><span>Volatility:</span><button type="button" data-mc="ew">Recent '+(s.ewma*100).toFixed(0)+'%</button><button type="button" data-mc="reset">1 yr '+(s.sig*100).toFixed(0)+'%</button></div>')+
       '<div class="mc-out"></div>';
     var run=function(){
       var mu=parseFloat($p('[data-mc="mu"]',body).value)/100,sig=parseFloat($p('[data-mc="sig"]',body).value)/100,n=+$p('[data-mc="n"]',body).value;

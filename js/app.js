@@ -831,7 +831,9 @@ const ROAD=[
   {id:"se9",p:["ib","rx"],g:"Recruiting",t:"Map your 2-year plan: PE on-cycle, staying in banking, or a hedge fund"},
   {id:"se12",g:"Recruiting",t:"Sort out your start: city, housing and a first-year budget"}]}
 ];
-const roadItems=g=>{const k=typeof profKey==="function"?profKey():"all";return g.items.filter(it=>k==="all"||!it.p||it.p.includes(k))};
+const roadBase=g=>{const k=typeof profKey==="function"?profKey():"all";return g.items.filter(it=>k==="all"||!it.p||it.p.includes(k))};
+/* js/schoolplan.js adds steps for the student's school and fills the plan to an even 100 */
+const roadItems=g=>{const b=roadBase(g);try{return window.maRoadExtra?maRoadExtra(g,b,roadBase):b}catch(e){return b}};
 const roadYear=()=>{const y=S.plan&&S.plan.year;return ROAD.some(g=>g.y===y)?y:null};
 
 const FIRMS=[
@@ -1587,7 +1589,7 @@ Return ONLY JSON: {"score": integer 1-10, "verdict": one short sentence, "streng
 /* ---------- roadmap ---------- */
 function renderRoad(){let tot=0,dn=0;if(!YOPEN.size&&!renderRoad._o){renderRoad._o=1;YOPEN.add(roadYear()||"Freshman")}
   $("#road").innerHTML=ROAD.map(g=>{let gd=0;const items=ROAD_G.map(G=>{const its=roadItems(g).filter(it=>(it.g||"Recruiting")===G);if(!its.length)return"";return `<div class="road-g">${G}</div>`+its.map(it=>{const a=it.auto?it.auto():false,ck=it.auto?a:!!S.road[it.id];tot++;if(ck){dn++;gd++}
-    const go=ROAD_GO[it.id];return `<div class="chk-row"><label class="chk ${ck?'done':''} ${window._justR===it.id?'just':''}"><input type="checkbox" data-r="${it.id}" ${ck?"checked":""} ${it.auto?"disabled":""}><span><span class="t">${it.t}</span>${it.auto?'<span class="auto">auto</span>':""}</span></label>${go&&!ck?`<button class="rel sm" data-act="${go}" aria-label="Go: ${esc(it.t)}">Go →</button>`:""}</div>`}).join("")}).join("");
+    const go=it.go||ROAD_GO[it.id];return `<div class="chk-row"><label class="chk ${ck?'done':''} ${window._justR===it.id?'just':''}"><input type="checkbox" data-r="${it.id}" ${ck?"checked":""} ${it.auto?"disabled":""}><span><span class="t">${it.t}</span>${it.auto?'<span class="auto">auto</span>':""}</span></label>${go&&!ck?`<button class="rel sm" data-act="${go}" aria-label="Go: ${esc(it.t)}">Go →</button>`:""}</div>`}).join("")}).join("");
     return `<details class="year" data-y="${g.y}" ${YOPEN.has(g.y)?"open":""}><summary><h3>${g.y}${roadYear()===g.y?'<span class="you-here">You are here</span>':""}</h3><span class="yr-meta">${gd}/${roadItems(g).length}<span class="yr-bar"><i style="width:${Math.round(gd/roadItems(g).length*100)}%"></i></span><span class="tr-dots">${roadItems(g).map((_,i)=>`<i class="${i<gd?'on':''}"></i>`).join("")}</span><span class="chev"></span></span></summary><div class="year-body">${items}</div></details>`}).join("");
   $("#road").querySelectorAll("details.year").forEach(d=>d.addEventListener("toggle",()=>{d.open?YOPEN.add(d.dataset.y):YOPEN.delete(d.dataset.y)}));
   const p=Math.round(dn/tot*100);$("#roadPct").textContent=p+"%";$("#roadBar").style.width=p+"%";
@@ -3004,6 +3006,7 @@ function closeAll(){if(!ov.hidden)closePanel();if(!$("#wire").hidden)toggleWire(
 const linkRow=items=>items.length?`<div class="related"><span class="label">Keep going</span>${items.map(([l,act])=>`<button class="rel" data-act="${esc(act)}">${l} <span aria-hidden="true">→</span></button>`).join("")}</div>`:"";
 function bindRel(root){(root||document).querySelectorAll("[data-act]").forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();runAct(b.dataset.act)})}
 function runAct(a){const [k,...rest]=a.split("|");
+  if(k==="url"){const u=rest.join("|");if(/^\/[a-z0-9\-\/]*$/i.test(u))location.href=u;return}
   if(k==="int")goInterview(rest[0],+rest[1]||0);else if(k==="lvl")goLevel(rest[0],+rest[1]);else if(k==="tool")goTool(rest[0]);else if(k==="firm")goFirm(rest[0]);
   else if(k==="tab"){closeAll();showTab(rest[0])}else if(k==="news"){closeAll();toggleWire(true)}else if(k==="gauntlet"){closeAll();showTab("compete");showSub("compete","overview")}
   else if(k==="rapid"){closeAll();showTab("practice");showSub("practice","rapid");setTimeout(()=>$("#rfBtn").click(),50)}else if(k==="profile"){closeAll();showPlayer({id:myId||"me",...myStats()})}
@@ -4536,7 +4539,7 @@ function homeGauntletCard(){const wk=isoWeek(),g=(S.gauntlet||{})[wk];
    ${g?`<div class="hc-score"><b>${g.score}</b><span>${g.correct}/10 right${rk?` · ${rk}`:""}</span></div>`:`<b>10 questions. One shot.</b><span class="note">Same questions for everyone this week. Speed counts.${wkP.length?` ${wkP.length} ${wkP.length===1?"person has":"people have"} played.`:""}</span>`}
    <span class="hc-next">${pos&&all.length>1?`You're #${pos} of ${all.length} overall by XP`:"Climb the leaderboard by playing every week"}</span></button>`}
 {const _rh=renderHome;renderHome=function(){_rh.apply(this,arguments);try{
-  const view=document.querySelector('[data-view="home"]');if(!view)return;const isNew=homeIsNew();view.classList.toggle("home-new",isNew);
+  const view=document.querySelector('[data-view="home"]');if(!view)return;const isNew=homeIsNew()||window.MA_SIGNED===false;view.classList.toggle("home-new",isNew);
   let land=$("#homeLand");if(!land){land=document.createElement("div");land.id="homeLand";const hero=view.querySelector(".hero > div");hero.insertBefore(land,hero.firstChild)}
   let duo=$("#homeDuo");if(!duo){duo=document.createElement("div");duo.id="homeDuo";duo.className="home-duo";$("#continue").after(duo)}
   if(isNew){if(!land.dataset.on){land.innerHTML=homeLanding();land.dataset.on="1";

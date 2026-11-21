@@ -23,6 +23,12 @@
   body.has-bb nav.tabs .tab[aria-selected="true"]{color:var(--cobalt,#2448D8)}
   body.has-bb nav.tabs .fx-ind{display:none!important}
   body.has-bb.bb-ov nav.tabs{display:none!important}
+  /* every sub-tab visible on small phones: rows wrap instead of running off the edge (Career has 6, Practice chips 3) */
+  .view nav.subnav{flex-wrap:wrap!important;overflow:visible!important;row-gap:2px;justify-content:center}
+  .view nav.subnav .fx-ind{display:none!important}
+  .view nav.subnav button[aria-pressed="true"]{box-shadow:inset 0 -2px 0 var(--cobalt,#2448D8)}
+  .pn-tabs{flex-wrap:wrap!important;overflow:visible!important;row-gap:8px}
+  header .brand{white-space:nowrap}
   body.has-bb:not(.bb-home) #tape{display:none!important}
   body.has-bb .ma-cn,body.has-bb .gw-tc,body.has-bb .ej-g,body.has-bb .rk-bar{bottom:calc(68px + env(safe-area-inset-bottom,0px))!important}
   body.has-bb .toast,body.has-bb .ux-toast,body.has-bb .bdg-toast,body.has-bb .em-sl{bottom:calc(76px + env(safe-area-inset-bottom,0px))!important}

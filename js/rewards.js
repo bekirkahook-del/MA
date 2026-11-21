@@ -108,6 +108,12 @@
       <p>Free gets you ready. Pro adds AI that grades every answer and tells you exactly what to fix, so you walk into your Superday having already done it 50 times.</p>
       ${pro?"":`<div class="pro2-cta"><button class="btn pro2-go" id="proTrial">Try Pro free for 3 days</button><span>No card needed · nothing to cancel</span></div>`}
     </section>
+    ${pro?"":`<section class="pro3-sum" aria-label="What Pro adds"><h3>Pro</h3>
+      <ul><li>Everything in Free</li><li>AI grading on every answer</li><li>Deeper practice and full mock Superdays</li></ul>
+      <div class="pro3-fb"><b>Example feedback</b><span>Missing: depreciation is non-cash, so add it back.</span><span>Strong answer: “Cash rises 2.50 from the tax shield.”</span></div>
+      <div class="pro3-chips"><span>$9 / month</span><span class="best">$69 / year · $5.75 a month</span><span>$29 Season Pass · 4 months, never renews</span></div>
+      <p class="pro3-terms">3-day free trial: no card, nothing to cancel. If you pick a plan, Monthly ($9) and Yearly ($69) renew until you cancel in Settings. Season Pass never renews.</p>
+      <button class="btn pro3-go" type="button" id="proTrial2">Start 3-day free trial</button></section>`}
     <section><div class="sec-head"><h2>Simple, student pricing</h2></div>
      <div class="plans pro2-plans">${plans.map(([k,n,p,per,d,tag])=>`<div class="plan ${k==="yearly"?"best":""}">${tag?`<span class="plan-tag">${tag}</span>`:""}<div class="label">${n}</div><div class="price">${p}<span>${per}</span></div><p>${d}</p><button class="${k==="yearly"?"btn":"ghost outline"}" data-plan="${k}">${pro&&plan===k?"Current plan":"Choose "+n}</button></div>`).join("")}</div>
      <p class="note pay-fine" style="margin:10px 0 14px;text-align:center;font-size:13px">Monthly, Yearly and Founding plans renew automatically at the same price until you cancel. Cancel anytime in Settings. Season Pass is a one-time payment. By continuing you agree to the <a href="/terms/" target="_blank" rel="noopener">Terms</a>; see <a href="/refund/" target="_blank" rel="noopener">Refunds</a>. Prices in USD, taxes added where required.</p>
@@ -316,3 +322,7 @@
   try{grant();useShields();applyAccent();renderHome();renderPro();applyProUI()}catch(e){console.error(e)}
   setInterval(()=>{try{const g=grant();if(g.some(x=>String(x).startsWith("p"))){confetti();toast(`★ Prestige ${prestige(totalXP())}! +1 Streak Shield`)}}catch(e){}},5000);
 })();
+
+/* Pro summary card (redesign v2, Nov 21): styles + its button reuses the existing trial button */
+(function(){try{var st=document.createElement("style");st.textContent=".pro3-sum{border:1.5px solid var(--cobalt,#2448D8);border-radius:10px;background:var(--sheet,#fff);padding:22px 20px;margin:6px auto 26px;max-width:640px}\n.pro3-sum h3{font-size:24px;margin:0 0 8px;color:var(--ink)}\n.pro3-sum ul{margin:0 0 14px;padding-left:20px;color:var(--ink-2);font-size:15.5px;line-height:1.8}\n.pro3-fb{display:flex;flex-direction:column;gap:2px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);padding:14px 16px;font-size:15px;color:var(--ink)}\n.pro3-fb b{margin-bottom:2px}\n.pro3-chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 10px}\n.pro3-chips span{font-size:14px;font-weight:600;border:1px solid var(--rule);border-radius:999px;padding:6px 12px;color:var(--ink-2);background:var(--paper)}\n.pro3-chips span.best{color:#1f7a4a;border-color:#9fd6b6;background:#e9f7ef}\n:root[data-theme=\"dark\"] .pro3-chips span.best{color:#79D6A2;border-color:#2f5c47;background:#15291f}\n.pro3-terms{font-size:13px;color:var(--ink-2);margin:0 0 14px;line-height:1.5}\n.pro3-go{width:100%;font-size:16px;padding:13px 16px}";document.head.appendChild(st);
+  document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#proTrial2");if(!b)return;var t=document.getElementById("proTrial");if(t)t.click()})}catch(e){}})();

@@ -1,7 +1,7 @@
 /* 1-year Monte Carlo for Market search (Nov 19, 2026).
    Adds a "1-year Monte Carlo" card to every quote and company panel. It pulls one year of daily closes from
-   /.netlify/functions/history, estimates drift and volatility from daily log returns, then simulates
-   geometric Brownian motion paths for one year and shows percentile bands, odds and 95% VaR.
+   /.netlify/functions/history, estimates volatility from daily log returns, then simulates
+   paired (antithetic) price paths (normal, fat-tail or replayed real days) for one year and shows percentile bands, odds and 95% VaR.
    Users can change the expected return, volatility and number of paths. Education only, not a forecast. */
 (function(){
   "use strict";
@@ -36,25 +36,43 @@
     var n=r.length,m=0;r.forEach(function(x){m+=x});m/=n;
     var v=0;r.forEach(function(x){v+=(x-m)*(x-m)});v/=(n-1);
     var days=(pts[pts.length-1][0]-pts[0][0])/86400,ppy=Math.min(366,Math.max(200,Math.round(n/(days/365.25))));
-    var sig=Math.sqrt(v*ppy),mu=m*ppy+sig*sig/2;     // arithmetic annual drift for GBM
-    return {mu:mu,sig:sig,ppy:ppy};
+    var sig=Math.sqrt(v*ppy),mu=m*ppy+sig*sig/2;     // arithmetic annual drift for GBM (past-year trend)
+    var ew=v;r.forEach(function(x){ew=0.94*ew+0.06*(x-m)*(x-m)});   // RiskMetrics EWMA (lambda 0.94): recent volatility
+    return {mu:mu,sig:sig,ppy:ppy,ewma:Math.sqrt(ew*ppy),rets:r,rm:m,rs:Math.sqrt(v),n:n};
   }
-  function gauss(){var u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
-  function simulate(S0,mu,sig,steps,paths){
-    var dt=1/steps,a=(mu-sig*sig/2)*dt,b=sig*Math.sqrt(dt),K=26,every=Math.max(1,Math.round(steps/K));
+  var MARKET=0.10;   // long-run U.S. stock market average, ~10%/yr: a saner default than one noisy year of returns
+  /* seeded RNG so the same inputs give the same answer (mulberry32) */
+  function rng(seed){var t=seed>>>0;return function(){t=(t+0x6D2B79F5)>>>0;var x=Math.imul(t^(t>>>15),1|t);x^=x+Math.imul(x^(x>>>7),61|x);return ((x^(x>>>14))>>>0)/4294967296}}
+  function normals(R){var spare=null;return function(){if(spare!==null){var z=spare;spare=null;return z}var u=0,v=0;while(!u)u=R();v=R();
+    var m=Math.sqrt(-2*Math.log(u));spare=m*Math.sin(2*Math.PI*v);return m*Math.cos(2*Math.PI*v)}}
+  /* Paired (antithetic) simulation: every random path is run twice, once with shocks z and once with -z.
+     The pair's errors cancel, so averages and odds settle with fewer paths.
+     model: "gbm" normal shocks | "t" fat tails (Student-t, 4 degrees of freedom, scaled to the same volatility)
+            "boot" replays the stock's own past daily moves in 5-day blocks, rescaled to the chosen volatility and drift */
+  function simulate(S0,mu,sig,steps,paths,model,st,seed){
+    var R=rng(seed||1),N=normals(R),dt=1/steps,a=(mu-sig*sig/2)*dt,b=sig*Math.sqrt(dt),K=26,every=Math.max(1,Math.round(steps/K));
     var marks=[];for(var k=0;k<=steps;k+=every)marks.push(k);if(marks[marks.length-1]!==steps)marks.push(steps);
-    var grid=marks.map(function(){return new Float64Array(paths)}),end=new Float64Array(paths),hitDown=0;
-    for(var p=0;p<paths;p++){var x=0,lo=0,mi=0;grid[0][p]=S0;
-      for(var s=1;s<=steps;s++){x+=a+b*gauss();if(x<lo)lo=x;if(s===marks[mi+1]){mi++;grid[mi][p]=S0*Math.exp(x)}}
-      end[p]=S0*Math.exp(x);if(lo<=Math.log(0.8))hitDown++}
+    paths=Math.max(2,paths-(paths%2));
+    var grid=marks.map(function(){return new Float64Array(paths)}),end=new Float64Array(paths),hitDown=0,SAMPLE=24,samp=[];
+    var tz=function(){var c=0;for(var q=0;q<4;q++){var g=N();c+=g*g}return N()/Math.sqrt(c/4)*Math.SQRT1_2};   // t(4) scaled to unit variance
+    var boot=model==="boot"&&st&&st.rets&&st.rets.length>40,scale=boot?b/st.rs:0,R0=boot?st.rets:null,L=R0?R0.length:0;
+    var z=new Float64Array(steps);
+    for(var p=0;p<paths;p+=2){
+      if(boot){for(var s0=0;s0<steps;){var st0=Math.floor(R()*(L-5));for(var q=0;q<5&&s0<steps;q++,s0++)z[s0]=(R0[st0+q]-st.rm)*scale}}
+      else for(var s1=0;s1<steps;s1++)z[s1]=b*(model==="t"?tz():N());
+      for(var side=0;side<2;side++){var sg=side?-1:1,x=0,lo=0,mi=0,pi=p+side,keep=samp.length<SAMPLE?[S0]:null;grid[0][pi]=S0;
+        for(var s=1;s<=steps;s++){x+=a+sg*z[s-1];if(x<lo)lo=x;if(s===marks[mi+1]){mi++;var v=S0*Math.exp(x);grid[mi][pi]=v;if(keep)keep.push(v)}}
+        end[pi]=S0*Math.exp(x);if(lo<=Math.log(0.8))hitDown++;if(keep)samp.push(keep)}}
     var pc=function(arr,q){var s=Array.prototype.slice.call(arr).sort(function(a,b){return a-b});return s[Math.min(s.length-1,Math.floor(q*s.length))]};
     var bands=grid.map(function(g,i){return {t:marks[i]/steps,p5:pc(g,.05),p25:pc(g,.25),p50:pc(g,.5),p75:pc(g,.75),p95:pc(g,.95)}});
-    var up=0,sum=0;for(var j=0;j<paths;j++){if(end[j]>S0)up++;sum+=end[j]}
-    return {bands:bands,p5:pc(end,.05),p50:pc(end,.5),p95:pc(end,.95),mean:sum/paths,up:up/paths,dd20:hitDown/paths};
+    var up=0,sum=0,pairUp=[];for(var j=0;j<paths;j+=2){var u2=(end[j]>S0)+(end[j+1]>S0);up+=u2;pairUp.push(u2/2);sum+=end[j]+end[j+1]}
+    var pu=up/paths,vv=0;pairUp.forEach(function(x){vv+=(x-pu)*(x-pu)});var se=Math.sqrt(vv/Math.max(1,pairUp.length-1)/pairUp.length);   // std error from pairs
+    var sorted=Array.prototype.slice.call(end).sort(function(a,b){return a-b}),cut=Math.max(1,Math.floor(.05*paths)),tail=0;for(var c2=0;c2<cut;c2++)tail+=sorted[c2];
+    return {bands:bands,marks:marks.map(function(m){return m/steps}),samp:samp,p5:pc(end,.05),p50:pc(end,.5),p95:pc(end,.95),mean:sum/paths,up:pu,upSE:se,dd20:hitDown/paths,es:tail/cut,n:paths};
   }
 
   /* ---------- chart ---------- */
-  function chart(pts,S0,r){
+  function chart(pts,S0,r,cur){
     var W=640,H=240,L=8,R=58,T=10,B=22,hist=pts.slice(-252),all=hist.map(function(p){return p[1]}).concat([r.bands[r.bands.length-1].p95,r.bands[r.bands.length-1].p5,S0]);
     var lo=Math.min.apply(null,all),hi=Math.max.apply(null,all);r.bands.forEach(function(b){if(b.p5<lo)lo=b.p5;if(b.p95>hi)hi=b.p95});
     var pad=(hi-lo)*.06||1;lo=Math.max(0,lo-pad);hi+=pad;
@@ -65,11 +83,16 @@
     var med=r.bands.map(function(x,i){return (i?"L":"M")+fx(x.t).toFixed(1)+" "+Y(x.p50).toFixed(1)}).join("");
     var fmt=function(v){return v>=1000?Math.round(v).toLocaleString():v.toFixed(v<10?2:1)};
     var tick=function(v,c){return '<text x="'+(W-R+6)+'" y="'+(Y(v)+4).toFixed(1)+'" font-size="11" fill="'+c+'" font-family="var(--mono,monospace)">'+fmt(v)+'</text>'};
-    var last=r.bands[r.bands.length-1];
-    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Past year of prices and simulated range for the next year">'+
+    var last=r.bands[r.bands.length-1],cs=cur==="USD"?"$":"",m2=function(v){return cs+(v>=1000?Math.round(v).toLocaleString():v.toFixed(2))};
+    var fd=function(t){return new Date(t*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})},t1=hist.length?hist[hist.length-1][0]:Date.now()/1000;
+    var rows=hist.map(function(p,i){return [+hx(i).toFixed(1),+Y(p[1]).toFixed(1),fd(p[0])+"\n"+m2(p[1])]}).concat(r.bands.slice(1).map(function(b){
+      return [+fx(b.t).toFixed(1),+Y(b.p50).toFixed(1),"~"+fd(t1+b.t*365.25*86400)+" (simulated)\nMedian "+m2(b.p50)+"\nMiddle 50%: "+m2(b.p25)+" – "+m2(b.p75)+"\nMiddle 90%: "+m2(b.p5)+" – "+m2(b.p95)]}));
+    var hv=window.maHvAttr?window.maHvAttr(rows):"";
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Past year of prices and simulated range for the next year. Hover or use arrow keys for values"'+hv+'>'+
       '<line x1="'+mid+'" x2="'+mid+'" y1="'+T+'" y2="'+(H-B)+'" stroke="currentColor" stroke-opacity=".18" stroke-dasharray="3 3"/>'+
       '<path d="'+band("p95","p5")+'" fill="var(--cobalt,#2448D8)" fill-opacity=".12"/>'+
       '<path d="'+band("p75","p25")+'" fill="var(--cobalt,#2448D8)" fill-opacity=".24"/>'+
+      (r.samp||[]).map(function(sp){return '<path d="'+sp.map(function(v,i){return (i?"L":"M")+fx(r.marks[i]).toFixed(1)+" "+Y(Math.max(lo,Math.min(hi,v))).toFixed(1)}).join("")+'" fill="none" stroke="var(--cobalt,#2448D8)" stroke-opacity=".18" stroke-width=".8"/>'}).join("")+
       '<path d="'+line+'" fill="none" stroke="currentColor" stroke-width="1.6"/>'+
       '<path d="'+med+'" fill="none" stroke="var(--cobalt,#2448D8)" stroke-width="2"/>'+
       tick(last.p95,"var(--ink-2,#555)")+tick(last.p50,"var(--cobalt,#2448D8)")+tick(last.p5,"var(--ink-2,#555)")+
@@ -101,32 +124,44 @@
     var s=stats(d.pts),body=$p(".mc-body",box),young=!s;
     if(young)s={mu:NaN,sig:NaN,ppy:252};
     body.innerHTML=(young?'<p class="note" style="margin:8px 0 0">Only '+d.pts.length+' trading day'+(d.pts.length===1?"":"s")+' of history, too few to estimate. Enter your own assumptions, for example the volatility of similar stocks.</p>':"")+'<div class="mc-f">'+
-      '<label>Expected return / yr (%)<input type="number" step="0.5" data-mc="mu" placeholder="e.g. 8" value="'+(young?"":(s.mu*100).toFixed(1))+'"></label>'+
+      '<label>Expected return / yr (%)<input type="number" step="0.5" data-mc="mu" placeholder="e.g. 10" value="'+(MARKET*100).toFixed(1)+'"></label>'+
       '<label>Volatility / yr (%)<input type="number" step="0.5" min="1" max="300" data-mc="sig" placeholder="e.g. 40" value="'+(young?"":(s.sig*100).toFixed(1))+'"></label>'+
-      '<label>Paths<select data-mc="n"><option>1000</option><option selected>2000</option><option>5000</option></select></label></div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-mc="run">Run</button>'+(young?"":'<button class="ghost outline" data-mc="reset">Use past-year numbers</button>')+'</div>'+
+      '<label>Paths (paired)<select data-mc="n"><option value="2000">2,000</option><option value="10000" selected>10,000</option><option value="20000">20,000</option></select></label>'+
+      '<label>Model<select data-mc="m"><option value="gbm">Normal moves (GBM)</option><option value="t">Fat tails (crash-prone)</option>'+(young?"":'<option value="boot" selected>Replay real past days</option>')+'</select></label></div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-mc="run">Run</button><button class="ghost outline" data-mc="new">New random draw</button>'+
+      '<button class="ghost outline" data-mc="mkt">Market avg return ('+(MARKET*100).toFixed(0)+'%)</button>'+
+      (young?"":'<button class="ghost outline" data-mc="trend">Past-year trend ('+pct(s.mu)+')</button><button class="ghost outline" data-mc="ew">Recent volatility ('+(s.ewma*100).toFixed(0)+'%)</button><button class="ghost outline" data-mc="reset">1-yr volatility ('+(s.sig*100).toFixed(0)+'%)</button>')+'</div>'+
       '<div class="mc-out"></div>';
     var run=function(){
       var mu=parseFloat($p('[data-mc="mu"]',body).value)/100,sig=parseFloat($p('[data-mc="sig"]',body).value)/100,n=+$p('[data-mc="n"]',body).value;
       if(!isFinite(mu)||!isFinite(sig)||sig<=0){$p(".mc-out",body).innerHTML='<p class="note">Enter a return and a volatility above 0.</p>';return}
       mu=Math.max(-0.95,Math.min(3,mu));sig=Math.min(3,sig);
-      var S0=d.last,r=simulate(S0,mu,sig,s.ppy,n),cur=d.cur;
-      $p(".mc-out",body).innerHTML=chart(d.pts,S0,r)+
+      var model=$p('[data-mc="m"]',body).value,S0=d.last,r=simulate(S0,mu,sig,s.ppy,n,model,young?null:s,seed),cur=d.cur;
+      $p(".mc-out",body).innerHTML=chart(d.pts,S0,r,cur)+
         '<div class="mc-lg"><span><i style="background:currentColor"></i>Past year</span><span><i style="background:var(--cobalt,#2448D8)"></i>Median path</span><span><i style="background:var(--cobalt,#2448D8);opacity:.45"></i>Middle 50%</span><span><i style="background:var(--cobalt,#2448D8);opacity:.2"></i>Middle 90%</span></div>'+
         '<div class="mc-k">'+
           '<div><span>Today</span><b>'+money(S0,cur)+'</b></div>'+
           '<div><span>Median in 1 yr</span><b>'+money(r.p50,cur)+'</b><small class="'+(r.p50>=S0?"up":"dn")+'"> '+pct(r.p50/S0-1)+'</small></div>'+
           '<div><span>90% range</span><b>'+money(r.p5,cur)+' – '+money(r.p95,cur)+'</b></div>'+
-          '<div><span>Chance it\'s higher</span><b>'+Math.round(r.up*100)+'%</b></div>'+
+          '<div><span>Chance it\'s higher</span><b>'+Math.round(r.up*100)+'%</b><small> ±'+Math.max(0.1,r.upSE*196).toFixed(1)+'</small></div>'+
+          '<div><span>Average (mean) in 1 yr</span><b>'+money(r.mean,cur)+'</b></div>'+
+          '<div><span>Avg of worst 5% (ES)</span><b class="dn">'+pct(r.es/S0-1)+'</b></div>'+
           '<div><span>95% VaR (1 yr)</span><b class="dn">'+pct(Math.min(0,r.p5/S0-1))+'</b></div>'+
           '<div><span>Chance of a 20% drop</span><b>'+Math.round(r.dd20*100)+'%</b></div>'+
           '<div><span>Return used</span><b>'+pct(mu)+'</b></div>'+
           '<div><span>Volatility used</span><b>'+(sig*100).toFixed(1)+'%</b></div></div>'+
-        '<p class="note" style="margin-top:10px">Assumes prices follow a random walk (geometric Brownian motion) with these numbers held constant. Past returns rarely repeat, so try a lower expected return too. Education only, not a forecast or advice.</p>'+
+        '<p class="note" style="margin-top:10px">'+r.n.toLocaleString()+' paths in mirrored pairs (antithetic variates) for steadier results; ± is the 95% sampling error. '+({gbm:"Normal model: a random walk (geometric Brownian motion) with constant return and volatility; it underestimates crashes.",t:"Fat-tail model: daily moves drawn from a Student-t (4 df) at the same volatility, so big jumps happen more often, like real markets.",boot:"Replay model: rebuilds each year from this stock\'s real past daily moves in 5-day blocks (keeps fat tails and calm/volatile streaks), rescaled to the volatility and return above."})[model]+' The default return is the long-run stock market average, not last year\'s move. Education only, not a forecast or advice.</p>'+
         '<div class="ang" style="margin-top:10px"><b>Interview angle</b>Banks and funds use Monte Carlo for VaR, option pricing and LBO returns. Be ready to explain why higher volatility widens the range and why the median ends below the mean.</div>';
     };
+    var seed=7,set=function(k,v){$p('[data-mc="'+k+'"]',body).value=v};
     $p('[data-mc="run"]',body).onclick=run;
-    if($p('[data-mc="reset"]',body))$p('[data-mc="reset"]',body).onclick=function(){$p('[data-mc="mu"]',body).value=(s.mu*100).toFixed(1);$p('[data-mc="sig"]',body).value=(s.sig*100).toFixed(1);run()};
+    $p('[data-mc="new"]',body).onclick=function(){seed=(Math.random()*1e9)|0;run()};
+    $p('[data-mc="mkt"]',body).onclick=function(){set("mu",(MARKET*100).toFixed(1));run()};
+    var on=function(k,f){var b=$p('[data-mc="'+k+'"]',body);if(b)b.onclick=f};
+    on("trend",function(){set("mu",(s.mu*100).toFixed(1));run()});
+    on("ew",function(){set("sig",(s.ewma*100).toFixed(1));run()});
+    on("reset",function(){set("sig",(s.sig*100).toFixed(1));run()});
+    $p('[data-mc="m"]',body).onchange=run;
     if(!young)run();
   }
 

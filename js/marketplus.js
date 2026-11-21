@@ -62,7 +62,9 @@
     var d=function(t){return new Date(t*1000).toLocaleDateString("en-US",{month:"short",day:"numeric"})};
     var f=function(x){return x>=1000?Math.round(x).toLocaleString():x.toFixed(x<10?2:1)};
     var mx=v.indexOf(Math.max.apply(null,v)),mn=v.indexOf(Math.min.apply(null,v));
-    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Price chart">'+
+    var cs=cur==="USD"?"$":"",fd=function(t){return new Date(t*1000).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"})};
+    var hv=window.maHvAttr?window.maHvAttr(pts.map(function(p,i){var ch=i?p[1]/pts[i-1][1]-1:null;return [+X(i).toFixed(1),+Y(p[1]).toFixed(1),fd(p[0])+"\n"+cs+(p[1]>=1000?p[1].toLocaleString("en-US",{maximumFractionDigits:2}):p[1].toFixed(2))+(ch===null?"":"  "+(ch>=0?"+":"−")+Math.abs(ch*100).toFixed(2)+"% day")]})):"";
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Price chart. Hover or use arrow keys to see each day\'s price"'+hv+'>'+
       '<path d="'+area+'" fill="'+col+'" fill-opacity=".08"/><path d="'+line+'" fill="none" stroke="'+col+'" stroke-width="1.8"/>'+
       '<text x="'+(W-R+6)+'" y="'+(Y(v[mx])+4).toFixed(1)+'" font-size="11" fill="var(--ink-2,#555)" font-family="var(--mono,monospace)">'+f(v[mx])+'</text>'+
       '<text x="'+(W-R+6)+'" y="'+(Y(v[mn])+4).toFixed(1)+'" font-size="11" fill="var(--ink-2,#555)" font-family="var(--mono,monospace)">'+f(v[mn])+'</text>'+

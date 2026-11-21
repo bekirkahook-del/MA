@@ -1953,6 +1953,8 @@ html body .page-head h1::after,html body .page-head h2::after{display:none}
 html body .set-hero{background:var(--cobalt)}
 html body .founder-b::after{display:none}
 html body .cb-th,html body .fr-note{font-style:normal}
+/* simpler home: no plan card, no daily question / curveball block */
+html body .view[data-view="home"] #planCard,html body .view[data-view="home"] section.side-daily,html body .view[data-view="home"] #cbHome{display:none!important}
 </style>
 <div class="wrap">
   <header class="top">

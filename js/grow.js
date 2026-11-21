@@ -3,7 +3,7 @@
    1) "Save your progress" pop-up right after a guest clears level 1 and level 3
    2) "Your progress is only on this device" bar for guests with XP
    3) Sign-up boxes on guide, tool and cheat-sheet pages (mid-article and end)
-   Everything can be closed. Nothing blocks free content. */
+   Everything can be closed. Nothing blocks free content (the guide gate test has a "keep reading" button). */
 (function(){
   const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
   const SS={get:k=>{try{return sessionStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{sessionStorage.setItem(k,v)}catch(e){}}};
@@ -41,6 +41,13 @@
 .gw-tc button.x{border:0;background:none;color:#B8C2DA;font-size:20px;cursor:pointer;padding:0 2px}
 .gw-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid var(--rule,#D3D9E4);border-left:4px solid var(--cobalt,#2448D8);border-radius:12px;background:var(--sheet,#fff);padding:10px 14px;margin:10px 0;font-size:14.5px;color:var(--ink,#13203B)}
 .gw-strip>span{flex:1;min-width:200px}.gw-strip button.go{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border:0;border-radius:9px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer;white-space:nowrap}
+.gw-pw.lock{max-height:220px;overflow:hidden;position:relative}
+.gw-pw.lock:after{content:"";position:absolute;left:0;right:0;bottom:0;height:180px;background:linear-gradient(transparent,var(--paper,#fff))}
+.gw-gate{border:1px solid var(--rule,#D3D9E4);border-top:4px solid var(--cobalt,#2448D8);border-radius:16px;background:var(--sheet,#fff);padding:22px 20px;margin:0 0 28px;text-align:center;box-shadow:0 10px 30px rgba(19,32,59,.08)}
+.gw-gate .k{font-size:11.5px;letter-spacing:.1em;font-weight:700;color:var(--cobalt,#2448D8);text-transform:uppercase}
+.gw-gate .h{font-size:22px;font-weight:800;margin:6px 0;color:var(--ink,#13203B)}.gw-gate p{font-size:15px;color:var(--ink-2,#4A5672);margin:0 0 14px}
+.gw-gate a.go{display:inline-block;font-size:16px;font-weight:700;padding:12px 22px;border-radius:12px;background:var(--cobalt,#2448D8);color:#fff!important;text-decoration:none}
+.gw-gate .skip{display:block;margin:10px auto 0;font:inherit;font-size:13.5px;background:none;border:0;color:var(--ink-2,#4A5672);text-decoration:underline;cursor:pointer}
 @keyframes gwUp{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 @keyframes gwIn{from{opacity:0}to{opacity:1}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
@@ -54,7 +61,23 @@
       d.querySelector("a").addEventListener("click",()=>{ev("guide_cta_click");flush()});return d};
     const place=()=>{if(!guest()||document.querySelector(".gw-cta"))return;
       const main=document.querySelector("main")||document.body;const hs=[...main.querySelectorAll("h2")].filter(h=>!/more free guides/i.test(h.textContent));
-      if(hs.length>=3){const mid=hs[Math.floor(hs.length/2)];mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid)}
+      /* A/B test (Nov 21, 2026): half of guests on /guides/ hit a soft gate at the halfway heading: the rest of the
+         article fades out behind "Sign up free to keep reading". The text stays in the page (marked as paywalled
+         content for Google), and "Keep reading" always unlocks it, so nothing is truly blocked. */
+      let gate=LS.get("ma-gate");if(gate!=="g"&&gate!=="c"){gate=Math.random()<.5?"g":"c";LS.set("ma-gate",gate)}
+      const isGuide=/^\/guides\//.test(location.pathname);
+      if(isGuide&&gate==="g"&&hs.length>=3){const mid=hs[Math.floor(hs.length/2)],par=mid.parentNode;
+        const stopAt=[...par.children].find(n=>n.tagName==="H2"&&/more free guides/i.test(n.textContent)&&(mid.compareDocumentPosition(n)&4));
+        const w=document.createElement("div");w.className="gw-pw lock";par.insertBefore(w,mid);
+        let n=mid;while(n&&n!==stopAt){const nx=n.nextSibling;w.appendChild(n);n=nx}
+        const g=document.createElement("div");g.className="gw-gate";
+        g.innerHTML=`<div class="k">Free account</div><div class="h">Sign up free to keep reading</div><p>Get the rest of this guide, 1,000+ interview questions, XP and streaks. Free, no card.</p><a class="go" href="${href("gate")}">Keep reading free →</a><button type="button" class="skip">Not now, keep reading</button>`;
+        w.after(g);
+        g.querySelector("a").addEventListener("click",()=>{ev("guide_gate_click");flush()});
+        g.querySelector(".skip").onclick=()=>{w.classList.remove("lock");g.remove();ev("guide_gate_skip")};
+        try{const ld=document.createElement("script");ld.type="application/ld+json";ld.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":document.title,"isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".gw-pw"}});document.head.appendChild(ld)}catch(e){}
+        ev("guide_gate_shown")}
+      else if(hs.length>=3){const mid=hs[Math.floor(hs.length/2)];mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
       const more=[...main.querySelectorAll("h2")].find(h=>/more free guides/i.test(h.textContent));
       const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
       if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")};

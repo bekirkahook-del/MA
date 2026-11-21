@@ -971,7 +971,7 @@ function showTab(t,focus){setTimeout(()=>{try{scrollProfRows()}catch(e){}},80);i
   const cur=document.querySelector(".view:not([hidden])");const swap=()=>{document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
   document.querySelectorAll(".view").forEach(v=>v.hidden=v.dataset.view!==t);if(cur&&cur.dataset.view!==t)window.scrollTo({top:0,behavior:"instant"})};
   const calm=S.settings.calm||matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(cur&&cur.dataset.view!==t&&!calm&&!window._noVT&&document.startViewTransition){try{document.startViewTransition(swap)}catch(e){swap()}}else{swap();const nv=document.querySelector(`.view[data-view="${t}"]`);if(nv&&!calm&&cur&&cur!==nv){nv.classList.remove("enter");void nv.offsetWidth;nv.classList.add("enter")}}
+  if(cur&&cur.dataset.view!==t&&!calm&&!window._noVT&&document.startViewTransition){try{const vt=document.startViewTransition(swap);/* a newer tab switch can skip this one; that is fine, not an error */[vt.ready,vt.finished,vt.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}))}catch(e){swap()}}else{swap();const nv=document.querySelector(`.view[data-view="${t}"]`);if(nv&&!calm&&cur&&cur!==nv){nv.classList.remove("enter");void nv.offsetWidth;nv.classList.add("enter")}}
   try{history.replaceState(null,"","#"+t)}catch(e){}
   if(focus&&document.querySelector(`.tab[data-tab="${t}"]`))document.querySelector(`.tab[data-tab="${t}"]`).focus();if(t==="settings")renderSettings();if(t==="pro")renderPro()}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));

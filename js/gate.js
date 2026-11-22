@@ -144,7 +144,9 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
   function trackFor(){try{const order=(S.plan&&S.plan.order)||["f"];for(const id of order){const tr=T(id);if(!tr)continue;let ok=true;try{ok=trackUnlocked(tr)}catch(e){}if(!ok)continue;
       for(let i=0;i<tr.levels.length;i++)if(!cleared(tr.id,i))return {tr,i}}}catch(e){}return null}
   function roadNext(){try{const yr=S.plan.year;const g=ROAD.find(g=>g.y===yr)||ROAD[0];const its=roadItems(g);return its.find(it=>!(S.road&&S.road[it.id]))||null}catch(e){return null}}
-  function welcome(){if(state!=="ok")return;const view=document.querySelector('[data-view="home"]');if(!view)return;let c=document.getElementById("mpWel");
+  /* Bekir, Nov 22, 2026: "Don't add something to the home page unless I say" - the welcome card is off */
+  const WELCOME_CARD=false;
+  function welcome(){const old=document.getElementById("mpWel");if(!WELCOME_CARD){if(old)old.remove();return}if(state!=="ok")return;const view=document.querySelector('[data-view="home"]');if(!view)return;let c=document.getElementById("mpWel");
     if(!(S.plan&&S.plan.year)){if(c)c.remove();return}
     /* first thing on Home: above the hero (new members) and above "Continue" (everyone) */
     const anchor=view.querySelector(".hero")||document.getElementById("continue");if(!anchor)return;

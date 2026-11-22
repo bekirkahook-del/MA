@@ -22,6 +22,7 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 - Stripe is live: webhook `stripe-webhook.mjs` listens to checkout.session.completed + customer.subscription.created/updated/deleted. Secrets live only in Netlify env vars; never ask for, paste or print them.
 
 ## Hard rules
+- **Never add anything to the Home page unless Bekir asks for it (Bekir, Nov 22, 2026).**
 - Never sign in, type passwords or create accounts for Bekir. Never post to his personal YouTube.
 - Don't invent numbers, quotes or personal experiences (Quora answers included). No mnaprep.com link in Quora answers.
 - Ask before purchases, deletions and anything irreversible.

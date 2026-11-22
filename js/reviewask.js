@@ -20,7 +20,7 @@
       if(document.querySelector(".ra-card,.gw-tc,.ej-g"))return false;return true}catch(e){return false}}
   function ask(){if(!eligible())return;LS.set(K,String(Date.now()));ev("review_ask_shown");
     const d=document.createElement("div");d.className="ra-card";d.setAttribute("role","status");
-    d.innerHTML=`<span class="m">Nice work. Rate M&amp;A Prep honestly (any rating counts) and get <b>1 day of Pro free</b>.</span><button class="go" type="button">Rate it</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
+    d.innerHTML=`<span class="m">Nice work. How's M&amp;A Prep helping you? An honest rating helps other students.</span><button class="go" type="button">Rate it</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
     let t=0;const close=()=>{clearTimeout(t);d.remove()};
     d.querySelector(".go").onclick=()=>{ev("review_ask_click");close();try{closePanel()}catch(e){}try{writeReview(null)}catch(e){}};
     d.querySelector(".x").onclick=()=>{ev("review_ask_dismiss");close()};
@@ -35,14 +35,14 @@
     try{await maReward("review","⭐ Thanks for the review! 1 day of Pro added.")}catch(e){}claiming=false}
   /* disclosure on the reviews section (required when reviews are rewarded) */
   function disclose(){const el=document.getElementById("reviews");if(!el||el.querySelector(".ra-disc"))return;const p=document.createElement("p");p.className="note ra-disc";
-    p.textContent="Reviewers get 1 free day of Pro for leaving a review, whatever rating they give.";el.prepend(p)}
+    p.textContent="Reviewers who hadn't had their free Pro day yet got it for reviewing, whatever rating they gave.";el.prepend(p)}
   /* homepage strip with the real average, only from 10+ real reviews */
   function strip(){const list=revs().filter(r=>r.rating>=1&&r.rating<=5);const el=document.getElementById("raStrip");
     if(list.length<MIN_SHOW){if(el)el.remove();return}
     const avg=list.reduce((a,r)=>a+r.rating,0)/list.length;const host=document.querySelector('[data-view="home"] .hl-land h1')||document.querySelector('[data-view="home"] .hero h1');if(!host)return;
     const html=`<b>${avg.toFixed(1)}</b><span class="s" aria-hidden="true">${"★".repeat(Math.round(avg))}${"☆".repeat(5-Math.round(avg))}</span><span>from ${list.length} student reviews</span>`;
     if(el){el.innerHTML=html;return}
-    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.title="Reviewers get 1 free Pro day for any rating";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
+    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.title="Some reviewers got 1 free Pro day for reviewing (any rating)";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
     b.onclick=()=>{ev("review_strip_click");try{showTab("pro");setTimeout(()=>{const r=document.getElementById("reviews");r&&r.scrollIntoView({behavior:"smooth"})},300)}catch(e){}};
     host.after(b)}
   (function hookRender(n){if(typeof renderReviews!=="function"){if(n<40)setTimeout(()=>hookRender(n+1),250);return}if(renderReviews.__ra)return;

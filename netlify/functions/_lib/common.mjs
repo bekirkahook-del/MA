@@ -49,6 +49,15 @@ export async function getDoc(col, id) {
   const rows = r.ok ? await r.json() : [];
   return (rows[0] && rows[0].data) || null;
 }
+// First account to claim a key owns it forever (insert-if-absent, then read back). Returns true if `uid` owns it.
+export async function claimOwner(col, id, uid) {
+  const w = await fetch(`${SB_URL}/rest/v1/docs?on_conflict=col,id`, { method: "POST", headers: { ...svcH(), Prefer: "resolution=ignore-duplicates,return=minimal" },
+    body: JSON.stringify({ col, id, uid: null, data: { uid, t: Date.now() }, updated_at: new Date().toISOString() }), signal: AbortSignal.timeout(6000) });
+  if (!w.ok && w.status !== 409) throw new Error("owner write " + w.status);
+  const d = await getDoc(col, id);
+  if (!d) throw new Error("owner read");
+  return d.uid === uid;
+}
 export async function setBilling(uid, data) {
   const r = await fetch(`${SB_URL}/rest/v1/docs`, {
     method: "POST",

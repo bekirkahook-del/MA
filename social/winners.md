@@ -8,7 +8,7 @@ How to use (every daily run):
 ## Idea types ranked (as of Nov 21, 2026; Nov 14-21 posts, IG + TikTok views)
 | Rank | Idea type | Avg views/post | Best example | Verdict |
 |---|---|---|---|---|
-| 1 | **School rankings with named schools** (lists, conference RANKED series, "is your school in?") | ~2,800 (3 posts) | US News list "5 schools tied at #6" TT 6,845 / Big Ten RANKED IG 923 + TT 367 | 🟢 DOUBLE DOWN: one every day or two. RANKED series next: Big 12, Ivy, Pac/West, SEC v2 |
+| 1 | **School rankings with named schools** (lists, conference RANKED series, "is your school in?") | ~2,900 (3 scored posts) | US News list "5 schools tied at #6" TT 6,845 / Big Ten RANKED IG 1,259 + TT 379 | 🟢 DOUBLE DOWN: one every day or two. RANKED series next: Big 12, Ivy, Pac/West, SEC v2 |
 | 2 | **Live headline market events** (big-name IPO, earnings, crash) posted same day | ~690 (6 posts) | Anthropic IPO priced: IG 1,249 + TT 456; NVDA week ahead TT 716 | 🟢 DOUBLE DOWN: post within 24h of any big IPO/earnings/deal |
 | 3 | **Tiered interview questions** ("intern / analyst / MD question", "most people get $75") | ~660 (3 posts) | Intern/analyst/MD TT 821; "$75" TT 620; jacket 20% off twice TT 539 | 🟢 KEEP: 1 every 2-3 days, always with a twist/trap |
 | 4 | **League tables with a twist** (Goldman most $ but not most deals) | ~560 (2 posts) | M&A advisers twist TT 654 + IG 119 | 🟡 KEEP when there's a real twist |
@@ -43,10 +43,12 @@ How to use (every daily run):
 | 11-19 | Anthropic IPO priced $83 | Live market | 1,249 | 456 | best IG of the week |
 | 11-19 | ANT day one | Live market | 152 | 325 | |
 | 11-19 | Biggest trading desks | Bank stat list | 133 | 21 | LOSER |
-| 11-20 | Big Ten RANKED (mascots, voice) | School rankings | 923 | 367 | IG #2 of week |
-| 11-20 | "Banking prep but it's a game" | Site promo | 135 | 150 | |
-| 11-21 | NVDA "best quarter, down 48%" | Live market | 134 | 261 | 1 day old at check |
-| 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | | | score Nov 23 |
+| 11-20 | Big Ten RANKED (mascots, voice) | School rankings | 1,259 | 379 | best IG of the week (was 923 at 24h, still climbing at 48h+) |
+| 11-20 | "Banking prep but it's a game" | Site promo | 141 | 152 | final |
+| 11-21 | NVDA "best quarter, down 48%" | Live market | 144 | 298 | final (48h) |
+| 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | 138 | | IG at ~30h; score again Nov 23 |
+| 11-21 | SEC: only 6 in top 100 (Vandy #1, Texas sends most) | School rankings | 127 | | IG at ~30h; score Nov 23 |
 | 11-22 | ACC RANKED (mascots, voice) | School rankings | | | score Nov 24 |
 | 11-22 | Intern/Analyst/MD, option $5 trap (video) | Tiered interview Q | | | score Nov 24 |
 | 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | | score Nov 24 |
+| 11-22 | "Jake knew nothing about finance" promo video | Site promo | | | score Nov 24 |

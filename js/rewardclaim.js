@@ -29,23 +29,4 @@
   /* the sign-up day unlocks once Level 1 is cleared (the server checks the profile): retry after each level */
   (function hookLv(n){const q=window.questEvt;if(typeof q!=="function"){if(n<40)setTimeout(()=>hookLv(n+1),250);return}if(q.__rwc)return;
     const w=function(k){const r=q.apply(this,arguments);try{if(k==="level"&&!LS.get("ma-rw-signup"))setTimeout(()=>reward("signup","🎉 Level cleared! 1 free day of Pro added to your account.").catch(()=>{}),8000)}catch(e){}return r};w.__rwc=1;window.questEvt=w})(0);
-  /* Sunday email: one small card on Home for members who haven't claimed it */
-  const st=document.createElement("style");
-  st.textContent=`.rwc-card{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px dashed var(--rule);background:var(--sheet);border-radius:8px;padding:12px 14px;margin:14px 0;text-align:left;font-size:14px;color:var(--ink)}
-.rwc-card .m{flex:1;min-width:200px}.rwc-card .x{border:0;background:none;color:var(--ink-2);font-size:20px;cursor:pointer;padding:0 4px}`;
-  document.head.appendChild(st);
-  async function emailCard(){const view=document.querySelector('[data-view="home"]');if(!view)return;let c=document.getElementById("rwcEmail");
-    if(LS.get("ma-rw-email")||LS.get("ma-rwc-x")){if(c)c.remove();return}
-    const s=await sess();if(!confirmed(s)){if(c)c.remove();return}
-    const anchor=document.getElementById("continue");if(!anchor)return;
-    if(!c){c=document.createElement("div");c.id="rwcEmail";c.className="rwc-card";
-      c.innerHTML=`<span class="m">📬 <b>Get 1 free day of Pro:</b> join the Sunday email (one interview question + one recruiting tip a week). Unsubscribe anytime.</span><button class="btn" type="button" id="rwcGo">Join + get Pro day</button><button class="x" type="button" aria-label="Dismiss">×</button>`;
-      c.querySelector(".x").onclick=()=>{LS.set("ma-rwc-x","1");ev("reward_email_dismiss");c.remove()};
-      c.querySelector("#rwcGo").onclick=async()=>{const btn=c.querySelector("#rwcGo");btn.disabled=true;btn.textContent="Joining…";ev("reward_email_click");
-        try{const r=await fetch("/.netlify/functions/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:s.user.email,src:"reward"})});
-          if(!r.ok)throw 0;const out=await reward("email","📬 You're in! 1 day of Pro added.");if(out!=="no"){c.remove();if(out==="done")T("You're on the Sunday email.")}else{btn.disabled=false;btn.textContent="Try again"}}
-        catch(e){btn.disabled=false;btn.textContent="Try again";T("Couldn't join right now. Try again in a minute.")}}}
-    if(anchor.previousElementSibling!==c)anchor.before(c)}
-  (function hook(n){if(typeof renderHome!=="function"){if(n<40)setTimeout(()=>hook(n+1),250);return}if(renderHome.__rwc)return;
-    const o=renderHome;renderHome=function(){const r=o.apply(this,arguments);try{emailCard()}catch(e){}return r};renderHome.__rwc=1;try{emailCard()}catch(e){}})(0);
 })();

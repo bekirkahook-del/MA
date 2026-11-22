@@ -56,6 +56,6 @@
       try{if(k==="level"&&!localStorage.getItem("ma-l1-save")&&window.MA_SIGNED===false&&window.maGrowToast){
         localStorage.setItem("ma-l1-save","1");
         const sc=(typeof S!=="undefined"&&S.profile&&S.profile.school)||"";
-        setTimeout(()=>window.maGrowToast("l1","🎯",`Level done. Save your ${sc?sc.replace(/[<>&"]/g,"")+" ":""}plan and progress so they're here tomorrow.`,"Save my plan"),1600)}}catch(e){}
+        setTimeout(()=>window.maGrowToast("l1","🎯",`Level done. Save your ${sc?sc.replace(/[<>&"]/g,"")+" ":""}plan and progress (plus 1 free day of Pro) so they're here tomorrow.`,"Save my plan"),1600)}}catch(e){}
       return r};w.__fr=1;window.questEvt=w})();
 })();

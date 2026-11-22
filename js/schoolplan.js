@@ -87,7 +87,15 @@
   const ev=n=>{try{window.maEv&&maEv(n)}catch(e){}};
   const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   // who's signed in: drives the landing (signed-out visitors always get the onboarding landing)
-  (function wait(n){if(window.MA_AUTH&&MA_AUTH.ready){MA_AUTH.ready.then(s=>{window.MA_SIGNED=!!s;try{renderHome()}catch(e){}});
+  /* brand-new account (made in the last 30 min, once per device): profile setup first, plan questions after it closes */
+  const profileFirst=s=>{try{if(!s||!s.user||localStorage.getItem("ma-prof-first"))return;const made=Date.parse(s.user.created_at||0);if(!made||Date.now()-made>30*60000)return;
+    localStorage.setItem("ma-prof-first","1");window.MA_PROF_FIRST=1;ev("signup_profile_first");
+    if(typeof onboarding==="function"&&!onboarding.__pf){const o=onboarding;onboarding=function(force){if(!force&&window.MA_PROF_FIRST)return;return o.apply(this,arguments)};onboarding.__pf=1}
+    const ov=document.getElementById("overlay"),done=()=>{if(!window.MA_PROF_FIRST)return;window.MA_PROF_FIRST=0;setTimeout(()=>{try{if(typeof S!=="undefined"&&!S.plan&&!S.onboardSkip&&typeof onboarding==="function")onboarding()}catch(e){}},400)};
+    let k=0;(function open(){if(typeof editProfile!=="function"||typeof S==="undefined"){if(k++<40)setTimeout(open,300);else done();return}
+      try{editProfile()}catch(e){done();return}
+      if(ov){const mo=new MutationObserver(()=>{if(ov.hidden){mo.disconnect();done()}});mo.observe(ov,{attributes:true,attributeFilter:["hidden"]})}else done()})()}catch(e){window.MA_PROF_FIRST=0}};
+  (function wait(n){if(window.MA_AUTH&&MA_AUTH.ready){MA_AUTH.ready.then(s=>{window.MA_SIGNED=!!s;profileFirst(s);try{renderHome()}catch(e){}});
       try{MA_AUTH.sb.auth.onAuthStateChange((e,s)=>{window.MA_SIGNED=!!s})}catch(e){}}else if(n<40)setTimeout(()=>wait(n+1),250)})(0);
   /* arrived from a school guide ("Get this as a plan for Ohio State"): prefill the school and point at the year buttons */
   let fromGuide=null;try{const q=new URLSearchParams(location.search);fromGuide=q.get("plan");if(fromGuide){q.delete("plan");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}
@@ -108,7 +116,7 @@
       <datalist id="spSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
       <div class="sp-f"><span>Year</span><div class="sp-yrs" role="group" aria-label="Your year">${YRS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===yr}">${y}</button>`).join("")}</div></div>
       <ol class="sp-mini" id="spMini" aria-live="polite"></ol>
-      <button class="btn" id="spGo" style="width:100%">Save my plan and start Level 1 →</button>
+      <button class="btn" id="spGo" style="width:100%">Save my plan →</button>
       <button class="ghost sp-all" id="spAll" type="button">See all my steps</button>`;
     cta.after(d);
     /* first time on the site (no saved plan yet): building the plan IS the first screen. The card replaces the
@@ -132,14 +140,15 @@
     if(fromGuide){const m=(window.maSchoolFind&&maSchoolFind(fromGuide))||null;const nm=(m&&m[0])||fromGuide.slice(0,80);sch.value=nm;draw();
       const tip=document.createElement("div");tip.className="sp-tip";tip.textContent=`Here's your ${nm} plan. Pick your year and role.`;d.querySelector(".sp-row").before(tip);
       fromGuide=null;ev("plan_from_guide");setTimeout(()=>{d.scrollIntoView({block:"center",behavior:"smooth"})},350)}
-    /* save the plan (complete it so the plan card works) and start the first level as a guest */
+    /* save the plan choices (complete it so the plan card works), then sign them up */
     d.querySelector("#spGo").onclick=()=>{apply();
       const order=(typeof PLAN_ORDER!=="undefined"&&PLAN_ORDER[role])||undefined;
       S.plan={...(S.plan||{}),year:yr,target:role,order:order||(S.plan&&S.plan.order),focus:order?order.length:(S.plan&&S.plan.focus),perWeek:(S.plan&&S.plan.perWeek)||5,created:(S.plan&&S.plan.created)||new Date().toISOString().slice(0,10)};
       if(role!=="Not sure yet"&&!S.profile.target)S.profile.target=role.replace("Hedge funds & markets","Hedge funds");
       try{save()}catch(e){}try{maRoadBust()}catch(e){}ev("plan_teaser");ev("plan_teaser_try");try{window._spAfterL1=1}catch(e){}
-      cta.classList.remove("sp-hidecta");land.classList.remove("sp-first");document.body.classList.remove("sp-firstvisit");
-      const go=document.getElementById("landGo");if(go)go.click();else if(typeof nextLevel==="function"){try{nextLevel()}catch(e){}}};
+      /* Bekir, Nov 21, 2026: "Save my plan" signs them in right away. No question first; after sign-up they land on profile setup. */
+      try{localStorage.setItem("ma-gw-from","plan")}catch(e){}
+      (window.maQuickJoin||window.maOpenAuth||(()=>{}))("up")};
     d.querySelector("#spAll").onclick=()=>{apply();ev("plan_teaser");preview(yr)}}
   function preview(yr){const r=window.maRoadSchool&&maRoadSchool(),all=ROAD.flatMap(g=>roadItems(g).map(it=>({...it,y:g.y})));
     const yi=Math.max(0,YRS.indexOf(yr)),cur=all.filter(it=>it.y===yr),later=all.filter(it=>YRS.indexOf(it.y)>yi),earlier=all.filter(it=>YRS.indexOf(it.y)<yi);

@@ -121,3 +121,5 @@
 - 2026-11-25 speed3 — [Carousel, speed round] $200 jacket 25% then 20% off = $120; 15% of 80 + 15% of 20 = 15; average of 1–100 = 50.5
 - 2026-11-25 story-eggs — [Teaser video, story.js, no voice] 2 eggs, 100 floors → 14 drops (14+13+…+1 = 105)
 - 2026-11-25 oddq-save5 — [Interview Q] $5 a day for a year = $1,825
+- 2026-11-22 1:38pm story-tier — [Tiered interview Q video, story.js, no voice] Intern $80K +10% = $88K; Analyst rule of 72 at 8% = 9 yrs; MD trap stock+option $110, stock $100 more → option $5 (not $10). TT + IG Reel + FB Reel + YT Short + Pinterest
+- 2026-11-22 9:12pm bc-epsweek — [Live market carousel] Thanksgiving week expected EPS vs year ago (StockTitan, Nov 20 2026): Dell +176% ($6.48 vs $2.35), HPE +117%, ADI +72%, Jacobs +21%, Zoom +12%, HP Inc −20%, Dollar Tree −26%; NYSE closed Thu, 1pm close Fri. TT + IG + FB + Pinterest

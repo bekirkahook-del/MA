@@ -48,3 +48,5 @@ How to use (every daily run):
 | 11-21 | NVDA "best quarter, down 48%" | Live market | 134 | 261 | 1 day old at check |
 | 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | | | score Nov 23 |
 | 11-22 | ACC RANKED (mascots, voice) | School rankings | | | score Nov 24 |
+| 11-22 | Intern/Analyst/MD, option $5 trap (video) | Tiered interview Q | | | score Nov 24 |
+| 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | | score Nov 24 |

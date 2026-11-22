@@ -17,3 +17,4 @@
 | 2026-11-24 | Monty Hall switch or stay (story.js) | 4 steps | story | 108 (pace 4, slow ~18s) | question-first "Switch or stay?" | | | | |
 | 2026-11-25 | Die pays $1–$6, fair price $3.50 (type.js) | 4 steps | typewriter | 132 (fast ~19.5s) | question-first "Fair price?" | | | | |
 | 2026-11-25 | 2 eggs 100 floors = 14 drops (story.js) | 4 steps | story (paper) | 124 (pace 3, ~13.5s) | question-first "Fewest drops?" | | | | |
+| 2026-11-22 | Intern/Analyst/MD 3 questions, MD trap option $5 (story.js) | 3 tiers + trap | story (terminal) | 128 (pace 4, ~15s) | challenge "Can you get all 3?" | | | | |

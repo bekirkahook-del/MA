@@ -52,6 +52,30 @@
 @keyframes gwIn{from{opacity:0}to{opacity:1}}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 
+  /* static pages (guides, tools) don't load the app's auth: load it on demand, then open the real sign-up popup */
+  let authLoading=null;
+  function openAuthLazy(mode){if(window.maOpenAuth){maOpenAuth(mode);return}
+    const add=src=>new Promise((ok,no)=>{const sc=document.createElement("script");sc.src=src;sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)});
+    if(!authLoading){const vs=document.createElement("style");vs.textContent=`.auth-ov{--sheet:#fff;--paper:#EEF1F5;--ink:#13203B;--ink-2:#4A5672;--rule:#D3D9E4;--cobalt:#2448D8;--body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-family:var(--body)}`;document.head.appendChild(vs);
+      authLoading=add("/vendor/supabase.js").then(()=>add("/js/backend.js")).then(()=>add("/js/auth.js"))}
+    authLoading.then(()=>{if(window.maOpenAuth)maOpenAuth(mode);else location.href="/"}).catch(()=>{location.href="/"})}
+  window.maOpenAuthLazy=openAuthLazy;
+  /* ---------- tool pages: the tools are for members who made their plan. The page (and its text) stays for search,
+     but the tool itself sits behind a wall that sends people to Make my plan. ---------- */
+  if(!isApp&&/^\/tools\/[^/]+/.test(location.pathname)){
+    const onb=()=>{try{const x=JSON.parse(LS.get("ma-progress-v1")||"{}");return !!((x.onb&&x.onb.done)||(x.plan&&x.plan.order&&x.plan.year))}catch(e){return false}};
+    if(!authTok()||!onb()){const css=document.createElement("style");css.textContent=`body.tw-on main,body.tw-on .wrap{filter:blur(3px);pointer-events:none;user-select:none}
+.tw-ov{position:fixed;inset:0;z-index:9990;display:grid;place-items:center;padding:16px;background:rgba(10,16,32,.45)}
+.tw-box{max-width:420px;width:100%;box-sizing:border-box;background:#fff;color:#13203B;border-radius:8px;padding:26px 22px;text-align:center;box-shadow:0 30px 80px rgba(10,20,60,.35);font-family:system-ui,-apple-system,sans-serif;border-top:4px solid #2448D8}
+.tw-box .k{font-size:11.5px;letter-spacing:.12em;font-weight:700;color:#2448D8;text-transform:uppercase}.tw-box h2{font-size:23px;margin:8px 0 6px}.tw-box p{font-size:15px;color:#4A5672;margin:0 0 16px}
+.tw-box a{display:block;font-weight:800;font-size:16px;padding:13px;border-radius:6px;background:#2448D8;color:#fff!important;text-decoration:none}
+.tw-box button{margin-top:10px;font:inherit;font-size:14px;background:none;border:0;color:#4A5672;text-decoration:underline;cursor:pointer}`;document.head.appendChild(css);
+      const put=()=>{document.body.classList.add("tw-on");const o=document.createElement("div");o.className="tw-ov";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
+        o.innerHTML=`<div class="tw-box"><div class="k">Free · 30 seconds</div><h2>Make your plan to use this tool</h2><p>Every tool is free with an account. Tell us your school and year, and we'll build your step-by-step plan.</p><a href="/#plan">Make my plan →</a>${authTok()?"":`<button type="button">Already have an account? Sign in</button>`}</div>`;
+        const b=o.querySelector("button");if(b)b.onclick=()=>openAuthLazy("in");o.querySelector("a").addEventListener("click",()=>{ev("tool_wall_click");flush()});
+        document.body.appendChild(o);ev("tool_wall_shown")};
+      if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",put);else put()}}
+
   /* ---------- guide / tool / cheat-sheet pages: sign-up boxes ---------- */
   if(!isApp&&/^\/(guides|tools|cheat-sheet)\//.test(location.pathname)){
     const slug=(location.pathname.split("/").filter(Boolean).pop()||"page").slice(0,40);
@@ -65,20 +89,26 @@
       /* A/B test (Nov 21, 2026): half of guests on /guides/ hit a soft gate at the halfway heading: the rest of the
          article fades out behind "Sign up free to keep reading". The text stays in the page (marked as paywalled
          content for Google), and "Keep reading" always unlocks it, so nothing is truly blocked. */
-      let gate=LS.get("ma-gate");if(gate!=="g"&&gate!=="c"){gate=Math.random()<.5?"g":"c";LS.set("ma-gate",gate)}
+      /* Nov 22, 2026 (Bekir): every logged-out reader hits the wall at the halfway point; the A/B test is over. */
+      const gate="g";
       const isGuide=/^\/guides\//.test(location.pathname);
       /* halfway point: the middle section heading, or for short guides (under 2 sections) the middle content block */
-      const midEl=(()=>{if(hs.length>=2)return hs[Math.floor(hs.length/2)];const a=hs[0]||main.querySelector("p");const pp=a?a.parentNode:main;
+      const midEl=(()=>{if(hs.length>=2){const par0=hs[0].parentNode,all=[...par0.children],moreH=all.find(n=>n.tagName==="H2"&&/more free guides/i.test(n.textContent)),
+          body=moreH?all.slice(0,all.indexOf(moreH)):all,tot=body.reduce((a,n)=>a+n.textContent.length,0)||1;let acc=0,best=null,bd=9;
+          /* nearest block boundary to 50% of the text; a section heading wins if it is within 8 points of it */
+          let bh=null,bhd=9;const skip=n=>/^(SCRIPT|STYLE)$/.test(n.tagName)||n.classList.contains("crumb")||n.classList.contains("upd")||n.tagName==="H1";
+          for(const n of body){if(acc>0&&!skip(n)){const d=Math.abs(acc/tot-.5);if(d<bd){bd=d;best=n}if(n.tagName==="H2"&&d<bhd){bhd=d;bh=n}}acc+=n.textContent.length}
+          return (bh&&bhd<=bd+.08?bh:best)||hs[Math.floor(hs.length/2)]}const a=hs[0]||main.querySelector("p");const pp=a?a.parentNode:main;
         const kids=[...pp.children].filter(n=>!/^(SCRIPT|STYLE)$/.test(n.tagName)&&!(n.tagName==="H2"&&/more free guides/i.test(n.textContent)));return kids.length>=4?kids[Math.floor(kids.length/2)]:null})();
       if(isGuide&&gate==="g"&&midEl){const mid=midEl,par=mid.parentNode;
         const stopAt=[...par.children].find(n=>n.tagName==="H2"&&/more free guides/i.test(n.textContent)&&(mid.compareDocumentPosition(n)&4));
         const w=document.createElement("div");w.className="gw-pw lock";par.insertBefore(w,mid);
         let n=mid;while(n&&n!==stopAt){const nx=n.nextSibling;w.appendChild(n);n=nx}
         const g=document.createElement("div");g.className="gw-gate";
-        g.innerHTML=`<div class="k">Free account</div><div class="h">Sign up free to keep reading</div><p>Get the rest of this guide, 1,000+ interview questions, XP and streaks. Free, no card.</p><a class="go" href="${href("gate")}">Keep reading free →</a><button type="button" class="skip">Not now, keep reading</button>`;
+        g.innerHTML=`<div class="k">Free account</div><div class="h">Sign up free to read the rest</div><p>Get the full guide, your step-by-step plan and 1,000+ interview questions. Free, no card.</p><a class="go" href="${href("gate")}" data-gate-up>Sign up free to keep reading →</a><button type="button" class="skip" data-gate-in>Already have an account? Sign in</button>`;
         w.after(g);
-        g.querySelector("a").addEventListener("click",()=>{ev("guide_gate_click");flush()});
-        g.querySelector(".skip").onclick=()=>{w.classList.remove("lock");g.remove();ev("guide_gate_skip")};
+        g.querySelector("a").addEventListener("click",e=>{e.preventDefault();ev("guide_gate_click");flush();openAuthLazy("up")});
+        g.querySelector(".skip").onclick=()=>{ev("guide_gate_signin");openAuthLazy("in")};
         try{const ld=document.createElement("script");ld.type="application/ld+json";ld.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":document.title,"isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".gw-pw"}});document.head.appendChild(ld)}catch(e){}
         ev("guide_gate_shown")}
       else if(midEl){const mid=midEl;
@@ -90,8 +120,8 @@
           d.querySelector("a").addEventListener("click",()=>{ev("guide_plan_click");flush()});mid.parentNode.insertBefore(d,mid);ev("guide_plan_shown")}
         else mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
       const more=[...main.querySelectorAll("h2")].find(h=>/more free guides/i.test(h.textContent));
-      const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
-      if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")};
+      if(!document.querySelector(".gw-gate")){const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
+      if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")}};
     if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",place);else place();
     return}
 
@@ -100,8 +130,7 @@
   /* ---------- app: arrived from a guide sign-up box ---------- */
   const q=new URLSearchParams(location.search);
   if(q.get("signup")==="1"){ev("guide_cta_land");
-    const tryOpen=(n=0)=>{if(window.MA_AUTH&&window.MA_AUTH.ready)window.MA_AUTH.ready.then(s=>{if(!s&&window.maOpenAuth){window.maOpenAuth("up");ev("signup_open_guide")}});else if(n<40)setTimeout(()=>tryOpen(n+1),250)};
-    setTimeout(tryOpen,900);
+    /* Nov 22, 2026: new visitors make their plan first (gate.js); sign-up opens from its "Save my plan" button */
     try{q.delete("signup");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}catch(e){}}
 
   /* ---------- invites: remember ?ref=, credit the inviter once this visitor has a confirmed account ---------- */

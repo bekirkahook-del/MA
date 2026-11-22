@@ -88,7 +88,7 @@
   const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   // who's signed in: drives the landing (signed-out visitors always get the onboarding landing)
   /* brand-new account (made in the last 30 min, once per device): profile setup first, plan questions after it closes */
-  const profileFirst=s=>{try{if(!s||!s.user||localStorage.getItem("ma-prof-first"))return;const made=Date.parse(s.user.created_at||0);if(!made||Date.now()-made>30*60000)return;
+  const profileFirst=s=>{return;/* retired Nov 22, 2026: new accounts make their plan first (gate.js), then land on Home */try{if(!s||!s.user||localStorage.getItem("ma-prof-first"))return;const made=Date.parse(s.user.created_at||0);if(!made||Date.now()-made>30*60000)return;
     localStorage.setItem("ma-prof-first","1");window.MA_PROF_FIRST=1;ev("signup_profile_first");
     if(typeof onboarding==="function"&&!onboarding.__pf){const o=onboarding;onboarding=function(force){if(!force&&window.MA_PROF_FIRST)return;return o.apply(this,arguments)};onboarding.__pf=1}
     const ov=document.getElementById("overlay"),done=()=>{if(!window.MA_PROF_FIRST)return;window.MA_PROF_FIRST=0;setTimeout(()=>{try{if(typeof S!=="undefined"&&!S.plan&&!S.onboardSkip&&typeof onboarding==="function")onboarding()}catch(e){}},400)};
@@ -98,7 +98,7 @@
   (function wait(n){if(window.MA_AUTH&&MA_AUTH.ready){MA_AUTH.ready.then(s=>{window.MA_SIGNED=!!s;profileFirst(s);try{renderHome()}catch(e){}});
       try{MA_AUTH.sb.auth.onAuthStateChange((e,s)=>{window.MA_SIGNED=!!s})}catch(e){}}else if(n<40)setTimeout(()=>wait(n+1),250)})(0);
   /* arrived from a school guide ("Get this as a plan for Ohio State"): prefill the school and point at the year buttons */
-  let fromGuide=null;try{const q=new URLSearchParams(location.search);fromGuide=q.get("plan");if(fromGuide){q.delete("plan");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}
+  let fromGuide=null;try{const q=new URLSearchParams(location.search);fromGuide=q.get("plan");if(fromGuide){window.MA_PLAN_PARAM=fromGuide.slice(0,80);q.delete("plan");q.delete("cta");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash)}}catch(e){}
   /* prototype-v2 onboarding (Bekir liked it, Nov 21): school + target role + year, a live preview of the first steps
      right in the card (no tap needed), and one button: save my plan and start Level 1 as a guest. */
   const ROLES=["Investment banking","Private equity","Equity research","Hedge funds & markets","Consulting","Restructuring","Not sure yet"];

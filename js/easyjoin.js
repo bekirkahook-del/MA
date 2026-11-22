@@ -49,7 +49,7 @@ const st = document.createElement("style"); st.textContent = `.ej-g{position:fix
     askGrad() }
 
   /* ---- 3) one small card for whatever's still missing: school (LinkedIn/Google don't share it) + grad year ---- */
-  function askGrad(){ if (!hasS() || LS.get("ma-gradask")) return;
+  function askGrad(){ if (!hasS() || LS.get("ma-gradask") || !(S.onb && S.onb.done)) return; /* new accounts give school + year on Make my plan (gate.js) */
     const needSchool = !S.profile.school && !(S.settings && S.settings.noSchool), needGrad = !S.profile.grad && !S.profile.year;
     if (!needSchool && !needGrad) return;
     const now = new Date(), y0 = now.getFullYear() + (now.getMonth() >= 5 ? 1 : 0), ys = [y0, y0 + 1, y0 + 2, y0 + 3];

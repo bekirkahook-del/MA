@@ -39,7 +39,7 @@
 # keep setup files off the public site
 [[redirects]]
   from = "/compete"
-  to = "/#series"
+  to = "/#compete"
   status = 302
 
 [[redirects]]

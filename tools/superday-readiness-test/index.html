@@ -101,7 +101,7 @@ async function loadBoard(mine){const el=$("#board");try{const r=await fetch("/.n
  el.innerHTML=`<table><thead><tr><th>#</th><th>School</th><th>Avg score (out of ${d.total})</th><th>Test takers</th></tr></thead><tbody>`+d.top.map((o,i)=>`<tr${o.school===mine?' style="font-weight:700"':""}><td>${i+1}</td><td>${NAMES[o.school]||o.school}</td><td>${o.avg}</td><td>${o.n}</td></tr>`).join("")+`</tbody></table>`+
  (mine&&d.ranked.indexOf(mine)>9?`<p>Your school is #${d.ranked.indexOf(mine)+1} of ${d.ranked.length} ranked.</p>`:"")+(mine&&d.counts[mine]&&d.counts[mine]<d.min?`<p>${NAMES[mine]} has ${d.counts[mine]} of the ${d.min} scores it needs to be ranked. Share the test with classmates.</p>`:"")+note()}
  catch(e){el.innerHTML="<p>The board isn't available right now. Try again later.</p>"}}
-const note=()=>`<p class="muted" style="font-size:13.5px">Self-reported and unverified: each person's first attempt counts once, and a school needs ${5} scores to be ranked. For verified .edu school boards see the <a href="/#series">National Collegiate Series</a>.</p>`;
+const note=()=>`<p class="muted" style="font-size:13.5px">Self-reported and unverified: each person's first attempt counts once, and a school needs ${5} scores to be ranked.</p>`;
 async function sendScore(s){const sc=$("#sch").value;let mine=sc;
  try{const done=localStorage.getItem("ma-sdscore");
   if(sc&&!done&&vid()){await fetch("/.netlify/functions/school-score",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({school:sc,score:s,v:vid()})});localStorage.setItem("ma-sdscore","1")}}catch(e){}

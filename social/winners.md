@@ -5,6 +5,12 @@ How to use (every daily run):
 2. 48h after each post, add its row to the log below (views = IG IGRE23 / TikTok TKPO07; add shares/saves when notable).
 3. Re-rank the idea types weekly by **average views per post** (IG + TikTok). 3 posts in a row under ~120 views = the idea goes to LOSERS and stops. A post over 2x the average = the idea moves up and gets a sequel within 3 days.
 
+## Nov 23 update
+- **NEW #1 CANDIDATE: Character stories (Jake).** "Jake knew nothing about finance" hit TT 1,494 (194 likes, organic) + IG 1,316 (partly paid), over 2x every other format this week. Sequels already out (Jake vs Chad, coffee chat; both ~150-270 at 10h). Keep 1 Jake episode every 2-3 days; judge the series on the Nov 23 sequels' 48h numbers before calling it a top-3 winner. Site promo without a character stays at rank 6.
+- School rankings still strong: SEC TT 374, ACC RANKED IG 396 + TT 276 at 36h. **Big 12 RANKED is promised in the ACC caption: post it Nov 24.**
+- Static 2x2 chart (Big Ten quadrant) was weak on TikTok (66). Rankings work as videos with mascots/voice, not as one static chart.
+- Two TikToks not made by this routine appeared Nov 22 (Excel/Access "join today" 306, "recruiting journey" 244). Source unknown; not logged as ideas.
+
 ## Idea types ranked (as of Nov 21, 2026; Nov 14-21 posts, IG + TikTok views)
 | Rank | Idea type | Avg views/post | Best example | Verdict |
 |---|---|---|---|---|
@@ -45,10 +51,15 @@ How to use (every daily run):
 | 11-19 | Biggest trading desks | Bank stat list | 133 | 21 | LOSER |
 | 11-20 | Big Ten RANKED (mascots, voice) | School rankings | 1,259 | 379 | best IG of the week (was 923 at 24h, still climbing at 48h+) |
 | 11-20 | "Banking prep but it's a game" | Site promo | 141 | 152 | final |
-| 11-21 | NVDA "best quarter, down 48%" | Live market | 144 | 298 | final (48h) |
-| 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | 138 | | IG at ~30h; score again Nov 23 |
-| 11-21 | SEC: only 6 in top 100 (Vandy #1, Texas sends most) | School rankings | 127 | | IG at ~30h; score Nov 23 |
-| 11-22 | ACC RANKED (mascots, voice) | School rankings | | | score Nov 24 |
-| 11-22 | Intern/Analyst/MD, option $5 trap (video) | Tiered interview Q | | | score Nov 24 |
-| 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | | score Nov 24 |
-| 11-22 | "Jake knew nothing about finance" promo video | Site promo | | | score Nov 24 |
+| 11-21 | NVDA "best quarter, down 48%" | Live market | 150 | 302 | final |
+| 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | 153 | 66 | final (static 2x2 chart, weak on TT) |
+| 11-21 | SEC: only 6 in top 100 (Vandy #1, Texas sends most) | School rankings | 133 | 374 | final |
+| 11-22 | ACC RANKED (mascots, voice) | School rankings | 396 | 276 | at ~36h; final Nov 24 |
+| 11-22 | Intern/Analyst/MD, option $5 trap (video) | Tiered interview Q | 128 | 170 | at ~42h; final Nov 24 |
+| 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | 126 | TT at ~30h; final Nov 24 |
+| 11-22 | "Jake knew nothing about finance" promo video | Character story (Jake) | 1,316 | 1,494 | at ~42h. TT 194 likes, organic. IG also has a $35 paid boost running (Traffic ad from 5:38pm Nov 22), so IG views are partly paid |
+| 11-23 | Jake vs Chad ($500 course vs $0) | Character story (Jake) | 146 | 157 | 10:10pm Nov 22 post; at ~10h. Repost Nov 23 4pm |
+| 11-23 | Jake's first coffee chat (mom reply) | Character story (Jake) | 249 | 269 | at ~10h; 12 likes TT. Repost Nov 23 4pm |
+| 11-23 | Week ahead (3.5 days, Dell, core PCE) 8am | Live market | | | score Nov 25 |
+| 11-23 | Capital stack: who gets paid ($500M vs $550M) | Tiered interview Q | | | score Nov 25 |
+| 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | | | score Nov 25 |

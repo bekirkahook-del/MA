@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T22:47:30Z",
+ "updated": "2026-11-23T17:10:00Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -123,6 +123,15 @@
    ]
   ],
   [
+   "Thu Nov 26",
+   "Thanksgiving: US markets closed",
+   "Markets are closed Thursday and Friday's session ends at 1 p.m. ET.",
+   [
+    "CNBC live updates (Nov 23)",
+    "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
+   ]
+  ],
+  [
    "Wed Dec 9",
    "Fed rate decision",
    "The Fed's December meeting decision, where markets are pricing a quarter-point hike.",
@@ -140,9 +149,89 @@
    "AMC",
    "",
    ""
+  ],
+  [
+   "2026-11-23",
+   "HPE",
+   "Hewlett Packard Enterprise",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "ADI",
+   "Analog Devices",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "MDT",
+   "Medtronic",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "BBY",
+   "Best Buy",
+   "BMO",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "DELL",
+   "Dell Technologies",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "WDAY",
+   "Workday",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "ADSK",
+   "Autodesk",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-24",
+   "HPQ",
+   "HP",
+   "AMC",
+   "",
+   ""
+  ],
+  [
+   "2026-11-25",
+   "DE",
+   "Deere",
+   "BMO",
+   "",
+   ""
   ]
  ],
  "EARN_SRC": [
+  [
+   "TheStreet earnings calendar (week of Nov 23)",
+   "https://pro.thestreet.com/earnings/week/2026-11-23"
+  ],
+  [
+   "IfYouSpent Thanksgiving-week earnings preview",
+   "https://news.ifyouspent.com/en/news/thanksgiving-week-earnings-dell-workday-zoom-hp-deere-november-2026"
+  ],
   [
    "Portfolio Terminal",
    "https://portfolio-terminal.com/earnings-calendar/november-2026"
@@ -150,18 +239,102 @@
   [
    "Earnings Watcher",
    "https://earnings-watcher.com/earnings-this-week"
-  ],
-  [
-   "Earnings Whispers",
-   "https://www.earningswhispers.com/calweek/20261116"
-  ],
-  [
-   "TheStreet market summary (Nov 19)",
-   "https://pro.thestreet.com/stock-market-today/2026-11-19"
   ]
  ],
- "NEWS_DATE": "Nov 19, 2026",
+ "NEWS_DATE": "Nov 23, 2026",
  "NEWS": [
+  {
+   "k": "Markets",
+   "d": "Nov 23",
+   "h": "Stocks surge Monday as Nvidia reinstates Jensen Huang; Nasdaq jumps about 7% midday",
+   "w": "Midday Monday, not a close: CNBC reported the S&P 500 up about 5.1%, the Nasdaq Composite up about 7% and the Dow up 1,569 points, or 3.3%, after Nvidia's board reinstated Jensen Huang as CEO. Nvidia rose about 34%, Micron 19%, CoreWeave 25% and AMD 8%. Huang had resigned earlier this month. Markets are closed Thursday for Thanksgiving and Friday's session ends at 1 p.m. ET.",
+   "m": "Friday's close left the S&P 500 and Dow in a correction and the Nasdaq-100 close to a bear market, so a one-day jump this size is partly a bounce from oversold levels. Intraday moves can fade by the close.",
+   "a": "Interview point: explain why one CEO's return can move an entire sector (key-person risk and how it shows up in valuation).",
+   "s": [
+    [
+     "CNBC live updates (Nov 23)",
+     "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
+    ],
+    [
+     "Yahoo Finance live blog (Nov 23)",
+     "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-nvidia-reinstates-jensen-huang-141511975.html"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 23",
+   "h": "CrowdStrike agrees to buy Zscaler for $43.9 billion in all stock",
+   "w": "CrowdStrike will pay 1.135 of its shares for each Zscaler share, or about $260.41 per Zscaler share, a 34% premium to Zscaler's last close. CrowdStrike holders would own about 84% of the combined company, and closing is expected in the second half of CrowdStrike's fiscal 2028. CNBC said CrowdStrike fell roughly 5% and Zscaler rose more than 20% in early trading.",
+   "m": "In an all-stock deal the buyer pays with its own shares, so the seller's price moves with the buyer's stock. CrowdStrike's drop on the news shows investors weighing the price against the strategic fit.",
+   "a": "Interview point: explain the exchange ratio and why the implied price per share changes as the acquirer's stock moves.",
+   "s": [
+    [
+     "CNBC (Nov 23)",
+     "https://www.cnbc.com/2026/11/23/crowdstrike-zscaler-aquisition-ai-cyberattacks.html"
+    ],
+    [
+     "Reuters via CNBC (Nov 23)",
+     "https://www.cnbc.com/2026/11/23/crowdstrike-to-buy-zscaler.html"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 23",
+   "h": "ABB to buy fan maker Ziehl-Abegg at a $2.65 billion enterprise value",
+   "w": "ABB signed an agreement to acquire Ziehl-Abegg, which makes electronically commutated fans and integrated motors, at a $2.65 billion enterprise value and $2.22 billion equity value. ABB said that implies 1.9x EV/Sales and 18.6x EV/EBITDA on 2026 numbers, and expects the EBITDA multiple to fall toward low double digits with synergies. Closing is expected in the second half of 2027.",
+   "m": "The 18.6x multiple looks high until you add the synergies ABB expects, which is why buyers quote a post-synergy multiple.",
+   "a": "Interview point: explain the gap between enterprise value and equity value ($2.65B vs $2.22B).",
+   "s": [
+    [
+     "ABB press release (Nov 23)",
+     "https://new.abb.com/news/detail/140614/abb-to-acquire-ziehl-abegg-expanding-offering-for-hvac-and-industrial-cooling-applications"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 23",
+   "h": "Texas Pacific Land to buy EagleRock in an all-stock deal worth about $3.0 billion",
+   "w": "TPL and EagleRock Land announced a definitive agreement under which EagleRock holders get 0.0831 New TPL shares per EagleRock Class A share, about $23.56 per share based on TPL's five-day VWAP as of Nov 20. The implied equity value is about $3.0 billion, and closing is expected in the first half of 2027 pending an EagleRock shareholder vote and HSR clearance.",
+   "m": "A fixed exchange ratio means the value EagleRock holders receive moves with TPL's share price until closing.",
+   "a": "Interview point: explain what a VWAP is and why deal values are often quoted off an average price.",
+   "s": [
+    [
+     "Texas Pacific Land press release (Nov 23)",
+     "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 23",
+   "h": "AMD acquires AI chip startup Taalas in a deal valued at about $2.9 billion",
+   "w": "Tech.eu reported AMD has acquired Taalas, a Toronto-founded startup that builds chips with AI models embedded in the silicon, for about $2.9 billion. Taalas had raised roughly $220 million from investors including Fidelity. AMD plans to fold the technology into its Instinct accelerator roadmap.",
+   "m": "Chipmakers are buying specialized startups rather than building the same technology in-house, a common reason for a strategic acquisition.",
+   "a": "Interview point: explain the build vs buy decision in a corporate acquisition.",
+   "s": [
+    [
+     "Tech.eu (Nov 23)",
+     "https://tech.eu/2026/11/23/amd-acquires-ai-chip-startup-taalas-for-29b-to-advance-ai-inference-technology/"
+    ]
+   ]
+  },
+  {
+   "k": "Markets",
+   "d": "Nov 20",
+   "h": "Michigan sentiment rises to 51.5 as one-year inflation expectations fall to 3.7%",
+   "w": "CNBC reported the University of Michigan's November sentiment index rose to 51.5, up 7.3% from a month ago and in line with the consensus estimate. One-year inflation expectations fell a full percentage point to 3.7%, the lowest since March, and the five-year outlook slipped to 3.3%. Markets still strongly expect a quarter-point Fed hike at the Dec. 8-9 meeting.",
+   "m": "Falling inflation expectations matter to the Fed, but Governor Lisa Cook said Friday that waiting longer risks getting behind the curve.",
+   "a": "Interview point: explain why central banks watch inflation expectations, not just current inflation.",
+   "s": [
+    [
+     "CNBC market wrap (Nov 20)",
+     "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html"
+    ]
+   ]
+  },
   {
    "k": "Markets",
    "d": "Nov 20",
@@ -299,165 +472,387 @@
      "https://leprivatebanker.com/2026/11/19/wall-streets-anthropic-debut-rally-fades-as-dow-slips-below-50000-and-the-10-year-yield-edges-to-5-1/"
     ]
    ]
-  },
-  {
-   "k": "Earnings",
-   "d": "Nov 19",
-   "h": "Walmart raises its full-year outlook, but the stock is lower midmorning",
-   "w": "Bloomberg reported Walmart raised its full-year sales and earnings forecasts. A midmorning market report had the shares down about 1.1% despite the raise. Williams-Sonoma was down 8.6% on revenue just under forecasts. Intuit and Ross Stores report after the close.",
-   "m": "A raised forecast can still be met with a selloff if investors expected even more.",
-   "a": "Interview point: explain why a stock can fall after raising guidance (expectations already priced in).",
-   "s": [
-    [
-     "Bloomberg markets wrap via swissinfo (Nov 19)",
-     "https://www.swissinfo.ch/eng/stocks-fall-as-ai-bets-wane-before-anthropic-debut:-markets-wrap/92404209"
-    ],
-    [
-     "The Private Banker market report (Nov 19)",
-     "https://leprivatebanker.com/2026/11/19/wall-streets-anthropic-debut-rally-fades-as-dow-slips-below-50000-and-the-10-year-yield-edges-to-5-1/"
-    ]
-   ]
-  },
-  {
-   "k": "Banks",
-   "d": "Nov 19",
-   "h": "JPMorgan, Visa and Mastercard say some customer data was accessed in a vendor cyberattack",
-   "w": "Bloomberg reported JPMorgan Chase, Visa and Mastercard said some customer data was accessed in a cyberattack on a vendor. The same wrap noted AMD fell after Hunterbrook Capital said it was short the stock, and that SpaceX planned a debt sale of at least $32 billion tied to a chip-financing deal.",
-   "m": "Banks depend on third-party vendors, so a vendor breach becomes the bank's risk too.",
-   "a": "Interview point: name one risk of relying on third-party vendors (operational and data-security risk).",
-   "s": [
-    [
-     "Bloomberg markets wrap via swissinfo (Nov 19)",
-     "https://www.swissinfo.ch/eng/stocks-fall-as-ai-bets-wane-before-anthropic-debut:-markets-wrap/92404209"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 18",
-   "h": "Dow drops 561 points, S&P 500 slips for a fifth day, Nasdaq rises ahead of Anthropic IPO",
-   "w": "The S&P 500 closed at 7,323.63 (-0.23%), the Dow at 50,198.17 (-1.11%) and the Nasdaq at 24,429.88 (+0.42%). The Russell 2000 also rose. Nvidia closed at $150.96, down 2.89%, after reversing early gains even though fiscal Q3 revenue grew 103% year over year; it also halted about $2.4B in quarterly Hopper chip sales to China. Fed minutes showed nearly all policymakers saw more rate increases as likely, and October building permits fell 7.4%.",
-   "m": "The split between the Dow and Nasdaq shows investors rotating toward AI names while worrying about rates.",
-   "a": "Interview point: explain why the Nasdaq can rise while the Dow falls (different sector weights, and AI IPO excitement).",
-   "s": [
-    [
-     "Vista P Global market wrap (Nov 18)",
-     "https://vistapglobal.com/u-s-stock-market-today-november-18-2026-dow-falls-561-points-nasdaq-rises-ahead-of-anthropic-ipo-ant-eprx-googl-modd-nvda-ser-tgt/"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 18",
-   "h": "Stocks slide again in late-morning trading even as Nvidia beats; Dow down about 1.3%",
-   "w": "Yahoo Finance's live page showed the S&P 500 at 7,297.48 (-0.59%), the Dow at 50,087.28 (-1.32%), the Nasdaq at 24,283.22 (-0.19%) and the Russell 2000 up 0.52%. The VIX was 24.89 and the 10-year Treasury yield 5.07%. Nvidia rose early but was down about 2.2% after trimming gains. Oil was around $83 and gold around $3,752.",
-   "m": "Good results from the biggest AI company did not lift the market, which suggests worries about rates and AI valuations matter more than one earnings report.",
-   "a": "Interview point: explain why a stock can fall after beating estimates (expectations were already priced in).",
-   "s": [
-    [
-     "Yahoo Finance live (Nov 18)",
-     "https://finance.yahoo.com/markets/live/stock-market-today-wednesday-november-18-dow-sp-500-nasdaq-nvidia-earnings-anthropic-ipo-143530588.html"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 17",
-   "h": "Nvidia beats: $115.8B revenue vs about $108.8B expected, guides next quarter to $130B",
-   "w": "Nvidia reported fiscal Q3 revenue of $115.8 billion (forecast about $108.8B) and EPS of $2.68 (forecast $2.47), with a 74.9% gross margin and $107.6B of Data Center revenue. It guided Q4 revenue to $130 billion, plus or minus 3%, with gross margin of 71% to 72%. The stock rose more than 4% after hours.",
-   "m": "Beating by about $7B and guiding higher shows AI spending is still growing, though the stock had already fallen about 35% from its October high before the report.",
-   "a": "Interview point: know how analysts compare actual results to consensus and guidance.",
-   "s": [
-    [
-     "Kiplinger live blog (updated Nov 18)",
-     "https://www.kiplinger.com/news/live/nvidia-earnings-live-updates-and-commentary-november-2026"
-    ]
-   ]
-  },
-  {
-   "k": "Earnings",
-   "d": "Nov 18",
-   "h": "Target beats on sales and EPS, but shares trade lower premarket",
-   "w": "Target's Q3 net sales rose 7.1% to $27.1B (estimate $26.5B) and diluted EPS rose 49% to $2.65 (estimate $2.08), including a $0.50 benefit from tariff refunds. Shares were still moving lower premarket. Lowe's also beat estimates.",
-   "m": "A one-time benefit like tariff refunds inflates EPS, so analysts focus on adjusted or underlying results.",
-   "a": "Interview point: explain why you adjust for one-time items when valuing a company.",
-   "s": [
-    [
-     "Yahoo Finance live (Nov 18)",
-     "https://finance.yahoo.com/markets/live/stock-market-today-wednesday-november-18-dow-sp-500-nasdaq-nvidia-earnings-anthropic-ipo-143530588.html"
-    ]
-   ]
   }
  ],
  "NEWS_QUIZ": [
   [
-   "Anthropic priced its IPO at $83, above the $70 to $78 range, and upsized the deal. What does that signal?",
+   "CrowdStrike is buying Zscaler for 1.135 of its own shares per Zscaler share. What is that ratio called?",
    [
-    "Demand exceeded the shares offered",
-    "The company wanted a lower valuation",
-    "Underwriters could not sell the shares",
-    "The SEC raised the price"
+    "The exchange ratio",
+    "The leverage ratio",
+    "The conversion premium",
+    "The coverage ratio"
    ],
    0,
-   "Pricing above range and adding shares means investors wanted more stock than was offered."
+   "In a stock deal, the exchange ratio sets how many acquirer shares each target share receives."
   ],
   [
-   "Palo Alto is paying $4.5B for Applied Compute largely in its own stock. What is one reason to pay in stock?",
+   "Nvidia stock jumped about 34% Monday after its board reinstated CEO Jensen Huang. What does that show about valuation?",
    [
-    "It preserves cash and shares the risk with the target's holders",
-    "It avoids any dilution",
-    "It is always cheaper than debt",
-    "It removes the need for shareholder value"
+    "Investors price in who runs the company, not just its numbers",
+    "Share prices ignore management",
+    "CEO changes never matter",
+    "Earnings alone set the price"
    ],
    0,
-   "Stock consideration keeps cash on hand but dilutes the acquirer's existing shareholders."
+   "Key-person risk can be priced into a stock, so leadership news can move it sharply."
   ],
   [
-   "Walmart raised its full-year outlook but its stock was down midmorning. Why can that happen?",
+   "ABB's price for Ziehl-Abegg is $2.65B enterprise value versus $2.22B equity value. Which is usually used to compute EV/EBITDA?",
    [
-    "Expectations were already higher than the new guidance",
-    "Guidance raises always lower the price",
-    "Revenue growth does not matter",
-    "The Fed banned trading"
+    "Enterprise value",
+    "Equity value",
+    "Market capitalization of the buyer",
+    "Book value"
    ],
    0,
-   "Prices reflect expectations, so a raise that falls short of what investors hoped for can still disappoint."
+   "EV/EBITDA uses enterprise value because EBITDA is earned before interest, so it belongs to all capital providers."
   ]
  ],
- "DEALS_DATE": "Nov 21, 2026",
+ "DEALS_DATE": "Nov 23, 2026",
  "DEALS": [
   {
-   "id": "d48",
-   "buyer": "MasTec",
-   "target": "Murphy Corporation",
-   "value": "~$1.25B cash (plus earnout)",
-   "usd": 1.25,
-   "date": "Nov 20, 2026",
+   "id": "d51",
+   "buyer": "CrowdStrike",
+   "target": "Zscaler",
+   "value": "$43.9B (all stock)",
+   "usd": 43.9,
+   "date": "Nov 23, 2026",
    "terms": [
-    "About $1.25B in cash, subject to customary purchase-price adjustments",
-    "Potential earnout based on Murphy's cumulative three-year performance after closing",
-    "Murphy is a mechanical contractor serving mission-critical end markets"
+    "1.135 CrowdStrike shares per Zscaler share",
+    "About $260.41 per Zscaler share, a 34% premium to the last close",
+    "CrowdStrike holders would own about 84% of the combined company",
+    "Expected to close in the second half of CrowdStrike's fiscal 2028",
+    "Subject to regulatory approval",
+    "CEO George Kurtz leads; Zscaler CEO Jay Chaudhry joins the CrowdStrike board"
    ],
-   "what": "Infrastructure contractor MasTec agreed to buy Murphy Corporation, a mechanical contractor serving mission-critical end markets, for about $1.25 billion in cash, announced November 20. Sellers can earn more through an earnout tied to Murphy's performance over the three years after closing.",
-   "why": "MasTec expands its U.S. mechanical contracting work into mission-critical projects. The earnout shares risk: part of the price is only paid if Murphy keeps performing.",
-   "say": "\"An earnout bridges a valuation gap: the seller thinks the business is worth more, the buyer isn't sure, so part of the price depends on future results.\"",
+   "what": "CrowdStrike agreed to buy network security provider Zscaler for about $43.9 billion in an all-stock deal announced Monday, Nov 23. It is CrowdStrike's biggest acquisition to date and one of the largest cybersecurity deals on record.",
+   "why": "CrowdStrike secures devices and Zscaler secures networks, so the deal gives CrowdStrike a broader product set to sell to the same customers. CNBC reported analysts see it closing a gap with market leader Palo Alto Networks.",
+   "say": "\"It's an all-stock deal, so Zscaler holders take CrowdStrike shares at a fixed exchange ratio and the value they get moves with CrowdStrike's stock until closing.\"",
    "src": [
     [
-     "MasTec press release (Nov 20)",
-     "https://investors.mastec.com/news-releases/news-release-details/mastec-enters-definitive-agreement-acquire-murphy-corporation"
+     "CNBC (Nov 23)",
+     "https://www.cnbc.com/2026/11/23/crowdstrike-zscaler-aquisition-ai-cyberattacks.html"
+    ],
+    [
+     "Reuters via CNBC (Nov 23)",
+     "https://www.cnbc.com/2026/11/23/crowdstrike-to-buy-zscaler.html"
     ]
    ],
    "q": [
     [
-     "Part of MasTec's price for Murphy depends on Murphy's results after closing. What is that called?",
+     "CrowdStrike pays 1.135 of its shares for each Zscaler share. What happens to the value Zscaler holders receive if CrowdStrike's stock falls before closing?",
      [
-      "An earnout",
-      "A breakup fee",
-      "A tender offer",
-      "A collar"
+      "It falls too, because the ratio is fixed",
+      "It stays the same",
+      "It rises",
+      "It is converted to cash at the announced price"
      ],
      0,
-     "An earnout pays the seller more later if the business hits agreed performance targets."
+     "With a fixed exchange ratio the number of shares is set, so the dollar value moves with the buyer's share price."
+    ]
+   ]
+  },
+  {
+   "id": "d38",
+   "buyer": "Marvell Technology",
+   "target": "Lumentum",
+   "value": "~$115B",
+   "usd": 115,
+   "date": "Nov 2, 2026",
+   "terms": [
+    "4.5 Marvell shares per Lumentum share",
+    "All stock",
+    "~23.9% premium to Oct 28 prices"
+   ],
+   "what": "Marvell agreed to buy Lumentum, a maker of lasers and optical parts for AI data centers, in an all-stock deal valued at about $115 billion, or about $1,132 per Lumentum share at Oct 28 prices. Marvell owners would hold about 67% of the combined company and Lumentum owners about 33%, with closing expected in the first half of 2028.",
+   "why": "Marvell makes chips that move data, and it wants more optical technology and factory capacity as AI data centers shift from copper to light. The companies expect more than $1 billion of yearly cost savings and say the deal should add to Marvell's adjusted EPS in the first year after closing.",
+   "say": "\"Because Marvell is paying a fixed 4.5 shares, the $115 billion headline moves with its stock, so Lumentum's owners take on Marvell's share price risk until closing in 2028.\"",
+   "src": [
+    [
+     "Yahoo Finance",
+     "https://finance.yahoo.com/markets/stocks/articles/marvell-strikes-115b-deal-acquire-124300132.html"
+    ],
+    [
+     "Marvell 8-K via Stocktitan",
+     "https://www.stocktitan.net/sec-filings/MRVL/8-k-marvell-technology-inc-reports-material-event-7df547335b18.html"
+    ]
+   ],
+   "q": [
+    [
+     "Marvell is paying a fixed 4.5 Marvell shares for each Lumentum share. If Marvell's stock falls before closing, what happens to Lumentum owners' payout?",
+     [
+      "It stays locked at the $1,132 headline price",
+      "It rises because Marvell issues extra shares",
+      "Its value falls because the 4.5 ratio is fixed",
+      "It converts into cash at the Oct 28 stock price"
+     ],
+     2,
+     "With a fixed exchange ratio, the share count stays the same, so the dollar value moves up and down with the buyer's stock."
+    ],
+    [
+     "Marvell must pay Lumentum $3.2 billion if the merger ends over certain regulatory problems. Why would Lumentum ask for this fee?",
+     [
+      "It pays Lumentum for failed-review risk",
+      "It lets Marvell skip the U.S. antitrust review",
+      "It raises the exchange ratio when deals close",
+      "It funds the $1 billion of planned cost savings"
+     ],
+     0,
+     "A reverse termination fee protects the target, which can lose years and business momentum if regulators block the merger."
+    ]
+   ]
+  },
+  {
+   "id": "d33",
+   "buyer": "DoorDash",
+   "target": "Instacart (Maplebear)",
+   "value": "~$17B",
+   "usd": 17,
+   "date": "Oct 29, 2026",
+   "terms": [
+    "$65.00 per share",
+    "At least 75% cash",
+    "26% premium"
+   ],
+   "what": "DoorDash agreed to buy Instacart's parent company, Maplebear, for $65 a share, about $17 billion of equity value. Instacart holders can choose cash, DoorDash stock or a mix, but stock is capped at 25% of the total, and the deal should close by late 2027 or the first half of 2028.",
+   "why": "DoorDash gets the leading U.S. grocery-delivery platform and its retailer software, plus a bigger ad business. Together they can offer local grocers one delivery network to compete with Walmart and Amazon.",
+   "say": "\"It's a mostly-cash strategic deal funded with a bridge loan, so the key risks are antitrust review and how much new debt DoorDash takes on while trying to keep its investment-grade rating.\"",
+   "src": [
+    [
+     "DoorDash press release",
+     "https://ir.doordash.com/news/news-details/2026/DoorDash-to-Acquire-Instacart-to-Help-Local-Stores-Win/default.aspx"
+    ],
+    [
+     "InsideArbitrage",
+     "https://www.insidearbitrage.com/2026/10/doordash-to-acquire-instacart-for-17-billion/"
+    ]
+   ],
+   "q": [
+    [
+     "DoorDash is paying for Instacart with at least 75% cash and at most 25% DoorDash stock. What is the main benefit of the stock portion for DoorDash?",
+     [
+      "It uses less new debt and protects the credit rating",
+      "It guarantees antitrust approval from regulators",
+      "It lets DoorDash skip the shareholder vote",
+      "It locks in a lower price per Instacart share"
+     ],
+     0,
+     "Paying part of the price in stock means borrowing less, which helps DoorDash keep its investment-grade rating."
+    ],
+    [
+     "JPMorgan gave DoorDash a 364-day bridge loan commitment for the Instacart deal. What is a bridge loan used for?",
+     [
+      "Paying Instacart's employee retention bonuses",
+      "Covering the breakup fee if the deal fails",
+      "Short-term funding until bonds are issued later",
+      "Buying back DoorDash shares after closing"
+     ],
+     2,
+     "A bridge loan guarantees the cash is there at signing; the buyer usually replaces it with longer-term bonds before or at closing."
+    ]
+   ]
+  },
+  {
+   "id": "d16",
+   "buyer": "EQT Corp.",
+   "target": "Range Resources",
+   "value": "~$12.8B",
+   "usd": 12.83,
+   "date": "Oct 26, 2026",
+   "terms": [
+    "0.987 EQT shares per Range share",
+    "All stock",
+    "~20.6% premium"
+   ],
+   "what": "EQT Corp., the largest U.S. natural gas producer, agreed to buy rival Range Resources by swapping its own shares for Range's. Reuters put Range's equity value at about $12.8 billion, and the combined company is worth more than $50 billion including debt.",
+   "why": "Data centers are driving up demand for natural gas, and a bigger producer can drill more cheaply and sell gas more effectively. EQT expects about $325 million a year in savings within two years, rising to over $600 million long term.",
+   "say": "\"It's an all-stock merger of equals in spirit: Range holders take a ~20% premium in EQT shares and end up owning about 27% of the combined gas giant.\"",
+   "src": [
+    [
+     "Reuters via Investing.com",
+     "https://za.investing.com/news/stock-market-news/eqt-range-resources-tie-up-in-50-billionplus-deal-to-create-us-gas-giant-4524945"
+    ],
+    [
+     "Investing.com",
+     "https://www.investing.com/news/company-news/eqt-to-acquire-range-resources-in-50-billion-allstock-deal-93CH-4971856"
+    ]
+   ],
+   "q": [
+    [
+     "Range holders get 0.987 EQT shares each. If EQT stock falls 10% before closing, what happens to the value Range holders receive?",
+     [
+      "It stays fixed at $54.91",
+      "It falls too, because the share ratio is fixed",
+      "It rises",
+      "The deal is cancelled automatically"
+     ],
+     1,
+     "With a fixed exchange ratio, the target's payout moves with the buyer's stock price."
+    ],
+    [
+     "Why might EQT's stock fall when the deal is announced while Range's jumps?",
+     [
+      "EQT is paying a premium and issuing new shares, diluting its holders",
+      "Range is paying EQT",
+      "All-stock deals are illegal",
+      "EQT is going private"
+     ],
+     0,
+     "The buyer pays a premium and issues shares, so its stock often dips while the target rises toward the offer."
+    ]
+   ]
+  },
+  {
+   "id": "d13",
+   "buyer": "EQT",
+   "target": "Qiagen",
+   "value": "~$12.1B",
+   "usd": 12.1,
+   "date": "Oct 21, 2026",
+   "terms": [
+    "\u20ac46.50 per share",
+    "All cash",
+    "~40% premium"
+   ],
+   "what": "Private equity firm EQT agreed to take diagnostics company Qiagen private for \u20ac46.50 a share in cash. Including about $1.1 billion of debt, the deal is worth about \u20ac10.8 billion (~$12.1 billion).",
+   "why": "Qiagen says private ownership will let it invest for the long term and move faster. Analysts at William Blair put the price at about 15x expected 2027 EBITDA, below similar life-science deals.",
+   "say": "\"This is a take-private: EQT pays a ~40% premium over the undisturbed price, measured before takeover rumors leaked in July.\"",
+   "src": [
+    [
+     "MedTech Dive",
+     "https://www.medtechdive.com/news/qiagen-agrees-to-private-equity-takeover/833805/"
+    ]
+   ],
+   "q": [
+    [
+     "The ~40% premium is measured against Qiagen's price before takeover reports in July. Why use that date?",
+     [
+      "It was the highest price of the year",
+      "It is the undisturbed price, before rumors pushed the stock up",
+      "Regulators require July prices",
+      "It is the date the deal closes"
+     ],
+     1,
+     "Rumors lift a stock, so premiums are measured from the undisturbed price."
+    ],
+    [
+     "EQT pays \u20ac46.50 a share, about a 40% premium. Qiagen's undisturbed share price was roughly:",
+     [
+      "\u20ac19",
+      "\u20ac28",
+      "\u20ac33",
+      "\u20ac40"
+     ],
+     2,
+     "46.50 \u00f7 1.40 \u2248 \u20ac33."
+    ]
+   ]
+  },
+  {
+   "id": "d53",
+   "buyer": "Texas Pacific Land",
+   "target": "EagleRock Land",
+   "value": "~$3.0B (all stock)",
+   "usd": 3.0,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "0.0831 New TPL shares per EagleRock Class A share",
+    "About $23.56 per EagleRock share on TPL's five-day VWAP as of Nov 20",
+    "Needs an EagleRock shareholder vote and Hart-Scott-Rodino clearance",
+    "Expected to close in the first half of 2027"
+   ],
+   "what": "Texas Pacific Land and EagleRock Land (NYSE: EROK) announced a definitive agreement for TPL to acquire EagleRock in an all-stock deal with an implied equity value of about $3.0 billion, announced November 23.",
+   "why": "The companies said the deal combines complementary Permian land and water assets, adds New Mexico Delaware Basin and Midland Basin exposure, and gives TPL more water commercialization opportunities.",
+   "say": "\"It's a stock-for-stock merger at a fixed exchange ratio, so the headline value is quoted off TPL's five-day VWAP and will move with TPL's share price.\"",
+   "src": [
+    [
+     "Texas Pacific Land press release (Nov 23)",
+     "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
+    ]
+   ],
+   "q": [
+    [
+     "TPL quotes EagleRock's value using TPL's five-day VWAP. What does VWAP stand for?",
+     [
+      "Volume-weighted average price",
+      "Value-weighted adjusted premium",
+      "Variable warrant asset price",
+      "Verified wholesale acquisition price"
+     ],
+     0,
+     "VWAP weights each trade's price by its size, smoothing out one-day swings."
+    ]
+   ]
+  },
+  {
+   "id": "d52",
+   "buyer": "ABB",
+   "target": "Ziehl-Abegg",
+   "value": "$2.65B EV ($2.22B equity)",
+   "usd": 2.65,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "Enterprise value $2.65B; equity value $2.22B",
+    "1.9x EV/Sales and 18.6x EV/EBITDA on 2026 numbers",
+    "About $1.4B of 2026 revenue, mid-single-digit operational EBITA margin",
+    "Expected to close in the second half of 2027, subject to regulatory approvals"
+   ],
+   "what": "ABB signed an agreement to acquire Ziehl-Abegg, a maker of high-efficiency electronically commutated (EC) fans and integrated motors, at a $2.65 billion enterprise value, announced November 23.",
+   "why": "The fans add to ABB's Motion portfolio of motors and drives and broaden its offering for HVAC, industrial cooling and thermal management. ABB expects the EBITDA multiple to fall toward low double digits with synergies.",
+   "say": "\"The enterprise value is $2.65B but equity is $2.22B; the difference is net debt and similar claims the buyer takes on.\"",
+   "src": [
+    [
+     "ABB press release (Nov 23)",
+     "https://new.abb.com/news/detail/140614/abb-to-acquire-ziehl-abegg-expanding-offering-for-hvac-and-industrial-cooling-applications"
+    ]
+   ],
+   "q": [
+    [
+     "ABB's price is $2.65B enterprise value but $2.22B equity value. What explains the gap?",
+     [
+      "Net debt and other claims ahead of equity holders",
+      "ABB's expected synergies",
+      "The HSR filing fee",
+      "A control premium"
+     ],
+     0,
+     "Enterprise value is equity value plus net debt and similar claims, so it is higher when the target carries net debt."
+    ]
+   ]
+  },
+  {
+   "id": "d54",
+   "buyer": "AMD",
+   "target": "Taalas",
+   "value": "~$2.9B",
+   "usd": 2.9,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "Valued at about $2.9B (Tech.eu)",
+    "Taalas raised about $220M from investors including Fidelity",
+    "AMD plans to add the technology to its Instinct accelerator roadmap"
+   ],
+   "what": "AMD acquired Taalas, a startup founded in Toronto in 2023 that builds chips with AI models integrated directly into silicon, in a deal Tech.eu valued at about $2.9 billion, reported November 23.",
+   "why": "Taalas designs chips around specific AI models instead of general-purpose GPUs. AMD plans to use the technology in its Instinct accelerator line.",
+   "say": "\"It's a tech tuck-in: AMD buys specialized chip design talent and IP rather than building it internally.\"",
+   "src": [
+    [
+     "Tech.eu (Nov 23)",
+     "https://tech.eu/2026/11/23/amd-acquires-ai-chip-startup-taalas-for-29b-to-advance-ai-inference-technology/"
+    ]
+   ],
+   "q": [
+    [
+     "AMD buying a startup's technology instead of developing it is an example of which decision?",
+     [
+      "Build vs buy",
+      "Leverage vs equity",
+      "Spin-off vs split-off",
+      "Dividend vs buyback"
+     ],
+     0,
+     "A strategic acquirer weighs building a capability itself against buying a company that already has it."
     ]
    ]
   },
@@ -473,10 +868,10 @@
     "Values BILL at about $6.0 billion",
     "31% premium to the 60-day VWAP ending Nov 16",
     "TPG takes a majority stake; Corpay a minority stake",
-    "Largest holder Starboard Value and CEO René Lacerte agreed to vote for it",
+    "Largest holder Starboard Value and CEO Ren\u00e9 Lacerte agreed to vote for it",
     "Expected to close in the first half of 2027"
    ],
-   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder René Lacerte stays CEO.",
+   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder Ren\u00e9 Lacerte stays CEO.",
    "why": "BILL's stock had fallen far from its highs, so a private-equity buyer could pay a premium and still buy in cheaply. Corpay gets a strategic stake in a business-payments platform. TPG and Corpay used the same playbook to buy AvidXchange in 2025.",
    "say": "\"It's a take-private: TPG pays a 31% premium in cash for a fallen software stock, with Corpay as a strategic partner, betting the business is worth more out of public markets.\"",
    "src": [
@@ -537,157 +932,37 @@
    ]
   },
   {
-   "id": "d45",
-   "buyer": "Palo Alto Networks",
-   "target": "Applied Compute",
-   "value": "$4.5B (reported all-stock)",
-   "usd": 4.5,
-   "date": "Nov 18, 2026",
+   "id": "d48",
+   "buyer": "MasTec",
+   "target": "Murphy Corporation",
+   "value": "~$1.25B cash (plus earnout)",
+   "usd": 1.25,
+   "date": "Nov 20, 2026",
    "terms": [
-    "$4.5B purchase price",
-    "Reported as an all-stock deal",
-    "Expected to close in Q3 of fiscal 2027",
-    "Aims to build a platform for securely training and deploying open-weight AI models"
+    "About $1.25B in cash, subject to customary purchase-price adjustments",
+    "Potential earnout based on Murphy's cumulative three-year performance after closing",
+    "Murphy is a mechanical contractor serving mission-critical end markets"
    ],
-   "what": "Palo Alto Networks agreed to buy AI startup Applied Compute for $4.5 billion, announced alongside its first-quarter results on November 18. The stated aim is a platform for securely training and deploying open-weight AI models. Reports describe the deal as all-stock, and it is expected to close in the third quarter of fiscal 2027.",
-   "why": "The buyer adds AI model infrastructure to its security platform. Paying in stock preserves cash but dilutes existing holders.",
-   "say": "\"Palo Alto is buying AI capability rather than building it, and paying in stock keeps its cash for other uses, but existing shareholders are diluted, so the deal needs to be accretive to growth and justify that dilution.\"",
+   "what": "Infrastructure contractor MasTec agreed to buy Murphy Corporation, a mechanical contractor serving mission-critical end markets, for about $1.25 billion in cash, announced November 20. Sellers can earn more through an earnout tied to Murphy's performance over the three years after closing.",
+   "why": "MasTec expands its U.S. mechanical contracting work into mission-critical projects. The earnout shares risk: part of the price is only paid if Murphy keeps performing.",
+   "say": "\"An earnout bridges a valuation gap: the seller thinks the business is worth more, the buyer isn't sure, so part of the price depends on future results.\"",
    "src": [
     [
-     "MarketScreener (Reuters)",
-     "https://www.marketscreener.com/news/palo-alto-to-buy-ai-startup-applied-compute-for-4-5-billion-ce785edddc8ff220"
+     "MasTec press release (Nov 20)",
+     "https://investors.mastec.com/news-releases/news-release-details/mastec-enters-definitive-agreement-acquire-murphy-corporation"
     ]
    ],
    "q": [
     [
-     "Palo Alto is paying for Applied Compute largely with its own shares. What is a downside of that for existing holders?",
+     "Part of MasTec's price for Murphy depends on Murphy's results after closing. What is that called?",
      [
-      "Dilution of their ownership",
-      "Higher cash interest costs",
-      "A required tender offer",
-      "Automatic loss of voting rights"
+      "An earnout",
+      "A breakup fee",
+      "A tender offer",
+      "A collar"
      ],
      0,
-     "Issuing new shares to pay for a deal spreads ownership across more shares, diluting existing holders."
-    ]
-   ]
-  },
-  {
-   "id": "d44",
-   "buyer": "Johnson & Johnson",
-   "target": "Ollin Biosciences",
-   "value": "$2.2B upfront (up to ~$3.3B)",
-   "usd": 2.2,
-   "date": "Nov 16, 2026",
-   "terms": [
-    "$2.2B upfront",
-    "Up to ~$1.125B in regulatory and commercial milestones",
-    "Blackstone Life Sciences to pay J&J $750M to fund phase 3",
-    "Expected to close before end of 2026"
-   ],
-   "what": "Johnson & Johnson agreed to buy Ollin Biosciences, a clinical-stage biotech in Austin, Texas, for $2.2 billion upfront plus up to about $1.125 billion in further regulatory and commercial milestones, for a potential total of about $3.3 billion. Ollin's lead drug, OLN324, is an experimental VEGF/Ang2 antibody for wet AMD and DME. The deal is subject to regulatory approvals and is expected to close before the end of 2026.",
-   "why": "J&J adds a late-stage eye-disease drug to its pipeline. The milestone structure means it pays the extra amount only if the drug succeeds.",
-   "say": "\"The $2.2B is paid upfront, but about a third of the potential value is milestone-based, so J&J shares the clinical and regulatory risk with Ollin's holders. Blackstone Life Sciences funding phase 3 with $750M also keeps that cost off J&J's balance sheet in exchange for royalties.\"",
-   "src": [
-    [
-     "Ophthalmology Times",
-     "https://www.ophthalmologytimes.com/view/johnson-johnson-to-acquire-ollin-biosciences-in-deal-worth-up-to-3-3-billion"
-    ]
-   ],
-   "q": [
-    [
-     "J&J pays $2.2B upfront plus up to about $1.125B on milestones. What is the milestone part similar to?",
-     [
-      "Contingent consideration (like an earnout)",
-      "A break-up fee",
-      "A leveraged recap",
-      "A stock split"
-     ],
-     0,
-     "Payments that depend on future events are contingent consideration, similar to an earnout."
-    ]
-   ]
-  },
-  {
-   "id": "d43",
-   "buyer": "Blackstone Digital Infrastructure Trust",
-   "target": "75% of two AWS data-center ventures",
-   "value": "~$5B",
-   "usd": 5,
-   "date": "Nov 16, 2026",
-   "terms": [
-    "~75% interest in two AWS joint ventures",
-    "13 powered-shell data-center buildings",
-    "12-year triple-net lease, extendable to 32 years",
-    "7.0% initial cap rate"
-   ],
-   "what": "Blackstone Digital Infrastructure Trust agreed to buy about a 75% interest in two Amazon Web Services joint ventures in a deal of about $5 billion. The ventures own 13 newly built data-center buildings on two AWS campuses. AWS keeps about 25% and leases all of the properties. The deal is expected to close in the fourth quarter and is subject to closing conditions.",
-   "why": "The buyer gets long-term rent from a large cloud tenant on stabilized assets. AWS keeps using the campuses without owning all of the real estate.",
-   "say": "\"It's a sale-leaseback: AWS turns buildings into cash but keeps using them under a 12-year triple-net lease, and Blackstone's trust earns a 7.0% initial cap rate on stabilized, tenant-backed assets.\"",
-   "src": [
-    [
-     "WRE News",
-     "https://wrenews.com/blackstone-amazon-data-centers-5-billion-sale-leaseback-november-2026/"
-    ]
-   ],
-   "q": [
-    [
-     "In a sale-leaseback like Blackstone's AWS data-center deal, what does the seller (AWS) do?",
-     [
-      "Sells the property and rents it back",
-      "Buys the property from its tenant",
-      "Spins the property off to shareholders",
-      "Raises equity by issuing new shares"
-     ],
-     0,
-     "A sale-leaseback converts owned real estate into cash while the seller keeps using the property as a tenant."
-    ],
-    [
-     "The deal has a 7.0% initial cap rate. What does a cap rate measure?",
-     [
-      "Net operating income divided by property price",
-      "Debt divided by equity",
-      "The premium paid over market price",
-      "Annual rent growth"
-     ],
-     0,
-     "Cap rate is a property's net operating income divided by its price, a quick yield measure for real estate."
-    ]
-   ]
-  },
-  {
-   "id": "d49",
-   "buyer": "Diamondback Energy",
-   "target": "Double Eagle IV and V subsidiaries",
-   "value": "$2.15B cash + 15.56M Diamondback shares",
-   "usd": 2.15,
-   "date": "Nov 16, 2026",
-   "terms": [
-    "About 15.56 million Diamondback shares plus $2.15 billion in cash",
-    "About 4.0x estimated 2027 EBITDA (company figure)",
-    "Adds about 176,000 net Midland Basin acres",
-    "Expected to close around December 21, 2026"
-   ],
-   "what": "Diamondback Energy agreed to buy subsidiaries of Double Eagle IV Midco and Double Eagle V Midco for about 15.56 million Diamondback shares plus $2.15 billion in cash, adding about 176,000 net acres in the Permian's Midland Basin. Diamondback says the price is about 4.0 times estimated 2027 EBITDA. The total dollar value depends on Diamondback's share price, so it's listed as cash plus shares.",
-   "why": "Diamondback keeps consolidating the Midland Basin, buying more drilling inventory next to its own acreage. Using part stock lets the sellers share in the combined company.",
-   "say": "\"It's Permian consolidation: Diamondback adds about 176,000 acres for roughly 4x next year's EBITDA, paying in cash and stock.\"",
-   "src": [
-    [
-     "World Oil (Nov 16)",
-     "https://www.worldoil.com/news/2026/11/16/diamondback-buys-out-double-eagle-partnership-adding-176-000-net-midland-basin-acres/"
-    ]
-   ],
-   "q": [
-    [
-     "Diamondback pays about 4.0x estimated 2027 EBITDA. What does a lower multiple usually signal?",
-     [
-      "A cheaper price for each dollar of earnings",
-      "A bigger cash payment",
-      "A higher interest rate",
-      "A larger share count"
-     ],
-     0,
-     "EV/EBITDA compares price to earnings power; a lower multiple means paying less per dollar of EBITDA."
+     "An earnout pays the seller more later if the business hits agreed performance targets."
     ]
    ]
   },
@@ -739,369 +1014,98 @@
    ]
   },
   {
-   "id": "d41",
-   "buyer": "Hancock Whitney",
-   "target": "Trustmark",
-   "value": "$3.2B",
-   "usd": 3.2,
-   "date": "Nov 12, 2026",
+   "id": "d37",
+   "buyer": "Affle",
+   "target": "Perion Network",
+   "value": "~$420M",
+   "usd": 0.42,
+   "date": "Nov 1, 2026",
    "terms": [
-    "All stock",
-    "0.7463 Hancock Whitney shares per Trustmark share",
-    "~7% accretive to 2028 EPS"
+    "$11.70 per share",
+    "All cash, debt-financed by Citibank",
+    "~34.5% premium"
    ],
-   "what": "Hancock Whitney agreed to buy fellow Gulf South regional bank Trustmark in an all-stock deal valued at about $3.2 billion. Trustmark shareholders will receive 0.7463 Hancock Whitney shares for each share they own.",
-   "why": "Regional banks are merging to gain scale and cut costs. Hancock Whitney expects the deal to add about 7% to its 2028 earnings per share.",
-   "say": "\"Because it's all stock at a fixed 0.7463 ratio, Trustmark holders share in Hancock Whitney's stock moves until closing, and the buyer is betting cost savings make it about 7% accretive by 2028.\"",
+   "what": "Affle, an Indian mobile ad-tech company, agreed to buy Nasdaq-listed Perion for $11.70 per share in cash, valuing Perion's equity at about $420 million. Perion's board backed the deal, which still needs shareholder and U.S. antitrust approval.",
+   "why": "Affle adds Perion's retail media, connected-TV and digital billboard ad tools to its mobile marketing platform, hoping to sell more to the same advertisers. Perion keeps its brand, and its shareholders get a certain cash price.",
+   "say": "\"Affle's all-cash offer for Perion pays a 34.5% premium and includes a 40-day go-shop, which lets Perion's board test the market for a better bid before the deal closes.\"",
    "src": [
     [
-     "Investrade mid-morning look",
-     "https://investrade.com/mid-morning-look-november-12-2026/"
+     "Perion press release via Yahoo Finance",
+     "https://finance.yahoo.com/markets/stocks/articles/perion-enters-definitive-merger-agreement-103000095.html"
     ]
    ],
    "q": [
     [
-     "Hancock Whitney says the deal is about 7% accretive to 2028 EPS. What does that mean?",
+     "Affle's deal to buy Perion includes a 40-day 'go-shop' period. What does that allow Perion to do?",
      [
-      "Its EPS should be about 7% lower",
-      "Its EPS should be about 7% higher",
-      "Its stock will rise 7%",
-      "It pays a 7% premium"
+      "Ask Affle to raise its $11.70 price once each week",
+      "Actively seek competing offers from other buyers",
+      "Let Perion holders swap shares for Affle stock",
+      "Delay its shareholder vote until regulators approve"
      ],
      1,
-     "Accretive means the buyer's earnings per share rise because of the deal."
+     "A go-shop lets the target solicit rival bids for a set time after signing, helping the board show it got the best price."
     ],
     [
-     "Trustmark holders get a fixed 0.7463 Hancock Whitney shares each. If Hancock Whitney's stock falls before closing, what happens?",
+     "Affle is paying $11.70 per share for Perion, a 34.5% premium to its Oct 30 close. Roughly where did Perion stock close that day?",
      [
-      "Their payout keeps the same dollar value",
-      "Their payout loses value",
-      "They get extra cash",
-      "The deal is canceled"
-     ],
-     1,
-     "With a fixed exchange ratio, the payout's value moves with the buyer's stock price."
-    ]
-   ]
-  },
-  {
-   "id": "d50",
-   "buyer": "KPS Capital Partners",
-   "target": "70% of MM Packaging (from Mayr-Melnhof)",
-   "value": "€2.4B EV",
-   "usd": 2.6,
-   "date": "Nov 9, 2026",
-   "terms": [
-    "€2.4 billion enterprise value",
-    "KPS buys 70%; MM Group keeps 30%",
-    "MM Group expects about €1.8–1.9 billion in proceeds",
-    "Expected to close in the first half of 2027"
-   ],
-   "what": "Private equity firm KPS Capital Partners agreed to buy 70% of MM Packaging, the folding-carton business of Austria's Mayr-Melnhof (MM Group), at a €2.4 billion enterprise value. MM Group keeps 30% and expects about €1.8–1.9 billion in proceeds. MM shares rose about 9% the next day.",
-   "why": "MM Group focuses on its board business and gets cash; KPS carves out a standalone global packaging company. Keeping 30% lets the seller share in any upside.",
-   "say": "\"It's a carve-out: the seller keeps a 30% stake, so the headline €2.4B enterprise value is more than the cash it actually receives.\"",
-   "src": [
-    [
-     "Packaging Europe",
-     "https://www.packagingeurope.com/mm-group-sells-packaging-business-at-enterprise-value-of-eur2-4-billion/"
-    ],
-    [
-     "Packaging Dive",
-     "https://www.packagingdive.com/news/mm-packaging-kps-private-equity-acquisition/874240/"
-    ]
-   ],
-   "q": [
-    [
-     "MM Group sells 70% at a €2.4B enterprise value but expects only ~€1.8–1.9B in proceeds. Why is the cash lower?",
-     [
-      "It keeps a 30% stake and EV includes more than equity cash",
-      "KPS paid in stock",
-      "Taxes are deducted first",
-      "The deal was cancelled"
+      "About $8.70, or $11.70 divided by 1.345",
+      "About $7.66, or $11.70 minus 34.5% of it",
+      "About $15.74, or $11.70 times 1.345",
+      "About $11.36, or $11.70 minus $0.345"
      ],
      0,
-     "Enterprise value covers the whole business; the seller only gets cash for the part it sells."
+     "Premium = offer / prior price - 1, so the prior price is $11.70 / 1.345, about $8.70."
     ]
    ]
   },
   {
-   "id": "d38",
-   "buyer": "Marvell Technology",
-   "target": "Lumentum",
-   "value": "~$115B",
-   "usd": 115,
-   "date": "Nov 2, 2026",
+   "id": "d36",
+   "buyer": "Ahold Delhaize",
+   "target": "Tesco Czechia and Slovakia",
+   "value": "~\u20ac1.2B (~$1.34B)",
+   "usd": 1.34,
+   "date": "Oct 30, 2026",
    "terms": [
-    "4.5 Marvell shares per Lumentum share",
-    "All stock",
-    "~23.9% premium to Oct 28 prices"
+    "~\u20ac1.2B enterprise value (~\u20ac1.7B including leases)",
+    "~7.2x EV/EBITDA, ~5.0x after synergies",
+    "Paid with committed financing and existing resources"
    ],
-   "what": "Marvell agreed to buy Lumentum, a maker of lasers and optical parts for AI data centers, in an all-stock deal valued at about $115 billion, or about $1,132 per Lumentum share at Oct 28 prices. Marvell owners would hold about 67% of the combined company and Lumentum owners about 33%, with closing expected in the first half of 2028.",
-   "why": "Marvell makes chips that move data, and it wants more optical technology and factory capacity as AI data centers shift from copper to light. The companies expect more than $1 billion of yearly cost savings and say the deal should add to Marvell's adjusted EPS in the first year after closing.",
-   "say": "\"Because Marvell is paying a fixed 4.5 shares, the $115 billion headline moves with its stock, so Lumentum's owners take on Marvell's share price risk until closing in 2028.\"",
+   "what": "Ahold Delhaize, the Dutch owner of Food Lion, Stop & Shop and Albert, agreed to buy Tesco's grocery business in Czechia and Slovakia for an enterprise value of about \u20ac1.2 billion. The unit has more than 360 company-run stores plus 100+ franchise stores and about \u20ac3.5 billion in sales.",
+   "why": "Combined with its Albert stores, Ahold expects to become the top grocery brand in Czechia and gains a first foothold in Slovakia. Grocery is a scale game, so more stores mean better buying power with suppliers and lower costs per store.",
+   "say": "\"Ahold Delhaize is paying about 7.2 times EBITDA for Tesco's Czech and Slovak stores, but closer to 5 times once you count synergies, which is how a buyer can justify a price that looks higher than it feels.\"",
    "src": [
     [
-     "Yahoo Finance",
-     "https://finance.yahoo.com/markets/stocks/articles/marvell-strikes-115b-deal-acquire-124300132.html"
+     "Ahold Delhaize press release",
+     "https://newsroom.aholddelhaize.com/ahold-delhaize-announces-the-acquisition-of-tesco-czechia-and-slovakia-strengthening-its-position-in-europe/"
     ],
     [
-     "Marvell 8-K via Stocktitan",
-     "https://www.stocktitan.net/sec-filings/MRVL/8-k-marvell-technology-inc-reports-material-event-7df547335b18.html"
+     "Pound Sterling Live (EUR/USD rate)",
+     "https://www.poundsterlinglive.com/history/EUR-USD-2026"
     ]
    ],
    "q": [
     [
-     "Marvell is paying a fixed 4.5 Marvell shares for each Lumentum share. If Marvell's stock falls before closing, what happens to Lumentum owners' payout?",
+     "Ahold Delhaize says its Tesco Czechia and Slovakia purchase costs about 7.2x EBITDA, or 5.0x 'including synergies.' Why is the second multiple lower?",
      [
-      "It stays locked at the $1,132 headline price",
-      "It rises because Marvell issues extra shares",
-      "Its value falls because the 4.5 ratio is fixed",
-      "It converts into cash at the Oct 28 stock price"
+      "Synergies are added to EBITDA, making the denominator larger",
+      "Synergies cut the purchase price Ahold Delhaize pays Tesco at closing",
+      "The lower multiple leaves out the leases that Tesco's stores carry",
+      "The lower multiple uses Tesco's sales instead of EBITDA as its base"
+     ],
+     0,
+     "Adding expected cost savings to the target's EBITDA makes the denominator bigger, so the price looks cheaper as a multiple."
+    ],
+    [
+     "Ahold Delhaize gives Tesco Czechia and Slovakia two values: ~\u20ac1.2B EV and ~\u20ac1.7B 'lease-adjusted' EV. What explains the gap?",
+     [
+      "The \u20ac0.5B gap is a breakup fee owed if regulators block the deal",
+      "The \u20ac0.5B gap is the extra amount Ahold expects to save each year",
+      "The \u20ac0.5B gap counts store lease obligations as a form of debt",
+      "The \u20ac0.5B gap is the value of Tesco's franchise stores in Slovakia"
      ],
      2,
-     "With a fixed exchange ratio, the share count stays the same, so the dollar value moves up and down with the buyer's stock."
-    ],
-    [
-     "Marvell must pay Lumentum $3.2 billion if the merger ends over certain regulatory problems. Why would Lumentum ask for this fee?",
-     [
-      "It pays Lumentum for failed-review risk",
-      "It lets Marvell skip the U.S. antitrust review",
-      "It raises the exchange ratio when deals close",
-      "It funds the $1 billion of planned cost savings"
-     ],
-     0,
-     "A reverse termination fee protects the target, which can lose years and business momentum if regulators block the merger."
-    ]
-   ]
-  },
-  {
-   "id": "d35",
-   "buyer": "UMB Financial",
-   "target": "El Dorado Savings Bank",
-   "value": "~$506M",
-   "usd": 0.506,
-   "date": "Oct 27, 2026",
-   "terms": [
-    "~52% cash, ~48% UMB stock",
-    "13.553 UMB shares + $1,958.88 cash per share",
-    "$2.1B of deposits, 35 branches"
-   ],
-   "what": "Kansas City-based UMB Financial agreed to buy El Dorado Savings Bank, a California bank with about $2.4 billion of assets, for about $506 million in cash and stock. Closing is expected in the first quarter of 2027 if regulators and El Dorado's owners approve.",
-   "why": "El Dorado brings $2.1 billion of deposits and 35 branches in California and Nevada, taking UMB to 227 branches in 15 states. UMB gets a much bigger West Coast footprint and a cheap, steady base of deposits to fund loans.",
-   "say": "\"UMB is paying about $506 million, mostly for El Dorado's $2.1 billion of deposits and 35 West Coast branches, which give it cheap funding and a bigger footprint in California.\"",
-   "src": [
-    [
-     "South Tahoe Now",
-     "https://southtahoenow.com/10/29/2026/umb-financial-corporation-to-acquire-el-dorado-savings"
-    ]
-   ],
-   "q": [
-    [
-     "UMB Financial is paying for El Dorado Savings Bank with about 52% cash and 48% UMB stock. What does the stock part mean for El Dorado's owners?",
-     [
-      "They must sell their shares back to El Dorado for cash",
-      "They become part-owners of UMB and share in its results",
-      "They receive UMB bonds that pay a fixed yearly interest rate",
-      "They keep their El Dorado shares, which stay publicly listed"
-     ],
-     1,
-     "Sellers paid in stock swap their shares for the buyer's shares, so they own part of the combined bank and share its future ups and downs."
-    ],
-    [
-     "UMB Financial's ~$506M purchase of El Dorado Savings Bank adds $2.1 billion of deposits and 35 branches. Why do banks often buy other banks for their deposits?",
-     [
-      "Deposits count as revenue the day the deal closes",
-      "Regulators require banks to double deposits every five years",
-      "Deposits let a bank skip its own capital requirements",
-      "Deposits are a cheap, steady source of money to fund loans"
-     ],
-     3,
-     "Banks earn money by lending, and customer deposits usually cost much less than borrowing in the bond market, so a big deposit base is valuable."
-    ]
-   ]
-  },
-  {
-   "id": "d1",
-   "buyer": "Schneider Electric",
-   "target": "PTC",
-   "value": "$22.6B",
-   "date": "Oct 5, 2026",
-   "terms": [
-    "$205 per share",
-    "All cash",
-    "Equity value"
-   ],
-   "what": "French industrial giant Schneider Electric agreed to buy PTC, a U.S. maker of design and engineering software, for $205 a share in cash.",
-   "why": "Schneider sells equipment for factories and buildings. Owning PTC's software adds recurring revenue and ties its hardware to the tools engineers use every day.",
-   "say": "\"It's a strategic deal: a hardware company paying up for recurring software revenue it can cross-sell to its industrial customers.\"",
-   "q": [
-    [
-     "Schneider is best described as what kind of buyer?",
-     [
-      "Financial buyer",
-      "Strategic buyer",
-      "Activist",
-      "Sovereign fund"
-     ],
-     1,
-     "It's an operating company buying a business that fits its own, so it can pay for synergies."
-    ],
-    [
-     "Paying all cash means PTC shareholders:",
-     [
-      "Become Schneider shareholders",
-      "Receive cash and exit",
-      "Keep their PTC shares",
-      "Get bonds"
-     ],
-     1,
-     "In an all-cash deal, target shareholders are paid out and no longer own the business."
-    ]
-   ]
-  },
-  {
-   "id": "d33",
-   "buyer": "DoorDash",
-   "target": "Instacart (Maplebear)",
-   "value": "~$17B",
-   "usd": 17,
-   "date": "Oct 29, 2026",
-   "terms": [
-    "$65.00 per share",
-    "At least 75% cash",
-    "26% premium"
-   ],
-   "what": "DoorDash agreed to buy Instacart's parent company, Maplebear, for $65 a share, about $17 billion of equity value. Instacart holders can choose cash, DoorDash stock or a mix, but stock is capped at 25% of the total, and the deal should close by late 2027 or the first half of 2028.",
-   "why": "DoorDash gets the leading U.S. grocery-delivery platform and its retailer software, plus a bigger ad business. Together they can offer local grocers one delivery network to compete with Walmart and Amazon.",
-   "say": "\"It's a mostly-cash strategic deal funded with a bridge loan, so the key risks are antitrust review and how much new debt DoorDash takes on while trying to keep its investment-grade rating.\"",
-   "src": [
-    [
-     "DoorDash press release",
-     "https://ir.doordash.com/news/news-details/2026/DoorDash-to-Acquire-Instacart-to-Help-Local-Stores-Win/default.aspx"
-    ],
-    [
-     "InsideArbitrage",
-     "https://www.insidearbitrage.com/2026/10/doordash-to-acquire-instacart-for-17-billion/"
-    ]
-   ],
-   "q": [
-    [
-     "DoorDash is paying for Instacart with at least 75% cash and at most 25% DoorDash stock. What is the main benefit of the stock portion for DoorDash?",
-     [
-      "It uses less new debt and protects the credit rating",
-      "It guarantees antitrust approval from regulators",
-      "It lets DoorDash skip the shareholder vote",
-      "It locks in a lower price per Instacart share"
-     ],
-     0,
-     "Paying part of the price in stock means borrowing less, which helps DoorDash keep its investment-grade rating."
-    ],
-    [
-     "JPMorgan gave DoorDash a 364-day bridge loan commitment for the Instacart deal. What is a bridge loan used for?",
-     [
-      "Paying Instacart's employee retention bonuses",
-      "Covering the breakup fee if the deal fails",
-      "Short-term funding until bonds are issued later",
-      "Buying back DoorDash shares after closing"
-     ],
-     2,
-     "A bridge loan guarantees the cash is there at signing; the buyer usually replaces it with longer-term bonds before or at closing."
-    ]
-   ]
-  },
-  {
-   "id": "d13",
-   "buyer": "EQT",
-   "target": "Qiagen",
-   "value": "~$12.1B",
-   "usd": 12.1,
-   "date": "Oct 21, 2026",
-   "terms": [
-    "€46.50 per share",
-    "All cash",
-    "~40% premium"
-   ],
-   "what": "Private equity firm EQT agreed to take diagnostics company Qiagen private for €46.50 a share in cash. Including about $1.1 billion of debt, the deal is worth about €10.8 billion (~$12.1 billion).",
-   "why": "Qiagen says private ownership will let it invest for the long term and move faster. Analysts at William Blair put the price at about 15x expected 2027 EBITDA, below similar life-science deals.",
-   "say": "\"This is a take-private: EQT pays a ~40% premium over the undisturbed price, measured before takeover rumors leaked in July.\"",
-   "src": [
-    [
-     "MedTech Dive",
-     "https://www.medtechdive.com/news/qiagen-agrees-to-private-equity-takeover/833805/"
-    ]
-   ],
-   "q": [
-    [
-     "The ~40% premium is measured against Qiagen's price before takeover reports in July. Why use that date?",
-     [
-      "It was the highest price of the year",
-      "It is the undisturbed price, before rumors pushed the stock up",
-      "Regulators require July prices",
-      "It is the date the deal closes"
-     ],
-     1,
-     "Rumors lift a stock, so premiums are measured from the undisturbed price."
-    ],
-    [
-     "EQT pays €46.50 a share, about a 40% premium. Qiagen's undisturbed share price was roughly:",
-     [
-      "€19",
-      "€28",
-      "€33",
-      "€40"
-     ],
-     2,
-     "46.50 ÷ 1.40 ≈ €33."
-    ]
-   ]
-  },
-  {
-   "id": "d16",
-   "buyer": "EQT Corp.",
-   "target": "Range Resources",
-   "value": "~$12.8B",
-   "usd": 12.83,
-   "date": "Oct 26, 2026",
-   "terms": [
-    "0.987 EQT shares per Range share",
-    "All stock",
-    "~20.6% premium"
-   ],
-   "what": "EQT Corp., the largest U.S. natural gas producer, agreed to buy rival Range Resources by swapping its own shares for Range's. Reuters put Range's equity value at about $12.8 billion, and the combined company is worth more than $50 billion including debt.",
-   "why": "Data centers are driving up demand for natural gas, and a bigger producer can drill more cheaply and sell gas more effectively. EQT expects about $325 million a year in savings within two years, rising to over $600 million long term.",
-   "say": "\"It's an all-stock merger of equals in spirit: Range holders take a ~20% premium in EQT shares and end up owning about 27% of the combined gas giant.\"",
-   "src": [
-    [
-     "Reuters via Investing.com",
-     "https://za.investing.com/news/stock-market-news/eqt-range-resources-tie-up-in-50-billionplus-deal-to-create-us-gas-giant-4524945"
-    ],
-    [
-     "Investing.com",
-     "https://www.investing.com/news/company-news/eqt-to-acquire-range-resources-in-50-billion-allstock-deal-93CH-4971856"
-    ]
-   ],
-   "q": [
-    [
-     "Range holders get 0.987 EQT shares each. If EQT stock falls 10% before closing, what happens to the value Range holders receive?",
-     [
-      "It stays fixed at $54.91",
-      "It falls too, because the share ratio is fixed",
-      "It rises",
-      "The deal is cancelled automatically"
-     ],
-     1,
-     "With a fixed exchange ratio, the target's payout moves with the buyer's stock price."
-    ],
-    [
-     "Why might EQT's stock fall when the deal is announced while Range's jumps?",
-     [
-      "EQT is paying a premium and issuing new shares, diluting its holders",
-      "Range is paying EQT",
-      "All-stock deals are illegal",
-      "EQT is going private"
-     ],
-     0,
-     "The buyer pays a premium and issues shares, so its stock often dips while the target rises toward the offer."
+     "Under IFRS 16, store leases are treated like debt, so adding them raises enterprise value; the matching EBITDA is also measured before rent."
     ]
    ]
   },
@@ -1154,105 +1158,9 @@
      "Paying part of the price only on success shifts the risk of a failed trial or rejection back to the sellers."
     ]
    ]
-  },
-  {
-   "id": "d36",
-   "buyer": "Ahold Delhaize",
-   "target": "Tesco Czechia and Slovakia",
-   "value": "~€1.2B (~$1.34B)",
-   "usd": 1.34,
-   "date": "Oct 30, 2026",
-   "terms": [
-    "~€1.2B enterprise value (~€1.7B including leases)",
-    "~7.2x EV/EBITDA, ~5.0x after synergies",
-    "Paid with committed financing and existing resources"
-   ],
-   "what": "Ahold Delhaize, the Dutch owner of Food Lion, Stop & Shop and Albert, agreed to buy Tesco's grocery business in Czechia and Slovakia for an enterprise value of about €1.2 billion. The unit has more than 360 company-run stores plus 100+ franchise stores and about €3.5 billion in sales.",
-   "why": "Combined with its Albert stores, Ahold expects to become the top grocery brand in Czechia and gains a first foothold in Slovakia. Grocery is a scale game, so more stores mean better buying power with suppliers and lower costs per store.",
-   "say": "\"Ahold Delhaize is paying about 7.2 times EBITDA for Tesco's Czech and Slovak stores, but closer to 5 times once you count synergies, which is how a buyer can justify a price that looks higher than it feels.\"",
-   "src": [
-    [
-     "Ahold Delhaize press release",
-     "https://newsroom.aholddelhaize.com/ahold-delhaize-announces-the-acquisition-of-tesco-czechia-and-slovakia-strengthening-its-position-in-europe/"
-    ],
-    [
-     "Pound Sterling Live (EUR/USD rate)",
-     "https://www.poundsterlinglive.com/history/EUR-USD-2026"
-    ]
-   ],
-   "q": [
-    [
-     "Ahold Delhaize says its Tesco Czechia and Slovakia purchase costs about 7.2x EBITDA, or 5.0x 'including synergies.' Why is the second multiple lower?",
-     [
-      "Synergies are added to EBITDA, making the denominator larger",
-      "Synergies cut the purchase price Ahold Delhaize pays Tesco at closing",
-      "The lower multiple leaves out the leases that Tesco's stores carry",
-      "The lower multiple uses Tesco's sales instead of EBITDA as its base"
-     ],
-     0,
-     "Adding expected cost savings to the target's EBITDA makes the denominator bigger, so the price looks cheaper as a multiple."
-    ],
-    [
-     "Ahold Delhaize gives Tesco Czechia and Slovakia two values: ~€1.2B EV and ~€1.7B 'lease-adjusted' EV. What explains the gap?",
-     [
-      "The €0.5B gap is a breakup fee owed if regulators block the deal",
-      "The €0.5B gap is the extra amount Ahold expects to save each year",
-      "The €0.5B gap counts store lease obligations as a form of debt",
-      "The €0.5B gap is the value of Tesco's franchise stores in Slovakia"
-     ],
-     2,
-     "Under IFRS 16, store leases are treated like debt, so adding them raises enterprise value; the matching EBITDA is also measured before rent."
-    ]
-   ]
-  },
-  {
-   "id": "d37",
-   "buyer": "Affle",
-   "target": "Perion Network",
-   "value": "~$420M",
-   "usd": 0.42,
-   "date": "Nov 1, 2026",
-   "terms": [
-    "$11.70 per share",
-    "All cash, debt-financed by Citibank",
-    "~34.5% premium"
-   ],
-   "what": "Affle, an Indian mobile ad-tech company, agreed to buy Nasdaq-listed Perion for $11.70 per share in cash, valuing Perion's equity at about $420 million. Perion's board backed the deal, which still needs shareholder and U.S. antitrust approval.",
-   "why": "Affle adds Perion's retail media, connected-TV and digital billboard ad tools to its mobile marketing platform, hoping to sell more to the same advertisers. Perion keeps its brand, and its shareholders get a certain cash price.",
-   "say": "\"Affle's all-cash offer for Perion pays a 34.5% premium and includes a 40-day go-shop, which lets Perion's board test the market for a better bid before the deal closes.\"",
-   "src": [
-    [
-     "Perion press release via Yahoo Finance",
-     "https://finance.yahoo.com/markets/stocks/articles/perion-enters-definitive-merger-agreement-103000095.html"
-    ]
-   ],
-   "q": [
-    [
-     "Affle's deal to buy Perion includes a 40-day 'go-shop' period. What does that allow Perion to do?",
-     [
-      "Ask Affle to raise its $11.70 price once each week",
-      "Actively seek competing offers from other buyers",
-      "Let Perion holders swap shares for Affle stock",
-      "Delay its shareholder vote until regulators approve"
-     ],
-     1,
-     "A go-shop lets the target solicit rival bids for a set time after signing, helping the board show it got the best price."
-    ],
-    [
-     "Affle is paying $11.70 per share for Perion, a 34.5% premium to its Oct 30 close. Roughly where did Perion stock close that day?",
-     [
-      "About $8.70, or $11.70 divided by 1.345",
-      "About $7.66, or $11.70 minus 34.5% of it",
-      "About $15.74, or $11.70 times 1.345",
-      "About $11.36, or $11.70 minus $0.345"
-     ],
-     0,
-     "Premium = offer / prior price - 1, so the prior price is $11.70 / 1.345, about $8.70."
-    ]
-   ]
   }
  ],
- "APP_OPEN_DATE": "Nov 21, 2026",
+ "APP_OPEN_DATE": "Nov 23, 2026",
  "APP_OPEN": [
   [
    "Evercore",
@@ -1307,14 +1215,14 @@
   ],
   [
    "RBC Capital Markets",
-   "2028 Summer Analyst",
+   "2028 Global IB Summer Analyst (Houston, Energy)",
    "IB",
-   "exp",
-   "",
-   "Not confirmed",
-   "",
-   "2028 IB posting not confirmed (checked Nov 21)",
-   "unconfirmed"
+   "open",
+   "2026-11-01",
+   "Posted Nov 1",
+   "2026-12-31",
+   "RBC Workday posting; accepts until 11:59pm the day before the deadline",
+   "confirmed"
   ],
   [
    "Stifel",
@@ -1322,20 +1230,20 @@
    "IB",
    "exp",
    "2026-11-01",
-   "Oct–Nov 2026",
+   "Oct\u2013Nov 2026",
    "",
    ""
   ],
   [
    "Houlihan Lokey",
-   "2028 Summer Financial Analyst",
+   "2028 Summer Financial Analyst (New York, M&A)",
    "IB",
-   "exp",
-   "",
-   "Not confirmed",
-   "",
-   "U.S. 2028 postings not confirmed (checked Nov 21)",
-   "unconfirmed"
+   "open",
+   "2026-11-02",
+   "Opened Nov 2",
+   "2026-12-19",
+   "Listing ref R3721; per L3VLUP tracker synced Nov 22. Confirm on the firm site",
+   "reported"
   ],
   [
    "BMO Capital Markets",
@@ -1474,14 +1382,14 @@
   ],
   [
    "Qatalyst Partners",
-   "2028 Summer Analyst",
+   "2028 Summer Analyst (San Francisco)",
    "IB",
-   "exp",
-   "",
-   "Not confirmed",
-   "",
-   "2028 posting not found (checked Nov 21)",
-   "unconfirmed"
+   "open",
+   "2026-11-02",
+   "Opened Nov 2",
+   "2026-11-27",
+   "Per Middlebury career-center listing; applications via Google Form. Confirm with the firm",
+   "reported"
   ],
   [
    "FT Partners",
@@ -1521,7 +1429,7 @@
    "2026-11-03",
    "Opened Nov 3",
    "",
-   "New York, incl. Global Banking – Corporate Finance"
+   "New York, incl. Global Banking \u2013 Corporate Finance"
   ],
   [
    "Moelis",
@@ -1871,7 +1779,7 @@
    "2026-11-08",
    "Opened Nov",
    "",
-   "Other offices expected Dec–Jan"
+   "Other offices expected Dec\u2013Jan"
   ],
   [
    "JPMorgan",
@@ -1881,7 +1789,7 @@
    "2026-11-04",
    "Opened Nov",
    "2026-11-08",
-   "Other offices expected Dec–Jan"
+   "Other offices expected Dec\u2013Jan"
   ],
   [
    "Barclays",
@@ -2072,7 +1980,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2092,7 +2000,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2102,7 +2010,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2112,7 +2020,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2122,7 +2030,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2132,7 +2040,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2142,7 +2050,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2152,7 +2060,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2162,7 +2070,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2172,7 +2080,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2182,7 +2090,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2192,7 +2100,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2202,7 +2110,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2212,7 +2120,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2222,7 +2130,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2242,7 +2150,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2252,7 +2160,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2262,7 +2170,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2272,7 +2180,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2282,7 +2190,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2292,7 +2200,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2302,7 +2210,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2312,7 +2220,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2322,7 +2230,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2332,7 +2240,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2342,7 +2250,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2352,7 +2260,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2362,7 +2270,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2372,7 +2280,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2382,7 +2290,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2392,7 +2300,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2402,7 +2310,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026–Jan 2027 (est.)",
+   "Dec 2026\u2013Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2412,7 +2320,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2422,7 +2330,7 @@
    "Buy side",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2432,7 +2340,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2442,7 +2350,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2452,7 +2360,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2462,7 +2370,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2472,7 +2380,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2482,7 +2390,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2492,7 +2400,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2502,7 +2410,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2512,7 +2420,7 @@
    "Buy side",
    "exp",
    "2027-02-28",
-   "Feb–Mar 2027 (est.)",
+   "Feb\u2013Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2522,7 +2430,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr–May 2027 (est.)",
+   "Apr\u2013May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2532,7 +2440,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr–May 2027 (est.)",
+   "Apr\u2013May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2542,7 +2450,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr–May 2027 (est.)",
+   "Apr\u2013May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2552,7 +2460,7 @@
    "IB",
    "exp",
    "2027-04-30",
-   "Apr–May 2027 (est.)",
+   "Apr\u2013May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2778,7 +2686,7 @@
   ],
   [
    "Jane Street",
-   "FTTP, NYC Mar 21–25, 2027 (first-years)",
+   "FTTP, NYC Mar 21\u201325, 2027 (first-years)",
    "Markets",
    "open",
    "2026-11-01",
@@ -2804,7 +2712,7 @@
    "Other",
    "open",
    "2026-10-01",
-   "Rolling (Oct–Apr)",
+   "Rolling (Oct\u2013Apr)",
    "",
    "For underrepresented students; freshmen and sophomores",
    "Freshman & sophomore"
@@ -2828,7 +2736,7 @@
    "2027-01-15",
    "Early 2027 (est.)",
    "",
-   "Last held Feb 12–14, 2026",
+   "Last held Feb 12\u201314, 2026",
    "Sophomore"
   ],
   [
@@ -2859,7 +2767,7 @@
    "IB",
    "exp",
    "2027-03-25",
-   "Late Mar–early Apr 2027 (est.)",
+   "Late Mar\u2013early Apr 2027 (est.)",
    "",
    "",
    "Freshman"
@@ -2986,7 +2894,7 @@
    "Summer 2027"
   ],
   [
-   "Crédit Agricole CIB",
+   "Cr\u00e9dit Agricole CIB",
    "2027 Energy & Infrastructure IB Summer Analyst (NYC)",
    "IB",
    "open",
@@ -3178,7 +3086,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3188,7 +3096,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3198,7 +3106,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3208,7 +3116,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3218,7 +3126,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3228,7 +3136,7 @@
    "Other",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3238,7 +3146,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3248,7 +3156,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3258,7 +3166,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3268,7 +3176,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3278,7 +3186,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3288,7 +3196,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3298,7 +3206,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3308,7 +3216,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3318,7 +3226,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3328,7 +3236,7 @@
    "Other",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3338,7 +3246,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3348,7 +3256,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3358,7 +3266,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3368,7 +3276,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3378,7 +3286,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3388,7 +3296,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3398,7 +3306,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3408,7 +3316,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3418,7 +3326,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3428,7 +3336,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3438,7 +3346,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3448,7 +3356,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3458,7 +3366,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3468,7 +3376,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3478,7 +3386,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3488,7 +3396,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3498,7 +3406,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3508,7 +3416,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3518,7 +3426,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3528,7 +3436,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3538,7 +3446,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3548,7 +3456,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3558,7 +3466,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3568,7 +3476,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep–Dec 2027 (est.)",
+   "Sep\u2013Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],

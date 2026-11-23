@@ -64,3 +64,7 @@ How to use (every daily run):
 | 11-23 | Capital stack: who gets paid ($500M vs $550M) | Tiered interview Q | | | score Nov 25 |
 | 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | | | score Nov 25 |
 | 11-23 | Jensen is back (PS2 news, 11:51am) | Live market + character story | | | score Nov 25 |
+| 11-23 | Day in the life: IB analyst (Jake, 6pm) | Character story (Jake) | | | score Nov 25 |
+| 11-24 | Day in the life: consultant (Maya, 10am) | Character story | | | score Nov 26 |
+| 11-25 | Day in the life: equity research (Dev, 10am) | Character story | | | score Nov 27 |
+| 11-26 | Day in the life: hedge fund (Sam, 10am) | Character story | | | score Nov 28 |

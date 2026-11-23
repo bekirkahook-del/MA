@@ -130,3 +130,8 @@
 - All labeled AI, link in FB caption + first comment.
 - 2026-11-23 run: Nov 23 already full (5 TikToks: week-ahead 8am, capstack 12:53, deals26 2:41, 2 Jake videos 4pm). Re-added missing defrev TikTok for Nov 24 12:23pm (Metricool 438587238); earlier copy wasn't in the queue.
 - 2026-11-23 11:51 AM ET (moved up from 2pm, Bekir: ASAP): Jensen is back (PS2 news video, 76s) IG/TT/FB/YT, Metricool 439087850. AI-labeled, sources in caption.
+- Day in the life series (PS2, fictional characters, AI voice), best hours from Metricool (10 AM / 6 PM ET):
+  - Mon 11-23 6:00 PM: IB analyst (Jake), Metricool 439207113
+  - Tue 11-24 10:00 AM: consultant (Maya), 439182624
+  - Wed 11-25 10:00 AM: equity research (Dev), 439267496
+  - Thu 11-26 10:00 AM: hedge fund (Sam), 439291454

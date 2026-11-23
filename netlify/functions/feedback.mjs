@@ -2,7 +2,7 @@
 import { json, getUser, SB_URL, hitLimit, tooMany, clientIp } from "./_lib/common.mjs";
 import { cleanText, isEmail } from "./_lib/security.mjs";
 
-const KINDS = new Set(["feedback", "question"]);
+const KINDS = new Set(["feedback", "question", "coaching"]);
 const clip = (s, n) => cleanText(s, n);
 
 export default async (req, context) => {

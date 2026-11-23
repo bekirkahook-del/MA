@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T17:10:00Z",
+ "updated": "2026-11-23T21:49:00Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -109,8 +109,8 @@
   ]
  ],
  "RECAP": {
-  "d": "Nov 20",
-  "t": "Nov 20 close: the S&P 500 fell 3.69% to 6,910.39, the Nasdaq Composite fell 5.28% to 22,617.73 and the Dow fell 1.93% to 48,147.33. The S&P 500 and Dow both confirmed corrections (down 10% or more from their highs)."
+  "d": "Nov 23",
+  "t": "Nov 23 close: the Nasdaq Composite rose 6.92% (up 1,563 points), the S&P 500 rose 5.03% and the Dow rose 3.21% (up 1,556 points), the best day for all three since April 2025, after Nvidia reinstated CEO Jensen Huang. Closing index levels were not available from a source read this run."
  },
  "CAL": [
   [
@@ -142,22 +142,6 @@
   ]
  ],
  "EARN": [
-  [
-   "2026-11-23",
-   "ZM",
-   "Zoom",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-23",
-   "HPE",
-   "Hewlett Packard Enterprise",
-   "AMC",
-   "",
-   ""
-  ],
   [
    "2026-11-24",
    "ADI",
@@ -246,18 +230,18 @@
   {
    "k": "Markets",
    "d": "Nov 23",
-   "h": "Stocks surge Monday as Nvidia reinstates Jensen Huang; Nasdaq jumps about 7% midday",
-   "w": "Midday Monday, not a close: CNBC reported the S&P 500 up about 5.1%, the Nasdaq Composite up about 7% and the Dow up 1,569 points, or 3.3%, after Nvidia's board reinstated Jensen Huang as CEO. Nvidia rose about 34%, Micron 19%, CoreWeave 25% and AMD 8%. Huang had resigned earlier this month. Markets are closed Thursday for Thanksgiving and Friday's session ends at 1 p.m. ET.",
+   "h": "Stocks close sharply higher Monday as Nvidia reinstates Jensen Huang; Nasdaq up about 6.9%",
+   "w": "Per TipRanks, the Nasdaq Composite closed up 6.92% (1,563 points), the S&P 500 up 5.03% and the Dow up 3.21% (1,556 points), the best day for all three since April 2025. Nvidia rose about 33% after its board reinstated Huang as CEO; Micron rose 19%, CoreWeave 20% and AMD 6%. Markets are closed Thursday for Thanksgiving and Friday's session ends at 1 p.m. ET.",
    "m": "Friday's close left the S&P 500 and Dow in a correction and the Nasdaq-100 close to a bear market, so a one-day jump this size is partly a bounce from oversold levels. Intraday moves can fade by the close.",
    "a": "Interview point: explain why one CEO's return can move an entire sector (key-person risk and how it shows up in valuation).",
    "s": [
     [
-     "CNBC live updates (Nov 23)",
-     "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
+     "TipRanks (Nov 23)",
+     "https://www.tipranks.com/news/nasdaq-closes-7-higher-after-jensen-huang-returns-as-nvidias-ceo"
     ],
     [
-     "Yahoo Finance live blog (Nov 23)",
-     "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-nvidia-reinstates-jensen-huang-141511975.html"
+     "CNBC live updates (Nov 23)",
+     "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
     ]
    ]
   },
@@ -711,11 +695,11 @@
    "usd": 12.1,
    "date": "Oct 21, 2026",
    "terms": [
-    "\u20ac46.50 per share",
+    "€46.50 per share",
     "All cash",
     "~40% premium"
    ],
-   "what": "Private equity firm EQT agreed to take diagnostics company Qiagen private for \u20ac46.50 a share in cash. Including about $1.1 billion of debt, the deal is worth about \u20ac10.8 billion (~$12.1 billion).",
+   "what": "Private equity firm EQT agreed to take diagnostics company Qiagen private for €46.50 a share in cash. Including about $1.1 billion of debt, the deal is worth about €10.8 billion (~$12.1 billion).",
    "why": "Qiagen says private ownership will let it invest for the long term and move faster. Analysts at William Blair put the price at about 15x expected 2027 EBITDA, below similar life-science deals.",
    "say": "\"This is a take-private: EQT pays a ~40% premium over the undisturbed price, measured before takeover rumors leaked in July.\"",
    "src": [
@@ -737,15 +721,15 @@
      "Rumors lift a stock, so premiums are measured from the undisturbed price."
     ],
     [
-     "EQT pays \u20ac46.50 a share, about a 40% premium. Qiagen's undisturbed share price was roughly:",
+     "EQT pays €46.50 a share, about a 40% premium. Qiagen's undisturbed share price was roughly:",
      [
-      "\u20ac19",
-      "\u20ac28",
-      "\u20ac33",
-      "\u20ac40"
+      "€19",
+      "€28",
+      "€33",
+      "€40"
      ],
      2,
-     "46.50 \u00f7 1.40 \u2248 \u20ac33."
+     "46.50 ÷ 1.40 ≈ €33."
     ]
    ]
   },
@@ -868,10 +852,10 @@
     "Values BILL at about $6.0 billion",
     "31% premium to the 60-day VWAP ending Nov 16",
     "TPG takes a majority stake; Corpay a minority stake",
-    "Largest holder Starboard Value and CEO Ren\u00e9 Lacerte agreed to vote for it",
+    "Largest holder Starboard Value and CEO René Lacerte agreed to vote for it",
     "Expected to close in the first half of 2027"
    ],
-   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder Ren\u00e9 Lacerte stays CEO.",
+   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder René Lacerte stays CEO.",
    "why": "BILL's stock had fallen far from its highs, so a private-equity buyer could pay a premium and still buy in cheaply. Corpay gets a strategic stake in a business-payments platform. TPG and Corpay used the same playbook to buy AvidXchange in 2025.",
    "say": "\"It's a take-private: TPG pays a 31% premium in cash for a fallen software stock, with Corpay as a strategic partner, betting the business is worth more out of public markets.\"",
    "src": [
@@ -1063,15 +1047,15 @@
    "id": "d36",
    "buyer": "Ahold Delhaize",
    "target": "Tesco Czechia and Slovakia",
-   "value": "~\u20ac1.2B (~$1.34B)",
+   "value": "~€1.2B (~$1.34B)",
    "usd": 1.34,
    "date": "Oct 30, 2026",
    "terms": [
-    "~\u20ac1.2B enterprise value (~\u20ac1.7B including leases)",
+    "~€1.2B enterprise value (~€1.7B including leases)",
     "~7.2x EV/EBITDA, ~5.0x after synergies",
     "Paid with committed financing and existing resources"
    ],
-   "what": "Ahold Delhaize, the Dutch owner of Food Lion, Stop & Shop and Albert, agreed to buy Tesco's grocery business in Czechia and Slovakia for an enterprise value of about \u20ac1.2 billion. The unit has more than 360 company-run stores plus 100+ franchise stores and about \u20ac3.5 billion in sales.",
+   "what": "Ahold Delhaize, the Dutch owner of Food Lion, Stop & Shop and Albert, agreed to buy Tesco's grocery business in Czechia and Slovakia for an enterprise value of about €1.2 billion. The unit has more than 360 company-run stores plus 100+ franchise stores and about €3.5 billion in sales.",
    "why": "Combined with its Albert stores, Ahold expects to become the top grocery brand in Czechia and gains a first foothold in Slovakia. Grocery is a scale game, so more stores mean better buying power with suppliers and lower costs per store.",
    "say": "\"Ahold Delhaize is paying about 7.2 times EBITDA for Tesco's Czech and Slovak stores, but closer to 5 times once you count synergies, which is how a buyer can justify a price that looks higher than it feels.\"",
    "src": [
@@ -1097,12 +1081,12 @@
      "Adding expected cost savings to the target's EBITDA makes the denominator bigger, so the price looks cheaper as a multiple."
     ],
     [
-     "Ahold Delhaize gives Tesco Czechia and Slovakia two values: ~\u20ac1.2B EV and ~\u20ac1.7B 'lease-adjusted' EV. What explains the gap?",
+     "Ahold Delhaize gives Tesco Czechia and Slovakia two values: ~€1.2B EV and ~€1.7B 'lease-adjusted' EV. What explains the gap?",
      [
-      "The \u20ac0.5B gap is a breakup fee owed if regulators block the deal",
-      "The \u20ac0.5B gap is the extra amount Ahold expects to save each year",
-      "The \u20ac0.5B gap counts store lease obligations as a form of debt",
-      "The \u20ac0.5B gap is the value of Tesco's franchise stores in Slovakia"
+      "The €0.5B gap is a breakup fee owed if regulators block the deal",
+      "The €0.5B gap is the extra amount Ahold expects to save each year",
+      "The €0.5B gap counts store lease obligations as a form of debt",
+      "The €0.5B gap is the value of Tesco's franchise stores in Slovakia"
      ],
      2,
      "Under IFRS 16, store leases are treated like debt, so adding them raises enterprise value; the matching EBITDA is also measured before rent."
@@ -1230,7 +1214,7 @@
    "IB",
    "exp",
    "2026-11-01",
-   "Oct\u2013Nov 2026",
+   "Oct–Nov 2026",
    "",
    ""
   ],
@@ -1429,7 +1413,7 @@
    "2026-11-03",
    "Opened Nov 3",
    "",
-   "New York, incl. Global Banking \u2013 Corporate Finance"
+   "New York, incl. Global Banking – Corporate Finance"
   ],
   [
    "Moelis",
@@ -1779,7 +1763,7 @@
    "2026-11-08",
    "Opened Nov",
    "",
-   "Other offices expected Dec\u2013Jan"
+   "Other offices expected Dec–Jan"
   ],
   [
    "JPMorgan",
@@ -1789,7 +1773,7 @@
    "2026-11-04",
    "Opened Nov",
    "2026-11-08",
-   "Other offices expected Dec\u2013Jan"
+   "Other offices expected Dec–Jan"
   ],
   [
    "Barclays",
@@ -1980,7 +1964,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2000,7 +1984,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2010,7 +1994,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2020,7 +2004,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2030,7 +2014,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2040,7 +2024,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2050,7 +2034,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2060,7 +2044,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2070,7 +2054,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2080,7 +2064,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2090,7 +2074,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2100,7 +2084,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2110,7 +2094,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2120,7 +2104,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2130,7 +2114,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2150,7 +2134,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2160,7 +2144,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2170,7 +2154,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2180,7 +2164,7 @@
    "Other",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2190,7 +2174,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2200,7 +2184,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2210,7 +2194,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2220,7 +2204,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2230,7 +2214,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2240,7 +2224,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2250,7 +2234,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2260,7 +2244,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2270,7 +2254,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2280,7 +2264,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2290,7 +2274,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2300,7 +2284,7 @@
    "IB",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2310,7 +2294,7 @@
    "Buy side",
    "exp",
    "2026-12-31",
-   "Dec 2026\u2013Jan 2027 (est.)",
+   "Dec 2026–Jan 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2320,7 +2304,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2330,7 +2314,7 @@
    "Buy side",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2340,7 +2324,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2350,7 +2334,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2360,7 +2344,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2370,7 +2354,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2380,7 +2364,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2390,7 +2374,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2400,7 +2384,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2410,7 +2394,7 @@
    "IB",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2420,7 +2404,7 @@
    "Buy side",
    "exp",
    "2027-02-28",
-   "Feb\u2013Mar 2027 (est.)",
+   "Feb–Mar 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2430,7 +2414,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr\u2013May 2027 (est.)",
+   "Apr–May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2440,7 +2424,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr\u2013May 2027 (est.)",
+   "Apr–May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2450,7 +2434,7 @@
    "Buy side",
    "exp",
    "2027-04-30",
-   "Apr\u2013May 2027 (est.)",
+   "Apr–May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2460,7 +2444,7 @@
    "IB",
    "exp",
    "2027-04-30",
-   "Apr\u2013May 2027 (est.)",
+   "Apr–May 2027 (est.)",
    "",
    "Estimate from Adventis's tracker (based on last cycle)"
   ],
@@ -2686,7 +2670,7 @@
   ],
   [
    "Jane Street",
-   "FTTP, NYC Mar 21\u201325, 2027 (first-years)",
+   "FTTP, NYC Mar 21–25, 2027 (first-years)",
    "Markets",
    "open",
    "2026-11-01",
@@ -2712,7 +2696,7 @@
    "Other",
    "open",
    "2026-10-01",
-   "Rolling (Oct\u2013Apr)",
+   "Rolling (Oct–Apr)",
    "",
    "For underrepresented students; freshmen and sophomores",
    "Freshman & sophomore"
@@ -2736,7 +2720,7 @@
    "2027-01-15",
    "Early 2027 (est.)",
    "",
-   "Last held Feb 12\u201314, 2026",
+   "Last held Feb 12–14, 2026",
    "Sophomore"
   ],
   [
@@ -2767,7 +2751,7 @@
    "IB",
    "exp",
    "2027-03-25",
-   "Late Mar\u2013early Apr 2027 (est.)",
+   "Late Mar–early Apr 2027 (est.)",
    "",
    "",
    "Freshman"
@@ -2894,7 +2878,7 @@
    "Summer 2027"
   ],
   [
-   "Cr\u00e9dit Agricole CIB",
+   "Crédit Agricole CIB",
    "2027 Energy & Infrastructure IB Summer Analyst (NYC)",
    "IB",
    "open",
@@ -3086,7 +3070,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3096,7 +3080,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3106,7 +3090,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3116,7 +3100,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3126,7 +3110,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3136,7 +3120,7 @@
    "Other",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3146,7 +3130,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3156,7 +3140,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3166,7 +3150,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3176,7 +3160,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3186,7 +3170,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3196,7 +3180,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3206,7 +3190,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3216,7 +3200,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3226,7 +3210,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3236,7 +3220,7 @@
    "Other",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3246,7 +3230,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3256,7 +3240,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3266,7 +3250,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3276,7 +3260,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3286,7 +3270,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3296,7 +3280,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3306,7 +3290,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3316,7 +3300,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3326,7 +3310,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3336,7 +3320,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3346,7 +3330,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3356,7 +3340,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3366,7 +3350,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3376,7 +3360,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3386,7 +3370,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3396,7 +3380,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3406,7 +3390,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3416,7 +3400,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3426,7 +3410,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3436,7 +3420,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3446,7 +3430,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3456,7 +3440,7 @@
    "Buy side",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3466,7 +3450,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],
@@ -3476,7 +3460,7 @@
    "IB",
    "exp",
    "2027-10-15",
-   "Sep\u2013Dec 2027 (est.)",
+   "Sep–Dec 2027 (est.)",
    "",
    "Estimate from Adventis's tracker; this firm posts late in the cycle"
   ],

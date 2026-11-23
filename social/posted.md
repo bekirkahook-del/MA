@@ -123,3 +123,8 @@
 - 2026-11-25 oddq-save5 — [Interview Q] $5 a day for a year = $1,825
 - 2026-11-22 1:38pm story-tier — [Tiered interview Q video, story.js, no voice] Intern $80K +10% = $88K; Analyst rule of 72 at 8% = 9 yrs; MD trap stock+option $110, stock $100 more → option $5 (not $10). TT + IG Reel + FB Reel + YT Short + Pinterest
 - 2026-11-22 9:12pm bc-epsweek — [Live market carousel] Thanksgiving week expected EPS vs year ago (StockTitan, Nov 20 2026): Dell +176% ($6.48 vs $2.35), HPE +117%, ADI +72%, Jacobs +21%, Zoom +12%, HP Inc −20%, Dollar Tree −26%; NYSE closed Thu, 1pm close Fri. TT + IG + FB + Pinterest
+
+## Nov 22–23, 2026: Jake videos (Metricool, IG/TikTok/FB/YT)
+- Sun 10:10 PM ET: jake-vs-chad (438225265), jake-coffee-chat (438225322)
+- Mon 4:00 PM ET: jake-vs-chad (438225392), jake-coffee-chat (438225452)
+- All labeled AI, link in FB caption + first comment.

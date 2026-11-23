@@ -63,3 +63,4 @@ How to use (every daily run):
 | 11-23 | Week ahead (3.5 days, Dell, core PCE) 8am | Live market | | | score Nov 25 |
 | 11-23 | Capital stack: who gets paid ($500M vs $550M) | Tiered interview Q | | | score Nov 25 |
 | 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | | | score Nov 25 |
+| 11-23 | Jensen is back (PS2 news, 2pm) | Live market + character story | | | score Nov 25 |

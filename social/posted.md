@@ -129,3 +129,4 @@
 - Mon 4:00 PM ET: jake-vs-chad (438225392), jake-coffee-chat (438225452)
 - All labeled AI, link in FB caption + first comment.
 - 2026-11-23 run: Nov 23 already full (5 TikToks: week-ahead 8am, capstack 12:53, deals26 2:41, 2 Jake videos 4pm). Re-added missing defrev TikTok for Nov 24 12:23pm (Metricool 438587238); earlier copy wasn't in the queue.
+- 2026-11-23 2:00 PM ET: Jensen is back (PS2 news video, 76s) IG/TT/FB/YT, Metricool 439087089. AI-labeled, sources in caption.

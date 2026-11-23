@@ -56,9 +56,9 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
   let state="checking";/* checking | gate | ok */
   const hasTok=()=>{try{const t=JSON.parse(LS.get(TOK)||"null");return !!(t&&(t.refresh_token||(t.currentSession&&t.currentSession.refresh_token)))}catch(e){return false}};
   const onboarded=()=>{try{return !!((S.onb&&S.onb.done)||(S.plan&&S.plan.order&&S.plan.year&&S.plan.target))&&complete()}catch(e){return false}};
-  /* name, school and year are required on every account (Bekir, Nov 23, 2026) */
+  /* a name is required on every account; school and year are optional (Bekir, Nov 23, 2026) */
   const okName=v=>{v=String(v||"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,40);return v.length>=2&&/[a-z]/i.test(v)?v:""};
-  const complete=()=>{try{const pr=S.profile||{};return !!(okName(pr.name)&&String(pr.school||"").trim()&&pr.year)}catch(e){return false}};
+  const complete=()=>{try{const pr=S.profile||{};return !!okName(pr.name)}catch(e){return false}};
   const metaName=()=>{try{const u=window.MA_AUTH&&MA_AUTH.session&&MA_AUTH.session.user,md=(u&&u.user_metadata)||{};return okName(LS.get("ma-pending-name"))||okName(md.full_name||md.name)}catch(e){return ""}};
   const pending=()=>{try{return JSON.parse(LS.get(PEND)||"null")}catch(e){return null}};
 
@@ -76,9 +76,9 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
       <div class="mp-head"><span class="k">Free · 30 seconds</span><h1 id="mpTitle">${editing?"Edit my plan":"Make my plan"}</h1><p>Your step-by-step path to an offer, built around your school and your year.</p></div>
       <form class="mp-card" id="mpForm" novalidate>
         <label class="mp-f"><span>Your name</span><input id="mpNm" maxlength="40" placeholder="First and last name" autocomplete="name" value="${esc(name)}"></label>
-        <label class="mp-f"><span>School</span><input id="mpSch" list="mpSchL" maxlength="80" placeholder="e.g. Ohio State" autocomplete="organization" value="${esc(school)}"></label>
+        <label class="mp-f"><span>School <small style="font-weight:500">(optional)</small></span><input id="mpSch" list="mpSchL" maxlength="80" placeholder="e.g. Ohio State" autocomplete="organization" value="${esc(school)}"></label>
         <datalist id="mpSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
-        <div class="mp-f"><span id="mpYl">Year</span><div class="mp-grid mp-g5" role="group" aria-labelledby="mpYl">${YEARS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===year}">${y}</button>`).join("")}</div></div>
+        <div class="mp-f"><span id="mpYl">Year <small style="font-weight:500">(optional)</small></span><div class="mp-grid mp-g5" role="group" aria-labelledby="mpYl">${YEARS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===year}">${y}</button>`).join("")}</div></div>
         <div class="mp-f" id="mpGr" ${year==="High school"?"":"hidden"}><span id="mpGl">Grade</span><div class="mp-grid mp-g4" role="group" aria-labelledby="mpGl">${GRADES.map(g=>`<button type="button" data-g="${g}" aria-pressed="${g===grade}">${g}</button>`).join("")}</div></div>
         <div class="mp-f"><span id="mpRl">What do you want to pursue?</span><div class="mp-grid mp-g2" role="group" aria-labelledby="mpRl">${ROLES.map(r=>`<button type="button" data-r="${esc(r[0])}" aria-pressed="${r[0]===role}">${esc(r[1])}</button>`).join("")}</div></div>
         <p class="mp-msg" id="mpMsg" role="alert"></p>
@@ -96,11 +96,9 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
       const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80);
       const nm=okName($("#mpNm").value);
       if(!nm){msg.textContent="Add your name.";$("#mpNm").focus();return}
-      if(!sc){msg.textContent="Add your school.";$("#mpSch").focus();return}
-      if(!year){msg.textContent="Pick your year.";return}
       if(year==="High school"&&!grade){msg.textContent="Pick your grade.";return}
       if(!role){msg.textContent="Pick what you want to pursue.";return}
-      const m=window.maSchoolFind&&maSchoolFind(sc);
+      const m=sc&&window.maSchoolFind&&maSchoolFind(sc);
       const plan={name:nm,school:(m&&m[0])||sc,year,grade:year==="High school"?grade:"",role,at:Date.now()};
       LS.set(PEND,JSON.stringify(plan));ev("gate_plan_saved");
       if(signed){finish(plan);return}
@@ -111,10 +109,10 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
   function apply(p){S.profile=S.profile||{};if(okName(p.name)){S.profile.name=okName(p.name);try{myName=S.profile.name}catch(e){}
       try{MA_AUTH.pushName&&MA_AUTH.pushName(S.profile.name)}catch(e){}LS.del("ma-pending-name");
       try{const u=MA_AUTH.session.user,md=u.user_metadata||{};if(md.full_name!==S.profile.name)MA_AUTH.sb.auth.updateUser({data:{full_name:S.profile.name,name:S.profile.name}})}catch(e){}}
-    S.profile.school=p.school;S.profile.year=p.year;if(p.grade)S.profile.grade=p.grade;else delete S.profile.grade;
+    if(p.school)S.profile.school=p.school;if(p.year)S.profile.year=p.year;if(p.grade)S.profile.grade=p.grade;else delete S.profile.grade;
     S.profile.target=(ROLES.find(r=>r[0]===p.role)||[p.role,p.role])[1];S.profile._t=Date.now();
     const order=(typeof PLAN_ORDER!=="undefined"&&PLAN_ORDER[p.role])||(S.plan&&S.plan.order)||["f","b","ib"];
-    S.plan={...(S.plan||{}),year:p.year,target:p.role,order,focus:order.length,perWeek:(S.plan&&S.plan.perWeek)||5,created:(S.plan&&S.plan.created)||new Date().toISOString().slice(0,10)};
+    S.plan={...(S.plan||{}),year:p.year||(S.plan&&S.plan.year)||"",target:p.role,order,focus:order.length,perWeek:(S.plan&&S.plan.perWeek)||5,created:(S.plan&&S.plan.created)||new Date().toISOString().slice(0,10)};
     S.onb={done:true,at:Date.now()};S.onboardSkip=false;
     try{maRoadBust()}catch(e){}try{save()}catch(e){}try{syncSoon()}catch(e){}}
   function finish(p){apply(p);LS.del(PEND);if(!editing)LS.set(WEL,"1");editing=false;ev("gate_onboarded");
@@ -146,7 +144,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
     const t0=Date.now();(function wait(){let done=true;try{done=typeof cloudState==="undefined"||cloudOn||cloudState==="error"||cloudState==="toobig"}catch(e){}
       if(!done&&Date.now()-t0<7000){setTimeout(wait,150);return}
       const p=pending();
-      if(p&&p.school&&p.year&&p.role&&(okName(p.name)||okName((S.profile||{}).name)||metaName())){if(!okName(p.name))p.name=okName((S.profile||{}).name)||metaName();finish(p);return}
+      if(p&&p.role&&(okName(p.name)||okName((S.profile||{}).name)||metaName())){if(!okName(p.name))p.name=okName((S.profile||{}).name)||metaName();finish(p);return}
       if(onboarded()){open_();return}
       show("form")})()}).catch(()=>show("form"));
 

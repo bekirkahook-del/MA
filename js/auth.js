@@ -44,6 +44,8 @@
     linkedin_oidc:'<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>'};
   /* Google / Apple buttons show only once the provider is switched on in Supabase (Auth > Providers). */
   let OAUTH=null;const oauthBtns=()=>OAUTH||(OAUTH=fetch((sb.supabaseUrl||"")+"/auth/v1/settings",{headers:{apikey:sb.supabaseKey||""}}).then(r=>r.json()).then(j=>[["google","Google"],["azure","Microsoft"],["apple","Apple"],["linkedin_oidc","LinkedIn"]].filter(([k])=>j.external&&j.external[k])).catch(()=>[]));
+  const PNAME="ma-pending-name";let pendName="";
+  const cleanName=v=>{v=String(v||"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,40);return v.length>=2&&/[a-z]/i.test(v)?v:""};
   function openAuth(mode){mode=mode||"in";mev("auth_open");
     const ov=document.createElement("div");ov.className="auth-ov";
     let view="main",email="",cd=0,cdT=null;
@@ -85,14 +87,15 @@
        <p>One tap with Google, or email + password. You're in right away.</p>
        ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
        <div id="auO" style="display:none;flex-direction:column;gap:8px"></div>
+       <label id="auNmL"${up?"":" hidden"}>Your name<input id="auNm" type="text" autocomplete="name" maxlength="40" placeholder="First and last name"></label>
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
        <label>Password<span style="position:relative;display:block"><input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="6+ characters" required style="width:100%;box-sizing:border-box;padding-right:58px"><button type="button" id="auEye" class="auth-sw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12.5px">Show</button></span></label>
        <button class="auth-go" type="submit">Continue</button>
        <p class="auth-fine">New here? This creates your free account. ${agree}</p>
        <div class="auth-msg" id="auM" role="status" aria-live="polite"></div>
        <div class="auth-links"><button type="button" class="auth-sw" id="auF">Forgot password?</button><button type="button" class="auth-sw" id="auMl">Email me a link instead</button></div></form>`;
-      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP");
-      ei.value=email;const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
+      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP"),nmL=ov.querySelector("#auNmL"),nmi=ov.querySelector("#auNm");
+      ei.value=email;nmi.value=pendName;const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
@@ -106,13 +109,18 @@
       f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim(),p=pi.value;mev("auth_submit");email=e;
         if(!okEmail(e)){say("Enter a valid email.");ei.focus();return}
         if(p.length<6){say("Password needs at least 6 characters.");pi.focus();return}
+        if(up&&!cleanName(nmi.value)){say("Add your name.");nmi.focus();return}
         go.disabled=true;go.textContent="One sec…";say("");
         const done=t=>{say(t,true);mev(t.startsWith("Account")?"auth_new":"auth_in");try{window.gtag&&gtag("event",t.startsWith("Account")?"sign_up":"login",{method:"password"})}catch(_){}setTimeout(()=>ov.remove(),700)};
         try{
           let r=await sb.auth.signInWithPassword({email:e,password:p});
           if(!r.error){done("Signed in. Loading…");return}
           if(!/invalid login|invalid credentials/i.test(r.error.message||""))throw r.error;
-          r=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin}});
+          /* new account: a name is required */
+          const n=cleanName(nmi.value);pendName=nmi.value;
+          if(!n){nmL.hidden=false;say("New here? Add your name to create your account. (Already have one? Check your password.)");nmi.focus();mev("auth_need_name");return}
+          try{localStorage.setItem(PNAME,n)}catch(_){}
+          r=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin,data:{full_name:n,name:n}}});
           if(r.error){if(/already|registered|exists/i.test(r.error.message))throw new Error("WRONGPW");throw r.error}
           if(r.data&&r.data.session){done("Account created. You're in!");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+r.data.session.access_token},keepalive:true}).catch(()=>{});return}
           throw new Error("WRONGPW")}
@@ -129,6 +137,7 @@
        <h2>${pw?(up?"Create your account":"Sign in with password"):(up?"Join free in 10 seconds":"Welcome back")}</h2>
        <p>${pw?"":(up?"Just your email. We'll send a link, no password to remember.":"Enter your email and we'll send a sign-in link.")}</p>
        ${up&&!pw?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
+       ${up&&pw?`<label>Your name<input id="auNm" type="text" autocomplete="name" maxlength="40" placeholder="First and last name"></label>`:""}
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
        ${pw?`<label>Password<input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="${up?"At least 6 characters":""}" required></label>`:""}
        <button class="auth-go" type="submit">${pw?(up?"Create account":"Sign in"):"Email me a link"}</button>
@@ -151,7 +160,8 @@
         try{
           if(!pw){const err=await sendLink(e);if(err)throw new Error(err);cd=60;view="sent";draw();return}
           const p=ov.querySelector("#auP").value;if(!p){say("Enter your password.");return}
-          if(up){const {data,error}=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin}});
+          if(up){const n=cleanName((ov.querySelector("#auNm")||{}).value);if(!n){say("Add your name.");return}try{localStorage.setItem(PNAME,n)}catch(_){}
+            const {data,error}=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin,data:{full_name:n,name:n}}});
             if(error)throw error;if(!data.session)say("Almost done. Check your email to confirm, then sign in.",true)}
           else{const {error}=await sb.auth.signInWithPassword({email:e,password:p});if(error)throw error;say("Signed in. Loading…",true)}}
         catch(x){say(/Invalid login/i.test(x.message)?"Wrong email or password.":x.message||"Something went wrong.")}
@@ -192,6 +202,30 @@
     top.insertBefore(b,top.firstChild);
     if(s){let last="";const tick=()=>{try{const n=(JSON.parse(localStorage.getItem("ma-progress-v1")||"{}").profile||{}).name||"";if(n&&n!==last&&A.pushName){last=n;A.pushName(n)}}catch(e){}};
       tick();setInterval(tick,20000);document.addEventListener("visibilitychange",tick)}});
+  /* Every new account needs a name (Bekir, Nov 23, 2026). Name comes from the sign-up form, Google, or this box.
+     Accounts made before the rule (created before NAME_SINCE) are not forced. */
+  const NAME_SINCE=Date.parse("2026-11-23T03:30:00Z");
+  function setName(n,s){try{S.profile=S.profile||{};S.profile.name=n;S.profile._t=Date.now();try{myName=n}catch(_){}save();syncSoon()}catch(_){}
+    try{localStorage.removeItem(PNAME)}catch(_){}try{A.pushName&&A.pushName(n)}catch(_){}
+    try{const md=(s.user&&s.user.user_metadata)||{};if(md.full_name!==n)sb.auth.updateUser({data:{full_name:n,name:n}})}catch(_){}
+    ["render","renderHome"].forEach(f=>{try{typeof window[f]==="function"&&window[f]()}catch(_){}})}
+  function askName(s){if(document.getElementById("auName"))return;const ov=document.createElement("div");ov.className="auth-ov";ov.id="auName";
+    ov.innerHTML=`<form class="auth-box" novalidate><div class="auth-mark" aria-hidden="true">M&amp;A</div><h2>What's your name?</h2>
+     <p>It shows on leaderboards and your school board.</p>
+     <label>Your name<input id="auNm2" type="text" autocomplete="name" maxlength="40" placeholder="First and last name" required></label>
+     <button class="auth-go" type="submit">Continue</button><div class="auth-msg" id="auM" role="status" aria-live="polite"></div></form>`;
+    const i=ov.querySelector("#auNm2"),m=ov.querySelector("#auM");
+    ov.querySelector("form").onsubmit=e=>{e.preventDefault();const n=cleanName(i.value);if(!n){m.textContent="Type your name (at least 2 letters).";m.className="auth-msg err";i.focus();return}
+      setName(n,s);mev("auth_name_set");ov.remove()};
+    document.body.appendChild(ov);setTimeout(()=>i.focus(),50);mev("auth_name_ask")}
+  A.ready.then(s=>{if(!s||typeof S==="undefined")return;const t0=Date.now();
+    (function wait(){let done=true;try{done=typeof cloudState==="undefined"||cloudOn||cloudState==="error"||cloudState==="toobig"}catch(e){}
+      if(!done&&Date.now()-t0<7000){setTimeout(wait,200);return}
+      if(S.profile&&cleanName(S.profile.name))return;
+      let n="";try{n=cleanName(localStorage.getItem(PNAME))}catch(_){}
+      const md=(s.user&&s.user.user_metadata)||{};if(!n)n=cleanName(md.full_name||md.name);
+      if(n){setName(n,s);return}
+      if(Date.parse(s.user.created_at)>=NAME_SINCE)askName(s)})()});
   /* "available when you sign in" notes become clickable */
   document.addEventListener("click",e=>{const n=e.target.closest&&e.target.closest(".note");if(!n||A.session)return;if(/sign in/i.test(n.textContent))openAuth("up")});
 })();

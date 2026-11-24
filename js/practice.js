@@ -78,8 +78,9 @@ function mount(el,key,o){
 /* standalone reps from the level briefing */
 function openReps(tr,i){
   const key=kOf(tr,i),lvl=tr.levels[i];
-  openPanel(`<div class="label">${E(tr.name)} · Level ${i+1} · ${E(lvl.n)}</div><div id="rpMount"></div>`);
-  mount(document.getElementById("rpMount"),key,{title:"Number reps",lead:"Fresh numbers every time. Aim for 3 in a row.",onDone:()=>showBrief(tr,i)})}
+  openPanel(`<div class="label">${E(tr.name)} · Level ${i+1} · ${E(lvl.n)}</div><div id="rpMount"></div>${window.MAMock?`<div class="actions" style="margin-top:14px"><button class="ghost outline" id="rpMock" type="button">Timed mock · 10 questions</button></div>`:""}`);
+  mount(document.getElementById("rpMount"),key,{title:"Number reps",lead:"Fresh numbers every time. Aim for 3 in a row.",onDone:()=>showBrief(tr,i)});
+  const mk=document.getElementById("rpMock");if(mk)mk.onclick=()=>MAMock.open(tr,i)}
 
 /* ---------- "Why you missed it" ---------- */
 const STOP=new Set("the and for are was with that this from have has not but you your can will what when which how why does did who whom its into than then them they their there these those over out per any all one two three each more most less only also just very much many such like very about after before between because while where should would could been being are our own off too use used using via get got put set".split(" "));

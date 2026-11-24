@@ -919,10 +919,47 @@ const S_DEFAULT=JSON.stringify(S);
 const safeJSON=t=>JSON.parse(t,(k,v)=>(k==="__proto__"||k==="constructor"||k==="prototype")?undefined:v);
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,safeJSON(r))}catch(e){}
 let cloudOn=false,cloudT=null,cloudState="off",cloudAt=0;
-function save(){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(()=>{cloudT=null;cloudPush()},1500)}}
+/* ---------- cross-device sync, per-field (Nov 24, 2026) ----------
+   Every save() compares against the last known state and stamps WHAT changed and WHEN:
+   - _kt[key]: edit time for data where the newest copy wins (settings, contacts, club…)
+   - profile._t: edit time for the profile
+   - _fl / _ci / _cn: one entry per person or club: +time = added, -time = removed (connections, club invites sent, club invites declined)
+   Merging keeps the newest decision per field / per person, so no device can undo another's newer change. */
+const SYNC_WHOLE=["settings","contacts","targets","superdays","road","club"];
+let SNAP=null;
+const sjs=v=>{try{return JSON.stringify(v===undefined?null:v)}catch(e){return ""}};
+const profSig=p=>{const c=Object.assign({},p||{});delete c._t;delete c.follows;return sjs(c)};
+const clubSig=c=>{if(!c)return "null";const x=Object.assign({},c);delete x.inv;return sjs(x)};
+const keySig=k=>k==="club"?clubSig(S.club):sjs(S[k]);
+const idSet=a=>new Set(Array.isArray(a)?a:[]);
+function snapTake(){SNAP={k:Object.fromEntries(SYNC_WHOLE.map(k=>[k,keySig(k)])),prof:profSig(S.profile),fol:idSet(S.profile&&S.profile.follows),inv:idSet(S.club&&S.club.inv),no:idSet(S.clubNo)}}
+function logDiff(key,before,after,now){const L=S[key]=S[key]&&typeof S[key]==="object"?S[key]:{};
+  after.forEach(id=>{if(!before.has(id))L[id]=now});before.forEach(id=>{if(!after.has(id))L[id]=-now})}
+function stampEdits(){if(!SNAP){snapTake();return}const now=Date.now();S._kt=S._kt||{};
+  SYNC_WHOLE.forEach(k=>{if(keySig(k)!==SNAP.k[k])S._kt[k]=now});
+  if(S.profile&&profSig(S.profile)!==SNAP.prof)S.profile._t=now;
+  logDiff("_fl",SNAP.fol,idSet(S.profile&&S.profile.follows),now);
+  logDiff("_ci",SNAP.inv,idSet(S.club&&S.club.inv),now);
+  logDiff("_cn",SNAP.no,idSet(S.clubNo),now);
+  snapTake()}
+/* first run on this version: record today's connections/invites as "added a long time ago", so any explicit change anywhere beats them */
+(function(){const seed=(key,arr)=>{const L=S[key]=S[key]&&typeof S[key]==="object"?S[key]:{};(Array.isArray(arr)?arr:[]).forEach(id=>{if(!(id in L))L[id]=1})};
+  try{seed("_fl",S.profile&&S.profile.follows);seed("_ci",S.club&&S.club.inv);seed("_cn",S.clubNo)}catch(e){}})();
+/* start tracking edits once start-up code has run (and again after every cloud merge), so defaults set on load never count as "newer" */
+setTimeout(()=>{if(!SNAP)snapTake()},4000);
+function save(){stampEdits();S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(cloudOn){clearTimeout(cloudT);cloudT=setTimeout(()=>{cloudT=null;cloudPush()},1500)}}
 const cloudDoc=()=>DB.collection("data/users/"+myId).doc("progress");
-async function cloudPush(){if(!DB||!myId)return;try{const body=JSON.stringify(S);if(body.length>900000){cloudState="toobig";renderSyncRow();return}
-  await cloudDoc().set({v:1,t:S._t||Date.now(),s:body});cloudAt=Date.now();cloudState="synced"}catch(e){cloudState="error";if(!cloudRetry)cloudRetry=setTimeout(()=>{cloudRetry=null;cloudPush()},8000)}renderSyncRow()}
+let remoteT=0,cloudWatch=null,pulling=false;
+/* live: when another device saves, pull its changes here (realtime + the backend's 45s check) */
+function watchCloud(){if(cloudWatch||!DB||!myId)return;try{cloudWatch=cloudDoc().onSnapshot(d=>{const t=((d&&d.data&&d.data())||{}).t||0;if(t&&t!==remoteT&&!pulling&&!cloudT){pulling=true;cloudPull().finally(()=>{pulling=false})}})}catch(e){}}
+async function cloudPush(){if(!DB||!myId)return;try{
+  /* merge whatever another device pushed since we last looked, then write */
+  try{const snap=await cloudDoc().get();if(snap.exists){const d=snap.data()||{},rt=d.t||0;if(rt&&rt!==remoteT){const remote=safeJSON(d.s||"null");
+    if(remote&&(!S._synced||S._synced===myId)){const before=stateSig(S);S=Object.assign(JSON.parse(S_DEFAULT),mergeState(S,remote,true));S._synced=myId;snapTake();
+      if(stateSig(S)!==before){["render","renderCompete","renderPeople","renderClub","renderSubUI"].forEach(f=>{try{if(typeof window[f]==="function")window[f]()}catch(e){}})}}}}}catch(e){}
+  S._t=Math.max(Date.now(),(remoteT||0)+1);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  const body=JSON.stringify(S);if(body.length>900000){cloudState="toobig";renderSyncRow();return}
+  await cloudDoc().set({v:1,t:S._t||Date.now(),s:body});remoteT=S._t;cloudAt=Date.now();cloudState="synced";try{syncSoon()}catch(e){}}catch(e){cloudState="error";if(!cloudRetry)cloudRetry=setTimeout(()=>{cloudRetry=null;cloudPush()},8000)}renderSyncRow()}
 let cloudRetry=null;
 /* Merge instead of "newest copy wins". Old behavior lost work: any save() on page load stamped a fresh
    time, so a stale device could overwrite newer progress from another device, and guest work was dropped
@@ -937,10 +974,20 @@ function mergeVal(a,b,aNew,k){if(a===undefined||a===null)return b===undefined?a:
   if(Array.isArray(a)&&Array.isArray(b)&&!aNew&&b.length===0&&a.length)return a;
   if(Array.isArray(a)&&Array.isArray(b)&&aNew&&a.length===0&&b.length)return b;
   return aNew?a:b}
-function mergeState(L,R,lNew){const o={};for(const k of new Set([...Object.keys(L),...Object.keys(R)])){
+/* +time/-time logs: keep whichever decision is newest for each id */
+const mergeLog=(a,b)=>{const o=Object.assign({},a||{});for(const [id,v] of Object.entries(b||{}))if(!(id in o)||Math.abs(+v||0)>Math.abs(+o[id]||0))o[id]=v;return o};
+const applyLog=(lists,log)=>{const out=new Set();lists.forEach(l=>(Array.isArray(l)?l:[]).forEach(id=>{if(!(id in log)||log[id]>0)out.add(id)}));Object.entries(log).forEach(([id,v])=>{if(v>0)out.add(id)});return [...out]};
+function mergeState(L,R,lNew){const o={};const lk=L._kt||{},rk=R._kt||{};for(const k of new Set([...Object.keys(L),...Object.keys(R)])){
+    if(k==="_fl"||k==="_ci"||k==="_cn"){o[k]=mergeLog(L[k],R[k]);continue}
+    if(k==="_kt"){o[k]=Object.assign({},lk);for(const [x,t] of Object.entries(rk))o[k][x]=Math.max(o[k][x]||0,t||0);continue}
+    if(SYNC_WHOLE.includes(k)&&(lk[k]||rk[k])&&lk[k]!==rk[k]){o[k]=((lk[k]||0)>(rk[k]||0)?L[k]:R[k])??L[k]??R[k];continue}
     if(k==="profile"){ /* the profile follows its own save time: opening the app on a device must not make its stale copy "newer" */
       const lt=(L.profile||{})._t||0,rt=(R.profile||{})._t||0;o[k]=((lt===rt?lNew:lt>rt)?L[k]:R[k])??L[k]??R[k];continue}
     o[k]=MERGE_WHOLE.has(k)?((lNew?L[k]:R[k])??L[k]??R[k]):mergeVal(L[k],R[k],lNew,k)}
+  /* connections and invites: union of both copies, then apply the newest add/remove per person */
+  try{if(o.profile){o.profile=Object.assign({},o.profile);o.profile.follows=applyLog([(L.profile||{}).follows,(R.profile||{}).follows],o._fl||{})}
+    if(o.club&&o.club.code){o.club=Object.assign({},o.club);o.club.inv=applyLog([(L.club||{}).inv,(R.club||{}).inv],o._ci||{}).slice(-100)}
+    o.clubNo=applyLog([L.clubNo,R.clubNo],o._cn||{}).slice(-30)}catch(e){}
   o._t=Math.max(L._t||0,R._t||0);return o}
 const stateSig=x=>{try{const c=Object.assign({},x);delete c._t;delete c._synced;return JSON.stringify(c)}catch(e){return ""}};
 async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();return}
@@ -951,10 +998,10 @@ async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();retur
       if(S._synced&&S._synced!==myId){S=Object.assign(JSON.parse(S_DEFAULT),remote);gotNew=true}
       else{const before=stateSig(S),xb=totalXP();const m=mergeState(S,remote,(S._t||0)>=rt);
         S=Object.assign(JSON.parse(S_DEFAULT),m);gotNew=stateSig(S)!==before&&totalXP()>=xb;needPush=stateSig(S)!==stateSig(Object.assign(JSON.parse(S_DEFAULT),remote))}}
-    S._synced=myId;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+    S._synced=myId;snapTake();remoteT=rt;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
     if(gotNew){["applySettings","applyProUI","render","renderRoad","renderCal","renderOpenings","renderApps","renderCRM","renderFirms","renderDeals","renderMock","renderTape","renderSubUI","renderCompete","renderPlan","renderReview"].forEach(f=>{try{if(f==="renderMock"){const m=document.getElementById("mockAns");if(m&&m.value.trim())return}if(typeof window[f]==="function")window[f]()}catch(e){}});
       toast("Progress synced from your account")}
-    cloudOn=true;if(needPush){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}await cloudPush()}else{cloudState="synced";cloudAt=Date.now()}
+    cloudOn=true;watchCloud();if(needPush){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}await cloudPush()}else{cloudState="synced";cloudAt=Date.now()}
   }catch(e){cloudState="error"}renderSyncRow()}
 /* keep every device on the account current: re-check the cloud when the tab comes back */
 let cloudPullAt=0;document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&cloudOn&&Date.now()-cloudPullAt>20000){cloudPullAt=Date.now();cloudPull()}});

@@ -4,7 +4,9 @@
   const KEY="ma-notif-v1";
   const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return{}}};
   const store=d=>{try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}};
-  let N=load();N.seen=N.seen||{};N.conn=N.conn||null;N.items=N.items||[];
+  let N=load();N.seen=N.seen||{};
+  /* "seen" follows the account across devices (S.nSeen syncs with progress); merged both ways */
+  const syncSeen=()=>{try{if(typeof S==="undefined")return;const a=S.nSeen||{};let ch=false;for(const k in N.seen)if(!a[k]){a[k]=1;ch=true}for(const k in a)N.seen[k]=1;if(ch){const ks=Object.keys(a);if(ks.length>300)ks.slice(0,ks.length-300).forEach(k=>delete a[k]);S.nSeen=a;if(typeof save==="function")save()}}catch(e){}};syncSeen();N.conn=N.conn||null;N.items=N.items||[];
   const baseTitle=document.title;let lastPlayers=null,lastFollows="",first=true,open=false;
 
   const st=document.createElement("style");st.textContent=`
@@ -77,7 +79,7 @@
   function openPanel(){if(open)return;open=true;const bell=document.querySelector("#nBell");const pn=document.createElement("div");pn.className="npanel";pn.setAttribute("role","dialog");pn.setAttribute("aria-label","Notifications");document.body.appendChild(pn);
     const r=bell.getBoundingClientRect();const w=Math.min(360,innerWidth-24);pn.style.top=(r.bottom+8)+"px";pn.style.left=Math.max(12,Math.min(innerWidth-12-w,r.right+8-w))+"px";
     drawPanel();bell.setAttribute("aria-expanded","true");
-    setTimeout(()=>{N.items.forEach(x=>N.seen[x.k+x.id]=1);store(N);const b=document.querySelector("#nBell b");if(b)b.hidden=true;document.title=baseTitle},400)}
+    setTimeout(()=>{N.items.forEach(x=>N.seen[x.k+x.id]=1);store(N);syncSeen();const b=document.querySelector("#nBell b");if(b)b.hidden=true;document.title=baseTitle},400)}
   function closePanel(){open=false;document.querySelectorAll(".npanel").forEach(p=>p.remove());const bell=document.querySelector("#nBell");if(bell)bell.setAttribute("aria-expanded","false");paint()}
   document.addEventListener("mousedown",e=>{if(open&&!e.target.closest(".npanel")&&!e.target.closest("#nBell"))closePanel()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&open)closePanel()});
@@ -88,7 +90,7 @@
     bell.innerHTML='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><b hidden></b>';
     bell.onclick=()=>open?closePanel():openPanel();
     const av=document.querySelector("#avBtn");av&&av.parentNode===top?top.insertBefore(bell,av):top.appendChild(bell);
-    setInterval(()=>{if(!ok())return;const f=JSON.stringify([(S&&S.profile&&S.profile.follows)||[],(S.club&&S.club.code)||"",S.clubNo||[]]);
+    setInterval(()=>{if(!ok())return;syncSeen();const f=JSON.stringify([(S&&S.profile&&S.profile.follows)||[],(S.club&&S.club.code)||"",S.clubNo||[]]);
       if(PLAYERS===lastPlayers&&f===lastFollows)return;lastPlayers=PLAYERS;lastFollows=f;
       const fresh=compute();if(first){first=false;const u=unseen();if(u.length)alertFor(u)}else alertFor(fresh);paint()},1500)});
 })();

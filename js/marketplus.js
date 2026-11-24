@@ -4,7 +4,8 @@
       Company panels used to show no price at all; now every listed symbol gets one.
    2. Ticker lookup: typing a symbol that isn't in the directory (a brand-new IPO, an ETF) offers
       "Look up XYZ" and opens a panel from Yahoo's data.
-   Data comes from /.netlify/functions/history (1 year of daily closes, CDN-cached 30 min).
+   Data comes from /.netlify/functions/history (1 year of daily closes + 50/200-day moving averages, CDN-cached 30 min).
+   3. 50/200-day moving averages (Nov 24, 2026): lines on the chart, price vs each, golden/death cross, and a plain-English read.
    window.maHist(sym) is shared with montecarlo.js so a panel fetches history once. */
 (function(){
   "use strict";
@@ -37,6 +38,13 @@
     ".pc-new{font-size:13px;color:var(--ink-2,#555);margin:8px 0 0}"+
     ".mk-look{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;border:1px dashed var(--rule,#d9dde6);background:transparent;color:var(--ink,#111);border-radius:4px;padding:10px 12px;margin:6px 0;cursor:pointer}"+
     ".mk-look:hover{border-color:var(--cobalt,#2448D8)}.mk-look b{font-family:var(--mono,monospace)}"+
+    ".pc-ma{margin-top:12px;border-top:1px solid var(--rule,#d9dde6);padding-top:12px}"+
+    ".pc-mah{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.pc-mah h4{margin:0;font-size:14px;color:var(--ink,#13203B)}"+
+    ".pc-tag{font-size:12px;font-weight:700;border-radius:999px;padding:3px 9px;background:var(--paper,#f4f5f8);border:1px solid var(--rule,#d9dde6)}.pc-tag.up{background:rgba(30,142,62,.1);border-color:rgba(30,142,62,.3)}.pc-tag.dn{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.3)}"+
+    ".pc-mat{margin-left:auto;font:inherit;font-size:12px;font-weight:700;border:1px solid var(--rule,#d9dde6);background:transparent;color:var(--ink-2,#555);border-radius:999px;padding:4px 10px;cursor:pointer}"+
+    ".pc-k{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}"+
+    ".pc-why{margin:10px 0 0;padding:0;list-style:none;font-size:14px;line-height:1.5;color:var(--ink,#13203B)}.pc-why li{padding:3px 0 3px 20px;position:relative}.pc-why li:before{content:'•';position:absolute;left:6px;color:var(--brass,#b08d2a)}"+
+    ".pc-how{margin-top:8px;font-size:13.5px;line-height:1.5;color:var(--ink-2,#555)}.pc-how summary{cursor:pointer;font-weight:700;color:var(--ink,#13203B)}.pc-how p{margin:6px 0}"+
     "@media(max-width:560px){.pc-s{grid-template-columns:1fr 1fr}.pc-top b{font-size:22px}}";
   document.head.appendChild(st);
 
@@ -52,8 +60,10 @@
     var days=(pts[pts.length-1][0]-pts[0][0])/DAY,ppy=Math.min(366,Math.max(200,Math.round(r.length/(days/365.25))));return Math.sqrt(v*ppy)}
   function maxDD(pts){var pk=pts[0][1],dd=0;pts.forEach(function(p){if(p[1]>pk)pk=p[1];var d=p[1]/pk-1;if(d<dd)dd=d});return dd}
 
-  function chart(pts,cur){
+  var C50="#e08a00",C200="#7b4fd6";
+  function chart(pts,cur,ma){
     var W=640,H=180,L=6,R=56,T=8,B=18,v=pts.map(function(p){return p[1]}),lo=Math.min.apply(null,v),hi=Math.max.apply(null,v);
+    if(ma)ma.forEach(function(m){[m[0],m[1]].forEach(function(x){if(x!=null){if(x<lo)lo=x;if(x>hi)hi=x}})});
     var pad=(hi-lo)*.08||hi*.02||1;lo-=pad;hi+=pad;
     var X=function(i){return L+(pts.length<2?0:i/(pts.length-1))*(W-L-R)},Y=function(x){return T+(1-(x-lo)/(hi-lo))*(H-T-B)};
     var up=v[v.length-1]>=v[0],col=up?"var(--good,#1e8e3e)":"var(--bad,#c0392b)";
@@ -63,13 +73,56 @@
     var f=function(x){return x>=1000?Math.round(x).toLocaleString():x.toFixed(x<10?2:1)};
     var mx=v.indexOf(Math.max.apply(null,v)),mn=v.indexOf(Math.min.apply(null,v));
     var cs=cur==="USD"?"$":"",fd=function(t){return new Date(t*1000).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"})};
-    var hv=window.maHvAttr?window.maHvAttr(pts.map(function(p,i){var ch=i?p[1]/pts[i-1][1]-1:null;return [+X(i).toFixed(1),+Y(p[1]).toFixed(1),fd(p[0])+"\n"+cs+(p[1]>=1000?p[1].toLocaleString("en-US",{maximumFractionDigits:2}):p[1].toFixed(2))+(ch===null?"":"  "+(ch>=0?"+":"−")+Math.abs(ch*100).toFixed(2)+"% day")]})):"";
+    var hv=window.maHvAttr?window.maHvAttr(pts.map(function(p,i){var ch=i?p[1]/pts[i-1][1]-1:null;return [+X(i).toFixed(1),+Y(p[1]).toFixed(1),fd(p[0])+"\n"+cs+(p[1]>=1000?p[1].toLocaleString("en-US",{maximumFractionDigits:2}):p[1].toFixed(2))+(ch===null?"":"  "+(ch>=0?"+":"−")+Math.abs(ch*100).toFixed(2)+"% day")+(ma&&ma[i]&&(ma[i][0]!=null||ma[i][1]!=null)?"\n"+(ma[i][0]!=null?"50-day "+cs+f(ma[i][0]):"")+(ma[i][1]!=null?"  200-day "+cs+f(ma[i][1]):""):"")]})):"";
+    var mline=function(k){var d="",on=false;(ma||[]).forEach(function(m,i){var x=m[k];if(x==null){on=false;return}d+=(on?"L":"M")+X(i).toFixed(1)+" "+Y(x).toFixed(1);on=true});return d};
     return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Price chart. Hover or use arrow keys to see each day\'s price"'+hv+'>'+
       '<path d="'+area+'" fill="'+col+'" fill-opacity=".08"/><path d="'+line+'" fill="none" stroke="'+col+'" stroke-width="1.8"/>'+
+      (ma?'<path d="'+mline(1)+'" fill="none" stroke="'+C200+'" stroke-width="1.6" stroke-dasharray="5 3"/><path d="'+mline(0)+'" fill="none" stroke="'+C50+'" stroke-width="1.6"/>':"")+
       '<text x="'+(W-R+6)+'" y="'+(Y(v[mx])+4).toFixed(1)+'" font-size="11" fill="var(--ink-2,#555)" font-family="var(--mono,monospace)">'+f(v[mx])+'</text>'+
       '<text x="'+(W-R+6)+'" y="'+(Y(v[mn])+4).toFixed(1)+'" font-size="11" fill="var(--ink-2,#555)" font-family="var(--mono,monospace)">'+f(v[mn])+'</text>'+
       '<text x="'+L+'" y="'+(H-4)+'" font-size="11" fill="var(--ink-2,#555)">'+d(pts[0][0])+'</text>'+
       '<text x="'+(W-R)+'" y="'+(H-4)+'" font-size="11" fill="var(--ink-2,#555)" text-anchor="end">'+d(pts[pts.length-1][0])+'</text></svg>';
+  }
+
+  /* ---------- 50 / 200-day moving averages: numbers + what they mean ---------- */
+  function maBox(ma,pts,last,cur,shown){
+    var m=ma[ma.length-1],a50=m[0],a200=m[1];
+    if(a50==null)return '<div class="pc-ma"><div class="pc-mah"><h4>50 / 200-day moving averages</h4></div><p class="pc-new" style="margin:0">Needs at least 50 trading days of history ('+pts.length+' so far). Check back once this listing has more trading days.</p></div>';
+    var v50=last/a50-1,v200=a200!=null?last/a200-1:null;
+    /* most recent golden / death cross in the last year */
+    var cross=null;for(var i=ma.length-1;i>0;i--){var p=ma[i-1],q=ma[i];if(p[0]==null||p[1]==null||q[1]==null)break;var s1=p[0]-p[1],s2=q[0]-q[1];if(s1<=0&&s2>0){cross=["golden",pts[i][0]];break}if(s1>=0&&s2<0){cross=["death",pts[i][0]];break}}
+    var dt=function(t){return new Date(t*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})};
+    var ab=function(x){return Math.abs(x*100).toFixed(1)+"% "+(x>=0?"above":"below")};
+    var tag,tc;
+    if(a200==null){tag=last>=a50?"Above its 50-day":"Below its 50-day";tc=last>=a50?"up":"dn"}
+    else if(last>a50&&a50>a200){tag="Strong uptrend";tc="up"}
+    else if(a50>a200&&last<=a50){tag=last>a200?"Uptrend, cooling off":"Uptrend at risk";tc=""}
+    else if(last<a50&&a50<a200){tag="Downtrend";tc="dn"}
+    else if(a50<a200&&last>=a50){tag=last>a200?"Recovering":"Trying to bounce";tc=""}
+    else {tag="Mixed";tc=""}
+    var why=[];
+    why.push(last>=a50?"Price is "+ab(v50)+" the 50-day: the short-term trend (about the last 2½ months) is up. Buyers have been in control lately.":"Price is "+ab(v50)+" the 50-day: the short-term trend (about the last 2½ months) has turned down.");
+    if(v200!=null)why.push(last>=a200?"Price is "+ab(v200)+" the 200-day: the long-term trend (about the last 10 months) is up. Many funds treat this as the line between a healthy stock and a broken one.":"Price is "+ab(v200)+" the 200-day: the long-term trend (about the last 10 months) is down. Many trend-following investors stay away until it gets back above.");
+    if(a200!=null)why.push(a50>a200?"The 50-day is above the 200-day, so recent prices are higher than the longer-run average. Momentum is on the bullish side.":"The 50-day is below the 200-day, so recent prices are lower than the longer-run average. Momentum is on the bearish side.");
+    if(cross)why.push(cross[0]==="golden"?"Golden cross on "+dt(cross[1])+": the 50-day crossed above the 200-day. Traders read it as a sign a new uptrend is starting.":"Death cross on "+dt(cross[1])+": the 50-day crossed below the 200-day. Traders read it as a sign a downtrend is setting in.");
+    else if(a200!=null)why.push("No golden or death cross in the last year: the "+(a50>a200?"uptrend":"downtrend")+" has held the whole time.");
+    if(v200!=null&&v200>.2)why.push("It's stretched: more than 20% above the 200-day. Stocks this far above their long-run average often pause or pull back toward it.");
+    if(v200!=null&&v200<-.2)why.push("It's far below its long-run average (more than 20% under the 200-day). That can mean real problems, or a bounce candidate. Check the news and earnings.");
+    if(a200==null)why.push("The 200-day needs 200 trading days of history ("+pts.length+" so far), so only the 50-day is shown for now.");
+    return '<div class="pc-ma"><div class="pc-mah"><h4>50 / 200-day moving averages</h4><span class="pc-tag '+tc+'">'+E(tag)+'</span><button type="button" class="pc-mat" aria-pressed="'+shown+'">'+(shown?"Hide lines":"Show on chart")+'</button></div>'+
+      '<div class="pc-s"><div><span><i class="pc-k" style="background:'+C50+'"></i>50-day avg</span><b>'+money(a50,cur)+'</b></div>'+
+        (a200!=null?'<div><span><i class="pc-k" style="background:'+C200+'"></i>200-day avg</span><b>'+money(a200,cur)+'</b></div>':"")+
+        '<div><span>Price vs 50-day</span><b class="'+cls(v50)+'">'+pct(v50)+'</b></div>'+
+        (v200!=null?'<div><span>Price vs 200-day</span><b class="'+cls(v200)+'">'+pct(v200)+'</b></div>':"")+
+        (a200!=null?'<div><span>50 vs 200</span><b class="'+cls(a50-a200)+'">'+(a50>a200?"50 above":"50 below")+'</b></div>':"")+
+        (cross?'<div><span>Last cross</span><b class="'+(cross[0]==="golden"?"up":"dn")+'">'+(cross[0]==="golden"?"Golden":"Death")+'</b></div>':"")+
+      '</div><ul class="pc-why">'+why.map(function(x){return '<li>'+E(x)+'</li>'}).join("")+'</ul>'+
+      '<details class="pc-how"><summary>What is a moving average?</summary>'+
+        '<p>A moving average is the average closing price over the last N trading days, updated every day. It smooths out the daily noise so you can see the trend.</p>'+
+        '<p><b>50-day</b> ≈ the last 2½ months: the short-to-medium-term trend. <b>200-day</b> ≈ the last 10 months: the long-term trend, and the one funds and the financial press watch most.</p>'+
+        '<p><b>Golden cross</b>: the 50-day moves above the 200-day (bullish). <b>Death cross</b>: the 50-day drops below the 200-day (bearish). These lines often act as support (prices bounce off them) or resistance (prices stall at them).</p>'+
+        '<p><b>The catch:</b> moving averages lag. They only describe what already happened, so crosses often show up after a lot of the move is over. Use them as context, not a buy or sell signal.</p>'+
+        '<p><b>Interview angle:</b> if asked to pitch a stock, mentioning where it trades vs. its 200-day shows you know how the market sees it. Then pivot to fundamentals (valuation, earnings, catalysts), which is what bankers and equity research actually care about.</p></details></div>';
   }
 
   /* ---------- price card ---------- */
@@ -81,12 +134,13 @@
       var day=prev?last/prev-1:null;
       var asof=d.t?new Date(d.t*1000).toLocaleString("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})+" ET":"";
       var hi=d.hi52!=null?d.hi52:Math.max.apply(null,pts.map(function(p){return p[1]})),lo=d.lo52!=null?d.lo52:Math.min.apply(null,pts.map(function(p){return p[1]}));
-      var young=pts.length<21;
+      var young=pts.length<21,showMA=true;try{showMA=localStorage.getItem("ma-pc-ma")!=="0"}catch(e){}
       var sel=young?"1Y":"3M";
       var draw=function(){
         var s=slice(pts,RANGES.filter(function(r){return r[0]===sel})[0][1]),ret=s[s.length-1][1]/s[0][1]-1,v=vol(pts);
+        var hasMA=Array.isArray(d.ma)&&d.ma.length===pts.length,maS=hasMA&&showMA?d.ma.slice(pts.length-s.length):null;
         body.innerHTML='<div class="pc-top"><b>'+money(last,cur)+'</b>'+(day==null?"":'<span class="pc-d '+cls(day)+'">'+(day>=0?"▲ ":"▼ ")+pct(day).replace(/^[+−]/,"")+' today</span>')+(asof?'<span class="pc-asof">'+E(asof)+'</span>':"")+'</div>'+
-          (pts.length>=2?'<div class="pc-rg" role="group" aria-label="Chart range">'+RANGES.map(function(r){return '<button data-r="'+r[0]+'" aria-pressed="'+(r[0]===sel)+'">'+r[0]+'</button>'}).join("")+'</div>'+chart(s,cur):"")+
+          (pts.length>=2?'<div class="pc-rg" role="group" aria-label="Chart range">'+RANGES.map(function(r){return '<button data-r="'+r[0]+'" aria-pressed="'+(r[0]===sel)+'">'+r[0]+'</button>'}).join("")+'</div>'+chart(s,cur,maS):"")+
           '<div class="pc-s">'+
             (pts.length>=2?'<div><span>'+E(sel)+' return</span><b class="'+cls(ret)+'">'+pct(ret)+'</b></div>':"")+
             '<div><span>52-wk high</span><b>'+money(hi,cur)+'</b></div>'+
@@ -95,8 +149,10 @@
             (v!=null?'<div><span>Volatility (1 yr)</span><b>'+(v*100).toFixed(1)+'%</b></div>':"")+
             (pts.length>=2?'<div><span>Max drawdown</span><b class="dn">'+pct(maxDD(pts))+'</b></div>':"")+
           '</div>'+
+          (hasMA?maBox(d.ma,pts,last,cur,showMA):"")+
           (young?'<p class="pc-new">New listing: only '+pts.length+' trading day'+(pts.length===1?"":"s")+' of history so far, so volatility and long-range stats fill in over the next few weeks.</p>':"");
         body.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){sel=b.dataset.r;draw()}});
+        var mt=$p(".pc-mat",body);if(mt)mt.onclick=function(){showMA=!showMA;try{localStorage.setItem("ma-pc-ma",showMA?"1":"0")}catch(e){}var o=$p(".pc-how",body),op=o&&o.open;draw();if(op)$p(".pc-how",body).open=true};
       };
       draw();
       /* live: refresh the price every 60s while this panel is open and the tab is visible.

@@ -50,14 +50,14 @@ window.SHOTS=[
   frame(s,lt,D){s.f.forEach((p,i)=>{pose(p,lt+i,'freeze');p.g.rotation.x=-1.45});camMove([0,6.5,6.0],[0,6.0,5.2],[0,0,0.6],[0,0,0.6],lt/D);stamp(s,'12 KNOCKED OUT','#ff4d5e',lt,0.3,110,330);
    card(s,'<div style="font-size:44px;font-weight:900;color:#13203B">Not in the national top 100 for Wall Street</div>',lt,D*0.45)}},
  /* 7 the names */
- {setup(s){arena();s.f=OUT.slice(0,4).map((id,i)=>{const p=fan(id,4+i,'shock');p.g.position.set(-2.4+i*1.6,0.1,0.6);p.g.rotation.x=-1.45;return p});s.c=el('chip','+ 8 more',{left:'400px',top:'1180px',background:'#c62828',fontSize:'60px'})},
+ {setup(s){arena();s.f=OUT.slice(0,4).map((id,i)=>{const p=fan(id,4+i,'shock');p.g.position.set(-1.8+i*1.2,0.1,0.6);p.g.rotation.x=-1.45;return p});s.c=el('chip','+ 8 more',{left:'400px',top:'1180px',background:'#c62828',fontSize:'60px'})},
   frame(s,lt,D){s.f.forEach((p,i)=>{pose(p,lt+i,'freeze');p.g.rotation.x=-1.45;tag(s,'t'+i,p,['BYU','Utah','Texas Tech','Kansas'][i],lt,i*D*0.18,0.9,'46px')});camMove([0,6.4,7.4],[0,6.0,6.8],[0,0.2,0.6],[0,0.2,0.6],lt/D);popIn(s.c,lt,D*0.72)}},
  /* 8 survivors line up: underrated or overrated */
  {setup(s){arena();s.f=['colorado','tcu','baylor','asu'].map((id,i)=>{const p=fan(id,[2,0,1,3][i],'happy');p.g.position.set(-1.65+i*1.1,0,0.8);return p});
-   s.q=el('stamp','Underrated or overrated? 👇',{left:'540px',top:'1320px',color:'#fff',fontSize:'72px',textShadow:'0 6px 0 #000',width:'900px'})},
-  frame(s,lt,D){s.f.forEach((p,i)=>{pose(p,lt+i,'idle');p.armR.rotation.z=-2.5;tag(s,'t'+i,p,SCH[p.id][2],lt,0.2,2.75,'40px')});camMove([0,2.3,9.6],[0,2.2,8.8],[0,1.6,0.6],[0,1.7,0.6],lt/D);popIn(s.q,lt,0.3,0.35,'translate(-50%,-50%)')}},
+   s.q=el('stamp','Underrated or overrated? 👇',{left:'540px',top:'300px',color:'#fff',fontSize:'72px',textShadow:'0 6px 0 #000',width:'900px'})},
+  frame(s,lt,D){s.f.forEach((p,i)=>{pose(p,lt+i,'idle');p.armR.rotation.z=-2.5;tag(s,'t'+i,p,SCH[p.id][2],lt,0.2,2.75,'40px')});camMove([0,2.3,11.2],[0,2.2,10.4],[0,1.6,0.6],[0,1.7,0.6],lt/D);popIn(s.q,lt,0.3,0.35,'translate(-50%,-50%)')}},
  /* 9 next: Ivy */
- {setup(s){A.skyline();s.T=fan('tcu',0);A.scene.add(s.T.g);
+ {setup(s){A.skyline();s.T=fan('tcu',0);s.T.g.visible=false;
    s.e=el('end',`<div class="t">NEXT EPISODE</div><div style="font-family:DejaVu Sans;font-weight:900;font-size:130px;color:#f6c84c;margin:20px 0">IVY 🏛️</div><div style="font-family:DejaVu Sans;font-weight:800;font-size:56px;color:#fff;text-align:center">Follow so your school<br>doesn't get left out</div><div class="s">Data: Rareliquid IB target school ranking, pulled Oct 16, 2026 (2/3 analysts at 18 top banks, 1/3 per student; counts are floors).<br>Original PS2-style characters in school colors, not official mascots. AI voice.</div>`);s.e.style.opacity=0},
   frame(s,lt,D){pose(s.T,lt,'cheer');camMove([0,1.6,7],[0,1.5,6],[0,1.3,0],[0,1.3,0],lt/D);s.e.style.opacity=ease((lt-0.2)/0.4)}}
 ];

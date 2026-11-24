@@ -7,9 +7,11 @@
 (function(){
   const css=`.tape .mkt{flex:none;display:inline-flex;align-items:center;gap:6px;padding:0 14px;background:#0B1222;color:#E8ECF5;border-right:1px solid #1C2640;font-family:var(--mono,monospace);font-size:11.5px;letter-spacing:.06em;z-index:2;position:relative}
 .tape-bar{display:none!important}
-.tape #tapeSearch{flex:none;display:inline-flex;align-items:center;gap:6px;padding:0 14px;background:#0B1222;color:#E8ECF5;border:0;border-left:1px solid #1C2640;border-radius:0;font-family:var(--mono,monospace);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;z-index:2;position:relative;cursor:pointer}
-.tape #tapeSearch:hover{background:#16203A}
-@media(max-width:600px){.tape .mkt{padding:0 10px}.tape .mkt #mktTxt{display:none}.tape #tapeSearch{font-size:0;gap:0;padding:0 12px}}
+.tape #tapeSearch{flex:none;display:inline-flex;align-items:center;gap:7px;align-self:center;margin:0 10px 0 0;height:26px;padding:0 13px 0 11px;background:rgba(255,255,255,.08);color:#E8ECF5;border:1px solid rgba(255,255,255,.16);border-radius:999px;font:600 12.5px/1 system-ui,-apple-system,sans-serif;letter-spacing:0;text-transform:none;z-index:2;position:relative;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s;box-shadow:-28px 0 18px 6px #0B1222}
+.tape #tapeSearch:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)}
+.tape #tapeSearch:focus-visible{outline:2px solid #6f8cff;outline-offset:2px}
+.tape #tapeSearch svg{width:13px;height:13px;opacity:.85}
+@media(max-width:600px){.tape .mkt{padding:0 10px}.tape .mkt #mktTxt{display:none}.tape #tapeSearch{font-size:0;gap:0;width:28px;height:28px;padding:0;justify-content:center;margin-right:8px}.tape #tapeSearch svg{width:14px;height:14px}}
 #xpChip{display:none!important}
 .tc-tabs{display:flex;justify-content:space-around;border-bottom:1px solid var(--rule);margin:0 0 12px}
 .tc-tabs button{flex:0 0 auto;font:inherit;font-size:12px;font-family:var(--mono,monospace);letter-spacing:.08em;text-transform:uppercase;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink-2);padding:6px 2px;cursor:pointer}

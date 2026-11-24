@@ -110,7 +110,7 @@ Return JSON: {"score": integer 1-10, "note": "one sentence verdict", "missed": [
       if(window.maInterviewer&&ivEl){iv=maInterviewer(ivEl,{name:R[i].r+(firm?` · ${firm}`:""),role:qs[i].c,roleKey:R[i].r});
         const key=i+"|"+phase;if(busy)iv.think();else if(spoken!==key){spoken=key;
           const ack=["Okay.","Got it.","Mm, okay.","Alright.","Sure."][Math.floor(Math.random()*5)];
-          iv.say(phase?`${ack} ${L.fu}`:(i===0?`Hi, thanks for coming in. ${q.q}`:q.q))}}
+          iv.say(phase?`${L.re||ack} ${L.fu}`:(i===0?`Hi, thanks for coming in. ${q.q}`:q.q))}}
       $("#sdQuit").onclick=()=>{clearInterval(tick);if(window.dictateStop)dictateStop();try{speechSynthesis.cancel()}catch(e){}persist();toast("Saved. Resume it from the Superday card.");closePanel()};
       if(busy){if(window.dictateStop)dictateStop();return}$("#sdA").focus();t0=Date.now();if(iv)iv.listen($("#sdA"));
       if(window.dictateBind&&$("#dictBtn"))dictateBind($("#dictBtn"),$("#sdA"));
@@ -122,14 +122,31 @@ Return JSON: {"score": integer 1-10, "note": "one sentence verdict", "missed": [
           try{const r=await ai(`You are ${R[i].who} at ${firm||"an investment bank"} running one part of a ${goal()} Superday. Your style: ${R[i].style}.
 You asked: "${q.q}". Strong answers cover: ${(q.k||[]).join("; ")}.
 ${BG?`Candidate background (from their resume/profile): ${BG}\n`:""}The candidate answered: """${v.slice(0,1500)}"""
-Ask ONE short, natural follow-up question (max 30 words) that probes the weakest or most interesting part of their answer, the way a real interviewer would. If it fits, tie it to something specific in their background. If the answer was wrong, gently push on the mistake. No praise, no feedback, just the question.
-Return JSON: {"followup":"..."}`,"quick");L.fu=String((r&&r.followup)||"").slice(0,240)}catch(e){}
+First react to the answer in ONE short spoken sentence (max 22 words), like a real banker: say plainly what was right and what was off or missing. Be honest; don't gush. If it was wrong, say so.
+Then ask ONE short, natural follow-up question (max 30 words) that probes the weakest or most interesting part of their answer. If it fits, tie it to something specific in their background.
+Return JSON: {"reaction":"...","followup":"..."}`,"quick");L.re=String((r&&r.reaction)||"").slice(0,200);L.fu=String((r&&r.followup)||"").slice(0,240)}catch(e){}
+          if(!L.re){const h=keyHits(q,v),ok=h.filter(x=>x.ok).length,miss=h.find(x=>!x.ok);L.re=!h.length?"Okay.":ok/h.length>=.7?"Good, that covers the main points.":miss?`Partly there, but you didn't really get to this: ${miss.k.toLowerCase()}.`:"Okay."}
           if(!L.fu){const miss=keyHits(q,v).find(h=>!h.ok);L.fu=miss?["Let me push on that. You left out a key piece. Walk me through it step by step.","Okay, but you skipped something important there. Can you fill in the gap?","Take me one level deeper. What are you missing in that answer?"][Math.floor(Math.random()*3)]:["Can you go one level deeper on that?","Why does that matter for the deal?","How would that change if rates went up 2%?"][Math.floor(Math.random()*3)]}
           phase=1;persist();draw()}
-        else{L.fa=v;gradeRound(i);if(teaser){teaserEnd();return}if(i<R.length-1){i++;phase=0;persist();
+        else{L.fa=v;gradeRound(i);if(teaser){teaserEnd();return}
+          if(i<R.length-1)await roundFeedback(i);
+          if(i<R.length-1){i++;phase=0;persist();
             if(window.maInterviewerJoin){openPanel(`<div id="sdJoin"></div>`);try{panel.classList.add("wide")}catch(e){}await maInterviewerJoin(document.getElementById("sdJoin"),R[i].r+(firm?` · ${firm}`:""))}
             draw()}else debrief()}}};
 
+    /* after each round: the interviewer tells you how it went before you walk to the next office */
+    const roundFeedback=j=>new Promise(async done=>{
+      openPanel(`<div class="label">Interview ${j+1} of ${R.length} · wrapping up</div><div id="sdFb"></div><p class="note">${esc(R[j].r)} is writing up their notes…</p>`);try{panel.classList.add("wide")}catch(e){}
+      let iv=null;const el=document.getElementById("sdFb");if(window.maInterviewer&&el){iv=maInterviewer(el,{name:R[j].r+(firm?` · ${firm}`:""),role:"Feedback",roleKey:R[j].r});iv.think()}
+      const g=await Promise.race([grades[j]||Promise.resolve(codeGrade(qs[j],log[j])),new Promise(r=>setTimeout(()=>r(codeGrade(qs[j],log[j])),7000))]);
+      const col=g.score>=7?"var(--good)":g.score>=5?"var(--brass)":"var(--bad)";
+      const words=g.score>=8?"Strong round.":g.score>=6?"Solid, with gaps.":g.score>=4?"That one was shaky.":"That round hurt you.";
+      const fb=document.createElement("div");fb.innerHTML=`<div class="sd-dec" style="color:${col}">${g.score}/10 · ${words}</div><p class="sub">${esc(g.note)}</p>
+        ${(g.missed||[]).length?`<h3 class="cs-h">What they wanted to hear</h3><ul class="sd-list">${g.missed.map(m=>`<li>${esc(m)}</li>`).join("")}</ul>`:""}
+        <div class="actions"><button class="btn" id="sdFbGo">Walk to the next office →</button></div>`;
+      const n=panel.querySelector("p.note");if(n)n.replaceWith(fb);else panel.appendChild(fb);
+      if(iv)iv.say(`${words} ${g.note}${(g.missed||[]).length?` Next time, make sure you hit: ${g.missed[0]}.`:""}`);
+      const go=document.getElementById("sdFbGo");go.focus();go.onclick=()=>{try{speechSynthesis.cancel()}catch(e){}if(iv)iv.destroy();done()}});
     const teaserEnd=async()=>{S.sdFreeUsed=1;save();try{window.maEv&&maEv("sd_free_done")}catch(e){}
       openPanel(`<div class="label">Interview 1 of ${R.length} done</div><h2>Grading your answer…</h2>`);
       const g=await (grades[0]||Promise.resolve(codeGrade(qs[0],log[0])));const col=g.score>=7?"var(--good)":g.score>=5?"var(--brass)":"var(--bad)";

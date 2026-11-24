@@ -1298,8 +1298,12 @@ function renderCompete(){
   $("#boardTabs").querySelectorAll("[data-bp]").forEach(b=>b.onclick=()=>{boardPath=b.dataset.bp;renderCompete()});
   $("#boardTabs").querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{boardMetric=b.dataset.m;renderCompete();$(`#boardTabs [data-m="${boardMetric}"]`).focus()});
   $("#boardStatus").textContent=status;
-  $("#board").innerHTML=ranked.length?`<ol class="board">${ranked.slice(0,25).map((x,i)=>`<li><button class="brow ${x.p.id===myId?'me':''}" data-p="${esc(x.p.id)}"><span class="pos">${i<3?["1st","2nd","3rd"][i]:i+1}</span><span class="avslot"></span><span class="who"><span class="nm"></span><small>${esc([RANKS[x.p.rank||0][0],x.p.school].filter(Boolean).join(" · "))}</small></span><span class="val">${mFmt(x.v)}</span></button></li>`).join("")}</ol>
+  /* podium + "you" card on top of the list (Nov 24, 2026) */
+  const podium=ranked.length>=3&&boardMetric!=="schools"?`<div class="bd-pod">${[1,0,2].map(i=>{const x=ranked[i];return `<button class="bd-pp p${i+1}" data-pp="${esc(x.p.id)}">${avatar(x.p.id,displayName(x.p.id),i===0?64:50)}<b>${esc(displayName(x.p.id))}</b><span class="bd-v">${mFmt(x.v)}</span><span class="bd-step">${i+1}</span></button>`}).join("")}</div>`:"";
+  const youCard=myPos>=0&&ranked.length>1&&boardMetric!=="schools"?`<div class="bd-you">${myPos===0?`<b>You're #1</b><span>${ranked[1]?`${mFmt(ranked[0].v-ranked[1].v)} ahead of ${esc(displayName(ranked[1].p.id))}. Keep it.`:""}</span>`:`<b>You're #${myPos+1} of ${ranked.length}</b><span>${mFmt(ranked[myPos-1].v-ranked[myPos].v)} behind <b>${esc(displayName(ranked[myPos-1].p.id))}</b> (#${myPos})</span>`}</div>`:"";
+  $("#board").innerHTML=ranked.length?`${youCard}${podium}<ol class="board">${ranked.slice(0,25).map((x,i)=>`<li><button class="brow ${x.p.id===myId?'me':''}" data-p="${esc(x.p.id)}"><span class="pos">${i<3?["1st","2nd","3rd"][i]:i+1}</span><span class="avslot"></span><span class="who"><span class="nm"></span><small>${esc([RANKS[x.p.rank||0][0],x.p.school].filter(Boolean).join(" · "))}</small></span><span class="val">${mFmt(x.v)}</span></button></li>`).join("")}</ol>
      ${myPos>=25?`<p class="note">You're #${myPos+1} on ${mLabel.toLowerCase()}.</p>`:""}`:`<p class="note">${boardMetric==="gauntlet"?"No Gauntlet scores this week yet. Be first.":boardMetric==="mock"?"Players appear here after 3 graded interview answers.":"No one on the board yet."}</p>`;
+  $("#board").querySelectorAll(".bd-pp").forEach(b=>b.onclick=()=>{const x=ranked.find(r=>r.p.id===b.dataset.pp);if(x)showPlayer(x.p)});
   $("#board").querySelectorAll(".brow").forEach((b,i)=>{b.querySelector(".nm").textContent=displayName(ranked[i].p.id);if(ranked[i].p.pro)b.querySelector(".nm").insertAdjacentHTML("afterend"," "+proBadge());b.querySelector(".avslot").outerHTML=avatar(ranked[i].p.id,realName(ranked[i].p.id),32);b.onclick=()=>showPlayer(ranked[i].p)});
   const top=players.map(p=>({p,v:p.xp||0})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,3);
   if($("#lbBody"))$("#lbBody").innerHTML=top.length?`<ol>${top.map((x,i)=>`<li class="${x.p.id===myId?'me':''}"><span class="pos">${i+1}</span><span class="nm"></span><span class="sc">${x.v} XP</span></li>`).join("")}</ol>`:`<p class="note">${dbState==="off"?"Sign in to see rankings.":"No players ranked yet."}</p>`;
@@ -3579,7 +3583,7 @@ setTimeout(()=>{try{renderWeakCard();renderMastery()}catch(e){}},0);
 const GROUPS={
  learn:[["tracks","Tracks",["tracks"]],["deals","Deals",["deals"]],["cheats","Cheat sheet",["cheats"]]],
  practice:[["drills","Drills",["rapid","curve","interview","coffee"]],["models","Models",["dcf","lbo","chal"]]],
- compete:[["leagues","Leagues",["overview","boards"]],["club","Club",["club"]],["you","Your profile",["me"],true]],
+ compete:[["leagues","Leagues",["boards","overview"]],["club","Club",["club"]],["you","Your profile",["me"],true]],
  career:[["road","Roadmap",["road"]],["recruit","Recruiting",["open","cal","apps"]],["net","Network",["net"]],["firms","Firms",["firms"]],["res","Resume",["res"]]]
 };
 const PANE_LABEL={curve:"Curveballs",interview:"Interview questions",coffee:"Mock coffee chat",dcf:"DCF builder",lbo:"LBO builder",chal:"Modeling challenges",open:"Openings",cal:"Calendar",apps:"Applications",res:"Resume",firms:"Firms"};

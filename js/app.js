@@ -1200,7 +1200,8 @@ const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 const lvlStars=(tr,raw)=>lvlN(tr)===3?raw:(raw>=lvlN(tr)-1?3:raw>=Math.ceil(lvlN(tr)*.7)?2:raw>=Math.ceil(lvlN(tr)*.4)?1:0);
 function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
-  quiz({title:L.n,qs:L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
+  const QS=L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,MISS=[];
+  quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
     const xp0=totalXP(),r0=rankOf(xp0);if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
     if(c>=2){questEvt("level");sfx("clear")}if(c===3)questEvt("stars3");
@@ -1208,9 +1209,9 @@ function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr
     const unlocked=before.filter(n=>trackUnlocked(TRACKS.find(t=>t.name===n)));
     if(nowDone&&!wasDone)logEvent(`Completed the ${tr.name} track`);if(r1>r0)logEvent(`Was promoted to ${RANKS[r1][0]}`);
     const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":Math.ceil(lvlN(tr)*.7)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
-    setTimeout(()=>{if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
+    setTimeout(()=>{if(window.MAPractice)MAPractice.bindMiss(tr,i);if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
     return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${Math.min(raw,lvlN(tr))} of ${lvlN(tr)} correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
-      <p>${msg}</p>${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}
+      <p>${msg}</p>${window.MAPractice?MAPractice.miss(tr,i,MISS):""}${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}
       ${r1>r0?`<p style="font-weight:600;margin-top:12px">Promoted to ${RANKS[r1][0]}.</p>`:""}
       ${unlocked.length?`<p style="margin-top:8px">Unlocked: <b>${unlocked.join(", ")}</b></p>`:""}
       <div class="actions">${pass&&hasNext?`<button class="btn" id="nextL">Next level</button>`:""}<button class="${pass&&hasNext?'ghost':'btn'}" id="retry">${pass?"Retry for stars":"Try again"}</button><button class="ghost" id="map">Back to map</button></div>`}})}

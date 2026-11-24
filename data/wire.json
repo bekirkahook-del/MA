@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T16:54:00Z",
+ "updated": "2026-11-24T21:48:52Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -109,8 +109,8 @@
   ]
  ],
  "RECAP": {
-  "d": "Nov 23",
-  "t": "Nov 23 close: stocks had their best day since April 2025 after Nvidia reinstated CEO Jensen Huang. Sources differ on the size: TipRanks had the Nasdaq Composite +6.92%, S&P 500 +5.03%, Dow +3.21%; Yahoo had +6.51%, +4.73%, +3.01%. Closing index levels were not available from a source read this run."
+  "d": "Nov 24",
+  "t": "Nov 24 close (AP): the S&P 500 fell 0.5% for its eighth loss in nine days, the Nasdaq fell 1.5% and the Dow added more than 400 points. Nvidia fell 7.6% a day after soaring 31.5%, and Anthropic fell 9.3% to below its $83 IPO price. The 10-year yield eased to 4.90% from 4.92%. Closing index levels were not available from a source read this run."
  },
  "CAL": [
   [
@@ -206,11 +206,15 @@
   {
    "k": "Markets",
    "d": "Nov 24",
-   "h": "US futures fall Tuesday as Nvidia's rally fades and Anthropic trades below its $83 IPO price",
-   "w": "Per AP, S&P 500 futures fell 1.03%, Nasdaq futures 1.7% and Dow futures 269 points (0.54%) in early trading. Nvidia was down about 5% premarket after jumping 31.5% Monday, and Anthropic fell sharply early Tuesday to trade below its $83 initial offering price. Taiwan's Taiex rose 9% and Seoul's Kospi 6.3%.",
-   "m": "Futures are not closing prices, so these moves can change before the bell. Sources differ on Monday's closing gains: AP said the S&P 500 rose 4.7%, Yahoo had Nasdaq +6.51%, S&P +4.73%, Dow +3.01%, while TipRanks had 6.92%, 5.03% and 3.21%.",
+   "h": "Stocks slip as Nvidia falls 7.6% and Anthropic drops below its $83 IPO price; Dow gains 400+ points",
+   "w": "Per AP, the S&P 500 fell 0.5% Tuesday and the Nasdaq fell 1.5%, while the Dow added more than 400 points. Nvidia fell 7.6% after soaring 31.5% Monday, Anthropic fell 9.3% to below the $83 it first sold for in its IPO last week, CoreWeave sank 12.7% and GE Vernova dropped 5.5%. The 10-year Treasury yield eased to 4.90% from 4.92%, and Brent crude rose 2.4% to $88.78.",
+   "m": "AP noted Democratic midterm wins have raised concerns about more AI regulation, including possible halts to data center construction. Dollar Tree rose 10.5% and Kohl's 15.3% after earnings beats, and consumer confidence improved more than economists expected.",
    "a": "Interview point: explain why a stock that doubles its recovery in a day can give back gains fast, and what an IPO trading below its offer price signals.",
    "s": [
+    [
+     "AP Closing Bell via WPTF (Nov 24)",
+     "https://www.wptf.com/2026/11/24/19515/"
+    ],
     [
      "Boston Globe / AP (Nov 24)",
      "https://www.bostonglobe.com/2026/11/24/business/tech-stocks-tuesday/"
@@ -484,7 +488,7 @@
    "buyer": "Sanofi",
    "target": "Insmed",
    "value": "$41.0B (cash)",
-   "usd": 41.0,
+   "usd": 41,
    "date": "Nov 24, 2026",
    "terms": [
     "$175 per Insmed share, all cash",
@@ -718,7 +722,7 @@
    "buyer": "Texas Pacific Land",
    "target": "EagleRock Land",
    "value": "~$3.0B (all stock)",
-   "usd": 3.0,
+   "usd": 3,
    "date": "Nov 23, 2026",
    "terms": [
     "0.0831 New TPL shares per EagleRock Class A share",
@@ -825,7 +829,7 @@
    "buyer": "TPG and Corpay",
    "target": "BILL Holdings",
    "value": "$6.0B ($63.25/share cash)",
-   "usd": 6.0,
+   "usd": 6,
    "date": "Nov 19, 2026",
    "terms": [
     "$63.25 per share in cash",

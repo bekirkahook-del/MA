@@ -160,7 +160,7 @@
     const accts=(pr.data||[]).map(r=>{const d=r.data||{},set=new Set();DK.forEach(k=>{const o=d[k];if(o&&typeof o==="object")Object.keys(o).forEach(x=>{const y=x.replace(/^cb-(sp-)?/,"");if(isD(y))set.add(y)})});
       Object.keys(d.newsq||{}).forEach(x=>{const t=Date.parse(x);if(t)set.add(dayStr(new Date(t)))});const t=Date.parse(r.updated_at);if(t)set.add(dayStr(new Date(t)));
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
-    const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:Date.parse(b.until||0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
+    const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:(b.until?Date.parse(b.until):0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
     const subs=((er&&er.data)||[]).map(r=>r.data||{});
     return{V,names,players,accts,pro,bill,reqs:((qr&&qr.data)||[]),billAll:Object.fromEntries((br.data||[]).map(r=>[r.id,r.data||{}])),trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
 
@@ -178,18 +178,17 @@
     const ppl=a=>new Set(a.map(v=>v.vid)).size,evP=(a,k)=>new Set(a.filter(v=>v.ev&&v.ev[k]).map(v=>v.vid)).size,evN=(a,k)=>a.reduce((n,v)=>n+((v.ev&&v.ev[k])||0),0);
     const newA=C.accts.filter(a=>a.first>=cut(N)).length,act7=C.accts.filter(a=>Date.now()-a.t<7*864e5).length;
     const subsA=(C.subs||[]).filter(x=>x.status==="active").length;
-    const steps=[["Visitors",ppl(cur)],["Cleared a level",evP(cur,"level_clear")],["Saw a sign-up nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_shown||v.ev.bar_shown||v.ev.guide_cta_shown||v.ev.p_any_shown)).map(v=>v.vid)).size],["Clicked a nudge",new Set(cur.filter(v=>v.ev&&(v.ev.prompt_click||v.ev.bar_click||v.ev.guide_cta_click||v.ev.p_any_click)).map(v=>v.vid)).size],["New accounts",newA],["Paying Pro (now)",C.pro]];
+    const sawN=new Set(cur.filter(v=>v.ev&&Object.keys(v.ev).some(k=>/_shown$/.test(k))).map(v=>v.vid)).size,clkN=new Set(cur.filter(v=>v.ev&&Object.keys(v.ev).some(k=>/(_click)$/.test(k))).map(v=>v.vid)).size;
+    const steps=[["Visitors",ppl(cur),"#2448D8"],["Saw a sign-up nudge",sawN,"#3a5fe0"],["Clicked a nudge",clkN,"#5b7be6"],["New accounts",newA,"#c9a227"],["Paying Pro (now)",C.pro,"#1e8e3e"]];
     const top=Math.max(1,steps[0][1]);
-    const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · sign-up nudges started Nov 12 · % = share of visitors (clicks: share who saw one)</small></h3>
-      ${steps.map(([l,n],i)=>`<div class="ms-row" style="grid-template-columns:minmax(0,1fr) 160px 70px"><span>${l}</span><span class="tr"><i style="width:${Math.max(2,n/top*100).toFixed(0)}%"></i></span><b>${n}${i&&i<5?` <small style="color:var(--ink-2)">${pct(n,i===3?steps[2][1]:steps[0][1])}%</small>`:""}</b></div>`).join("")}
-      <div class="ms-tiles" style="margin-top:10px">
-       <div class="ms-tile"><b>${evN(cur,"prompt_shown")} → ${evN(cur,"prompt_click")}</b><span>Level pop-up: shown → clicked</span></div>
-       <div class="ms-tile"><b>${evN(cur,"bar_shown")} → ${evN(cur,"bar_click")}</b><span>"Only on this device" bar</span></div>
-       <div class="ms-tile"><b>${evN(cur,"guide_cta_shown")} → ${evN(cur,"guide_cta_click")}</b><span>Guide sign-up boxes</span></div>
-       <div class="ms-tile"><b>${evN(cur,"from_chatgpt")}</b><span>Visits from ChatGPT (${evN(cur,"from_ai")} from any AI assistant)</span></div>
-       ${[["plan","Plan strip on Home"],["planpanel","Plan-ready screen"],["lb","Leaderboard row"],["school","School board strip"],["streak","Streak toast"],["score","Daily score toast"],["rapid","Rapid Fire toast"],["open","Deadline toast"],["deal","Save-deal button"],["fav","Favorite-stock toast"],["fav3","3-favorites toast"]].map(([k,l])=>`<div class="ms-tile"><b>${evN(cur,"p_"+k+"_shown")} → ${evN(cur,"p_"+k+"_click")}</b><span>${l}: shown → clicked</span></div>`).join("")}
-       <div class="ms-tile"><b>${evN(cur,"prompt0_shown")} → ${evN(cur,"prompt0_click")}</b><span>Welcome-back pop-up: shown → clicked</span></div>
-       <div class="ms-tile"><b>${evN(cur,"signup")}</b><span>Tracked sign-ups (${["prompt0","prompt1","prompt3","bar","guide","chatgpt","plan","planpanel","lb","school","streak","score","rapid","open","deal","fav","fav3"].map(k=>evN(cur,"signup_from_"+k)+" "+k.replace("prompt","pop-up ")).join(", ")})</span></div></div></div>`;
+    const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · arrows = % who made it from the step before</small></h3>
+      <div class="mx-fun">${steps.map(([l,n,c],i)=>`${i?`<div class="mx-fa">↓ ${pct(n,steps[i-1][1])}%</div>`:""}<div class="mx-fs" data-tip="${l}: ${n} (${pct(n,top)}% of visitors)"><div class="mx-fb" style="width:${Math.max(6,n/top*100).toFixed(1)}%;background:${c}"><b>${n.toLocaleString()}</b></div><span>${l}</span></div>`).join("")}</div></div>`;
+    /* sign-up nudges: one sortable table instead of a wall of "0 → 0" tiles; only nudges that were shown */
+    const NUD=[["prompt","Level pop-up"],["prompt0","Welcome-back pop-up"],["bar","\"Only on this device\" bar"],["guide_cta","Guide sign-up box"],["p_plan","Plan strip on Home"],["p_planpanel","Plan-ready screen"],["p_lb","Leaderboard row"],["p_school","School board strip"],["p_streak","Streak toast"],["p_score","Daily score toast"],["p_rapid","Rapid Fire toast"],["p_open","Deadline toast"],["p_deal","Save-deal button"],["p_fav","Favorite-stock toast"],["p_fav3","3-favorites toast"]]
+      .map(([k,l])=>({l,sh:evN(cur,k+"_shown"),ck:evN(cur,k+"_click")})).filter(x=>x.sh).sort((a,b)=>b.ck/b.sh-a.ck/a.sh);
+    const nmx=Math.max(1,...NUD.map(x=>x.ck/x.sh));
+    const nudges=`<div class="ms-sec"><h3>Which sign-up nudges work <small>${N===1?"today":N+" days"} · best click rate first · ${evN(cur,"signup")} tracked sign-ups · ${evN(cur,"from_chatgpt")} visits from ChatGPT</small></h3>
+      ${NUD.length?`<div style="overflow-x:auto"><table class="ms-tbl"><thead><tr><th>Nudge</th><th class="n">Shown</th><th class="n">Clicked</th><th>Click rate</th></tr></thead><tbody>${NUD.map(x=>`<tr><td>${esc(x.l)}</td><td class="n">${x.sh}</td><td class="n">${x.ck}</td><td><div class="mx-rate"><i style="width:${(x.ck/x.sh/nmx*100).toFixed(0)}%"></i><b>${(x.ck/x.sh*100).toFixed(1)}%</b></div></td></tr>`).join("")}</tbody></table></div>`:`<p class="note">No nudges shown in this range.</p>`}</div>`;
     const sum=(f)=>P.reduce((n,p)=>n+(+f(p)||0),0);
     const xpT=sum(p=>p.xp),lvT=sum(p=>p.levels),mockT=sum(p=>p.mockN),stk=P.filter(p=>(p.streak||0)>=3).length;
     const eng=`<div class="ms-sec"><h3>What members do <small>everyone on the leaderboard (${P.length})</small></h3>
@@ -205,10 +204,10 @@
       ${fb.length?`<table class="ms-tbl" style="margin-top:10px"><thead><tr><th>When</th><th>Type</th><th>What they said</th><th>Where</th></tr></thead><tbody>${fb.slice(0,12).map(f=>`<tr><td>${esc((f.at||"").slice(5,10).replace("-","/"))}</td><td>${esc(f.kind==="question"?"Question: "+(f.reason||"report"):"Feedback")}</td><td>${esc((f.text||f.question||"").slice(0,160))}</td><td>${esc((f.where||f.page||"").slice(0,40))}</td></tr>`).join("")}</tbody></table>`:`<p class="note">No feedback yet.</p>`}</div>`;
     const g=cur.filter(v=>/^\/guides\//.test(v.p||"")),sch=g.filter(v=>/-investment-banking\/?$/.test(v.p||"")&&!/interview/.test(v.p||""));
     const dow=[0,0,0,0,0,0,0];cur.forEach(v=>{const d=new Date((v.d||"")+"T12:00:00");if(!isNaN(d))dow[d.getDay()]++});const dm=Math.max(1,...dow),DN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-    const content=`<div class="ms-grid2"><div class="ms-sec"><h3>Guides &amp; search <small>visits that landed on a page</small></h3>
+    const content=`<div><div class="ms-sec"><h3>Guides &amp; search <small>visits that landed on a page</small></h3>
       <div class="ms-tiles"><div class="ms-tile"><b>${g.length}</b><span>Landed on a guide</span></div><div class="ms-tile"><b>${sch.length}</b><span>School guides</span></div></div>
       <div style="margin-top:8px">${rows(tally(g,v=>PAGE_NAME(v.p).replace("Guide: ",""),8))}</div></div>
-      <div class="ms-sec"><h3>Day of week <small>${N===1?"today":N+" days"}</small></h3><div class="ms-bars" style="height:110px">${dow.map((n,i)=>`<div class="ms-bar" data-tip="${DN[i]}: ${n} visit${n===1?"":"s"} · ${pct(n,Math.max(1,cur.length))}% of total"><em>${n||""}</em><i style="height:${(n/dm*100).toFixed(0)}%"></i></div>`).join("")}</div><div class="ms-days">${DN.map(d=>`<span>${d}</span>`).join("")}</div></div></div>
+      </div>
       <div class="ms-sec"><h3>Every guide visited <small>${(()=>{const n=new Set(g.map(v=>(v.p||"").replace(/\/$/,""))).size;return n+" guide"+(n===1?"":"s")+" · "+(N===1?"today":N+" days")})()}</small></h3>${(()=>{const gm={};g.forEach(v=>{const k=(v.p||"").replace(/\/$/,"");const o=gm[k]=gm[k]||{n:0,p:new Set(),s:{},ph:0};o.n++;o.p.add(v.vid);if(v.dev==="Phone")o.ph++;const c=srcName(v.src||v.ref);o.s[c]=(o.s[c]||0)+1});const L=Object.entries(gm).sort((a,b)=>b[1].n-a[1].n);return L.length?`<div style="max-height:460px;overflow:auto"><table class="ms-tbl"><thead><tr><th>Guide</th><th>Visits</th><th>People</th><th>Phones</th><th>Where they came from</th></tr></thead><tbody>${L.map(([k,o])=>`<tr><td><a href="${esc(k)}/" target="_blank" rel="noopener">${esc(PAGE_NAME(k).replace("Guide: ",""))}</a></td><td>${o.n}</td><td>${o.p.size}</td><td>${pct(o.ph,o.n)}%</td><td>${Object.entries(o.s).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([c,n])=>esc(c)+" <b>"+n+"</b>").join(" · ")}</td></tr>`).join("")}</tbody></table></div>`:`<p class="note">No guide visits in this range yet.</p>`})()}<p class="note" style="margin-top:6px">Counts the first page each person opens per day, so this is where they landed from.</p></div>
       `;
     const L=[["Google Search Console","https://search.google.com/search-console?resource_id=sc-domain%3Amnaprep.com"],["Bing Webmaster","https://www.bing.com/webmasters/home?siteUrl=https://mnaprep.com/"],["Metricool (all socials)","https://app.metricool.com/evolution/web?blogId=7259200"],["TikTok Studio","https://www.tiktok.com/tiktokstudio"],["Instagram insights","https://www.instagram.com/mnaprep/"],["YouTube Studio","https://studio.youtube.com/channel/UCecz_zgUGiksG2HpJEt0cTg"],["Pinterest analytics","https://www.pinterest.com/business/hub/"],["Stripe","https://dashboard.stripe.com/"],["Netlify","https://app.netlify.com/"],["Supabase","https://supabase.com/dashboard/project/nbakxpnhcfzdosbzbupd"],["Resend (emails)","https://resend.com/emails"],["Discord server","https://discord.com/channels/1529231349494452365"],["Product Hunt","https://www.producthunt.com/products/m-a-prep"],["AlternativeTo","https://alternativeto.net/software/manda-prep/"],["Quora profile","https://www.quora.com/profile/Bekir-Kahook"]];
@@ -216,12 +215,50 @@
     const BA=C.billAll||{},proTil=u=>{const b=BA[u]||{};return Math.max(b.until||0,b.grantUntil||0,b.trialUntil||0,b.passUntil||0)};
     const reqs=(C.reqs||[]).map(r=>({uid:r.id,...(r.data||{})}));
     const reqSec=`<div class="ms-sec"><h3>Free Pro requests <small>${reqs.length} total · tap a button to give Pro</small></h3>${reqs.length?`<table class="ms-tbl"><thead><tr><th>When</th><th>Who</th><th>What they said</th><th>Pro until</th><th></th></tr></thead><tbody>${reqs.slice(0,40).map(q=>{const t=proTil(q.uid);return `<tr><td>${q.at?new Date(q.at).toLocaleDateString(undefined,{month:"numeric",day:"numeric"}):""}</td><td>${esc(C.names[q.uid]||q.name||"(no name)")}</td><td>${esc((q.note||"").slice(0,160))}</td><td>${t>Date.now()?new Date(t).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"–"}</td><td style="white-space:nowrap"><button class="btn sm" data-grant="${esc(q.uid)}" data-days="30">+30 days</button> <button class="ghost outline sm" data-grant="${esc(q.uid)}" data-days="120">+4 months</button></td></tr>`}).join("")}</tbody></table>`:`<p class="note">No requests yet.</p>`}</div>`;
-    return funnel+money+eng+content+voice+links}
+    return {funnel,nudges,money,eng,content,voice,links,reqSec}}
   /* owner: give Pro (server checks you're the owner) */
   document.addEventListener("click",async e=>{const b=e.target.closest&&e.target.closest("[data-grant]");if(!b)return;e.preventDefault();
     const days=+b.dataset.days;if(!confirm(days?`Give ${days} days of Pro?`:"Remove free Pro?"))return;b.disabled=true;
     try{const sb=window.MA_AUTH&&MA_AUTH.sb,s=sb&&(await sb.auth.getSession()).data.session;const r=await fetch("/.netlify/functions/grant",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+(s?s.access_token:"")},body:JSON.stringify({uid:b.dataset.grant,days})});
       const j=await r.json().catch(()=>({}));b.textContent=r.ok?"✓ Done":(j.error||"Failed")}catch(x){b.textContent="Failed"}});
+  /* ---------- visuals: donut, day x hour heatmap, fact cards (Nov 24, 2026 redesign) ---------- */
+  const PAL=["#2448D8","#c9a227","#1e8e3e","#d9534f","#7b4fd6","#1aa3b8","#e08a00","#8a94a6"];
+  function donut(pairs,label){const tot=pairs.reduce((n,p)=>n+p[1],0);if(!tot)return "";let a=-Math.PI/2;const R=52,r=32,c=60;
+    const arc=(a0,a1)=>{const big=a1-a0>Math.PI?1:0,p=(rr,t)=>[(c+rr*Math.cos(t)).toFixed(2),(c+rr*Math.sin(t)).toFixed(2)];const [x0,y0]=p(R,a0),[x1,y1]=p(R,a1),[x2,y2]=p(r,a1),[x3,y3]=p(r,a0);
+      return `M${x0} ${y0}A${R} ${R} 0 ${big} 1 ${x1} ${y1}L${x2} ${y2}A${r} ${r} 0 ${big} 0 ${x3} ${y3}Z`};
+    const segs=pairs.map(([k,v],i)=>{const a0=a,a1=a+(v/tot)*Math.PI*2-(pairs.length>1?.02:0);a+=(v/tot)*Math.PI*2;return `<path d="${pairs.length===1?`M${c} ${c-R}A${R} ${R} 0 1 1 ${c-.01} ${c-R}L${c-.01} ${c-r}A${r} ${r} 0 1 0 ${c} ${c-r}Z`:arc(a0,a1)}" fill="${PAL[i%PAL.length]}" data-tip="${esc(k)}: ${v} (${pct(v,tot)}%)"/>`}).join("");
+    return `<div class="mx-dn"><svg viewBox="0 0 120 120" role="img" aria-label="${esc(label)}">${segs}<text x="60" y="58" text-anchor="middle" class="mx-dnt">${tot.toLocaleString()}</text><text x="60" y="73" text-anchor="middle" class="mx-dns">${esc(label)}</text></svg>
+      <ul>${pairs.map(([k,v],i)=>`<li><i style="background:${PAL[i%PAL.length]}"></i><span>${esc(k)}</span><b>${pct(v,tot)}%</b></li>`).join("")}</ul></div>`}
+  function heat(cur,N,cut){const DN=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],g=DN.map(()=>Array(24).fill(0)),occ=Array(7).fill(0);
+    for(let i=0;i<N;i++){const d=new Date(Date.now()-i*864e5);occ[(new Date(dayStr(d)+"T12:00:00").getDay()+6)%7]++}
+    cur.forEach(v=>{if(!v.t)return;const h=etHour(v.t),wd=(new Date((v.d||"")+"T12:00:00").getDay()+6)%7;if(h>=0&&wd>=0)g[wd][h]++});
+    const avg=g.map((row,w)=>row.map(n=>occ[w]?n/occ[w]:0)),mx=Math.max(.0001,...avg.flat());let best=[0,0];avg.forEach((row,w)=>row.forEach((v,h)=>{if(v>avg[best[0]][best[1]])best=[w,h]}));
+    const dayTot=avg.map(r=>r.reduce((a,b)=>a+b,0)),bd=dayTot.indexOf(Math.max(...dayTot));
+    return {best:`${DN[best[0]]} ${hr(best[1])}–${hr((best[1]+1)%24)} ET`,bestDay:DN[bd],html:`<div class="mx-hm"><div></div>${Array.from({length:24},(_,h)=>`<span class="mx-hx">${h%3?"":hr(h)}</span>`).join("")}
+      ${avg.map((row,w)=>`<span class="mx-hy">${DN[w]}</span>${row.map((v,h)=>`<i style="opacity:${v?(.12+.88*v/mx).toFixed(2):.05}" data-tip="${DN[w]} ${hr(h)}–${hr((h+1)%24)} ET: ${v.toFixed(1)} visits on an average ${DN[w]}"></i>`).join("")}`).join("")}</div>`}}
+  const fact=(ic,big,txt,tone)=>`<div class="mx-fact${tone?" "+tone:""}"><span class="mx-fi" aria-hidden="true">${ic}</span><div><b>${big}</b><p>${txt}</p></div></div>`;
+  const st3=document.createElement("style");st3.textContent=`
+.mx-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px}
+.mx-kpi{border:1px solid var(--rule);border-radius:10px;padding:14px 14px 10px;background:var(--paper)}.mx-kpi span{display:block;font-size:12px;color:var(--ink-2);font-weight:600}
+.mx-kpi b{display:block;font-family:var(--mono);font-size:28px;font-weight:700;margin:4px 0 2px;color:var(--ink)}.mx-kpi .ch{margin-left:0}
+.mx-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mx-fact{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:12px;background:var(--paper)}
+.mx-fact.up{border-left:3px solid var(--good)}.mx-fact.dn{border-left:3px solid var(--bad)}
+.mx-fi{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:17px;background:color-mix(in srgb,var(--cobalt) 10%,transparent)}
+.mx-fact>div>b{display:block;font-family:var(--mono);font-size:18px;color:var(--ink)}.mx-fact p b{color:var(--ink);font-weight:700}.mx-fact p{margin:2px 0 0;font-size:12.5px;line-height:1.4;color:var(--ink-2)}
+.mx-fun{display:flex;flex-direction:column;align-items:center;gap:2px}.mx-fs{width:100%;display:flex;flex-direction:column;align-items:center}
+.mx-fb{height:40px;border-radius:8px;display:grid;place-items:center;min-width:56px;transition:width .5s}.mx-fb b{color:#fff;font-family:var(--mono);font-size:15px}
+.mx-fs span{font-size:12.5px;color:var(--ink-2);margin-top:3px}.mx-fa{font:700 11.5px var(--mono);color:var(--ink-2);padding:3px 0}
+.mx-rate{display:flex;align-items:center;gap:8px}.mx-rate i{display:block;height:8px;border-radius:4px;background:var(--good);min-width:2px;flex:none;max-width:90px;width:0}@media(max-width:560px){.mx-rate i{display:none}}.mx-rate b{font-family:var(--mono);font-size:12.5px}
+.mx-dn{display:flex;gap:14px;align-items:center;margin-bottom:10px}.mx-dn svg{width:120px;height:120px;flex:none}.mx-dn path{transition:opacity .12s}.mx-dn path:hover{opacity:.8}
+.mx-dnt{font:700 17px var(--mono);fill:var(--ink)}.mx-dns{font:600 8.5px system-ui;fill:var(--ink-2)}
+.mx-dn ul{list-style:none;margin:0;padding:0;flex:1;min-width:0;font-size:12.5px}.mx-dn li{display:flex;align-items:center;gap:6px;padding:2px 0}.mx-dn li i{width:9px;height:9px;border-radius:2px;flex:none}.mx-dn li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mx-dn li b{font-family:var(--mono)}
+.mx-hm{display:grid;grid-template-columns:34px repeat(24,minmax(0,1fr));gap:2px;align-items:center}.mx-hm i{display:block;aspect-ratio:1;border-radius:3px;background:var(--cobalt)}
+.mx-hx{font:9.5px var(--mono);color:var(--ink-2);text-align:center}.mx-hy{font:600 11px system-ui;color:var(--ink-2)}
+.mx-more>summary{cursor:pointer;font-weight:700;font-size:15px;padding:14px 0;list-style:none}.mx-more>summary:before{content:"▸ ";color:var(--ink-2)}.mx-more[open]>summary:before{content:"▾ "}
+@media (max-width:720px){.mx-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mx-facts{grid-template-columns:1fr 1fr}.mx-kpi b{font-size:22px}.mx-hm{grid-template-columns:28px repeat(24,minmax(0,1fr));gap:1px}}
+@media (max-width:420px){.mx-facts{grid-template-columns:1fr}}
+@media (max-width:720px){#msBody .ms-tbl,#msLive .ms-tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}#msBody .ms-tbl td{min-width:60px}}`;document.head.appendChild(st3);
   function draw(){const body=document.getElementById("msBody");if(!body||!CACHE)return;
     const {V:V0,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
     const cut=n=>dayStr(new Date(Date.now()-(n-1)*864e5));
@@ -249,23 +286,48 @@
       if(tk)ins.push(`TikTok sent <b>${tk}</b> visits${CACHE&&cur.some(v=>v.cmp)?`. Best post: <b>${esc(tally(cur.filter(v=>v.cmp),v=>v.cmp,1)[0][0])}</b>`:""}.`);
       if(hours[peak])ins.push(`Busiest hour: <b>${hr(peak)}–${hr((peak+1)%24)} ET</b>.`);
       ins.push(`${pct(returning,cur.length)}% of visits were people coming back; ${pct(phone(cur),cur.length)}% were on phones.`)}
+    /* "Today" vs yesterday up to the same time (comparing a partial day with a full one always looked like a drop) */
+    const prevCmp=N===1?prev.filter(v=>!v.t||v.t<=Date.now()-864e5):prev;
+    const facts=[];if(cur.length){
+      const pc=people(cur),pp=people(prevCmp),dch=pp?Math.round((pc-pp)/pp*100):null;
+      facts.push(fact("👥",pc.toLocaleString(),`people visited ${N===1?"today":"in "+N+" days"}${dch===null?"":`, ${dch>=0?"up":"down"} ${Math.abs(dch)}% vs ${N===1?"yesterday at this time":"the "+N+" days before"}`}`,dch===null?"":dch>=0?"up":"dn"));
+      if(srcs[0])facts.push(fact("📣",pct(srcs[0][1],cur.length)+"%",`of visits came from <b>${esc(srcs[0][0])}</b>${srcs[1]?`, then ${esc(srcs[1][0])} (${pct(srcs[1][1],cur.length)}%)`:""}`));
+      const inR=days.slice(-N);const bd=inR.reduce((m,d)=>d[1]>m[1]?d:m,["",0]);
+      if(N>1&&bd[1])facts.push(fact("🏆",bd[1]+" visits",`best day: <b>${new Date(bd[0]+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}</b>`));
+      if(hours[peak])facts.push(fact("⏰",hr(peak)+"–"+hr((peak+1)%24),`busiest hour (ET), ${pct(hours[peak],cur.length)}% of visits`));
+      const fr=fresh(cur);if(fr)facts.push(fact("✍️",pct(newAccts,fr)+"%",`of new visitors made an account (${newAccts} of ${fr})`,pct(newAccts,fr)>=5?"up":""));
+      facts.push(fact("📱",pct(phone(cur),cur.length)+"%",`of visits were on phones`));
+      facts.push(fact("🔁",pct(returning,cur.length)+"%",`of visits were people coming back`));
+      const tg=tally(cur.filter(v=>/^\/guides\//.test(v.p||"")),v=>PAGE_NAME(v.p).replace("Guide: ",""),1)[0];
+      if(tg)facts.push(fact("📘",tg[1]+" landings",`top guide: <b>${esc(tg[0])}</b>`))}
     const t5=(label,val,c,sp)=>`<div class="ms-tile"><b>${val}${c||""}</b><span>${label}</span>${sp||""}</div>`;
     const sp0=scroller(body),sc0=sp0?sp0.scrollTop:0;
+    const H=holistic(cur,prev,N,cut),HM=heat(cur,N,cut);
+    const PRc={monthly:9,yearly:69/12,founding:49/12,season:29/4,trial:0},mrr=(CACHE.bill||[]).reduce((n,b)=>n+(PRc[b.plan]??0),0);
+    const kpi=(l,v,c,sp)=>`<div class="mx-kpi"><span>${l}</span><b>${v}</b>${c||""}${sp||""}</div>`;
+    const range=N===1?"today":"last "+N+" days";
     body.innerHTML=`
      <div class="ms-top"><div class="ms-seg" role="group" aria-label="Date range">${[[1,"Today"],[7,"7 days"],[14,"14 days"],[30,"30 days"],[60,"60 days"]].map(([n,l])=>`<button type="button" data-r="${n}" aria-pressed="${n===N}">${l}</button>`).join("")}</div>
       <div style="display:flex;gap:8px"><button class="btn sm" id="msCsv">Download CSV</button><button class="btn sm" id="msRefresh">Refresh</button></div></div>
      ${(FILT.src||FILT.dev)?`<div class="ms-sec" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="note" style="margin:0">Filtering visits (accounts and money aren't filtered):</span>${FILT.src?`<button type="button" class="ms-chip" data-clr="src">${esc(FILT.src)} ✕</button>`:""}${FILT.dev?`<button type="button" class="ms-chip" data-clr="dev">${esc(FILT.dev)} ✕</button>`:""}</div>`:`<p class="ms-hint">Tip: tap a traffic source or device below to filter the whole page.</p>`}
-     ${ins.length?`<div class="ms-sec"><div class="ms-ins"><ul style="margin:0;padding-left:18px">${ins.map(x=>`<li>${x}</li>`).join("")}</ul></div></div>`:""}
-     ${holistic(cur,prev,N,cut)}
-     <div class="ms-sec"><h3>Visitors <small>last ${CN} days vs the ${CN} before · ET · hover or tap the chart</small></h3>
-      <div class="ms-tiles five">${t5("Unique people",people(cur),chg(people(cur),people(prev)),spark(days.map(d=>d[3])))}${t5("Visits",cur.length,chg(cur.length,prev.length),spark(days.map(d=>d[1])))}${t5("New people",fresh(cur),chg(fresh(cur),fresh(prev)),spark(days.map(d=>d[2])))}
-       ${t5("Today",V.filter(v=>v.d===today).length,chg(V.filter(v=>v.d===today).length,V.filter(v=>v.d===yest).length))}${t5("Signed in",pct(signed(cur),cur.length)+"%")}</div>
+
+     <div class="mx-kpis">${kpi("People",people(cur).toLocaleString(),chg(people(cur),people(prevCmp)),spark(days.map(d=>d[3])))}${kpi("New people",fresh(cur).toLocaleString(),chg(fresh(cur),fresh(prevCmp)),spark(days.map(d=>d[2])))}${kpi("New accounts",newAccts,chg(newAccts,prevAccts))}${kpi("Paying Pro",pro)}${kpi("Est. monthly revenue","$"+mrr.toFixed(0))}</div>
+     <p class="ms-hint" style="margin-top:6px">${range} · % change vs ${N===1?"yesterday up to this time":"the "+N+" days before"}</p>
+     ${facts.length?`<div class="ms-sec"><h3>Key facts <small>${range}</small></h3><div class="mx-facts">${facts.join("")}</div></div>`:""}
+     <div class="ms-sec"><h3>Traffic over time <small>last ${CN} days vs the ${CN} before · ET · hover or tap the chart</small></h3>
       <div class="ms-top" style="margin:12px 0 6px"><div class="ms-seg ms-mseg" role="group" aria-label="Chart metric">${Object.entries(MET).map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===METRIC}">${l}</button>`).join("")}</div></div>
       ${LC.html}
       <div class="ms-leg"><span>${MET[METRIC]}</span><span class="pv">Previous ${CN} days</span></div></div>
-     <div class="ms-sec"><h3>When they visit <small>hour of day, ET · ${N} days</small></h3>
-      <div class="ms-bars ms-hrs">${hours.map((n,h)=>`<div class="ms-bar" data-tip="${hr(h)}–${hr((h+1)%24)} ET: ${n} visit${n===1?"":"s"} · ${pct(n,Math.max(1,cur.length))}% of total"><em>${n||""}</em><i style="height:${(n/hm*100).toFixed(0)}%"></i></div>`).join("")}</div>
-      <div class="ms-days">${hours.map((_,h)=>`<span>${h%3?"":hr(h)}</span>`).join("")}</div></div>
+     <div class="ms-sec"><h3>When people visit <small>average visits per weekday × hour, ET · ${N} days · darker = busier</small></h3>${HM.html}<p class="ms-hint">Busiest slot: <b>${HM.best}</b> · busiest day: <b>${HM.bestDay}</b>. Post on social just before these.</p></div>
+     ${H.funnel}
+     <div class="ms-grid2">
+      <div class="ms-sec"><h3>Where they come from <small>${N} days · tap to filter</small></h3>${donut(srcsU,"visits")}${rows(srcsU,0,"src")}</div>
+      <div class="ms-sec"><h3>TikTok posts <small>visits by QR / link tag</small></h3>${rows(tally(cur.filter(v=>v.cmp),v=>v.cmp,8))}</div>
+      <div class="ms-sec"><h3>First page they landed on</h3>${rows(tally(cur,v=>PAGE_NAME(v.p),8))}</div>
+      <div class="ms-sec"><h3>Where they are</h3>${rows(tally(cur,v=>v.cc==="US"?(v.region||"United States"):(v.country||v.cc),8))}</div>
+      <div class="ms-sec"><h3>Top cities</h3>${rows(tally(cur,v=>v.city?(v.city+(v.cc==="US"&&v.region?", "+v.region:"")):"",8))}</div>
+      <div class="ms-sec"><h3>Device <small>tap to filter</small></h3>${donut(devsU,"visits")}${rows(devsU,0,"dev")}</div></div>
+     ${H.nudges}
      ${(()=>{const agg={};let tot=0;const ppl=new Set();cur.forEach(v=>{if(!v.time)return;ppl.add(v.vid);for(const [k,x] of Object.entries(v.time)){const a=agg[k]=agg[k]||{s:0,p:new Set()};a.s+=+x||0;a.p.add(v.vid);tot+=+x||0}});
        const nice=k=>{const L=(typeof PANE_LABEL!=="undefined"&&PANE_LABEL)||{};const cap=w=>w.charAt(0).toUpperCase()+w.slice(1);return k.split(" › ").map((w,i)=>i?(L[w]||cap(w)):cap(w)).join(" › ")};
        const fm=x=>x>=3600?(x/3600).toFixed(1)+" hr":x>=60?Math.round(x/60)+" min":Math.round(x)+" sec";
@@ -276,19 +338,10 @@
        return `<div class="ms-sec"><h3>Time spent <small>${N} days · active time only</small></h3>
         <div class="ms-tiles"><div class="ms-tile"><b>${fm(tot/Math.max(1,ppl.size))}</b><span>Avg time per visitor</span></div><div class="ms-tile"><b>${fm(tot)}</b><span>Total time on site</span></div><div class="ms-tile"><b>${esc(nice(most[0].k).split(" › ").pop())}</b><span>Most-used section</span></div><div class="ms-tile"><b>${list.length}</b><span>Sections visited</span></div></div>
         <div class="ms-grid2" style="margin-top:12px"><div><h3 style="font-size:14px">🔥 Most time spent</h3>${most.map(row).join("")}</div><div><h3 style="font-size:14px">🧊 Least time spent</h3>${least.map(row).join("")}</div></div></div>`})()}
-     <div class="ms-grid2">
-      <div class="ms-sec"><h3>Where they come from <small>${N} days</small></h3>${rows(srcsU,0,"src")}</div>
-      <div class="ms-sec"><h3>TikTok posts <small>visits by QR / link tag</small></h3>${rows(tally(cur.filter(v=>v.cmp),v=>v.cmp,8))}</div>
-      <div class="ms-sec"><h3>First page they landed on</h3>${rows(tally(cur,v=>PAGE_NAME(v.p),8))}</div>
-      <div class="ms-sec"><h3>Where they are</h3>${rows(tally(cur,v=>v.cc==="US"?(v.region||"United States"):(v.country||v.cc),8))}</div>
-      <div class="ms-sec"><h3>Top cities</h3>${rows(tally(cur,v=>v.city?(v.city+(v.cc==="US"&&v.region?", "+v.region:"")):"",8))}</div>
-      <div class="ms-sec"><h3>Device</h3>${rows(devsU,0,"dev")}</div></div>
+     ${H.money}
      <div class="ms-sec"><h3>Accounts</h3>
       <div class="ms-tiles five">${t5("Total accounts",accts.length)}${t5(`New, ${N} days`,newAccts,chg(newAccts,prevAccts))}${t5("Active 24h",act(864e5))}${t5("Active 7 days",act(7*864e5))}${t5("Paying Pro",pro)}</div>
       <p class="note" style="margin-top:8px">${cur.length?`About <b>${pct(newAccts,Math.max(1,fresh(cur)))}%</b> of new visitors made an account in this period.`:""}</p></div>
-     <div class="ms-sec"><h3>Email list <small>Sunday curveball email</small></h3>${(()=>{const S2=CACHE.subs||[],act2=S2.filter(x=>x.status==="active"),nw=act2.filter(x=>(x.t||"").slice(0,10)>=cut(N)).length;
-       return `<div class="ms-tiles"><div class="ms-tile"><b>${act2.length}</b><span>Subscribers</span></div><div class="ms-tile"><b>${nw}</b><span>New, ${N} days</span></div><div class="ms-tile"><b>${S2.length-act2.length}</b><span>Unsubscribed</span></div><div class="ms-tile"><b>${(tally(act2,x=>(x.src||"").split(":")[0],1)[0]||["–"])[0]}</b><span>Top signup spot</span></div></div>
-       <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" id="msTestMail">Send me this week's email</button><span class="note" id="msTestMsg"></span> <button class="btn sm" type="button" id="msStuck">Stuck sign-ups</button><span class="note" id="msStuckMsg"></span></div>`})()}</div>
      <div class="ms-sec"><h3>Account history <small>rebuilt from saved progress · back to launch</small></h3>${(()=>{const all=[...new Set(accts.flatMap(a=>a.days))].sort();if(!all.length)return`<p class="note">No dated activity yet.</p>`;
        const start=all[0],list=[];for(let t=Date.parse(start+"T12:00:00");t<=Date.now();t+=864e5){const d=dayStr(new Date(t));list.push([d,accts.filter(a=>a.days.includes(d)).length,accts.filter(a=>a.first===d).length])}
        const L=list.slice(-Math.max(N,14)),m=Math.max(1,...L.map(x=>x[1]));const tot=accts.filter(a=>a.first).length;
@@ -296,9 +349,19 @@
        <div class="ms-bars" role="img" aria-label="Active accounts per day">${L.map(([d,n,f])=>`<div class="ms-bar" data-tip="${d}: ${n} active · ${f} new · ${n-f} returning"><em>${n||""}</em><span class="stk" style="height:${(n/m*100).toFixed(0)}%">${f?`<i class="nw" style="height:${(f/Math.max(1,n)*100).toFixed(0)}%"></i>`:""}<i style="flex:1"></i></span></div>`).join("")}</div>
        <div class="ms-days">${L.map(([d])=>`<span>${L.length>14?(+d.slice(8)%2?"":+d.slice(8)):+d.slice(8)}</span>`).join("")}</div>
        <div class="ms-leg"><span class="nw">New accounts</span><span>Returning accounts</span></div>`})()}</div>
+     ${H.eng}
+     <div class="ms-sec"><h3>Email list <small>Sunday curveball email</small></h3>${(()=>{const S2=CACHE.subs||[],act2=S2.filter(x=>x.status==="active"),nw=act2.filter(x=>(x.t||"").slice(0,10)>=cut(N)).length;
+       return `<div class="ms-tiles"><div class="ms-tile"><b>${act2.length}</b><span>Subscribers</span></div><div class="ms-tile"><b>${nw}</b><span>New, ${N} days</span></div><div class="ms-tile"><b>${S2.length-act2.length}</b><span>Unsubscribed</span></div><div class="ms-tile"><b>${(tally(act2,x=>(x.src||"").split(":")[0],1)[0]||["–"])[0]}</b><span>Top signup spot</span></div></div>
+       <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" id="msTestMail">Send me this week's email</button><span class="note" id="msTestMsg"></span> <button class="btn sm" type="button" id="msStuck">Stuck sign-ups</button><span class="note" id="msStuckMsg"></span></div>`})()}</div>
+     ${H.voice}
+     ${H.content}
+     <details class="mx-more"><summary>More: all accounts, free Pro requests, schools, other dashboards</summary>
      <div class="ms-sec"><h3><span>All accounts <small>${accts.length}</small></span><input class="ms-search" id="msFind" type="search" placeholder="Search name or school"></h3>
       <div id="msAcc"></div></div>
      <div class="ms-sec"><h3>Top schools <small>players on the leaderboard</small></h3>${rows(tally(Object.values(players),p=>(p.school||"").trim(),8))}</div>
+     ${H.reqSec}
+     ${H.links}
+     </details>
      <p class="note" style="margin-top:14px">Visits = one per person per day. Your own visits aren't counted. Counting started Nov 4, 2026. Loaded ${new Date(CACHE.at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}.</p>`;
     const accRows=q=>{q=(q||"").toLowerCase().trim();const L=accts.filter(a=>{if(!q)return true;const p=players[a.uid]||{};return((names[a.uid]||"")+" "+(p.school||"")).toLowerCase().includes(q)});
       return L.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Days active</th><th class="n">First seen</th><th class="n">Last seen</th><th></th></tr></thead><tbody>${L.slice(0,100).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.days.length}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td><td><button class="ghost outline sm" data-grant="${esc(a.uid)}" data-days="30" title="Give 30 days of Pro">+Pro</button></td></tr>`}).join("")}</tbody></table>${L.length>100?`<p class="note">Showing 100 of ${L.length}. Search to narrow it down.</p>`:""}`:`<p class="note">${q?"No matches.":"No accounts yet."}</p>`};

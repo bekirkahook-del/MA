@@ -1,14 +1,15 @@
-// "Unexpected interview question" posts (meme style): slide 1 = question + reaction emoji,
+// Interview-style brainteaser posts (meme style). NEVER claim a question is from a real interview unless it is sourced.
 // slide 2 = answer with the quick mental math, slide 3 = M&A Prep QR call to action.
 // Usage: node oddq.js <spec.json> <outDir>
 // spec = [{key, label?, question, emoji?, answer, steps:[...], tip?}]  (question/answer may use <b>/<em>)
+const H=+process.env.H||1920;
 const { chromium } = require("playwright");const QR=require("qrcode");const fs=require("fs"),path=require("path");
 const F=p=>"file://"+path.join(__dirname,"node_modules/@fontsource",p);
 const CSS=`@font-face{font-family:Archivo;font-weight:900;src:url(${F("archivo/files/archivo-latin-900-normal.woff2")})}
 @font-face{font-family:Plex;font-weight:400;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2")})}
 @font-face{font-family:Plex;font-weight:600;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2")})}
 @font-face{font-family:Mono;font-weight:500;src:url(${F("ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")})}
-*{box-sizing:border-box;margin:0}body{width:1080px;height:1920px;overflow:hidden;font-family:Plex,sans-serif;position:relative}
+*{box-sizing:border-box;margin:0}body{width:1080px;height:${H}px;overflow:hidden;font-family:Plex,sans-serif;position:relative}
 .w{background:#F7F5F0;color:#0B1630}.d{background:#07101F;color:#fff}
 .top{position:absolute;top:150px;left:0;right:0;text-align:center}
 .lab{font-family:Mono;font-size:30px;letter-spacing:7px;color:#5E6C88}
@@ -32,19 +33,20 @@ const CSS=`@font-face{font-family:Archivo;font-weight:900;src:url(${F("archivo/f
 .cap{font-size:38px;line-height:1.4;color:#C7D0E2}
 .qrbig{background:#fff;border-radius:32px;padding:40px 52px;display:flex;flex-direction:column;align-items:center;gap:12px}.qrbig b{color:#07101F;font-family:Mono;font-size:72px;font-weight:500}.qrbig span{color:#07101F;font-family:Mono;font-size:26px}
 .url2{font-family:Mono;font-size:42px;background:#E3C27A;color:#07101F;border-radius:99px;padding:14px 36px;font-weight:500}`;
-const page=(cls,b)=>`<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body class="${cls}">${b}</body></html>`;
+const IGCSS=H<1500?".top{top:80px}.big{font-size:80px;margin-top:14px}.red{font-size:42px}.q{top:400px}.q p{font-size:64px}.q .qm{font-size:100px}.emo{top:auto;bottom:150px;font-size:220px}.hint{bottom:70px}.a{top:80px}.ans{font-size:120px;margin:18px 0 26px}.qq{font-size:34px;margin-bottom:28px}.st{gap:16px}.s{padding:20px 26px}.s span,.s i{font-size:34px}.tip{margin-top:24px;font-size:30px;padding:20px 26px}":"";
+const page=(cls,b)=>`<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${IGCSS}</style></head><body class="${cls}">${b}</body></html>`;
 (async()=>{
   const [spec,out]=process.argv.slice(2);const posts=JSON.parse(fs.readFileSync(spec,"utf8"));fs.mkdirSync(out,{recursive:true});
-  const br=await chromium.launch();const pg=await br.newPage({viewport:{width:1080,height:1920}});let bad=0;
+  const br=await chromium.launch();const pg=await br.newPage({viewport:{width:1080,height:H}});let bad=0;
   for(const p of posts){
     const qr=await QR.toDataURL(`https://mnaprep.com/?utm_source=tiktok&utm_campaign=${p.key}`,{margin:1,width:600});
-    const s1=page("w",`<div class="top"><div class="lab">${p.label||"IB SUPERDAY"}</div><div class="big">Real interview</div><div class="red">UNEXPECTED Interview Question</div></div>
+    const s1=page("w",`<div class="top"><div class="lab">${p.label||"MENTAL MATH"}</div><div class="big">${p.big||"Quick math check"}</div><div class="red">${p.red||"Interview-style brainteaser"}</div></div>
       <div class="q"><span class="qm">“</span><p>${p.question}</p></div><div class="emo">${p.emoji||"😳"}</div><div class="hint">No calculator. 10 seconds. Comment your answer 👇</div>`);
     const s2=page("d",`<div class="a"><div class="k">THE ANSWER</div><div class="ans">${p.answer}</div><div class="qq">${p.question.replace(/<[^>]+>/g,"")}</div>
       <div class="st">${p.steps.map((s,i)=>`<div class="s"><i>${i+1}</i><span>${s}</span></div>`).join("")}</div>${p.tip?`<div class="tip">💡 ${p.tip}</div>`:""}</div>`);
     const s3=page("d",`<div class="c"><div class="k">WANT TO BE READY?</div><h2>${["Practice the weird ones <em>for free.</em>","Ready for curveballs? <em>Train free.</em>","Don't freeze on the hard ones. <em>Practice free.</em>"][[...p.key].reduce((a,c)=>a+c.charCodeAt(0),0)%3]}</h2><p class="cap">Mental math, brainteasers and 1,000+ real IB and PE interview questions.</p><div class="qrbig"><b>mnaprep.com</b><span>🔗 Tap the link in bio</span></div></div>`);
     for(const [i,h] of [[1,s1],[2,s2],[3,s3]]){const f=path.join(out,`${p.key}-tmp.html`);fs.writeFileSync(f,h);await pg.goto("file://"+path.resolve(f));await pg.evaluate(()=>document.fonts.ready);
-      const of=await pg.evaluate(()=>document.documentElement.scrollHeight>1920||[...document.querySelectorAll(".a,.q")].some(e=>e.getBoundingClientRect().bottom>1700));
+      const of=await pg.evaluate((H)=>document.documentElement.scrollHeight>H||[...document.querySelectorAll(".a,.q")].some(e=>e.getBoundingClientRect().bottom>H-220),H);
       if(of){bad=1;console.log("OVERFLOW",p.key,i)}
       await pg.screenshot({path:path.join(out,`${p.key}-0${i}.jpg`),type:"jpeg",quality:90});fs.unlinkSync(f)}
     console.log(p.key," ok")}

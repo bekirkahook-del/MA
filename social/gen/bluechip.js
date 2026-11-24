@@ -1,4 +1,5 @@
 // Blue Chip 2-slide posts: slide 1 = building photo + title, slide 2 = ranked bar chart.
+const H=+process.env.H||1920;
 const { chromium } = require("playwright");const QR=require("qrcode");const fs=require("fs"),path=require("path");
 const F=p=>"file://"+path.join(__dirname,"node_modules/@fontsource",p);
 const photo="data:image/png;base64,"+fs.readFileSync(path.join(__dirname,"jpm.png")).toString("base64");
@@ -7,7 +8,7 @@ const CSS=`@font-face{font-family:Archivo;font-weight:900;font-stretch:62% 125%;
 @font-face{font-family:Plex;font-weight:400;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2")})}
 @font-face{font-family:Plex;font-weight:600;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2")})}
 @font-face{font-family:Mono;font-weight:500;src:url(${F("ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")})}
-*{box-sizing:border-box;margin:0}body{width:1080px;height:1920px;overflow:hidden;background:#07101F;color:#fff;font-family:Plex,sans-serif;position:relative}
+*{box-sizing:border-box;margin:0}body{width:1080px;height:${H}px;overflow:hidden;background:#07101F;color:#fff;font-family:Plex,sans-serif;position:relative}
 .ph{position:absolute;inset:0;background:url(${photo}) center 40%/cover}
 .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,24,.88) 0%,rgba(4,10,24,.55) 30%,rgba(4,10,24,.05) 52%,rgba(4,10,24,.25) 75%,rgba(4,10,24,.85) 100%)}
 .brand{position:absolute;top:84px;left:80px;font-family:Mono;font-size:28px;letter-spacing:6px;color:#E3C27A}
@@ -33,9 +34,10 @@ h1{font-family:Archivo;font-weight:900;font-size:96px;line-height:.98;letter-spa
 .cta img{width:150px;height:150px;border-radius:12px;background:#fff;padding:8px;flex:none}
 .cta b{display:block;font-family:Archivo;font-weight:800;font-size:40px;line-height:1.1}.cta b em{font-style:normal;color:#E3C27A}
 .cta span{display:block;font-size:28px;color:#C7D0E2;margin-top:6px}`;
-const page=b=>`<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body>${b}</body></html>`;
+const IGCSS=H<1500?".c{top:160px;right:80px;bottom:90px;gap:22px}.rows{gap:16px}.k{font-size:22px;letter-spacing:4px}":"";
+const page=b=>`<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${IGCSS}</style></head><body>${b}</body></html>`;
 (async()=>{const spec=JSON.parse(fs.readFileSync(process.argv[2],"utf8"));const out=process.argv[3];fs.mkdirSync(out,{recursive:true});
- const b=await chromium.launch();const pg=await b.newPage({viewport:{width:1080,height:1920}});
+ const b=await chromium.launch();const pg=await b.newPage({viewport:{width:1080,height:H}});
  for(const p of spec.posts){
   const qr=await QR.toDataURL(`https://mnaprep.com/?utm_source=tiktok&utm_campaign=${p.key}`,{margin:1,width:400,color:{dark:"#07101F",light:"#FFFFFF"}});
   const s1=page(`<div class="ph"></div><div class="sh"></div><div class="brand">BLUE CHIP FINANCIAL</div><div class="t">${p.badge?`<div class="badge">${p.badge}</div>`:""}<h1>${p.title}</h1>${p.sub?`<p class="sub">${p.sub}</p>`:""}</div><div class="sw">${p.swipe||"Swipe for the ranking →"}</div>`);

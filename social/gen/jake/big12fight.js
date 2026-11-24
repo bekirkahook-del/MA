@@ -29,20 +29,20 @@ window.SHOTS=[
   frame(s,lt,D){s.f.forEach((p,i)=>{pose(p,lt+i*0.3,'idle');swing(p,lt,(i*0.37)%Math.max(0.5,D-0.6));p.g.position.y=Math.abs(Math.sin(lt*5+i))*0.12});
    camMove([-3,3.6,8.2],[3,3.2,7.6],[0,1.2,0.3],[0,1.2,0.3],lt/D);pow(s,'p1','POW!',300,700,lt,D*0.3,'#f6c84c');pow(s,'p2','BAM!',760,820,lt,D*0.6,'#ff4d5e')}},
  /* 3 #3 Colorado knocks out two */
- {setup(s){arena();s.C=fan('colorado',2);s.C.g.position.set(0,0,0.8);s.x=[fan('ucf',11,'neutral'),fan('houston',9,'neutral')];s.x[0].g.position.set(-1.0,0,0.8);s.x[0].g.rotation.y=Math.PI/2;s.x[1].g.position.set(1.0,0,0.8);s.x[1].g.rotation.y=-Math.PI/2},
-  frame(s,lt,D){pose(s.C,lt,'idle');s.x.forEach((p,i)=>pose(p,lt+i,'idle'));s.C.g.rotation.y=lt<D*0.4?-Math.PI/2:Math.PI/2;swing(s.C,lt,D*0.2);knock(s.x[1],lt,D*0.2+0.2,1);swing(s.C,lt,D*0.45);knock(s.x[0],lt,D*0.45+0.2,-1);
-   camMove([0,2.4,8.2],[0,2.3,7.4],[0,1.5,0.6],[0,1.6,0.6],lt/D);pow(s,'p1','BONK!',700,650,lt,D*0.2+0.2);pow(s,'p2','POW!',380,650,lt,D*0.45+0.2,'#f6c84c');
-   card(s,'<div style="font-size:30px;color:#4A5672;font-weight:800">#3 IN THE BIG 12</div><div style="font-size:66px;font-weight:900;color:#13203B">Colorado</div><div style="font-size:34px;font-weight:700;color:#13203B">56 analysts · #91 in the U.S.</div>',lt,D*0.6)}},
+ {setup(s){arena();s.C=fan('colorado',2);s.C.g.position.set(0,0,0.8);s.x=[fan('houston',9,'neutral'),fan('asu',3,'neutral')];s.x[0].g.position.set(-1.0,0,0.8);s.x[0].g.rotation.y=Math.PI/2;s.x[1].g.position.set(1.0,0,0.8);s.x[1].g.rotation.y=-Math.PI/2},
+  frame(s,lt,D){pose(s.C,lt,'idle');s.x.forEach((p,i)=>pose(p,lt+i,'idle'));s.C.g.rotation.y=lt<D*0.4?-Math.PI/2:lt<D*0.68?Math.PI/2:0;if(lt>D*0.68)s.C.expr='happy';swing(s.C,lt,D*0.2);knock(s.x[1],lt,D*0.2+0.2,1);swing(s.C,lt,D*0.45);knock(s.x[0],lt,D*0.45+0.2,-1);
+   camMove([0,2.4,8.2],[0,2.3,7.4],[0,1.5,0.6],[0,1.6,0.6],lt/D);pow(s,'p1','BONK!',700,650,lt,D*0.2+0.2);pow(s,'p2','POW!',380,650,lt,D*0.45+0.2,'#f6c84c');tag(s,'v1',s.x[1],'ASU #4',lt,0.2,2.45,'38px');tag(s,'v0',s.x[0],'UH',lt,0.2,2.45,'38px');tag(s,'w',s.C,'CU',lt,0.2,2.45,'38px');
+   card(s,'<div style="font-size:30px;color:#4A5672;font-weight:800">#3 IN THE BIG 12</div><div style="font-size:66px;font-weight:900;color:#13203B">Colorado</div><div style="font-size:34px;font-weight:700;color:#13203B">56 analysts · #91 in the U.S. · knocks out #4 ASU</div>',lt,D*0.6)}},
  /* 4 #2 Baylor */
- {setup(s){arena();s.C=fan('baylor',1);s.C.g.position.set(0,0,0.8);s.x=[fan('kstate',13,'neutral'),fan('cincy',10,'neutral')];s.x[0].g.position.set(-1.0,0,0.8);s.x[0].g.rotation.y=Math.PI/2;s.x[1].g.position.set(1.0,0,0.8);s.x[1].g.rotation.y=-Math.PI/2},
-  frame(s,lt,D){pose(s.C,lt,'idle');s.x.forEach((p,i)=>pose(p,lt+i,'idle'));s.C.g.rotation.y=lt<D*0.4?-Math.PI/2:Math.PI/2;swing(s.C,lt,D*0.2);knock(s.x[1],lt,D*0.2+0.2,1);swing(s.C,lt,D*0.45);knock(s.x[0],lt,D*0.45+0.2,-1);
-   camMove([0,2.4,8.2],[0,2.3,7.4],[0,1.5,0.6],[0,1.6,0.6],lt/D);pow(s,'p1','WHAM!',700,650,lt,D*0.2+0.2);pow(s,'p2','BONK!',380,650,lt,D*0.45+0.2,'#f6c84c');
-   card(s,'<div style="font-size:30px;color:#4A5672;font-weight:800">#2 IN THE BIG 12</div><div style="font-size:66px;font-weight:900;color:#13203B">Baylor</div><div style="font-size:34px;font-weight:700;color:#13203B">50 analysts, but more per student · #89</div>',lt,D*0.6)}},
+ {setup(s){arena();s.C=fan('baylor',1);s.C.g.position.set(0,0,0.8);s.x=[fan('kstate',13,'neutral'),fan('colorado',2,'neutral')];s.x[0].g.position.set(-1.0,0,0.8);s.x[0].g.rotation.y=Math.PI/2;s.x[1].g.position.set(1.0,0,0.8);s.x[1].g.rotation.y=-Math.PI/2},
+  frame(s,lt,D){pose(s.C,lt,'idle');s.x.forEach((p,i)=>pose(p,lt+i,'idle'));s.C.g.rotation.y=lt<D*0.4?-Math.PI/2:lt<D*0.68?Math.PI/2:0;if(lt>D*0.68)s.C.expr='happy';swing(s.C,lt,D*0.2);knock(s.x[1],lt,D*0.2+0.2,1);swing(s.C,lt,D*0.45);knock(s.x[0],lt,D*0.45+0.2,-1);
+   camMove([0,2.4,8.2],[0,2.3,7.4],[0,1.5,0.6],[0,1.6,0.6],lt/D);pow(s,'p1','WHAM!',700,650,lt,D*0.2+0.2);pow(s,'p2','BONK!',380,650,lt,D*0.45+0.2,'#f6c84c');tag(s,'v1',s.x[1],'CU #3',lt,0.2,2.45,'38px');tag(s,'v0',s.x[0],'K-STATE',lt,0.2,2.45,'38px');tag(s,'w',s.C,'BAYLOR',lt,0.2,2.45,'38px');
+   card(s,'<div style="font-size:30px;color:#4A5672;font-weight:800">#2 IN THE BIG 12</div><div style="font-size:66px;font-weight:900;color:#13203B">Baylor</div><div style="font-size:34px;font-weight:700;color:#13203B">50 analysts, more per student · #89 · beats Colorado</div>',lt,D*0.6)}},
  /* 5 #1 TCU: last one standing on the podium */
  {setup(s){arena();A.box(1.4,0.6,1.0,'#f6c84c',0,0.3,0.4);s.T=fan('tcu',0);s.T.g.position.set(0,0.6,0.4);
-   s.x=['asu','okstate','isu','wvu'].map((id,i)=>{const p=fan(id,[3,14,12,15][i],'shock');p.g.position.set([-1.6,1.6,-2.4,2.4][i],0,[1.2,1.2,0.4,0.4][i]);p.g.rotation.y=i%2?-Math.PI/2:Math.PI/2;return p});s.cf=[...Array(14)].map((_,k)=>el('label',['🎉','✨','💜'][k%3],{fontSize:'64px'}))},
+   s.x=['baylor','okstate','isu','wvu'].map((id,i)=>{const p=fan(id,[1,14,12,15][i],'shock');p.g.position.set([-1.6,1.6,-2.4,2.4][i],0,[1.2,1.2,0.4,0.4][i]);p.g.rotation.y=i%2?-Math.PI/2:Math.PI/2;return p});s.cf=[...Array(14)].map((_,k)=>el('label',['🎉','✨','💜'][k%3],{fontSize:'64px'}))},
   frame(s,lt,D){pose(s.T,lt,lt>D*0.45?'cheer':'idle');swing(s.T,lt,D*0.15);s.x.forEach((p,i)=>{pose(p,lt+i,'idle');knock(p,lt,D*0.15+0.2+i*0.08,i%2?1:-1);p.g.position.z=[1.2,1.2,0.4,0.4][i]});
-   camMove([0,2.6,8.0],[0,2.4,7.0],[0,1.7,0.4],[0,1.8,0.4],lt/D);pow(s,'p1','KO!',540,700,lt,D*0.15+0.25,'#f6c84c');stamp(s,'#1 TCU','#c9a2ff',lt,D*0.4,160,300);
+   camMove([0,2.6,8.0],[0,2.4,7.0],[0,1.7,0.4],[0,1.8,0.4],lt/D);pow(s,'p1','KO!',540,700,lt,D*0.15+0.25,'#f6c84c');tag(s,'vb',s.x[0],'BAYLOR #2',lt,0.1,2.45,'38px');stamp(s,'#1 TCU','#c9a2ff',lt,D*0.4,150,215);
    card(s,'<div style="font-size:66px;font-weight:900;color:#4D1979">115 analysts</div><div style="font-size:34px;font-weight:700;color:#13203B">More than double anyone in the Big 12 · #60 in the U.S.</div>',lt,D*0.5);
    s.cf.forEach((e,k)=>{const t=lt-D*0.45-k*0.05;e.style.left=(80+(k*73)%920)+'px';e.style.top=(200+((t*420+k*90)%1300))+'px';e.style.opacity=t>0?1:0})}},
  /* 6 twelve knocked out */

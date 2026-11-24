@@ -93,3 +93,5 @@ Updated every daily run. Views per post (Nov 17-24 data). Route each new post on
 | 11-24 | Day in the life: consultant (Maya, 10am) | Character story | | | score Nov 26 |
 | 11-25 | Day in the life: equity research (Dev, 10am) | Character story | | | score Nov 27 |
 | 11-26 | Day in the life: hedge fund (Sam, 10am) | Character story | | | score Nov 28 |
+| 11-25 | Big 12 BRAWL (RANKED, PS2 fight) | School rankings + character | | | IG/TT/FB only. Score Nov 27 |
+| 11-27 | Jake's first Superday | Character story (Jake) | | | IG/TT/FB only. Score Nov 29 |

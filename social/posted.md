@@ -141,3 +141,7 @@
 - 2026-11-27 1:08pm punch-bfdays — [Ranking video, punch.js, no voice] Biggest online shopping days (Adobe forecast): Cyber Monday $15.1B, Black Friday $12.9B, Prime Day $9.9B, Thanksgiving $6.9B
 - 2026-11-27 4:37pm oddq-cmsec — [Interview Q] $15.1B Cyber Monday ÷ 86,400 s ≈ $175K a second
 - 2026-11-27 8:14pm type2-markup — [Teaser video, type2.js, no voice] +25% then 20% off = $0 saved (1.25 × 0.8 = 1)
+- 2026-11-24 double-down batch:
+  - Wed 11-25 6:00 PM: Big 12 BRAWL (PS2, rank-based knockouts, Rareliquid data) IG/TT/FB, Metricool 440776667. YT skipped (rankings flop on YT).
+  - Fri 11-27 10:00 AM: Jake's first Superday (PS2) IG/TT/FB, Metricool 440764924. YT skipped (character skits flop on YT).
+  - Moved to drafts (Wed filler, weak format): die EV, speed round, egg drop, $5/day on TikTok + IG (Pinterest pins kept).

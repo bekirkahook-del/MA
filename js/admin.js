@@ -258,7 +258,8 @@
 .mx-more>summary{cursor:pointer;font-weight:700;font-size:15px;padding:14px 0;list-style:none}.mx-more>summary:before{content:"▸ ";color:var(--ink-2)}.mx-more[open]>summary:before{content:"▾ "}
 @media (max-width:720px){.mx-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mx-facts{grid-template-columns:1fr 1fr}.mx-kpi b{font-size:22px}.mx-hm{grid-template-columns:28px repeat(24,minmax(0,1fr));gap:1px}}
 @media (max-width:420px){.mx-facts{grid-template-columns:1fr}}
-@media (max-width:720px){#msBody .ms-tbl,#msLive .ms-tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}#msBody .ms-tbl td{min-width:60px}}`;document.head.appendChild(st3);
+#msBody .ms-tbl,#msLive .ms-tbl{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}#msBody .ms-tbl td:nth-child(3),#msBody .ms-tbl td.wrap{white-space:normal}
+@media (max-width:720px){#msBody .ms-tbl td{min-width:60px}}`;document.head.appendChild(st3);
   function draw(){const body=document.getElementById("msBody");if(!body||!CACHE)return;
     const {V:V0,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
     const cut=n=>dayStr(new Date(Date.now()-(n-1)*864e5));

@@ -61,7 +61,7 @@ export default async (req, context) => {
     headers: { "x-api-key": (process.env.ANTHROPIC_API_KEY || process.env.AnthropicAPIKeyMNA), "anthropic-version": "2023-06-01", "content-type": "application/json" },
     body: JSON.stringify({
       model: m,
-      max_tokens: 2000,
+      max_tokens: 1400, // shorter answers finish inside the ~10s function limit (4 of 6 calls timed out on Nov 24 at 2000)
       system: "Reply with valid JSON only. No markdown fences, no text before or after the JSON. Keep it concise.",
       messages: [{ role: "user", content: prompt }],
     }),

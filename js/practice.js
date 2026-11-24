@@ -60,6 +60,7 @@ function mount(el,key,o){
       if(answered)return;const u=parse(inp.value);
       if(isNaN(u)){fb.innerHTML=`<div class="why">Type just the number, like 25 or −4.5.</div>`;inp.focus();return}
       answered=true;tries++;const ok=closeEnough(u,p);if(ok){right++;streak++}else streak=0;
+      try{if(o.onResult)o.onResult(ok);else if(window.MASrs)MASrs.rep(key,ok)}catch(e){}
       inp.disabled=true;inp.classList.add(ok?"ok":"no");el.querySelector("#rpGo").disabled=true;
       try{if(typeof sfx==="function")sfx(ok?"ok":"no");if(typeof buzz==="function")buzz(ok?8:[12,30,12])}catch(e){}
       const steps=p.steps.map((s,n)=>`<li style="--i:${n}"><span>${s[0]}</span><span class="m">${s[1]}</span></li>`).join("");

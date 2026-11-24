@@ -1201,7 +1201,7 @@ const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 const lvlStars=(tr,raw)=>lvlN(tr)===3?raw:(raw>=lvlN(tr)-1?3:raw>=Math.ceil(lvlN(tr)*.7)?2:raw>=Math.ceil(lvlN(tr)*.4)?1:0);
 function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
   const QS=L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,MISS=[];
-  quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n])},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
+  quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
     const xp0=totalXP(),r0=rankOf(xp0);if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
     if(c>=2){questEvt("level");sfx("clear")}if(c===3)questEvt("stars3");

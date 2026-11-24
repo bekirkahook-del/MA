@@ -53,7 +53,8 @@ function open(tr,i){
       if(done)return;const raw=inp.value,u=MAPractice.parse(raw);
       if(!timeout&&isNaN(u)){inp.classList.add("no");inp.placeholder="number";return}
       done=true;stop();
-      res.push({q,u:isNaN(u)?null:u,ok:!isNaN(u)&&MAPractice.closeEnough(u,p),secs:Math.min(SECS,Math.round((Date.now()-t0)/1000)),timeout:!!timeout&&isNaN(u)});
+      const okQ=!isNaN(u)&&MAPractice.closeEnough(u,p);try{if(window.MASrs)MASrs.rep(q.key,okQ)}catch(e){}
+      res.push({q,u:isNaN(u)?null:u,ok:okQ,secs:Math.min(SECS,Math.round((Date.now()-t0)/1000)),timeout:!!timeout&&isNaN(u)});
       n++;ask()};
     document.getElementById("mkGo").onclick=()=>submit(false);
     inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();submit(false)}});

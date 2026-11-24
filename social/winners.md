@@ -5,6 +5,25 @@ How to use (every daily run):
 2. 48h after each post, add its row to the log below (views = IG IGRE23 / TikTok TKPO07; add shares/saves when notable).
 3. Re-rank the idea types weekly by **average views per post** (IG + TikTok). 3 posts in a row under ~120 views = the idea goes to LOSERS and stops. A post over 2x the average = the idea moves up and gets a sequel within 3 days.
 
+## PLATFORM SCOREBOARD (Bekir, Nov 24: "Keep patrol over what works on what platform")
+Updated every daily run. Views per post (Nov 17-24 data). Route each new post only to platforms where its idea type wins or is untested.
+
+| Idea type | Instagram | TikTok | Facebook | YouTube Shorts |
+|---|---|---|---|---|
+| Character stories (Jake, day in the life) | 🟢 **1,185-1,605** (coffee chat 1,216, IB DIL 1,302) | 🟢 1,508 promo / 🟡 ~150-290 sequels | 🟢 **109-255** (coffee chat 255, IB DIL 133) | 🔴 14-18 |
+| RANKED schools (mascots/characters, voice) | 🟢 786-1,259 | 🟢 276-379 (US News list 6,845) | 🟢 150 (ACC) | 🔴 2-7 |
+| Live market news (NVDA, IPO, week ahead) | 🟡 130-280 (ANT IPO 1,249) | 🟡 300-716 | 🟡 40-84 | 🟢 **37-100** (NVDA miss 100, week ahead 78) |
+| Recruiting advice / timing | 🔴 23-70 | 🔴 15-25 | 🔴 8-17 | 🟢 **42-90** (2027 recruiting 90) |
+| Tiered interview questions | 🔴 ~129 | 🟢 170-821 | 🔴 4 | untested |
+| Site/product promo | 🟡 141 | 🟡 152-272 | 🔴 2-52 | 🟡 10-40 |
+| Brain teasers / MC quizzes | 🔴 | 🔴 12-338 | n/a | n/a |
+
+**Per-platform rules (current):**
+- **Instagram + Facebook:** character stories first, then RANKED. Market news only when it's a huge headline.
+- **TikTok:** RANKED + tiered interview questions + big live news. Max 4/day (possible throttle after 6 posts on Nov 23).
+- **YouTube Shorts:** it's a search/news audience. Market news, week-ahead and recruiting-timing videos win; skip rankings and character skits there unless testing.
+- **Pinterest:** keep pins for rankings/explainers (link clicks, not views).
+
 ## Nov 24 update
 - **Character stories are now #1 on Instagram, organically:** Day-in-the-life IB analyst IG 1,302 in 14h; coffee chat IG 1,216 and its 4pm repost IG 1,185. Relatable "real job / real recruiting moment" scenes win. Jake vs Chad (comparison skit) stayed flat at ~150 on both rounds: the character alone isn't enough, the scenario has to be a moment students live through.
 - **ACC RANKED final: IG 786 + TT 312**, the best ranking post since Big Ten. Big 12 RANKED was promised in the caption: post it Wed Nov 25.

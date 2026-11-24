@@ -1,0 +1,10 @@
+{"date":"2026-11-26","decks":{"q3bond":{"guide":"https://mnaprep.com/","ctaHead":"Intern to MD, <em>free</em>","ctaSub":"Hundreds more interview questions at mnaprep.com.","slides":[
+"<div class=\"kicker\">3-question challenge</div><h1>Intern. Analyst. <em>MD</em>. The last one is a trap.</h1><p class=\"lede\">Keep score as you swipe.</p>",
+"<div class=\"kicker\">Q1 · Intern</div><h2>What's <em>20%</em> of <em>45</em>?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>8</div><div class=\"opt\"><i>B</i>9</div><div class=\"opt\"><i>C</i>11</div><div class=\"opt\"><i>D</i>12</div></div><p class=\"note\">No calculator. Pick, then swipe.</p>",
+"<div class=\"kicker\">Answer 1</div><div class=\"big\">B. 9</div><p class=\"lede\">10% of 45 is 4.5. Double it.</p>",
+"<div class=\"kicker\">Q2 · Analyst</div><h2>Revenue <em>$200M</em>, EBITDA margin <em>15%</em>. Comps trade at <em>10x</em> EBITDA. Enterprise value?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$300M</div><div class=\"opt\"><i>B</i>$2B</div><div class=\"opt\"><i>C</i>$150M</div><div class=\"opt\"><i>D</i>$30M</div></div><p class=\"note\">Pick one, then swipe.</p>",
+"<div class=\"kicker\">Answer 2</div><div class=\"big\">A. $300M</div><p class=\"lede\">EBITDA = $200M × 15% = $30M. Then $30M × 10 = $300M.</p>",
+"<div class=\"kicker\">Q3 · MD 🔥</div><h2>A bond costs <em>$90</em> today and pays <em>$100</em> in one year. What's the yield?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>9.0%</div><div class=\"opt\"><i>B</i>10.0%</div><div class=\"opt\"><i>C</i>10.5%</div><div class=\"opt\"><i>D</i>11.1%</div></div><p class=\"note\">Most people say 10%.</p>",
+"<div class=\"kicker\">Answer 3</div><div class=\"big\">D. 11.1%</div><p class=\"lede\">You earn $10 on the $90 you paid, not on $100. $10 ÷ $90 = 11.1%.</p>",
+"<div class=\"kicker\">Your score</div><table><thead><tr><th>SCORE</th><th>YOU'RE A...</th></tr></thead><tbody><tr><td>3/3</td><td class=\"hot\">MD 🔥</td></tr><tr><td>2/3</td><td>VP</td></tr><tr><td>1/3</td><td>Analyst</td></tr><tr><td>0/3</td><td>Intern</td></tr></tbody></table><p class=\"lede\">Comment your score 👇</p>"
+]}}}

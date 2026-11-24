@@ -18,3 +18,6 @@
 | 2026-11-25 | Die pays $1–$6, fair price $3.50 (type.js) | 4 steps | typewriter | 132 (fast ~19.5s) | question-first "Fair price?" | | | | |
 | 2026-11-25 | 2 eggs 100 floors = 14 drops (story.js) | 4 steps | story (paper) | 124 (pace 3, ~13.5s) | question-first "Fewest drops?" | | | | |
 | 2026-11-22 | Intern/Analyst/MD 3 questions, MD trap option $5 (story.js) | 3 tiers + trap | story (terminal) | 128 (pace 4, ~15s) | challenge "Can you get all 3?" | | | | |
+| 2026-11-26 | Big 12 RANKED: US News 2027 undergrad business rank (P&Q) | 5 | terminal, no photo | 118 (pace 3, ~13s) | conflict "Big 12's best is only #31" | | | | |
+| 2026-11-27 | Biggest online shopping days 2026 (Adobe forecast) | 4 | glow + photo bg | 136 (pace 2, fast ~8.4s) | conflict "Black Friday isn't #1" | | | | |
+| 2026-11-27 | +25% then 20% off = $0 saved (type2.js) | 4 steps | timeline | 126 | question-first "Did you save?" | | | | |

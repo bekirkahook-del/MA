@@ -135,3 +135,9 @@
   - Tue 11-24 10:00 AM: consultant (Maya), 439182624
   - Wed 11-25 10:00 AM: equity research (Dev), 439267496
   - Thu 11-26 10:00 AM: hedge fund (Sam), 439291454
+- 2026-11-26 1:17pm q3bond — [Tiered quiz] 20% of 45 = 9 (B); $200M rev × 15% × 10x = $300M EV (A); MD trap: $90 bond pays $100 → 11.1% (D), not 10%
+- 2026-11-26 4:42pm punch-big12 — [Ranking video, punch.js, no voice] Big 12 RANKED: US News 2027 undergrad business: ASU #31 (down from #24), Arizona T-33, Colorado T-33, BYU T-39, Utah T-50 (via Poets&Quants, Sept 22 2026)
+- 2026-11-26 8:26pm bc-holiday — [Live market carousel] Adobe 2026 holiday online forecast $275.1B (+6.7%); by category: electronics $63.3B, apparel $51.3B, furniture $33.4B, grocery $26.1B (+10.3%, fastest), toys $9.6B, cosmetics $9.2B; Cyber 5 $47.5B
+- 2026-11-27 1:08pm punch-bfdays — [Ranking video, punch.js, no voice] Biggest online shopping days (Adobe forecast): Cyber Monday $15.1B, Black Friday $12.9B, Prime Day $9.9B, Thanksgiving $6.9B
+- 2026-11-27 4:37pm oddq-cmsec — [Interview Q] $15.1B Cyber Monday ÷ 86,400 s ≈ $175K a second
+- 2026-11-27 8:14pm type2-markup — [Teaser video, type2.js, no voice] +25% then 20% off = $0 saved (1.25 × 0.8 = 1)

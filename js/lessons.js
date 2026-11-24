@@ -226,7 +226,7 @@
   function flow(tr, i, opts){
     const key = tr.id + ":" + i, teach = LESSONS[key].filter(c => !c.check), Q = opts.qs.map(shuffleOpts), steps = [];
     const per = Math.max(1, Math.ceil(Q.length / teach.length)); let qi = 0;
-    teach.forEach(c => { steps.push({ t: "L", c }); for (let k = 0; k < per && qi < Q.length; k++) steps.push({ t: "Q", q: Q[qi], raw: opts.qs[qi], n: qi++ }) });
+    teach.forEach(c => { steps.push({ t: "L", c }); if (c.ex && window.MA_REPS && window.MA_REPS[key] && window.MAPractice) steps.push({ t: "R" }); for (let k = 0; k < per && qi < Q.length; k++) steps.push({ t: "Q", q: Q[qi], raw: opts.qs[qi], n: qi++ }) });
     while (qi < Q.length) steps.push({ t: "Q", q: Q[qi], raw: opts.qs[qi], n: qi++ });
     const res = []; let s = 0;
     ev("lesson_open");
@@ -245,6 +245,9 @@
         frame(`<div class="ls-kind">Lesson</div><h2>${c.h}</h2><div class="ls-body">${c.ex ? `<div class="ls-ex">${c.ex}</div>` : ""}${c.b || ""}</div>
           <div class="actions"><button class="btn" id="lsNext">${steps[s + 1] && steps[s + 1].t === "Q" ? "Try a question" : "Continue"}</button></div>`);
         const b = document.getElementById("lsNext"); b.onclick = next; b.focus({ preventScroll: true });
+      } else if (st.t === "R") {
+        frame(`<div class="ls-kind">Your turn</div><div id="rpMount"></div>`);
+        MAPractice.mount(document.getElementById("rpMount"), key, { onNext: next });
       } else {
         const q = st.q;
         frame(`<div class="ls-kind">Question ${st.n + 1} of ${Q.length}</div><div class="q">${q.q}</div>

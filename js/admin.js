@@ -153,6 +153,7 @@
       sb.from("docs").select("id,data").eq("col","reviews").limit(1000),
       sb.from("docs").select("id,data,updated_at").eq("col","requests").order("updated_at",{ascending:false}).limit(200)]);
     if(vr.error||pr.error)throw new Error((vr.error||pr.error).message);
+    let acc=null;try{const tok=A.session&&A.session.access_token||(await sb.auth.getSession()).data.session.access_token;const r=await fetch("/.netlify/functions/owner-accounts",{headers:{Authorization:"Bearer "+tok}});if(r.ok)acc=(await r.json()).list}catch(e){}
     const V=(vr.data||[]).map(r=>Object.assign({vid:String(r.id).slice(11)},r.data||{}));
     const names={};(nr.data||[]).forEach(r=>names[r.id]=(r.data&&r.data.name)||"");
     const players={};(plr.data||[]).forEach(r=>players[r.id]=r.data||{});
@@ -162,7 +163,7 @@
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
     const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:(b.until?Date.parse(b.until):0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
     const subs=((er&&er.data)||[]).map(r=>r.data||{});
-    return{V,names,players,accts,pro,bill,reqs:((qr&&qr.data)||[]),billAll:Object.fromEntries((br.data||[]).map(r=>[r.id,r.data||{}])),trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
+    return{acc,V,names,players,accts,pro,bill,reqs:((qr&&qr.data)||[]),billAll:Object.fromEntries((br.data||[]).map(r=>[r.id,r.data||{}])),trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
 
   async function openStats(){if(!owner)return;window.__maStatsOpen=true;
     openPanel(`<div class="label">Only you can see this</div><h2>Site stats</h2><div class="ms-sec" id="msLive"></div><div id="msBody"><p class="note" style="margin-top:18px">Loading…</p></div>`);
@@ -239,6 +240,9 @@
   const fact=(ic,big,txt,tone)=>`<div class="mx-fact${tone?" "+tone:""}"><span class="mx-fi" aria-hidden="true">${ic}</span><div><b>${big}</b><p>${txt}</p></div></div>`;
   const st3=document.createElement("style");st3.textContent=`
 .mx-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px}
+#msAccts .mx-kpis{grid-template-columns:repeat(auto-fit,minmax(92px,1fr));margin-top:6px}#msAccts .mx-kpi b{font-size:24px}
+.mx-kpi svg.sp{display:block;width:100%;height:22px;margin-top:6px}.mx-kpi svg.sp polyline{fill:none;stroke:var(--cobalt);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#msBody .ch{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:1px 5px;border-radius:5px}#msBody .ch.up{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}#msBody .ch.dn{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
 .mx-kpi{border:1px solid var(--rule);border-radius:10px;padding:14px 14px 10px;background:var(--paper)}.mx-kpi span{display:block;font-size:12px;color:var(--ink-2);font-weight:600}
 .mx-kpi b{display:block;font-family:var(--mono);font-size:28px;font-weight:700;margin:4px 0 2px;color:var(--ink)}.mx-kpi .ch{margin-left:0}
 .mx-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
@@ -260,6 +264,42 @@
 @media (max-width:420px){.mx-facts{grid-template-columns:1fr}}
 #msBody .ms-tbl,#msLive .ms-tbl{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}#msBody .ms-tbl td:nth-child(3),#msBody .ms-tbl td.wrap{white-space:normal}
 @media (max-width:720px){#msBody .ms-tbl td{min-width:60px}}`;document.head.appendChild(st3);
+  /* ---------- Accounts: first thing on the page (Bekir, Nov 24, 2026) ---------- */
+  let AF="all",AQ="",ASORT="joined";
+  const agoD=t=>{if(!t)return"–";const d=Math.floor((Date.now()-(typeof t==="number"?t:Date.parse(t)))/864e5);return d<=0?"today":d===1?"1 day ago":d+" days ago"};
+  const SRCN=s=>{s=String(s||"").toLowerCase();if(!s)return"Direct";if(/tiktok/.test(s))return"TikTok";if(/instagram/.test(s))return"Instagram";if(/google/.test(s))return"Google";if(/chatgpt|openai/.test(s))return"ChatGPT";if(/linkedin|lnkd/.test(s))return"LinkedIn";if(/reddit/.test(s))return"Reddit";if(/bing/.test(s))return"Bing";if(/t\.co|x\.com|twitter/.test(s))return"X";if(/youtube/.test(s))return"YouTube";if(/discord/.test(s))return"Discord";return s};
+  const proTxt=a=>a.paid?`<b style="color:var(--good)">Paid · ${esc(a.plan||"Pro")}</b>`:a.tier==="pro"?"Free Pro (you)":a.tier==="trial"?`Pro days till ${new Date(a.proUntil).toLocaleDateString(undefined,{month:"short",day:"numeric"})}`:a.tier==="club"?"Club seat":`Free${a.rewards.length?` <span class="note">(got ${esc(a.rewards.join(" + "))} day)</span>`:""}`;
+  function acctSection(N,cut){const L=(CACHE&&CACHE.acc)||null;
+    if(!L)return `<div class="ms-sec" id="msAccts"><h3>Accounts</h3><p class="note">Account details load from the server after the next deploy. Refresh in a minute.</p></div>`;
+    const since=cut(N),isNew=a=>(a.joined||"").slice(0,10)>=since,dk=t=>Date.now()-Date.parse(t)<=0;
+    const n=(ms)=>L.filter(a=>Date.now()-Date.parse(a.joined)<ms).length;
+    const act=L.filter(a=>a.levels>=1).length,back=L.filter(a=>a.daysActive>=2).length,paid=L.filter(a=>a.paid).length;
+    const newL=L.filter(isNew),srcT={};newL.forEach(a=>{const k=SRCN(a.src);srcT[k]=(srcT[k]||0)+1});
+    const tile=(b,l,sub)=>`<div class="mx-kpi"><span>${l}</span><b>${b}</b>${sub?`<span class="note" style="font-weight:500">${sub}</span>`:""}</div>`;
+    return `<div class="ms-sec" id="msAccts"><h3>Accounts <small>${L.length} total · newest first · tap a column to sort</small></h3>
+      <div class="mx-kpis">${tile(L.length,"Total accounts")}${tile(n(864e5),"New today")}${tile(n(7*864e5),"New, 7 days")}${tile(n(30*864e5),"New, 30 days")}${tile(Math.round(act/Math.max(1,L.length)*100)+"%","Cleared Level 1",act+" of "+L.length)}${tile(Math.round(back/Math.max(1,L.length)*100)+"%","Came back a 2nd day",back+" of "+L.length)}${tile(paid,"Paying")}</div>
+      ${newL.length?`<p class="ms-hint" style="margin-top:8px">New ${N===1?"today":"in the last "+N+" days"}: <b>${newL.length}</b>${Object.keys(srcT).length?" · from "+Object.entries(srcT).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${esc(k)} ${v}`).join(", "):""}</p>`:""}
+      <div class="ms-top" style="margin:10px 0 8px"><div class="ms-seg" role="group" aria-label="Filter accounts" id="acF">${[["all","All"],["new",N===1?"New today":`New, ${N} days`],["inactive","Never cleared a level"],["pro","Pro"],["noreview","Not reviewed"]].map(([k,l])=>`<button type="button" data-af="${k}" aria-pressed="${AF===k}">${l}</button>`).join("")}</div>
+       <input class="ms-search" id="acQ" type="search" placeholder="Search name, email, school" value="${esc(AQ)}"></div>
+      <div id="acT"></div></div>`}
+  function acctRows(){const L=((CACHE&&CACHE.acc)||[]).slice(),N=RANGE,since=dayStr(new Date(Date.now()-(N-1)*864e5));
+    let f=L.filter(a=>AF==="all"||(AF==="new"&&(a.joined||"").slice(0,10)>=since)||(AF==="inactive"&&a.levels<1)||(AF==="pro"&&(a.paid||a.tier!=="free"))||(AF==="noreview"&&!a.review));
+    const q=AQ.toLowerCase().trim();if(q)f=f.filter(a=>(a.name+" "+a.email+" "+a.school+" "+a.target).toLowerCase().includes(q));
+    const key={joined:a=>-Date.parse(a.joined),xp:a=>-a.xp,levels:a=>-a.levels,days:a=>-a.daysActive,last:a=>-(a.lastActive||0),name:a=>(a.name||a.email).toLowerCase()}[ASORT]||(a=>-Date.parse(a.joined));
+    f.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-1:x>y?1:0});
+    const th=(k,l,c)=>`<th${c?` class="${c}"`:""}>${k?`<button type="button" data-as="${k}" style="all:unset;cursor:pointer">${l}${ASORT===k?" ▾":""}</button>`:l}</th>`;
+    return f.length?`<table class="ms-tbl"><thead><tr>${th("joined","Joined")}${th("name","Name")}${th("","Email")}${th("","School · grad")}${th("","Going for")}${th("","Came from")}${th("levels","Levels","n")}${th("xp","XP","n")}${th("days","Days active","n")}${th("","Streak","n")}${th("","Friends","n")}${th("last","Last active")}${th("","Pro")}${th("","Review")}${th("","Sunday email")}${th("","")}</tr></thead><tbody>${f.map(a=>`<tr>
+      <td>${new Date(a.joined).toLocaleDateString(undefined,{month:"short",day:"numeric"})} <span class="note">${agoD(a.joined)}</span>${(a.joined||"").slice(0,10)>=since?' <span class="ch up">new</span>':""}</td>
+      <td><b>${esc(a.name||"(no name)")}</b>${a.confirmed?"":' <span class="ch dn" title="Email not confirmed">unconfirmed</span>'}</td><td>${esc(a.email)}</td>
+      <td>${esc(a.school||"–")}${a.grad?` · ${esc(a.grad)}`:""}</td><td>${esc(a.target||"–")}</td>
+      <td>${esc(SRCN(a.src))}${a.cmp?` · ${esc(a.cmp)}`:""}${a.nudge?` <span class="note">(${esc(a.nudge)})</span>`:""}${a.place?`<br><span class="note">${esc(a.place)}${a.device?" · "+esc(a.device):""}</span>`:""}</td>
+      <td class="n">${a.levels}</td><td class="n">${a.xp.toLocaleString()}</td><td class="n">${a.daysActive}</td><td class="n">${a.streak?a.streak+"🔥":"–"}</td><td class="n">${a.friends}</td>
+      <td>${agoD(a.lastActive||a.lastSignIn)}</td><td>${proTxt(a)}</td><td>${a.review?"★".repeat(a.review.rating)+(a.review.about?` <span class="note">${esc(a.review.about)}</span>`:""):"–"}</td>
+      <td>${a.sunday==="active"?"✓":a.sunday?"unsubscribed":"–"}${a.promoOff?' <span class="note">no promos</span>':""}</td>
+      <td><button class="ghost outline sm" data-grant="${esc(a.id)}" data-days="30">Give 30d Pro</button></td></tr>`).join("")}</tbody></table>`:`<p class="note">No accounts match.</p>`}
+  function bindAccts(){const t=document.getElementById("acT");if(!t)return;const draw2=()=>{t.innerHTML=acctRows();t.querySelectorAll("[data-as]").forEach(b=>b.onclick=()=>{ASORT=b.dataset.as;draw2()})};draw2();
+    document.querySelectorAll("#acF [data-af]").forEach(b=>b.onclick=()=>{AF=b.dataset.af;document.querySelectorAll("#acF [data-af]").forEach(x=>x.setAttribute("aria-pressed",x===b));draw2()});
+    const q=document.getElementById("acQ");if(q)q.oninput=e=>{AQ=e.target.value;draw2()}}
   function draw(){const body=document.getElementById("msBody");if(!body||!CACHE)return;
     const {V:V0,names,players,accts,pro}=CACHE,N=RANGE,today=dayStr(new Date()),yest=dayStr(new Date(Date.now()-864e5));
     const cut=n=>dayStr(new Date(Date.now()-(n-1)*864e5));
@@ -312,6 +352,7 @@
       <div style="display:flex;gap:8px"><button class="btn sm" id="msCsv">Download CSV</button><button class="btn sm" id="msRefresh">Refresh</button></div></div>
      ${(FILT.src||FILT.dev)?`<div class="ms-sec" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="note" style="margin:0">Filtering visits (accounts and money aren't filtered):</span>${FILT.src?`<button type="button" class="ms-chip" data-clr="src">${esc(FILT.src)} ✕</button>`:""}${FILT.dev?`<button type="button" class="ms-chip" data-clr="dev">${esc(FILT.dev)} ✕</button>`:""}</div>`:`<p class="ms-hint">Tip: tap a traffic source or device below to filter the whole page.</p>`}
 
+     ${acctSection(N,cut)}
      <div class="mx-kpis">${kpi("People",people(cur).toLocaleString(),chg(people(cur),people(prevCmp)),spark(days.map(d=>d[3])))}${kpi("New people",fresh(cur).toLocaleString(),chg(fresh(cur),fresh(prevCmp)),spark(days.map(d=>d[2])))}${kpi("New accounts",newAccts,chg(newAccts,prevAccts))}${kpi("Paying Pro",pro)}${kpi("Est. monthly revenue","$"+mrr.toFixed(0))}</div>
      <p class="ms-hint" style="margin-top:6px">${range} · % change vs ${N===1?"yesterday up to this time":"the "+N+" days before"}</p>
      ${facts.length?`<div class="ms-sec"><h3>Key facts <small>${range}</small></h3><div class="mx-facts">${facts.join("")}</div></div>`:""}
@@ -358,9 +399,7 @@
        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" type="button" id="rvPrev">Preview</button><button class="ghost outline sm" type="button" id="rvTest">Send test to me</button><button class="ghost outline sm" type="button" id="rvSend" disabled>Send to everyone</button></div><div id="rvOut" class="note" style="margin-top:8px"></div></div>`})()}</div>
      ${H.voice}
      ${H.content}
-     <details class="mx-more"><summary>More: all accounts, free Pro requests, schools, other dashboards</summary>
-     <div class="ms-sec"><h3><span>All accounts <small>${accts.length}</small></span><input class="ms-search" id="msFind" type="search" placeholder="Search name or school"></h3>
-      <div id="msAcc"></div></div>
+     <details class="mx-more"><summary>More: free Pro requests, schools, other dashboards</summary>
      <div class="ms-sec"><h3>Top schools <small>players on the leaderboard</small></h3>${rows(tally(Object.values(players),p=>(p.school||"").trim(),8))}</div>
      ${H.reqSec}
      ${H.links}
@@ -368,9 +407,9 @@
      <p class="note" style="margin-top:14px">Visits = one per person per day. Your own visits aren't counted. Counting started Nov 4, 2026. Loaded ${new Date(CACHE.at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}.</p>`;
     const accRows=q=>{q=(q||"").toLowerCase().trim();const L=accts.filter(a=>{if(!q)return true;const p=players[a.uid]||{};return((names[a.uid]||"")+" "+(p.school||"")).toLowerCase().includes(q)});
       return L.length?`<table class="ms-tbl"><thead><tr><th>Name</th><th>School</th><th class="n">XP</th><th class="n">Days active</th><th class="n">First seen</th><th class="n">Last seen</th><th></th></tr></thead><tbody>${L.slice(0,100).map(a=>{const p=players[a.uid]||{};return `<tr><td>${esc(names[a.uid]||"(no name)")}</td><td>${esc(p.school||"")}</td><td class="n">${p.xp||0}</td><td class="n">${a.days.length}</td><td class="n">${a.first?a.first.slice(5).replace("-","/"):""}</td><td class="n">${ago(a.t)}</td><td><button class="ghost outline sm" data-grant="${esc(a.uid)}" data-days="30" title="Give 30 days of Pro">+Pro</button></td></tr>`}).join("")}</tbody></table>${L.length>100?`<p class="note">Showing 100 of ${L.length}. Search to narrow it down.</p>`:""}`:`<p class="note">${q?"No matches.":"No accounts yet."}</p>`};
-    const acc=document.getElementById("msAcc");acc.innerHTML=accRows("");
-    document.getElementById("msFind").oninput=e=>{acc.innerHTML=accRows(e.target.value)};
-    body.querySelectorAll(".ms-seg:not(.ms-mseg) button").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});
+    
+    bindAccts();
+    body.querySelectorAll(".ms-seg [data-r]").forEach(b=>b.onclick=()=>{RANGE=+b.dataset.r;draw()});
     body.querySelectorAll(".ms-mseg button").forEach(b=>b.onclick=()=>{METRIC=b.dataset.m;draw()});
     body.querySelectorAll("[data-fk]").forEach(r=>{const go=()=>{const k=r.dataset.fk,v=r.dataset.fv;FILT[k]=FILT[k]===v?"":v;draw()};r.onclick=go;r.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}}});
     body.querySelectorAll("[data-clr]").forEach(b=>b.onclick=()=>{FILT[b.dataset.clr]="";draw()});

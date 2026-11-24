@@ -998,7 +998,11 @@ async function cloudPull(){if(!DB||!myId){cloudState="off";renderSyncRow();retur
       if(S._synced&&S._synced!==myId){S=Object.assign(JSON.parse(S_DEFAULT),remote);gotNew=true}
       else{const before=stateSig(S),xb=totalXP();const m=mergeState(S,remote,(S._t||0)>=rt);
         S=Object.assign(JSON.parse(S_DEFAULT),m);gotNew=stateSig(S)!==before&&totalXP()>=xb;needPush=stateSig(S)!==stateSig(Object.assign(JSON.parse(S_DEFAULT),remote))}}
-    S._synced=myId;snapTake();remoteT=rt;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+    S._synced=myId;
+    /* where this account came from (owner's Accounts table): the browser's visitor id ties it to that visitor's first visit + source */
+    if(!S.acq){try{const LSg=k=>localStorage.getItem(k)||"",q=new URLSearchParams(location.search);let ref="";try{const h=new URL(document.referrer).hostname.replace(/^www\./,"");if(h&&!/mnaprep\.com$/.test(h))ref=h}catch(e){}
+      S.acq={vid:LSg("ma-vid"),vfirst:LSg("ma-vfirst"),nudge:LSg("ma-gw-from"),src:(q.get("utm_source")||"").toLowerCase()||ref,cmp:q.get("utm_campaign")||"",p:location.pathname,at:Date.now()};needPush=true}catch(e){}}
+    snapTake();remoteT=rt;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
     if(gotNew){["applySettings","applyProUI","render","renderRoad","renderCal","renderOpenings","renderApps","renderCRM","renderFirms","renderDeals","renderMock","renderTape","renderSubUI","renderCompete","renderPlan","renderReview"].forEach(f=>{try{if(f==="renderMock"){const m=document.getElementById("mockAns");if(m&&m.value.trim())return}if(typeof window[f]==="function")window[f]()}catch(e){}});
       toast("Progress synced from your account")}
     cloudOn=true;watchCloud();if(needPush){S._t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}await cloudPush()}else{cloudState="synced";cloudAt=Date.now()}

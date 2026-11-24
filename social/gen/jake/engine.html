@@ -3,11 +3,13 @@
 html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0b1020}
 #c{position:absolute;inset:0;width:1080px;height:1920px}
 #ui{position:absolute;inset:0;pointer-events:none;font-family:"DejaVu Sans Mono",monospace}
-.cap{position:absolute;left:56px;bottom:300px;max-width:820px;background:rgba(10,12,18,.88);color:#fff;font-size:44px;line-height:1.32;padding:18px 26px;font-weight:700;white-space:pre-wrap}
-.stamp{position:absolute;font-family:"DejaVu Sans",sans-serif;font-weight:900;text-align:center;transform-origin:50% 50%}
+.cap{position:absolute;left:56px;bottom:470px;max-width:840px;background:rgba(10,12,18,.9);color:#fff;font-family:"DejaVu Sans",sans-serif;font-size:46px;line-height:1.28;padding:18px 26px;font-weight:800;white-space:pre-wrap;border-left:8px solid #f6c84c}
+.hookt{position:absolute;left:40px;right:40px;top:110px;background:#f6c84c;color:#0b0f18;font-family:"DejaVu Sans",sans-serif;font-weight:900;font-size:66px;line-height:1.12;padding:22px 30px;text-align:center;box-shadow:0 14px 0 rgba(0,0,0,.45);border:6px solid #0b0f18;z-index:50}
+.stamp{position:absolute;white-space:nowrap;font-family:"DejaVu Sans",sans-serif;font-weight:900;text-align:center;transform-origin:50% 50%}
 .bub{position:absolute;background:#fff;color:#111;border:5px solid #111;padding:16px 22px;font-size:38px;line-height:1.25;font-weight:700;max-width:640px;text-align:center;transform:translate(-50%,-100%)}
 .bub:after{content:"";position:absolute;left:50%;bottom:-28px;margin-left:-14px;border:14px solid transparent;border-top-color:#111}
 .chip{position:absolute;font-family:"DejaVu Sans",sans-serif;font-weight:800;color:#fff;background:#2448D8;border-radius:14px;padding:14px 24px;font-size:40px}
+.stamp[style*="width"]{white-space:normal}
 .card{position:absolute;background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.45);font-family:"DejaVu Sans",sans-serif;color:#13203B}
 .label{position:absolute;font-family:"DejaVu Sans",sans-serif;font-weight:900;color:#fff;font-size:48px;text-shadow:0 4px 0 #000;transform:translate(-50%,-100%)}
 .end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(8,12,30,.2),rgba(8,12,30,.85) 40%,rgba(8,12,30,.95))}
@@ -122,10 +124,18 @@ let SH=null,cur=-1,shotT0=0,state={};
 function clearScene(){while(scene.children.length)scene.remove(scene.children[0]);UI.innerHTML=''}
 window.STORY_SETUP=null;
 window.render=function(t){const T=window.TL;let i=T.findIndex(s=>t>=s.a&&t<s.b);if(i<0)i=T.length-1;const sh=T[i];
-  if(i!==cur){cur=i;clearScene();state={};SH=window.SHOTS[i];SH.setup&&SH.setup(state);if(sh.cap){state.cap=el('cap',sh.cap)}}
-  const lt=t-sh.a,D=sh.b-sh.a;SH.frame&&SH.frame(state,lt,D,t);
+  const off=(T[0]&&T[0].tease!=null)?1:0;
+  if(i!==cur){cur=i;clearScene();state={};SH=window.SHOTS[sh.tease!=null?sh.tease:sh.shot!=null?sh.shot:i-off];SH.setup&&SH.setup(state);if(sh.cap){state.cap=el('cap',sh.cap)}if(sh.hook){state.hk=el('hookt',sh.hook.replace(/(\p{Extended_Pictographic}\uFE0F?)/gu,'<span style="font-family:Noto Color Emoji">$1</span>'))}}
+  let lt=t-sh.a,D=sh.b-sh.a;if(sh.tease!=null){lt=sh.tlt+lt;D=sh.tD}SH.frame&&SH.frame(state,lt,D,t);
+  if(sh.tease!=null&&!sh.hook&&state.ck)state.ck.style.visibility='hidden';
+  if(sh.hook){for(const d of UI.children){if(d!==state.hk&&d.className!=='stamp')d.style.visibility='hidden'}}
+  if(state.hk){state.hk.style.transform=`scale(${0.9+0.1*back((t-sh.a)/0.25)})`}
   if(state.cap){const k=ease(lt/0.25);state.cap.style.opacity=k}
-  document.getElementById('fade').style.opacity=i===0?Math.max(0,1-lt/0.4):Math.max(0,0.7-lt/0.18);
+  /* layout guard: stamps never wider than the frame; low chips/stamps/cards sit just above the caption box, never under it */
+  for(const d of UI.children){if(d.className==='stamp'&&!d._w){d._w=1;const w=d.offsetWidth;if(w>1000&&!d.style.width)d.style.fontSize=(parseFloat(getComputedStyle(d).fontSize)*1000/w)+'px'}}
+  if(state.cap){const ct=state.cap.offsetTop;for(const d of UI.children){if(d._fx||d===state.cap)continue;const c=d.className;if(c!=='chip'&&c!=='stamp'&&c!=='card')continue;const tp=parseFloat(d.style.top)||0;if(tp<1000){d._fx=1;continue}
+    if(c==='stamp'){d.style.top=Math.min(tp,ct-d.offsetHeight/2-30)+'px'}else{d.style.top=Math.min(tp,ct-d.offsetHeight-28)+'px'}d._fx=1}}
+  document.getElementById('fade').style.opacity=i===0?0:Math.max(0,0.7-(t-sh.a)/0.18);
   // crossfade-from-black at shot start
   renderer.render(scene,cam)};
 window.API={THREE,scene,cam,box,person,pose,room,campus,interviewRoom,cafe,skyline,deskWithScreen,textPlane,canvasTex,img,el,anchor,toScreen,ease,back,M,lights,floor};

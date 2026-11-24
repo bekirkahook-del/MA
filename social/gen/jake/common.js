@@ -13,7 +13,7 @@ export const deskCam=(lt,D,side=1)=>camMove([1.5*side,2.7,4.6],[1.1*side,2.5,3.6
 export const screenCam=(lt,D)=>camMove([0,2.3,2.6],[0,2.15,1.3],[0,2.1,-0.3],[0,2.15,-0.3],Math.min(1,lt/(D*0.6)));
 export function endCard(s,names){A.skyline();s.J=person(Object.assign({},JAKE,{shirt:'#f4f4f4',suit:'#1d2433',sleeve:'#1d2433',tie:'#c9a227',prop:'briefcase',expr:'happy'}));A.scene.add(s.J.g);
   s.e=el('end',`<div class="t">PRACTICE FREE · LINK IN BIO</div><img src="qr.png"><div class="u">mnaprep.com</div><div class="s">${names} fictional. AI voice.</div>`);s.e.style.opacity=0}
-export function endFrame(s,lt,D){pose(s.J,lt);camMove([0,1.6,7],[0,1.5,6],[0,1.3,0],[0,1.3,0],lt/D);s.e.style.opacity=ease((lt-0.3)/0.4)}
+export function endFrame(s,lt,D){pose(s.J,lt);camMove([0,1.6,7],[0,1.5,6],[0,1.3,0],[0,1.3,0],lt/D);s.e.style.opacity=ease((lt-0.05)/0.25)}
 /* bus interior with scenery sliding past the windows */
 export function bus(){const S=A.scene;S.background=new THREE.Color('#9ccfee');A.lights({fog:false,sunI:1.8});A.floor('#5d6472');
   A.box(0.2,3,30,'#e8e3d4',-2.2,1.5,0);A.box(0.2,3,30,'#e8e3d4',2.2,1.5,0);A.box(5,0.2,30,'#ddd8c8',0,3,0);

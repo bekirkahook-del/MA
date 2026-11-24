@@ -18,7 +18,7 @@ const mail=tex((g,w,h)=>{g.fillStyle='#fff';g.fillRect(0,0,w,h);g.fillStyle='#0b
 window.SHOTS=[
  /* 1 intro */
  {setup(s){A.skyline();s.J=person(Object.assign({},SUIT,{expr:'worried',prop:'briefcase'}));A.scene.add(s.J.g);s.c=el('chip','4 interviews · 1 day',{left:'300px',top:'1180px',background:'#2448D8',fontSize:'54px'})},
-  frame(s,lt,D){pose(s.J,lt,'idle');camMove([0,1.8,6.5],[0,1.6,5.2],[0,1.3,0],[0,1.4,0],lt/D);stamp(s,'SUPERDAY','#f6c84c',lt,0.6,150,330);popIn(s.c,lt,D*0.5)}},
+  frame(s,lt,D){pose(s.J,lt,'idle');camMove([0,1.7,4.8],[0,1.75,2.5],[0,1.4,0],[0,1.62,0],lt/D);stamp(s,'SUPERDAY','#f6c84c',lt,0.6,150,330);popIn(s.c,lt,D*0.5)}},
  /* 2 lobby, security */
  {setup(s){A.room('#cfd8e6','#8c95a8');sign('RECEPTION',{bg:'#111',fg:'#f6c84c',size:100});A.box(2.4,1.0,0.7,'#5b3a26',1.4,0.5,-0.9);
    s.G=person(Object.assign({},GUARD,{expr:'neutral'}));s.G.g.position.set(1.4,0,-1.5);A.scene.add(s.G.g);s.J=person(Object.assign({},SUIT,{expr:'happy',prop:'briefcase'}));s.J.g.position.set(-0.9,0,0.6);s.J.g.rotation.y=0.5;A.scene.add(s.J.g);

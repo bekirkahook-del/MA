@@ -1,5 +1,5 @@
-/* One free Pro day per student (Bekir, Nov 21-22, 2026): earned by whichever comes first - making an account (after
-   Level 1), joining the Sunday email, or leaving a review.
+/* Free Pro days (Bekir, Nov 21-24, 2026): ONE day for whichever comes first of making an account (after Level 1) or
+   joining the Sunday email, plus ONE separate day for leaving a review of the site or Pro (any rating).
    The server (netlify/functions/reward.mjs) checks everything and blocks repeat devices/networks; this only asks. */
 (function(){
   const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
@@ -14,12 +14,13 @@
   const sess=async()=>{const A=window.MA_AUTH;if(!A)return null;try{return await A.ready}catch(e){return null}};
   const confirmed=s=>!!(s&&s.user&&(s.user.email_confirmed_at||s.user.confirmed_at));
   /* returns "ok" | "done" (already/blocked: stop asking) | "no" (not yet) */
-  const ALL=()=>["signup","email","review"].forEach(k=>LS.set("ma-rw-"+k,"1"));
+  /* the review day is separate from the sign-up/email day, so their "done" flags are too */
+  const ALL=k=>(k==="review"?["review"]:["signup","email"]).forEach(x=>LS.set("ma-rw-"+x,"1"));
   async function reward(kind,okMsg){if(LS.get("ma-rw-"+kind))return "done";const s=await sess();if(!s||!confirmed(s))return "no";
     const r=await fetch("/.netlify/functions/reward",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({kind,device:devId(),fp:fpr(),fp2:await fp2()})});
     const j=await r.json().catch(()=>({}));
-    if(r.ok){ALL();ev("reward_"+kind);try{window.maClubClaim&&maClubClaim()}catch(e){}if(okMsg)T(okMsg);return "ok"}
-    if(["used","device_used","network_used","blocked"].includes(j.code)){if(j.code==="used")ALL();else LS.set("ma-rw-"+kind,"1");if(j.code!=="used"&&okMsg)T(j.error);return "done"}
+    if(r.ok){ALL(kind);ev("reward_"+kind);try{window.maClubClaim&&maClubClaim()}catch(e){}if(okMsg)T(okMsg);return "ok"}
+    if(["used","device_used","network_used","blocked"].includes(j.code)){if(j.code==="used")ALL(kind);else LS.set("ma-rw-"+kind,"1");if(j.code!=="used"&&okMsg)T(j.error);return "done"}
     if(j.code==="short")T("Add a sentence or two to your review to get your free Pro day.");
     return "no"}
   window.maReward=reward;

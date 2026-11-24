@@ -35,18 +35,27 @@
     try{await maReward("review","⭐ Thanks for the review! 1 day of Pro added.")}catch(e){}claiming=false}
   /* disclosure on the reviews section (required when reviews are rewarded) */
   function disclose(){const el=document.getElementById("reviews");if(!el||el.querySelector(".ra-disc"))return;const p=document.createElement("p");p.className="note ra-disc";
-    p.textContent="Reviewers who hadn't had their free Pro day yet got it for reviewing, whatever rating they gave.";el.prepend(p)}
+    p.textContent="Reviewers get 1 free Pro day for reviewing, whatever rating they give. Reviews are of the whole site or of Pro.";el.prepend(p)}
   /* homepage strip with the real average, only from 10+ real reviews */
   function strip(){const list=revs().filter(r=>r.rating>=1&&r.rating<=5);const el=document.getElementById("raStrip");
     if(list.length<MIN_SHOW){if(el)el.remove();return}
     const avg=list.reduce((a,r)=>a+r.rating,0)/list.length;const host=document.querySelector('[data-view="home"] .hl-land h1')||document.querySelector('[data-view="home"] .hero h1');if(!host)return;
     const html=`<b>${avg.toFixed(1)}</b><span class="s" aria-hidden="true">${"★".repeat(Math.round(avg))}${"☆".repeat(5-Math.round(avg))}</span><span>from ${list.length} student reviews</span>`;
     if(el){el.innerHTML=html;return}
-    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.title="Some reviewers got 1 free Pro day for reviewing (any rating)";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
+    const b=document.createElement("button");b.type="button";b.id="raStrip";b.className="ra-strip";b.title="Reviewers get 1 free Pro day for reviewing (any rating)";b.setAttribute("aria-label",`Rated ${avg.toFixed(1)} out of 5 from ${list.length} student reviews. See reviews`);b.innerHTML=html;
     b.onclick=()=>{ev("review_strip_click");try{showTab("pro");setTimeout(()=>{const r=document.getElementById("reviews");r&&r.scrollIntoView({behavior:"smooth"})},300)}catch(e){}};
     host.after(b)}
   (function hookRender(n){if(typeof renderReviews!=="function"){if(n<40)setTimeout(()=>hookRender(n+1),250);return}if(renderReviews.__ra)return;
     const o=renderReviews;renderReviews=function(){const r=o.apply(this,arguments);try{strip();disclose();claim()}catch(e){}return r};renderReviews.__ra=1;try{strip();disclose();claim()}catch(e){}})(0);
+  /* mnaprep.com/#review (the review email links here): opens the review form, or says what's needed first */
+  (function deep(n){const h=(window.MA_START_HASH||"")+location.hash;if(!/#review\b/.test(h))return;
+    const A=window.MA_AUTH;if(!A||typeof writeReview!=="function"||typeof canReview!=="function"){if(n<40)setTimeout(()=>deep(n+1),250);return}
+    Promise.resolve(A.ready).then(s=>{const go=k=>{if(typeof dbState!=="undefined"&&dbState==="on"&&me()){
+        try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}window.MA_START_HASH="";ev("review_link_open");
+        if(!canReview()){try{toast("Clear 3 levels first, then you can review (and get your free Pro day).");showTab("learn")}catch(e){}return}
+        const mine=revs().find(r=>r.id===me());try{writeReview(mine||null)}catch(e){}return}
+      if(k<60)setTimeout(()=>go(k+1),250)};
+      if(!s){try{toast("Sign in to leave your review");typeof openAuth==="function"&&openAuth("in")}catch(e){}return}go(0)}).catch(()=>{})})(0);
   (function hookHome(n){if(typeof renderHome!=="function"){if(n<40)setTimeout(()=>hookHome(n+1),250);return}if(renderHome.__ra)return;
     const o=renderHome;renderHome=function(){const r=o.apply(this,arguments);try{strip()}catch(e){}return r};renderHome.__ra=1})(0);
 })();

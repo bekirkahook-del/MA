@@ -6,7 +6,8 @@
 // MEGA anti-exploit (all server-side, fail closed, only salted hashes stored):
 //  1. confirmed email; disposable/temp email domains get nothing
 //  2. one identity per real inbox: Gmail dots/+tags and +tags elsewhere are folded, so a.b+1@gmail.com = ab@gmail.com
-//  3. ONE free Pro day per account, ever (Bekir: "only 1 day max"): whichever action comes first pays, the rest don't
+//  3. ONE free Pro day per account, ever, for sign-up or email (Bekir: "only 1 day max"), whichever comes first.
+//     Reviews are separate (Bekir, Nov 24, 2026): a review always earns its own 1 day, once per account, even after the other day.
 //  4. device binding: the first account that claims on a device (device id), on a browser fingerprint + network, on a
 //     canvas/GPU fingerprint + network, or with a canonical inbox OWNS it - every other account is refused, all kinds
 //  5. network caps: max 3 accounts rewarded per IP, and 6 per /24 (IPv4) or /48 (IPv6) range, per 30 days
@@ -66,7 +67,7 @@ export default async (req, context) => {
   const b = (await getBilling(user.id)) || {};
   const got = b.rewards || {};
   if (got[kind]) return NO("used", "Already claimed");
-  if (Object.keys(got).length >= MAX_DAYS) return NO("used", "You already got your free Pro day");
+  if (kind !== "review" && Object.keys(got).filter(k => k !== "review").length >= MAX_DAYS) return NO("used", "You already got your free Pro day");
   const bad = await proof(kind, user);
   if (bad) return json(409, bad);
   const dev = String(device || "").slice(0, 80), f = String(fp || "").slice(0, 300), f2 = String(fp2 || "").slice(0, 120);
@@ -83,7 +84,8 @@ export default async (req, context) => {
       if ((await bump("rewardguard", `rng:${H(range(ip))}:${month}`, null, 6)) === null) return NO("network_used", "Too many accounts got free Pro days from this network");
     }
     // 7. site-wide brake
-    if ((await bump("rewardguard", `global:${day}`, null, GLOBAL_PER_DAY)) === null) return NO("paused", "Free Pro days are paused for today. Try again tomorrow.");
+    // reviews have their own, bigger brake so a review email can't use up the sign-up budget (or hit it and break its promise)
+    if ((await bump("rewardguard", kind === "review" ? `global-rv:${day}` : `global:${day}`, null, kind === "review" ? 400 : GLOBAL_PER_DAY)) === null) return NO("paused", "Free Pro days are paused for today. Try again tomorrow.");
   } catch (e) { console.error("reward guard", String(e)); return json(503, { error: "Try again in a minute" }); }
   const now = Date.now();
   const passUntil = Math.max(b.passUntil || 0, now) + KINDS[kind] * DAY;

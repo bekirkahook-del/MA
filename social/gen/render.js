@@ -1,6 +1,7 @@
 // Renders TikTok carousel slides (1080x1920 JPG) from a spec file. Usage: node render.js spec.json
 // spec: {"date":"2026-11-08","decks":{"key":{"guide":"https://mnaprep.com/guides/...","ctaHead":"Practice DCFs <em>free</em>","ctaSub":"...","slides":["<html>",...]}}}
 // Output: ../<date>/<key>-01.jpg ... (the last slide of each deck is an automatic call-to-action slide: mnaprep.com + link in bio, NO QR code: TikTok makes posts with QR codes ineligible for the For You feed).
+const H = +process.env.H || 1920; // H=1350 renders native 4:5 Instagram slides into <date>/ig/
 const { chromium } = require("playwright");
 const QR = require("qrcode");
 const fs = require("fs"), path = require("path");
@@ -13,7 +14,7 @@ const CSS = `
 @font-face{font-family:Plex;font-weight:700;src:url(${F("ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2")})}
 @font-face{font-family:Mono;font-weight:500;src:url(${F("ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")})}
 *{box-sizing:border-box;margin:0}
-body{width:1080px;height:1920px;overflow:hidden;background:#0E1424;color:#F2F4F9;font-family:Plex,sans-serif;position:relative}
+body{width:1080px;height:${H}px;overflow:hidden;background:#0E1424;color:#F2F4F9;font-family:Plex,sans-serif;position:relative}
 .bg{position:absolute;inset:0;background:radial-gradient(900px 700px at 85% 8%,rgba(64,104,255,.35),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(221,176,86,.16),transparent 60%)}
 .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:60px 60px}
 .top{position:absolute;top:70px;left:80px;right:80px;display:flex;justify-content:space-between;align-items:center}
@@ -51,13 +52,14 @@ td:first-child{font-weight:700;color:#DDB056}tr:last-child td{border-bottom:0}td
 .note{font-size:30px;color:#7F8AA6}
 .wide .step .n{width:var(--nw,290px);white-space:nowrap;font-size:52px}.wide .step{gap:24px}
 `;
-const wrap = (inner, i, n) => `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body><div class="bg"></div><div class="grid"></div>
+const IGCSS = H < 1500 ? ".main{top:170px;right:80px;bottom:80px;gap:28px}h1{font-size:92px}h2{font-size:66px}p.lede{font-size:38px}.opts{gap:16px}.opt{padding:22px 32px;font-size:46px}.big{font-size:180px}.qr{padding:34px 48px}.qr b{font-size:64px}th,td{padding:18px 10px;font-size:40px}" : "";
+const wrap = (inner, i, n) => `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${IGCSS}</style></head><body><div class="bg"></div><div class="grid"></div>
 <div class="top"><div class="logo">M<span>&amp;</span>A</div><div class="url">mnaprep.com</div><div class="count">${i}/${n}</div></div>
 <div class="main">${inner}</div></body></html>`;
 (async () => {
   const spec = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
-  const out = path.join(__dirname, "..", spec.date); fs.mkdirSync(out, { recursive: true });
-  const b = await chromium.launch(); const pg = await b.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+  const out = path.join(__dirname, "..", spec.date, H < 1500 ? "ig" : ""); fs.mkdirSync(out, { recursive: true });
+  const b = await chromium.launch(); const pg = await b.newPage({ viewport: { width: 1080, height: H }, deviceScaleFactor: 1 });
   let bad = 0; const made = [];
   for (const [key, d] of Object.entries(spec.decks)) {
     if (!/^[a-z0-9-]{2,24}$/.test(key)) throw new Error("bad deck key " + key);

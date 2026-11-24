@@ -8,7 +8,7 @@
 "slides": [
 "<div class=\"kicker\">3-question challenge</div><h1>3 questions. Intern to <em>MD</em>. Can you get all 3?</h1><p class=\"lede\">Each one is harder. Keep score.</p>",
 "<div class=\"kicker\">Q1 · Intern</div><h2>Revenue is <em>$200M</em>. Cost of goods sold is <em>$120M</em>. Gross margin?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>60%</div><div class=\"opt\"><i>B</i>40%</div><div class=\"opt\"><i>C</i>80%</div><div class=\"opt\"><i>D</i>25%</div></div><p class=\"note\">Pick one, then swipe.</p>",
-"<div class=\"kicker\">Answer 1</div><div class=\"big\">B. 40%</div><p class=\"lede\">($200M − $120M) ÷ $200M = $80M ÷ $200M.</p>",
+"<div class=\"kicker\">Answer 1</div><div class=\"big\">B. 40%</div><p class=\"lede\">($200M − $120M) ÷ $200M = $80M ÷ $200M = 40%.</p>",
 "<div class=\"kicker\">Q2 · Analyst</div><h2>EBITDA is <em>$60M</em>. Net debt is <em>$240M</em>. What's the leverage?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>2.5x</div><div class=\"opt\"><i>B</i>6.0x</div><div class=\"opt\"><i>C</i>0.25x</div><div class=\"opt\"><i>D</i>4.0x</div></div><p class=\"note\">Pick one, then swipe.</p>",
 "<div class=\"kicker\">Answer 2</div><div class=\"big\">D. 4.0x</div><p class=\"lede\">Leverage = net debt ÷ EBITDA = $240M ÷ $60M. Lenders watch this number closely.</p>",
 "<div class=\"kicker\">Q3 · MD 🔥</div><h2>Net income <em>$100M</em>, <em>50M</em> shares. The company buys back <em>10M</em> shares with cash. New EPS?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$2.00</div><div class=\"opt\"><i>B</i>$2.25</div><div class=\"opt\"><i>C</i>$2.50</div><div class=\"opt\"><i>D</i>$3.00</div></div><p class=\"note\">Ignore lost interest on the cash.</p>",

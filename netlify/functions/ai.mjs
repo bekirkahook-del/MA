@@ -42,7 +42,7 @@ export default async (req, context) => {
   let plan = "free";
   try { plan = owner ? "owner" : tierOf(await getBilling(user.id)); } catch (e) {}
   const limit = AI_LIMITS[plan] ?? AI_LIMITS.free;
-  const day = new Date().toISOString().slice(0, 10);
+  const day = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" }); // calendar day in Eastern time: AI allowance resets at midnight ET, not 7pm
   let left;
   try {
     // atomic daily counters: one per account, one for the whole site (a hard ceiling on the Anthropic bill)

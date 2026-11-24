@@ -56,3 +56,13 @@
 | 2026-11-13 | US inspections for Singapore Nvidia chip buyers | https://www.quora.com/Should-Singapore-based-buyers-of-Nvidia-chips-have-to-accept-US-inspections/answer/Bekir-Kahook |
 | 2026-11-13 | Should Congress investigate Nvidia export controls | https://www.quora.com/Should-Congress-investigate-whether-Nvidia-helped-Chinese-companies-get-around-US-chip-export-controls/answer/Bekir-Kahook |
 | 2026-11-13 | Do grades matter when applying for jobs | https://www.quora.com/Is-academic-grades-important-when-applying-for-a-job-Does-it-affect-how-they-see-you-also-as-a-college-graduate/answer/Bekir-Kahook |
+| 2026-11-24 | Abolish department meetings for email updates | https://www.quora.com/Would-you-abolish-department-meetings-entirely-in-favor-of-simple-email-updates/answer/Bekir-Kahook |
+| 2026-11-24 | What is dark-shift manufacturing | https://www.quora.com/What-is-dark-shift-manufacturing/answer/Bekir-Kahook |
+| 2026-11-24 | Why developers feel undervalued vs C-level execs | https://www.quora.com/Why-do-techies-and-software-developers-often-feel-undervalued-compared-to-C-level-executives-despite-being-highly-compensated/answer/Bekir-Kahook |
+| 2026-11-24 | No waitlist system in PSUs | https://www.quora.com/Why-is-there-no-waitlist-system-in-many-PSUs-and-how-could-implementing-one-benefit-both-candidates-and-organizations/answer/Bekir-Kahook |
+| 2026-11-24 | Are sportsbook sign-up bonuses a good deal | https://www.quora.com/Are-sportsbook-sign-up-bonuses-as-good-a-deal-as-they-sound/answer/Bekir-Kahook |
+| 2026-11-24 | Ashton Kutcher's fame and tech investing | https://www.quora.com/How-much-has-Ashton-Kutchers-fame-helped-him-succeed-as-a-tech-investor/answer/Bekir-Kahook |
+| 2026-11-24 | Bessent on older Nvidia chip exports to China | https://www.quora.com/Do-you-agree-with-US-Treasury-Secretary-Scott-Bessent-that-no-further-restrictions-on-older-Nvidia-chip-exports-to-China-are-needed/answer/Bekir-Kahook |
+| 2026-11-24 | Will Nvidia lose key employees after ousting Huang | https://www.quora.com/Will-Nvidia-lose-key-employees-after-ousting-founder-Jensen-Huang/answer/Bekir-Kahook |
+| 2026-11-24 | Will Colette Kress stay after Huang's return | https://www.quora.com/Will-Nvidia-CFO-Colette-Kress-stay-at-the-company-after-Jensen-Huangs-return-as-CEO/answer/Bekir-Kahook |
+| 2026-11-24 | Huang's second stint as Nvidia CEO | https://www.quora.com/Will-Jensen-Huang-perform-even-better-in-his-second-stint-as-NVIDIA-s-CEO/answer/Bekir-Kahook |

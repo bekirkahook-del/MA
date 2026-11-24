@@ -5,6 +5,14 @@ How to use (every daily run):
 2. 48h after each post, add its row to the log below (views = IG IGRE23 / TikTok TKPO07; add shares/saves when notable).
 3. Re-rank the idea types weekly by **average views per post** (IG + TikTok). 3 posts in a row under ~120 views = the idea goes to LOSERS and stops. A post over 2x the average = the idea moves up and gets a sequel within 3 days.
 
+## PRISTINE CHECKLIST (Bekir, Nov 24: "Content wise fuck the analytics we need pristine content")
+Quality beats count. If it isn't pristine, fix it or don't post it.
+- Script: every line tight, every number sourced (source on screen), no filler.
+- Frame: nothing overlaps anything (chips/stamps/cards vs captions, faces, other text); nothing cut off at the edges; stamps on one line; characters fully in frame; no stray objects; emoji in color.
+- Process: test frame per shot -> contact sheet -> fix -> full render -> check every 2 s.
+- Voice: whisper-verify every line; re-record any mispronounced word or stray syllable.
+- Spelling/grammar perfect on screen and in post text.
+
 ## VIDEO RULES (Nov 24 audit: "Identify problems with our videos and attack them")
 Data: IG skip rate 39-47% on winners vs 55-87% on flops. FB avg watch 1-5 s on 45-60 s videos. YT avg view 2-19 s.
 | Problem | Fix (now in /home/user/jake2 build.py + engine.html) |

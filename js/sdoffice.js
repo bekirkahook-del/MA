@@ -15,11 +15,11 @@
   /* the cast: one person + one room per role */
   const CAST={
     "Analyst":{n:"Jordan",sex:"m",skin:"#e9b996",hair:"#3a2618",hs:"short",suit:"#34425c",tie:"#3b6fd6",room:"bullpen",where:"28th floor · Analyst bullpen",pv:[1.05,1.06]},
-    "Associate":{n:"Priya",sex:"f",skin:"#c58a5f",hair:"#1a110c",hs:"bun",suit:"#1f2b46",glasses:1,room:"board",where:"30th floor · Team room",pv:[1.08,1.03]},
+    "Associate":{n:"Priya",sex:"f",skin:"#c58a5f",hair:"#1a110c",hs:"long",suit:"#1f2b46",glasses:0,room:"board",where:"30th floor · Team room",pv:[1.08,1.03]},
     "Associate (markets)":{n:"Marcus",sex:"m",skin:"#8a5636",hair:"#120b07",hs:"fade",suit:"#2e3a49",tie:"#b8322a",room:"trading",where:"12th floor · Trading floor",pv:[.98,1.1]},
-    "Vice President":{n:"Elena",sex:"f",skin:"#f0c8a4",hair:"#6e3f1f",hs:"long",suit:"#3d2f4b",room:"office",where:"34th floor · VP office",pv:[1,1]},
-    "Director":{n:"David",sex:"m",skin:"#d6a17a",hair:"#8d8d8d",hs:"side",suit:"#253040",tie:"#2b7a57",glasses:1,room:"glass",where:"36th floor · Conference room B",pv:[.93,.98]},
-    "Managing Director":{n:"Richard",sex:"m",skin:"#ebc2a2",hair:"#d2d2d2",hs:"receding",suit:"#14181f",tie:"#8c1a2b",room:"corner",where:"40th floor · Corner office",pv:[.86,.94]}};
+    "Vice President":{n:"Daniel",sex:"m",skin:"#f0c8a4",hair:"#6e3f1f",hs:"side",suit:"#3d2f4b",tie:"#5b4a7a",room:"office",where:"34th floor · VP office",pv:[1,1]},
+    "Director":{n:"Mei",sex:"f",skin:"#e8c39e",hair:"#141010",hs:"long",suit:"#253040",glasses:1,room:"glass",where:"36th floor · Conference room B",pv:[.93,.98]},
+    "Managing Director":{n:"Grace",sex:"f",skin:"#7d4b2e",hair:"#cfcfcf",hs:"bun",suit:"#14181f",glasses:1,room:"corner",where:"40th floor · Corner office",pv:[.95,.94]}};
   const castOf=k=>CAST[k]||CAST[String(k||"").split(" · ")[0]]||CAST["Analyst"];
 
   const css=`.panel.wide:has(.sdo){max-width:1020px}
@@ -129,13 +129,14 @@
   const resetCC=key=>{if(CC.key!==key||Date.now()-CC.t>20*60e3){CC.key=key;CC.lines=[];CC.live=""}CC.t=Date.now()};
   const flushLive=()=>{const v=(CC.live||"").trim();if(v&&!(CC.lines.length&&CC.lines[CC.lines.length-1].you&&CC.lines[CC.lines.length-1].text===v))CC.lines.push({you:1,text:v});CC.live=""};
 
-  window.maInterviewer=function(el,o){o=o||{};const c=castOf(o.roleKey||o.name);const firm=(String(o.name||"").split(" · ")[1]||"").trim();
+  window.maOfficeReset=()=>{CC.key="";CC.lines=[];CC.live=""};
+  window.maInterviewer=function(el,o){o=o||{};const c=castOf(o.roleKey||o.name);
     resetCC(o.name||c.n);flushLive();
     const who=`${c.n} · ${(o.roleKey||"Interviewer")}`;
-    el.innerHTML=`<div class="sdo"><div class="sdo-stage"><svg viewBox="0 0 640 400" role="img" aria-label="${esc(who)} in their office">${room(c.room)}<g transform="translate(320 400) scale(1.16) translate(-320 -400)">${person(c)}</g>${desk(c,c.n+" · "+(o.roleKey||"")+(firm?" · "+firm:""))}</svg>
+    el.innerHTML=`<div class="sdo"><div class="sdo-stage"><svg viewBox="0 0 640 400" role="img" aria-label="${esc(who)} (fictional interviewer) in their office">${room(c.room)}<g transform="translate(320 400) scale(1.16) translate(-320 -400)">${person(c)}</g>${desk(c,c.n+" · "+(o.roleKey||""))}</svg>
       <span class="sdo-live">● LIVE</span><span class="sdo-where">${esc(c.where)}</span><div class="sdo-ring"></div>
       <div class="sdo-bar"><span class="sdo-st"><span class="sdo-dot"></span><span class="sdo-stt">${esc(o.role||"")}</span></span>${hasTTS?`<button type="button" class="sdo-rep">🔁 Repeat</button><button type="button" class="sdo-mute"></button>`:""}</div></div>
-      <aside class="sdo-cc" aria-label="Live captions"><div class="sdo-cch">Live captions</div><div class="sdo-ccl" aria-live="polite"></div><div class="sdo-hint">Sounds like you're done. Hit the button below when you're ready.</div></aside></div>`;
+      <aside class="sdo-cc" aria-label="Live captions"><div class="sdo-cch">Live captions</div><div class="sdo-ccl"></div><div class="sdo-hint">Sounds like you're done. Hit the button below when you're ready.</div></aside></div>`;
     const stage=el.querySelector(".sdo-stage"),head=el.querySelector(".sdo-head"),body=el.querySelector(".sdo-body"),eyes=el.querySelector(".sdo-eyes"),m=el.querySelector(".sdo-m"),teeth=el.querySelector(".sdo-teeth"),
       mm=el.querySelector(".sdo-mm"),stBox=el.querySelector(".sdo-st"),stTxt=el.querySelector(".sdo-stt"),ccl=el.querySelector(".sdo-ccl"),hint=el.querySelector(".sdo-hint"),
       mute=el.querySelector(".sdo-mute"),rep=el.querySelector(".sdo-rep"),tick=el.querySelector(".sdo-tick");
@@ -182,7 +183,7 @@
       if(!isRepeat){CC.lines.push({text:lastText});}talking=true;drawCC();talking=false;setState("Speaking",true);
       const done=()=>{if(my!==gen)return;talking=false;stage.classList.remove("talk");curWords&&curWords.forEach(w=>{w.classList.remove("on");w.classList.add("done")});
         setState(listening?"Listening":o.role||"",listening);after&&after()};
-      const start=()=>{if(my!==gen)return;talking=true;stage.classList.add("talk");const cur=ccl.querySelector(".sdo-ln:not(.you):last-of-type");const all=ccl.querySelectorAll(".sdo-ln:not(.you)");all.length&&all[all.length-1].classList.add("cur")};
+      const start=()=>{if(my!==gen)return;talking=true;stage.classList.add("talk");const all=ccl.querySelectorAll(".sdo-ln:not(.you)");all.length&&all[all.length-1].classList.add("cur")};
       if(!voiceOn()||!hasTTS){start();gotB=false;setTimeout(done,Math.min(5000,700+lastText.split(/\s+/).length*130));return}
       /* sentence by sentence: Chrome stops long utterances after ~15s, and each sentence gets a natural pause */
       const parts=lastText.match(/[^.!?]+[.!?]+["')]*\s*|[^.!?]+$/g)||[lastText];let off=0,k=0;const v=pickVoice(c),pv=c.pv||[1,1];

@@ -5,6 +5,16 @@ How to use (every daily run):
 2. 48h after each post, add its row to the log below (views = IG IGRE23 / TikTok TKPO07; add shares/saves when notable).
 3. Re-rank the idea types weekly by **average views per post** (IG + TikTok). 3 posts in a row under ~120 views = the idea goes to LOSERS and stops. A post over 2x the average = the idea moves up and gets a sequel within 3 days.
 
+## VIDEO RULES (Nov 24 audit: "Identify problems with our videos and attack them")
+Data: IG skip rate 39-47% on winners vs 55-87% on flops. FB avg watch 1-5 s on 45-60 s videos. YT avg view 2-19 s.
+| Problem | Fix (now in /home/user/jake2 build.py + engine.html) |
+|---|---|
+| Slow first 3 s ("Meet Dev", "Remember Jake?", dark skyline) | 1.7 s cold open: climax shot + big yellow hook text, then the story (TEASE dict) |
+| Too long (45-76 s) | TEMPO ~1.1, 30-45 s target |
+| Captions low (bottom 300px = under TikTok UI) | bottom 470px, bigger, bolder sans |
+| 2-4 s dead QR end card | end hold 0.9 s |
+| Fade from black on frame 1, no cover | frame 1 fully lit; Metricool cover ~1000 ms on the hook |
+
 ## PLATFORM SCOREBOARD (Bekir, Nov 24: "Keep patrol over what works on what platform")
 Updated every daily run. Views per post (Nov 17-24 data). Route each new post only to platforms where its idea type wins or is untested.
 

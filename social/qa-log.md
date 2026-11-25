@@ -14,3 +14,8 @@
 | Nov 25 | Fri 16:37 | Cyber Monday brainteaser (TT+IG) | 97 | F2 no CTA on TikTok, no IG first comment | CTA + first comment | 100 |
 | Nov 25 | Fri 20:14 | Markup trap video | 87 | D2 clipping (+2.3 dB peak), F2 no CTA, B3 no cover | limited to -1.3 dB, CTA, cover | 100 |
 | Nov 25 | Wed-Fri | 10 Pinterest pins | 100 | | | 100 |
+| Nov 25 (daily gate) | Wed 10:00 | Equity research DIL video (re-voiced: Kokoro Echo) | 100 | | voice-checked ALL PASS | 100 |
+| Nov 25 (daily gate) | Wed 13:58 | Margin/leverage/buyback quiz (TT+IG+pin) | 100 | | | 100 |
+| Nov 25 (daily gate) | Wed 18:00 | Big 12 Brawl video (re-voiced: Kokoro George) | 100 | | voice-checked ALL PASS, end card no longer frozen | 100 |
+| Nov 25 (daily gate) | Wed 17:21-21:52 | 4 Pinterest pins | 100 | | | 100 |
+| Nov 25 (pre-check) | Thu 10:00 / Fri 10:00 | Hedge + Superday DIL videos (re-voiced: Echo) | 100 | | voice-checked ALL PASS | 100 |

@@ -1,1 +1,15 @@
-[]
+[
+  {"from":"msbfinancecareerhub@marshall.usc.edu","kind":"interest","date":"2026-11-23"},
+  {"from":"jrenaldo@business.rutgers.edu","kind":"other","date":"2026-11-20"},
+  {"from":"poole_careers@ncsu.edu","kind":"optout","date":"2026-11-16"},
+  {"from":"careers@vcu.edu","kind":"other","date":"2026-11-16"},
+  {"from":"fcob-honors@osu.edu","kind":"other","date":"2026-11-25"},
+  {"from":"businesscareers@purdue.edu","kind":"other","date":"2026-11-24"},
+  {"from":"dmsb_co-op@northeastern.edu","kind":"auto","date":null},
+  {"from":"career@xavier.edu","kind":"auto","date":null},
+  {"from":"careers@shu.edu","kind":"auto","date":null},
+  {"from":"cmc@depaul.edu","kind":"auto","date":null},
+  {"from":"rbscareers@business.rutgers.edu","kind":"auto","date":null},
+  {"from":"career@ucf.edu","kind":"auto","date":null},
+  {"from":"kelleyucs@iu.edu","kind":"auto","date":null}
+]

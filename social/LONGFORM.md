@@ -38,3 +38,4 @@ Bekir: "post something like this every day. Keep it very viral market content, 3
 |---|---|---|---|---|---|
 | 2026-11-23 | Nvidia CEO out → Anthropic IPO → CEO back, +30% | 3:01 | First version: Pexels b-roll, drawing line charts, dot grid, lower-thirds, kinetic words | vidIQ Liam | Nov 24 1:25pm ET: not in Metricool YouTube analytics yet (vidIQ stats need 5 credits, had 3) |
 | 2026-11-24 | SKIPPED: no voice credits (ElevenLabs 266 chars left, resets Dec 13; vidIQ 3 credits, resets Dec 21). Not posted per rule 3. | - | - | - | - |
+| 2026-11-25 | SKIPPED again: no voice credits (ElevenLabs 266 of 37,039 chars left, resets ~Dec 13; vidIQ 3/150 credits, resets Dec 21). Nov 23 video still not in Metricool YouTube analytics (only Shorts show). Not posted per rule 3. | - | - | - | - |

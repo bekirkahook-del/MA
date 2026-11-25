@@ -42,7 +42,7 @@ test("verified defect (answer key out of range) = fix from one report",()=>{
   assert.equal(r.items[0].consensus.hardEvidence,true);
 });
 test("duplicate options are verified",()=>{
-  const f=B.flaws([Q,["Same","same!","Other"],2],null);
+  const f=B.flaws([Q,["Same","same","Other"],2],null);
   assert.ok(f.find(x=>x.type==="duplicate-options"&&x.objective));
 });
 test("question gone from code = ignore",()=>{
@@ -81,4 +81,18 @@ test("real repo: non-target question is located and stays watch with one report"
   assert.ok(found,"question should be found in js/");
   const r=B.run([row({question:"From a 'non-target' school, the biggest lever is usually:"})],{...c,now:new Date()},{});
   assert.ok(["watch","ignore"].includes(r.items[0].verdict));
+});
+test("signed and decimal answers are NOT duplicates (+$20 vs -$20, 1.0x vs 10x)",()=>{
+  assert.equal(B.flaws(["q",["+$20","−$20","No effect","+$40"],1],null).filter(f=>f.type==="duplicate-options").length,0);
+  assert.equal(B.flaws(["q",["1.0x","10x","2x"],0],null).filter(f=>f.type==="duplicate-options").length,0);
+  assert.equal(B.flaws(["q",["Debt","debt.","Cash"],0],null).filter(f=>f.type==="duplicate-options").length,1);
+});
+test("symbol-only differences are different answers (< vs >, [ vs ], & vs _)",()=>{
+  const d=o=>B.flaws(["q",o,0],null).filter(f=>f.type==="duplicate-options").length;
+  assert.equal(d(["Stock price > strike","Stock price < strike","Always"]),0);
+  assert.equal(d(["Ctrl + ]","Ctrl + [","Alt + ="]),0);
+  assert.equal(d(["Ctrl+Shift+&","Ctrl+Shift+_","Alt+B"]),0);
+});
+test("short numeric answers are never a length giveaway",()=>{
+  assert.equal(B.flaws(["q",["$20","$40","$1,000"],2,"x"].slice(0,3),null).filter(f=>f.type==="length-giveaway").length,0);
 });

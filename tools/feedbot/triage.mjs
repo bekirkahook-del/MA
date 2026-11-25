@@ -98,14 +98,14 @@ export function locateIn(files, question) {
 const ABSURD = /\b(hoping|hope for|luck|never|always|guess|ignor\w*|skipp?\w*|nothing|don't need|just wing)\b|\bonly\b/i;
 export function flaws(q, support) {
   const out = [], opts = q[1].map(String), idx = q[2];
-  const norm = opts.map(o => o.toLowerCase().replace(/[^a-z0-9]/g, ""));
+  const norm = opts.map(o => o.toLowerCase().replace(/[\u2212\u2013\u2014]/g, "-").replace(/\s+/g, " ").trim().replace(/[.;,]+$/, "")); // plain equality only: symbols like < > [ ] + - $ change the meaning
   if (typeof idx !== "number" || !opts[idx]) out.push({ type: "answer-key-out-of-range", weight: 40, objective: true, note: "keyed answer index " + idx + " is not one of the " + opts.length + " options" });
   if (new Set(norm).size < norm.length) out.push({ type: "duplicate-options", weight: 40, objective: true, note: "two options are the same text" });
   const wrong = opts.filter((_, k) => k !== idx);
   const absurd = wrong.filter(o => ABSURD.test(o));
   if (absurd.length >= 2) out.push({ type: "implausible-distractors", weight: 20, objective: false, note: absurd.length + " of " + wrong.length + " wrong options read as obviously wrong: " + absurd.map(a => '"' + a + '"').join(", ") });
   const lens = wrong.map(o => o.length).sort((a, b) => a - b), med = lens[Math.floor(lens.length / 2)] || 1;
-  if (opts[idx] && opts[idx].length >= 1.5 * med && opts[idx].length > Math.max(...lens)) out.push({ type: "length-giveaway", weight: 20, objective: false, note: "the keyed answer is the longest option by a wide margin (" + opts[idx].length + " vs median " + med + " chars)" });
+  if (opts[idx] && opts[idx].length >= 20 && opts[idx].length >= 1.5 * med && opts[idx].length > Math.max(...lens)) out.push({ type: "length-giveaway", weight: 20, objective: false, note: "the keyed answer is the longest option by a wide margin (" + opts[idx].length + " vs median " + med + " chars)" });
   if (support) {
     const sc = opts.map(o => support(o)), good = sc[idx] || 0;
     const bestOther = Math.max(...sc.map((s, k) => (k === idx ? -1 : s)));

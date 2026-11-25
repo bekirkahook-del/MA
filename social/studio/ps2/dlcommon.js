@@ -1,0 +1,14 @@
+// shared pieces for the "day in the life" PS2 series
+import {A,THREE,person,pose,el,anchor,ease,back,popIn,fadeIn} from './common.js';
+export const CO=i=>({shirt:['#f4f4f4','#cfe0ff','#ffe8cc','#e6f4ea','#f7d6e0','#ffffff'][i%6],sleeve:['#f4f4f4','#cfe0ff','#ffe8cc','#e6f4ea','#f7d6e0','#ffffff'][i%6],tie:['#8a1c1c',null,'#2a6b2a',null,'#1c3d8a',null][i%6],hair:['#111','#4a2f1d','#c9a46a','#2a1a12','#7a5a3a','#222'][i%6],skin:['#a8714a','#f0c09a','#e0b48c','#c98b63','#e8c3a0','#d9a882'][i%6],girl:i===2||i===4,hairStyle:i===2?'long':i===4?'bun':i===5?'bald':undefined,pants:'#2a2f45'});
+export function bullpen(night,mode='type'){const ps=[];[[-2.3,-0.6],[2.3,-0.6],[-2.5,1.9],[2.5,1.9],[-4.4,0.6],[4.4,0.6]].forEach(([x,z],i)=>{A.box(1.2,0.06,0.7,'#5b3a26',x,0.82,z-0.55);A.box(0.9,0.55,0.05,'#111',x,1.15,z-0.8);
+  const sc=new THREE.Mesh(new THREE.PlaneGeometry(0.82,0.46),new THREE.MeshBasicMaterial({color:night?'#9db4ff':'#e8eef8'}));sc.position.set(x,1.15,z-0.77);A.scene.add(sc);
+  const p=person(Object.assign({},CO(i),{expr:night?'worried':'neutral'}));p.g.position.set(x,0,z);p.g.rotation.y=Math.PI;p.mode=mode;A.scene.add(p.g);ps.push(p)});return ps}
+export const bp=(s,lt)=>(s.bp||[]).forEach((p,i)=>pose(p,lt+i*0.7,p.mode));
+export const tex=(draw)=>{const cv=document.createElement('canvas');cv.width=1024;cv.height=614;const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;t.cv=cv;t.draw=()=>{draw(cv.getContext('2d'),1024,614);t.needsUpdate=true};t.draw();return t};
+export function clock(s,t,lt,col='#0b0f18'){if(!s.ck)s.ck=el('chip',t,{left:'50%',top:'250px',background:col,fontSize:'64px',border:'4px solid #f6c84c',transform:'translateX(-50%)',whiteSpace:'nowrap'});s.ck.style.opacity=ease(lt/0.2)}
+export function stamp(s,txt,color,lt,at,size=150,top=420){if(!s.st)s.st=el('stamp',txt,{left:'540px',top:top+'px',color,fontSize:size+'px',textShadow:'0 8px 0 rgba(0,0,0,.6)'});popIn(s.st,lt,at,0.35,'translate(-50%,-50%) rotate(-6deg)')}
+export const boss=(o,x,z,ry)=>{const p=person(o);p.g.position.set(x,0,z);p.g.rotation.y=ry;A.scene.add(p.g);return p};
+export function nameTag(s,P,name,role,lt){if(!s.nt)s.nt=el('label',`${name}<br><span style="font-size:36px;color:#f6c84c">${role}</span>`,{textAlign:'center'});const a=anchor(P,2.75);s.nt.style.left=a.x+'px';s.nt.style.top=a.y+'px';s.nt.style.opacity=ease((lt-0.6)/0.3)}
+export function wallScreen(t,x=0,y=3.3,z=-2.05,w=4.6,h=2.75){A.box(w+0.25,h+0.25,0.12,'#111',x,y,z-0.08);const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:t}));m.position.set(x,y,z);A.scene.add(m);return m}
+export function sign(txt,{y=3.6,bg='#1b2a4a',fg='#fff',w=3.6,h=0.7,size=90}={}){const p=A.textPlane([txt],{w,h,bg,fg,font:`bold ${size}px DejaVu Sans`});p.position.set(0,y,-2.12);A.scene.add(p);return p}

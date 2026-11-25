@@ -1,0 +1,135 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07111f;font-family:'Inter',sans-serif;color:#fff}
+#bg{position:absolute;inset:0;background:radial-gradient(1200px 1000px at 50% 35%,var(--tint,#12305a) 0%,#07111f 72%)}
+.grid{position:absolute;inset:-90px;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:90px 90px}
+.layer{position:absolute;left:0;right:0;opacity:0}
+#brand{position:absolute;top:110px;left:0;right:0;text-align:center;font-size:28px;font-weight:800;letter-spacing:4px;color:rgba(255,255,255,.55);z-index:5}
+#series{position:absolute;top:156px;left:0;right:0;text-align:center;z-index:5}
+#series span{display:inline-block;font-size:28px;font-weight:900;letter-spacing:8px;background:#f5c542;color:#07111f;padding:8px 22px;border-radius:8px}
+/* hook */
+#hook{top:300px;text-align:center}
+#hook .m{width:820px;height:460px;margin:0 auto;border-radius:36px;overflow:hidden;border:6px solid #e0313b;box-shadow:0 0 80px rgba(224,49,59,.5)}
+#hook .m img{width:100%;height:100%;object-fit:cover}
+#hook .h{font-size:96px;font-weight:900;line-height:1.02;margin-top:46px;padding:0 60px}
+#hook .h span{color:#ff4d57}
+#hook .s{font-size:52px;font-weight:700;margin-top:30px;color:#cfe0ff}
+/* list */
+#list{top:230px;padding:0 50px}
+#list .title{font-size:50px;font-weight:900;text-align:center;line-height:1.1}
+#list .title span{color:#f5c542}
+#list .sub{font-size:26px;color:#9fb6d9;text-align:center;margin-top:8px;font-weight:600}
+.rows{margin-top:24px;display:flex;flex-direction:column;gap:7px}
+.row{display:flex;align-items:center;height:66px;border-radius:16px;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.12);padding:0 20px 0 8px;opacity:0;position:relative;overflow:hidden}
+.row .bar{position:absolute;left:0;top:0;bottom:0;width:8px}
+.row .av{width:54px;height:54px;border-radius:50%;overflow:hidden;margin:0 14px 0 8px;border:3px solid rgba(255,255,255,.35);flex:none}
+.row .av img{width:100%;height:100%;object-fit:cover;transform:scale(1.35) translateY(6%)}
+.row .r{font-size:32px;font-weight:900;width:70px;color:#f5c542}
+.row .n{flex:1;font-size:34px;font-weight:800}
+.row .n small{font-size:21px;color:#9fb6d9;font-weight:600;margin-left:10px}
+.row .v{font-size:32px;font-weight:900;text-align:right}
+.row .v small{font-size:19px;color:#9fb6d9;font-weight:600}
+.row.top{background:linear-gradient(90deg,rgba(245,197,66,.35),rgba(245,197,66,.08));border-color:#f5c542}
+.row.mich{box-shadow:0 0 0 4px #ff4d57}
+.row.osu{box-shadow:0 0 0 4px #ff3b3b}
+#next{top:470px;padding:0 60px;text-align:center}
+#next .k{font-size:40px;font-weight:900;letter-spacing:8px;color:#9fb6d9}
+#next .h{font-size:150px;font-weight:900;color:#f5c542;line-height:1;margin-top:20px}
+#next .s{font-size:64px;font-weight:900;margin-top:40px;line-height:1.1}
+#next .btn{display:inline-block;margin-top:60px;font-size:56px;font-weight:900;background:#ff2d55;padding:24px 60px;border-radius:999px}
+/* hero */
+#hero{top:300px;text-align:center}
+#hero .rk{font-size:200px;font-weight:900;line-height:.9;letter-spacing:-6px;color:var(--c2,#f5c542);text-shadow:0 10px 0 rgba(0,0,0,.35)}
+#hero .card{width:900px;height:506px;margin:20px auto 0;border-radius:40px;overflow:hidden;border:8px solid var(--c2,#f5c542);box-shadow:0 0 120px var(--c1,#f5c542)}
+#hero .card img{width:100%;height:100%;object-fit:cover}
+#hero .nm{font-size:110px;font-weight:900;margin-top:34px;line-height:1}
+#hero .st{font-size:46px;font-weight:700;color:#cfe0ff;margin-top:20px}
+#hero .st b{color:var(--c2,#f5c542)}
+/* miss */
+#miss{top:290px;text-align:center}
+#miss .t{font-size:78px;font-weight:900;line-height:1.05;padding:0 60px}
+#miss .t span{color:#ff5a5a}
+.mrow{display:flex;justify-content:center;flex-wrap:wrap;gap:20px 16px;margin-top:50px;padding:0 40px}
+.mc{width:220px;opacity:0}
+.mc .pic{width:220px;height:220px;border-radius:30px;overflow:hidden;border:5px solid rgba(255,90,90,.7);position:relative}
+.mc .pic img{width:100%;height:100%;object-fit:cover;transform:scale(1.25) translateY(8%)}
+.mc .x{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:170px;font-weight:900;color:#ff3b3b;text-shadow:0 6px 0 #000;opacity:0}
+.mc .lb{font-size:28px;white-space:nowrap;font-weight:900;margin-top:20px}
+/* cta */
+#cta{top:430px;padding:0 70px;text-align:center}
+#cta .q{font-size:92px;font-weight:900;line-height:1.05}
+#cta .q span{color:#f5c542}
+#cta .faces{display:flex;justify-content:center;gap:14px;margin-top:56px;flex-wrap:wrap}
+#cta .faces div{width:120px;height:120px;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.4)}
+#cta .faces img{width:100%;height:100%;object-fit:cover;transform:scale(1.35) translateY(6%)}
+#cta .src{font-size:28px;color:#9fb6d9;margin-top:56px;line-height:1.4;font-weight:600}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:9}
+#conf{position:absolute;inset:0;z-index:8;pointer-events:none}
+</style></head><body>
+<div id="bg"></div><div class="grid" id="grid"></div>
+<div id="brand">M&amp;A PREP · BLUECHIPFINANCIAL</div>
+<div id="series"><span>RANKED · BIG 12</span></div>
+<div id="hook" class="layer"><div class="m"><img src="assets/byu.png"></div><div class="h"><span>BYU</span> isn't even top 100 for Wall Street</div><div class="s">So who is? 👀</div></div>
+<div id="list" class="layer"><div class="title">Big 12 ranked for <span>Wall Street</span></div><div class="sub">IB analysts at 18 top banks + per student · national rank in grey</div><div class="rows" id="rows"></div></div>
+<div id="hero" class="layer"><div class="rk" id="hrk"></div><div class="card"><img id="himg"></div><div class="nm" id="hnm"></div><div class="st" id="hst"></div></div>
+<div id="miss" class="layer"><div class="t">Didn't make the national <span>top 100</span></div><div class="mrow" id="mrow"></div></div>
+<div id="cta" class="layer"><div class="q">Is your school <span>underrated</span> or <span>overrated</span>? 👇</div><div class="faces" id="faces"></div>
+<div class="src">Source: Rareliquid IB target school ranking, data pulled Oct 16, 2026. Ranked by its national rank (2/3 analyst count, 1/3 per student). IB analysts (grad 2013+) at 18 top banks, LinkedIn-based data; counts are floors. Only 4 of 16 Big 12 schools are in the national top 100. Original PS2-style characters in school colors, not official mascots. AI voice.</div></div>
+<div id="next" class="layer"><div class="k">NEXT EPISODE</div><div class="h">IVY 🏛️</div><div class="s">Follow so your school<br>doesn't get left out</div><div class="btn">+ FOLLOW</div></div>
+<canvas id="conf" width="1080" height="1920"></canvas>
+<div id="flash"></div>
+<script>
+const S=[['TCU','tcu',60,115,'#4D1979','#E8E3F2'],['Baylor','baylor',89,50,'#154734','#FFB81C'],['Colorado','colorado',91,56,'#1a1a1a','#CFB87C'],['Arizona State','asu',93,56,'#8C1D40','#FFC627']];
+const T=window.TL=__TL__;
+const rows=document.getElementById('rows');
+S.forEach((s,i)=>{const d=document.createElement('div');d.className='row'+(i<3?' top':'')+'';
+ d.innerHTML=`<div class="bar" style="background:${s[4]}"></div><div class="av" style="background:${s[4]}"><img src="assets/${s[1]}.png"></div><div class="r">#${i+1}</div><div class="n">${s[0]}<small>#${s[2]}</small></div><div class="v"><span class="cnt" data-v="${s[3]}">0</span> <small>analysts</small></div>`;rows.appendChild(d)});
+const M=[['BYU','byu'],['Utah','utah'],['Texas Tech','ttu'],['Kansas','kansas'],['Arizona','arizona'],['Houston','houston'],['Cincinnati','cincy'],['UCF','ucf'],['Iowa State','isu'],['K-State','kstate'],['Okla. State','okstate'],['West Virginia','wvu']];const mrow=document.getElementById('mrow');
+M.forEach(m=>{const d=document.createElement('div');d.className='mc';d.innerHTML=`<div class="pic"><img src="assets/${m[1]}.png"><div class="x">✕</div></div><div class="lb">${m[0]}</div>`;mrow.appendChild(d)});
+const faces=document.getElementById('faces');['tcu','baylor','colorado','asu','byu','utah','ttu','kansas','arizona','isu'].forEach(f=>{const d=document.createElement('div');d.innerHTML=`<img src="assets/${f}.png">`;faces.appendChild(d)});
+const cl=x=>Math.max(0,Math.min(1,x)),ease=x=>1-Math.pow(1-cl(x),3),back=x=>{x=cl(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function seg(t,a,b,fi=.2,fo=.2){if(t<a||t>b)return 0;return Math.min(cl((t-a)/fi),cl((b-t)/fo))}
+const rt=[];let tt=T.cd0;for(let i=S.length-1;i>=3;i--){rt[i]=tt;tt+=0.34}
+T.heroes.forEach(([i,t])=>rt[i]=t+3.2);
+// confetti (deterministic)
+const cv=document.getElementById('conf'),cx=cv.getContext('2d');const P=[...Array(160)].map((_,k)=>({x:(k*97)%1080,v:300+(k*53)%500,dx:((k*31)%200)-100,s:10+(k%4)*5,c:['#990000','#FFC72C','#ffffff','#f5c542'][k%4],r:k}));
+function confetti(t){cx.clearRect(0,0,1080,1920);const t0=T.heroes[2][1]+1.2;const e=t-t0;if(e<0||e>4)return;P.forEach(p=>{const y=-60+p.v*e+200*e*e;const x=p.x+p.dx*e+Math.sin(e*4+p.r)*30;cx.save();cx.translate(x,y);cx.rotate(e*6+p.r);cx.fillStyle=p.c;cx.globalAlpha=cl(4-e);cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()})}
+window.render=function(t){
+ const bgEl=document.documentElement;
+ document.getElementById('grid').style.transform=`translateY(${(t*30)%90}px)`;
+ // hook
+ const H=document.getElementById('hook');H.style.opacity=seg(t,0,T.hookEnd,.01,.2);
+ const sh=t<.7?Math.sin(t*80)*(1-t/.7)*14:0;H.querySelector('.m').style.transform=`translateX(${sh}px) scale(${.6+.4*back(t/.45)}) rotate(${t<.7?Math.sin(t*60)*(1-t/.7)*3:0}deg)`;
+ H.querySelector('.h').style.transform=`translateY(${(1-ease((t-.15)/.4))*80}px)`;H.querySelector('.h').style.opacity=ease((t-.15)/.3);
+ H.querySelector('.s').style.opacity=ease((t-1.6)/.3);
+ // list
+ let heroOn=-1;T.heroes.forEach(([i,a],k)=>{const b=k<2?T.heroes[k+1][1]-.1:T.hold-.05;if(t>=a&&t<b)heroOn=k});
+ const L=document.getElementById('list');L.style.opacity=(t>=T.hookEnd-.1&&t<T.miss)?(heroOn>=0?0:seg(t,T.hookEnd-.1,T.miss,.2,.25)):0;
+ [...rows.children].forEach((el,i)=>{const p=ease((t-rt[i])/.28);el.style.opacity=p;el.style.transform=`translateX(${(1-p)*160}px)`;
+  const c=el.querySelector('.cnt');c.textContent=Math.round(c.dataset.v*ease((t-rt[i])/.5))});
+ // hero
+ const HE=document.getElementById('hero');
+ if(heroOn>=0){const [i,a]=T.heroes[heroOn];const s=S[i];const b=heroOn<2?T.heroes[heroOn+1][1]-.1:T.hold-.05;const e=t-a;
+  HE.style.opacity=seg(t,a,b,.12,.2);HE.style.setProperty('--c1',s[4]);HE.style.setProperty('--c2',s[5]);document.body.style.setProperty('--tint',s[4]);
+  document.getElementById('hrk').textContent='#'+(i+1);document.getElementById('himg').src=`assets/${s[1]}.png`;
+  document.getElementById('hnm').textContent=s[0];document.getElementById('hst').innerHTML=`<b>${Math.round(s[3]*ease(e/.8))}</b> IB analysts · #${s[2]} in the U.S.`;
+  HE.querySelector('.rk').style.transform=`scale(${.3+.7*back(e/.35)})`;
+  HE.querySelector('.card').style.transform=`translateY(${(1-back((e-.15)/.45))*500}px) scale(${1+.03*Math.sin(e*3)})`;
+  HE.querySelector('.nm').style.opacity=ease((e-.6)/.25);HE.querySelector('.nm').style.transform=`scale(${.7+.3*back((e-.6)/.3)})`;
+  HE.querySelector('.st').style.opacity=ease((e-.8)/.3);
+ }else{HE.style.opacity=0;document.body.style.setProperty('--tint','#12305a')}
+ const fl=Math.max(0,...T.heroes.map(([i,a])=>1-Math.abs(t-a-.15)/.12));document.getElementById('flash').style.opacity=cl(fl)*.35;
+ confetti(t);
+ // miss
+ const MI=document.getElementById('miss');MI.style.opacity=seg(t,T.miss,T.cta,.25,.25);
+ [...mrow.children].forEach((c,k)=>{const a=T.xs[k];const p=back((t-a+.5)/.4);c.style.opacity=cl((t-a+.5)/.2);c.style.transform=`translateY(${(1-p)*300}px)`;
+  const st=cl((t-a)/.15);c.querySelector('.x').style.opacity=st;c.querySelector('.x').style.transform=`scale(${2-st})`;
+  c.querySelector('img').style.filter=`grayscale(${st})`;c.style.rotate=`${st*((k%4)-1.5)*3}deg`});
+ // cta
+ const C=document.getElementById('cta');C.style.opacity=seg(t,T.cta,T.next,.25,.25);
+ const N=document.getElementById('next');N.style.opacity=seg(t,T.next,99,.25,.25);const ne=t-T.next;N.querySelector('.h').style.transform=`scale(${.4+.6*back(ne/.4)})`;N.querySelector('.btn').style.transform=`scale(${1+.06*Math.sin(ne*8)})`;
+ const ow=[...rows.children][4];if(ow){const g=Math.max(0,1-Math.abs(t-T.stan)/1.4);ow.style.boxShadow=`0 0 0 4px #ff4d57,0 0 ${50*g}px #ff4d57`}
+ [...faces.children].forEach((f,k)=>{const p=back((t-T.cta-.3-k*.07)/.3);f.style.transform=`scale(${p})`});
+}
+window.ready=true;render(0);
+</script></body></html>

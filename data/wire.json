@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T21:48:52Z",
+ "updated": "2026-11-25T16:50:48Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -114,15 +114,6 @@
  },
  "CAL": [
   [
-   "Wed Nov 25",
-   "GDP and PCE inflation",
-   "Second estimate of Q3 GDP and October PCE inflation, both at 8:30 a.m. ET, the day before Thanksgiving. A preview put headline PCE at 0.3% m/m and 3.8% y/y, core at 0.3% m/m.",
-   [
-    "Finance Calendar: PCE",
-    "https://www.financecalendar.com/event/us-personal-income-and-outlays-pce-november-2026/"
-   ]
-  ],
-  [
    "Thu Nov 26",
    "Thanksgiving: US markets closed",
    "Markets are closed Thursday and Friday's session ends at 1 p.m. ET.",
@@ -142,38 +133,6 @@
   ]
  ],
  "EARN": [
-  [
-   "2026-11-24",
-   "DELL",
-   "Dell Technologies",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-24",
-   "WDAY",
-   "Workday",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-24",
-   "ADSK",
-   "Autodesk",
-   "AMC",
-   "",
-   ""
-  ],
-  [
-   "2026-11-24",
-   "HPQ",
-   "HP",
-   "AMC",
-   "",
-   ""
-  ],
   [
    "2026-11-25",
    "DE",
@@ -201,8 +160,68 @@
    "https://earnings-watcher.com/earnings-this-week"
   ]
  ],
- "NEWS_DATE": "Nov 24, 2026",
+ "NEWS_DATE": "Nov 25, 2026",
  "NEWS": [
+  {
+   "k": "Fed",
+   "d": "Nov 25",
+   "h": "October PCE inflation hits 3.8% and Q3 GDP is revised up to 4.3%, keeping a December Fed hike near-certain",
+   "w": "Particle reports core PCE rose to 3.3% and the Commerce Department revised third-quarter real GDP to a 4.3% annualized pace on stronger consumer spending and a surge in business investment in software and AI. Financial markets have priced in a near-certain quarter-point hike at the Fed's Dec. 8-9 meeting.",
+   "m": "ABC News (a pre-release preview) put the odds of a quarter-point hike at about 97% per CME FedWatch and said a December hike would be the central bank's second in four months.",
+   "a": "Interview point: explain why strong GDP plus sticky inflation pushes the Fed toward hikes, and what higher rates do to discount rates and deal valuations.",
+   "s": [
+    [
+     "Particle: PCE 3.8%, Q3 GDP 4.3% (Nov 25)",
+     "https://particle.news/story/pce-inflation-rises-to-38-as-q3-gdp-is-revised-up-to-43"
+    ],
+    [
+     "ABC News preview (Nov 25)",
+     "https://abcnews.com/Business/inflation-report-provide-feds-preferred-gauge-prices-ahead/story?id=138410424"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 25",
+   "h": "Todd Boehly's consortium signs a US-backed share swap to buy Lukoil's international assets",
+   "w": "Per Reuters, Boehly (CEO and owner of Eldridge) leads a consortium that includes the US International Development Finance Corp. It will swap Lukoil securities worth $10 billion for the international assets, which two people familiar valued at around $16 billion. The assets span 11 countries and produce around 350,000 barrels of oil a day. Closing could take up to a year and needs OFAC approval.",
+   "m": "The swapped shares go into a UAE escrow account so Lukoil gets no windfall, a structure meant to satisfy the US Treasury's sanctions on Lukoil. The DFC stake gives the US a share of future profits after private investors recover capital plus an agreed return.",
+   "a": "Interview point: explain how sanctions and regulatory approval shape deal structure, and why a share swap into escrow differs from a cash purchase.",
+   "s": [
+    [
+     "Reuters via Global Banking & Finance (Nov 25)",
+     "https://www.globalbankingandfinance.com/exclusive-boehly-signs-us-backed-share-swap-deal-buy-lukoil/"
+    ]
+   ]
+  },
+  {
+   "k": "Earnings",
+   "d": "Nov 25",
+   "h": "Deere forecasts fiscal 2027 net income of $4.50 billion to $5.25 billion, below the $5.91 billion analysts expected",
+   "w": "Per Reuters, Deere's fourth-quarter net income was $1.05 billion, or $3.89 a share, versus $4.05 expected, while net sales of $10.51 billion beat the $10.37 billion estimate. The forecast includes a one-time non-cash charge of $250 million to $400 million tied to a pension payout. Deere cited a subdued ag market and weak crop prices.",
+   "m": "Deere recorded $383 million in tariff recoveries in fiscal 2026, and expects construction and forestry sales to be flat to up 10%, helped by AI data center buildout.",
+   "a": "Interview point: explain why a company can beat on sales but still be marked down on guidance.",
+   "s": [
+    [
+     "Reuters via Investing.com (Nov 25)",
+     "https://www.investing.com/news/stock-market-news/deere-forecasts-fiscal-2027-net-income-below-estimates-5050370"
+    ]
+   ]
+  },
+  {
+   "k": "Markets",
+   "d": "Nov 25",
+   "h": "US futures fall sharply before the open as Asian stocks sell off",
+   "w": "Per TipRanks as of 5:44 a.m. EST, Nasdaq-100 futures were down 2.55%, S&P 500 futures down 1.54% and Dow futures down 0.82%. Japan's Nikkei 225 fell 2.78% and Shanghai fell 2.03%. Brent fell 0.54% to $90.90 and WTI was down 0.79% at $81.40.",
+   "m": "The article noted reports that the administration is preparing new tariffs on 16 major trading partners, and that US markets close Thursday for Thanksgiving.",
+   "a": "Interview point: explain what futures moves do and don't tell you about the regular session.",
+   "s": [
+    [
+     "TipRanks (Nov 25)",
+     "https://www.tipranks.com/news/stock-market-today-nov-25-wall-street-braces-for-inflation-data-after-tech-led-selloff"
+    ]
+   ]
+  },
   {
    "k": "Markets",
    "d": "Nov 24",
@@ -388,101 +407,83 @@
      "https://www.marketscreener.com/news/wall-st-ends-sharply-lower-on-ai-selloff-s-p-500-dow-in-correction-ce785ed3dd80f527"
     ]
    ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 20",
-   "h": "US futures tick lower after the AI-driven selloff; Anthropic slips about 4% after hours",
-   "w": "Trading Economics reported US futures edged lower Friday after Anthropic's IPO. Anthropic shares fell nearly 4% in after-hours trading after a 17% gain on debut day. On Thursday all three major indexes fell more than 2%, with the Nasdaq Composite at its lowest since April. Nvidia fell 3.3% and AMD fell 7.7% after Hunterbrook Capital's short call.",
-   "m": "Investors are still testing how much AI optimism the market will pay for, and the new listing is trading with the tape.",
-   "a": "Interview point: explain how a short seller's report can move a stock and what a bank would check before responding.",
-   "s": [
-    [
-     "Trading Economics, US stock market news (Nov 19-20)",
-     "https://tradingeconomics.com/united-states/stock-market/news/592547"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 19",
-   "h": "Stocks sink on Anthropic's debut day: Dow falls 2.19%, S&P 500 2.02%, Nasdaq 2.25%",
-   "w": "TradingKey reported closes of 49,097.06 for the Dow (-2.19%), 7,175.83 for the S&P 500 (-2.02%) and 23,879.20 for the Nasdaq Composite (-2.25%). The Philadelphia Semiconductor Index fell 2.41% to 9,419.72, with 27 of 30 members lower. Fed Vice Chair Philip Jefferson said AI data-center investment is pushing up inflation, per TradingKey.",
-   "m": "A record IPO did not stop a broad selloff, so rates and AI valuation worries are still setting the tone.",
-   "a": "Interview point: give two reasons a big IPO can pull money out of existing holdings in the same sector.",
-   "s": [
-    [
-     "TradingKey close report (Nov 19)",
-     "https://www.tradingkey.com/analysis/stocks/us-stocks/262313953-us-stock-nasdaq-falls-anthropic-ipo-debut-amd-short-report-tradingkey"
-    ]
-   ]
-  },
-  {
-   "k": "IPOs",
-   "d": "Nov 19",
-   "h": "Anthropic opens at $111.50 on its first day, then closes at $97.17, about 17% above the $83 IPO price",
-   "w": "Per TradingKey, Anthropic (ANT) opened about 34% above the $83 offer at $111.50, hit a high of $115.10, and closed at $97.17, about 17% above the IPO price. WSJ, as cited by TradingKey, put the market value slightly below $1.5 trillion at the open counting current shares, and above $2 trillion counting all potential future shares.",
-   "m": "An IPO pop shows buyers would pay more than the offer price, but a fade from the open shows how quickly early excitement cools.",
-   "a": "Interview point: explain what an IPO 'pop' means for the issuer (money left on the table).",
-   "s": [
-    [
-     "TradingKey close report (Nov 19)",
-     "https://www.tradingkey.com/analysis/stocks/us-stocks/262313953-us-stock-nasdaq-falls-anthropic-ipo-debut-amd-short-report-tradingkey"
-    ]
-   ]
-  },
-  {
-   "k": "M&A",
-   "d": "Nov 19",
-   "h": "Intuit agrees to sell Mailchimp to Bending Spoons for $3.68 billion",
-   "w": "Panabee, summarizing the SEC filings, reported Bending Spoons will buy Mailchimp for $3.68 billion, subject to adjustments for cash, debt and working capital. Intuit will reinvest about $368 million (about 10% of the value) into newly issued Bending Spoons shares. Closing is expected in early 2027, and Intuit agreed not to compete with Mailchimp for two years after closing. Panabee notes its text is AI-generated and may contain numerical errors.",
-   "m": "Selling a non-core unit and taking part of the price in the buyer's stock keeps some upside while freeing cash.",
-   "a": "Interview point: explain why a seller might take part of the price in the buyer's shares.",
-   "s": [
-    [
-     "Panabee (Nov 19)",
-     "https://www.panabee.com/news/bending-spoons-agrees-to-buy-mailchimp-for-3-68-billion-with-368-million-intuit-reinvest"
-    ]
-   ]
   }
  ],
  "NEWS_QUIZ": [
   [
-   "Sanofi is paying $175 per Insmed share in cash, about a 17.5% premium. What does the premium measure?",
+   "October PCE inflation hit 3.8% year over year with core at 3.3%. What does PCE measure?",
    [
-    "How much the offer exceeds the target's last closing price",
-    "The buyer's profit margin",
-    "The deal's debt ratio",
-    "The target's earnings growth"
+    "Prices consumers pay for goods and services, the Fed's preferred gauge",
+    "Corporate profits",
+    "Employer payroll growth",
+    "Treasury auction demand"
    ],
    0,
-   "A takeover premium is the offer price above the target's undisturbed share price."
+   "Personal consumption expenditures is the price index the Fed watches most closely for inflation."
   ],
   [
-   "Sanofi is funding its Insmed purchase with debt and cash on hand. Why does an all-cash deal differ from an all-stock deal for the seller's holders?",
+   "Deere beat on sales but guided fiscal 2027 net income below estimates. Why can the stock still fall?",
    [
-    "They get a fixed dollar price instead of buyer shares",
-    "They keep owning the target",
-    "They share in the buyer's future stock moves",
-    "They pay the buyer's debt"
+    "Markets price future earnings, so weak guidance outweighs a sales beat",
+    "Sales never matter",
+    "Guidance is a tax filing",
+    "Beats are always ignored"
    ],
    0,
-   "Cash gives target holders a set price, while stock deals leave their value tied to the buyer's share price."
+   "Stock prices reflect expected future profits, so a guidance miss can outweigh a quarterly beat."
   ],
   [
-   "Nvidia jumped 31.5% Monday then fell about 5% in premarket Tuesday. What does a premarket move tell you?",
+   "Boehly's Lukoil deal pays with a share swap into escrow. What is an escrow account?",
    [
-    "It is an early indication that can change by the open",
-    "It is the official closing price",
-    "It is the 52-week high",
-    "It is a guaranteed trend"
+    "A neutral account holding assets until deal conditions are met",
+    "A margin loan",
+    "A dividend fund",
+    "A brokerage fee"
    ],
    0,
-   "Premarket trading is thin and early, so prices can reverse once the regular session begins."
+   "Escrow holds assets with a third party until the agreed conditions are satisfied."
   ]
  ],
- "DEALS_DATE": "Nov 24, 2026",
+ "DEALS_DATE": "Nov 25, 2026",
  "DEALS": [
+  {
+   "id": "d56",
+   "buyer": "Todd Boehly consortium (with US DFC)",
+   "target": "Lukoil international assets",
+   "value": "$10B (share swap)",
+   "usd": 10,
+   "date": "Nov 25, 2026",
+   "terms": [
+    "Lukoil securities worth $10 billion swapped for the assets",
+    "Two people familiar valued the portfolio at around $16 billion",
+    "Swapped shares go into a UAE escrow account",
+    "DFC stake shares future profits after investors recover capital plus an agreed return",
+    "Needs OFAC approval",
+    "Closing could take up to a year"
+   ],
+   "what": "Todd Boehly, CEO and owner of Eldridge, signed and announced on Wednesday, Nov 25 a US-backed deal to buy Lukoil's international assets through a swap of Lukoil securities, with a consortium that includes the US International Development Finance Corp.",
+   "why": "The assets cover operations in 11 countries producing around 350,000 barrels of oil per day, including oilfields in Azerbaijan and Kazakhstan and refineries in the Netherlands, Bulgaria and Romania. Boehly and a DFC official said the deal moves strategic energy assets to US or allied hands.",
+   "say": "\"It's a share swap into escrow rather than cash, so Lukoil gets no windfall under sanctions, and the deal still needs OFAC approval, which is why closing could take up to a year.\"",
+   "src": [
+    [
+     "Reuters via Global Banking & Finance (Nov 25)",
+     "https://www.globalbankingandfinance.com/exclusive-boehly-signs-us-backed-share-swap-deal-buy-lukoil/"
+    ]
+   ],
+   "q": [
+    [
+     "Why does the Lukoil deal need OFAC approval?",
+     [
+      "Lukoil is under US sanctions, so the deal needs Treasury review",
+      "It is a stock-exchange rule",
+      "It is an antitrust filing for Boehly",
+      "It sets the share price"
+     ],
+     0,
+     "OFAC administers US sanctions, and Lukoil was sanctioned in October 2025, so the transaction needs Treasury sign-off."
+    ]
+   ]
+  },
   {
    "id": "d55",
    "buyer": "Sanofi",
@@ -664,56 +665,6 @@
      ],
      2,
      "A bridge loan guarantees the cash is there at signing; the buyer usually replaces it with longer-term bonds before or at closing."
-    ]
-   ]
-  },
-  {
-   "id": "d16",
-   "buyer": "EQT Corp.",
-   "target": "Range Resources",
-   "value": "~$12.8B",
-   "usd": 12.83,
-   "date": "Oct 26, 2026",
-   "terms": [
-    "0.987 EQT shares per Range share",
-    "All stock",
-    "~20.6% premium"
-   ],
-   "what": "EQT Corp., the largest U.S. natural gas producer, agreed to buy rival Range Resources by swapping its own shares for Range's. Reuters put Range's equity value at about $12.8 billion, and the combined company is worth more than $50 billion including debt.",
-   "why": "Data centers are driving up demand for natural gas, and a bigger producer can drill more cheaply and sell gas more effectively. EQT expects about $325 million a year in savings within two years, rising to over $600 million long term.",
-   "say": "\"It's an all-stock merger of equals in spirit: Range holders take a ~20% premium in EQT shares and end up owning about 27% of the combined gas giant.\"",
-   "src": [
-    [
-     "Reuters via Investing.com",
-     "https://za.investing.com/news/stock-market-news/eqt-range-resources-tie-up-in-50-billionplus-deal-to-create-us-gas-giant-4524945"
-    ],
-    [
-     "Investing.com",
-     "https://www.investing.com/news/company-news/eqt-to-acquire-range-resources-in-50-billion-allstock-deal-93CH-4971856"
-    ]
-   ],
-   "q": [
-    [
-     "Range holders get 0.987 EQT shares each. If EQT stock falls 10% before closing, what happens to the value Range holders receive?",
-     [
-      "It stays fixed at $54.91",
-      "It falls too, because the share ratio is fixed",
-      "It rises",
-      "The deal is cancelled automatically"
-     ],
-     1,
-     "With a fixed exchange ratio, the target's payout moves with the buyer's stock price."
-    ],
-    [
-     "Why might EQT's stock fall when the deal is announced while Range's jumps?",
-     [
-      "EQT is paying a premium and issuing new shares, diluting its holders",
-      "Range is paying EQT",
-      "All-stock deals are illegal",
-      "EQT is going private"
-     ],
-     0,
-     "The buyer pays a premium and issues shares, so its stock often dips while the target rises toward the offer."
     ]
    ]
   },

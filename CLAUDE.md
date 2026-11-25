@@ -2,6 +2,13 @@
 
 Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, short casual answers, tables and numbers.
 
+## STANDING PERMISSION (Bekir, Nov 25, 2026, supersedes every older "ask first" line below)
+- **Never ask Bekir to approve anything, except sending email from Gmail.** Websites, crawling, actions on his computer, file changes, installs, scheduled tasks, staging, bots: all pre-approved. Just do it.
+- **Email:** the bots send their scheduled emails on their own, Mon-Fri at 12:00pm ET (inside the 9am-4pm window). When Bekir asks Claude to write an email himself, Claude comes back and asks one short question: "draft or send?". Nothing else about email changes.
+- **Deploys are pre-approved too,** but keep Bekir's cap: max 2 deploys per ET day (`tools/deploy.sh` enforces it), batch everything staged into one deploy, and tell him after it ships what went live and the credits used.
+- **Not waived (these are about other people or safety, not about asking him):** the email safety rules (one email per org, 2 per school, 9/day, opt-out line, mailing address, no repeat clubs), never print secrets, never invent numbers/quotes/experiences, never add anything to the Home page unless he asks, no crawling past what WebFetch allows or copying competitors' content, and Claude does not type his passwords or create accounts in his name.
+- Older lines below that say "ask before a deploy / purchases / deletions" are replaced by this block.
+
 ## Repo and deploys
 - GitHub `bekirkahook-del/MA`, branch `main`. Netlify auto-deploys on push.
 - **Every production deploy costs 15 Netlify credits (plan: 1,000/month).**

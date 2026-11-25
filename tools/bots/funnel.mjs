@@ -34,4 +34,4 @@ export function funnel(rows, { minVisitors = 100 } = {}) {
   const enough = people >= minVisitors;
   return { days: days.size, visitors: people, steps, biggestLeak: drops[0] || null, side, sources: src, guide, confidence: enough ? "usable" : "too few visitors (" + people + " < " + minVisitors + "): treat every percentage as a guess", note: enough ? "" : "Come back at " + minVisitors + "+ visitors before changing anything based on this." };
 }
-cli(import.meta.url, a => funnel(JSON.parse(fs.readFileSync(a[0], "utf8"))));
+cli(import.meta.url, a => a[0] && fs.existsSync(a[0]) ? funnel(JSON.parse(fs.readFileSync(a[0], "utf8"))) : { bot: "funnel", findings: [{ code: "no-rows-file", severity: "info", where: "funnel", detail: "Pass a rows.json file. Fetch: select id, data->'ev' as ev from docs where col='visits' and id >= '2026-11-01' (read-only)." }], stats: {}, ok: true });

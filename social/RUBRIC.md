@@ -50,7 +50,7 @@ Run `python3 social/studio/qa.py <file>` first: it checks the measurable items (
 |---|---|---|
 | F1 | Post text and on-screen text: perfect spelling and grammar, consistent with the video | 3 |
 | F2 | CTA: mnaprep.com in the post text (link in bio) + first comment on Instagram/Facebook/YouTube; Pinterest: pin link to mnaprep.com + footer on the image | 3 |
-| F3 | Scheduled at a best hour (10 AM / 6 PM ET), right platforms for the idea type, commit-pinned media URL, platform title set | 4 |
+| F3 | Scheduled in a strong window (videos at the best hours, currently 10 AM / 6 PM ET; slides at least 2 h from any other post on the same platform), right platforms for the idea type, commit-pinned media URL, platform title set | 4 |
 
 ## Score log
 Record every scored post in `social/qa-log.md`: date, slot, post, score, what failed, what you fixed. A post that went from 95 to 100 counts as a pass only after the re-score.

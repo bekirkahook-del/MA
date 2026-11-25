@@ -43,13 +43,13 @@ Runs the detective on **every** question, not just flagged ones.
 
 **Rechecked by:** [[Verifier Bot]] (re-run after a question fix)
 
-**Fed by:** [[Rep Auditor Bot]] (wrong practice answers are verified defects too)
+**Fed by:** [[Rep Auditor Bot]] (wrong practice answers are verified defects too); [[Question Length Bot]] (long questions hurt on a phone); [[Stale Year Bot]] (stale years make answers wrong); [[Explanation Quality Bot]] (weak explanations teach nothing)
 
 **Feeds:** [[Dispatcher Bot]] (issues found); [[Superfeedbackbot]] (verified defects count as hard evidence)
 
 ```dataview-fields
 rechecked_by:: [[Verifier Bot]]
-fed_by:: [[Rep Auditor Bot]]
+fed_by:: [[Rep Auditor Bot]], [[Question Length Bot]], [[Stale Year Bot]], [[Explanation Quality Bot]]
 feeds:: [[Dispatcher Bot]], [[Superfeedbackbot]]
 ```
 <!-- circle:end -->

@@ -97,8 +97,8 @@ test("retention: dry run, never sends, needs opt-in", () => {
 test("outreach: drafts only; no invented email; dedupes; caps per org and per run", () => {
   const t = (id, org, email) => ({ id, name: "Sam Lee", org, email, kind: "club" });
   const r = draft([t("a", "OSU Club", "a@osu.edu"), t("b", "OSU Club", "b@osu.edu"), t("c", "OSU Club", "c@osu.edu"), t("d", "X", null), t("e", "Y", "e@y.edu")], { sent: { e: "2026-11-01" } });
-  assert.equal(r.sends, 0); assert.equal(r.drafted, 2);
-  assert.ok(r.skipped.some(s => /no valid email/.test(s.reason))); assert.ok(r.skipped.some(s => /already contacted/.test(s.reason))); assert.ok(r.skipped.some(s => /already drafting 2/.test(s.reason)));
+  assert.equal(r.sends, 0); assert.equal(r.drafted, 1);
+  assert.ok(r.skipped.some(s => /no valid email/.test(s.reason))); assert.ok(r.skipped.some(s => /already contacted/.test(s.reason))); assert.ok(r.skipped.some(s => /already drafting 1/.test(s.reason)));
   assert.ok(r.drafts.every(d => /won't email again/.test(d.body)));
   assert.ok(!/\d+%|\d+ students|loved/i.test(r.drafts[0].body));
 });

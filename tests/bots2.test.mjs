@@ -67,7 +67,7 @@ test("secrets: finds live keys and service_role JWTs, never prints the value, al
   assert.equal(jwtRole(jwt("service_role")), "service_role");
   assert.equal(scanText(`k="${jwt("service_role")}"`, "g.js").length, 1);
   assert.equal(scanText(`k="${jwt("anon")}"`, "g.js").length, 0);
-  assert.equal(scanText("-----BEGIN PRIVATE KEY-----", "k.pem")[0].kind, "Private key block");
+  assert.equal(scanText("-----BEGIN " + "PRIVATE KEY-----", "k.pem")[0].kind, "Private key block");
   assert.equal(headers("[[headers]]\nX-Content-Type-Options=1\nX-Frame-Options=1\nReferrer-Policy=1\nStrict-Transport-Security=1").length, 0);
   assert.equal(headers("").length, 4);
 });

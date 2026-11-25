@@ -16,19 +16,37 @@ import { digest } from "./reporter.mjs";
 import { release } from "../release.mjs";
 import { rank } from "../strategist.mjs";
 import { changelog as mkChangelog, readQueue } from "../changelog.mjs";
+import { PACK3 } from "./pack3.mjs";
+import { brief } from "../flywheel/brief.mjs";
+import { todayList } from "../todaylist.mjs";
 
-const STATIC = ["seo", "sitemap", "schema", "a11y", "perf", "secrets", "duplicate", "readability", "reps", "coverage", "testcov", "deadcode"];
-const ADAPT = { qa: S.fromQa, health: S.fromHealth, freshness: S.fromFreshness, cost: S.fromCost, ...Object.fromEntries(STATIC.map(b => [b, S.fromReport(b)])) };
+const STATIC = ["seo", "sitemap", "schema", "a11y", "perf", "secrets", "duplicate", "readability", "reps", "coverage", "testcov", "deadcode",
+  "linkgraph", "thin", "cannibal", "typos", "mojibake", "images", "redirects", "feed", "dupids", "consolelog", "localhost", "extlinks", "pwa", "timeouts", "envvars", "deps", "wireschema", "companies", "privacy", "pricing", "drift",
+  "claims", "qlength", "qyears", "explain", "testrunner", "consoleerrors", "mobile", "authdiag"];
+const FLY = PACK3.map(b => b.id);
+const OPTIONAL = ["feedbot", "funnel", "billing", "retention", "outreach", "testrunner", "consoleerrors", "mobile"]; // need live data, a browser, or a long run
+const ADAPT = { ...Object.fromEntries(FLY.map(b => [b, S.fromReport(b)])), qa: S.fromQa, health: S.fromHealth, freshness: S.fromFreshness, cost: S.fromCost, ...Object.fromEntries(STATIC.map(b => [b, S.fromReport(b)])) };
 
 export async function defaultSensors(root, o = {}) {
-  const f = o.files || {}, rd = p => JSON.parse(fs.readFileSync(p, "utf8")), out = {};
+  const now0 = o.now || new Date(), f = o.files || {}, rd = p => JSON.parse(fs.readFileSync(p, "utf8")), out = {};
   const { brokenLinks, functionSyntax, smoke, summarize } = await import("../health.mjs");
   out.health = async () => summarize({ links: brokenLinks(root), funcs: functionSyntax(root), sm: o.smoke ? await smoke(root) : null });
-  out.qa = async () => { const { dumpTracks } = await import("../dump.mjs"); const { auditQuestions } = await import("../qa.mjs"); return auditQuestions((await dumpTracks()).tracks); };
+  
+  out.qa = async () => { const { auditQuestions } = await import("../qa.mjs"); return auditQuestions((await tracks()).tracks); };
   const { scanFreshness } = await import("../freshness.mjs"); out.freshness = async () => scanFreshness(root, o.now);
   const { costReport, deploysThisMonth } = await import("../cost.mjs"); out.cost = async () => costReport({ deploys: deploysThisMonth(root, o.now), aiRows: f.ai ? rd(f.ai) : [], now: o.now });
-  for (const b of STATIC.filter(b => b !== "coverage")) out[b] = async () => (await import("../" + b + ".mjs")).scan(root);
-  out.coverage = async () => (await import("../coverage.mjs")).scan(root, f.tracks);
+  let tp; const tracks = () => (tp ||= f.tracks ? Promise.resolve(rd(f.tracks)) : import("../dump.mjs").then(m => m.dumpTracks()));
+  const PLAIN = STATIC.filter(b => !["coverage", "claims", "qlength", "qyears", "explain", "testrunner", "consoleerrors", "mobile", "authdiag", "deps"].includes(b));
+  for (const b of PLAIN) out[b] = async () => (await import("../" + b + ".mjs")).scan(root);
+  out.deps = async () => (await import("../deps.mjs")).scan(root, { audit: o.network });
+  out.coverage = async () => (await import("../coverage.mjs")).scan(root, (await tracks()).tracks);
+  out.claims = async () => (await import("../claims.mjs")).scan(root, (await tracks()).tracks);
+  for (const b of ["qlength", "qyears", "explain"]) out[b] = async () => (await import("../" + b + ".mjs"))[b](( await import("../qdata.mjs")).flatten((await tracks()).tracks));
+  let oc; const opsCtx = async () => (oc ||= (async () => { const O = await import("../ops.mjs"), COST = await import("../cost.mjs"), { flatten } = await import("../qdata.mjs"); return O.loadOps(root, now0, { cost: COST, qs: flatten((await tracks()).tracks) }); })());
+  for (const b of FLY) out[b] = async () => (await import("../" + b + ".mjs")).scan(root, { ctx: await opsCtx() });
+  out.authdiag = async () => (await import("../authdiag.mjs")).scan(root, { rows: f.visits ? rd(f.visits) : null, smoke: o.smoke, network: o.network });
+  if (o.tests) out.testrunner = async () => (await import("../testrunner.mjs")).scan(root);
+  if (o.smoke) for (const b of ["consoleerrors", "mobile"]) out[b] = async () => (await import("../" + b + ".mjs")).scan(root);
   out.changelog = async () => mkChangelog(readQueue(root));
   if (f.visits) { const { funnel } = await import("../funnel.mjs"); out.funnel = async () => funnel(rd(f.visits)); }
   if (f.billing) { const { reconcile } = await import("../billing.mjs"); out.billing = async () => reconcile(rd(f.billing)); }
@@ -50,13 +68,13 @@ export async function runCircle(o = {}) {
   await sense("qa", S.fromQa, sensors.qa);
   await sense("freshness", S.fromFreshness, sensors.freshness);
   await sense("cost", S.fromCost, sensors.cost);
-  for (const b of STATIC) await sense(b, ADAPT[b], sensors[b]);
+  for (const b of [...STATIC, ...FLY]) await sense(b, ADAPT[b], sensors[b]);
   await sense("funnel", S.fromFunnel, sensors.funnel);
   const qaDefects = new Set(found.filter(i => i.bot === "qa" && i.verified).map(i => i.question));
   await sense("feedbot", S.fromFeedbot, sensors.feedbot && (() => sensors.feedbot({ qaDefects })));
 
   L.upsert(led, found, { ran, now });
-  const gates = gateMarketing(led), drafts = {};
+  const gates = gateMarketing(led, now), drafts = {};
   for (const [name, fn] of [["retention", sensors.retention], ["outreach", sensors.outreach]]) {
     if (!fn) continue;
     if (!gates[name]) { drafts[name] = { skipped: gates.why.join("; ") }; continue; }
@@ -92,10 +110,15 @@ export async function runCircle(o = {}) {
   }
   const plan = makePlan(led, { now, autoAllowed }), cost = reports.cost && reports.cost.deploy;
   const queue = sensors.changelog ? await sensors.changelog() : null, killed = fs.existsSync(path.join(root, "tools/bots/STOP"));
-  const rel = queue ? release({ issues: Object.values(led.issues), queue, tests: o.testsResult, deploysLeft: reports.cost && reports.cost.deploy && reports.cost.deploy.deploysLeft }) : null;
+  const rel = queue ? release({ issues: Object.values(led.issues), queue, tests: o.testsResult || (reports.testrunner ? { ok: reports.testrunner.ok, note: reports.testrunner.note } : undefined), deploysLeft: reports.cost && reports.cost.deploy && reports.cost.deploy.deploysLeft }) : null;
   if (rel && killed) { rel.verdict = "NO-GO"; rel.reasons.push("Kill switch (tools/bots/STOP) is on."); }
-  const ideas = rank({ issues: Object.values(led.issues), coverage: reports.coverage }, 5), extras = { release: rel, changelog: queue, ideas };
+  let trend = null, metaRep = null;
+  try { const T = await import("../trend.mjs"); trend = T.record(root, Object.values(led.issues), now, o.write !== false); } catch (e) { failed.push({ bot: "trend", error: e.message }); }
+  try { const M = await import("../meta.mjs"), { NODES } = await import("./graph.mjs"); metaRep = M.selfAudit({ issues: Object.values(led.issues), ran, nodes: NODES, history: hist, exists: p => fs.existsSync(path.join(root, p)), now, optional: OPTIONAL }); } catch (e) { failed.push({ bot: "meta", error: e.message }); }
+  const today = todayList(Object.values(led.issues)), contentBrief = reports.slotplan ? brief(reports, { date: reports.slotplan.stats.date }) : null;
+  const ideas = rank({ issues: Object.values(led.issues), coverage: reports.coverage }, 5), extras = { release: rel, changelog: queue, ideas, trend, meta: metaRep, today, contentBrief };
   const md = digest({ now, summary: L.counts(led), plan, actions, gates, failed, cost, ran, mode, queuedSiteChanges: o.queuedSiteChanges || (queue ? queue.commits : 0), extras });
+  if (o.write !== false && contentBrief) fs.writeFileSync(path.join(sd, "content-brief.md"), contentBrief);
   if (o.write !== false) {
     fs.writeFileSync(path.join(sd, "circle-ledger.json"), JSON.stringify(led, null, 1)); fs.writeFileSync(path.join(sd, "circle-history.json"), JSON.stringify(hist, null, 1)); fs.writeFileSync(path.join(sd, "digest.md"), md);
   }
@@ -103,5 +126,5 @@ export async function runCircle(o = {}) {
 }
 cli(import.meta.url, async a => {
   const files = { visits: arg(a, "visits"), billing: arg(a, "billing"), feedback: arg(a, "feedback"), targets: arg(a, "targets"), engage: arg(a, "engage"), ai: arg(a, "ai"), tracks: arg(a, "tracks") };
-  return runCircle({ mode: a.includes("--act") ? "act" : "plan", smoke: a.includes("--smoke"), files });
+  return runCircle({ mode: a.includes("--act") ? "act" : "plan", smoke: a.includes("--smoke"), tests: a.includes("--tests"), network: a.includes("--live"), files });
 });

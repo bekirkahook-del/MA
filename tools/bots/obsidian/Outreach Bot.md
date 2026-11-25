@@ -29,10 +29,13 @@ Needs a target list. The earlier club outreach list lives in the M&A Website pro
 
 **Gated by:** [[Guard Bot]] (runs only when health and billing are clean)
 
+**Fed by:** [[Outreach Bump Bot]] (who is due a follow-up)
+
 **Feeds:** [[Reporter Bot]] (drafts waiting for approval)
 
 ```dataview-fields
 gated_by:: [[Guard Bot]]
+fed_by:: [[Outreach Bump Bot]]
 feeds:: [[Reporter Bot]]
 ```
 <!-- circle:end -->

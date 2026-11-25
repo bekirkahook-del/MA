@@ -16,11 +16,14 @@ Live keys committed to the repo (never prints them) and missing security headers
 <!-- circle:start -->
 ## Connections
 
+**Fed by:** [[Env Var Bot]] (which secrets the code reads); [[Dependency Bot]] (vulnerable dependencies); [[Privacy Bot]] (public personal data)
+
 **Feeds:** [[Dispatcher Bot]] (issues found)
 
 **Gates:** [[Guard Bot]] (leaked key = freeze all fixes)
 
 ```dataview-fields
+fed_by:: [[Env Var Bot]], [[Dependency Bot]], [[Privacy Bot]]
 feeds:: [[Dispatcher Bot]]
 gates:: [[Guard Bot]]
 ```

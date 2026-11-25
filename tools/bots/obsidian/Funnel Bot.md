@@ -24,10 +24,10 @@ Built and tested on sample data. Not run on live rows yet.
 <!-- circle:start -->
 ## Connections
 
-**Feeds:** [[Dispatcher Bot]] (issues found); [[Strategist Bot]] (where visitors leave)
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Strategist Bot]] (where visitors leave); [[Sign-up and Sign-in Diagnostic Bot]] (sign-up funnel events)
 
 ```dataview-fields
-feeds:: [[Dispatcher Bot]], [[Strategist Bot]]
+feeds:: [[Dispatcher Bot]], [[Strategist Bot]], [[Sign-up and Sign-in Diagnostic Bot]]
 ```
 <!-- circle:end -->
 

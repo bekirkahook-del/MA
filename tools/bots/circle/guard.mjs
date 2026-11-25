@@ -16,9 +16,11 @@ export function checkPatch({ files = [], attempts = 0, reopened = 0 }) {
   if (reopened >= LIMITS.maxReopen) why.push("issue keeps coming back");
   return { ok: !why.length, why };
 }
-export function gateMarketing(ledger) {
+import { outreachWindow } from "../ops.mjs";
+export function gateMarketing(ledger, now = new Date()) {
   const open = Object.values(ledger.issues).filter(i => !["resolved", "ignored"].includes(i.status));
   const bill = open.some(i => i.bot === "billing" && i.severity === "critical"), health = open.some(i => i.bot === "health" && i.severity === "critical");
   const why = [bill && "a critical billing problem is open", health && "site health is critical"].filter(Boolean);
-  return { retention: !why.length, outreach: !why.length, why };
+  const w = outreachWindow(now), outWhy = w.open ? [] : [`outside the outreach window (${w.label}); next opens ${w.next}`];
+  return { retention: !why.length, outreach: !why.length && w.open, why: [...why, ...outWhy] };
 }

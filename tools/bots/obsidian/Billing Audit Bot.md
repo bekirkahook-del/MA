@@ -31,11 +31,14 @@ Built and tested on sample data. Needs a live pull of billing docs plus Stripe s
 <!-- circle:start -->
 ## Connections
 
+**Fed by:** [[Pricing Consistency Bot]] (price text must match Stripe)
+
 **Feeds:** [[Dispatcher Bot]] (issues found)
 
 **Gates:** [[Guard Bot]] (money problem = pause marketing)
 
 ```dataview-fields
+fed_by:: [[Pricing Consistency Bot]]
 feeds:: [[Dispatcher Bot]]
 gates:: [[Guard Bot]]
 ```

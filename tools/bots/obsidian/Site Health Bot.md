@@ -33,11 +33,14 @@ First version reported 9 "broken" links. All were Netlify redirects (`/youtube`,
 <!-- circle:start -->
 ## Connections
 
+**Fed by:** [[Console Error Bot]] (script errors are health problems); [[Leftover Debug Bot]] (debug leftovers); [[Localhost Bot]] (dev addresses in production); [[Install (PWA) Bot]] (install support); [[Timeout Bot]] (slow partners break functions); [[Company List Bot]] (search data integrity)
+
 **Feeds:** [[Dispatcher Bot]] (issues found)
 
 **Gates:** [[Guard Bot]] (site broken = freeze all fixes)
 
 ```dataview-fields
+fed_by:: [[Console Error Bot]], [[Leftover Debug Bot]], [[Localhost Bot]], [[Install (PWA) Bot]], [[Timeout Bot]], [[Company List Bot]]
 feeds:: [[Dispatcher Bot]]
 gates:: [[Guard Bot]]
 ```

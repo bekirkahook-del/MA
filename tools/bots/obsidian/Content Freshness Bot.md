@@ -31,10 +31,13 @@ status: built, not scheduled
 
 **Rechecked by:** [[Verifier Bot]] (re-run after a data fix)
 
+**Fed by:** [[Wire Schema Bot]] (bad rows before stale rows)
+
 **Feeds:** [[Dispatcher Bot]] (issues found)
 
 ```dataview-fields
 rechecked_by:: [[Verifier Bot]]
+fed_by:: [[Wire Schema Bot]]
 feeds:: [[Dispatcher Bot]]
 ```
 <!-- circle:end -->

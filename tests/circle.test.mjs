@@ -71,8 +71,9 @@ test("guard: protects Home, config, functions and auth; stops after 2 attempts o
   assert.equal(checkPatch({ files: [], attempts: 2 }).ok, false); assert.equal(checkPatch({ files: [], reopened: 3 }).ok, false);
 });
 test("guard: a critical billing or health issue pauses marketing bots", () => {
-  const led = L.empty(); assert.equal(gateMarketing(led).outreach, true);
-  led.issues.b = issue({ key: "b", bot: "billing", severity: "critical" }); const g = gateMarketing(led);
+  const OPEN = new Date("2026-11-25T15:00:00Z"), led = L.empty(); assert.equal(gateMarketing(led, OPEN).outreach, true);
+  assert.equal(gateMarketing(led, new Date("2026-11-28T16:00:00Z")).outreach, false);
+  led.issues.b = issue({ key: "b", bot: "billing", severity: "critical" }); const g = gateMarketing(led, OPEN);
   assert.equal(g.outreach, false); assert.equal(g.retention, false); assert.match(g.why[0], /billing/);
 });
 

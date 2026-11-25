@@ -16,12 +16,12 @@ Reads the commits waiting on staging and groups them by what a student would not
 <!-- circle:start -->
 ## Connections
 
-**Fed by:** [[Verifier Bot]] (bot fix commits join the staging queue)
+**Fed by:** [[Verifier Bot]] (bot fix commits join the staging queue); [[Drift Bot]] (what main has that staging lacks)
 
 **Feeds:** [[Release Bot]] (what would ship); [[Reporter Bot]] (plain-English change list)
 
 ```dataview-fields
-fed_by:: [[Verifier Bot]]
+fed_by:: [[Verifier Bot]], [[Drift Bot]]
 feeds:: [[Release Bot]], [[Reporter Bot]]
 ```
 <!-- circle:end -->

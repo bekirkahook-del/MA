@@ -1,0 +1,11 @@
+{
+  "note": "Seeded from the project hub (ma-hub.md, Nov 18) and growth-kit. Update this file when you send more; the Outreach Bump Bot reads it. Dates are the send dates.",
+  "groups": [
+    { "name": "Club emails (published club/org inbox)", "sent": "2026-11-18", "count": 15, "bumpAfterDays": 5, "bumped": null },
+    { "name": "Career center emails", "sent": "2026-11-16", "count": 8, "bumpAfterDays": 7, "bumped": null }
+  ],
+  "pending": [
+    { "name": "Clubs with only a contact form or site", "count": 33, "next": "use each contact form or find a verified email" },
+    { "name": "Career centers with no verified inbox (Michigan, Miami)", "count": 2, "next": "find a verified inbox before sending" }
+  ]
+}

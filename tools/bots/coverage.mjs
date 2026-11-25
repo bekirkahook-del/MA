@@ -26,7 +26,7 @@ export function coverage(tracks, keys) {
   return { ...report("coverage", f, { levels: n, withLessonPct: pct("lesson"), withRepsPct: pct("reps"), withModelPct: pct("model") }), rows };
 }
 export async function scan(root = ROOT, tracksFile) {
-  const tracks = tracksFile ? JSON.parse(fs.readFileSync(tracksFile, "utf8")).tracks : (await (await import("./dump.mjs")).dumpTracks()).tracks;
+  const tracks = Array.isArray(tracksFile) ? tracksFile : tracksFile ? JSON.parse(fs.readFileSync(tracksFile, "utf8")).tracks : (await (await import("./dump.mjs")).dumpTracks()).tracks;
   return coverage(tracks, loadKeys(root));
 }
 cli(import.meta.url, a => scan(ROOT, a[0]));

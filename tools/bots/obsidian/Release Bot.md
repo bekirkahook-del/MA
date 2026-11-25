@@ -28,15 +28,15 @@ The batch's cost comes from the [[Changelog Bot]]: a batch that only touches bot
 <!-- circle:start -->
 ## Connections
 
-**Gated by:** [[Rep Auditor Bot]] (a broken practice problem blocks a release); [[Guard Bot]] (kill switch blocks a GO)
+**Gated by:** [[Rep Auditor Bot]] (a broken practice problem blocks a release); [[Guard Bot]] (kill switch blocks a GO); [[Sign-up and Sign-in Diagnostic Bot]] (broken sign-up blocks a release); [[Drift Bot]] (a merge conflict blocks a deploy)
 
-**Fed by:** [[Changelog Bot]] (what would ship); [[Dispatcher Bot]] (open critical issues); [[Cost Guard Bot]] (deploy credits left)
+**Fed by:** [[Changelog Bot]] (what would ship); [[Dispatcher Bot]] (open critical issues); [[Cost Guard Bot]] (deploy credits left); [[Test Runner Bot]] (tests passed or failed)
 
 **Feeds:** [[Reporter Bot]] (GO or NO-GO)
 
 ```dataview-fields
-gated_by:: [[Rep Auditor Bot]], [[Guard Bot]]
-fed_by:: [[Changelog Bot]], [[Dispatcher Bot]], [[Cost Guard Bot]]
+gated_by:: [[Rep Auditor Bot]], [[Guard Bot]], [[Sign-up and Sign-in Diagnostic Bot]], [[Drift Bot]]
+fed_by:: [[Changelog Bot]], [[Dispatcher Bot]], [[Cost Guard Bot]], [[Test Runner Bot]]
 feeds:: [[Reporter Bot]]
 ```
 <!-- circle:end -->

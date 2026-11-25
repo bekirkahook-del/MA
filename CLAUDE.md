@@ -31,3 +31,6 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 
 ## Saving usage
 - Read only the parts of big files you need (grep first). Batch browser actions; prefer page text over screenshots.
+
+## Outreach hours (Bekir, Nov 25, 2026)
+- **Outreach only goes out Monday to Friday, 9am to 4pm Eastern.** Clubs, career centers, bumps, anyone. Never send, schedule or draft-for-now outside that window. `outreachWindow()` in `tools/bots/ops.mjs` is the one place that rule lives; the Guard Bot and the Outreach Bump Bot both read it.

@@ -21,3 +21,5 @@
 | 2026-11-26 | Big 12 RANKED: US News 2027 undergrad business rank (P&Q) | 5 | terminal, no photo | 118 (pace 3, ~13s) | conflict "Big 12's best is only #31" | | | | |
 | 2026-11-27 | Biggest online shopping days 2026 (Adobe forecast) | 4 | glow + photo bg | 136 (pace 2, fast ~8.4s) | conflict "Black Friday isn't #1" | | | | |
 | 2026-11-27 | +25% then 20% off = $0 saved (type2.js) | 4 steps | timeline | 126 | question-first "Did you save?" | | | | |
+| 2026-11-28 | Intern/Analyst/MD ladder: margin 40%, P/E 20x, +10%/−10% = −1% (story.js) | 3 tiers, 6 cards | story | 104 (pace 4, slow ~23s) | challenge "Can you get all 3?" | | | | |
+| 2026-11-28 | Old Pac-12 RANKED: US News 2027 undergrad business rank (P&Q) | 5 | neon, no photo | 112 (pace 3, ~14s) | conflict "best is #3 in the country" | | | | |

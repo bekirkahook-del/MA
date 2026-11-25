@@ -145,3 +145,8 @@
   - Wed 11-25 6:00 PM: Big 12 BRAWL (PS2, rank-based knockouts, Rareliquid data) IG/TT/FB, Metricool 440776667. YT skipped (rankings flop on YT).
   - Fri 11-27 10:00 AM: Jake's first Superday (PS2) IG/TT/FB, Metricool 440764924. YT skipped (character skits flop on YT).
   - Moved to drafts (Wed filler, weak format): die EV, speed round, egg drop, $5/day on TikTok + IG (Pinterest pins kept).
+- 2026-11-27 9:16pm oddq-negev — [Interview Q] Negative EV: $50M mkt cap + $10M debt − $80M cash = −$20M (cash > market cap + debt). TT + IG + Pinterest
+- 2026-11-28 1:41pm oddq-half — [Interview Q] Stock drops 50% → needs +100% to get back (10% drop needs 11.1%). TT + IG + Pinterest
+- 2026-11-28 3:23pm story-tier2 — [Tiered interview Q video, story.js, no voice] Intern margin $20/$50 = 40%; Analyst P/E $40/$2 = 20x; MD +10% then −10% = −1%. TT + IG Reel + Pinterest
+- 2026-11-28 6:49pm q3lbo — [Tiered quiz, PE edition] 15% of 240 = 36 (B); doubling in 5 yrs ≈ 15% IRR (C, exact 14.9%); MD: $200M equity, debt $300M→$100M, exit $500M → 2.0x (D). TT + IG + Pinterest
+- 2026-11-28 8:17pm punch-pac12 — [Ranking video, punch.js neon, no voice] Old Pac-12 RANKED, U.S. News 2027 undergrad business (P&Q, Sept 23 2026): Berkeley #3, USC #11 (from #8), Washington T-20, ASU T-31, Arizona & Colorado T-33. TT + IG Reel + Pinterest

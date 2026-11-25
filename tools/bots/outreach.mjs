@@ -9,8 +9,8 @@ const orgKey = s => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").tr
 const clean = s => String(s || "").replace(/[\r\n<>]/g, " ").replace(/\s+/g, " ").trim().slice(0, 120);
 const first = n => clean(n).split(" ")[0];
 const T = {
-  club: t => ({ subject: `Free finance recruiting prep for ${t.org}`, body: `Hi ${first(t.name)},\n\nI'm Bekir, a finance student at Ohio State. I built mnaprep.com, a free site with short levels, technical questions and number drills for IB and PE recruiting. It might help ${t.org} members. Happy to set up a free club code if useful.\n\nBekir Kahook\nmnaprep.com\n\nReply "no thanks" and I won't email again.` }),
-  career: t => ({ subject: `Free finance recruiting prep for ${t.org} students`, body: `Hi ${first(t.name)},\n\nI'm Bekir, a finance student at Ohio State. I built mnaprep.com, a free site where students practice IB and PE recruiting questions in short levels. If your office keeps a list of prep resources, it may be a fit.\n\nBekir Kahook\nmnaprep.com\n\nReply "no thanks" and I won't email again.` }),
+  club: t => ({ subject: `Free finance recruiting prep for ${t.org}`, body: `Hi ${first(t.name)},\n\nI'm Bekir, a finance student at Ohio State. I built mnaprep.com, a free site with short levels, technical questions and number drills for IB and PE recruiting. It might help ${t.org} members. Happy to set up a free club code if useful.\n\nBekir Kahook\nmnaprep.com\n80 W 11th Ave, Columbus, OH 43085\n\nReply "no thanks" and I won't email again.` }),
+  career: t => ({ subject: `Free finance recruiting prep for ${t.org} students`, body: `Hi ${first(t.name)},\n\nI'm Bekir, a finance student at Ohio State. I built mnaprep.com, a free site where students practice IB and PE recruiting questions in short levels. If your office keeps a list of prep resources, it may be a fit.\n\nBekir Kahook\nmnaprep.com\n80 W 11th Ave, Columbus, OH 43085\n\nReply "no thanks" and I won't email again.` }),
 };
 T.other = T.club;
 import { outreachWindow } from "./ops.mjs";

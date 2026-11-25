@@ -41,6 +41,6 @@
 
 ## Around the content
 
-- Club emails (published club/org inbox): 15 sent 2026-11-18. Bump was due 2026-11-23 (2 day(s) overdue). Send inside Mon-Fri 9am-4pm ET: next window Wed Nov 25, 9:00am ET.
-- Career center emails: 8 sent 2026-11-16. Bump was due 2026-11-23 (2 day(s) overdue). Send inside Mon-Fri 9am-4pm ET: next window Wed Nov 25, 9:00am ET.
+- Club emails (published club/org inbox): 15 sent 2026-11-18. Bump was due 2026-11-23 (2 day(s) overdue). The outreach window is open now (Mon-Fri 9am-4pm ET), so send it.
+- Career center emails: 8 sent 2026-11-16. Bump was due 2026-11-23 (2 day(s) overdue). The outreach window is open now (Mon-Fri 9am-4pm ET), so send it.
 - 8 of 8 listings not done. Today: Product Hunt (producthunt.com) and BetaList (betalist.com). Mark them done in tools/bots/state/directories-done.json.

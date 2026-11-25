@@ -4,6 +4,7 @@ import { PACK3 } from "./pack3.mjs";
 import { PACK4 } from "./pack4.mjs";
 import { PACK5 } from "./pack5.mjs";
 import { PACK6 } from "./pack6.mjs";
+import { PACK7 } from "./pack7.mjs";
 export const NODES = [
   { id: "qa", name: "Question QA Bot", role: "sensor", file: "tools/bots/qa.mjs", does: "Audits all 1,248 questions for wrong keys, duplicate options, giveaways." },
   { id: "health", name: "Site Health Bot", role: "sensor", file: "tools/bots/health.mjs", does: "Links, function syntax, every level opens, JS errors." },
@@ -179,6 +180,9 @@ EDGES.push(...PACK5.map(b => ({ from: b.id, to: "dispatcher", type: "feed", labe
 NODES.push(...PACK6.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
 EDGES.push(...PACK6.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "learn issues" })),
   ...PACK6.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "learn to do" })));
+NODES.push(...PACK7.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK7.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "grow issues" })),
+  ...PACK7.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "grow to do" })));
 
 export const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
 export const edgesOf = id => ({ out: EDGES.filter(e => e.from === id), in: EDGES.filter(e => e.to === id) });

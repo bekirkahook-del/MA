@@ -365,6 +365,30 @@ flowchart LR
     lncrawlqueue["Learn Crawl Queue Bot"]
     lncrawlsrc["Learn Crawl Source Bot"]
     lnbrief["Learn Brief Bot"]
+    grsnap["Snapshot Puller"]
+    grmetri["Metricool Puller"]
+    grtag["Source Tagger"]
+    gralert["Sign-up Alert"]
+    grreply["Reply Triage"]
+    grnudge["Nudge Writer"]
+    grcomp["Competitor Watcher"]
+    grreview["Review Collector"]
+    grpay["Paywall Tester"]
+    grchurn["Churn Watch"]
+    grqdoc["Question Doctor"]
+    grspeed["Page Speed Watcher"]
+    grwinner["Guide Winner"]
+    grleak["Funnel Leak"]
+    grlink["Link Booster"]
+    grref["Referral Bot"]
+    grwelcome["Welcome Coverage"]
+    grreact["Reactivation Bot"]
+    grab["Test Planner"]
+    grpost["Post-to-Signup"]
+    grdigest["Morning Digest"]
+    grseason["Season Bot"]
+    grmagnet["Lead Magnet Bot"]
+    grshare["Share Loop Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -1126,6 +1150,54 @@ flowchart LR
   lncrawlqueue -->|learn to do| todaylist
   lncrawlsrc -->|learn to do| todaylist
   lnbrief -->|learn to do| todaylist
+  grsnap -->|grow issues| dispatcher
+  grmetri -->|grow issues| dispatcher
+  grtag -->|grow issues| dispatcher
+  gralert -->|grow issues| dispatcher
+  grreply -->|grow issues| dispatcher
+  grnudge -->|grow issues| dispatcher
+  grcomp -->|grow issues| dispatcher
+  grreview -->|grow issues| dispatcher
+  grpay -->|grow issues| dispatcher
+  grchurn -->|grow issues| dispatcher
+  grqdoc -->|grow issues| dispatcher
+  grspeed -->|grow issues| dispatcher
+  grwinner -->|grow issues| dispatcher
+  grleak -->|grow issues| dispatcher
+  grlink -->|grow issues| dispatcher
+  grref -->|grow issues| dispatcher
+  grwelcome -->|grow issues| dispatcher
+  grreact -->|grow issues| dispatcher
+  grab -->|grow issues| dispatcher
+  grpost -->|grow issues| dispatcher
+  grdigest -->|grow issues| dispatcher
+  grseason -->|grow issues| dispatcher
+  grmagnet -->|grow issues| dispatcher
+  grshare -->|grow issues| dispatcher
+  grsnap -->|grow to do| todaylist
+  grmetri -->|grow to do| todaylist
+  grtag -->|grow to do| todaylist
+  gralert -->|grow to do| todaylist
+  grreply -->|grow to do| todaylist
+  grnudge -->|grow to do| todaylist
+  grcomp -->|grow to do| todaylist
+  grreview -->|grow to do| todaylist
+  grpay -->|grow to do| todaylist
+  grchurn -->|grow to do| todaylist
+  grqdoc -->|grow to do| todaylist
+  grspeed -->|grow to do| todaylist
+  grwinner -->|grow to do| todaylist
+  grleak -->|grow to do| todaylist
+  grlink -->|grow to do| todaylist
+  grref -->|grow to do| todaylist
+  grwelcome -->|grow to do| todaylist
+  grreact -->|grow to do| todaylist
+  grab -->|grow to do| todaylist
+  grpost -->|grow to do| todaylist
+  grdigest -->|grow to do| todaylist
+  grseason -->|grow to do| todaylist
+  grmagnet -->|grow to do| todaylist
+  grshare -->|grow to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -1888,6 +1960,54 @@ flowchart LR
 | [[Learn Crawl Queue Bot]] | feed | [[Today List Bot]] | learn to do |
 | [[Learn Crawl Source Bot]] | feed | [[Today List Bot]] | learn to do |
 | [[Learn Brief Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Snapshot Puller]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Metricool Puller]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Source Tagger]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Sign-up Alert]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Reply Triage]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Nudge Writer]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Competitor Watcher]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Review Collector]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Paywall Tester]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Churn Watch]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Question Doctor]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Page Speed Watcher]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Guide Winner]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Funnel Leak]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Link Booster]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Referral Bot]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Welcome Coverage]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Reactivation Bot]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Test Planner]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Post-to-Signup]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Morning Digest]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Season Bot]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Lead Magnet Bot]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Share Loop Bot]] | feed | [[Dispatcher Bot]] | grow issues |
+| [[Snapshot Puller]] | feed | [[Today List Bot]] | grow to do |
+| [[Metricool Puller]] | feed | [[Today List Bot]] | grow to do |
+| [[Source Tagger]] | feed | [[Today List Bot]] | grow to do |
+| [[Sign-up Alert]] | feed | [[Today List Bot]] | grow to do |
+| [[Reply Triage]] | feed | [[Today List Bot]] | grow to do |
+| [[Nudge Writer]] | feed | [[Today List Bot]] | grow to do |
+| [[Competitor Watcher]] | feed | [[Today List Bot]] | grow to do |
+| [[Review Collector]] | feed | [[Today List Bot]] | grow to do |
+| [[Paywall Tester]] | feed | [[Today List Bot]] | grow to do |
+| [[Churn Watch]] | feed | [[Today List Bot]] | grow to do |
+| [[Question Doctor]] | feed | [[Today List Bot]] | grow to do |
+| [[Page Speed Watcher]] | feed | [[Today List Bot]] | grow to do |
+| [[Guide Winner]] | feed | [[Today List Bot]] | grow to do |
+| [[Funnel Leak]] | feed | [[Today List Bot]] | grow to do |
+| [[Link Booster]] | feed | [[Today List Bot]] | grow to do |
+| [[Referral Bot]] | feed | [[Today List Bot]] | grow to do |
+| [[Welcome Coverage]] | feed | [[Today List Bot]] | grow to do |
+| [[Reactivation Bot]] | feed | [[Today List Bot]] | grow to do |
+| [[Test Planner]] | feed | [[Today List Bot]] | grow to do |
+| [[Post-to-Signup]] | feed | [[Today List Bot]] | grow to do |
+| [[Morning Digest]] | feed | [[Today List Bot]] | grow to do |
+| [[Season Bot]] | feed | [[Today List Bot]] | grow to do |
+| [[Lead Magnet Bot]] | feed | [[Today List Bot]] | grow to do |
+| [[Share Loop Bot]] | feed | [[Today List Bot]] | grow to do |
 
 Types: **feed** passes findings, **act** gives work, **gate** can block, **recheck** verifies, **learn** changes future behavior.
 

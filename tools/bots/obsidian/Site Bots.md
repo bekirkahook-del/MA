@@ -365,6 +365,30 @@ flowchart LR
     lncrawlqueue["Learn Crawl Queue Bot"]
     lncrawlsrc["Learn Crawl Source Bot"]
     lnbrief["Learn Brief Bot"]
+    grsnap["Snapshot Puller"]
+    grmetri["Metricool Puller"]
+    grtag["Source Tagger"]
+    gralert["Sign-up Alert"]
+    grreply["Reply Triage"]
+    grnudge["Nudge Writer"]
+    grcomp["Competitor Watcher"]
+    grreview["Review Collector"]
+    grpay["Paywall Tester"]
+    grchurn["Churn Watch"]
+    grqdoc["Question Doctor"]
+    grspeed["Page Speed Watcher"]
+    grwinner["Guide Winner"]
+    grleak["Funnel Leak"]
+    grlink["Link Booster"]
+    grref["Referral Bot"]
+    grwelcome["Welcome Coverage"]
+    grreact["Reactivation Bot"]
+    grab["Test Planner"]
+    grpost["Post-to-Signup"]
+    grdigest["Morning Digest"]
+    grseason["Season Bot"]
+    grmagnet["Lead Magnet Bot"]
+    grshare["Share Loop Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -1126,6 +1150,54 @@ flowchart LR
   lncrawlqueue -->|learn to do| todaylist
   lncrawlsrc -->|learn to do| todaylist
   lnbrief -->|learn to do| todaylist
+  grsnap -->|grow issues| dispatcher
+  grmetri -->|grow issues| dispatcher
+  grtag -->|grow issues| dispatcher
+  gralert -->|grow issues| dispatcher
+  grreply -->|grow issues| dispatcher
+  grnudge -->|grow issues| dispatcher
+  grcomp -->|grow issues| dispatcher
+  grreview -->|grow issues| dispatcher
+  grpay -->|grow issues| dispatcher
+  grchurn -->|grow issues| dispatcher
+  grqdoc -->|grow issues| dispatcher
+  grspeed -->|grow issues| dispatcher
+  grwinner -->|grow issues| dispatcher
+  grleak -->|grow issues| dispatcher
+  grlink -->|grow issues| dispatcher
+  grref -->|grow issues| dispatcher
+  grwelcome -->|grow issues| dispatcher
+  grreact -->|grow issues| dispatcher
+  grab -->|grow issues| dispatcher
+  grpost -->|grow issues| dispatcher
+  grdigest -->|grow issues| dispatcher
+  grseason -->|grow issues| dispatcher
+  grmagnet -->|grow issues| dispatcher
+  grshare -->|grow issues| dispatcher
+  grsnap -->|grow to do| todaylist
+  grmetri -->|grow to do| todaylist
+  grtag -->|grow to do| todaylist
+  gralert -->|grow to do| todaylist
+  grreply -->|grow to do| todaylist
+  grnudge -->|grow to do| todaylist
+  grcomp -->|grow to do| todaylist
+  grreview -->|grow to do| todaylist
+  grpay -->|grow to do| todaylist
+  grchurn -->|grow to do| todaylist
+  grqdoc -->|grow to do| todaylist
+  grspeed -->|grow to do| todaylist
+  grwinner -->|grow to do| todaylist
+  grleak -->|grow to do| todaylist
+  grlink -->|grow to do| todaylist
+  grref -->|grow to do| todaylist
+  grwelcome -->|grow to do| todaylist
+  grreact -->|grow to do| todaylist
+  grab -->|grow to do| todaylist
+  grpost -->|grow to do| todaylist
+  grdigest -->|grow to do| todaylist
+  grseason -->|grow to do| todaylist
+  grmagnet -->|grow to do| todaylist
+  grshare -->|grow to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -1497,6 +1569,30 @@ flowchart LR
 | [[Learn Crawl Queue Bot]] | Sensor | The next public sites worth reading, not yet in the file. |
 | [[Learn Crawl Source Bot]] | Sensor | Every competitor entry must name its page. No unsourced claims. |
 | [[Learn Brief Bot]] | Sensor | One short list: the best things to build in the Learn section next, in order, with the reason for each. |
+| [[Snapshot Puller]] | Sensor | Warns when the usage snapshot is over a day old. The daily scheduled task refreshes it with the read-only SQL in state/learn/refresh.sql. |
+| [[Metricool Puller]] | Sensor | Checks the Metricool numbers file exists and is fresh; the scheduled task fills it. |
+| [[Source Tagger]] | Sensor | Finds mnaprep.com links in your posts and bio lists that carry no utm_source, so sign-ups can be traced to a platform. |
+| [[Sign-up Alert]] | Sensor | Flags a day with zero sign-ups or a spike of more than 5, so you look at what changed. |
+| [[Reply Triage]] | Sensor | Sorts email replies (opt-out, interest, question, decline, auto) from state/learn/replies.json and finds opt-outs not yet on the suppression list. |
+| [[Nudge Writer]] | Sensor | Drafts one reminder text for users who signed up but never cleared a level. Draft only; bulk email is never sent. |
+| [[Competitor Watcher]] | Sensor | Warns when competitor facts are over 7 days old; the weekly task re-reads the public pages. |
+| [[Review Collector]] | Sensor | Counts happy users and review asks. Real reviews only; none are invented. |
+| [[Paywall Tester]] | Sensor | Click and dismiss rates for the upgrade bar and prompt, from site events. |
+| [[Churn Watch]] | Sensor | Paying members, cancel-at-end and users gone quiet for 7 days. |
+| [[Question Doctor]] | Sensor | Prints the hardest questions with their text and key so each gets checked for a wrong key, vague wording or a missing lesson. |
+| [[Page Speed Watcher]] | Sensor | Tracks size of the main scripts against a saved baseline so slow pages are caught. |
+| [[Guide Winner]] | Sensor | Which step of the guide funnel loses the most people. |
+| [[Funnel Leak]] | Sensor | Walks the sign-up funnel and names the biggest drop. |
+| [[Link Booster]] | Sensor | Guide pages that link to no other guide, which wastes the page's ranking and the reader's next step. |
+| [[Referral Bot]] | Sensor | Shows whether the referral code is pulling people in. |
+| [[Welcome Coverage]] | Sensor | How many users got the welcome email. |
+| [[Reactivation Bot]] | Sensor | Drafts one win-back note for users quiet 7+ days. Draft only. |
+| [[Test Planner]] | Sensor | Sample-size math: how many visitors a test needs before the result means anything. |
+| [[Post-to-Signup]] | Sensor | Lines up what you posted each day with sign-ups that day. |
+| [[Morning Digest]] | Sensor | One-line morning summary built from the other grow bots. |
+| [[Season Bot]] | Sensor | Flags US holidays when outreach and posting land on closed campuses. |
+| [[Lead Magnet Bot]] | Sensor | Checks whether any free download or emailed guide exists to capture emails. |
+| [[Share Loop Bot]] | Sensor | Checks that clearing a level offers a share action, the cheapest growth loop. |
 
 **Sensors** find problems. **The Circle** routes, fixes, verifies, remembers and reports. **Drafters** prepare emails and never send.
 

@@ -34,3 +34,9 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 
 ## Outreach hours (Bekir, Nov 25, 2026)
 - **Outreach only goes out Monday to Friday, 9am to 4pm Eastern.** Clubs, career centers, bumps, anyone. Never send, schedule or draft-for-now outside that window. `outreachWindow()` in `tools/bots/ops.mjs` is the one place that rule lives; the Guard Bot and the Outreach Bump Bot both read it.
+
+## Obsidian (Bekir, Nov 25, 2026, in caps)
+- **ALWAYS push everything to Obsidian.** After any work session, sync new notes, rules and summaries to `~/Documents/Obsidian Mind/work/active/` (bot notes go in `M&A Prep Bots/`). Existing notes are never overwritten; new info goes in new notes. Bot notes regenerate with `node tools/bots/obsidian/build.mjs`.
+
+## Quora (Bekir, Nov 25, 2026)
+- **Quora is dropped.** Do not draft, post or chase Quora answers. The quora bots stay in the repo but are muted from the Today List.

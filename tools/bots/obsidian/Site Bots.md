@@ -332,6 +332,39 @@ flowchart LR
     seolinkfaculty["Faculty Page Targets"]
     seolinkyoutube["Video Description Targets"]
     seolinkpitch["Link Pitch Drafter"]
+    lnsample["Learn Sample Size Bot"]
+    lnsnapage["Learn Snapshot Age Bot"]
+    lnactivation["Learn Activation Bot"]
+    lnfbtally["Learn Feedback Tally Bot"]
+    lnfbhard["Learn Too-Hard Bot"]
+    lnlevelreach["Learn Reach Bot"]
+    lnlevelstuck["Learn Drop-off Bot"]
+    lnlevelstars["Learn Hard Levels Bot"]
+    lnqmiss["Learn Missed Questions Bot"]
+    lnqoverall["Learn Miss Rate Bot"]
+    lntoolusage["Learn Tool Usage Bot"]
+    lnfbask["Learn Ask Bot"]
+    lnevlesson["Learn Tracking: Lessons"]
+    lnevreps["Learn Tracking: Number reps"]
+    lnevmock["Learn Tracking: Timed mock"]
+    lnevmodel["Learn Tracking: Model Lab"]
+    lnevpitch["Learn Tracking: Pitch Room"]
+    lnevgap["Learn Tracking Summary Bot"]
+    lntopicgap["Learn Topic Gap Bot"]
+    lncert["Learn Certificate Bot"]
+    lncases["Learn Case Study Bot"]
+    lntemplates["Learn Template Bot"]
+    lnfreehook["Learn Free Hook Bot"]
+    lnladder["Learn Ladder Bot"]
+    lnprice["Learn Price Bot"]
+    lnguarantee["Learn Guarantee Bot"]
+    lncommunity["Learn Community Bot"]
+    lnproof["Learn Proof Bot"]
+    lnformat["Learn Format Bot"]
+    lncrawlage["Learn Crawl Age Bot"]
+    lncrawlqueue["Learn Crawl Queue Bot"]
+    lncrawlsrc["Learn Crawl Source Bot"]
+    lnbrief["Learn Brief Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -1027,6 +1060,72 @@ flowchart LR
   seolinkfaculty -->|SEO to do| todaylist
   seolinkyoutube -->|SEO to do| todaylist
   seolinkpitch -->|SEO to do| todaylist
+  lnsample -->|learn issues| dispatcher
+  lnsnapage -->|learn issues| dispatcher
+  lnactivation -->|learn issues| dispatcher
+  lnfbtally -->|learn issues| dispatcher
+  lnfbhard -->|learn issues| dispatcher
+  lnlevelreach -->|learn issues| dispatcher
+  lnlevelstuck -->|learn issues| dispatcher
+  lnlevelstars -->|learn issues| dispatcher
+  lnqmiss -->|learn issues| dispatcher
+  lnqoverall -->|learn issues| dispatcher
+  lntoolusage -->|learn issues| dispatcher
+  lnfbask -->|learn issues| dispatcher
+  lnevlesson -->|learn issues| dispatcher
+  lnevreps -->|learn issues| dispatcher
+  lnevmock -->|learn issues| dispatcher
+  lnevmodel -->|learn issues| dispatcher
+  lnevpitch -->|learn issues| dispatcher
+  lnevgap -->|learn issues| dispatcher
+  lntopicgap -->|learn issues| dispatcher
+  lncert -->|learn issues| dispatcher
+  lncases -->|learn issues| dispatcher
+  lntemplates -->|learn issues| dispatcher
+  lnfreehook -->|learn issues| dispatcher
+  lnladder -->|learn issues| dispatcher
+  lnprice -->|learn issues| dispatcher
+  lnguarantee -->|learn issues| dispatcher
+  lncommunity -->|learn issues| dispatcher
+  lnproof -->|learn issues| dispatcher
+  lnformat -->|learn issues| dispatcher
+  lncrawlage -->|learn issues| dispatcher
+  lncrawlqueue -->|learn issues| dispatcher
+  lncrawlsrc -->|learn issues| dispatcher
+  lnbrief -->|learn issues| dispatcher
+  lnsample -->|learn to do| todaylist
+  lnsnapage -->|learn to do| todaylist
+  lnactivation -->|learn to do| todaylist
+  lnfbtally -->|learn to do| todaylist
+  lnfbhard -->|learn to do| todaylist
+  lnlevelreach -->|learn to do| todaylist
+  lnlevelstuck -->|learn to do| todaylist
+  lnlevelstars -->|learn to do| todaylist
+  lnqmiss -->|learn to do| todaylist
+  lnqoverall -->|learn to do| todaylist
+  lntoolusage -->|learn to do| todaylist
+  lnfbask -->|learn to do| todaylist
+  lnevlesson -->|learn to do| todaylist
+  lnevreps -->|learn to do| todaylist
+  lnevmock -->|learn to do| todaylist
+  lnevmodel -->|learn to do| todaylist
+  lnevpitch -->|learn to do| todaylist
+  lnevgap -->|learn to do| todaylist
+  lntopicgap -->|learn to do| todaylist
+  lncert -->|learn to do| todaylist
+  lncases -->|learn to do| todaylist
+  lntemplates -->|learn to do| todaylist
+  lnfreehook -->|learn to do| todaylist
+  lnladder -->|learn to do| todaylist
+  lnprice -->|learn to do| todaylist
+  lnguarantee -->|learn to do| todaylist
+  lncommunity -->|learn to do| todaylist
+  lnproof -->|learn to do| todaylist
+  lnformat -->|learn to do| todaylist
+  lncrawlage -->|learn to do| todaylist
+  lncrawlqueue -->|learn to do| todaylist
+  lncrawlsrc -->|learn to do| todaylist
+  lnbrief -->|learn to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -1365,6 +1464,39 @@ flowchart LR
 | [[Faculty Page Targets]] | Sensor | Queries for faculty or program pages that list free student tools. |
 | [[Video Description Targets]] | Sensor | Where to put the site link in your own video descriptions and bios, from your posted log. |
 | [[Link Pitch Drafter]] | Sensor | A short, honest pitch for a resource-page link: what the site is, one fact it can support, no numbers you cannot show. |
+| [[Learn Sample Size Bot]] | Sensor | Says how much to trust the usage numbers. Under 100 users, treat every pattern as a hint, not a result. |
+| [[Learn Snapshot Age Bot]] | Sensor | Warns when the usage snapshot is old so decisions are not made on stale numbers. |
+| [[Learn Activation Bot]] | Sensor | How many sign-ups ever clear a level. The first-level wall is the biggest leak in a learning site. |
+| [[Learn Feedback Tally Bot]] | Sensor | Counts what users actually told you, by poll answer and report type. |
+| [[Learn Too-Hard Bot]] | Sensor | Finds the 'too hard' signal in feedback and ties it to the levels where stars are lowest. |
+| [[Learn Reach Bot]] | Sensor | How many players reached each level, per track. Shows where people stop. |
+| [[Learn Drop-off Bot]] | Sensor | Flags a level where at least half the players from the level before never show up. |
+| [[Learn Hard Levels Bot]] | Sensor | Levels where players average under 2.3 stars (out of 3). These are where it feels hardest. |
+| [[Learn Missed Questions Bot]] | Sensor | Lists questions most players get wrong so they get reviewed, re-worded or taught first. |
+| [[Learn Miss Rate Bot]] | Sensor | Overall share of answers that are wrong. |
+| [[Learn Tool Usage Bot]] | Sensor | Which practice tools anyone has used: timed mock, spaced review, rapid, gauntlet. |
+| [[Learn Ask Bot]] | Sensor | Writes the next question to ask users, picked from what is least known. |
+| [[Learn Tracking: Lessons]] | Sensor | Checks that Lessons reports usage events, so you can see if anyone uses it. |
+| [[Learn Tracking: Number reps]] | Sensor | Checks that Number reps reports usage events, so you can see if anyone uses it. |
+| [[Learn Tracking: Timed mock]] | Sensor | Checks that Timed mock reports usage events, so you can see if anyone uses it. |
+| [[Learn Tracking: Model Lab]] | Sensor | Checks that Model Lab reports usage events, so you can see if anyone uses it. |
+| [[Learn Tracking: Pitch Room]] | Sensor | Checks that Pitch Room reports usage events, so you can see if anyone uses it. |
+| [[Learn Tracking Summary Bot]] | Sensor | Counts the learn tools that send no events. |
+| [[Learn Topic Gap Bot]] | Sensor | Topics competitors teach or sell that your lessons and guides never mention. |
+| [[Learn Certificate Bot]] | Sensor | Competitors give certificates. Do you? |
+| [[Learn Case Study Bot]] | Sensor | BIWS sells Excel case studies as the core of its courses. How many does Model Lab have? |
+| [[Learn Template Bot]] | Sensor | Competitors sell downloadable Excel templates. Do you give any? |
+| [[Learn Free Hook Bot]] | Sensor | How competitors turn free readers into emails and what you have. |
+| [[Learn Ladder Bot]] | Sensor | BIWS sorts courses into Levels 1-3 so buyers know the next step. Do your tracks say what to do next? |
+| [[Learn Price Bot]] | Sensor | Your prices next to what competitors show publicly. |
+| [[Learn Guarantee Bot]] | Sensor | BIWS uses a 90-day money-back guarantee as the conversion lever. What do you offer? |
+| [[Learn Community Bot]] | Sensor | WSO's value is the community and bank-by-bank question lists. What social features do you have? |
+| [[Learn Proof Bot]] | Sensor | CFI shows ratings and review counts. Do you show proof of results? |
+| [[Learn Format Bot]] | Sensor | Formats competitors use that you do not: video lessons, certificates, live sessions. |
+| [[Learn Crawl Age Bot]] | Sensor | Warns when competitor facts are over 14 days old. |
+| [[Learn Crawl Queue Bot]] | Sensor | The next public sites worth reading, not yet in the file. |
+| [[Learn Crawl Source Bot]] | Sensor | Every competitor entry must name its page. No unsourced claims. |
+| [[Learn Brief Bot]] | Sensor | One short list: the best things to build in the Learn section next, in order, with the reason for each. |
 
 **Sensors** find problems. **The Circle** routes, fixes, verifies, remembers and reports. **Drafters** prepare emails and never send.
 

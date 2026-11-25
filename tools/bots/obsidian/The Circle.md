@@ -332,6 +332,39 @@ flowchart LR
     seolinkfaculty["Faculty Page Targets"]
     seolinkyoutube["Video Description Targets"]
     seolinkpitch["Link Pitch Drafter"]
+    lnsample["Learn Sample Size Bot"]
+    lnsnapage["Learn Snapshot Age Bot"]
+    lnactivation["Learn Activation Bot"]
+    lnfbtally["Learn Feedback Tally Bot"]
+    lnfbhard["Learn Too-Hard Bot"]
+    lnlevelreach["Learn Reach Bot"]
+    lnlevelstuck["Learn Drop-off Bot"]
+    lnlevelstars["Learn Hard Levels Bot"]
+    lnqmiss["Learn Missed Questions Bot"]
+    lnqoverall["Learn Miss Rate Bot"]
+    lntoolusage["Learn Tool Usage Bot"]
+    lnfbask["Learn Ask Bot"]
+    lnevlesson["Learn Tracking: Lessons"]
+    lnevreps["Learn Tracking: Number reps"]
+    lnevmock["Learn Tracking: Timed mock"]
+    lnevmodel["Learn Tracking: Model Lab"]
+    lnevpitch["Learn Tracking: Pitch Room"]
+    lnevgap["Learn Tracking Summary Bot"]
+    lntopicgap["Learn Topic Gap Bot"]
+    lncert["Learn Certificate Bot"]
+    lncases["Learn Case Study Bot"]
+    lntemplates["Learn Template Bot"]
+    lnfreehook["Learn Free Hook Bot"]
+    lnladder["Learn Ladder Bot"]
+    lnprice["Learn Price Bot"]
+    lnguarantee["Learn Guarantee Bot"]
+    lncommunity["Learn Community Bot"]
+    lnproof["Learn Proof Bot"]
+    lnformat["Learn Format Bot"]
+    lncrawlage["Learn Crawl Age Bot"]
+    lncrawlqueue["Learn Crawl Queue Bot"]
+    lncrawlsrc["Learn Crawl Source Bot"]
+    lnbrief["Learn Brief Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -1027,6 +1060,72 @@ flowchart LR
   seolinkfaculty -->|SEO to do| todaylist
   seolinkyoutube -->|SEO to do| todaylist
   seolinkpitch -->|SEO to do| todaylist
+  lnsample -->|learn issues| dispatcher
+  lnsnapage -->|learn issues| dispatcher
+  lnactivation -->|learn issues| dispatcher
+  lnfbtally -->|learn issues| dispatcher
+  lnfbhard -->|learn issues| dispatcher
+  lnlevelreach -->|learn issues| dispatcher
+  lnlevelstuck -->|learn issues| dispatcher
+  lnlevelstars -->|learn issues| dispatcher
+  lnqmiss -->|learn issues| dispatcher
+  lnqoverall -->|learn issues| dispatcher
+  lntoolusage -->|learn issues| dispatcher
+  lnfbask -->|learn issues| dispatcher
+  lnevlesson -->|learn issues| dispatcher
+  lnevreps -->|learn issues| dispatcher
+  lnevmock -->|learn issues| dispatcher
+  lnevmodel -->|learn issues| dispatcher
+  lnevpitch -->|learn issues| dispatcher
+  lnevgap -->|learn issues| dispatcher
+  lntopicgap -->|learn issues| dispatcher
+  lncert -->|learn issues| dispatcher
+  lncases -->|learn issues| dispatcher
+  lntemplates -->|learn issues| dispatcher
+  lnfreehook -->|learn issues| dispatcher
+  lnladder -->|learn issues| dispatcher
+  lnprice -->|learn issues| dispatcher
+  lnguarantee -->|learn issues| dispatcher
+  lncommunity -->|learn issues| dispatcher
+  lnproof -->|learn issues| dispatcher
+  lnformat -->|learn issues| dispatcher
+  lncrawlage -->|learn issues| dispatcher
+  lncrawlqueue -->|learn issues| dispatcher
+  lncrawlsrc -->|learn issues| dispatcher
+  lnbrief -->|learn issues| dispatcher
+  lnsample -->|learn to do| todaylist
+  lnsnapage -->|learn to do| todaylist
+  lnactivation -->|learn to do| todaylist
+  lnfbtally -->|learn to do| todaylist
+  lnfbhard -->|learn to do| todaylist
+  lnlevelreach -->|learn to do| todaylist
+  lnlevelstuck -->|learn to do| todaylist
+  lnlevelstars -->|learn to do| todaylist
+  lnqmiss -->|learn to do| todaylist
+  lnqoverall -->|learn to do| todaylist
+  lntoolusage -->|learn to do| todaylist
+  lnfbask -->|learn to do| todaylist
+  lnevlesson -->|learn to do| todaylist
+  lnevreps -->|learn to do| todaylist
+  lnevmock -->|learn to do| todaylist
+  lnevmodel -->|learn to do| todaylist
+  lnevpitch -->|learn to do| todaylist
+  lnevgap -->|learn to do| todaylist
+  lntopicgap -->|learn to do| todaylist
+  lncert -->|learn to do| todaylist
+  lncases -->|learn to do| todaylist
+  lntemplates -->|learn to do| todaylist
+  lnfreehook -->|learn to do| todaylist
+  lnladder -->|learn to do| todaylist
+  lnprice -->|learn to do| todaylist
+  lnguarantee -->|learn to do| todaylist
+  lncommunity -->|learn to do| todaylist
+  lnproof -->|learn to do| todaylist
+  lnformat -->|learn to do| todaylist
+  lncrawlage -->|learn to do| todaylist
+  lncrawlqueue -->|learn to do| todaylist
+  lncrawlsrc -->|learn to do| todaylist
+  lnbrief -->|learn to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -1723,6 +1822,72 @@ flowchart LR
 | [[Faculty Page Targets]] | feed | [[Today List Bot]] | SEO to do |
 | [[Video Description Targets]] | feed | [[Today List Bot]] | SEO to do |
 | [[Link Pitch Drafter]] | feed | [[Today List Bot]] | SEO to do |
+| [[Learn Sample Size Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Snapshot Age Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Activation Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Feedback Tally Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Too-Hard Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Reach Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Drop-off Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Hard Levels Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Missed Questions Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Miss Rate Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tool Usage Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Ask Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking: Lessons]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking: Number reps]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking: Timed mock]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking: Model Lab]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking: Pitch Room]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Tracking Summary Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Topic Gap Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Certificate Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Case Study Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Template Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Free Hook Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Ladder Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Price Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Guarantee Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Community Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Proof Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Format Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Crawl Age Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Crawl Queue Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Crawl Source Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Brief Bot]] | feed | [[Dispatcher Bot]] | learn issues |
+| [[Learn Sample Size Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Snapshot Age Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Activation Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Feedback Tally Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Too-Hard Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Reach Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Drop-off Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Hard Levels Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Missed Questions Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Miss Rate Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tool Usage Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Ask Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking: Lessons]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking: Number reps]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking: Timed mock]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking: Model Lab]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking: Pitch Room]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Tracking Summary Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Topic Gap Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Certificate Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Case Study Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Template Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Free Hook Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Ladder Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Price Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Guarantee Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Community Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Proof Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Format Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Crawl Age Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Crawl Queue Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Crawl Source Bot]] | feed | [[Today List Bot]] | learn to do |
+| [[Learn Brief Bot]] | feed | [[Today List Bot]] | learn to do |
 
 Types: **feed** passes findings, **act** gives work, **gate** can block, **recheck** verifies, **learn** changes future behavior.
 

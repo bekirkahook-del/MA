@@ -5,9 +5,10 @@ import path from "node:path";
 import { PACK3 } from "./circle/pack3.mjs";
 import { PACK4 } from "./circle/pack4.mjs";
 import { PACK5 } from "./circle/pack5.mjs";
+import { PACK6 } from "./circle/pack6.mjs";
 
 const GEAR = { gate: 3, plan: 2.6, reach: 2.2, site: 2, measure: 1.8, learn: 1.6, pages: 1, safe: 3, fix: 2, data: 2, make: 1.4, seo: 2.4 }, SEV = { critical: 3, warn: 2, info: 0.4 };
-const gearOf = Object.fromEntries([...PACK3, ...PACK4, ...PACK5].map(b => [b.id, b.gear]));
+const gearOf = Object.fromEntries([...PACK3, ...PACK4, ...PACK5, ...PACK6].map(b => [b.id, b.gear]));
 export function todayList(issues, { max = 10, perBot = 2 } = {}) {
   const open = issues.filter(i => !["resolved", "ignored", "fixed"].includes(i.status) && i.severity !== "info" && gearOf[i.bot] && !/^quora/.test(i.bot));
   const scored = open.map(i => ({ bot: i.bot, gear: gearOf[i.bot], severity: i.severity, do: i.detail, score: (SEV[i.severity] || 1) * (GEAR[gearOf[i.bot]] || 1) })).sort((a, b) => b.score - a.score || a.bot.localeCompare(b.bot));

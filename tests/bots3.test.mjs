@@ -5,6 +5,7 @@ import { draft } from "../tools/bots/outreach.mjs";
 import { PACK3 } from "../tools/bots/circle/pack3.mjs";
 import { PACK4 } from "../tools/bots/circle/pack4.mjs";
 import { PACK5 } from "../tools/bots/circle/pack5.mjs";
+import { PACK6 } from "../tools/bots/circle/pack6.mjs";
 import { NODES, EDGES } from "../tools/bots/circle/graph.mjs";
 
 test("outreach window: Mon-Fri 9am-4pm ET only", () => {
@@ -23,13 +24,13 @@ test("outreach drafter: one email per organization, ever, and short", () => {
 });
 test("flywheel pack: every bot is a graph node with edges", () => {
   const ids = new Set(NODES.map(n => n.id));
-  for (const b of [...PACK3, ...PACK4, ...PACK5]) assert.ok(ids.has(b.id), b.id);
+  for (const b of [...PACK3, ...PACK4, ...PACK5, ...PACK6]) assert.ok(ids.has(b.id), b.id);
   const linked = new Set(EDGES.flatMap(e => [e.from, e.to]));
-  for (const b of [...PACK3, ...PACK4, ...PACK5]) assert.ok(linked.has(b.id), "orphan " + b.id);
-  assert.equal(new Set([...PACK3, ...PACK4, ...PACK5].map(b => b.id)).size, PACK3.length + PACK4.length + PACK5.length);
+  for (const b of [...PACK3, ...PACK4, ...PACK5, ...PACK6]) assert.ok(linked.has(b.id), "orphan " + b.id);
+  assert.equal(new Set([...PACK3, ...PACK4, ...PACK5, ...PACK6].map(b => b.id)).size, PACK3.length + PACK4.length + PACK5.length + PACK6.length);
 });
 test("flywheel pack: every bot returns a report with findings", async () => {
-  for (const b of [...PACK3, ...PACK4, ...PACK5]) { const r = await (await import("../tools/bots/" + b.id + ".mjs")).scan(); assert.ok(Array.isArray(r.findings), b.id); }
+  for (const b of [...PACK3, ...PACK4, ...PACK5, ...PACK6]) { const r = await (await import("../tools/bots/" + b.id + ".mjs")).scan(); assert.ok(Array.isArray(r.findings), b.id); }
 });
 
 test("deploy cap: max 2 per ET day", async () => {

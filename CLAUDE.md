@@ -41,6 +41,9 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 ## Auto-stage fixes (Bekir, Nov 25, 2026)
 - **STAGE EVERYTHING, ALWAYS (Bekir, Nov 25, 2026, in caps).** Any fix Claude sees, fix it and stage it on `staging` automatically, no need to ask. This only covers staging. Deploying still needs his "deploy" (and the 2/day cap). Still never touch the Home page, never invent numbers/quotes/facts to fill thin pages, and still ask before purchases, deletions and irreversible things.
 
+## Crawling (Bekir, Nov 25, 2026)
+- **Claude may crawl public websites on its own, no per-site OK needed** (competitor research, SEO, outreach lists). Facts and structure only: never copy their text, videos or paid content. No sign-ins, no accounts, no purchases, no posting, no deploys. Skip anything WebFetch declines.
+
 ## Obsidian (Bekir, Nov 25, 2026, in caps)
 - **ALWAYS push everything to Obsidian.** After any work session, sync new notes, rules and summaries to `~/Documents/Obsidian Mind/work/active/` (bot notes go in `M&A Prep Bots/`). Existing notes are never overwritten; new info goes in new notes. Bot notes regenerate with `node tools/bots/obsidian/build.mjs`.
 

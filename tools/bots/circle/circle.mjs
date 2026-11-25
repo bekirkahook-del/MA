@@ -19,13 +19,14 @@ import { changelog as mkChangelog, readQueue } from "../changelog.mjs";
 import { PACK3 } from "./pack3.mjs";
 import { PACK4 } from "./pack4.mjs";
 import { PACK5 } from "./pack5.mjs";
+import { PACK6 } from "./pack6.mjs";
 import { brief } from "../flywheel/brief.mjs";
 import { todayList } from "../todaylist.mjs";
 
 const STATIC = ["seo", "sitemap", "schema", "a11y", "perf", "secrets", "duplicate", "readability", "reps", "coverage", "testcov", "deadcode",
   "linkgraph", "thin", "cannibal", "typos", "mojibake", "images", "redirects", "feed", "dupids", "consolelog", "localhost", "extlinks", "pwa", "timeouts", "envvars", "deps", "wireschema", "companies", "privacy", "pricing", "drift",
   "claims", "qlength", "qyears", "explain", "testrunner", "consoleerrors", "mobile", "authdiag"];
-const FLY = [...PACK3, ...PACK4, ...PACK5].map(b => b.id);
+const FLY = [...PACK3, ...PACK4, ...PACK5, ...PACK6].map(b => b.id);
 const OPTIONAL = ["feedbot", "funnel", "billing", "retention", "outreach", "testrunner", "consoleerrors", "mobile"]; // need live data, a browser, or a long run
 const ADAPT = { ...Object.fromEntries(FLY.map(b => [b, S.fromReport(b)])), qa: S.fromQa, health: S.fromHealth, freshness: S.fromFreshness, cost: S.fromCost, ...Object.fromEntries(STATIC.map(b => [b, S.fromReport(b)])) };
 

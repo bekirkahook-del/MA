@@ -31,4 +31,17 @@ Quarantines instruction-like text, links and spam. Drops emails and user agents.
 ## Bug found and fixed
 The duplicate-option check treated "+$20" and "−$20" as the same answer, which would have counted as a *verified defect*. Now plain-text equality only, with regression tests.
 
+<!-- circle:start -->
+## Connections
+
+**Fed by:** [[Question QA Bot]] (verified defects count as hard evidence)
+
+**Feeds:** [[Dispatcher Bot]] (issues found)
+
+```dataview-fields
+fed_by:: [[Question QA Bot]]
+feeds:: [[Dispatcher Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

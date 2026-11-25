@@ -24,4 +24,17 @@ Drafts first emails to clubs and career centers. **Drafts only: it never sends.*
 ## Status
 Needs a target list. The earlier club outreach list lives in the M&A Website project docs.
 
+<!-- circle:start -->
+## Connections
+
+**Gated by:** [[Guard Bot]] (runs only when health and billing are clean)
+
+**Feeds:** [[Reporter Bot]] (drafts waiting for approval)
+
+```dataview-fields
+gated_by:: [[Guard Bot]]
+feeds:: [[Reporter Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

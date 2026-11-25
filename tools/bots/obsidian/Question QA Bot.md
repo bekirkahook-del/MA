@@ -38,4 +38,17 @@ Runs the detective on **every** question, not just flagged ones.
 
 **Takeaway:** the answers are right. The weakness is that a student can score by picking the longest option on about 1 in 8 questions.
 
+<!-- circle:start -->
+## Connections
+
+**Rechecked by:** [[Verifier Bot]] (re-run after a question fix)
+
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Superfeedbackbot]] (verified defects count as hard evidence)
+
+```dataview-fields
+rechecked_by:: [[Verifier Bot]]
+feeds:: [[Dispatcher Bot]], [[Superfeedbackbot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

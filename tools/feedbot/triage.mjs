@@ -133,6 +133,7 @@ export function decideQuestion(group, ctx, R = RUBRIC) {
   const changed = ctx.changedSince ? ctx.changedSince(q0.question, first) : null;
   if (changed) return { ...base, verdict: "ignore", why: "already changed after the first report (" + changed + ")", target: { file: found.file } };
   const fl = flaws(found.q, ctx.support).filter(f => (RELEVANT[cls] || RELEVANT.other).includes(f.type));
+  if (ctx.qaDefects && ctx.qaDefects.has(q0.question)) fl.push({ type: "qa-bot-verified", weight: 40, objective: true, note: "the Question QA bot independently verified a defect in this question" });
   fl.forEach(f => notes.push((f.objective ? "[verified] " : "[heuristic] ") + f.note));
   const evidence = fl.reduce((m, f) => Math.max(m, f.weight), 0), hard = fl.some(f => f.objective && f.weight >= R.hardEvidence);
   const reach = (users.signed > 0 ? 10 : 0) + 10;

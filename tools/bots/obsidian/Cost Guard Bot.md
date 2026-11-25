@@ -26,4 +26,14 @@ status: built, not scheduled
 
 Status: fine. If Netlify shows a different number, pass `--credits-used N`.
 
+<!-- circle:start -->
+## Connections
+
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Reporter Bot]] (deploy budget advice)
+
+```dataview-fields
+feeds:: [[Dispatcher Bot]], [[Reporter Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

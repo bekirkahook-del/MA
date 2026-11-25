@@ -20,9 +20,12 @@ test("qa: bad key and missing explanation are verified; signed answers are not d
   assert.ok(!r.issues.some(i => i.type === "duplicate-options"));
   assert.equal(r.verifiedDefects, 1);
 });
-test("qa: flags answer-slot skew on a 10-question track", () => {
-  const qs = Array.from({ length: 10 }, (_, i) => ["Unique question number " + i + " about topic " + "xyz".repeat(i + 1), ["a1", "b2", "c3"], 0, "Because this is the explanation text."]);
-  assert.ok(auditQuestions(T(qs)).issues.some(i => i.type === "answer-position-skew"));
+test("qa: glitches are checked per string; templates with different numbers are not duplicates", () => {
+  const ok = ["Equity $300 and debt $100. EV?", ["$1", "$2", "$3"], 0, "Because the formula says so here."], ok2 = ["Equity $500 and debt $100. EV?", ["$1", "$2", "$3"], 0, "Because the formula says so here."];
+  assert.equal(auditQuestions(T([ok, ok2])).issues.filter(i => /glitch|duplicate-question/.test(i.type)).length, 0);
+  const bad = ["Why does the the price rise?", ["a1", "b2", "c3"], 0, "Because the formula says so here."];
+  assert.equal(auditQuestions(T([bad])).issues.filter(i => i.type === "text-glitch").length, 1);
+  assert.equal(auditQuestions(T([ok, ok])).issues.filter(i => i.type === "duplicate-question").length, 1);
 });
 
 const row = (day, v, ev) => ({ id: day + "_" + v, ev });

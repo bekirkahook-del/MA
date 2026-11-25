@@ -3,7 +3,8 @@
 // Usage: node tools/bots/cost.mjs [ai.json] [--credits-used N]
 import fs from "node:fs";
 import { AI_LIMITS } from "../../netlify/functions/_lib/common.mjs";
-import { cli, arg, git, pct, short, sortBySev } from "./lib.mjs";
+import { cli, arg, git, pct, short, sortBySev, ROOT } from "./lib.mjs";
+export function deploysThisMonth(root = ROOT, now = new Date()) { const first = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString(); return git(["log", "--all", "--since=" + first, "--grep=^Deploy", "--format=%h"], root).split("\n").filter(Boolean).length; }
 
 export function deployBudget({ deploys, creditsUsed = null, perDeploy = 15, budget = 1000, now = new Date() }) {
   const used = creditsUsed != null ? creditsUsed : deploys * perDeploy, dim = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).getUTCDate(), day = now.getUTCDate();

@@ -26,4 +26,17 @@ status: built, not scheduled
 ## First run (Nov 25)
 1,121 guides checked: **212 warnings, 56 info.** Most are guides that mention 2022 to 2024 near recruiting words. Those are leads to check, not proof they are wrong.
 
+<!-- circle:start -->
+## Connections
+
+**Rechecked by:** [[Verifier Bot]] (re-run after a data fix)
+
+**Feeds:** [[Dispatcher Bot]] (issues found)
+
+```dataview-fields
+rechecked_by:: [[Verifier Bot]]
+feeds:: [[Dispatcher Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

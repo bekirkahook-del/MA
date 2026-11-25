@@ -37,10 +37,11 @@ export function freshness({ wire, pages = [], now = new Date() }) {
   const f = [...wireFreshness(wire || {}, now)];
   pages.forEach(p => f.push(...pageFreshness(p.html, p.name, now)));
   const g = sortBySev(f), by = {}; g.forEach(x => (by[x.severity] = (by[x.severity] || 0) + 1));
-  return { pagesChecked: pages.length, counts: by, findings: g.slice(0, 60), truncated: Math.max(0, g.length - 60) };
+  return { pagesChecked: pages.length, counts: by, findings: g, truncated: Math.max(0, g.length - 60) };
 }
-cli(import.meta.url, () => {
-  const wire = readJson(path.join(ROOT, "data/wire.json"), {}), gd = path.join(ROOT, "guides"), pages = [];
+export function scanFreshness(root = ROOT, now = new Date()) {
+  const wire = readJson(path.join(root, "data/wire.json"), {}), gd = path.join(root, "guides"), pages = [];
   for (const n of fs.existsSync(gd) ? fs.readdirSync(gd) : []) { const p = path.join(gd, n, "index.html"); if (fs.existsSync(p)) pages.push({ name: n, html: fs.readFileSync(p, "utf8") }); }
-  return freshness({ wire, pages });
-});
+  return freshness({ wire, pages, now });
+}
+cli(import.meta.url, () => scanFreshness());

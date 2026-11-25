@@ -48,7 +48,7 @@ export function functionSyntax(root = ROOT) {
 export async function smoke(root = ROOT, { guides = 8 } = {}) {
   const s = await serve(root), { chromium } = loadPlaywright(), b = await chromium.launch(), out = { errors: [], levelsOpened: 0, levelsFailed: [], guides: [] };
   try {
-    const p = await b.newPage(), push = (w, m) => { if (!/favicon|net::ERR_(NAME|INTERNET|CONNECTION)|supabase|googleapis|gstatic|\.netlify\/functions|ERR_BLOCKED|Failed to load resource/i.test(m) && out.errors.length < 25) out.errors.push(w + ": " + m.slice(0, 200)); };
+    const p = await b.newPage(), push = (w, m) => { if (!/favicon|net::ERR_(NAME|INTERNET|CONNECTION)|supabase|googleapis|gstatic|\.netlify\/functions|ERR_BLOCKED|Failed to load resource|cloudflareinsights|cdn-cgi/i.test(m) && out.errors.length < 25) out.errors.push(w + ": " + m.slice(0, 200)); };
     p.on("pageerror", e => push("pageerror", e.message)); p.on("console", m => m.type() === "error" && push("console", m.text()));
     await p.goto(s.url + "/index.html", { waitUntil: "load" }); await p.waitForTimeout(1200);
     const r = await p.evaluate(() => { const bad = []; let ok = 0; TRACKS.forEach(t => t.levels.forEach((l, i) => { try { showBrief(t, i); const el = document.querySelector("#panel"); if (!el || el.textContent.trim().length < 20) bad.push(t.id + ":" + i + " empty"); else ok++; } catch (e) { bad.push(t.id + ":" + i + " " + e.message); } })); return { ok, bad }; });

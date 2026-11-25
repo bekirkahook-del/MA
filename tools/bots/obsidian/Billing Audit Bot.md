@@ -28,4 +28,17 @@ Read-only: it never grants, refunds or edits.
 ## Status
 Built and tested on sample data. Needs a live pull of billing docs plus Stripe subscriptions.
 
+<!-- circle:start -->
+## Connections
+
+**Feeds:** [[Dispatcher Bot]] (issues found)
+
+**Gates:** [[Guard Bot]] (money problem = pause marketing)
+
+```dataview-fields
+feeds:: [[Dispatcher Bot]]
+gates:: [[Guard Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

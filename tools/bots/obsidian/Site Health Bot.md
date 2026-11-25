@@ -30,4 +30,17 @@ Local-only noise (a Cloudflare analytics CORS message) is expected on `127.0.0.1
 ## Lesson
 First version reported 9 "broken" links. All were Netlify redirects (`/youtube`, `/discord`, ...), so the checker now reads `netlify.toml`.
 
+<!-- circle:start -->
+## Connections
+
+**Feeds:** [[Dispatcher Bot]] (issues found)
+
+**Gates:** [[Guard Bot]] (site broken = freeze all fixes)
+
+```dataview-fields
+feeds:: [[Dispatcher Bot]]
+gates:: [[Guard Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

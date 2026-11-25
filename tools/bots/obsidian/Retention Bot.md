@@ -21,4 +21,17 @@ Plans "you have N things to review" reminders for people with spaced-review item
 ## Blocker
 Nobody can opt in yet. A new checkbox is needed where streak emails are set (Home page). **Home page changes need Bekir's OK**, so the bot only counts people until then.
 
+<!-- circle:start -->
+## Connections
+
+**Gated by:** [[Guard Bot]] (runs only when health and billing are clean)
+
+**Feeds:** [[Reporter Bot]] (dry-run counts)
+
+```dataview-fields
+gated_by:: [[Guard Bot]]
+feeds:: [[Reporter Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

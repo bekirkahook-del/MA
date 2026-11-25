@@ -21,4 +21,14 @@ Under **100 visitors** the report says "too few to conclude" and tells you not t
 ## Status
 Built and tested on sample data. Not run on live rows yet.
 
+<!-- circle:start -->
+## Connections
+
+**Feeds:** [[Dispatcher Bot]] (issues found)
+
+```dataview-fields
+feeds:: [[Dispatcher Bot]]
+```
+<!-- circle:end -->
+
 Back to [[Site Bots]].

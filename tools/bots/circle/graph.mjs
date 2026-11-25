@@ -1,6 +1,8 @@
 // The circle as data. circle.mjs runs it, obsidian/build.mjs draws it, tests check it. One source of truth for "who depends on whom".
 // edge types: feed = passes findings, gate = can block, act = changes something, recheck = verifies, learn = changes future behavior
 import { PACK3 } from "./pack3.mjs";
+import { PACK4 } from "./pack4.mjs";
+import { PACK5 } from "./pack5.mjs";
 export const NODES = [
   { id: "qa", name: "Question QA Bot", role: "sensor", file: "tools/bots/qa.mjs", does: "Audits all 1,248 questions for wrong keys, duplicate options, giveaways." },
   { id: "health", name: "Site Health Bot", role: "sensor", file: "tools/bots/health.mjs", does: "Links, function syntax, every level opens, JS errors." },
@@ -160,6 +162,20 @@ EDGES.push(...PACK3.map(b => ({ from: b.id, to: "dispatcher", type: "feed", labe
   ...[...gearIds("reach"), ...gearIds("site"), ...gearIds("pages")].map(id => ({ from: id, to: "todaylist", type: "feed", label: "chores and risks" })),
   { from: "dispatcher", to: "todaylist", type: "feed", label: "open issues" }, { from: "todaylist", to: "reporter", type: "feed", label: "do today" },
   { from: "bumps", to: "outreach", type: "feed", label: "who is due a follow-up" }, { from: "newsjack", to: "strategist", type: "feed", label: "live-market chances" });
+// ---- Doers pack (137 bots): makers, outreach, fixers, real-data sensors, safety checks ----
+NODES.push(...PACK4.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK4.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "issues found" })),
+  ...PACK4.filter(b => b.gear === "make").map(b => ({ from: b.id, to: "contentbrief", type: "feed", label: "drafts for tomorrow" })),
+  ...PACK4.filter(b => b.gear === "data").map(b => ({ from: b.id, to: "logscore", type: "feed", label: "real views from Metricool" })),
+  ...PACK4.filter(b => b.gear === "safe").map(b => ({ from: b.id, to: "contentbrief", type: "gate", label: "hard-rule check" })),
+  ...PACK4.filter(b => b.gear === "reach").map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "outreach to do" })),
+  ...PACK4.filter(b => b.gear === "fix").map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "exact fix text" })));
+
+// ---- SEO pack (60 bots) ----
+NODES.push(...PACK5.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK5.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "issues found" })),
+  ...PACK5.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "SEO to do" })));
+
 export const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
 export const edgesOf = id => ({ out: EDGES.filter(e => e.from === id), in: EDGES.filter(e => e.to === id) });
 export function mermaid() {
@@ -170,3 +186,4 @@ export function mermaid() {
   lines.push("  reporter ==>|digest and deploy question| H");
   return lines.join("\n");
 }
+

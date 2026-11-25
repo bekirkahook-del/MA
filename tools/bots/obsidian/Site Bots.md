@@ -135,6 +135,203 @@ flowchart LR
     canonical["Canonical Tag Bot"]
     ogimage["Guide Share Image Bot"]
     answerskew["Answer Position Bot"]
+    mkrankedhooks["Hook Maker: ranked schools"]
+    mkrankedcaption["Caption Maker: ranked schools"]
+    mkrankedcta["CTA Picker: ranked schools"]
+    mkrankedscript["Script Outline Maker: ranked schools"]
+    mkrankedslides["Slide Plan Maker: ranked schools"]
+    mkrankedtitle["Title Card Maker: ranked schools"]
+    mkrankedsequel["Sequel Maker: ranked schools"]
+    mkrankedpin["Pinned Comment Maker: ranked schools"]
+    mkcharacterhooks["Hook Maker: character stories"]
+    mkcharactercaption["Caption Maker: character stories"]
+    mkcharactercta["CTA Picker: character stories"]
+    mkcharacterscript["Script Outline Maker: character stories"]
+    mkcharacterslides["Slide Plan Maker: character stories"]
+    mkcharactertitle["Title Card Maker: character stories"]
+    mkcharactersequel["Sequel Maker: character stories"]
+    mkcharacterpin["Pinned Comment Maker: character stories"]
+    mktieredhooks["Hook Maker: tiered interview questions"]
+    mktieredcaption["Caption Maker: tiered interview questions"]
+    mktieredcta["CTA Picker: tiered interview questions"]
+    mktieredscript["Script Outline Maker: tiered interview questions"]
+    mktieredslides["Slide Plan Maker: tiered interview questions"]
+    mktieredtitle["Title Card Maker: tiered interview questions"]
+    mktieredsequel["Sequel Maker: tiered interview questions"]
+    mktieredpin["Pinned Comment Maker: tiered interview questions"]
+    mkmarkethooks["Hook Maker: live market news"]
+    mkmarketcaption["Caption Maker: live market news"]
+    mkmarketcta["CTA Picker: live market news"]
+    mkmarketscript["Script Outline Maker: live market news"]
+    mkmarketslides["Slide Plan Maker: live market news"]
+    mkmarkettitle["Title Card Maker: live market news"]
+    mkmarketsequel["Sequel Maker: live market news"]
+    mkmarketpin["Pinned Comment Maker: live market news"]
+    mkleaguehooks["Hook Maker: league tables"]
+    mkleaguecaption["Caption Maker: league tables"]
+    mkleaguecta["CTA Picker: league tables"]
+    mkleaguescript["Script Outline Maker: league tables"]
+    mkleagueslides["Slide Plan Maker: league tables"]
+    mkleaguetitle["Title Card Maker: league tables"]
+    mkleaguesequel["Sequel Maker: league tables"]
+    mkleaguepin["Pinned Comment Maker: league tables"]
+    orohioqueries["Club Finder Queries: Ohio"]
+    orohioroster["School Roster: Ohio"]
+    orohiodedupe["Region De-dupe: Ohio"]
+    orbigtenqueries["Club Finder Queries: Big Ten"]
+    orbigtenroster["School Roster: Big Ten"]
+    orbigtendedupe["Region De-dupe: Big Ten"]
+    orsecqueries["Club Finder Queries: SEC"]
+    orsecroster["School Roster: SEC"]
+    orsecdedupe["Region De-dupe: SEC"]
+    oraccqueries["Club Finder Queries: ACC"]
+    oraccroster["School Roster: ACC"]
+    oraccdedupe["Region De-dupe: ACC"]
+    orbig12queries["Club Finder Queries: Big 12"]
+    orbig12roster["School Roster: Big 12"]
+    orbig12dedupe["Region De-dupe: Big 12"]
+    orivyqueries["Club Finder Queries: Ivy League"]
+    orivyroster["School Roster: Ivy League"]
+    orivydedupe["Region De-dupe: Ivy League"]
+    orwestqueries["Club Finder Queries: West"]
+    orwestroster["School Roster: West"]
+    orwestdedupe["Region De-dupe: West"]
+    ornycqueries["Club Finder Queries: New York area"]
+    ornycroster["School Roster: New York area"]
+    ornycdedupe["Region De-dupe: New York area"]
+    ortexasqueries["Club Finder Queries: Texas"]
+    ortexasroster["School Roster: Texas"]
+    ortexasdedupe["Region De-dupe: Texas"]
+    orsouthqueries["Club Finder Queries: Southeast"]
+    orsouthroster["School Roster: Southeast"]
+    orsouthdedupe["Region De-dupe: Southeast"]
+    fxdesclong["Meta Description Fixer"]
+    fxtitlelong["Title Length Fixer"]
+    fxcanon["Canonical Fixer"]
+    fxogimg["OG Image Fixer"]
+    fximgalt["Image Alt Fixer"]
+    fxlang["Language Tag Fixer"]
+    fxviewport["Viewport Fixer"]
+    fxh1["Missing H1 Fixer"]
+    fxh1multi["Double H1 Fixer"]
+    fxhttp["Insecure Link Fixer"]
+    fxrel["Link Safety Fixer"]
+    fxemptyhref["Empty Link Fixer"]
+    fxtodo["Leftover Text Fixer"]
+    fxspaces["Double Space Fixer"]
+    fxtwitter["Twitter Card Fixer"]
+    fxtheme["Theme Color Fixer"]
+    fxmailto["Email Link Fixer"]
+    fxdecksrc["Deck Source Fixer"]
+    fxdeckcta["Deck CTA Fixer"]
+    fxrendercount["Render Count Fixer"]
+    fxwirepast["Wire Past Rows Fixer"]
+    fxtickernull["Ticker Null Fixer"]
+    fxpostdate["Log Date Fixer"]
+    fxfamily["Idea Type Fixer"]
+    fxposted["Posted Log Fixer"]
+    fxpunch["Punch Log Fixer"]
+    fxtopics["Topics Gap Fixer"]
+    fxlegaladdr["Legal Address Fixer"]
+    fxemailtmpl["Email Template Fixer"]
+    fxswver["Service Worker Fixer"]
+    fxsitemap["Sitemap Fixer"]
+    mdfollowersnow["Metricool Followers Reader"]
+    mdfollowerstrend["Metricool Followers Trend"]
+    mdviewsnow["Metricool Views Reader"]
+    mdviewstrend["Metricool Views Trend"]
+    mdreachnow["Metricool Reach Reader"]
+    mdreachtrend["Metricool Reach Trend"]
+    mdlikesnow["Metricool Likes Reader"]
+    mdlikestrend["Metricool Likes Trend"]
+    mdcommentsnow["Metricool Comments Reader"]
+    mdcommentstrend["Metricool Comments Trend"]
+    mdsharesnow["Metricool Shares Reader"]
+    mdsharestrend["Metricool Shares Trend"]
+    mdsavesnow["Metricool Saves Reader"]
+    mdsavestrend["Metricool Saves Trend"]
+    mdpostsnow["Metricool Posts published Reader"]
+    mdpoststrend["Metricool Posts published Trend"]
+    mdvisitsnow["Metricool Profile visits Reader"]
+    mdvisitstrend["Metricool Profile visits Trend"]
+    mdclicksnow["Metricool Link clicks Reader"]
+    mdclickstrend["Metricool Link clicks Trend"]
+    sfdupeemail["Duplicate Email Guard"]
+    sfdaycap["Daily Email Cap Guard"]
+    sfschoolcap["School Cap Guard"]
+    sfwindow["Send Window Guard"]
+    sfsuppress["Opt-out Guard"]
+    sfoptout["Opt-out Line Guard"]
+    sfaddr["Mailing Address Guard"]
+    sflength["Email Length Guard"]
+    sfclaims["Claim Words Guard"]
+    sfunsourced["Unsourced Number Guard"]
+    sfblackout["Blackout Guard"]
+    sftiktokcap["TikTok Cap Guard"]
+    sfhours["Post Hours Guard"]
+    sfquoramuted["Quora Mute Guard"]
+    sfsentdates["Sent Log Hygiene Guard"]
+    sfhome["Home Baseline Guard"]
+    seobriefibinterview["SEO Brief: Investment banking interview questions"]
+    seobrieflbo["SEO Brief: LBO model"]
+    seobriefdcf["SEO Brief: DCF"]
+    seobriefaccretion["SEO Brief: Accretion and dilution"]
+    seobriefcomps["SEO Brief: Comparable company analysis"]
+    seobriefperecruit["SEO Brief: Private equity recruiting"]
+    seobriefsuperday["SEO Brief: Superday"]
+    seobriefnetwork["SEO Brief: Networking and cold email"]
+    seobriefresume["SEO Brief: Resume"]
+    seobriefrestructuring["SEO Brief: Restructuring"]
+    seobriefhedgefund["SEO Brief: Hedge funds"]
+    seobriefaccounting["SEO Brief: Accounting for finance interviews"]
+    seothin["Thin Page Checker"]
+    seoh2["Heading Depth Checker"]
+    seoinlinks["Internal Link Count Checker"]
+    seofaq["FAQ Schema Checker"]
+    seoarticle["Article Schema Checker"]
+    seotitlekw["Title Keyword Checker"]
+    seodescmiss["Description Checker"]
+    seodupetitle["Duplicate Title Checker"]
+    seodupedesc["Duplicate Description Checker"]
+    seoupdated["Freshness Checker"]
+    seocta["Guide CTA Checker"]
+    seoimgalt["Image Alt Checker"]
+    seoh1match["H1 Match Checker"]
+    seolong["Page Length Balance Checker"]
+    seoschoolconsulting["School Pages: Consulting"]
+    seoschoolhedgefunds["School Pages: Hedge funds"]
+    seoschoolinvestmentbanking["School Pages: Investment banking"]
+    seoschoolprivateequity["School Pages: Private equity"]
+    seoschoolsalesandtrading["School Pages: Sales and trading"]
+    seoschoolsame["School Page Sameness Checker"]
+    seoschoolgap["School Coverage Checker"]
+    seoschoollink["School Hub Link Checker"]
+    seorobots["Robots Checker"]
+    seosmsize["Sitemap Size Checker"]
+    seolastmod["Sitemap Date Checker"]
+    seollms["llms.txt Checker"]
+    seocanonconf["Canonical Conflict Checker"]
+    seonoindex["Noindex Checker"]
+    seoslug["URL Slug Checker"]
+    seoweight["Page Weight Checker"]
+    seoscripts["Blocking Script Checker"]
+    seohttps["Sitemap HTTPS Checker"]
+    seoredirect["Redirect Rule Checker"]
+    seobreadcrumb["Breadcrumb Checker"]
+    seoaicite["AI Citation Checker"]
+    seoogtitle["Social Preview Checker"]
+    seolinkcareer["Career Center Link Targets"]
+    seolinkclubs["Club Resource Link Targets"]
+    seolinkreddit["Community Answer Targets"]
+    seolinkunlinked["Unlinked Mention Finder"]
+    seolinkroundup["Roundup Page Targets"]
+    seolinknewsletter["Newsletter Targets"]
+    seolinkpodcast["Guest Spot Targets"]
+    seolinkdir["Directory Targets"]
+    seolinkwiki["Reference Page Targets"]
+    seolinkfaculty["Faculty Page Targets"]
+    seolinkyoutube["Video Description Targets"]
+    seolinkpitch["Link Pitch Drafter"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -436,6 +633,400 @@ flowchart LR
   todaylist -->|do today| reporter
   bumps -->|who is due a follow-up| outreach
   newsjack -->|live-market chances| strategist
+  mkrankedhooks -->|issues found| dispatcher
+  mkrankedcaption -->|issues found| dispatcher
+  mkrankedcta -->|issues found| dispatcher
+  mkrankedscript -->|issues found| dispatcher
+  mkrankedslides -->|issues found| dispatcher
+  mkrankedtitle -->|issues found| dispatcher
+  mkrankedsequel -->|issues found| dispatcher
+  mkrankedpin -->|issues found| dispatcher
+  mkcharacterhooks -->|issues found| dispatcher
+  mkcharactercaption -->|issues found| dispatcher
+  mkcharactercta -->|issues found| dispatcher
+  mkcharacterscript -->|issues found| dispatcher
+  mkcharacterslides -->|issues found| dispatcher
+  mkcharactertitle -->|issues found| dispatcher
+  mkcharactersequel -->|issues found| dispatcher
+  mkcharacterpin -->|issues found| dispatcher
+  mktieredhooks -->|issues found| dispatcher
+  mktieredcaption -->|issues found| dispatcher
+  mktieredcta -->|issues found| dispatcher
+  mktieredscript -->|issues found| dispatcher
+  mktieredslides -->|issues found| dispatcher
+  mktieredtitle -->|issues found| dispatcher
+  mktieredsequel -->|issues found| dispatcher
+  mktieredpin -->|issues found| dispatcher
+  mkmarkethooks -->|issues found| dispatcher
+  mkmarketcaption -->|issues found| dispatcher
+  mkmarketcta -->|issues found| dispatcher
+  mkmarketscript -->|issues found| dispatcher
+  mkmarketslides -->|issues found| dispatcher
+  mkmarkettitle -->|issues found| dispatcher
+  mkmarketsequel -->|issues found| dispatcher
+  mkmarketpin -->|issues found| dispatcher
+  mkleaguehooks -->|issues found| dispatcher
+  mkleaguecaption -->|issues found| dispatcher
+  mkleaguecta -->|issues found| dispatcher
+  mkleaguescript -->|issues found| dispatcher
+  mkleagueslides -->|issues found| dispatcher
+  mkleaguetitle -->|issues found| dispatcher
+  mkleaguesequel -->|issues found| dispatcher
+  mkleaguepin -->|issues found| dispatcher
+  orohioqueries -->|issues found| dispatcher
+  orohioroster -->|issues found| dispatcher
+  orohiodedupe -->|issues found| dispatcher
+  orbigtenqueries -->|issues found| dispatcher
+  orbigtenroster -->|issues found| dispatcher
+  orbigtendedupe -->|issues found| dispatcher
+  orsecqueries -->|issues found| dispatcher
+  orsecroster -->|issues found| dispatcher
+  orsecdedupe -->|issues found| dispatcher
+  oraccqueries -->|issues found| dispatcher
+  oraccroster -->|issues found| dispatcher
+  oraccdedupe -->|issues found| dispatcher
+  orbig12queries -->|issues found| dispatcher
+  orbig12roster -->|issues found| dispatcher
+  orbig12dedupe -->|issues found| dispatcher
+  orivyqueries -->|issues found| dispatcher
+  orivyroster -->|issues found| dispatcher
+  orivydedupe -->|issues found| dispatcher
+  orwestqueries -->|issues found| dispatcher
+  orwestroster -->|issues found| dispatcher
+  orwestdedupe -->|issues found| dispatcher
+  ornycqueries -->|issues found| dispatcher
+  ornycroster -->|issues found| dispatcher
+  ornycdedupe -->|issues found| dispatcher
+  ortexasqueries -->|issues found| dispatcher
+  ortexasroster -->|issues found| dispatcher
+  ortexasdedupe -->|issues found| dispatcher
+  orsouthqueries -->|issues found| dispatcher
+  orsouthroster -->|issues found| dispatcher
+  orsouthdedupe -->|issues found| dispatcher
+  fxdesclong -->|issues found| dispatcher
+  fxtitlelong -->|issues found| dispatcher
+  fxcanon -->|issues found| dispatcher
+  fxogimg -->|issues found| dispatcher
+  fximgalt -->|issues found| dispatcher
+  fxlang -->|issues found| dispatcher
+  fxviewport -->|issues found| dispatcher
+  fxh1 -->|issues found| dispatcher
+  fxh1multi -->|issues found| dispatcher
+  fxhttp -->|issues found| dispatcher
+  fxrel -->|issues found| dispatcher
+  fxemptyhref -->|issues found| dispatcher
+  fxtodo -->|issues found| dispatcher
+  fxspaces -->|issues found| dispatcher
+  fxtwitter -->|issues found| dispatcher
+  fxtheme -->|issues found| dispatcher
+  fxmailto -->|issues found| dispatcher
+  fxdecksrc -->|issues found| dispatcher
+  fxdeckcta -->|issues found| dispatcher
+  fxrendercount -->|issues found| dispatcher
+  fxwirepast -->|issues found| dispatcher
+  fxtickernull -->|issues found| dispatcher
+  fxpostdate -->|issues found| dispatcher
+  fxfamily -->|issues found| dispatcher
+  fxposted -->|issues found| dispatcher
+  fxpunch -->|issues found| dispatcher
+  fxtopics -->|issues found| dispatcher
+  fxlegaladdr -->|issues found| dispatcher
+  fxemailtmpl -->|issues found| dispatcher
+  fxswver -->|issues found| dispatcher
+  fxsitemap -->|issues found| dispatcher
+  mdfollowersnow -->|issues found| dispatcher
+  mdfollowerstrend -->|issues found| dispatcher
+  mdviewsnow -->|issues found| dispatcher
+  mdviewstrend -->|issues found| dispatcher
+  mdreachnow -->|issues found| dispatcher
+  mdreachtrend -->|issues found| dispatcher
+  mdlikesnow -->|issues found| dispatcher
+  mdlikestrend -->|issues found| dispatcher
+  mdcommentsnow -->|issues found| dispatcher
+  mdcommentstrend -->|issues found| dispatcher
+  mdsharesnow -->|issues found| dispatcher
+  mdsharestrend -->|issues found| dispatcher
+  mdsavesnow -->|issues found| dispatcher
+  mdsavestrend -->|issues found| dispatcher
+  mdpostsnow -->|issues found| dispatcher
+  mdpoststrend -->|issues found| dispatcher
+  mdvisitsnow -->|issues found| dispatcher
+  mdvisitstrend -->|issues found| dispatcher
+  mdclicksnow -->|issues found| dispatcher
+  mdclickstrend -->|issues found| dispatcher
+  sfdupeemail -->|issues found| dispatcher
+  sfdaycap -->|issues found| dispatcher
+  sfschoolcap -->|issues found| dispatcher
+  sfwindow -->|issues found| dispatcher
+  sfsuppress -->|issues found| dispatcher
+  sfoptout -->|issues found| dispatcher
+  sfaddr -->|issues found| dispatcher
+  sflength -->|issues found| dispatcher
+  sfclaims -->|issues found| dispatcher
+  sfunsourced -->|issues found| dispatcher
+  sfblackout -->|issues found| dispatcher
+  sftiktokcap -->|issues found| dispatcher
+  sfhours -->|issues found| dispatcher
+  sfquoramuted -->|issues found| dispatcher
+  sfsentdates -->|issues found| dispatcher
+  sfhome -->|issues found| dispatcher
+  mkrankedhooks -->|drafts for tomorrow| contentbrief
+  mkrankedcaption -->|drafts for tomorrow| contentbrief
+  mkrankedcta -->|drafts for tomorrow| contentbrief
+  mkrankedscript -->|drafts for tomorrow| contentbrief
+  mkrankedslides -->|drafts for tomorrow| contentbrief
+  mkrankedtitle -->|drafts for tomorrow| contentbrief
+  mkrankedsequel -->|drafts for tomorrow| contentbrief
+  mkrankedpin -->|drafts for tomorrow| contentbrief
+  mkcharacterhooks -->|drafts for tomorrow| contentbrief
+  mkcharactercaption -->|drafts for tomorrow| contentbrief
+  mkcharactercta -->|drafts for tomorrow| contentbrief
+  mkcharacterscript -->|drafts for tomorrow| contentbrief
+  mkcharacterslides -->|drafts for tomorrow| contentbrief
+  mkcharactertitle -->|drafts for tomorrow| contentbrief
+  mkcharactersequel -->|drafts for tomorrow| contentbrief
+  mkcharacterpin -->|drafts for tomorrow| contentbrief
+  mktieredhooks -->|drafts for tomorrow| contentbrief
+  mktieredcaption -->|drafts for tomorrow| contentbrief
+  mktieredcta -->|drafts for tomorrow| contentbrief
+  mktieredscript -->|drafts for tomorrow| contentbrief
+  mktieredslides -->|drafts for tomorrow| contentbrief
+  mktieredtitle -->|drafts for tomorrow| contentbrief
+  mktieredsequel -->|drafts for tomorrow| contentbrief
+  mktieredpin -->|drafts for tomorrow| contentbrief
+  mkmarkethooks -->|drafts for tomorrow| contentbrief
+  mkmarketcaption -->|drafts for tomorrow| contentbrief
+  mkmarketcta -->|drafts for tomorrow| contentbrief
+  mkmarketscript -->|drafts for tomorrow| contentbrief
+  mkmarketslides -->|drafts for tomorrow| contentbrief
+  mkmarkettitle -->|drafts for tomorrow| contentbrief
+  mkmarketsequel -->|drafts for tomorrow| contentbrief
+  mkmarketpin -->|drafts for tomorrow| contentbrief
+  mkleaguehooks -->|drafts for tomorrow| contentbrief
+  mkleaguecaption -->|drafts for tomorrow| contentbrief
+  mkleaguecta -->|drafts for tomorrow| contentbrief
+  mkleaguescript -->|drafts for tomorrow| contentbrief
+  mkleagueslides -->|drafts for tomorrow| contentbrief
+  mkleaguetitle -->|drafts for tomorrow| contentbrief
+  mkleaguesequel -->|drafts for tomorrow| contentbrief
+  mkleaguepin -->|drafts for tomorrow| contentbrief
+  mdfollowersnow -->|real views from Metricool| logscore
+  mdfollowerstrend -->|real views from Metricool| logscore
+  mdviewsnow -->|real views from Metricool| logscore
+  mdviewstrend -->|real views from Metricool| logscore
+  mdreachnow -->|real views from Metricool| logscore
+  mdreachtrend -->|real views from Metricool| logscore
+  mdlikesnow -->|real views from Metricool| logscore
+  mdlikestrend -->|real views from Metricool| logscore
+  mdcommentsnow -->|real views from Metricool| logscore
+  mdcommentstrend -->|real views from Metricool| logscore
+  mdsharesnow -->|real views from Metricool| logscore
+  mdsharestrend -->|real views from Metricool| logscore
+  mdsavesnow -->|real views from Metricool| logscore
+  mdsavestrend -->|real views from Metricool| logscore
+  mdpostsnow -->|real views from Metricool| logscore
+  mdpoststrend -->|real views from Metricool| logscore
+  mdvisitsnow -->|real views from Metricool| logscore
+  mdvisitstrend -->|real views from Metricool| logscore
+  mdclicksnow -->|real views from Metricool| logscore
+  mdclickstrend -->|real views from Metricool| logscore
+  sfdupeemail -.->|hard-rule check| contentbrief
+  sfdaycap -.->|hard-rule check| contentbrief
+  sfschoolcap -.->|hard-rule check| contentbrief
+  sfwindow -.->|hard-rule check| contentbrief
+  sfsuppress -.->|hard-rule check| contentbrief
+  sfoptout -.->|hard-rule check| contentbrief
+  sfaddr -.->|hard-rule check| contentbrief
+  sflength -.->|hard-rule check| contentbrief
+  sfclaims -.->|hard-rule check| contentbrief
+  sfunsourced -.->|hard-rule check| contentbrief
+  sfblackout -.->|hard-rule check| contentbrief
+  sftiktokcap -.->|hard-rule check| contentbrief
+  sfhours -.->|hard-rule check| contentbrief
+  sfquoramuted -.->|hard-rule check| contentbrief
+  sfsentdates -.->|hard-rule check| contentbrief
+  sfhome -.->|hard-rule check| contentbrief
+  orohioqueries -->|outreach to do| todaylist
+  orohioroster -->|outreach to do| todaylist
+  orohiodedupe -->|outreach to do| todaylist
+  orbigtenqueries -->|outreach to do| todaylist
+  orbigtenroster -->|outreach to do| todaylist
+  orbigtendedupe -->|outreach to do| todaylist
+  orsecqueries -->|outreach to do| todaylist
+  orsecroster -->|outreach to do| todaylist
+  orsecdedupe -->|outreach to do| todaylist
+  oraccqueries -->|outreach to do| todaylist
+  oraccroster -->|outreach to do| todaylist
+  oraccdedupe -->|outreach to do| todaylist
+  orbig12queries -->|outreach to do| todaylist
+  orbig12roster -->|outreach to do| todaylist
+  orbig12dedupe -->|outreach to do| todaylist
+  orivyqueries -->|outreach to do| todaylist
+  orivyroster -->|outreach to do| todaylist
+  orivydedupe -->|outreach to do| todaylist
+  orwestqueries -->|outreach to do| todaylist
+  orwestroster -->|outreach to do| todaylist
+  orwestdedupe -->|outreach to do| todaylist
+  ornycqueries -->|outreach to do| todaylist
+  ornycroster -->|outreach to do| todaylist
+  ornycdedupe -->|outreach to do| todaylist
+  ortexasqueries -->|outreach to do| todaylist
+  ortexasroster -->|outreach to do| todaylist
+  ortexasdedupe -->|outreach to do| todaylist
+  orsouthqueries -->|outreach to do| todaylist
+  orsouthroster -->|outreach to do| todaylist
+  orsouthdedupe -->|outreach to do| todaylist
+  fxdesclong -->|exact fix text| todaylist
+  fxtitlelong -->|exact fix text| todaylist
+  fxcanon -->|exact fix text| todaylist
+  fxogimg -->|exact fix text| todaylist
+  fximgalt -->|exact fix text| todaylist
+  fxlang -->|exact fix text| todaylist
+  fxviewport -->|exact fix text| todaylist
+  fxh1 -->|exact fix text| todaylist
+  fxh1multi -->|exact fix text| todaylist
+  fxhttp -->|exact fix text| todaylist
+  fxrel -->|exact fix text| todaylist
+  fxemptyhref -->|exact fix text| todaylist
+  fxtodo -->|exact fix text| todaylist
+  fxspaces -->|exact fix text| todaylist
+  fxtwitter -->|exact fix text| todaylist
+  fxtheme -->|exact fix text| todaylist
+  fxmailto -->|exact fix text| todaylist
+  fxdecksrc -->|exact fix text| todaylist
+  fxdeckcta -->|exact fix text| todaylist
+  fxrendercount -->|exact fix text| todaylist
+  fxwirepast -->|exact fix text| todaylist
+  fxtickernull -->|exact fix text| todaylist
+  fxpostdate -->|exact fix text| todaylist
+  fxfamily -->|exact fix text| todaylist
+  fxposted -->|exact fix text| todaylist
+  fxpunch -->|exact fix text| todaylist
+  fxtopics -->|exact fix text| todaylist
+  fxlegaladdr -->|exact fix text| todaylist
+  fxemailtmpl -->|exact fix text| todaylist
+  fxswver -->|exact fix text| todaylist
+  fxsitemap -->|exact fix text| todaylist
+  seobriefibinterview -->|issues found| dispatcher
+  seobrieflbo -->|issues found| dispatcher
+  seobriefdcf -->|issues found| dispatcher
+  seobriefaccretion -->|issues found| dispatcher
+  seobriefcomps -->|issues found| dispatcher
+  seobriefperecruit -->|issues found| dispatcher
+  seobriefsuperday -->|issues found| dispatcher
+  seobriefnetwork -->|issues found| dispatcher
+  seobriefresume -->|issues found| dispatcher
+  seobriefrestructuring -->|issues found| dispatcher
+  seobriefhedgefund -->|issues found| dispatcher
+  seobriefaccounting -->|issues found| dispatcher
+  seothin -->|issues found| dispatcher
+  seoh2 -->|issues found| dispatcher
+  seoinlinks -->|issues found| dispatcher
+  seofaq -->|issues found| dispatcher
+  seoarticle -->|issues found| dispatcher
+  seotitlekw -->|issues found| dispatcher
+  seodescmiss -->|issues found| dispatcher
+  seodupetitle -->|issues found| dispatcher
+  seodupedesc -->|issues found| dispatcher
+  seoupdated -->|issues found| dispatcher
+  seocta -->|issues found| dispatcher
+  seoimgalt -->|issues found| dispatcher
+  seoh1match -->|issues found| dispatcher
+  seolong -->|issues found| dispatcher
+  seoschoolconsulting -->|issues found| dispatcher
+  seoschoolhedgefunds -->|issues found| dispatcher
+  seoschoolinvestmentbanking -->|issues found| dispatcher
+  seoschoolprivateequity -->|issues found| dispatcher
+  seoschoolsalesandtrading -->|issues found| dispatcher
+  seoschoolsame -->|issues found| dispatcher
+  seoschoolgap -->|issues found| dispatcher
+  seoschoollink -->|issues found| dispatcher
+  seorobots -->|issues found| dispatcher
+  seosmsize -->|issues found| dispatcher
+  seolastmod -->|issues found| dispatcher
+  seollms -->|issues found| dispatcher
+  seocanonconf -->|issues found| dispatcher
+  seonoindex -->|issues found| dispatcher
+  seoslug -->|issues found| dispatcher
+  seoweight -->|issues found| dispatcher
+  seoscripts -->|issues found| dispatcher
+  seohttps -->|issues found| dispatcher
+  seoredirect -->|issues found| dispatcher
+  seobreadcrumb -->|issues found| dispatcher
+  seoaicite -->|issues found| dispatcher
+  seoogtitle -->|issues found| dispatcher
+  seolinkcareer -->|issues found| dispatcher
+  seolinkclubs -->|issues found| dispatcher
+  seolinkreddit -->|issues found| dispatcher
+  seolinkunlinked -->|issues found| dispatcher
+  seolinkroundup -->|issues found| dispatcher
+  seolinknewsletter -->|issues found| dispatcher
+  seolinkpodcast -->|issues found| dispatcher
+  seolinkdir -->|issues found| dispatcher
+  seolinkwiki -->|issues found| dispatcher
+  seolinkfaculty -->|issues found| dispatcher
+  seolinkyoutube -->|issues found| dispatcher
+  seolinkpitch -->|issues found| dispatcher
+  seobriefibinterview -->|SEO to do| todaylist
+  seobrieflbo -->|SEO to do| todaylist
+  seobriefdcf -->|SEO to do| todaylist
+  seobriefaccretion -->|SEO to do| todaylist
+  seobriefcomps -->|SEO to do| todaylist
+  seobriefperecruit -->|SEO to do| todaylist
+  seobriefsuperday -->|SEO to do| todaylist
+  seobriefnetwork -->|SEO to do| todaylist
+  seobriefresume -->|SEO to do| todaylist
+  seobriefrestructuring -->|SEO to do| todaylist
+  seobriefhedgefund -->|SEO to do| todaylist
+  seobriefaccounting -->|SEO to do| todaylist
+  seothin -->|SEO to do| todaylist
+  seoh2 -->|SEO to do| todaylist
+  seoinlinks -->|SEO to do| todaylist
+  seofaq -->|SEO to do| todaylist
+  seoarticle -->|SEO to do| todaylist
+  seotitlekw -->|SEO to do| todaylist
+  seodescmiss -->|SEO to do| todaylist
+  seodupetitle -->|SEO to do| todaylist
+  seodupedesc -->|SEO to do| todaylist
+  seoupdated -->|SEO to do| todaylist
+  seocta -->|SEO to do| todaylist
+  seoimgalt -->|SEO to do| todaylist
+  seoh1match -->|SEO to do| todaylist
+  seolong -->|SEO to do| todaylist
+  seoschoolconsulting -->|SEO to do| todaylist
+  seoschoolhedgefunds -->|SEO to do| todaylist
+  seoschoolinvestmentbanking -->|SEO to do| todaylist
+  seoschoolprivateequity -->|SEO to do| todaylist
+  seoschoolsalesandtrading -->|SEO to do| todaylist
+  seoschoolsame -->|SEO to do| todaylist
+  seoschoolgap -->|SEO to do| todaylist
+  seoschoollink -->|SEO to do| todaylist
+  seorobots -->|SEO to do| todaylist
+  seosmsize -->|SEO to do| todaylist
+  seolastmod -->|SEO to do| todaylist
+  seollms -->|SEO to do| todaylist
+  seocanonconf -->|SEO to do| todaylist
+  seonoindex -->|SEO to do| todaylist
+  seoslug -->|SEO to do| todaylist
+  seoweight -->|SEO to do| todaylist
+  seoscripts -->|SEO to do| todaylist
+  seohttps -->|SEO to do| todaylist
+  seoredirect -->|SEO to do| todaylist
+  seobreadcrumb -->|SEO to do| todaylist
+  seoaicite -->|SEO to do| todaylist
+  seoogtitle -->|SEO to do| todaylist
+  seolinkcareer -->|SEO to do| todaylist
+  seolinkclubs -->|SEO to do| todaylist
+  seolinkreddit -->|SEO to do| todaylist
+  seolinkunlinked -->|SEO to do| todaylist
+  seolinkroundup -->|SEO to do| todaylist
+  seolinknewsletter -->|SEO to do| todaylist
+  seolinkpodcast -->|SEO to do| todaylist
+  seolinkdir -->|SEO to do| todaylist
+  seolinkwiki -->|SEO to do| todaylist
+  seolinkfaculty -->|SEO to do| todaylist
+  seolinkyoutube -->|SEO to do| todaylist
+  seolinkpitch -->|SEO to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -577,6 +1168,203 @@ flowchart LR
 | [[Answer Position Bot]] | Sensor | Where the right answers sit (A, B, C, D). Your hub note says the keys skew to B; students notice and game it. |
 | [[Content Brief Bot]] | Circle | The flywheel's daily page: growth, tomorrow's slots, what to fix before posting, what to stop. |
 | [[Today List Bot]] | Circle | One ranked do-today list from every warning the 73 flywheel and operator bots raised. |
+| [[Hook Maker: ranked schools]] | Sensor | three hook drafts for tomorrow, each copying the shape of one of this family's best posts (RANKED schools). |
+| [[Caption Maker: ranked schools]] | Sensor | a caption skeleton: hook line, one value line, source line, call to action (RANKED schools). |
+| [[CTA Picker: ranked schools]] | Sensor | the call to action for tomorrow, rotated by day so no two posts in a row end the same way (RANKED schools). |
+| [[Script Outline Maker: ranked schools]] | Sensor | a 5-beat video outline for the family's next topic (RANKED schools). |
+| [[Slide Plan Maker: ranked schools]] | Sensor | a carousel plan: cover, body slides, a source slide, a call-to-action slide (RANKED schools). |
+| [[Title Card Maker: ranked schools]] | Sensor | three title-card options built from the words of the best posts (RANKED schools). |
+| [[Sequel Maker: ranked schools]] | Sensor | the sequel idea for this family's best post, since a post over 2x the average gets a sequel within 3 days (RANKED schools). |
+| [[Pinned Comment Maker: ranked schools]] | Sensor | a pinned-comment question that gets replies, which the platforms count as engagement (RANKED schools). |
+| [[Hook Maker: character stories]] | Sensor | three hook drafts for tomorrow, each copying the shape of one of this family's best posts (Character stories). |
+| [[Caption Maker: character stories]] | Sensor | a caption skeleton: hook line, one value line, source line, call to action (Character stories). |
+| [[CTA Picker: character stories]] | Sensor | the call to action for tomorrow, rotated by day so no two posts in a row end the same way (Character stories). |
+| [[Script Outline Maker: character stories]] | Sensor | a 5-beat video outline for the family's next topic (Character stories). |
+| [[Slide Plan Maker: character stories]] | Sensor | a carousel plan: cover, body slides, a source slide, a call-to-action slide (Character stories). |
+| [[Title Card Maker: character stories]] | Sensor | three title-card options built from the words of the best posts (Character stories). |
+| [[Sequel Maker: character stories]] | Sensor | the sequel idea for this family's best post, since a post over 2x the average gets a sequel within 3 days (Character stories). |
+| [[Pinned Comment Maker: character stories]] | Sensor | a pinned-comment question that gets replies, which the platforms count as engagement (Character stories). |
+| [[Hook Maker: tiered interview questions]] | Sensor | three hook drafts for tomorrow, each copying the shape of one of this family's best posts (Tiered interview questions). |
+| [[Caption Maker: tiered interview questions]] | Sensor | a caption skeleton: hook line, one value line, source line, call to action (Tiered interview questions). |
+| [[CTA Picker: tiered interview questions]] | Sensor | the call to action for tomorrow, rotated by day so no two posts in a row end the same way (Tiered interview questions). |
+| [[Script Outline Maker: tiered interview questions]] | Sensor | a 5-beat video outline for the family's next topic (Tiered interview questions). |
+| [[Slide Plan Maker: tiered interview questions]] | Sensor | a carousel plan: cover, body slides, a source slide, a call-to-action slide (Tiered interview questions). |
+| [[Title Card Maker: tiered interview questions]] | Sensor | three title-card options built from the words of the best posts (Tiered interview questions). |
+| [[Sequel Maker: tiered interview questions]] | Sensor | the sequel idea for this family's best post, since a post over 2x the average gets a sequel within 3 days (Tiered interview questions). |
+| [[Pinned Comment Maker: tiered interview questions]] | Sensor | a pinned-comment question that gets replies, which the platforms count as engagement (Tiered interview questions). |
+| [[Hook Maker: live market news]] | Sensor | three hook drafts for tomorrow, each copying the shape of one of this family's best posts (Live market news). |
+| [[Caption Maker: live market news]] | Sensor | a caption skeleton: hook line, one value line, source line, call to action (Live market news). |
+| [[CTA Picker: live market news]] | Sensor | the call to action for tomorrow, rotated by day so no two posts in a row end the same way (Live market news). |
+| [[Script Outline Maker: live market news]] | Sensor | a 5-beat video outline for the family's next topic (Live market news). |
+| [[Slide Plan Maker: live market news]] | Sensor | a carousel plan: cover, body slides, a source slide, a call-to-action slide (Live market news). |
+| [[Title Card Maker: live market news]] | Sensor | three title-card options built from the words of the best posts (Live market news). |
+| [[Sequel Maker: live market news]] | Sensor | the sequel idea for this family's best post, since a post over 2x the average gets a sequel within 3 days (Live market news). |
+| [[Pinned Comment Maker: live market news]] | Sensor | a pinned-comment question that gets replies, which the platforms count as engagement (Live market news). |
+| [[Hook Maker: league tables]] | Sensor | three hook drafts for tomorrow, each copying the shape of one of this family's best posts (League tables). |
+| [[Caption Maker: league tables]] | Sensor | a caption skeleton: hook line, one value line, source line, call to action (League tables). |
+| [[CTA Picker: league tables]] | Sensor | the call to action for tomorrow, rotated by day so no two posts in a row end the same way (League tables). |
+| [[Script Outline Maker: league tables]] | Sensor | a 5-beat video outline for the family's next topic (League tables). |
+| [[Slide Plan Maker: league tables]] | Sensor | a carousel plan: cover, body slides, a source slide, a call-to-action slide (League tables). |
+| [[Title Card Maker: league tables]] | Sensor | three title-card options built from the words of the best posts (League tables). |
+| [[Sequel Maker: league tables]] | Sensor | the sequel idea for this family's best post, since a post over 2x the average gets a sequel within 3 days (League tables). |
+| [[Pinned Comment Maker: league tables]] | Sensor | a pinned-comment question that gets replies, which the platforms count as engagement (League tables). |
+| [[Club Finder Queries: Ohio]] | Sensor | three search queries to find undergraduate finance clubs (Ohio). |
+| [[School Roster: Ohio]] | Sensor | which schools in the region still have no club emailed (Ohio). |
+| [[Region De-dupe: Ohio]] | Sensor | schools in the region already emailed, so none gets a second email (Ohio). |
+| [[Club Finder Queries: Big Ten]] | Sensor | three search queries to find undergraduate finance clubs (Big Ten). |
+| [[School Roster: Big Ten]] | Sensor | which schools in the region still have no club emailed (Big Ten). |
+| [[Region De-dupe: Big Ten]] | Sensor | schools in the region already emailed, so none gets a second email (Big Ten). |
+| [[Club Finder Queries: SEC]] | Sensor | three search queries to find undergraduate finance clubs (SEC). |
+| [[School Roster: SEC]] | Sensor | which schools in the region still have no club emailed (SEC). |
+| [[Region De-dupe: SEC]] | Sensor | schools in the region already emailed, so none gets a second email (SEC). |
+| [[Club Finder Queries: ACC]] | Sensor | three search queries to find undergraduate finance clubs (ACC). |
+| [[School Roster: ACC]] | Sensor | which schools in the region still have no club emailed (ACC). |
+| [[Region De-dupe: ACC]] | Sensor | schools in the region already emailed, so none gets a second email (ACC). |
+| [[Club Finder Queries: Big 12]] | Sensor | three search queries to find undergraduate finance clubs (Big 12). |
+| [[School Roster: Big 12]] | Sensor | which schools in the region still have no club emailed (Big 12). |
+| [[Region De-dupe: Big 12]] | Sensor | schools in the region already emailed, so none gets a second email (Big 12). |
+| [[Club Finder Queries: Ivy League]] | Sensor | three search queries to find undergraduate finance clubs (Ivy League). |
+| [[School Roster: Ivy League]] | Sensor | which schools in the region still have no club emailed (Ivy League). |
+| [[Region De-dupe: Ivy League]] | Sensor | schools in the region already emailed, so none gets a second email (Ivy League). |
+| [[Club Finder Queries: West]] | Sensor | three search queries to find undergraduate finance clubs (West). |
+| [[School Roster: West]] | Sensor | which schools in the region still have no club emailed (West). |
+| [[Region De-dupe: West]] | Sensor | schools in the region already emailed, so none gets a second email (West). |
+| [[Club Finder Queries: New York area]] | Sensor | three search queries to find undergraduate finance clubs (New York area). |
+| [[School Roster: New York area]] | Sensor | which schools in the region still have no club emailed (New York area). |
+| [[Region De-dupe: New York area]] | Sensor | schools in the region already emailed, so none gets a second email (New York area). |
+| [[Club Finder Queries: Texas]] | Sensor | three search queries to find undergraduate finance clubs (Texas). |
+| [[School Roster: Texas]] | Sensor | which schools in the region still have no club emailed (Texas). |
+| [[Region De-dupe: Texas]] | Sensor | schools in the region already emailed, so none gets a second email (Texas). |
+| [[Club Finder Queries: Southeast]] | Sensor | three search queries to find undergraduate finance clubs (Southeast). |
+| [[School Roster: Southeast]] | Sensor | which schools in the region still have no club emailed (Southeast). |
+| [[Region De-dupe: Southeast]] | Sensor | schools in the region already emailed, so none gets a second email (Southeast). |
+| [[Meta Description Fixer]] | Sensor | Finds meta description over 160 characters across the public pages and writes the exact fix. Proposals only. |
+| [[Title Length Fixer]] | Sensor | Finds page title over 65 characters across the public pages and writes the exact fix. Proposals only. |
+| [[Canonical Fixer]] | Sensor | Finds page without a canonical link across the public pages and writes the exact fix. Proposals only. |
+| [[OG Image Fixer]] | Sensor | Finds page without an og:image across the public pages and writes the exact fix. Proposals only. |
+| [[Image Alt Fixer]] | Sensor | Finds images without alt text across the public pages and writes the exact fix. Proposals only. |
+| [[Language Tag Fixer]] | Sensor | Finds page without a lang attribute across the public pages and writes the exact fix. Proposals only. |
+| [[Viewport Fixer]] | Sensor | Finds page without a viewport meta across the public pages and writes the exact fix. Proposals only. |
+| [[Missing H1 Fixer]] | Sensor | Finds page without an h1 across the public pages and writes the exact fix. Proposals only. |
+| [[Double H1 Fixer]] | Sensor | Finds page with more than one h1 across the public pages and writes the exact fix. Proposals only. |
+| [[Insecure Link Fixer]] | Sensor | Finds links that start with http:// across the public pages and writes the exact fix. Proposals only. |
+| [[Link Safety Fixer]] | Sensor | Finds target=_blank links without rel=noopener across the public pages and writes the exact fix. Proposals only. |
+| [[Empty Link Fixer]] | Sensor | Finds links with an empty href across the public pages and writes the exact fix. Proposals only. |
+| [[Leftover Text Fixer]] | Sensor | Finds TODO or lorem text left on a page across the public pages and writes the exact fix. Proposals only. |
+| [[Double Space Fixer]] | Sensor | Finds double spaces inside visible text across the public pages and writes the exact fix. Proposals only. |
+| [[Twitter Card Fixer]] | Sensor | Finds page without a twitter:card tag across the public pages and writes the exact fix. Proposals only. |
+| [[Theme Color Fixer]] | Sensor | Finds page without a theme-color meta across the public pages and writes the exact fix. Proposals only. |
+| [[Email Link Fixer]] | Sensor | Finds mailto links with a malformed address across the public pages and writes the exact fix. Proposals only. |
+| [[Deck Source Fixer]] | Sensor | Finds upcoming decks with no source line and writes the exact fix. Proposals only. |
+| [[Deck CTA Fixer]] | Sensor | Finds upcoming decks with no call to action and writes the exact fix. Proposals only. |
+| [[Render Count Fixer]] | Sensor | Finds decks whose rendered slide count does not match the spec and writes the exact fix. Proposals only. |
+| [[Wire Past Rows Fixer]] | Sensor | Finds calendar rows already in the past and writes the exact fix. Proposals only. |
+| [[Ticker Null Fixer]] | Sensor | Finds ticker rows with a missing price and writes the exact fix. Proposals only. |
+| [[Log Date Fixer]] | Sensor | Finds post-log rows with no views after 4 days and writes the exact fix. Proposals only. |
+| [[Idea Type Fixer]] | Sensor | Finds post-log rows whose idea type matches no family and writes the exact fix. Proposals only. |
+| [[Posted Log Fixer]] | Sensor | Finds posted.md rows missing a date and writes the exact fix. Proposals only. |
+| [[Punch Log Fixer]] | Sensor | Finds punch-log rows with no style and writes the exact fix. Proposals only. |
+| [[Topics Gap Fixer]] | Sensor | Finds families with an empty topic list and writes the exact fix. Proposals only. |
+| [[Legal Address Fixer]] | Sensor | Finds legal pages without the mailing address and writes the exact fix. Proposals only. |
+| [[Email Template Fixer]] | Sensor | Finds outreach email template missing address or opt-out and writes the exact fix. Proposals only. |
+| [[Service Worker Fixer]] | Sensor | Finds service worker cache version older than the last site change and writes the exact fix. Proposals only. |
+| [[Sitemap Fixer]] | Sensor | Finds guides missing from the sitemap and writes the exact fix. Proposals only. |
+| [[Metricool Followers Reader]] | Sensor | Followers per platform, read from the Metricool snapshot. |
+| [[Metricool Followers Trend]] | Sensor | Followers change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Views Reader]] | Sensor | Views per platform, read from the Metricool snapshot. |
+| [[Metricool Views Trend]] | Sensor | Views change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Reach Reader]] | Sensor | Reach per platform, read from the Metricool snapshot. |
+| [[Metricool Reach Trend]] | Sensor | Reach change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Likes Reader]] | Sensor | Likes per platform, read from the Metricool snapshot. |
+| [[Metricool Likes Trend]] | Sensor | Likes change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Comments Reader]] | Sensor | Comments per platform, read from the Metricool snapshot. |
+| [[Metricool Comments Trend]] | Sensor | Comments change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Shares Reader]] | Sensor | Shares per platform, read from the Metricool snapshot. |
+| [[Metricool Shares Trend]] | Sensor | Shares change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Saves Reader]] | Sensor | Saves per platform, read from the Metricool snapshot. |
+| [[Metricool Saves Trend]] | Sensor | Saves change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Posts published Reader]] | Sensor | Posts published per platform, read from the Metricool snapshot. |
+| [[Metricool Posts published Trend]] | Sensor | Posts published change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Profile visits Reader]] | Sensor | Profile visits per platform, read from the Metricool snapshot. |
+| [[Metricool Profile visits Trend]] | Sensor | Profile visits change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Metricool Link clicks Reader]] | Sensor | Link clicks per platform, read from the Metricool snapshot. |
+| [[Metricool Link clicks Trend]] | Sensor | Link clicks change per platform against the previous snapshot; warns at -25% or worse. |
+| [[Duplicate Email Guard]] | Sensor | Hard-rule check: the same address or organization appearing twice in the sent log. |
+| [[Daily Email Cap Guard]] | Sensor | Hard-rule check: more than 9 new emails in one day. |
+| [[School Cap Guard]] | Sensor | Hard-rule check: more than 2 clubs emailed at one school. |
+| [[Send Window Guard]] | Sensor | Hard-rule check: email sent outside Mon-Fri 9am-4pm ET (checks the log dates for weekends). |
+| [[Opt-out Guard]] | Sensor | Hard-rule check: addresses on the opt-out list that were emailed anyway. |
+| [[Opt-out Line Guard]] | Sensor | Hard-rule check: an email template with no opt-out line. |
+| [[Mailing Address Guard]] | Sensor | Hard-rule check: an email template with no mailing address. |
+| [[Email Length Guard]] | Sensor | Hard-rule check: an email body over 90 words. |
+| [[Claim Words Guard]] | Sensor | Hard-rule check: guarantee-style claims in decks or email templates. |
+| [[Unsourced Number Guard]] | Sensor | Hard-rule check: upcoming decks with numbers but no source line. |
+| [[Blackout Guard]] | Sensor | Hard-rule check: an upcoming deck dated on a no-post blackout day. |
+| [[TikTok Cap Guard]] | Sensor | Hard-rule check: more than 4 TikToks planned in one day. |
+| [[Post Hours Guard]] | Sensor | Hard-rule check: posts planned outside 12pm-10pm ET. |
+| [[Quora Mute Guard]] | Sensor | Hard-rule check: any Quora task that is still queued although Quora is dropped. |
+| [[Sent Log Hygiene Guard]] | Sensor | Hard-rule check: sent-log entries whose date is not YYYY-MM-DD. |
+| [[Home Baseline Guard]] | Sensor | Hard-rule check: any change to the Home page without your OK. |
+| [[SEO Brief: Investment banking interview questions]] | Sensor | Content brief for the "Investment banking interview questions" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: LBO model]] | Sensor | Content brief for the "LBO model" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: DCF]] | Sensor | Content brief for the "DCF" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Accretion and dilution]] | Sensor | Content brief for the "Accretion and dilution" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Comparable company analysis]] | Sensor | Content brief for the "Comparable company analysis" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Private equity recruiting]] | Sensor | Content brief for the "Private equity recruiting" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Superday]] | Sensor | Content brief for the "Superday" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Networking and cold email]] | Sensor | Content brief for the "Networking and cold email" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Resume]] | Sensor | Content brief for the "Resume" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Restructuring]] | Sensor | Content brief for the "Restructuring" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Hedge funds]] | Sensor | Content brief for the "Hedge funds" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[SEO Brief: Accounting for finance interviews]] | Sensor | Content brief for the "Accounting for finance interviews" cluster: does a guide exist, how strong is it, and what to add. Phrases only; no volume numbers. |
+| [[Thin Page Checker]] | Sensor | Scans every guide for guides under 400 words. |
+| [[Heading Depth Checker]] | Sensor | Scans every guide for guides with fewer than 3 sections. |
+| [[Internal Link Count Checker]] | Sensor | Scans every guide for guides linking to fewer than 3 other guides. |
+| [[FAQ Schema Checker]] | Sensor | Scans every guide for guides with no FAQ markup. |
+| [[Article Schema Checker]] | Sensor | Scans every guide for guides with no Article or BreadcrumbList markup. |
+| [[Title Keyword Checker]] | Sensor | Scans every guide for titles that do not contain the page's main topic words. |
+| [[Description Checker]] | Sensor | Scans every guide for guides with a missing or very short meta description. |
+| [[Duplicate Title Checker]] | Sensor | Scans every guide for guides sharing the exact same title. |
+| [[Duplicate Description Checker]] | Sensor | Scans every guide for guides sharing the exact same description. |
+| [[Freshness Checker]] | Sensor | Scans every guide for guides with no visible updated date. |
+| [[Guide CTA Checker]] | Sensor | Scans every guide for guides with no link into the training site. |
+| [[Image Alt Checker]] | Sensor | Scans every guide for guides with images missing alt text. |
+| [[H1 Match Checker]] | Sensor | Scans every guide for pages whose h1 shares no words with the title. |
+| [[Page Length Balance Checker]] | Sensor | Scans every guide for the spread of guide lengths, to spot template pages that are all the same. |
+| [[School Pages: Consulting]] | Sensor | Checks the school-specific Consulting guides for thin or copy-paste content. |
+| [[School Pages: Hedge funds]] | Sensor | Checks the school-specific Hedge funds guides for thin or copy-paste content. |
+| [[School Pages: Investment banking]] | Sensor | Checks the school-specific Investment banking guides for thin or copy-paste content. |
+| [[School Pages: Private equity]] | Sensor | Checks the school-specific Private equity guides for thin or copy-paste content. |
+| [[School Pages: Sales and trading]] | Sensor | Checks the school-specific Sales and trading guides for thin or copy-paste content. |
+| [[School Page Sameness Checker]] | Sensor | How similar the school pages are to each other. Near-identical text across hundreds of pages is the main ranking risk of a programmatic site. |
+| [[School Coverage Checker]] | Sensor | Schools that have some career pages but not all five. |
+| [[School Hub Link Checker]] | Sensor | Whether each school page links to the school's other career pages, which spreads ranking power across the set. |
+| [[Robots Checker]] | Sensor | Checks robots.txt blocking pages it should not. |
+| [[Sitemap Size Checker]] | Sensor | Checks sitemap URL count against the guide count. |
+| [[Sitemap Date Checker]] | Sensor | Checks sitemap entries with no lastmod. |
+| [[llms.txt Checker]] | Sensor | Checks llms.txt, the file AI search tools read. |
+| [[Canonical Conflict Checker]] | Sensor | Checks canonicals pointing at a different page. |
+| [[Noindex Checker]] | Sensor | Checks pages accidentally set to noindex. |
+| [[URL Slug Checker]] | Sensor | Checks slugs that are very long. |
+| [[Page Weight Checker]] | Sensor | Checks guide pages over 300 KB of HTML. |
+| [[Blocking Script Checker]] | Sensor | Checks guides with render-blocking scripts in the head. |
+| [[Sitemap HTTPS Checker]] | Sensor | Checks sitemap URLs that are not https on the main domain. |
+| [[Redirect Rule Checker]] | Sensor | Checks redirect rules in netlify.toml. |
+| [[Breadcrumb Checker]] | Sensor | Checks guides with no breadcrumb markup. |
+| [[AI Citation Checker]] | Sensor | Checks guides that answer a question in the first 150 words, which is what AI search quotes. |
+| [[Social Preview Checker]] | Sensor | Checks guides missing og:title or og:description. |
+| [[Career Center Link Targets]] | Sensor | Search queries that find university career-center resource pages that list free prep tools. |
+| [[Club Resource Link Targets]] | Sensor | Queries that find club sites with a resources or links page. |
+| [[Community Answer Targets]] | Sensor | Questions students ask in public forums that a guide here answers. List only; answer by hand, one useful reply at a time, never a drive-by link. |
+| [[Unlinked Mention Finder]] | Sensor | Queries that find pages that mention M&A Prep without linking to it. |
+| [[Roundup Page Targets]] | Sensor | Queries that find 'best free resources' lists that could add the site. |
+| [[Newsletter Targets]] | Sensor | Queries for student finance newsletters that feature tools. |
+| [[Guest Spot Targets]] | Sensor | Queries for student-run finance podcasts and blogs that take guests or guest posts. |
+| [[Directory Targets]] | Sensor | Queries for free education and tool directories. |
+| [[Reference Page Targets]] | Sensor | Queries for public wiki or guide pages that cite free study tools. |
+| [[Faculty Page Targets]] | Sensor | Queries for faculty or program pages that list free student tools. |
+| [[Video Description Targets]] | Sensor | Where to put the site link in your own video descriptions and bios, from your posted log. |
+| [[Link Pitch Drafter]] | Sensor | A short, honest pitch for a resource-page link: what the site is, one fact it can support, no numbers you cannot show. |
 
 **Sensors** find problems. **The Circle** routes, fixes, verifies, remembers and reports. **Drafters** prepare emails and never send.
 

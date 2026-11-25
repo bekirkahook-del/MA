@@ -135,6 +135,203 @@ flowchart LR
     canonical["Canonical Tag Bot"]
     ogimage["Guide Share Image Bot"]
     answerskew["Answer Position Bot"]
+    mkrankedhooks["Hook Maker: ranked schools"]
+    mkrankedcaption["Caption Maker: ranked schools"]
+    mkrankedcta["CTA Picker: ranked schools"]
+    mkrankedscript["Script Outline Maker: ranked schools"]
+    mkrankedslides["Slide Plan Maker: ranked schools"]
+    mkrankedtitle["Title Card Maker: ranked schools"]
+    mkrankedsequel["Sequel Maker: ranked schools"]
+    mkrankedpin["Pinned Comment Maker: ranked schools"]
+    mkcharacterhooks["Hook Maker: character stories"]
+    mkcharactercaption["Caption Maker: character stories"]
+    mkcharactercta["CTA Picker: character stories"]
+    mkcharacterscript["Script Outline Maker: character stories"]
+    mkcharacterslides["Slide Plan Maker: character stories"]
+    mkcharactertitle["Title Card Maker: character stories"]
+    mkcharactersequel["Sequel Maker: character stories"]
+    mkcharacterpin["Pinned Comment Maker: character stories"]
+    mktieredhooks["Hook Maker: tiered interview questions"]
+    mktieredcaption["Caption Maker: tiered interview questions"]
+    mktieredcta["CTA Picker: tiered interview questions"]
+    mktieredscript["Script Outline Maker: tiered interview questions"]
+    mktieredslides["Slide Plan Maker: tiered interview questions"]
+    mktieredtitle["Title Card Maker: tiered interview questions"]
+    mktieredsequel["Sequel Maker: tiered interview questions"]
+    mktieredpin["Pinned Comment Maker: tiered interview questions"]
+    mkmarkethooks["Hook Maker: live market news"]
+    mkmarketcaption["Caption Maker: live market news"]
+    mkmarketcta["CTA Picker: live market news"]
+    mkmarketscript["Script Outline Maker: live market news"]
+    mkmarketslides["Slide Plan Maker: live market news"]
+    mkmarkettitle["Title Card Maker: live market news"]
+    mkmarketsequel["Sequel Maker: live market news"]
+    mkmarketpin["Pinned Comment Maker: live market news"]
+    mkleaguehooks["Hook Maker: league tables"]
+    mkleaguecaption["Caption Maker: league tables"]
+    mkleaguecta["CTA Picker: league tables"]
+    mkleaguescript["Script Outline Maker: league tables"]
+    mkleagueslides["Slide Plan Maker: league tables"]
+    mkleaguetitle["Title Card Maker: league tables"]
+    mkleaguesequel["Sequel Maker: league tables"]
+    mkleaguepin["Pinned Comment Maker: league tables"]
+    orohioqueries["Club Finder Queries: Ohio"]
+    orohioroster["School Roster: Ohio"]
+    orohiodedupe["Region De-dupe: Ohio"]
+    orbigtenqueries["Club Finder Queries: Big Ten"]
+    orbigtenroster["School Roster: Big Ten"]
+    orbigtendedupe["Region De-dupe: Big Ten"]
+    orsecqueries["Club Finder Queries: SEC"]
+    orsecroster["School Roster: SEC"]
+    orsecdedupe["Region De-dupe: SEC"]
+    oraccqueries["Club Finder Queries: ACC"]
+    oraccroster["School Roster: ACC"]
+    oraccdedupe["Region De-dupe: ACC"]
+    orbig12queries["Club Finder Queries: Big 12"]
+    orbig12roster["School Roster: Big 12"]
+    orbig12dedupe["Region De-dupe: Big 12"]
+    orivyqueries["Club Finder Queries: Ivy League"]
+    orivyroster["School Roster: Ivy League"]
+    orivydedupe["Region De-dupe: Ivy League"]
+    orwestqueries["Club Finder Queries: West"]
+    orwestroster["School Roster: West"]
+    orwestdedupe["Region De-dupe: West"]
+    ornycqueries["Club Finder Queries: New York area"]
+    ornycroster["School Roster: New York area"]
+    ornycdedupe["Region De-dupe: New York area"]
+    ortexasqueries["Club Finder Queries: Texas"]
+    ortexasroster["School Roster: Texas"]
+    ortexasdedupe["Region De-dupe: Texas"]
+    orsouthqueries["Club Finder Queries: Southeast"]
+    orsouthroster["School Roster: Southeast"]
+    orsouthdedupe["Region De-dupe: Southeast"]
+    fxdesclong["Meta Description Fixer"]
+    fxtitlelong["Title Length Fixer"]
+    fxcanon["Canonical Fixer"]
+    fxogimg["OG Image Fixer"]
+    fximgalt["Image Alt Fixer"]
+    fxlang["Language Tag Fixer"]
+    fxviewport["Viewport Fixer"]
+    fxh1["Missing H1 Fixer"]
+    fxh1multi["Double H1 Fixer"]
+    fxhttp["Insecure Link Fixer"]
+    fxrel["Link Safety Fixer"]
+    fxemptyhref["Empty Link Fixer"]
+    fxtodo["Leftover Text Fixer"]
+    fxspaces["Double Space Fixer"]
+    fxtwitter["Twitter Card Fixer"]
+    fxtheme["Theme Color Fixer"]
+    fxmailto["Email Link Fixer"]
+    fxdecksrc["Deck Source Fixer"]
+    fxdeckcta["Deck CTA Fixer"]
+    fxrendercount["Render Count Fixer"]
+    fxwirepast["Wire Past Rows Fixer"]
+    fxtickernull["Ticker Null Fixer"]
+    fxpostdate["Log Date Fixer"]
+    fxfamily["Idea Type Fixer"]
+    fxposted["Posted Log Fixer"]
+    fxpunch["Punch Log Fixer"]
+    fxtopics["Topics Gap Fixer"]
+    fxlegaladdr["Legal Address Fixer"]
+    fxemailtmpl["Email Template Fixer"]
+    fxswver["Service Worker Fixer"]
+    fxsitemap["Sitemap Fixer"]
+    mdfollowersnow["Metricool Followers Reader"]
+    mdfollowerstrend["Metricool Followers Trend"]
+    mdviewsnow["Metricool Views Reader"]
+    mdviewstrend["Metricool Views Trend"]
+    mdreachnow["Metricool Reach Reader"]
+    mdreachtrend["Metricool Reach Trend"]
+    mdlikesnow["Metricool Likes Reader"]
+    mdlikestrend["Metricool Likes Trend"]
+    mdcommentsnow["Metricool Comments Reader"]
+    mdcommentstrend["Metricool Comments Trend"]
+    mdsharesnow["Metricool Shares Reader"]
+    mdsharestrend["Metricool Shares Trend"]
+    mdsavesnow["Metricool Saves Reader"]
+    mdsavestrend["Metricool Saves Trend"]
+    mdpostsnow["Metricool Posts published Reader"]
+    mdpoststrend["Metricool Posts published Trend"]
+    mdvisitsnow["Metricool Profile visits Reader"]
+    mdvisitstrend["Metricool Profile visits Trend"]
+    mdclicksnow["Metricool Link clicks Reader"]
+    mdclickstrend["Metricool Link clicks Trend"]
+    sfdupeemail["Duplicate Email Guard"]
+    sfdaycap["Daily Email Cap Guard"]
+    sfschoolcap["School Cap Guard"]
+    sfwindow["Send Window Guard"]
+    sfsuppress["Opt-out Guard"]
+    sfoptout["Opt-out Line Guard"]
+    sfaddr["Mailing Address Guard"]
+    sflength["Email Length Guard"]
+    sfclaims["Claim Words Guard"]
+    sfunsourced["Unsourced Number Guard"]
+    sfblackout["Blackout Guard"]
+    sftiktokcap["TikTok Cap Guard"]
+    sfhours["Post Hours Guard"]
+    sfquoramuted["Quora Mute Guard"]
+    sfsentdates["Sent Log Hygiene Guard"]
+    sfhome["Home Baseline Guard"]
+    seobriefibinterview["SEO Brief: Investment banking interview questions"]
+    seobrieflbo["SEO Brief: LBO model"]
+    seobriefdcf["SEO Brief: DCF"]
+    seobriefaccretion["SEO Brief: Accretion and dilution"]
+    seobriefcomps["SEO Brief: Comparable company analysis"]
+    seobriefperecruit["SEO Brief: Private equity recruiting"]
+    seobriefsuperday["SEO Brief: Superday"]
+    seobriefnetwork["SEO Brief: Networking and cold email"]
+    seobriefresume["SEO Brief: Resume"]
+    seobriefrestructuring["SEO Brief: Restructuring"]
+    seobriefhedgefund["SEO Brief: Hedge funds"]
+    seobriefaccounting["SEO Brief: Accounting for finance interviews"]
+    seothin["Thin Page Checker"]
+    seoh2["Heading Depth Checker"]
+    seoinlinks["Internal Link Count Checker"]
+    seofaq["FAQ Schema Checker"]
+    seoarticle["Article Schema Checker"]
+    seotitlekw["Title Keyword Checker"]
+    seodescmiss["Description Checker"]
+    seodupetitle["Duplicate Title Checker"]
+    seodupedesc["Duplicate Description Checker"]
+    seoupdated["Freshness Checker"]
+    seocta["Guide CTA Checker"]
+    seoimgalt["Image Alt Checker"]
+    seoh1match["H1 Match Checker"]
+    seolong["Page Length Balance Checker"]
+    seoschoolconsulting["School Pages: Consulting"]
+    seoschoolhedgefunds["School Pages: Hedge funds"]
+    seoschoolinvestmentbanking["School Pages: Investment banking"]
+    seoschoolprivateequity["School Pages: Private equity"]
+    seoschoolsalesandtrading["School Pages: Sales and trading"]
+    seoschoolsame["School Page Sameness Checker"]
+    seoschoolgap["School Coverage Checker"]
+    seoschoollink["School Hub Link Checker"]
+    seorobots["Robots Checker"]
+    seosmsize["Sitemap Size Checker"]
+    seolastmod["Sitemap Date Checker"]
+    seollms["llms.txt Checker"]
+    seocanonconf["Canonical Conflict Checker"]
+    seonoindex["Noindex Checker"]
+    seoslug["URL Slug Checker"]
+    seoweight["Page Weight Checker"]
+    seoscripts["Blocking Script Checker"]
+    seohttps["Sitemap HTTPS Checker"]
+    seoredirect["Redirect Rule Checker"]
+    seobreadcrumb["Breadcrumb Checker"]
+    seoaicite["AI Citation Checker"]
+    seoogtitle["Social Preview Checker"]
+    seolinkcareer["Career Center Link Targets"]
+    seolinkclubs["Club Resource Link Targets"]
+    seolinkreddit["Community Answer Targets"]
+    seolinkunlinked["Unlinked Mention Finder"]
+    seolinkroundup["Roundup Page Targets"]
+    seolinknewsletter["Newsletter Targets"]
+    seolinkpodcast["Guest Spot Targets"]
+    seolinkdir["Directory Targets"]
+    seolinkwiki["Reference Page Targets"]
+    seolinkfaculty["Faculty Page Targets"]
+    seolinkyoutube["Video Description Targets"]
+    seolinkpitch["Link Pitch Drafter"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -436,6 +633,400 @@ flowchart LR
   todaylist -->|do today| reporter
   bumps -->|who is due a follow-up| outreach
   newsjack -->|live-market chances| strategist
+  mkrankedhooks -->|issues found| dispatcher
+  mkrankedcaption -->|issues found| dispatcher
+  mkrankedcta -->|issues found| dispatcher
+  mkrankedscript -->|issues found| dispatcher
+  mkrankedslides -->|issues found| dispatcher
+  mkrankedtitle -->|issues found| dispatcher
+  mkrankedsequel -->|issues found| dispatcher
+  mkrankedpin -->|issues found| dispatcher
+  mkcharacterhooks -->|issues found| dispatcher
+  mkcharactercaption -->|issues found| dispatcher
+  mkcharactercta -->|issues found| dispatcher
+  mkcharacterscript -->|issues found| dispatcher
+  mkcharacterslides -->|issues found| dispatcher
+  mkcharactertitle -->|issues found| dispatcher
+  mkcharactersequel -->|issues found| dispatcher
+  mkcharacterpin -->|issues found| dispatcher
+  mktieredhooks -->|issues found| dispatcher
+  mktieredcaption -->|issues found| dispatcher
+  mktieredcta -->|issues found| dispatcher
+  mktieredscript -->|issues found| dispatcher
+  mktieredslides -->|issues found| dispatcher
+  mktieredtitle -->|issues found| dispatcher
+  mktieredsequel -->|issues found| dispatcher
+  mktieredpin -->|issues found| dispatcher
+  mkmarkethooks -->|issues found| dispatcher
+  mkmarketcaption -->|issues found| dispatcher
+  mkmarketcta -->|issues found| dispatcher
+  mkmarketscript -->|issues found| dispatcher
+  mkmarketslides -->|issues found| dispatcher
+  mkmarkettitle -->|issues found| dispatcher
+  mkmarketsequel -->|issues found| dispatcher
+  mkmarketpin -->|issues found| dispatcher
+  mkleaguehooks -->|issues found| dispatcher
+  mkleaguecaption -->|issues found| dispatcher
+  mkleaguecta -->|issues found| dispatcher
+  mkleaguescript -->|issues found| dispatcher
+  mkleagueslides -->|issues found| dispatcher
+  mkleaguetitle -->|issues found| dispatcher
+  mkleaguesequel -->|issues found| dispatcher
+  mkleaguepin -->|issues found| dispatcher
+  orohioqueries -->|issues found| dispatcher
+  orohioroster -->|issues found| dispatcher
+  orohiodedupe -->|issues found| dispatcher
+  orbigtenqueries -->|issues found| dispatcher
+  orbigtenroster -->|issues found| dispatcher
+  orbigtendedupe -->|issues found| dispatcher
+  orsecqueries -->|issues found| dispatcher
+  orsecroster -->|issues found| dispatcher
+  orsecdedupe -->|issues found| dispatcher
+  oraccqueries -->|issues found| dispatcher
+  oraccroster -->|issues found| dispatcher
+  oraccdedupe -->|issues found| dispatcher
+  orbig12queries -->|issues found| dispatcher
+  orbig12roster -->|issues found| dispatcher
+  orbig12dedupe -->|issues found| dispatcher
+  orivyqueries -->|issues found| dispatcher
+  orivyroster -->|issues found| dispatcher
+  orivydedupe -->|issues found| dispatcher
+  orwestqueries -->|issues found| dispatcher
+  orwestroster -->|issues found| dispatcher
+  orwestdedupe -->|issues found| dispatcher
+  ornycqueries -->|issues found| dispatcher
+  ornycroster -->|issues found| dispatcher
+  ornycdedupe -->|issues found| dispatcher
+  ortexasqueries -->|issues found| dispatcher
+  ortexasroster -->|issues found| dispatcher
+  ortexasdedupe -->|issues found| dispatcher
+  orsouthqueries -->|issues found| dispatcher
+  orsouthroster -->|issues found| dispatcher
+  orsouthdedupe -->|issues found| dispatcher
+  fxdesclong -->|issues found| dispatcher
+  fxtitlelong -->|issues found| dispatcher
+  fxcanon -->|issues found| dispatcher
+  fxogimg -->|issues found| dispatcher
+  fximgalt -->|issues found| dispatcher
+  fxlang -->|issues found| dispatcher
+  fxviewport -->|issues found| dispatcher
+  fxh1 -->|issues found| dispatcher
+  fxh1multi -->|issues found| dispatcher
+  fxhttp -->|issues found| dispatcher
+  fxrel -->|issues found| dispatcher
+  fxemptyhref -->|issues found| dispatcher
+  fxtodo -->|issues found| dispatcher
+  fxspaces -->|issues found| dispatcher
+  fxtwitter -->|issues found| dispatcher
+  fxtheme -->|issues found| dispatcher
+  fxmailto -->|issues found| dispatcher
+  fxdecksrc -->|issues found| dispatcher
+  fxdeckcta -->|issues found| dispatcher
+  fxrendercount -->|issues found| dispatcher
+  fxwirepast -->|issues found| dispatcher
+  fxtickernull -->|issues found| dispatcher
+  fxpostdate -->|issues found| dispatcher
+  fxfamily -->|issues found| dispatcher
+  fxposted -->|issues found| dispatcher
+  fxpunch -->|issues found| dispatcher
+  fxtopics -->|issues found| dispatcher
+  fxlegaladdr -->|issues found| dispatcher
+  fxemailtmpl -->|issues found| dispatcher
+  fxswver -->|issues found| dispatcher
+  fxsitemap -->|issues found| dispatcher
+  mdfollowersnow -->|issues found| dispatcher
+  mdfollowerstrend -->|issues found| dispatcher
+  mdviewsnow -->|issues found| dispatcher
+  mdviewstrend -->|issues found| dispatcher
+  mdreachnow -->|issues found| dispatcher
+  mdreachtrend -->|issues found| dispatcher
+  mdlikesnow -->|issues found| dispatcher
+  mdlikestrend -->|issues found| dispatcher
+  mdcommentsnow -->|issues found| dispatcher
+  mdcommentstrend -->|issues found| dispatcher
+  mdsharesnow -->|issues found| dispatcher
+  mdsharestrend -->|issues found| dispatcher
+  mdsavesnow -->|issues found| dispatcher
+  mdsavestrend -->|issues found| dispatcher
+  mdpostsnow -->|issues found| dispatcher
+  mdpoststrend -->|issues found| dispatcher
+  mdvisitsnow -->|issues found| dispatcher
+  mdvisitstrend -->|issues found| dispatcher
+  mdclicksnow -->|issues found| dispatcher
+  mdclickstrend -->|issues found| dispatcher
+  sfdupeemail -->|issues found| dispatcher
+  sfdaycap -->|issues found| dispatcher
+  sfschoolcap -->|issues found| dispatcher
+  sfwindow -->|issues found| dispatcher
+  sfsuppress -->|issues found| dispatcher
+  sfoptout -->|issues found| dispatcher
+  sfaddr -->|issues found| dispatcher
+  sflength -->|issues found| dispatcher
+  sfclaims -->|issues found| dispatcher
+  sfunsourced -->|issues found| dispatcher
+  sfblackout -->|issues found| dispatcher
+  sftiktokcap -->|issues found| dispatcher
+  sfhours -->|issues found| dispatcher
+  sfquoramuted -->|issues found| dispatcher
+  sfsentdates -->|issues found| dispatcher
+  sfhome -->|issues found| dispatcher
+  mkrankedhooks -->|drafts for tomorrow| contentbrief
+  mkrankedcaption -->|drafts for tomorrow| contentbrief
+  mkrankedcta -->|drafts for tomorrow| contentbrief
+  mkrankedscript -->|drafts for tomorrow| contentbrief
+  mkrankedslides -->|drafts for tomorrow| contentbrief
+  mkrankedtitle -->|drafts for tomorrow| contentbrief
+  mkrankedsequel -->|drafts for tomorrow| contentbrief
+  mkrankedpin -->|drafts for tomorrow| contentbrief
+  mkcharacterhooks -->|drafts for tomorrow| contentbrief
+  mkcharactercaption -->|drafts for tomorrow| contentbrief
+  mkcharactercta -->|drafts for tomorrow| contentbrief
+  mkcharacterscript -->|drafts for tomorrow| contentbrief
+  mkcharacterslides -->|drafts for tomorrow| contentbrief
+  mkcharactertitle -->|drafts for tomorrow| contentbrief
+  mkcharactersequel -->|drafts for tomorrow| contentbrief
+  mkcharacterpin -->|drafts for tomorrow| contentbrief
+  mktieredhooks -->|drafts for tomorrow| contentbrief
+  mktieredcaption -->|drafts for tomorrow| contentbrief
+  mktieredcta -->|drafts for tomorrow| contentbrief
+  mktieredscript -->|drafts for tomorrow| contentbrief
+  mktieredslides -->|drafts for tomorrow| contentbrief
+  mktieredtitle -->|drafts for tomorrow| contentbrief
+  mktieredsequel -->|drafts for tomorrow| contentbrief
+  mktieredpin -->|drafts for tomorrow| contentbrief
+  mkmarkethooks -->|drafts for tomorrow| contentbrief
+  mkmarketcaption -->|drafts for tomorrow| contentbrief
+  mkmarketcta -->|drafts for tomorrow| contentbrief
+  mkmarketscript -->|drafts for tomorrow| contentbrief
+  mkmarketslides -->|drafts for tomorrow| contentbrief
+  mkmarkettitle -->|drafts for tomorrow| contentbrief
+  mkmarketsequel -->|drafts for tomorrow| contentbrief
+  mkmarketpin -->|drafts for tomorrow| contentbrief
+  mkleaguehooks -->|drafts for tomorrow| contentbrief
+  mkleaguecaption -->|drafts for tomorrow| contentbrief
+  mkleaguecta -->|drafts for tomorrow| contentbrief
+  mkleaguescript -->|drafts for tomorrow| contentbrief
+  mkleagueslides -->|drafts for tomorrow| contentbrief
+  mkleaguetitle -->|drafts for tomorrow| contentbrief
+  mkleaguesequel -->|drafts for tomorrow| contentbrief
+  mkleaguepin -->|drafts for tomorrow| contentbrief
+  mdfollowersnow -->|real views from Metricool| logscore
+  mdfollowerstrend -->|real views from Metricool| logscore
+  mdviewsnow -->|real views from Metricool| logscore
+  mdviewstrend -->|real views from Metricool| logscore
+  mdreachnow -->|real views from Metricool| logscore
+  mdreachtrend -->|real views from Metricool| logscore
+  mdlikesnow -->|real views from Metricool| logscore
+  mdlikestrend -->|real views from Metricool| logscore
+  mdcommentsnow -->|real views from Metricool| logscore
+  mdcommentstrend -->|real views from Metricool| logscore
+  mdsharesnow -->|real views from Metricool| logscore
+  mdsharestrend -->|real views from Metricool| logscore
+  mdsavesnow -->|real views from Metricool| logscore
+  mdsavestrend -->|real views from Metricool| logscore
+  mdpostsnow -->|real views from Metricool| logscore
+  mdpoststrend -->|real views from Metricool| logscore
+  mdvisitsnow -->|real views from Metricool| logscore
+  mdvisitstrend -->|real views from Metricool| logscore
+  mdclicksnow -->|real views from Metricool| logscore
+  mdclickstrend -->|real views from Metricool| logscore
+  sfdupeemail -.->|hard-rule check| contentbrief
+  sfdaycap -.->|hard-rule check| contentbrief
+  sfschoolcap -.->|hard-rule check| contentbrief
+  sfwindow -.->|hard-rule check| contentbrief
+  sfsuppress -.->|hard-rule check| contentbrief
+  sfoptout -.->|hard-rule check| contentbrief
+  sfaddr -.->|hard-rule check| contentbrief
+  sflength -.->|hard-rule check| contentbrief
+  sfclaims -.->|hard-rule check| contentbrief
+  sfunsourced -.->|hard-rule check| contentbrief
+  sfblackout -.->|hard-rule check| contentbrief
+  sftiktokcap -.->|hard-rule check| contentbrief
+  sfhours -.->|hard-rule check| contentbrief
+  sfquoramuted -.->|hard-rule check| contentbrief
+  sfsentdates -.->|hard-rule check| contentbrief
+  sfhome -.->|hard-rule check| contentbrief
+  orohioqueries -->|outreach to do| todaylist
+  orohioroster -->|outreach to do| todaylist
+  orohiodedupe -->|outreach to do| todaylist
+  orbigtenqueries -->|outreach to do| todaylist
+  orbigtenroster -->|outreach to do| todaylist
+  orbigtendedupe -->|outreach to do| todaylist
+  orsecqueries -->|outreach to do| todaylist
+  orsecroster -->|outreach to do| todaylist
+  orsecdedupe -->|outreach to do| todaylist
+  oraccqueries -->|outreach to do| todaylist
+  oraccroster -->|outreach to do| todaylist
+  oraccdedupe -->|outreach to do| todaylist
+  orbig12queries -->|outreach to do| todaylist
+  orbig12roster -->|outreach to do| todaylist
+  orbig12dedupe -->|outreach to do| todaylist
+  orivyqueries -->|outreach to do| todaylist
+  orivyroster -->|outreach to do| todaylist
+  orivydedupe -->|outreach to do| todaylist
+  orwestqueries -->|outreach to do| todaylist
+  orwestroster -->|outreach to do| todaylist
+  orwestdedupe -->|outreach to do| todaylist
+  ornycqueries -->|outreach to do| todaylist
+  ornycroster -->|outreach to do| todaylist
+  ornycdedupe -->|outreach to do| todaylist
+  ortexasqueries -->|outreach to do| todaylist
+  ortexasroster -->|outreach to do| todaylist
+  ortexasdedupe -->|outreach to do| todaylist
+  orsouthqueries -->|outreach to do| todaylist
+  orsouthroster -->|outreach to do| todaylist
+  orsouthdedupe -->|outreach to do| todaylist
+  fxdesclong -->|exact fix text| todaylist
+  fxtitlelong -->|exact fix text| todaylist
+  fxcanon -->|exact fix text| todaylist
+  fxogimg -->|exact fix text| todaylist
+  fximgalt -->|exact fix text| todaylist
+  fxlang -->|exact fix text| todaylist
+  fxviewport -->|exact fix text| todaylist
+  fxh1 -->|exact fix text| todaylist
+  fxh1multi -->|exact fix text| todaylist
+  fxhttp -->|exact fix text| todaylist
+  fxrel -->|exact fix text| todaylist
+  fxemptyhref -->|exact fix text| todaylist
+  fxtodo -->|exact fix text| todaylist
+  fxspaces -->|exact fix text| todaylist
+  fxtwitter -->|exact fix text| todaylist
+  fxtheme -->|exact fix text| todaylist
+  fxmailto -->|exact fix text| todaylist
+  fxdecksrc -->|exact fix text| todaylist
+  fxdeckcta -->|exact fix text| todaylist
+  fxrendercount -->|exact fix text| todaylist
+  fxwirepast -->|exact fix text| todaylist
+  fxtickernull -->|exact fix text| todaylist
+  fxpostdate -->|exact fix text| todaylist
+  fxfamily -->|exact fix text| todaylist
+  fxposted -->|exact fix text| todaylist
+  fxpunch -->|exact fix text| todaylist
+  fxtopics -->|exact fix text| todaylist
+  fxlegaladdr -->|exact fix text| todaylist
+  fxemailtmpl -->|exact fix text| todaylist
+  fxswver -->|exact fix text| todaylist
+  fxsitemap -->|exact fix text| todaylist
+  seobriefibinterview -->|issues found| dispatcher
+  seobrieflbo -->|issues found| dispatcher
+  seobriefdcf -->|issues found| dispatcher
+  seobriefaccretion -->|issues found| dispatcher
+  seobriefcomps -->|issues found| dispatcher
+  seobriefperecruit -->|issues found| dispatcher
+  seobriefsuperday -->|issues found| dispatcher
+  seobriefnetwork -->|issues found| dispatcher
+  seobriefresume -->|issues found| dispatcher
+  seobriefrestructuring -->|issues found| dispatcher
+  seobriefhedgefund -->|issues found| dispatcher
+  seobriefaccounting -->|issues found| dispatcher
+  seothin -->|issues found| dispatcher
+  seoh2 -->|issues found| dispatcher
+  seoinlinks -->|issues found| dispatcher
+  seofaq -->|issues found| dispatcher
+  seoarticle -->|issues found| dispatcher
+  seotitlekw -->|issues found| dispatcher
+  seodescmiss -->|issues found| dispatcher
+  seodupetitle -->|issues found| dispatcher
+  seodupedesc -->|issues found| dispatcher
+  seoupdated -->|issues found| dispatcher
+  seocta -->|issues found| dispatcher
+  seoimgalt -->|issues found| dispatcher
+  seoh1match -->|issues found| dispatcher
+  seolong -->|issues found| dispatcher
+  seoschoolconsulting -->|issues found| dispatcher
+  seoschoolhedgefunds -->|issues found| dispatcher
+  seoschoolinvestmentbanking -->|issues found| dispatcher
+  seoschoolprivateequity -->|issues found| dispatcher
+  seoschoolsalesandtrading -->|issues found| dispatcher
+  seoschoolsame -->|issues found| dispatcher
+  seoschoolgap -->|issues found| dispatcher
+  seoschoollink -->|issues found| dispatcher
+  seorobots -->|issues found| dispatcher
+  seosmsize -->|issues found| dispatcher
+  seolastmod -->|issues found| dispatcher
+  seollms -->|issues found| dispatcher
+  seocanonconf -->|issues found| dispatcher
+  seonoindex -->|issues found| dispatcher
+  seoslug -->|issues found| dispatcher
+  seoweight -->|issues found| dispatcher
+  seoscripts -->|issues found| dispatcher
+  seohttps -->|issues found| dispatcher
+  seoredirect -->|issues found| dispatcher
+  seobreadcrumb -->|issues found| dispatcher
+  seoaicite -->|issues found| dispatcher
+  seoogtitle -->|issues found| dispatcher
+  seolinkcareer -->|issues found| dispatcher
+  seolinkclubs -->|issues found| dispatcher
+  seolinkreddit -->|issues found| dispatcher
+  seolinkunlinked -->|issues found| dispatcher
+  seolinkroundup -->|issues found| dispatcher
+  seolinknewsletter -->|issues found| dispatcher
+  seolinkpodcast -->|issues found| dispatcher
+  seolinkdir -->|issues found| dispatcher
+  seolinkwiki -->|issues found| dispatcher
+  seolinkfaculty -->|issues found| dispatcher
+  seolinkyoutube -->|issues found| dispatcher
+  seolinkpitch -->|issues found| dispatcher
+  seobriefibinterview -->|SEO to do| todaylist
+  seobrieflbo -->|SEO to do| todaylist
+  seobriefdcf -->|SEO to do| todaylist
+  seobriefaccretion -->|SEO to do| todaylist
+  seobriefcomps -->|SEO to do| todaylist
+  seobriefperecruit -->|SEO to do| todaylist
+  seobriefsuperday -->|SEO to do| todaylist
+  seobriefnetwork -->|SEO to do| todaylist
+  seobriefresume -->|SEO to do| todaylist
+  seobriefrestructuring -->|SEO to do| todaylist
+  seobriefhedgefund -->|SEO to do| todaylist
+  seobriefaccounting -->|SEO to do| todaylist
+  seothin -->|SEO to do| todaylist
+  seoh2 -->|SEO to do| todaylist
+  seoinlinks -->|SEO to do| todaylist
+  seofaq -->|SEO to do| todaylist
+  seoarticle -->|SEO to do| todaylist
+  seotitlekw -->|SEO to do| todaylist
+  seodescmiss -->|SEO to do| todaylist
+  seodupetitle -->|SEO to do| todaylist
+  seodupedesc -->|SEO to do| todaylist
+  seoupdated -->|SEO to do| todaylist
+  seocta -->|SEO to do| todaylist
+  seoimgalt -->|SEO to do| todaylist
+  seoh1match -->|SEO to do| todaylist
+  seolong -->|SEO to do| todaylist
+  seoschoolconsulting -->|SEO to do| todaylist
+  seoschoolhedgefunds -->|SEO to do| todaylist
+  seoschoolinvestmentbanking -->|SEO to do| todaylist
+  seoschoolprivateequity -->|SEO to do| todaylist
+  seoschoolsalesandtrading -->|SEO to do| todaylist
+  seoschoolsame -->|SEO to do| todaylist
+  seoschoolgap -->|SEO to do| todaylist
+  seoschoollink -->|SEO to do| todaylist
+  seorobots -->|SEO to do| todaylist
+  seosmsize -->|SEO to do| todaylist
+  seolastmod -->|SEO to do| todaylist
+  seollms -->|SEO to do| todaylist
+  seocanonconf -->|SEO to do| todaylist
+  seonoindex -->|SEO to do| todaylist
+  seoslug -->|SEO to do| todaylist
+  seoweight -->|SEO to do| todaylist
+  seoscripts -->|SEO to do| todaylist
+  seohttps -->|SEO to do| todaylist
+  seoredirect -->|SEO to do| todaylist
+  seobreadcrumb -->|SEO to do| todaylist
+  seoaicite -->|SEO to do| todaylist
+  seoogtitle -->|SEO to do| todaylist
+  seolinkcareer -->|SEO to do| todaylist
+  seolinkclubs -->|SEO to do| todaylist
+  seolinkreddit -->|SEO to do| todaylist
+  seolinkunlinked -->|SEO to do| todaylist
+  seolinkroundup -->|SEO to do| todaylist
+  seolinknewsletter -->|SEO to do| todaylist
+  seolinkpodcast -->|SEO to do| todaylist
+  seolinkdir -->|SEO to do| todaylist
+  seolinkwiki -->|SEO to do| todaylist
+  seolinkfaculty -->|SEO to do| todaylist
+  seolinkyoutube -->|SEO to do| todaylist
+  seolinkpitch -->|SEO to do| todaylist
   reporter ==>|digest and deploy question| H
 ```
 
@@ -738,6 +1329,400 @@ flowchart LR
 | [[Today List Bot]] | feed | [[Reporter Bot]] | do today |
 | [[Outreach Bump Bot]] | feed | [[Outreach Bot]] | who is due a follow-up |
 | [[Newsjack Bot]] | feed | [[Strategist Bot]] | live-market chances |
+| [[Hook Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Caption Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[CTA Picker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Script Outline Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Slide Plan Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Card Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sequel Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Pinned Comment Maker: ranked schools]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Hook Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Caption Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[CTA Picker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Script Outline Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Slide Plan Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Card Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sequel Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Pinned Comment Maker: character stories]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Hook Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Caption Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[CTA Picker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Script Outline Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Slide Plan Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Card Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sequel Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Pinned Comment Maker: tiered interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Hook Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Caption Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[CTA Picker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Script Outline Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Slide Plan Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Card Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sequel Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Pinned Comment Maker: live market news]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Hook Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Caption Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[CTA Picker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Script Outline Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Slide Plan Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Card Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sequel Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Pinned Comment Maker: league tables]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Ohio]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Ohio]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Ohio]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Big Ten]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Big Ten]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Big Ten]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: SEC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: SEC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: SEC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: ACC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: ACC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: ACC]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Big 12]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Big 12]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Big 12]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Ivy League]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Ivy League]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Ivy League]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: West]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: West]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: West]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: New York area]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: New York area]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: New York area]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Texas]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Texas]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Texas]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Finder Queries: Southeast]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Roster: Southeast]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Region De-dupe: Southeast]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Meta Description Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Length Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Canonical Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[OG Image Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Image Alt Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Language Tag Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Viewport Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Missing H1 Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Double H1 Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Insecure Link Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Link Safety Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Empty Link Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Leftover Text Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Double Space Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Twitter Card Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Theme Color Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Email Link Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Deck Source Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Deck CTA Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Render Count Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Wire Past Rows Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Ticker Null Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Log Date Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Idea Type Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Posted Log Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Punch Log Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Topics Gap Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Legal Address Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Email Template Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Service Worker Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sitemap Fixer]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Followers Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Followers Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Views Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Views Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Reach Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Reach Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Likes Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Likes Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Comments Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Comments Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Shares Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Shares Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Saves Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Saves Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Posts published Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Posts published Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Profile visits Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Profile visits Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Link clicks Reader]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Metricool Link clicks Trend]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Duplicate Email Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Daily Email Cap Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Cap Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Send Window Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Opt-out Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Opt-out Line Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Mailing Address Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Email Length Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Claim Words Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Unsourced Number Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Blackout Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[TikTok Cap Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Post Hours Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Quora Mute Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sent Log Hygiene Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Home Baseline Guard]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Hook Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Caption Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[CTA Picker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Script Outline Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Slide Plan Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Title Card Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Sequel Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Pinned Comment Maker: ranked schools]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Hook Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Caption Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[CTA Picker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Script Outline Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Slide Plan Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Title Card Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Sequel Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Pinned Comment Maker: character stories]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Hook Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Caption Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[CTA Picker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Script Outline Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Slide Plan Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Title Card Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Sequel Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Pinned Comment Maker: tiered interview questions]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Hook Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Caption Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[CTA Picker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Script Outline Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Slide Plan Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Title Card Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Sequel Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Pinned Comment Maker: live market news]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Hook Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Caption Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[CTA Picker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Script Outline Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Slide Plan Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Title Card Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Sequel Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Pinned Comment Maker: league tables]] | feed | [[Content Brief Bot]] | drafts for tomorrow |
+| [[Metricool Followers Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Followers Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Views Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Views Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Reach Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Reach Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Likes Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Likes Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Comments Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Comments Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Shares Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Shares Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Saves Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Saves Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Posts published Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Posts published Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Profile visits Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Profile visits Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Link clicks Reader]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Metricool Link clicks Trend]] | feed | [[Post Log Bot]] | real views from Metricool |
+| [[Duplicate Email Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Daily Email Cap Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[School Cap Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Send Window Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Opt-out Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Opt-out Line Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Mailing Address Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Email Length Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Claim Words Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Unsourced Number Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Blackout Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[TikTok Cap Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Post Hours Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Quora Mute Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Sent Log Hygiene Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Home Baseline Guard]] | gate | [[Content Brief Bot]] | hard-rule check |
+| [[Club Finder Queries: Ohio]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Ohio]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Ohio]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: Big Ten]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Big Ten]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Big Ten]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: SEC]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: SEC]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: SEC]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: ACC]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: ACC]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: ACC]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: Big 12]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Big 12]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Big 12]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: Ivy League]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Ivy League]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Ivy League]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: West]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: West]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: West]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: New York area]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: New York area]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: New York area]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: Texas]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Texas]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Texas]] | feed | [[Today List Bot]] | outreach to do |
+| [[Club Finder Queries: Southeast]] | feed | [[Today List Bot]] | outreach to do |
+| [[School Roster: Southeast]] | feed | [[Today List Bot]] | outreach to do |
+| [[Region De-dupe: Southeast]] | feed | [[Today List Bot]] | outreach to do |
+| [[Meta Description Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Title Length Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Canonical Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[OG Image Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Image Alt Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Language Tag Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Viewport Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Missing H1 Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Double H1 Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Insecure Link Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Link Safety Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Empty Link Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Leftover Text Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Double Space Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Twitter Card Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Theme Color Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Email Link Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Deck Source Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Deck CTA Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Render Count Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Wire Past Rows Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Ticker Null Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Log Date Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Idea Type Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Posted Log Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Punch Log Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Topics Gap Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Legal Address Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Email Template Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Service Worker Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[Sitemap Fixer]] | feed | [[Today List Bot]] | exact fix text |
+| [[SEO Brief: Investment banking interview questions]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: LBO model]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: DCF]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Accretion and dilution]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Comparable company analysis]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Private equity recruiting]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Superday]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Networking and cold email]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Resume]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Restructuring]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Hedge funds]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Accounting for finance interviews]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Thin Page Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Heading Depth Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Internal Link Count Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[FAQ Schema Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Article Schema Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Title Keyword Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Description Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Duplicate Title Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Duplicate Description Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Freshness Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Guide CTA Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Image Alt Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[H1 Match Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Page Length Balance Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Pages: Consulting]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Pages: Hedge funds]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Pages: Investment banking]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Pages: Private equity]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Pages: Sales and trading]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Page Sameness Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Coverage Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[School Hub Link Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Robots Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sitemap Size Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sitemap Date Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[llms.txt Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Canonical Conflict Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Noindex Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[URL Slug Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Page Weight Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Blocking Script Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sitemap HTTPS Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Redirect Rule Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Breadcrumb Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[AI Citation Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Social Preview Checker]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Career Center Link Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Club Resource Link Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Community Answer Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Unlinked Mention Finder]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Roundup Page Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Newsletter Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Guest Spot Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Directory Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Reference Page Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Faculty Page Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Video Description Targets]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Link Pitch Drafter]] | feed | [[Dispatcher Bot]] | issues found |
+| [[SEO Brief: Investment banking interview questions]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: LBO model]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: DCF]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Accretion and dilution]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Comparable company analysis]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Private equity recruiting]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Superday]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Networking and cold email]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Resume]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Restructuring]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Hedge funds]] | feed | [[Today List Bot]] | SEO to do |
+| [[SEO Brief: Accounting for finance interviews]] | feed | [[Today List Bot]] | SEO to do |
+| [[Thin Page Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Heading Depth Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Internal Link Count Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[FAQ Schema Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Article Schema Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Title Keyword Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Description Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Duplicate Title Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Duplicate Description Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Freshness Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Guide CTA Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Image Alt Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[H1 Match Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Page Length Balance Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Pages: Consulting]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Pages: Hedge funds]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Pages: Investment banking]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Pages: Private equity]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Pages: Sales and trading]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Page Sameness Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Coverage Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[School Hub Link Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Robots Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Sitemap Size Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Sitemap Date Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[llms.txt Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Canonical Conflict Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Noindex Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[URL Slug Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Page Weight Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Blocking Script Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Sitemap HTTPS Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Redirect Rule Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Breadcrumb Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[AI Citation Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Social Preview Checker]] | feed | [[Today List Bot]] | SEO to do |
+| [[Career Center Link Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Club Resource Link Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Community Answer Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Unlinked Mention Finder]] | feed | [[Today List Bot]] | SEO to do |
+| [[Roundup Page Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Newsletter Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Guest Spot Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Directory Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Reference Page Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Faculty Page Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Video Description Targets]] | feed | [[Today List Bot]] | SEO to do |
+| [[Link Pitch Drafter]] | feed | [[Today List Bot]] | SEO to do |
 
 Types: **feed** passes findings, **act** gives work, **gate** can block, **recheck** verifies, **learn** changes future behavior.
 

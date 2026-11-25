@@ -32,7 +32,7 @@ Run `sh social/studio/setup.sh` first in a fresh container (rebuilds everything 
 | Blue Chip market posts | `social/gen/bluechip.js` + `social/bc/<date>/*.json` | `node bluechip.js spec outdir` (+ `H=1350` for IG) |
 | Brainteasers | `social/gen/oddq.js` | same `H=1350` rule |
 | Punch/countdown videos | `social/gen/punch/` | see file headers |
-| Narrator voice | `/home/user/voicelab/narrator.py "line" out.wav 0.6` (energy 0.4 calm to 0.9 hype) | verify every line with faster-whisper small.en; re-record any wrong word |
+| Voices (Bekir's picks, Nov 25) | **Kokoro "Echo" (`am_echo`) = default narrator; Kokoro "George" (`bm_george`) = RANKED/Brawl announcer.** Free, Apache-2.0. Voice a whole story: `/home/user/tts-env/bin/python /home/user/voicelab/voice.py <story_dir> am_echo` | then `/home/user/cb-env/bin/python /home/user/voicelab/voicecheck.py <story_dir>` (must say ALL PASS; numbers are said via speakable.py). Old Chatterbox clone (narrator.py) is retired: Bekir judged the new options better |
 
 PS2 engine features: `TEASE` dict in build.py (1.7 s cold open: climax shot + yellow hook text), `CALLBACK` dict (closing line over a callback scene, QR card for the last 1.1 s), layout guard (chips/stamps/cards never cover captions), `node render.js <story>.js tl_<story>.json <dir> test` = one test frame per shot.
 

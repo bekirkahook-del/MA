@@ -20,6 +20,10 @@ if [ ! -x /home/user/cb-env/bin/python ]; then
   python3 -m venv /home/user/cb-env
   /home/user/cb-env/bin/pip install -q chatterbox-tts faster-whisper jiwer num2words soundfile numpy
 fi
+# Kokoro voices (Echo/George): separate env
+if [ ! -x /home/user/tts-env/bin/python ]; then
+  python3 -m venv /home/user/tts-env && /home/user/tts-env/bin/pip install -q kokoro misaki soundfile numpy num2words
+fi
 # Slide/video renderers
 (cd "$R/../gen" && npm install --no-audit --no-fund >/dev/null 2>&1) || true
 pip install -q qrcode --break-system-packages 2>/dev/null || true

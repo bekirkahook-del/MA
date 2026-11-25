@@ -1,19 +1,239 @@
 {
-  "pulled": "2026-11-25",
-  "note": "Anonymous aggregates from Supabase (docs: feedback + data/users progress). No user ids, emails or free text. Refresh with the SQL in tools/bots/state/learn/README.md.",
-  "users": 28,
-  "withAnyLevel": 13,
-  "feedback": { "total": 3, "polls": 2, "answers": { "Technical questions feel too hard": 2 }, "questionReports": [{ "reason": "Too easy / too hard", "n": 1 }] },
-  "tools": { "mockBest": 0, "srs": 0, "rapid": 0, "gauntlet": 1 },
-  "questions": { "seen": 508, "right": 465, "wrong": 125, "miss": 0.212, "hardest": [
-    { "id": "pcyj2n", "tries": 3, "miss": 0.67 }, { "id": "tuwld8", "tries": 3, "miss": 0.67 }, { "id": "13eo4iq", "tries": 3, "miss": 0.67 }, { "id": "7htwe", "tries": 3, "miss": 0.67 }, { "id": "183n01j", "tries": 3, "miss": 0.67 },
-    { "id": "vh2b96", "tries": 5, "miss": 0.6 }, { "id": "1hep1zz", "tries": 5, "miss": 0.6 }, { "id": "xe7gom", "tries": 5, "miss": 0.6 }, { "id": "1l9y19i", "tries": 6, "miss": 0.5 }, { "id": "1yethsb", "tries": 4, "miss": 0.5 }, { "id": "1vgjoem", "tries": 4, "miss": 0.5 }, { "id": "7bypso", "tries": 7, "miss": 0.43 }
-  ] },
-  "levels": {
-    "b-0": { "players": 7, "avg": 3.0 }, "b-1": { "players": 4, "avg": 3.0 }, "b-2": { "players": 4, "avg": 2.5 }, "b-3": { "players": 3, "avg": 3.0 },
-    "f-0": { "players": 12, "avg": 2.58 }, "f-1": { "players": 9, "avg": 2.44 }, "f-2": { "players": 9, "avg": 2.78 }, "f-3": { "players": 8, "avg": 2.88 }, "f-4": { "players": 7, "avg": 2.86 },
-    "ib-0": { "players": 5, "avg": 3.0 }, "ib-1": { "players": 3, "avg": 3.0 }, "ib-2": { "players": 3, "avg": 3.0 }, "ib-3": { "players": 2, "avg": 2.5 }, "ib-4": { "players": 2, "avg": 3.0 }, "ib-5": { "players": 2, "avg": 2.0 }, "ib-6": { "players": 2, "avg": 1.5 },
-    "t-0": { "players": 2, "avg": 2.5 }, "t-1": { "players": 1, "avg": 3.0 }, "t-2": { "players": 1, "avg": 3.0 }, "t-3": { "players": 1, "avg": 3.0 },
-    "x-0": { "players": 2, "avg": 2.5 }, "x-1": { "players": 2, "avg": 3.0 }, "x-2": { "players": 2, "avg": 3.0 }
+ "pulled": "2026-11-25",
+ "note": "Anonymous aggregates from Supabase (docs: feedback + data/users progress). No user ids, emails or free text. Refresh with the SQL in tools/bots/state/learn/README.md.",
+ "users": 28,
+ "withAnyLevel": 13,
+ "feedback": {
+  "total": 3,
+  "polls": 2,
+  "answers": {
+   "Technical questions feel too hard": 2
+  },
+  "questionReports": [
+   {
+    "reason": "Too easy / too hard",
+    "n": 1
+   }
+  ]
+ },
+ "tools": {
+  "mockBest": 0,
+  "srs": 0,
+  "rapid": 0,
+  "gauntlet": 1
+ },
+ "questions": {
+  "seen": 508,
+  "right": 465,
+  "wrong": 125,
+  "miss": 0.212,
+  "hardest": [
+   {
+    "id": "pcyj2n",
+    "tries": 3,
+    "miss": 0.67
+   },
+   {
+    "id": "tuwld8",
+    "tries": 3,
+    "miss": 0.67
+   },
+   {
+    "id": "13eo4iq",
+    "tries": 3,
+    "miss": 0.67
+   },
+   {
+    "id": "7htwe",
+    "tries": 3,
+    "miss": 0.67
+   },
+   {
+    "id": "183n01j",
+    "tries": 3,
+    "miss": 0.67
+   },
+   {
+    "id": "vh2b96",
+    "tries": 5,
+    "miss": 0.6
+   },
+   {
+    "id": "1hep1zz",
+    "tries": 5,
+    "miss": 0.6
+   },
+   {
+    "id": "xe7gom",
+    "tries": 5,
+    "miss": 0.6
+   },
+   {
+    "id": "1l9y19i",
+    "tries": 6,
+    "miss": 0.5
+   },
+   {
+    "id": "1yethsb",
+    "tries": 4,
+    "miss": 0.5
+   },
+   {
+    "id": "1vgjoem",
+    "tries": 4,
+    "miss": 0.5
+   },
+   {
+    "id": "7bypso",
+    "tries": 7,
+    "miss": 0.43
+   }
+  ]
+ },
+ "levels": {
+  "b-0": {
+   "players": 7,
+   "avg": 3.0
+  },
+  "b-1": {
+   "players": 4,
+   "avg": 3.0
+  },
+  "b-2": {
+   "players": 4,
+   "avg": 2.5
+  },
+  "b-3": {
+   "players": 3,
+   "avg": 3.0
+  },
+  "f-0": {
+   "players": 12,
+   "avg": 2.58
+  },
+  "f-1": {
+   "players": 9,
+   "avg": 2.44
+  },
+  "f-2": {
+   "players": 9,
+   "avg": 2.78
+  },
+  "f-3": {
+   "players": 8,
+   "avg": 2.88
+  },
+  "f-4": {
+   "players": 7,
+   "avg": 2.86
+  },
+  "ib-0": {
+   "players": 5,
+   "avg": 3.0
+  },
+  "ib-1": {
+   "players": 3,
+   "avg": 3.0
+  },
+  "ib-2": {
+   "players": 3,
+   "avg": 3.0
+  },
+  "ib-3": {
+   "players": 2,
+   "avg": 2.5
+  },
+  "ib-4": {
+   "players": 2,
+   "avg": 3.0
+  },
+  "ib-5": {
+   "players": 2,
+   "avg": 2.0
+  },
+  "ib-6": {
+   "players": 2,
+   "avg": 1.5
+  },
+  "t-0": {
+   "players": 2,
+   "avg": 2.5
+  },
+  "t-1": {
+   "players": 1,
+   "avg": 3.0
+  },
+  "t-2": {
+   "players": 1,
+   "avg": 3.0
+  },
+  "t-3": {
+   "players": 1,
+   "avg": 3.0
+  },
+  "x-0": {
+   "players": 2,
+   "avg": 2.5
+  },
+  "x-1": {
+   "players": 2,
+   "avg": 3.0
+  },
+  "x-2": {
+   "players": 2,
+   "avg": 3.0
   }
+ },
+ "signupsByDay": {
+  "2026-11-20": 3,
+  "2026-11-21": 1,
+  "2026-11-22": 10,
+  "2026-11-23": 8,
+  "2026-11-24": 1
+ },
+ "events": {
+  "p_any_shown": 1464,
+  "guide_cta_shown": 943,
+  "p_lb_shown": 718,
+  "p_school_shown": 718,
+  "level_clear": 100,
+  "lesson_open": 69,
+  "lesson_done": 59,
+  "guide_gate_shown": 52,
+  "auth_open": 35,
+  "gate_plan_saved": 24,
+  "gate_signup_open": 23,
+  "signup": 22,
+  "p_plan_shown": 22,
+  "gate_onboarded": 16,
+  "signup_from_plan": 15,
+  "auth_submit": 14,
+  "first_level": 13,
+  "auth_oauth_google": 11,
+  "review_ask_shown": 7,
+  "reward_signup": 6,
+  "bar_shown": 21,
+  "bar_click": 4,
+  "bar_dismiss": 5,
+  "prompt_shown": 10,
+  "prompt_dismiss": 7,
+  "tool_wall_shown": 4,
+  "signup_open_guide": 4,
+  "plan_teaser": 4,
+  "since": "2026-11-04"
+ },
+ "billing": {
+  "docs": 11,
+  "active": 1,
+  "cancelAtEnd": 0
+ },
+ "lifecycle": {
+  "stalled24h": 15,
+  "happy": 8,
+  "inactive7": 3,
+  "welcomeSent": 19,
+  "subscribers": 3,
+  "refCodes": 1,
+  "refSignups": 7
+ }
 }

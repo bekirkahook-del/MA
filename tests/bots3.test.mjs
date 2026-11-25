@@ -31,3 +31,12 @@ test("flywheel pack: every bot is a graph node with edges", () => {
 test("flywheel pack: every bot returns a report with findings", async () => {
   for (const b of [...PACK3, ...PACK4, ...PACK5]) { const r = await (await import("../tools/bots/" + b.id + ".mjs")).scan(); assert.ok(Array.isArray(r.findings), b.id); }
 });
+
+test("deploy cap: max 2 per ET day", async () => {
+  const { deployCap } = await import("../tools/bots/ops.mjs");
+  const now = new Date("2026-11-25T18:00:00Z");
+  assert.equal(deployCap("", now).allowed, true);
+  assert.equal(deployCap("2026-11-25 09:00:00", now).left, 1);
+  assert.equal(deployCap("2026-11-25 09:00:00\n2026-11-25 14:00:00", now).allowed, false);
+  assert.equal(deployCap("2026-11-24 09:00:00\n2026-11-24 14:00:00", now).allowed, true);
+});

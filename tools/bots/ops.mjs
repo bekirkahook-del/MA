@@ -8,6 +8,13 @@ import { read, guidePages, trackedFiles } from "./scan.mjs";
 export const etDay = d => new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
 /* Bekir's outreach rule (Nov 25, 2026): outreach only Monday to Friday, 9am to 4pm Eastern. Everything that sends or drafts outreach asks this one function. */
 export const OUTREACH = { days: [1, 2, 3, 4, 5], from: 9, to: 16, tz: "America/New_York" };
+// Deploy cap (Bekir, Nov 25, 2026): max 2 deploys per ET day; bots only stage, never deploy. log = lines "YYYY-MM-DD HH:MM:SS" (ET date first).
+export const DEPLOY_CAP = 2;
+export function deployCap(log = "", now = new Date()) {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(now);
+  const used = String(log).split("\n").filter(l => l.startsWith(today)).length;
+  return { used, cap: DEPLOY_CAP, left: Math.max(0, DEPLOY_CAP - used), allowed: used < DEPLOY_CAP, today };
+}
 export function outreachWindow(now = new Date()) {
   const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: OUTREACH.tz, weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(now).map(x => [x.type, x.value]));
   const dow = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[p.weekday], mins = +p.hour * 60 + +p.minute;

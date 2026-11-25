@@ -16,11 +16,15 @@ export function checkPatch({ files = [], attempts = 0, reopened = 0 }) {
   if (reopened >= LIMITS.maxReopen) why.push("issue keeps coming back");
   return { ok: !why.length, why };
 }
-import { outreachWindow } from "../ops.mjs";
+import { outreachWindow, deployCap } from "../ops.mjs";
 export function gateMarketing(ledger, now = new Date()) {
   const open = Object.values(ledger.issues).filter(i => !["resolved", "ignored"].includes(i.status));
   const bill = open.some(i => i.bot === "billing" && i.severity === "critical"), health = open.some(i => i.bot === "health" && i.severity === "critical");
   const why = [bill && "a critical billing problem is open", health && "site health is critical"].filter(Boolean);
   const w = outreachWindow(now), outWhy = w.open ? [] : [`outside the outreach window (${w.label}); next opens ${w.next}`];
   return { retention: !why.length, outreach: !why.length && w.open, why: [...why, ...outWhy] };
+}
+export function gateDeploy(log, now = new Date()) {
+  const d = deployCap(log, now);
+  return { deploy: d.allowed, ...d, why: d.allowed ? [] : [`deploy cap hit: ${d.used}/${d.cap} today; stay queued on staging`] };
 }

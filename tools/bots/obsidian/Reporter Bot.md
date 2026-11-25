@@ -18,10 +18,10 @@ It only asks "Want me to deploy? (~15 credits)" when site changes are actually q
 <!-- circle:start -->
 ## Connections
 
-**Fed by:** [[Dispatcher Bot]] (issues that need a human); [[Cost Guard Bot]] (deploy budget advice); [[Retention Bot]] (dry-run counts); [[Outreach Bot]] (drafts waiting for approval); [[Verifier Bot]] (what changed and what was reverted)
+**Fed by:** [[Dispatcher Bot]] (issues that need a human); [[Cost Guard Bot]] (deploy budget advice); [[Retention Bot]] (dry-run counts); [[Outreach Bot]] (drafts waiting for approval); [[Verifier Bot]] (what changed and what was reverted); [[Strategist Bot]] (ranked build list); [[Changelog Bot]] (plain-English change list); [[Release Bot]] (GO or NO-GO)
 
 ```dataview-fields
-fed_by:: [[Dispatcher Bot]], [[Cost Guard Bot]], [[Retention Bot]], [[Outreach Bot]], [[Verifier Bot]]
+fed_by:: [[Dispatcher Bot]], [[Cost Guard Bot]], [[Retention Bot]], [[Outreach Bot]], [[Verifier Bot]], [[Strategist Bot]], [[Changelog Bot]], [[Release Bot]]
 ```
 <!-- circle:end -->
 

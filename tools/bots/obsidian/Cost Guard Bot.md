@@ -29,10 +29,10 @@ Status: fine. If Netlify shows a different number, pass `--credits-used N`.
 <!-- circle:start -->
 ## Connections
 
-**Feeds:** [[Dispatcher Bot]] (issues found); [[Reporter Bot]] (deploy budget advice)
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Reporter Bot]] (deploy budget advice); [[Release Bot]] (deploy credits left)
 
 ```dataview-fields
-feeds:: [[Dispatcher Bot]], [[Reporter Bot]]
+feeds:: [[Dispatcher Bot]], [[Reporter Bot]], [[Release Bot]]
 ```
 <!-- circle:end -->
 

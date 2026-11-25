@@ -43,10 +43,13 @@ Runs the detective on **every** question, not just flagged ones.
 
 **Rechecked by:** [[Verifier Bot]] (re-run after a question fix)
 
+**Fed by:** [[Rep Auditor Bot]] (wrong practice answers are verified defects too)
+
 **Feeds:** [[Dispatcher Bot]] (issues found); [[Superfeedbackbot]] (verified defects count as hard evidence)
 
 ```dataview-fields
 rechecked_by:: [[Verifier Bot]]
+fed_by:: [[Rep Auditor Bot]]
 feeds:: [[Dispatcher Bot]], [[Superfeedbackbot]]
 ```
 <!-- circle:end -->

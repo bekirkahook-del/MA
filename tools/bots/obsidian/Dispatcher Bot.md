@@ -29,19 +29,19 @@ Critical = 300, warn = 200, info = 100. Plus 20 per reopening, 3 per day open (m
 <!-- circle:start -->
 ## Connections
 
-**Fed by:** [[Question QA Bot]] (issues found); [[Site Health Bot]] (issues found); [[Content Freshness Bot]] (issues found); [[Cost Guard Bot]] (issues found); [[Funnel Bot]] (issues found); [[Billing Audit Bot]] (issues found); [[Superfeedbackbot]] (issues found)
+**Fed by:** [[Question QA Bot]] (issues found); [[Site Health Bot]] (issues found); [[Content Freshness Bot]] (issues found); [[Cost Guard Bot]] (issues found); [[Funnel Bot]] (issues found); [[Billing Audit Bot]] (issues found); [[Superfeedbackbot]] (issues found); [[SEO Meta Bot]] (issues found); [[Sitemap Bot]] (issues found); [[Structured Data Bot]] (issues found); [[Accessibility Bot]] (issues found); [[Performance Budget Bot]] (issues found); [[Secrets and Headers Bot]] (issues found); [[Duplicate Content Bot]] (issues found); [[Readability Bot]] (issues found); [[Rep Auditor Bot]] (issues found); [[Coverage Gap Bot]] (issues found); [[Test Coverage Bot]] (issues found); [[Dead Code Bot]] (issues found)
 
 **Gated by:** [[Guard Bot]] (frozen issues go straight to a human)
 
 **Directs:** [[Fixer Bot]] (safe, fixable issues)
 
-**Feeds:** [[Reporter Bot]] (issues that need a human)
+**Feeds:** [[Reporter Bot]] (issues that need a human); [[Strategist Bot]] (open issues with evidence); [[Release Bot]] (open critical issues)
 
 ```dataview-fields
-fed_by:: [[Question QA Bot]], [[Site Health Bot]], [[Content Freshness Bot]], [[Cost Guard Bot]], [[Funnel Bot]], [[Billing Audit Bot]], [[Superfeedbackbot]]
+fed_by:: [[Question QA Bot]], [[Site Health Bot]], [[Content Freshness Bot]], [[Cost Guard Bot]], [[Funnel Bot]], [[Billing Audit Bot]], [[Superfeedbackbot]], [[SEO Meta Bot]], [[Sitemap Bot]], [[Structured Data Bot]], [[Accessibility Bot]], [[Performance Budget Bot]], [[Secrets and Headers Bot]], [[Duplicate Content Bot]], [[Readability Bot]], [[Rep Auditor Bot]], [[Coverage Gap Bot]], [[Test Coverage Bot]], [[Dead Code Bot]]
 gated_by:: [[Guard Bot]]
 directs:: [[Fixer Bot]]
-feeds:: [[Reporter Bot]]
+feeds:: [[Reporter Bot]], [[Strategist Bot]], [[Release Bot]]
 ```
 <!-- circle:end -->
 

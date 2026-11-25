@@ -21,6 +21,18 @@ flowchart LR
     funnel["Funnel Bot"]
     billing["Billing Audit Bot"]
     feedbot["Superfeedbackbot"]
+    seo["SEO Meta Bot"]
+    sitemap["Sitemap Bot"]
+    schema["Structured Data Bot"]
+    a11y["Accessibility Bot"]
+    perf["Performance Budget Bot"]
+    secrets["Secrets and Headers Bot"]
+    duplicate["Duplicate Content Bot"]
+    readability["Readability Bot"]
+    reps["Rep Auditor Bot"]
+    coverage["Coverage Gap Bot"]
+    testcov["Test Coverage Bot"]
+    deadcode["Dead Code Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -29,6 +41,9 @@ flowchart LR
     verifier["Verifier Bot"]
     historian["Historian Bot"]
     reporter["Reporter Bot"]
+    changelog["Changelog Bot"]
+    release["Release Bot"]
+    strategist["Strategist Bot"]
   end
   subgraph DRAFT[Drafters - never send]
     retention["Retention Bot"]
@@ -60,6 +75,37 @@ flowchart LR
   retention -->|dry-run counts| reporter
   outreach -->|drafts waiting for approval| reporter
   verifier -->|what changed and what was reverted| reporter
+  seo -->|issues found| dispatcher
+  sitemap -->|issues found| dispatcher
+  schema -->|issues found| dispatcher
+  a11y -->|issues found| dispatcher
+  perf -->|issues found| dispatcher
+  secrets -->|issues found| dispatcher
+  duplicate -->|issues found| dispatcher
+  readability -->|issues found| dispatcher
+  reps -->|issues found| dispatcher
+  coverage -->|issues found| dispatcher
+  testcov -->|issues found| dispatcher
+  deadcode -->|issues found| dispatcher
+  secrets -.->|leaked key = freeze all fixes| guard
+  reps -.->|a broken practice problem blocks a release| release
+  reps -->|wrong practice answers are verified defects too| qa
+  duplicate -->|duplicate pages explain weak rankings| seo
+  sitemap -->|pages missing from the sitemap are not indexed| seo
+  deadcode -->|unreferenced code needs no test| testcov
+  readability -->|hard-to-read levels need a simpler lesson| coverage
+  coverage -->|levels missing lessons, reps or models| strategist
+  funnel -->|where visitors leave| strategist
+  dispatcher -->|open issues with evidence| strategist
+  feedbot -->|what users ask for| strategist
+  strategist -->|ranked build list| reporter
+  verifier -->|bot fix commits join the staging queue| changelog
+  changelog -->|what would ship| release
+  changelog -->|plain-English change list| reporter
+  dispatcher -->|open critical issues| release
+  cost -->|deploy credits left| release
+  release -->|GO or NO-GO| reporter
+  guard -.->|kill switch blocks a GO| release
   reporter ==>|digest and deploy question| H
 ```
 
@@ -107,6 +153,37 @@ flowchart LR
 | [[Retention Bot]] | feed | [[Reporter Bot]] | dry-run counts |
 | [[Outreach Bot]] | feed | [[Reporter Bot]] | drafts waiting for approval |
 | [[Verifier Bot]] | feed | [[Reporter Bot]] | what changed and what was reverted |
+| [[SEO Meta Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Sitemap Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Structured Data Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Accessibility Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Performance Budget Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Secrets and Headers Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Duplicate Content Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Readability Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Rep Auditor Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Coverage Gap Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Test Coverage Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Dead Code Bot]] | feed | [[Dispatcher Bot]] | issues found |
+| [[Secrets and Headers Bot]] | gate | [[Guard Bot]] | leaked key = freeze all fixes |
+| [[Rep Auditor Bot]] | gate | [[Release Bot]] | a broken practice problem blocks a release |
+| [[Rep Auditor Bot]] | feed | [[Question QA Bot]] | wrong practice answers are verified defects too |
+| [[Duplicate Content Bot]] | feed | [[SEO Meta Bot]] | duplicate pages explain weak rankings |
+| [[Sitemap Bot]] | feed | [[SEO Meta Bot]] | pages missing from the sitemap are not indexed |
+| [[Dead Code Bot]] | feed | [[Test Coverage Bot]] | unreferenced code needs no test |
+| [[Readability Bot]] | feed | [[Coverage Gap Bot]] | hard-to-read levels need a simpler lesson |
+| [[Coverage Gap Bot]] | feed | [[Strategist Bot]] | levels missing lessons, reps or models |
+| [[Funnel Bot]] | feed | [[Strategist Bot]] | where visitors leave |
+| [[Dispatcher Bot]] | feed | [[Strategist Bot]] | open issues with evidence |
+| [[Superfeedbackbot]] | feed | [[Strategist Bot]] | what users ask for |
+| [[Strategist Bot]] | feed | [[Reporter Bot]] | ranked build list |
+| [[Verifier Bot]] | feed | [[Changelog Bot]] | bot fix commits join the staging queue |
+| [[Changelog Bot]] | feed | [[Release Bot]] | what would ship |
+| [[Changelog Bot]] | feed | [[Reporter Bot]] | plain-English change list |
+| [[Dispatcher Bot]] | feed | [[Release Bot]] | open critical issues |
+| [[Cost Guard Bot]] | feed | [[Release Bot]] | deploy credits left |
+| [[Release Bot]] | feed | [[Reporter Bot]] | GO or NO-GO |
+| [[Guard Bot]] | gate | [[Release Bot]] | kill switch blocks a GO |
 
 Types: **feed** passes findings, **act** gives work, **gate** can block, **recheck** verifies, **learn** changes future behavior.
 

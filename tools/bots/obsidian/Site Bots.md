@@ -21,6 +21,18 @@ flowchart LR
     funnel["Funnel Bot"]
     billing["Billing Audit Bot"]
     feedbot["Superfeedbackbot"]
+    seo["SEO Meta Bot"]
+    sitemap["Sitemap Bot"]
+    schema["Structured Data Bot"]
+    a11y["Accessibility Bot"]
+    perf["Performance Budget Bot"]
+    secrets["Secrets and Headers Bot"]
+    duplicate["Duplicate Content Bot"]
+    readability["Readability Bot"]
+    reps["Rep Auditor Bot"]
+    coverage["Coverage Gap Bot"]
+    testcov["Test Coverage Bot"]
+    deadcode["Dead Code Bot"]
   end
   subgraph CIRCLE[The Circle]
     dispatcher["Dispatcher Bot"]
@@ -29,6 +41,9 @@ flowchart LR
     verifier["Verifier Bot"]
     historian["Historian Bot"]
     reporter["Reporter Bot"]
+    changelog["Changelog Bot"]
+    release["Release Bot"]
+    strategist["Strategist Bot"]
   end
   subgraph DRAFT[Drafters - never send]
     retention["Retention Bot"]
@@ -60,6 +75,37 @@ flowchart LR
   retention -->|dry-run counts| reporter
   outreach -->|drafts waiting for approval| reporter
   verifier -->|what changed and what was reverted| reporter
+  seo -->|issues found| dispatcher
+  sitemap -->|issues found| dispatcher
+  schema -->|issues found| dispatcher
+  a11y -->|issues found| dispatcher
+  perf -->|issues found| dispatcher
+  secrets -->|issues found| dispatcher
+  duplicate -->|issues found| dispatcher
+  readability -->|issues found| dispatcher
+  reps -->|issues found| dispatcher
+  coverage -->|issues found| dispatcher
+  testcov -->|issues found| dispatcher
+  deadcode -->|issues found| dispatcher
+  secrets -.->|leaked key = freeze all fixes| guard
+  reps -.->|a broken practice problem blocks a release| release
+  reps -->|wrong practice answers are verified defects too| qa
+  duplicate -->|duplicate pages explain weak rankings| seo
+  sitemap -->|pages missing from the sitemap are not indexed| seo
+  deadcode -->|unreferenced code needs no test| testcov
+  readability -->|hard-to-read levels need a simpler lesson| coverage
+  coverage -->|levels missing lessons, reps or models| strategist
+  funnel -->|where visitors leave| strategist
+  dispatcher -->|open issues with evidence| strategist
+  feedbot -->|what users ask for| strategist
+  strategist -->|ranked build list| reporter
+  verifier -->|bot fix commits join the staging queue| changelog
+  changelog -->|what would ship| release
+  changelog -->|plain-English change list| reporter
+  dispatcher -->|open critical issues| release
+  cost -->|deploy credits left| release
+  release -->|GO or NO-GO| reporter
+  guard -.->|kill switch blocks a GO| release
   reporter ==>|digest and deploy question| H
 ```
 
@@ -80,6 +126,21 @@ flowchart LR
 | [[Verifier Bot]] | Circle | Re-runs the sensor and the tests after a fix. Reverts the patch if either fails. |
 | [[Historian Bot]] | Circle | Remembers which fix types worked or got reverted and demotes the ones that fail. |
 | [[Reporter Bot]] | Circle | Writes the daily digest for Bekir and says when a deploy question is due. |
+| [[SEO Meta Bot]] | Sensor | Titles, descriptions, h1, canonical and og tags on every guide. |
+| [[Sitemap Bot]] | Sensor | sitemap.xml vs the guide pages that really exist, and robots.txt. |
+| [[Structured Data Bot]] | Sensor | JSON-LD on every guide parses and has the fields search engines need. |
+| [[Accessibility Bot]] | Sensor | Missing alt text, unlabeled buttons and fields, lang, viewport, heading order. |
+| [[Performance Budget Bot]] | Sensor | File weight and render-blocking scripts against a budget. |
+| [[Secrets and Headers Bot]] | Sensor | Live keys committed to the repo (never prints them) and missing security headers. |
+| [[Duplicate Content Bot]] | Sensor | Near-identical guide pages that search engines merge or demote. |
+| [[Readability Bot]] | Sensor | Reading grade level of lessons and guides. |
+| [[Rep Auditor Bot]] | Sensor | Runs every practice-problem generator 300 times and checks each problem is sane. |
+| [[Coverage Gap Bot]] | Sensor | Which of the 49 levels lack a lesson, number reps or a model. |
+| [[Test Coverage Bot]] | Sensor | Scripts and functions that no test names. |
+| [[Dead Code Bot]] | Sensor | Scripts and functions that nothing references. |
+| [[Changelog Bot]] | Circle | Plain-English list of what is waiting on staging and whether it triggers a build. |
+| [[Release Bot]] | Circle | GO, CAUTION or NO-GO before a deploy. Advises only, never deploys. |
+| [[Strategist Bot]] | Circle | Ranks what to build next from the other bots' evidence. |
 
 **Sensors** find problems. **The Circle** routes, fixes, verifies, remembers and reports. **Drafters** prepare emails and never send.
 

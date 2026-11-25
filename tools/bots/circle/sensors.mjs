@@ -37,4 +37,6 @@ export function fromFeedbot(r) {
   return (r.items || []).filter(i => ["fix", "investigate", "recommend", "human"].includes(i.verdict)).map(i => mk("feedbot", i.verdict, hash(i.key), i.verdict === "fix" ? "warn" : "info", `${i.verdict}: ${i.why}${i.question ? " (" + i.question.slice(0, 80) + ")" : ""}`, i.target ? i.target.file : "feedback"))
     .concat((r.polls && r.polls.tally || []).filter(p => p.verdict === "recommend").map(p => mk("feedbot", "poll", hash(p.answer), "info", `${p.count} votes (${p.share}%): "${p.answer}". ${p.why}`, "polls")));
 }
+/* generic adapter for the static-scan bots: { findings:[{code,severity,detail,where}] } */
+export const fromReport = bot => r => (r.findings || []).map(f => mk(bot, f.code, "all", f.severity, f.detail, f.where || f.code));
 export const botFailure = (bot, e) => mk("circle", "bot-failure", bot, "critical", `${bot} failed to run: ${String(e.message || e).slice(0, 160)}`, bot);

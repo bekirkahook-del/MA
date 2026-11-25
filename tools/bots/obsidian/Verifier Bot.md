@@ -28,12 +28,12 @@ Every outcome is sent to the [[Historian Bot]] and the [[Reporter Bot]].
 
 **Rechecks:** [[Question QA Bot]] (re-run after a question fix); [[Content Freshness Bot]] (re-run after a data fix)
 
-**Feeds:** [[Historian Bot]] (worked or reverted); [[Reporter Bot]] (what changed and what was reverted)
+**Feeds:** [[Historian Bot]] (worked or reverted); [[Reporter Bot]] (what changed and what was reverted); [[Changelog Bot]] (bot fix commits join the staging queue)
 
 ```dataview-fields
 fed_by:: [[Fixer Bot]]
 rechecks:: [[Question QA Bot]], [[Content Freshness Bot]]
-feeds:: [[Historian Bot]], [[Reporter Bot]]
+feeds:: [[Historian Bot]], [[Reporter Bot]], [[Changelog Bot]]
 ```
 <!-- circle:end -->
 

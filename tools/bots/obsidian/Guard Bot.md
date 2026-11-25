@@ -27,16 +27,16 @@ A critical billing problem or a critical health problem **pauses** [[Retention B
 <!-- circle:start -->
 ## Connections
 
-**Gated by:** [[Site Health Bot]] (site broken = freeze all fixes); [[Billing Audit Bot]] (money problem = pause marketing)
+**Gated by:** [[Site Health Bot]] (site broken = freeze all fixes); [[Billing Audit Bot]] (money problem = pause marketing); [[Secrets and Headers Bot]] (leaked key = freeze all fixes)
 
 **Taught by:** [[Historian Bot]] (demote fix types that keep failing)
 
-**Gates:** [[Fixer Bot]] (allow or block every patch); [[Retention Bot]] (runs only when health and billing are clean); [[Outreach Bot]] (runs only when health and billing are clean); [[Dispatcher Bot]] (frozen issues go straight to a human)
+**Gates:** [[Fixer Bot]] (allow or block every patch); [[Retention Bot]] (runs only when health and billing are clean); [[Outreach Bot]] (runs only when health and billing are clean); [[Dispatcher Bot]] (frozen issues go straight to a human); [[Release Bot]] (kill switch blocks a GO)
 
 ```dataview-fields
-gated_by:: [[Site Health Bot]], [[Billing Audit Bot]]
+gated_by:: [[Site Health Bot]], [[Billing Audit Bot]], [[Secrets and Headers Bot]]
 taught_by:: [[Historian Bot]]
-gates:: [[Fixer Bot]], [[Retention Bot]], [[Outreach Bot]], [[Dispatcher Bot]]
+gates:: [[Fixer Bot]], [[Retention Bot]], [[Outreach Bot]], [[Dispatcher Bot]], [[Release Bot]]
 ```
 <!-- circle:end -->
 

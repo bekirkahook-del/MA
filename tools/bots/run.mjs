@@ -2,6 +2,6 @@
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-const dir = path.dirname(fileURLToPath(import.meta.url)), bot = process.argv[2], map = { qa: "qa.mjs", health: "health.mjs", funnel: "funnel.mjs", retention: "retention.mjs", freshness: "freshness.mjs", cost: "cost.mjs", billing: "billing.mjs", outreach: "outreach.mjs", dump: "dump.mjs", circle: "circle/circle.mjs" };
+const dir = path.dirname(fileURLToPath(import.meta.url)), bot = process.argv[2], map = { qa: "qa.mjs", health: "health.mjs", funnel: "funnel.mjs", retention: "retention.mjs", freshness: "freshness.mjs", cost: "cost.mjs", billing: "billing.mjs", outreach: "outreach.mjs", dump: "dump.mjs", seo: "seo.mjs", sitemap: "sitemap.mjs", schema: "schema.mjs", a11y: "a11y.mjs", perf: "perf.mjs", secrets: "secrets.mjs", duplicate: "duplicate.mjs", readability: "readability.mjs", reps: "reps.mjs", coverage: "coverage.mjs", testcov: "testcov.mjs", deadcode: "deadcode.mjs", changelog: "changelog.mjs", release: "release.mjs", strategist: "strategist.mjs", circle: "circle/circle.mjs" };
 if (!map[bot]) { console.error("usage: node tools/bots/run.mjs <" + Object.keys(map).join("|") + "> [args]"); process.exit(2); }
 process.exit(spawnSync("node", [path.join(dir, map[bot]), ...process.argv.slice(3)], { stdio: "inherit" }).status || 0);

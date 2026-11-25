@@ -13,8 +13,12 @@ import { FIXERS, packet } from "./fixer.mjs";
 import { verify, revert, realTests } from "./verifier.mjs";
 import * as H from "./historian.mjs";
 import { digest } from "./reporter.mjs";
+import { release } from "../release.mjs";
+import { rank } from "../strategist.mjs";
+import { changelog as mkChangelog, readQueue } from "../changelog.mjs";
 
-const ADAPT = { qa: S.fromQa, health: S.fromHealth, freshness: S.fromFreshness, cost: S.fromCost };
+const STATIC = ["seo", "sitemap", "schema", "a11y", "perf", "secrets", "duplicate", "readability", "reps", "coverage", "testcov", "deadcode"];
+const ADAPT = { qa: S.fromQa, health: S.fromHealth, freshness: S.fromFreshness, cost: S.fromCost, ...Object.fromEntries(STATIC.map(b => [b, S.fromReport(b)])) };
 
 export async function defaultSensors(root, o = {}) {
   const f = o.files || {}, rd = p => JSON.parse(fs.readFileSync(p, "utf8")), out = {};
@@ -23,6 +27,9 @@ export async function defaultSensors(root, o = {}) {
   out.qa = async () => { const { dumpTracks } = await import("../dump.mjs"); const { auditQuestions } = await import("../qa.mjs"); return auditQuestions((await dumpTracks()).tracks); };
   const { scanFreshness } = await import("../freshness.mjs"); out.freshness = async () => scanFreshness(root, o.now);
   const { costReport, deploysThisMonth } = await import("../cost.mjs"); out.cost = async () => costReport({ deploys: deploysThisMonth(root, o.now), aiRows: f.ai ? rd(f.ai) : [], now: o.now });
+  for (const b of STATIC.filter(b => b !== "coverage")) out[b] = async () => (await import("../" + b + ".mjs")).scan(root);
+  out.coverage = async () => (await import("../coverage.mjs")).scan(root, f.tracks);
+  out.changelog = async () => mkChangelog(readQueue(root));
   if (f.visits) { const { funnel } = await import("../funnel.mjs"); out.funnel = async () => funnel(rd(f.visits)); }
   if (f.billing) { const { reconcile } = await import("../billing.mjs"); out.billing = async () => reconcile(rd(f.billing)); }
   if (f.feedback) { const T = await import("../../feedbot/triage.mjs"); out.feedbot = async ({ qaDefects }) => T.run(rd(f.feedback), { ...T.repoContext(root), qaDefects }, { state: readJson(path.join(root, "tools/feedbot/state.json"), {}) }); }
@@ -43,6 +50,7 @@ export async function runCircle(o = {}) {
   await sense("qa", S.fromQa, sensors.qa);
   await sense("freshness", S.fromFreshness, sensors.freshness);
   await sense("cost", S.fromCost, sensors.cost);
+  for (const b of STATIC) await sense(b, ADAPT[b], sensors[b]);
   await sense("funnel", S.fromFunnel, sensors.funnel);
   const qaDefects = new Set(found.filter(i => i.bot === "qa" && i.verified).map(i => i.question));
   await sense("feedbot", S.fromFeedbot, sensors.feedbot && (() => sensors.feedbot({ qaDefects })));
@@ -56,7 +64,7 @@ export async function runCircle(o = {}) {
   }
 
   const autoAllowed = t => H.autoAllowed(hist, t);
-  const healthCritical = Object.values(led.issues).some(i => i.bot === "health" && i.severity === "critical" && !["resolved", "ignored"].includes(i.status));
+  const healthCritical = Object.values(led.issues).some(i => ["health", "secrets"].includes(i.bot) && i.severity === "critical" && !["resolved", "ignored"].includes(i.status));
   const actions = [];
   if (mode === "act") {
     const branch = git(["rev-parse", "--abbrev-ref", "HEAD"], root), dirty = git(["status", "--porcelain"], root).split("\n").filter(l => l && !l.includes("tools/bots/state/"));
@@ -83,13 +91,17 @@ export async function runCircle(o = {}) {
     }
   }
   const plan = makePlan(led, { now, autoAllowed }), cost = reports.cost && reports.cost.deploy;
-  const md = digest({ now, summary: L.counts(led), plan, actions, gates, failed, cost, ran, mode, queuedSiteChanges: o.queuedSiteChanges || 0 });
+  const queue = sensors.changelog ? await sensors.changelog() : null, killed = fs.existsSync(path.join(root, "tools/bots/STOP"));
+  const rel = queue ? release({ issues: Object.values(led.issues), queue, tests: o.testsResult, deploysLeft: reports.cost && reports.cost.deploy && reports.cost.deploy.deploysLeft }) : null;
+  if (rel && killed) { rel.verdict = "NO-GO"; rel.reasons.push("Kill switch (tools/bots/STOP) is on."); }
+  const ideas = rank({ issues: Object.values(led.issues), coverage: reports.coverage }, 5), extras = { release: rel, changelog: queue, ideas };
+  const md = digest({ now, summary: L.counts(led), plan, actions, gates, failed, cost, ran, mode, queuedSiteChanges: o.queuedSiteChanges || (queue ? queue.commits : 0), extras });
   if (o.write !== false) {
     fs.writeFileSync(path.join(sd, "circle-ledger.json"), JSON.stringify(led, null, 1)); fs.writeFileSync(path.join(sd, "circle-history.json"), JSON.stringify(hist, null, 1)); fs.writeFileSync(path.join(sd, "digest.md"), md);
   }
-  return { mode, ran, failed, gates, counts: L.counts(led), plan: plan.map(p => ({ to: p.to, why: p.why, priority: p.priority, severity: p.issue.severity, key: p.issue.key, detail: p.issue.detail })), actions, packets: plan.filter(p => p.to === "human").map(p => packet(p.issue)), drafts: Object.fromEntries(Object.entries(drafts).map(([k, v]) => [k, v.skipped ? v : { dryRun: true, sends: 0, ...(v.drafted != null ? { drafted: v.drafted } : { eligibleToday: v.eligibleToday, wouldSendIfTheyOptIn: v.wouldSendIfTheyOptIn }) }])), digestPath: "tools/bots/state/digest.md" };
+  return { mode, ran, failed, extras, gates, counts: L.counts(led), plan: plan.map(p => ({ to: p.to, why: p.why, priority: p.priority, severity: p.issue.severity, key: p.issue.key, detail: p.issue.detail })), actions, packets: plan.filter(p => p.to === "human").map(p => packet(p.issue)), drafts: Object.fromEntries(Object.entries(drafts).map(([k, v]) => [k, v.skipped ? v : { dryRun: true, sends: 0, ...(v.drafted != null ? { drafted: v.drafted } : { eligibleToday: v.eligibleToday, wouldSendIfTheyOptIn: v.wouldSendIfTheyOptIn }) }])), digestPath: "tools/bots/state/digest.md" };
 }
 cli(import.meta.url, async a => {
-  const files = { visits: arg(a, "visits"), billing: arg(a, "billing"), feedback: arg(a, "feedback"), targets: arg(a, "targets"), engage: arg(a, "engage"), ai: arg(a, "ai") };
+  const files = { visits: arg(a, "visits"), billing: arg(a, "billing"), feedback: arg(a, "feedback"), targets: arg(a, "targets"), engage: arg(a, "engage"), ai: arg(a, "ai"), tracks: arg(a, "tracks") };
   return runCircle({ mode: a.includes("--act") ? "act" : "plan", smoke: a.includes("--smoke"), files });
 });

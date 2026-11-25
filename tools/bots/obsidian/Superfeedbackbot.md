@@ -36,11 +36,11 @@ The duplicate-option check treated "+$20" and "−$20" as the same answer, which
 
 **Fed by:** [[Question QA Bot]] (verified defects count as hard evidence)
 
-**Feeds:** [[Dispatcher Bot]] (issues found)
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Strategist Bot]] (what users ask for)
 
 ```dataview-fields
 fed_by:: [[Question QA Bot]]
-feeds:: [[Dispatcher Bot]]
+feeds:: [[Dispatcher Bot]], [[Strategist Bot]]
 ```
 <!-- circle:end -->
 

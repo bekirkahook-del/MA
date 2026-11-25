@@ -19,6 +19,21 @@ function connections(id) {
   return [S, ...lines, E].join("\n");
 }
 const BODY = {
+  release: `A GO / CAUTION / NO-GO check before Bekir says "deploy". It reads the same ledger as the digest, so the two always agree. It only advises. It never deploys.
+
+## Verdict rules
+| Situation | Verdict |
+|---|---|
+| Nothing waiting on staging | NOTHING TO SHIP |
+| Tests failing | NO-GO |
+| Open critical issue from health, reps, secrets, sitemap, schema, billing or a crashed bot | NO-GO |
+| A verified wrong answer from the ${L("Question QA Bot")} | NO-GO |
+| Tests not run, warnings from a11y/seo/perf, or under 5 deploys left this month | CAUTION |
+| Everything else | GO |
+
+The batch's cost comes from the ${L("Changelog Bot")}: a batch that only touches bots, tests, social or notes is free.`,
+  changelog: `Reads the commits waiting on staging and groups them by what a student would notice (learning content, Pro and billing, guides and SEO, site design, backend, bots). It also says whether the batch triggers a Netlify build, using the same "no build" list as \`netlify.toml\`.`,
+  strategist: `Ranks what to build next. Every line cites the evidence from another bot (funnel drop-offs weigh double, then severity, then how many users, pages or levels it touches). It never invents an impact number: the score is a rank, not a forecast. Feeds the "Build next" section of the digest.`,
   dispatcher: `Takes every finding from every sensor (already deduped in the shared ledger), scores its priority, and decides who handles it: the ${L("Fixer Bot")} for safe fixes, a human for anything that needs judgment, or "watch" for low-severity items. It never changes anything itself.
 
 ## Priority

@@ -49,7 +49,7 @@ Run `python3 social/studio/qa.py <file>` first: it checks the measurable items (
 | # | Item | Pts |
 |---|---|---|
 | F1 | Post text and on-screen text: perfect spelling and grammar, consistent with the video | 3 |
-| F2 | CTA: mnaprep.com in the text (link in bio) + first comment where the platform supports it | 3 |
+| F2 | CTA: mnaprep.com in the post text (link in bio) + first comment on Instagram/Facebook/YouTube; Pinterest: pin link to mnaprep.com + footer on the image | 3 |
 | F3 | Scheduled at a best hour (10 AM / 6 PM ET), right platforms for the idea type, commit-pinned media URL, platform title set | 4 |
 
 ## Score log

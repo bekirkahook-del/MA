@@ -38,7 +38,13 @@ PS2 engine features: `TEASE` dict in build.py (1.7 s cold open: climax shot + ye
 
 Instagram always gets native 4:5 renders (`H=1350`), Pinterest native 2:3 with the mnaprep footer. Never squeeze 9:16 into 4:5 with blurred side bars.
 
-# Pristine checklist (every post, no exceptions)
+# THE GATE: 100/100 or it doesn't post (Bekir, Nov 25)
+Every post is scored on `social/RUBRIC.md` (100 points, every item pass/fail) BEFORE it publishes:
+- Run `python3 social/studio/qa.py <video>` (or `--slides <platform> <images>`) for the automated items, then score the rest from a contact sheet and the post text.
+- Below 100: fix and re-score. If it can't be fixed before its slot, set it to draft and report it. Never round up.
+- Every day, re-score everything publishing in the next 24 h (even posts that passed before) and log each score in `social/qa-log.md`.
+
+# Pristine checklist (how to hit 100)
 1. Script first: every line tight, every number checked against a source, a conflict/hook in second 1.
 2. Video: 1.7 s cold open with hook text; no dark first frame; captions high (clear of TikTok's bottom UI); nothing overlapping captions, faces or other text; no text cut off at the edges; stamps on one line; characters fully in frame; no stray objects; emoji in color; end card at most about 1 s.
 3. Process: test frame per shot, contact sheet, fix everything, then full render, then check the final mp4 every 2 s (`ffmpeg -vf fps=0.5,tile`), plus a dense check (`fps=4`) on any count-up numbers.

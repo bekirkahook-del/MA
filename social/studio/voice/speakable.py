@@ -29,6 +29,8 @@ def _num(s):
 
 def speakable(t):
     t = t.replace('–', '-').replace('—', ', ')
+    # money with a written scale word: $2.52 billion -> two point five two billion dollars
+    t = re.sub(r"\$(\d[\d,]*(?:\.\d+)?)\s?(thousand|million|billion|trillion)\b", lambda m: f"{_num(m.group(1))} {m.group(2)} dollars", t)
     # money with scale: $15.1B -> fifteen point one billion dollars
     t = re.sub(r"\$(\d[\d,]*(?:\.\d+)?)\s?([KMBT])\b", lambda m: f"{_num(m.group(1))} {SCALE[m.group(2)]} dollars", t)
     # plain money: $1.10 -> one dollar ten ; $100 -> one hundred dollars

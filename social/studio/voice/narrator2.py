@@ -5,7 +5,7 @@
 - PRONUNCIATION: text goes through speakable.py first ($15.1B, EBITDA, Q3, 7:15 said like a banker), and
   takes are also scored on Whisper's per-word confidence, so oddly pronounced words lose
 - PHRASE MODE (default, Bekir Nov 25 "best of 3 for each second of voice"): the line is split at natural pauses
-  (. ? ! , ;) into ~1-3 s phrases; each phrase gets its own best of 3 takes; winners are trimmed, level-matched
+  (. ? ! , ;) into ~1-3 s phrases of 4+ words; each phrase gets its own best of 3 takes; winners are trimmed, level-matched
   and stitched with natural pauses (0.35 s after . ? !, 0.18 s after , ;). Never cuts inside a word.
 Usage: python narrator2.py "text" out.wav [energy 0.4-0.9] [takes per phrase, default 3] [--line = whole-line mode]"""
 import sys, os, subprocess, json
@@ -19,7 +19,20 @@ _base_score = score
 def score(path, text):
     r = _base_score(path, text)
     segs, _ = asr.transcribe(path, beam_size=1, word_timestamps=True)
+    segs = list(segs)
     pr = [w.probability for s_ in segs for w in (s_.words or [])]
+    # money-aware word check: run Whisper's "$1.04" through the same speakable() as the script
+    hyp = " ".join(s_.text for s_ in segs)
+    nw = jiwer.wer(" ".join(norm(speakable(text))), " ".join(norm(speakable(hyp)))) if norm(hyp) else 1.0
+    r['score'] += 6 * (r['wer'] - nw); r['wer'] = round(nw, 3)
+    # questions must SOUND like questions: reward a pitch rise at the end, punish a fall
+    if text.strip().endswith('?'):
+        y, sr_ = librosa.load(path, sr=16000)
+        f0, _, _ = librosa.pyin(y, fmin=60, fmax=400, sr=sr_, frame_length=1024)
+        v = f0[~np.isnan(f0)]
+        if len(v) > 12:
+            k = max(3, len(v) // 4); rise = 12 * np.log2(np.median(v[-k:]) / np.median(v[:-k]))
+            r['score'] += 1.5 if rise > 1 else (-1.5 if rise < -0.5 else 0); r['rise'] = round(float(rise), 2)
     minp = min(pr) if pr else 0.0; meanp = sum(pr) / len(pr) if pr else 0.0
     r['score'] = round(r['score'] + 4 * (meanp - 0.85) - 6 * max(0.0, 0.65 - minp), 3)
     r['minp'], r['meanp'] = round(minp, 3), round(meanp, 3)
@@ -35,11 +48,13 @@ def phrases(text):
     parts = re.findall(r"[^.?!,;]+[.?!,;]*", text)
     out = []
     for p in (x.strip() for x in parts if x.strip()):
-        # keep tiny fragments (1 word after a comma) attached so prosody stays natural
-        if out and len(p.split()) < 2 and out[-1][-1] in ',;':
+        # chunks need ~4+ words: one-word phrases ("Tough?") lose their natural intonation when said alone
+        if out and len(out[-1].split()) < 4:
             out[-1] += ' ' + p
         else:
             out.append(p)
+    if len(out) > 1 and len(out[-1].split()) < 3:
+        out[-2] += ' ' + out.pop()
     return out
 def trim(y, sr, thr=0.02):
     a = np.abs(y); idx = np.where(a > thr * a.max())[0]
@@ -56,7 +71,7 @@ def narrate_phrases(text, out, energy=0.6, n=3):
         y, sr = sf.read(raw)
         if y.ndim > 1: y = y.mean(1)
         y = trim(y, sr); y = y / (np.sqrt(np.mean(y ** 2)) + 1e-9) * 0.08   # level-match phrases
-        gap = 0.35 if ph.rstrip()[-1:] in '.?!' else 0.18
+        gap = 0.3 if ph.rstrip()[-1:] in '.?!' else 0.12
         pieces += [y, np.zeros(int(gap * sr))]
         report.append({'phrase': ph, 'wer': best['wer'], 'minp': best.get('minp'), 'spread': best['spread']}); os.remove(raw)
     joined = out.replace('.wav', '_joined.wav'); sf.write(joined, np.concatenate(pieces[:-1]), sr)

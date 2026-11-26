@@ -1,1 +1,67 @@
-window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{});
+/* Beginner pools for pm-6..pm-9 */
+window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
+"pm-6":[
+ ["What does the <b>Fed</b> mainly control?",["The short-term interest rate in the U.S.","Stock prices directly","Company profits","The price of oil"],0,"The Fed (the U.S. central bank) sets the short-term policy rate. Markets set stock prices."],
+ ["If inflation is 2% and your savings earn 1%, your real return is:",["+3%","+1%","+2%","−1%"],3,"Real return = 1% − 2% = −1%. Your money buys less than before."],
+ ["When interest rates go up, new loans become:",["Cheaper","Free","More expensive","Illegal"],2,"Interest rate is the price of borrowing, so a higher rate costs more."],
+ ["Bond prices and bond yields usually move:",["In the same direction","In opposite directions","Randomly","Only on Mondays"],1,"When yields rise, existing bonds with lower payments lose value."],
+ ["<b>Inflation</b> means:",["Prices are falling","Prices across the economy are rising","Jobs are growing","The stock market is closed"],1,"Inflation is a general rise in prices over time."],
+ ["Which is a <i>risk-off</i> move?",["Selling stocks and buying Treasuries","Buying speculative stocks","Borrowing to buy more stocks","Buying crypto with leverage"],0,"Risk-off means moving from risky to safe assets."],
+ ["A recession is best described as:",["A stock market rally","A bank holiday","A rise in inflation only","A period when the economy shrinks"],3,"A recession is a broad drop in output, jobs and spending."],
+ ["The <b>yield curve</b> shows:",["Stock prices over time","A company's profit","Interest rates for bonds of different lengths","Oil prices by country"],2,"It plots yields from short maturities (months) to long ones (30 years)."],
+ ["Yields rise from 4.00% to 4.50%. That is a move of:",["5 basis points","0.5 basis points","50 basis points","500 basis points"],2,"One basis point = 0.01%. A 0.50 point move is 50 basis points."],
+ ["The U.S. <b>Treasury</b> issues bonds to:",["Pay stock dividends","Borrow money for the U.S. government","Rate other countries","Print stocks"],1,"Treasury bonds are how the government borrows."],
+ ["A macro fund thinks the U.S. dollar will rise. It might:",["Buy dollars against another currency","Sell all bonds in the world","Buy only one stock","Do nothing"],0,"A currency bet means going long the one you expect to strengthen."],
+ ["GDP growing faster than expected is usually seen as:",["A sign of a recession","Irrelevant to stocks","A drop in jobs","Good for company profits"],3,"A faster-growing economy tends to mean more sales and profits."],
+ ["<b>CPI</b> (consumer price index) is released:",["Hourly","Once per century","Daily by each company","Monthly by the government"],3,"In the U.S., the Bureau of Labor Statistics publishes CPI every month."],
+ ["A central bank wants to cool inflation. It usually:",["Cuts rates to zero","Prints more money for everyone","Raises interest rates","Bans stock trading"],2,"Higher rates slow borrowing and spending, which cools price growth."]
+],
+"pm-7":[
+ ["Which pair shows a market maker's quotes?",["A profit and a loss","A bid and an ask","A debt and equity","A ticker and a symbol"],1,"Market makers always show a price to buy (bid) and a price to sell (ask)."],
+ ["The <b>ask</b> price is the price at which a market maker will:",["Sell to you","Buy from you","Lend to you","Merge with you"],0,"You buy at the ask. You sell at the bid."],
+ ["Bid $10.00 and ask $10.02. The spread is:",["$10.02","$0.20","$20.02","$0.02"],3,"Spread = ask − bid = 0.02."],
+ ["Which job talks to clients all day?",["Back office","Compliance auditor","Sales","Quant researcher only"],2,"Sales covers the client relationships and brings in orders."],
+ ["Why do market makers exist?",["To set company profits","To pick winners","To make it easy for others to buy and sell quickly","To collect taxes"],2,"They provide liquidity so there is always someone to trade with."],
+ ["A wider spread usually means the stock is:",["Easier to trade","Harder to trade or riskier","Guaranteed to rise","Free of risk"],1,"Dealers charge more when a stock is thin or volatile."],
+ ["<b>Liquidity</b> means:",["How easily you can buy or sell without moving the price","How much cash a company has","How high a stock's price is","A type of loan"],0,"Liquid markets let you trade quickly at fair prices."],
+ ["Which trade earns the market maker the spread?",["Buying at the ask and selling at the bid","Holding for a year","Never trading","Buying at the bid and selling at the ask"],3,"Buy low (bid), sell high (ask), and the gap is the dealer's pay."],
+ ["A desk sells 1,000 shares for a $0.03 spread each. Spread income:",["$3","$300","$3,000","$30"],3,"0.03 × 1,000 = $30."],
+ ["A <b>trader</b> on a sales and trading desk mainly:",["Writes ads","Files taxes","Prices trades and manages risk","Hires interns"],2,"Traders hold the book and decide prices and hedges."],
+ ["Which is a typical client of a sales and trading desk?",["A neighborhood bakery","A hedge fund","A high school","A local library"],1,"S&T desks serve institutional investors like hedge funds and asset managers."],
+ ["Stock a desk has bought but not yet sold is called:",["Inventory","Revenue","Equity","A dividend"],0,"Inventory is the position the desk is stuck holding."],
+ ["Which action reduces inventory risk?",["Hedging the position","Doubling the position","Ignoring it","Raising the spread to zero"],0,"A hedge is an offsetting trade that cancels out price risk."],
+ ["A bank trading only with its own money for profit is doing:",["Flow trading","Underwriting","Research","Proprietary (prop) trading"],3,"Prop trading is the bank's own bet rather than client business."]
+],
+"pm-8":[
+ ["If you hold five stocks in equal amounts, each stock has a weight of:",["5%","50%","20%","100%"],2,"100% ÷ 5 = 20%."],
+ ["Which is the best description of diversification?",["Owning only one great stock","Not putting all your eggs in one basket","Holding only cash","Trading every minute"],1,"Spreading money across different holdings reduces the damage from any one."],
+ ["A portfolio has $60 in stock A and $40 in stock B. Stock A's weight is:",["60%","40%","100%","6%"],0,"60 ÷ (60 + 40) = 60%."],
+ ["Stock A (50% weight) returns +8%. Stock B (50% weight) returns +4%. Portfolio return:",["12%","4%","8%","6%"],3,"0.5 × 8 + 0.5 × 4 = 6%."],
+ ["A <b>stop-loss</b> is:",["A price where you buy more","A fee","A dividend date","A price where you sell to limit a loss"],3,"It is a planned exit if the idea is proving wrong."],
+ ["Two assets that always move together have a correlation near:",["0","−1","+1","−5"],2,"Correlation runs from −1 to +1. +1 means perfect lockstep."],
+ ["Which helps diversification more?",["Buying 10 stocks in the same industry","Mixing stocks from different industries","Buying only the biggest stock","Holding one stock"],1,"Different industries react differently to the same news."],
+ ["<b>Rebalancing</b> a portfolio usually means:",["Selling some winners and buying laggards to return to target weights","Selling everything","Using only one stock","Ignoring all changes"],0,"It resets the mix back to the plan."],
+ ["You risk 1% of a $100,000 account on one trade. Max loss on the trade:",["$1,000","$100","$10,000","$100,000"],0,"1% × 100,000 = $1,000."],
+ ["A position is too big when:",["It makes money","It is in a famous company","It pays a dividend","One bad outcome could badly hurt the whole fund"],3,"Size is about survivability, not about how good the company is."],
+ ["A <b>benchmark</b> is:",["A broker","A fee","A comparison index such as the S&P 500","A tax form"],2,"Managers are judged against a benchmark to see if they added value."],
+ ["Holding cash in a portfolio is:",["Illegal","A choice that lowers both risk and expected return","Required to be zero","A guaranteed loss"],1,"Cash is stable but earns little compared with stocks over time."],
+ ["Sizing by <b>conviction</b> means:",["Equal weights always","Bigger weights for ideas you believe in most","Random weights","Buying only losers"],1,"The best ideas get more capital, within risk limits."],
+ ["A portfolio of 10 stocks, all in the same industry, is:",["Less diversified than it looks","Fully diversified","Risk-free","Safer than an index fund"],0,"Same-industry stocks tend to move together, so risk is concentrated."]
+],
+"pm-9":[
+ ["Shorting a stock means you:",["Buy and hold forever","Lend your cash to a company","Ask for a dividend","Borrow shares and sell them, hoping to buy back lower"],3,"A short is a bet that the price will fall."],
+ ["You short at $20 and the stock falls to $15. You:",["Lose money","Break even","Make money","Owe taxes only"],2,"You sold at 20 and can buy back at 15, keeping $5 per share."],
+ ["You short at $20 and the stock rises to $30. You:",["Make money","Lose money","Break even","Receive a dividend"],1,"You must buy back at 30 after selling at 20, losing $10 per share."],
+ ["Buying back shares you shorted is called:",["Covering","Splitting","Vesting","Issuing"],0,"You cover a short by buying the shares to return to the lender."],
+ ["A short seller's biggest fear is:",["A short squeeze","A dividend cut","A stock split plan","A new ticker"],0,"A squeeze forces covering at much higher prices."],
+ ["Which event is a likely <b>catalyst</b>?",["A rainy day","The stock's logo","A holiday","An upcoming earnings report"],3,"Earnings are a dated event that can move the price."],
+ ["The maximum loss on a short position is:",["Zero","The borrow fee only","Unlimited","100%"],2,"A price can keep rising with no cap."],
+ ["The maximum gain on a short position is:",["Unlimited","The full amount you sold the stock for (the stock goes to $0)","10%","Twice the position"],1,"A stock cannot fall below zero."],
+ ["Why do shorts pay a <b>borrow fee</b>?",["The stock is risky","They are borrowing shares from someone else","To buy a license","To trade on weekends"],1,"Lenders charge a yearly rate for lending out their shares."],
+ ["A stock has high short interest. That means:",["Many investors are betting against it","It is risk-free","No one trades it","It pays high dividends"],0,"Short interest is the number of shares currently sold short."],
+ ["Short 100 shares at $40, cover at $35. Profit before fees:",["$5","$50","$3,500","$500"],3,"100 × (40 − 35) = $500."],
+ ["A company announces bad earnings and the stock falls. A short seller usually:",["Always loses","Pays the company","Profits","Gets dividends"],2,"A lower price means they can buy back cheaper."],
+ ["Which is a <b>catalyst</b> for a drug company?",["Its office lease","Its stock ticker","An FDA decision date","A new logo"],2,"A drug approval or rejection can move a biotech a lot."],
+ ["A short seller who is wrong too long may face:",["A free refund","A margin call","A tax credit","A dividend bonus"],1,"A margin call asks the trader to add cash as losses build."]
+]
+});

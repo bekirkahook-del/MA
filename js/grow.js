@@ -148,14 +148,25 @@
 
   /* ---------- invites: remember ?ref=, credit the inviter once this visitor has a confirmed account ---------- */
   const rf=(q.get("ref")||"").toLowerCase();if(/^[a-z0-9]{4,12}$/.test(rf)&&!LS.get("ma-ref-done")){LS.set("ma-ref",rf);ev("ref_land")}
-  async function claimRef(){const code=LS.get("ma-ref"),A=window.MA_AUTH;if(!code||!A||!A.sb)return;
+  async function claimRef(){const v=LS.get("ma-ref"),A=window.MA_AUTH;if(!v||!A||!A.sb)return;
     try{const s=(await A.sb.auth.getSession()).data.session;if(!s)return;
-      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"claim",code})});
+      const dk=window.maDevKeys?await maDevKeys():{};
+      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"claim",...(v.indexOf("@")>0?{email:v}:{code:v}),...dk})});
       const j=await r.json().catch(()=>({}));
-      if(j&&j.drop){try{localStorage.removeItem("ma-ref")}catch(e){}LS.set("ma-ref-done","1")}
+      /* the server gives the same answer whether or not the name matched anyone, so this message never says who it found */
+      if(j&&j.drop){try{localStorage.removeItem("ma-ref")}catch(e){}LS.set("ma-ref-done","1");
+        if(j.pending){LS.set("ma-ref-pend","1");ev("ref_claimed");try{toast("Thanks! If that checks out, they'll get credit once you clear Level 1.")}catch(e){}setTimeout(settleRef,4000)}}
     }catch(e){}}
+  /* a referral only counts once the friend has a confirmed email and has cleared Level 1 (the server checks both) */
+  async function settleRef(){if(!LS.get("ma-ref-pend"))return;const A=window.MA_AUTH;if(!A||!A.sb)return;
+    try{const s=(await A.sb.auth.getSession()).data.session;if(!s)return;
+      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"settle"})});
+      const j=await r.json().catch(()=>({}));
+      if(j&&j.drop){try{localStorage.removeItem("ma-ref-pend")}catch(e){}if(j.done)ev("ref_settled")}
+    }catch(e){}}
+  window.maRefSettle=settleRef;
   const hookRef=(n=0)=>{const A=window.MA_AUTH;if(A&&A.sb&&A.ready){A.ready.then(()=>claimRef());try{A.sb.auth.onAuthStateChange(evt=>{if(evt==="SIGNED_IN")setTimeout(claimRef,800)})}catch(e){}}else if(n<40)setTimeout(()=>hookRef(n+1),250)};
-  if(LS.get("ma-ref"))hookRef();
+  hookRef();if(LS.get("ma-ref-pend"))setTimeout(settleRef,4000);
 
   /* ---------- helpers that read the app's state ---------- */
   const xp=()=>{try{return totalXP()}catch(e){return 0}};

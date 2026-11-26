@@ -47,6 +47,11 @@
   /* Google / Apple buttons show only once the provider is switched on in Supabase (Auth > Providers). */
   let OAUTH=null;const oauthBtns=()=>OAUTH||(OAUTH=fetch((sb.supabaseUrl||"")+"/auth/v1/settings",{headers:{apikey:sb.supabaseKey||""}}).then(r=>r.json()).then(j=>[["google","Google"],["azure","Microsoft"],["apple","Apple"],["linkedin_oidc","LinkedIn"]].filter(([k])=>j.external&&j.external[k])).catch(()=>[]));
   const PNAME="ma-pending-name";let pendName="";try{pendName=(JSON.parse(localStorage.getItem("ma-pending-plan")||"{}")||{}).name||""}catch(_){}
+  /* "Who invited you?": an invite code or the inviter's account email. Stored here, claimed after sign-in by js/grow.js; the server decides if it counts. */
+  const cleanRef=v=>{v=String(v||"").trim().toLowerCase().slice(0,120);return /^[a-z0-9]{4,12}$/.test(v)||/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(v)?v:""};
+  const saveRef=el=>{const v=cleanRef(el&&el.value);if(!v)return;try{localStorage.setItem("ma-ref",v);localStorage.removeItem("ma-ref-done")}catch(_){}mev("ref_typed")};
+  const prefillRef=ov=>{const i=ov.querySelector("#auRef");if(i){try{i.value=localStorage.getItem("ma-ref")||""}catch(_){}}};
+  const REFBOX=hide=>`<label id="auRfL"${hide?" hidden":""}><span>Who invited you? <small style="opacity:.7">(optional)</small></span><input id="auRef" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="Their email or invite code"></label>`;
   const cleanName=v=>{v=String(v||"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,40);return v.length>=2&&/[a-z]/i.test(v)?v:""};
   function openAuth(mode){mode=mode||"in";try{const pn=(JSON.parse(localStorage.getItem("ma-pending-plan")||"{}")||{}).name;if(pn&&!pendName)pendName=pn}catch(_){}mev("auth_open");
     const ov=document.createElement("div");ov.className="auth-ov";
@@ -90,14 +95,15 @@
        ${up?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
        <div id="auO" style="display:none;flex-direction:column;gap:8px"></div>
        <label id="auNmL"${up?"":" hidden"}>Your name<input id="auNm" type="text" autocomplete="name" maxlength="40" placeholder="First and last name"></label>
+       ${REFBOX(!up)}
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
        <label>Password<span style="position:relative;display:block"><input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="6+ characters" required style="width:100%;box-sizing:border-box;padding-right:58px"><button type="button" id="auEye" class="auth-sw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12.5px">Show</button></span></label>
        <button class="auth-go" type="submit">Continue</button>
        <p class="auth-fine">New here? This creates your free account. ${agree}</p>
        <div class="auth-msg" id="auM" role="status" aria-live="polite"></div>
        <div class="auth-links"><button type="button" class="auth-sw" id="auF">Forgot password?</button><button type="button" class="auth-sw" id="auMl">Email me a link instead</button></div></form>`;
-      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP"),nmL=ov.querySelector("#auNmL"),nmi=ov.querySelector("#auNm");
-      ei.value=email;nmi.value=pendName;const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
+      const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE"),pi=ov.querySelector("#auP"),nmL=ov.querySelector("#auNmL"),nmi=ov.querySelector("#auNm"),rfL=ov.querySelector("#auRfL");
+      ei.value=email;nmi.value=pendName;prefillRef(ov);const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
@@ -120,8 +126,9 @@
           if(!/invalid login|invalid credentials/i.test(r.error.message||""))throw r.error;
           /* new account: a name is required */
           const n=cleanName(nmi.value);pendName=nmi.value;
-          if(!n){nmL.hidden=false;say("New here? Add your name to create your account. (Already have one? Check your password.)");nmi.focus();mev("auth_need_name");return}
+          if(!n){nmL.hidden=false;rfL.hidden=false;say("New here? Add your name to create your account. (Already have one? Check your password.)");nmi.focus();mev("auth_need_name");return}
           try{localStorage.setItem(PNAME,n)}catch(_){}
+          saveRef(ov.querySelector("#auRef"));
           r=await sb.auth.signUp({email:e,password:p,options:{emailRedirectTo:location.origin,data:{full_name:n,name:n}}});
           if(r.error){if(/already|registered|exists/i.test(r.error.message))throw new Error("WRONGPW");throw r.error}
           if(r.data&&r.data.session){done("Account created. You're in!");fetch("/.netlify/functions/welcome",{method:"POST",headers:{Authorization:"Bearer "+r.data.session.access_token},keepalive:true}).catch(()=>{});return}
@@ -141,6 +148,7 @@
        ${up&&!pw?`<ul class="auth-perks"><li>AI grading on mock interviews</li><li>Leaderboards, friends and school boards</li><li>Progress synced across devices</li></ul>`:""}
        ${up&&pw?`<label>Your name<input id="auNm" type="text" autocomplete="name" maxlength="40" placeholder="First and last name"></label>`:""}
        <label>Email<input id="auE" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@school.edu" required></label>
+       ${up?REFBOX(false):""}
        ${pw?`<label>Password<input id="auP" type="password" autocomplete="${up?"new-password":"current-password"}" placeholder="${up?"At least 6 characters":""}" required></label>`:""}
        <button class="auth-go" type="submit">${pw?(up?"Create account":"Sign in"):"Email me a link"}</button>
        ${up||!pw?`<p style="font-size:12px;line-height:1.4">${agree}</p>`:""}
@@ -149,7 +157,7 @@
        ${pw?`<button type="button" class="auth-sw" id="auSw">${up?"Already have an account? Sign in":"New here? Create a free account"}</button>`:""}
        ${pw&&!up?`<button type="button" class="auth-sw" id="auF">Forgot password?</button>`:""}</form>`;
       const f=ov.querySelector("form"),msg=ov.querySelector("#auM"),go=ov.querySelector(".auth-go"),ei=ov.querySelector("#auE");
-      ei.value=email;
+      ei.value=email;prefillRef(ov);
       const say=(t,ok)=>{msg.textContent=t;msg.className="auth-msg "+(ok?"ok":"err")};
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auPw").onclick=()=>{email=ei.value.trim();view="main";draw()};
@@ -158,7 +166,7 @@
         const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin});say(error?error.message:"Check your email for a reset link.",!error)};
       f.onsubmit=async ev=>{ev.preventDefault();const e=ei.value.trim();email=e;
         if(!okEmail(e)){say("Enter a valid email.");return}
-        go.disabled=true;say("");
+        go.disabled=true;say("");if(up)saveRef(ov.querySelector("#auRef"));
         try{
           if(!pw){const err=await sendLink(e);if(err)throw new Error(err);cd=60;view="sent";draw();return}
           const p=ov.querySelector("#auP").value;if(!p){say("Enter your password.");return}

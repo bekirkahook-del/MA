@@ -13,6 +13,7 @@ export function installBackend({ users = {}, rpc = true, stripeSub = null, anthr
         const t = ((opts.headers || {}).Authorization || "").replace(/^Bearer\s+/i, "");
         return users[t] ? J(200, users[t]) : J(401, { msg: "bad jwt" });
       }
+      if (u.pathname === "/auth/v1/admin/users") return J(200, { users: Object.values(users) });
       if (u.pathname.startsWith("/auth/v1/admin/users/")) {
         const id = u.pathname.split("/").pop(), usr = Object.values(users).find((x) => x.id === id);
         return usr ? J(200, usr) : J(404, {});
@@ -26,10 +27,15 @@ export function installBackend({ users = {}, rpc = true, stripeSub = null, anthr
       if (u.pathname === "/rest/v1/docs") {
         const q = u.searchParams, col = (q.get("col") || "").replace(/^eq\./, ""), id = (q.get("id") || "").replace(/^eq\./, "");
         if (method === "GET") {
-          const rows = [...docs.values()].filter((d) => d.col === col && (!id || d.id === id));
+          const jf = [...q.entries()].filter(([k]) => k.startsWith("data->>")); // data->>field=eq.value
+          const rows = [...docs.values()].filter((d) => d.col === col && (!id || d.id === id) && jf.every(([k, v]) => String((d.data || {})[k.slice(7)]) === v.replace(/^eq\./, "")));
           return J(200, rows.map((d) => ({ id: d.id, data: d.data })));
         }
-        if (method === "POST") { const b = JSON.parse(opts.body); put(b.col, b.id, b.uid, b.data); return J(201, []); }
+        if (method === "POST") {
+          const b = JSON.parse(opts.body);
+          if (String((opts.headers || {}).Prefer || "").includes("ignore-duplicates") && docs.has(`${b.col}|${b.id}`)) return J(201, []); // first writer wins
+          put(b.col, b.id, b.uid, b.data); return J(201, []);
+        }
         if (method === "DELETE") { for (const [k, d] of docs) if (d.col === col) docs.delete(k); return J(204); }
       }
     }

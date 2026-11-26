@@ -1208,9 +1208,9 @@ function keyDrill(tr,i){
 const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 /* Difficulty is chosen per specialized track from a 5-question pre-test (and can be changed any time).
-   Foundation: pass 6/10. Standard: pass 7/10 (the original bar). Advanced: pass 8/10, 3 stars only for a perfect 10.
+   Beginner: pass 6/10. Intermediate: pass 7/10 (the original bar). Advanced: pass 8/10, 3 stars only for a perfect 10.
    Stored as strings so cross-device sync keeps the latest choice: S.diff[trackId]={k:"f"|"s"|"a",s:pretest score,d:date}. */
-const DIFFS=[["f","Foundation","Pass at 6 of 10. Builds the base."],["s","Standard","Pass at 7 of 10. The default bar."],["a","Advanced","Pass at 8 of 10. 3 stars need a perfect 10."]];
+const DIFFS=[["f","Beginner","Pass at 6 of 10. Builds the base."],["s","Intermediate","Pass at 7 of 10. The default bar."],["a","Advanced","Pass at 8 of 10. 3 stars need a perfect 10."]];
 const diffOf=tr=>{if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
 const passN=tr=>{const N=lvlN(tr);if(N===3)return 2;const d=diffOf(tr);return d==="a"?8:d==="f"?6:Math.ceil(N*.7)};
 const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;const d=diffOf(tr);return raw>=(d==="a"?N:N-1)?3:raw>=passN(tr)?2:raw>=(d==="a"?5:d==="f"?3:Math.ceil(N*.4))?1:0};
@@ -1221,7 +1221,7 @@ function trackPretest(tr,after){
   const save_=(k,sc)=>{S.diff=S.diff||{};S.diff[tr.id]={k,s:sc,d:today()};save()};
   const intro=()=>{openPanel(`<div class="ob"><div class="label">${esc(tr.name)} · Set your difficulty</div><h2>Quick pre-test</h2>
     <p class="sub">${items.length} questions from across this track. About 2 minutes. Your score picks a starting difficulty, and you can change it any time.</p>
-    <div class="actions"><button class="btn" id="ptGo">Start pre-test</button><button class="ghost" id="ptSkip">${S.diff&&S.diff[tr.id]?"Just pick a difficulty":"Skip, use Standard"}</button></div></div>`);
+    <div class="actions"><button class="btn" id="ptGo">Start pre-test</button><button class="ghost" id="ptSkip">${S.diff&&S.diff[tr.id]?"Just pick a difficulty":"Skip, use Intermediate"}</button></div></div>`);
     $("#ptGo").onclick=()=>ask(0,[]);$("#ptSkip").onclick=()=>{if(S.diff&&S.diff[tr.id])picker(diffOf(tr),null);else{save_("s",null);after()}};$("#ptGo").focus()};
   const ask=(i,ans)=>{if(i>=items.length)return result(ans);const q=shuffleOpts(items[i].q);
     openPanel(`<div class="ob"><div class="ob-dots">${items.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join("")}</div><div class="label">Question ${i+1} of ${items.length}</div><h2 style="font-size:20px;line-height:1.35">${q.q}</h2>

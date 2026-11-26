@@ -1181,18 +1181,26 @@ const TRACK_PARTS={
  mc:[["Case fundamentals","What consultants do, sizing, profit cases and recommendations."],["Case mastery","Market entry, math, frameworks, communication and the fit interview."]]};
 function showTrack(id){const tr=T(id);if(!tr)return;curTrack=id;closePanel();showTab("track");renderTrackPage();try{history.replaceState(null,"","#track-"+id)}catch(e){}
   if(trackUnlocked(tr)&&!(S.diff&&S.diff[id])&&!tr.levels.some((_,l)=>cleared(id,l)))setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),300)}
+const TP_THEME={ib:"#2448D8",pe:"#12906A",pm:"#6B46D8",rx:"#D8456B",mc:"#0E9AA7"};
 function renderTrackPage(){const el=$("#trackPage"),tr=curTrack&&T(curTrack);if(!el||!tr)return;
-  const n=tr.levels.length,c=clearedCount(tr.id),d=DIFFS.find(x=>x[0]===diffOf(tr))[1],used=new Set();
+  const n=tr.levels.length,c=clearedCount(tr.id),d=DIFFS.find(x=>x[0]===diffOf(tr))[1],col=TP_THEME[tr.id]||"#2448D8",pct=Math.round(c/n*100);
+  let cur=tr.levels.findIndex((_,i)=>!cleared(tr.id,i));if(cur<0)cur=n;
+  const stars=tr.levels.reduce((s,_,i)=>s+((S.best[lid(tr.id,i)]||0)>=2?S.best[lid(tr.id,i)]:0),0);
   const step=i=>{const lvl=tr.levels[i],b=S.best[lid(tr.id,i)]||0,cl=b>=2,op=levelOpen(tr,i),cls=cl?"cleared":op?"open":"locked";
-    return `<div class="vstep ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"\u2713":i+1}</button><div class="vtx"><b>${lvl.n}</b>${lvl.sub?`<small>${lvl.sub}</small>`:""}</div><div class="stars">${cl?starStr(b):cls==="open"?"Start":""}</div></div>`};
-  el.innerHTML=`<button class="tp-back" type="button">\u2190 Learn</button>
-  <header class="tp-head"><div><h2>${tr.name}</h2><p>${tr.tag}. ${tr.desc}</p></div><button class="flink tp-diff" type="button">Difficulty: ${d} \u00b7 change</button></header>
-  <div class="tp-prog"><i style="width:${Math.round(c/n*100)}%"></i></div><div class="tp-sub">${c} of ${n} levels cleared \u00b7 ${DAILY_CAP} new levels per day</div>
-  <div class="vline">${tr.levels.map((_,i)=>step(i)).join("")}</div>`}
+    const chips=`<span>${lvl.q.length} questions</span><span>~5 min</span>${cl?`<span class="ok">${starStr(b)}</span>`:""}`;
+    return `<div class="vstep ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"✓":cls==="locked"?"🔒":i+1}</button><div class="vcard"><div class="vtx"><b>${lvl.n}</b>${lvl.sub?`<small>${lvl.sub}</small>`:""}<div class="vchips">${chips}</div></div>${cls==="open"?`<button class="tp-go" data-l="${i}" type="button">${i===cur?(c?"Continue":"Start"):"Open"}</button>`:""}</div></div>`};
+  const rows=tr.levels.map((_,i)=>(i===Math.ceil(n/2)&&n>=6?`<div class="vmile ${cur>=i?"done":""}"><i></i>Halfway there</div>`:"")+step(i)).join("");
+  el.style.setProperty("--tc",col);
+  el.innerHTML=`<button class="tp-back" type="button">← Learn</button>
+  <section class="tp-hero"><div class="tp-hero-t"><small>${c===n?"Track complete":c?"In progress":"Ready to start"}</small><h2>${tr.name}</h2><p>${tr.tag}. ${tr.desc}</p>
+    <div class="tp-hero-b">${cur<n?`<button class="tp-go tp-go-big" data-l="${cur}" type="button">${c?"Continue":"Start"}: ${tr.levels[cur].n}</button>`:""}<button class="tp-diff" type="button">${d} · change</button></div></div>
+    <div class="tp-ring" style="--p:${pct}"><div><b>${pct}%</b><small>${c} of ${n} levels</small></div></div></section>
+  <div class="tp-stats"><div><b>${c}/${n}</b><small>levels cleared</small></div><div><b>${stars}</b><small>stars earned</small></div><div><b>${DAILY_CAP}</b><small>new levels a day</small></div></div>
+  <div class="vline" style="--fill:${n>1?Math.min(100,Math.max(0,cur/(n-1)*100)):0}%">${rows}<div class="vmile end ${c===n?"done":""}"><i></i>${c===n?"Track complete":"Finish line"}</div></div>`}
 $("#trackPage").addEventListener("click",e=>{const tr=curTrack&&T(curTrack);if(!tr)return;
   if(e.target.closest(".tp-back")){showTab("learn");return}
   if(e.target.closest(".tp-diff")){trackPretest(tr,()=>{closePanel();render()});return}
-  const b=e.target.closest(".node");if(!b)return;const i=+b.dataset.l;
+  const b=e.target.closest(".node,.tp-go");if(!b)return;const i=+b.dataset.l;
   if(!levelOpen(tr,i)){if(trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1))&&capHit(tr,i)){restPanel(tr);return}toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
   if(!(S.diff&&S.diff[tr.id])&&!tr.levels.some((_,l)=>cleared(tr.id,l))){trackPretest(tr,()=>showBrief(tr,i));return}showBrief(tr,i)});
 

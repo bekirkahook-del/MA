@@ -1,1 +1,7 @@
 __pycache__/
+
+# bot state (live data derived)
+tools/bots/state/circle-*.json
+tools/bots/state/digest.md
+tools/bots/STOP
+tools/bots/state/learn/tracks.json

@@ -1,0 +1,26 @@
+---
+title: Guest Spot Targets
+tags: [ma-prep, bots, circle]
+created: 2026-11-25
+project: M&A Prep
+circle_role: sensor
+status: built, not scheduled
+---
+
+# Guest Spot Targets
+
+Queries for student-run finance podcasts and blogs that take guests or guest posts.
+
+**File:** `tools/bots/seolinkpodcast.mjs`
+
+<!-- circle:start -->
+## Connections
+
+**Feeds:** [[Dispatcher Bot]] (issues found); [[Today List Bot]] (SEO to do)
+
+```dataview-fields
+feeds:: [[Dispatcher Bot]], [[Today List Bot]]
+```
+<!-- circle:end -->
+
+Back to [[The Circle]] · [[Site Bots]].

@@ -1,0 +1,197 @@
+// The circle as data. circle.mjs runs it, obsidian/build.mjs draws it, tests check it. One source of truth for "who depends on whom".
+// edge types: feed = passes findings, gate = can block, act = changes something, recheck = verifies, learn = changes future behavior
+import { PACK3 } from "./pack3.mjs";
+import { PACK4 } from "./pack4.mjs";
+import { PACK5 } from "./pack5.mjs";
+import { PACK6 } from "./pack6.mjs";
+import { PACK7 } from "./pack7.mjs";
+export const NODES = [
+  { id: "qa", name: "Question QA Bot", role: "sensor", file: "tools/bots/qa.mjs", does: "Audits all 1,248 questions for wrong keys, duplicate options, giveaways." },
+  { id: "health", name: "Site Health Bot", role: "sensor", file: "tools/bots/health.mjs", does: "Links, function syntax, every level opens, JS errors." },
+  { id: "freshness", name: "Content Freshness Bot", role: "sensor", file: "tools/bots/freshness.mjs", does: "Stale wire data and guides that mention past years." },
+  { id: "cost", name: "Cost Guard Bot", role: "sensor", file: "tools/bots/cost.mjs", does: "Netlify credits (15 per deploy) and AI usage vs limits." },
+  { id: "funnel", name: "Funnel Bot", role: "sensor", file: "tools/bots/funnel.mjs", does: "Where visitors drop between landing and sign-up." },
+  { id: "billing", name: "Billing Audit Bot", role: "sensor", file: "tools/bots/billing.mjs", does: "Paid vs access mismatches between Stripe and the site." },
+  { id: "feedbot", name: "Superfeedbackbot", role: "sensor", file: "tools/feedbot/triage.mjs", does: "Judges user feedback with a rubric and a consensus gate." },
+  { id: "retention", name: "Retention Bot", role: "actor-draft", file: "tools/bots/retention.mjs", does: "Plans review-due reminders (dry run, never sends)." },
+  { id: "outreach", name: "Outreach Bot", role: "actor-draft", file: "tools/bots/outreach.mjs", does: "Drafts club and career-center emails (never sends)." },
+  { id: "dispatcher", name: "Dispatcher Bot", role: "circle", file: "tools/bots/circle/dispatcher.mjs", does: "Dedupes issues, scores priority, routes each to the fixer, a human, or watch." },
+  { id: "guard", name: "Guard Bot", role: "circle", file: "tools/bots/circle/guard.mjs", does: "Allows or blocks every action: kill switch, protected files, caps, loop breaker, marketing gates." },
+  { id: "fixer", name: "Fixer Bot", role: "circle", file: "tools/bots/circle/fixer.mjs", does: "Applies the few fixes that are safe to automate. Everything else becomes a packet for a human." },
+  { id: "verifier", name: "Verifier Bot", role: "circle", file: "tools/bots/circle/verifier.mjs", does: "Re-runs the sensor and the tests after a fix. Reverts the patch if either fails." },
+  { id: "historian", name: "Historian Bot", role: "circle", file: "tools/bots/circle/historian.mjs", does: "Remembers which fix types worked or got reverted and demotes the ones that fail." },
+  { id: "reporter", name: "Reporter Bot", role: "circle", file: "tools/bots/circle/reporter.mjs", does: "Writes the daily digest for Bekir and says when a deploy question is due." },
+  { id: "seo", name: "SEO Meta Bot", role: "sensor", file: "tools/bots/seo.mjs", does: "Titles, descriptions, h1, canonical and og tags on every guide." },
+  { id: "sitemap", name: "Sitemap Bot", role: "sensor", file: "tools/bots/sitemap.mjs", does: "sitemap.xml vs the guide pages that really exist, and robots.txt." },
+  { id: "schema", name: "Structured Data Bot", role: "sensor", file: "tools/bots/schema.mjs", does: "JSON-LD on every guide parses and has the fields search engines need." },
+  { id: "a11y", name: "Accessibility Bot", role: "sensor", file: "tools/bots/a11y.mjs", does: "Missing alt text, unlabeled buttons and fields, lang, viewport, heading order." },
+  { id: "perf", name: "Performance Budget Bot", role: "sensor", file: "tools/bots/perf.mjs", does: "File weight and render-blocking scripts against a budget." },
+  { id: "secrets", name: "Secrets and Headers Bot", role: "sensor", file: "tools/bots/secrets.mjs", does: "Live keys committed to the repo (never prints them) and missing security headers." },
+  { id: "duplicate", name: "Duplicate Content Bot", role: "sensor", file: "tools/bots/duplicate.mjs", does: "Near-identical guide pages that search engines merge or demote." },
+  { id: "readability", name: "Readability Bot", role: "sensor", file: "tools/bots/readability.mjs", does: "Reading grade level of lessons and guides." },
+  { id: "reps", name: "Rep Auditor Bot", role: "sensor", file: "tools/bots/reps.mjs", does: "Runs every practice-problem generator 300 times and checks each problem is sane." },
+  { id: "coverage", name: "Coverage Gap Bot", role: "sensor", file: "tools/bots/coverage.mjs", does: "Which of the 49 levels lack a lesson, number reps or a model." },
+  { id: "testcov", name: "Test Coverage Bot", role: "sensor", file: "tools/bots/testcov.mjs", does: "Scripts and functions that no test names." },
+  { id: "deadcode", name: "Dead Code Bot", role: "sensor", file: "tools/bots/deadcode.mjs", does: "Scripts and functions that nothing references." },
+  { id: "changelog", name: "Changelog Bot", role: "circle", file: "tools/bots/changelog.mjs", does: "Plain-English list of what is waiting on staging and whether it triggers a build." },
+  { id: "release", name: "Release Bot", role: "circle", file: "tools/bots/release.mjs", does: "GO, CAUTION or NO-GO before a deploy. Advises only, never deploys." },
+  { id: "strategist", name: "Strategist Bot", role: "circle", file: "tools/bots/strategist.mjs", does: "Ranks what to build next from the other bots' evidence." },
+
+  { id: "linkgraph", name: "Internal Link Bot", role: "sensor", file: "tools/bots/linkgraph.mjs", does: "Guides nothing links to, and guides that link out to almost nothing." },
+  { id: "thin", name: "Thin Content Bot", role: "sensor", file: "tools/bots/thin.mjs", does: "Guides with too few words to rank or teach." },
+  { id: "cannibal", name: "Keyword Cannibalization Bot", role: "sensor", file: "tools/bots/cannibal.mjs", does: "Guides with the same headline competing against each other." },
+  { id: "typos", name: "Typo Bot", role: "sensor", file: "tools/bots/typos.mjs", does: "Common misspellings and repeated words in guides and the home page." },
+  { id: "mojibake", name: "Encoding Bot", role: "sensor", file: "tools/bots/mojibake.mjs", does: "Garbled characters from wrong text encoding." },
+  { id: "images", name: "Broken Image Bot", role: "sensor", file: "tools/bots/images.mjs", does: "Image and social-preview references that point at missing files." },
+  { id: "redirects", name: "Redirect Bot", role: "sensor", file: "tools/bots/redirects.mjs", does: "netlify.toml redirects that loop, chain, repeat or point at nothing." },
+  { id: "feed", name: "Feed Bot", role: "sensor", file: "tools/bots/feed.mjs", does: "feed.xml and llms.txt must only list pages that exist." },
+  { id: "dupids", name: "Duplicate ID Bot", role: "sensor", file: "tools/bots/dupids.mjs", does: "Repeated id attributes that break scripts and screen readers." },
+  { id: "consolelog", name: "Leftover Debug Bot", role: "sensor", file: "tools/bots/consolelog.mjs", does: "console.log and debugger statements left in shipped scripts." },
+  { id: "localhost", name: "Localhost Bot", role: "sensor", file: "tools/bots/localhost.mjs", does: "Development addresses left in files that ship." },
+  { id: "extlinks", name: "External Link Bot", role: "sensor", file: "tools/bots/extlinks.mjs", does: "Insecure http links, new-tab links without noopener, and which outside sites we send students to." },
+  { id: "pwa", name: "Install (PWA) Bot", role: "sensor", file: "tools/bots/pwa.mjs", does: "Manifest and service worker that make the site installable." },
+  { id: "timeouts", name: "Timeout Bot", role: "sensor", file: "tools/bots/timeouts.mjs", does: "Netlify functions that call outside services with no timeout (10 second limit)." },
+  { id: "envvars", name: "Env Var Bot", role: "sensor", file: "tools/bots/envvars.mjs", does: "Inventory of environment variable names the functions read, and lookalike names." },
+  { id: "deps", name: "Dependency Bot", role: "sensor", file: "tools/bots/deps.mjs", does: "package.json hygiene and known vulnerabilities." },
+  { id: "wireschema", name: "Wire Schema Bot", role: "sensor", file: "tools/bots/wireschema.mjs", does: "Shape check on data/wire.json (ticker, calendar, earnings, news, deals)." },
+  { id: "companies", name: "Company List Bot", role: "sensor", file: "tools/bots/companies.mjs", does: "The 5,800-row company directory behind Market search." },
+  { id: "privacy", name: "Privacy Bot", role: "sensor", file: "tools/bots/privacy.mjs", does: "Personal emails and phone numbers in public files (never prints them)." },
+  { id: "pricing", name: "Pricing Consistency Bot", role: "sensor", file: "tools/bots/pricing.mjs", does: "The same plan must show the same price everywhere." },
+  { id: "claims", name: "Claims Bot", role: "sensor", file: "tools/bots/claims.mjs", does: "Numbers the site brags about versus what really exists." },
+  { id: "qlength", name: "Question Length Bot", role: "sensor", file: "tools/bots/qlength.mjs", does: "Questions and options too long to read on a phone." },
+  { id: "qyears", name: "Stale Year Bot", role: "sensor", file: "tools/bots/qyears.mjs", does: "Questions that name a year that is already over." },
+  { id: "explain", name: "Explanation Quality Bot", role: "sensor", file: "tools/bots/explain.mjs", does: "Explanations that are too short or only repeat the answer." },
+  { id: "testrunner", name: "Test Runner Bot", role: "sensor", file: "tools/bots/testrunner.mjs", does: "Runs the whole test suite. The Release Bot uses its answer." },
+  { id: "drift", name: "Drift Bot", role: "sensor", file: "tools/bots/drift.mjs", does: "How far staging is from main and whether merging would conflict." },
+  { id: "consoleerrors", name: "Console Error Bot", role: "sensor", file: "tools/bots/consoleerrors.mjs", does: "Opens the real site in a headless browser and records JavaScript errors." },
+  { id: "mobile", name: "Mobile Layout Bot", role: "sensor", file: "tools/bots/mobile.mjs", does: "Sideways scrolling, tiny tap targets and tiny text at phone width." },
+  { id: "authdiag", name: "Sign-up and Sign-in Diagnostic Bot", role: "sensor", file: "tools/bots/authdiag.mjs", does: "Funnel, code, Supabase settings and the live form for the account flow. Never signs in or submits anything." },
+  { id: "trend", name: "Trend Bot", role: "circle", file: "tools/bots/trend.mjs", does: "One snapshot a day so the digest says better or worse than yesterday." },
+  { id: "meta", name: "Meta Bot", role: "circle", file: "tools/bots/meta.mjs", does: "Audits the circle itself: stale issues, idle sensors, demoted fixers, missing bot files." },
+];
+export const EDGES = [
+  ...["qa", "health", "freshness", "cost", "funnel", "billing", "feedbot"].map(s => ({ from: s, to: "dispatcher", type: "feed", label: "issues found" })),
+  { from: "qa", to: "feedbot", type: "feed", label: "verified defects count as hard evidence" },
+  { from: "dispatcher", to: "fixer", type: "act", label: "safe, fixable issues" },
+  { from: "dispatcher", to: "reporter", type: "feed", label: "issues that need a human" },
+  { from: "guard", to: "fixer", type: "gate", label: "allow or block every patch" },
+  { from: "health", to: "guard", type: "gate", label: "site broken = freeze all fixes" },
+  { from: "billing", to: "guard", type: "gate", label: "money problem = pause marketing" },
+  { from: "guard", to: "retention", type: "gate", label: "runs only when health and billing are clean" },
+  { from: "guard", to: "outreach", type: "gate", label: "runs only when health and billing are clean" },
+  { from: "fixer", to: "verifier", type: "feed", label: "patch to check" },
+  { from: "verifier", to: "qa", type: "recheck", label: "re-run after a question fix" },
+  { from: "verifier", to: "freshness", type: "recheck", label: "re-run after a data fix" },
+  { from: "verifier", to: "historian", type: "feed", label: "worked or reverted" },
+  { from: "historian", to: "guard", type: "learn", label: "demote fix types that keep failing" },
+  { from: "guard", to: "dispatcher", type: "gate", label: "frozen issues go straight to a human" },
+  { from: "cost", to: "reporter", type: "feed", label: "deploy budget advice" },
+  { from: "retention", to: "reporter", type: "feed", label: "dry-run counts" },
+  { from: "outreach", to: "reporter", type: "feed", label: "drafts waiting for approval" },
+  { from: "verifier", to: "reporter", type: "feed", label: "what changed and what was reverted" },
+  ...["seo", "sitemap", "schema", "a11y", "perf", "secrets", "duplicate", "readability", "reps", "coverage", "testcov", "deadcode"].map(s => ({ from: s, to: "dispatcher", type: "feed", label: "issues found" })),
+  { from: "secrets", to: "guard", type: "gate", label: "leaked key = freeze all fixes" },
+  { from: "reps", to: "release", type: "gate", label: "a broken practice problem blocks a release" },
+  { from: "reps", to: "qa", type: "feed", label: "wrong practice answers are verified defects too" },
+  { from: "duplicate", to: "seo", type: "feed", label: "duplicate pages explain weak rankings" },
+  { from: "sitemap", to: "seo", type: "feed", label: "pages missing from the sitemap are not indexed" },
+  { from: "deadcode", to: "testcov", type: "feed", label: "unreferenced code needs no test" },
+  { from: "readability", to: "coverage", type: "feed", label: "hard-to-read levels need a simpler lesson" },
+  { from: "coverage", to: "strategist", type: "feed", label: "levels missing lessons, reps or models" },
+  { from: "funnel", to: "strategist", type: "feed", label: "where visitors leave" },
+  { from: "dispatcher", to: "strategist", type: "feed", label: "open issues with evidence" },
+  { from: "feedbot", to: "strategist", type: "feed", label: "what users ask for" },
+  { from: "strategist", to: "reporter", type: "feed", label: "ranked build list" },
+  { from: "verifier", to: "changelog", type: "feed", label: "bot fix commits join the staging queue" },
+  { from: "changelog", to: "release", type: "feed", label: "what would ship" },
+  { from: "changelog", to: "reporter", type: "feed", label: "plain-English change list" },
+  { from: "dispatcher", to: "release", type: "feed", label: "open critical issues" },
+  { from: "cost", to: "release", type: "feed", label: "deploy credits left" },
+  { from: "release", to: "reporter", type: "feed", label: "GO or NO-GO" },
+  { from: "guard", to: "release", type: "gate", label: "kill switch blocks a GO" },
+  ...["linkgraph","thin","cannibal","typos","mojibake","images","redirects","feed","dupids","consolelog","localhost","extlinks","pwa","timeouts","envvars","deps","wireschema","companies","privacy","pricing","claims","qlength","qyears","explain","testrunner","drift","consoleerrors","mobile","authdiag"].map(s => ({ from: s, to: "dispatcher", type: "feed", label: "issues found" })),
+  { from: "dispatcher", to: "trend", type: "feed", label: "open issue counts" },
+  { from: "dispatcher", to: "meta", type: "feed", label: "the ledger to audit" },
+  { from: "trend", to: "reporter", type: "feed", label: "better or worse than yesterday" },
+  { from: "meta", to: "reporter", type: "feed", label: "circle health" },
+  { from: "authdiag", to: "release", type: "gate", label: "broken sign-up blocks a release" },
+  { from: "authdiag", to: "strategist", type: "feed", label: "where the account flow leaks" },
+  { from: "funnel", to: "authdiag", type: "feed", label: "sign-up funnel events" },
+  { from: "testrunner", to: "release", type: "feed", label: "tests passed or failed" },
+  { from: "drift", to: "release", type: "gate", label: "a merge conflict blocks a deploy" },
+  { from: "drift", to: "changelog", type: "feed", label: "what main has that staging lacks" },
+  { from: "pricing", to: "billing", type: "feed", label: "price text must match Stripe" },
+  { from: "claims", to: "strategist", type: "feed", label: "marketing numbers that are wrong" },
+  { from: "wireschema", to: "freshness", type: "feed", label: "bad rows before stale rows" },
+  { from: "redirects", to: "sitemap", type: "feed", label: "redirected URLs should not be in the sitemap" },
+  { from: "feed", to: "sitemap", type: "feed", label: "feed and llms links need real pages" },
+  { from: "images", to: "seo", type: "feed", label: "missing social preview images" },
+  { from: "linkgraph", to: "seo", type: "feed", label: "orphan pages are not crawled" },
+  { from: "thin", to: "seo", type: "feed", label: "thin pages rank badly" },
+  { from: "cannibal", to: "seo", type: "feed", label: "same headline, split rankings" },
+  { from: "typos", to: "readability", type: "feed", label: "typos hurt trust and readability" },
+  { from: "mojibake", to: "readability", type: "feed", label: "garbled text is unreadable" },
+  { from: "qlength", to: "qa", type: "feed", label: "long questions hurt on a phone" },
+  { from: "qyears", to: "qa", type: "feed", label: "stale years make answers wrong" },
+  { from: "explain", to: "qa", type: "feed", label: "weak explanations teach nothing" },
+  { from: "dupids", to: "a11y", type: "feed", label: "duplicate ids confuse screen readers" },
+  { from: "mobile", to: "a11y", type: "feed", label: "phone layout evidence" },
+  { from: "consoleerrors", to: "health", type: "feed", label: "script errors are health problems" },
+  { from: "consolelog", to: "health", type: "feed", label: "debug leftovers" },
+  { from: "localhost", to: "health", type: "feed", label: "dev addresses in production" },
+  { from: "pwa", to: "health", type: "feed", label: "install support" },
+  { from: "timeouts", to: "health", type: "feed", label: "slow partners break functions" },
+  { from: "envvars", to: "secrets", type: "feed", label: "which secrets the code reads" },
+  { from: "deps", to: "secrets", type: "feed", label: "vulnerable dependencies" },
+  { from: "privacy", to: "secrets", type: "feed", label: "public personal data" },
+  { from: "companies", to: "health", type: "feed", label: "search data integrity" },
+  { from: "extlinks", to: "seo", type: "feed", label: "outbound link quality" },
+];
+
+/* The Content Flywheel and operator desk (generated list in pack3.mjs): social measure -> learn -> plan -> gate -> brief, plus reach and site chores. */
+NODES.push(...PACK3.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })),
+  { id: "contentbrief", name: "Content Brief Bot", role: "circle", file: "tools/bots/flywheel/brief.mjs", does: "The flywheel's daily page: growth, tomorrow's slots, what to fix before posting, what to stop." },
+  { id: "todaylist", name: "Today List Bot", role: "circle", file: "tools/bots/todaylist.mjs", does: "One ranked do-today list from every warning the 73 flywheel and operator bots raised." });
+const gearIds = g => PACK3.filter(b => b.gear === g).map(b => b.id);
+EDGES.push(...PACK3.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "issues found" })),
+  ...["measure", "learn"].flatMap(g => gearIds(g).map(id => ({ from: id, to: "slotplan", type: "feed", label: "what won, what flopped" }))).filter(e => e.from !== "slotplan"),
+  ...["backlog", "questionmine", "newsjack", "sequelqueue", "characterladder"].map(id => ({ from: id, to: "slotplan", type: "feed", label: "topics for the slots" })),
+  ...["slotplan", "timing", "ctarotation", "hookwriter", "repurpose", "platformroute", "dailymix", "gapdays", "videoperday"].map(id => ({ from: id, to: "contentbrief", type: "feed", label: "tomorrow's plan" })),
+  ...gearIds("gate").map(id => ({ from: id, to: "contentbrief", type: "gate", label: "fix before posting" })),
+  ...["growthrate", "compound", "spikes", "flops", "loserwatch", "saturation", "reposts"].map(id => ({ from: id, to: "contentbrief", type: "feed", label: "growth and what to stop" })),
+  { from: "contentbrief", to: "ideaavg", type: "learn", label: "posts scored at 48h feed the next plan" },
+  { from: "contentbrief", to: "reporter", type: "feed", label: "the content page" },
+  ...[...gearIds("reach"), ...gearIds("site"), ...gearIds("pages")].map(id => ({ from: id, to: "todaylist", type: "feed", label: "chores and risks" })),
+  { from: "dispatcher", to: "todaylist", type: "feed", label: "open issues" }, { from: "todaylist", to: "reporter", type: "feed", label: "do today" },
+  { from: "bumps", to: "outreach", type: "feed", label: "who is due a follow-up" }, { from: "newsjack", to: "strategist", type: "feed", label: "live-market chances" });
+// ---- Doers pack (137 bots): makers, outreach, fixers, real-data sensors, safety checks ----
+NODES.push(...PACK4.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK4.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "issues found" })),
+  ...PACK4.filter(b => b.gear === "make").map(b => ({ from: b.id, to: "contentbrief", type: "feed", label: "drafts for tomorrow" })),
+  ...PACK4.filter(b => b.gear === "data").map(b => ({ from: b.id, to: "logscore", type: "feed", label: "real views from Metricool" })),
+  ...PACK4.filter(b => b.gear === "safe").map(b => ({ from: b.id, to: "contentbrief", type: "gate", label: "hard-rule check" })),
+  ...PACK4.filter(b => b.gear === "reach").map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "outreach to do" })),
+  ...PACK4.filter(b => b.gear === "fix").map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "exact fix text" })));
+
+// ---- SEO pack (60 bots) ----
+NODES.push(...PACK5.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK5.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "issues found" })),
+  ...PACK5.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "SEO to do" })));
+NODES.push(...PACK6.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK6.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "learn issues" })),
+  ...PACK6.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "learn to do" })));
+NODES.push(...PACK7.map(b => ({ id: b.id, name: b.name, role: "sensor", file: "tools/bots/" + b.id + ".mjs", does: b.does })));
+EDGES.push(...PACK7.map(b => ({ from: b.id, to: "dispatcher", type: "feed", label: "grow issues" })),
+  ...PACK7.map(b => ({ from: b.id, to: "todaylist", type: "feed", label: "grow to do" })));
+
+export const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
+export const edgesOf = id => ({ out: EDGES.filter(e => e.from === id), in: EDGES.filter(e => e.to === id) });
+export function mermaid() {
+  const grp = r => NODES.filter(n => n.role === r).map(n => `    ${n.id}["${n.name}"]`).join("\n");
+  const arrow = { feed: "-->", act: "==>", gate: "-.->", recheck: "-->", learn: "-.->" };
+  const lines = ["flowchart LR", "  subgraph SENSE[Sensors]", grp("sensor"), "  end", "  subgraph CIRCLE[The Circle]", grp("circle"), "  end", "  subgraph DRAFT[Drafters - never send]", grp("actor-draft"), "  end", "  H((Bekir))"];
+  EDGES.forEach(e => lines.push(`  ${e.from} ${arrow[e.type]}|${e.label.replace(/[|"]/g, "")}| ${e.to}`));
+  lines.push("  reporter ==>|digest and deploy question| H");
+  return lines.join("\n");
+}
+

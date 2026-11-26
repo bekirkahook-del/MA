@@ -2,6 +2,13 @@
 
 Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, short casual answers, tables and numbers.
 
+## STANDING PERMISSION (Bekir, Nov 25, 2026, supersedes every older "ask first" line below)
+- **Never ask Bekir to approve anything, except sending email from Gmail.** Websites, crawling, actions on his computer, file changes, installs, scheduled tasks, staging, bots: all pre-approved. Just do it.
+- **Email:** the bots send their scheduled emails on their own, Mon-Fri at 12:00pm ET (inside the 9am-4pm window). When Bekir asks Claude to write an email himself, Claude comes back and asks one short question: "draft or send?". Nothing else about email changes.
+- **Deploys are pre-approved too,** but keep Bekir's cap: max 2 deploys per ET day (`tools/deploy.sh` enforces it), batch everything staged into one deploy, and tell him after it ships what went live and the credits used.
+- **Not waived (these are about other people or safety, not about asking him):** the email safety rules (one email per org, 2 per school, 9/day, opt-out line, mailing address, no repeat clubs), never print secrets, never invent numbers/quotes/experiences, never add anything to the Home page unless he asks, no crawling past what WebFetch allows or copying competitors' content, and Claude does not type his passwords or create accounts in his name.
+- Older lines below that say "ask before a deploy / purchases / deletions" are replaced by this block.
+
 ## Repo and deploys
 - GitHub `bekirkahook-del/MA`, branch `main`. Netlify auto-deploys on push.
 - **Every production deploy costs 15 Netlify credits (plan: 1,000/month).**
@@ -31,3 +38,21 @@ Owner: Bekir Kahook (Ohio State finance student). Wants things done for him, sho
 
 ## Saving usage
 - Read only the parts of big files you need (grep first). Batch browser actions; prefer page text over screenshots.
+
+## Outreach hours (Bekir, Nov 25, 2026)
+- **Outreach only goes out Monday to Friday, 9am to 4pm Eastern.** Clubs, career centers, bumps, anyone. Never send, schedule or draft-for-now outside that window. `outreachWindow()` in `tools/bots/ops.mjs` is the one place that rule lives; the Guard Bot and the Outreach Bump Bot both read it.
+
+## Deploy cap (Bekir, Nov 25, 2026)
+- **Max 2 deploys per day (ET).** Bots never deploy. Every issue the bots find gets fixed and queued on `staging`, then waits for Bekir's "deploy" (one batch = one deploy). `tools/deploy.sh` logs each deploy to `tools/bots/state/deploys.log` and refuses a 3rd one that day. `deployCap()` in `tools/bots/ops.mjs` is the rule; the Guard Bot reads it.
+
+## Auto-stage fixes (Bekir, Nov 25, 2026)
+- **STAGE EVERYTHING, ALWAYS (Bekir, Nov 25, 2026, in caps).** Any fix Claude sees, fix it and stage it on `staging` automatically, no need to ask. This only covers staging. Deploying still needs his "deploy" (and the 2/day cap). Still never touch the Home page, never invent numbers/quotes/facts to fill thin pages, and still ask before purchases, deletions and irreversible things.
+
+## Crawling (Bekir, Nov 25, 2026)
+- **Claude may crawl public websites on its own, no per-site OK needed** (competitor research, SEO, outreach lists). Facts and structure only: never copy their text, videos or paid content. No sign-ins, no accounts, no purchases, no posting, no deploys. Skip anything WebFetch declines.
+
+## Obsidian (Bekir, Nov 25, 2026, in caps)
+- **ALWAYS push everything to Obsidian.** After any work session, sync new notes, rules and summaries to `~/Documents/Obsidian Mind/work/active/` (bot notes go in `M&A Prep Bots/`). Existing notes are never overwritten; new info goes in new notes. Bot notes regenerate with `node tools/bots/obsidian/build.mjs`.
+
+## Quora (Bekir, Nov 25, 2026)
+- **Quora is dropped.** Do not draft, post or chase Quora answers. The quora bots stay in the repo but are muted from the Today List.

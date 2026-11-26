@@ -5,7 +5,8 @@ import { isEmail } from "./security.mjs";
 const key = () => process.env.SUPABASE_SERVICE_ROLE_KEY_good || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 export const svc = () => { const k = key(); return { apikey: k, "Content-Type": "application/json", ...(k.startsWith("eyJ") ? { Authorization: `Bearer ${k}` } : {}) }; };
 export const FROM = () => process.env.MAIL_FROM || "M&A Prep <hello@mnaprep.com>";
-export const ADDRESS = () => (process.env.MAIL_ADDRESS || "").trim(); // postal address, required by US law (CAN-SPAM) on marketing email
+// postal address, required by US law (CAN-SPAM) on marketing email. MAIL_ADDRESS overrides; the fallback is the address already published on /privacy and /terms.
+export const ADDRESS = () => (process.env.MAIL_ADDRESS || "").trim() || "80 W 11th Ave, Columbus, OH 43085, USA";
 
 export async function sha(s) {
   const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));

@@ -1,0 +1,1 @@
+{ "weeklyGrowth": 0.25, "note": "Target week-over-week growth in average views per post. This is a starting guess, not a measured number: Bekir sets it. The Growth Rate Bot compares the real log against it." }

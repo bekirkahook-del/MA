@@ -161,6 +161,12 @@
     const accts=(pr.data||[]).map(r=>{const d=r.data||{},set=new Set();DK.forEach(k=>{const o=d[k];if(o&&typeof o==="object")Object.keys(o).forEach(x=>{const y=x.replace(/^cb-(sp-)?/,"");if(isD(y))set.add(y)})});
       Object.keys(d.newsq||{}).forEach(x=>{const t=Date.parse(x);if(t)set.add(dayStr(new Date(t)))});const t=Date.parse(r.updated_at);if(t)set.add(dayStr(new Date(t)));
       const days=[...set].filter(x=>x>="2026-06-01").sort();return{uid:r.col.slice(11),t,days,first:days[0]||""}}).sort((a,b)=>b.t-a.t);
+    /* "New accounts" = real sign-up date (Supabase Auth), not first saved progress. Accounts that never saved progress are included too. */
+    if(acc){const byId={};acc.forEach(u=>{byId[u.id]=u});
+      accts.forEach(a=>{a.firstActive=a.first;const u=byId[a.uid];if(u&&u.joined){a.signup=dayStr(new Date(u.joined));a.first=a.signup}});
+      const have=new Set(accts.map(a=>a.uid));
+      acc.forEach(u=>{if(!have.has(u.id)&&u.joined){const s=dayStr(new Date(u.joined));accts.push({uid:u.id,t:Date.parse(u.lastActive||u.lastSignIn||u.joined)||0,days:[s],first:s,signup:s,firstActive:""})}});
+      accts.sort((a,b)=>b.t-a.t)}
     const bill=(br.data||[]).map(r=>r.data||{}).filter(b=>{const u=typeof b.until==="number"?b.until:(b.until?Date.parse(b.until):0);return (b.paid||/active|trialing|past_due/.test(b.status||""))&&(!u||u>Date.now())});const pro=bill.length;
     const subs=((er&&er.data)||[]).map(r=>r.data||{});
     return{acc,V,names,players,accts,pro,bill,reqs:((qr&&qr.data)||[]),billAll:Object.fromEntries((br.data||[]).map(r=>[r.id,r.data||{}])),trials:(br.data||[]).filter(r=>((r.data||{}).trialUntil||0)>Date.now()&&!/active|trialing|past_due/.test((r.data||{}).status||"")).length,trialsEver:(br.data||[]).filter(r=>(r.data||{}).trialStart).length,subs,fb:(fr&&fr.data)||[],rev:((rr&&rr.data)||[]).map(r=>r.data||{}).filter(r=>r.rating>=1),at:Date.now()}}
@@ -180,7 +186,7 @@
     const newA=C.accts.filter(a=>a.first>=cut(N)).length,act7=C.accts.filter(a=>Date.now()-a.t<7*864e5).length;
     const subsA=(C.subs||[]).filter(x=>x.status==="active").length;
     const sawN=new Set(cur.filter(v=>v.ev&&Object.keys(v.ev).some(k=>/_shown$/.test(k))).map(v=>v.vid)).size,clkN=new Set(cur.filter(v=>v.ev&&Object.keys(v.ev).some(k=>/(_click)$/.test(k))).map(v=>v.vid)).size;
-    const steps=[["Visitors",ppl(cur),"#2448D8"],["Saw a sign-up nudge",sawN,"#3a5fe0"],["Clicked a nudge",clkN,"#5b7be6"],["New accounts",newA,"#c9a227"],["Paying Pro (now)",C.pro,"#1e8e3e"]];
+    const steps=[["Visitors",ppl(cur),"#2448D8"],["Saw a sign-up nudge",sawN,"#3a5fe0"],["Clicked a nudge",clkN,"#5b7be6"],[C.acc?"New accounts (signed up)":"New accounts (est.)",newA,"#c9a227"],["Paying Pro (now)",C.pro,"#1e8e3e"]];
     const top=Math.max(1,steps[0][1]);
     const funnel=`<div class="ms-sec"><h3>Growth funnel <small>${N===1?"today":N+" days"} · arrows = % who made it from the step before</small></h3>
       <div class="mx-fun">${steps.map(([l,n,c],i)=>`${i?`<div class="mx-fa">↓ ${pct(n,steps[i-1][1])}%</div>`:""}<div class="mx-fs" data-tip="${l}: ${n} (${pct(n,top)}% of visitors)"><div class="mx-fb" style="width:${Math.max(6,n/top*100).toFixed(1)}%;background:${c}"><b>${n.toLocaleString()}</b></div><span>${l}</span></div>`).join("")}</div></div>`;
@@ -353,7 +359,7 @@
      ${(FILT.src||FILT.dev)?`<div class="ms-sec" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="note" style="margin:0">Filtering visits (accounts and money aren't filtered):</span>${FILT.src?`<button type="button" class="ms-chip" data-clr="src">${esc(FILT.src)} ✕</button>`:""}${FILT.dev?`<button type="button" class="ms-chip" data-clr="dev">${esc(FILT.dev)} ✕</button>`:""}</div>`:`<p class="ms-hint">Tip: tap a traffic source or device below to filter the whole page.</p>`}
 
      ${acctSection(N,cut)}
-     <div class="mx-kpis">${kpi("People",people(cur).toLocaleString(),chg(people(cur),people(prevCmp)),spark(days.map(d=>d[3])))}${kpi("New people",fresh(cur).toLocaleString(),chg(fresh(cur),fresh(prevCmp)),spark(days.map(d=>d[2])))}${kpi("New accounts",newAccts,chg(newAccts,prevAccts))}${kpi("Paying Pro",pro)}${kpi("Est. monthly revenue","$"+mrr.toFixed(0))}</div>
+     <div class="mx-kpis">${kpi("People",people(cur).toLocaleString(),chg(people(cur),people(prevCmp)),spark(days.map(d=>d[3])))}${kpi("New people",fresh(cur).toLocaleString(),chg(fresh(cur),fresh(prevCmp)),spark(days.map(d=>d[2])))}${kpi(CACHE.acc?"New accounts":"New accounts (est.)",newAccts,chg(newAccts,prevAccts))}${kpi("Paying Pro",pro)}${kpi("Est. monthly revenue","$"+mrr.toFixed(0))}</div>
      <p class="ms-hint" style="margin-top:6px">${range} · % change vs ${N===1?"yesterday up to this time":"the "+N+" days before"}</p>
      ${facts.length?`<div class="ms-sec"><h3>Key facts <small>${range}</small></h3><div class="mx-facts">${facts.join("")}</div></div>`:""}
      <div class="ms-sec"><h3>Traffic over time <small>last ${CN} days vs the ${CN} before · ET · hover or tap the chart</small></h3>

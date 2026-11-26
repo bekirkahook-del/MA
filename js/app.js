@@ -1101,6 +1101,10 @@ function render(){
     return `<details class="track ${un?'':'locked'}" data-tr="${tr.id}" ${OPEN.has(tr.id)?"open":""}><summary><span class="tr-name">${tr.name}<small>${un?tr.tag:tr.req.why}</small></span><span style="display:flex;gap:14px;align-items:center">${pill}<span class="tr-dots" aria-hidden="true">${dots}</span></span><span class="chev" aria-hidden="true"></span></summary>
       <div class="track-body"><p>${tr.desc}</p><div class="path-scroll"><div class="path">${steps}</div></div></div></details>`})()}).join("");
   $("#tracks").querySelectorAll("details.track").forEach(d=>d.addEventListener("toggle",()=>{d.open?OPEN.add(d.dataset.tr):OPEN.delete(d.dataset.tr)}));
+  /* first click on a specialized track header (opening it) pops the difficulty pre-test */
+  $("#tracks").querySelectorAll("details.track > summary").forEach(sm=>sm.addEventListener("click",()=>{const d=sm.parentElement,tr=T(d.dataset.tr);
+    if(d.open||!tr||!LONG_TRACKS.includes(tr.id)||!trackUnlocked(tr)||(S.diff&&S.diff[tr.id])||tr.levels.some((_,l)=>cleared(tr.id,l)))return;
+    setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),0)}));
   const pool=rapidPool().length;$("#rfBtn").disabled=pool<4;
   $("#rfText").textContent=lv<2?`Starter round: ${pool} questions from the first levels of your ${profKey()==="all"?"":PROFS.find(x=>x[0]===profKey())[1]+" "}tracks. Clear levels to add more. +1 per right answer.`:`${pool} questions in your pool from ${lv} cleared levels. +1 per right answer. Your best: ${S.rapid||0}.`;
   S.xpLog=S.xpLog||{};if(S.xpLog[today()]===undefined){S.xpLog={[today()]:x};save()}

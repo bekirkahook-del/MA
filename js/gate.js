@@ -36,6 +36,8 @@ body.gate-on{overflow:hidden}
 #mkPlan .mp-grid button[aria-pressed=true]{background:var(--cobalt,#2448D8)!important;border-color:var(--cobalt,#2448D8)!important;color:#fff!important;opacity:1!important}
 .mp-go{font:inherit;font-size:17px;font-weight:800;padding:15px;border:0;border-radius:6px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer;width:100%}
 .mp-go:disabled{opacity:.45;cursor:not-allowed}
+.mp-g{font:inherit;font-size:16px;font-weight:700;padding:13px;border:1px solid var(--rule,#D3D9E4);border-radius:6px;background:#fff;color:var(--ink,#13203B);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:10px}
+.mp-g:disabled{opacity:.5;cursor:wait}
 .mp-msg{min-height:18px;text-align:center;font-size:13.5px;color:#b3261e;margin:-6px 0 -8px}
 .mp-foot{text-align:center;font-size:13px;color:var(--ink-2,#4A5672);margin:16px 0 0}
 .mp-load{text-align:center;color:var(--ink-2,#4A5672);font-size:15px}
@@ -83,6 +85,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
         <div class="mp-f"><span id="mpRl">What do you want to pursue?</span><div class="mp-grid mp-g2" role="group" aria-labelledby="mpRl">${ROLES.map(r=>`<button type="button" data-r="${esc(r[0])}" aria-pressed="${r[0]===role}">${esc(r[1])}</button>`).join("")}</div></div>
         <p class="mp-msg" id="mpMsg" role="alert"></p>
         <button type="submit" class="mp-go" id="mpGo">${signed?"Save my plan →":"Save my plan →"}</button>
+        ${signed?"":'<button type="button" class="mp-g" id="mpGg"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.5-4.1 7-10.2 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.8 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continue with Google</button>'}
       </form>
       <p class="mp-foot">${signed?"Saved to your account. You can change it any time.":"Free account. No card. Your plan is saved when you sign up."}</p></div>`;
     const $=s=>root.querySelector(s),msg=$("#mpMsg");
@@ -92,6 +95,18 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
     root.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{role=b.dataset.r;pick("[data-r]","r",role);msg.textContent=""});
     const ib=$("#mpIn");if(ib)ib.onclick=()=>{ev("gate_signin");(window.maOpenAuth||(()=>{}))("in")};
     const bk=$("#mpBack");if(bk)bk.onclick=()=>{editing=false;hide()};
+    /* one tap: same checks as "Save my plan", then straight to Google (the plan waits in localStorage and is saved after sign-in) */
+    const gg=$("#mpGg");if(gg)gg.onclick=async()=>{
+      const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80),nm=okName($("#mpNm").value);
+      if(!nm){msg.textContent="Add your name.";$("#mpNm").focus();return}
+      if(year==="High school"&&!grade){msg.textContent="Pick your grade.";return}
+      if(!role){msg.textContent="Pick what you want to pursue.";return}
+      const m=sc&&window.maSchoolFind&&maSchoolFind(sc);
+      LS.set(PEND,JSON.stringify({name:nm,school:(m&&m[0])||sc,year,grade:year==="High school"?grade:"",role,at:Date.now()}));
+      ev("gate_plan_saved");ev("gate_google_click");ev("auth_oauth_google");LS.set("ma-gw-from","plan");
+      const sbc=window.MA_AUTH&&MA_AUTH.sb;if(!sbc){msg.textContent="Sign-up is still loading. Try again in a second.";return}
+      gg.disabled=true;const r=await sbc.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/"}});
+      if(r&&r.error){gg.disabled=false;msg.textContent=r.error.message||"Google sign-in failed. Try again."}};
     $("#mpForm").onsubmit=e=>{e.preventDefault();
       const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80);
       const nm=okName($("#mpNm").value);

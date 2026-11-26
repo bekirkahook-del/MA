@@ -1,1 +1,53 @@
-window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{});
+(function(){"use strict";window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
+ "pe-7":[
+  ["A fund has $300M of commitments and a 2% fee. The annual fee is:",["$0.6M","$6M","$60M","$15M"],1,"2% × $300M = $6M."],
+  ["A fund earns $50M of profit with 20% carry and no hurdle. Carry is:",["$5M","$10M","$40M","$25M"],1,"20% × $50M = $10M."],
+  ["Who receives the management fee?",["The LPs","The portfolio companies","The banks that lent to the fund","The GP's firm"],3,"The fund pays the fee to the GP's management company to cover salaries and costs."],
+  ["The hurdle rate is another name for:",["The preferred return","The carry percentage","The fund's fee","The exit multiple"],0,"The hurdle, or preferred return, is the minimum yearly return LPs get before the GP shares in profit."],
+  ["A fund returns exactly the money LPs put in, with no profit. Carry is:",["20% of the fund","The same as the fee","$0M","Half the fund"],2,"Carry is a share of profit. No profit means no carry."],
+  ["What is the first thing a typical waterfall pays?",["The GP's carry","The catch-up","LPs' invested capital back","A bonus to the CEO"],2,"LPs get their original money back first."],
+  ["What is a catch-up?",["A period where the GP gets most or all distributions until it has caught up to its full carry share","A late fee on LP contributions","The fund's final tax payment","A rule that cuts fees"],0,"After the hurdle is paid, the catch-up lets the GP receive carry on the profit that went to LPs as preferred return."],
+  ["What is a clawback?",["A fee for being late","A discount on the fee","Extra carry for good years","A rule making the GP give carry back if it was overpaid"],3,"It protects LPs when early deals paid carry but the whole fund ended below the agreed return."],
+  ["A typical GP commitment to its own fund is:",["0%","About 1% to 3%","50%","100%"],1,"The GP usually puts in a small slice of its own money to show it has skin in the game."],
+  ["LPs invest $100M with an 8% hurdle for one year. The preferred return amount is:",["$80M","$8M","$0.8M","$92M"],1,"8% × $100M = $8M."],
+  ["Carry is 20% and profit is $120M. Carry (no hurdle) is:",["$12M","$96M","$20M","$24M"],3,"20% × $120M = $24M."],
+  ["A fund has $400M of commitments and charges a 1.5% fee. The annual fee is:",["$6M","$1.5M","$60M","$8M"],0,"1.5% × $400M = $6M."],
+  ["A whole-fund waterfall is also called:",["An American waterfall","A deal-by-deal waterfall","A European waterfall","A catch-up waterfall"],2,"European = whole fund. American = deal by deal."],
+  ["Which of these depends on how well the fund performs?",["The management fee","The fund's commitments","Carried interest","The fund's term"],2,"The fee is paid regardless of results. Carry only pays if there is profit."],
+  ["The management fee during the investment period is usually based on:",["Total commitments","Fund profit","Exit proceeds","Debt raised"],0,"Funds typically charge about 2% of what LPs have committed, not what has been invested."]
+ ],
+ "pe-8":[
+  ["Enterprise value for a company with $60M of EBITDA bought at 8x is:",["$68M","$7.5M","$480M","$420M"],2,"EV = 8 × $60M = $480M."],
+  ["Debt of 5x EBITDA on a company with $40M of EBITDA is:",["$8M","$45M","$200M","$160M"],2,"5 × $40M = $200M."],
+  ["Uses are $510M and debt is $300M. Sponsor equity is:",["$210M","$810M","$300M","$510M"],0,"Equity fills the gap: 510 − 300 = $210M."],
+  ["Exit EV is $900M and remaining debt is $300M. Exit equity is:",["$1,200M","$900M","$300M","$600M"],3,"Exit equity = exit EV − debt = 900 − 300 = $600M."],
+  ["A sponsor invests $200M and receives $500M. MOIC is:",["0.4x","2.5x","3.0x","1.5x"],1,"500 ÷ 200 = 2.5x."],
+  ["A 2.5x return over 5 years is roughly what IRR?",["About 5%","About 20%","About 50%","About 12%"],1,"1.2 compounded five times is about 2.5, so 2.5x in 5 years is roughly 20% a year."],
+  ["What does 'base case' mean?",["The best possible outcome","The worst possible outcome","The price the seller wants","The most likely set of operating assumptions"],3,"Base is the realistic case. Upside and downside cases show what happens if things go better or worse."],
+  ["Why include a downside case?",["To check the deal still works if results disappoint","To make the base case look better","Because the seller requires it","To raise the price"],0,"Good investors ask how much they could lose, not just how much they might make."],
+  ["Which line is an example of a 'use' of funds?",["Senior loan","Sponsor equity","Purchase price of the company","Management rollover"],2,"Uses are where the money goes: price, fees and refinanced debt. Debt and equity are sources."],
+  ["What does management rollover mean?",["Managers resign at closing","The company moves offices","Managers reinvest part of their sale proceeds into the new deal","Managers sell all their shares"],2,"It is a source of equity and keeps management invested in the future."],
+  ["EBITDA is $100M and cash interest is $40M. Interest coverage (EBITDA ÷ interest) is:",["2.5x","0.4x","60x","1.4x"],0,"100 ÷ 40 = 2.5x."],
+  ["Which is a quick check that a returns model is working?",["The font looks consistent","The file name is short","The case has a title","Sources equal uses and the balance sheet balances"],3,"Basic checks catch the most common errors before you spend time on results."],
+  ["Total debt falls from $500M to $350M over the hold. How much debt was repaid?",["$850M","$150M","$350M","$250M"],1,"500 − 350 = $150M."],
+  ["In a test, an assumption you aren't given should be:",["Hidden","Stated clearly and kept simple and reasonable","Left blank","Set to zero without comment"],1,"Reviewers accept sensible assumptions that are written down. Silent guesses look careless."],
+  ["A paper LBO is:",["An LBO done only on printed pages","A bankruptcy filing","A type of loan","A quick back-of-envelope LBO done by hand or in your head"],3,"Paper LBOs test whether you can reason through returns without a full spreadsheet."]
+ ],
+ "pe-9":[
+  ["An NDA (non-disclosure agreement) is usually signed:",["Before the buyer receives the CIM","After the deal closes","Only by the lenders","Never in PE"],0,"The seller won't share confidential information until the buyer agrees to keep it private."],
+  ["Who typically runs an auction process?",["The buyer's lenders","The IC","The seller's investment bank","The target's customers"],2,"Sell-side bankers manage the process and collect bids."],
+  ["An IOI is:",["A final contract","A loan commitment","A non-binding early indication of price","A tax form"],2,"IOIs let the seller pick which bidders move to the next round."],
+  ["A letter of intent (LOI) is:",["A more detailed offer that usually asks for exclusivity","A resume","The final purchase agreement","A fund report"],0,"The LOI comes after the IOI and sets terms before final documents."],
+  ["What does 'originating' a deal mean?",["Closing the deal","Financing the deal","Selling the company","Finding the opportunity yourself"],3,"Sourcing or origination means finding and starting conversations on deals."],
+  ["Commercial due diligence mainly examines:",["The building's age","The market, competitors and customers","The tax code","The fund's fees"],1,"It tests whether the market and the company's position are as good as the seller claims."],
+  ["Legal due diligence mainly checks:",["The marketing slogans","Contracts, litigation and compliance","The CEO's golf score","The fund's fee"],1,"Lawyers look for lawsuits, unusual contract terms and legal risks."],
+  ["A company has $200M of revenue and the largest customer is 25% of it. That customer represents:",["$25M","$8M","$225M","$50M"],3,"25% × $200M = $50M of revenue."],
+  ["An EBITDA multiple of 9x on $30M of EBITDA gives an EV of:",["$270M","$39M","$3.3M","$300M"],0,"9 × $30M = $270M."],
+  ["What does 'IC' stand for in PE?",["Interest Coverage","Initial Cash","Investment Committee","Index Contract"],2,"The IC is the group that approves new investments."],
+  ["Which team does financial due diligence and QoE?",["The target's customers","The fund's LPs","Outside accountants","A stock exchange"],2,"Accounting firms review the numbers behind the CIM."],
+  ["Why might a seller choose a broad auction?",["To get competing bids that raise the price","To reduce the number of buyers","To avoid disclosing financials","To keep the price low"],0,"More bidders usually means higher prices."],
+  ["A top partner at the firm says 'pass' on a deal in the IC. What happens?",["Closing begins","The firm pays a fee","The bank takes over","The deal normally stops or goes back for more work"],3,"IC members can vote no. A weak case is usually dropped to save time and money."],
+  ["What does 'break-up fee' mean?",["A fee for splitting a company","A fee paid if a signed deal falls through for agreed reasons","A fund fee","The cost of renaming the company"],1,"It compensates the other side for time and cost if the deal collapses."],
+  ["A target has $80M revenue and 20% EBITDA margin. EBITDA is:",["$4M","$16M","$100M","$64M"],1,"20% × $80M = $16M."]
+ ]
+});})();

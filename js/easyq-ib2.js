@@ -1,1 +1,20 @@
-window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{});
+(function(){"use strict";window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
+ "ib-9":[
+  ["Trading comps value a company using:",["The market prices of similar public companies today","The prices buyers paid in past takeovers","The company's own future cash flows only","The value of its factories and equipment"],0,"Trading comps look at what similar public companies trade at right now. Past deal prices are precedent transactions."],
+  ["Precedent transactions show:",["What public stocks trade at today","What a company's debt is worth","What analysts guess next year's profit will be","What buyers actually paid to acquire similar companies"],3,"Precedents are past acquisitions. They show real prices paid, including any control premium."],
+  ["The median of the peer multiples 6x, 8x, 10x, 12x, 14x is:",["8x","10x","12x","6x"],1,"Sort the list and take the middle number. With five peers, the third one is 10x."],
+  ["A target has EBITDA of $40M and the peer median is 9x EV/EBITDA. The implied enterprise value is:",["$49M","$360M","$4.4M","$31M"],1,"EV = multiple × EBITDA = 9 × $40M = $360M."],
+  ["EV is $360M, debt is $60M and cash is $10M. Equity value is:",["$410M","$290M","$430M","$310M"],3,"Equity value = EV − debt + cash = 360 − 60 + 10 = $310M."],
+  ["Why do precedent transactions usually give a higher value than trading comps?",["Buyers pay a control premium to take over the whole company","Precedent deals always involve bigger companies","Trading comps ignore profit","Precedents are adjusted for inflation"],0,"Owning the whole company brings control, and buyers pay extra for it. That premium lifts deal multiples above trading multiples."],
+  ["LTM stands for:",["Long-term maturity","Leveraged target multiple","Last twelve months","Latest ten months"],2,"LTM means the most recent twelve months of actual results. NTM is the next twelve months."],
+  ["A football field chart is used to:",["Track a stock's price each day","List the deal team's hours","Show valuation ranges from different methods side by side","Show a company's cash flow by year"],2,"Each bar is one method's range (trading comps, precedents, DCF). Where bars overlap suggests a sensible price."],
+  ["Enterprise value is normally paired with which metric?",["EBITDA","Net income","Earnings per share","Dividends per share"],0,"EBITDA is earned before paying lenders, so it matches enterprise value (the value to all investors). Net income matches equity value."],
+  ["A peer group has a P/E median of 15x. A target earns $20M of net income. The implied equity value is:",["$35M","$1.3M","$150M","$300M"],3,"P/E is an equity multiple: equity value = 15 × $20M = $300M."],
+  ["Which statistic is less affected by one extreme peer multiple?",["The average","The median","The highest value","The sum"],1,"The median is the middle value, so one very high or very low peer can't pull it much."],
+  ["An unprofitable, fast-growing software company is often valued with:",["P/E","EV/Revenue","EV/EBITDA","Dividend yield"],1,"With no profit, EBITDA and net income are negative or tiny. Revenue multiples still work."],
+  ["Calendarization means:",["Deleting old data from the model","Counting only business days","Converting currencies to dollars","Adjusting companies with different fiscal year-ends onto the same calendar period"],3,"Peers with fiscal years ending in different months aren't comparable until their results are put on the same 12-month window."],
+  ["Equity value is $420M and there are 42M shares. The implied value per share is:",["$10","$420","$4.20","$100"],0,"Per share = equity value ÷ shares = 420 ÷ 42 = $10."],
+  ["Which kind of comp is most useful?",["Same country only","Any company with a similar name","Similar industry, size, growth and margins","Whichever has the highest multiple"],2,"Comparable companies should share the traits that drive what investors pay."],
+  ["Why are very old precedent deals less useful?",["They have no EBITDA","They can't be public","Market conditions and valuations may have changed since then","The law forbids using them"],2,"A deal from a very different market says less about today's price, so bankers weight recent deals more."]
+ ]
+});})();

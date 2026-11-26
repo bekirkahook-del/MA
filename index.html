@@ -1404,6 +1404,20 @@ html.noexp .panel .why{display:none}
 .pt-d{position:relative}.pt-d.on{border-color:var(--cobalt,#2448D8);background:var(--cobalt-soft,#E3E9FC)}
 .pt-dt b{display:block;font-size:16px}.pt-dt em{display:block;font-style:normal;font-size:13px;color:var(--ink-2);margin-top:2px}
 .pt-tag{margin-left:auto;flex:none;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--cobalt,#2448D8);border-radius:99px;padding:4px 9px}
+.trackpage{max-width:1100px}
+.tp-back{background:none;border:0;color:var(--ink-2);font:600 14px var(--body,inherit);cursor:pointer;padding:6px 0;margin-bottom:6px}
+.tp-back:hover{color:var(--ink)}
+.tp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.tp-head h2{margin:0;font-size:34px}.tp-head p{margin:6px 0 0;color:var(--ink-2);max-width:620px}
+.tp-prog{height:8px;background:var(--rule);border-radius:4px;overflow:hidden}.tp-prog i{display:block;height:100%;background:var(--cobalt);border-radius:4px}
+.tp-sub{font-size:13px;color:var(--ink-2);margin:8px 0 18px}
+.tp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+.tp-card{border:2px solid var(--tc);background:color-mix(in srgb,var(--tc) 9%,var(--sheet));border-radius:16px;padding:20px 20px 14px}
+.tp-card-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.tp-card-h b{font-size:21px;color:var(--ink)}.tp-card-h span{font-size:13px;font-weight:700;color:var(--tc)}
+.tp-card p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
+.tp-card .step.open .node{border-color:var(--tc);color:var(--tc)}.tp-card .step.cleared .node{background:var(--tc);border-color:var(--tc);color:#fff}
+.tp-card .path{flex-wrap:wrap;min-width:0;row-gap:14px}.tp-card .step{width:108px}.tp-card .step::after{display:none}
+@media(max-width:560px){.tp-head h2{font-size:28px}}
 .ob-plan{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
 .ob-plan li b{font-weight:600}.ob-plan li span{color:var(--ink-2);font-size:13px;margin-left:8px}
 .plan-card{margin-top:16px;border-top:1px solid var(--rule);padding-top:14px}
@@ -2063,6 +2077,8 @@ html body .view[data-view="home"] #planCard,html body .view[data-view="home"] se
   </section>
 
   <!-- PRACTICE -->
+  <section class="view" data-view="track" hidden><div id="trackPage" class="trackpage"></div></section>
+
   <section class="view" data-view="practice" hidden>
     <header class="page-head"><h2>Practice</h2><p data-blurb="practice">Interview reps, speed drills and modeling.</p></header>
     <div class="prof-row" role="tablist" aria-label="Career path"></div>

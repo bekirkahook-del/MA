@@ -1079,11 +1079,11 @@ function streak(){let n=0;const d=new Date();if(!(today() in S.daily))d.setDate(
   while(d.toLocaleDateString("en-CA") in S.daily){n++;d.setDate(d.getDate()-1)}return n}
 
 /* ---------- tabs ---------- */
-const TABS=["home","learn","practice","compete","career","settings","pro"];
+const TABS=["home","learn","practice","compete","career","settings","pro","track"];
 const TAB_ALIAS={coffee:["practice","coffee"],deals:["learn","deals"],curve:["practice","curve"],curveballs:["practice","curve"],train:["learn","tracks"],tools:["practice","lbo"],interview:["practice","interview"],recruit:["career","road"],firms:["career","firms"]};
 function showSub(view,sub){const b=document.querySelector(`[data-view="${view}"] .sub [data-sub="${sub}"]`);if(b&&b.getAttribute("aria-pressed")!=="true")b.click()}
 function showTab(t,focus){setTimeout(()=>{try{scrollProfRows()}catch(e){}},80);if(TAB_ALIAS[t]){const [v,sb]=TAB_ALIAS[t];showTab(v,focus);showSub(v,sb);return}if(!TABS.includes(t))t="home";
-  const cur=document.querySelector(".view:not([hidden])");const swap=()=>{document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  const cur=document.querySelector(".view:not([hidden])");const swap=()=>{document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===(t==="track"?"learn":t)));
   document.querySelectorAll(".view").forEach(v=>v.hidden=v.dataset.view!==t);if(cur&&cur.dataset.view!==t)window.scrollTo({top:0,behavior:"instant"})};
   const calm=S.settings.calm||matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(cur&&cur.dataset.view!==t&&!calm&&!window._noVT&&document.startViewTransition){try{const vt=document.startViewTransition(swap);/* a newer tab switch can skip this one; that is fine, not an error */[vt.ready,vt.finished,vt.updateCallbackDone].forEach(p=>p&&p.catch(()=>{}))}catch(e){swap()}}else{swap();const nv=document.querySelector(`.view[data-view="${t}"]`);if(nv&&!calm&&cur&&cur!==nv){nv.classList.remove("enter");void nv.offsetWidth;nv.classList.add("enter")}}
@@ -1115,11 +1115,10 @@ function render(){
     return `<details class="track ${un?'':'locked'}" data-tr="${tr.id}" ${OPEN.has(tr.id)?"open":""}><summary><span class="tr-name">${tr.name}<small>${un?tr.tag:tr.req.why}</small></span><span style="display:flex;gap:14px;align-items:center">${pill}<span class="tr-dots" aria-hidden="true">${dots}</span></span><span class="chev" aria-hidden="true"></span></summary>
       <div class="track-body"><p>${tr.desc}</p><div class="path-scroll"><div class="path">${steps}</div></div></div></details>`})()}).join("");
   $("#tracks").querySelectorAll("details.track").forEach(d=>d.addEventListener("toggle",()=>{d.open?OPEN.add(d.dataset.tr):OPEN.delete(d.dataset.tr)}));
-  /* first click on a specialized track header (opening it) pops the difficulty pre-test */
-  $("#tracks").querySelectorAll("details.track > summary").forEach(sm=>sm.addEventListener("click",()=>{const d=sm.parentElement,tr=T(d.dataset.tr);
-    if(d.open||!tr||!LONG_TRACKS.includes(tr.id)||!trackUnlocked(tr)||(S.diff&&S.diff[tr.id])||tr.levels.some((_,l)=>cleared(tr.id,l)))return;
-    setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),0)}));
-  const pool=rapidPool().length;$("#rfBtn").disabled=pool<4;
+  /* clicking an unlocked specialized track opens that track's own page (Learn list stays the same) */
+  $("#tracks").querySelectorAll("details.track > summary").forEach(sm=>sm.addEventListener("click",e=>{const tr=T(sm.parentElement.dataset.tr);
+    if(!tr||!SPEC_TRACKS.includes(tr.id)||!trackUnlocked(tr))return;e.preventDefault();showTrack(tr.id)}));
+  if(curTrack&&!document.querySelector('.view[data-view="track"]').hidden)renderTrackPage();const pool=rapidPool().length;$("#rfBtn").disabled=pool<4;
   $("#rfText").textContent=lv<2?`Starter round: ${pool} questions from the first levels of your ${profKey()==="all"?"":PROFS.find(x=>x[0]===profKey())[1]+" "}tracks. Clear levels to add more. +1 per right answer.`:`${pool} questions in your pool from ${lv} cleared levels. +1 per right answer. Your best: ${S.rapid||0}.`;
   S.xpLog=S.xpLog||{};if(S.xpLog[today()]===undefined){S.xpLog={[today()]:x};save()}
   const goal=+(S.settings.goal??50),gained=Math.max(0,x-S.xpLog[today()]),gEl=$("#goal");if(gEl){gEl.hidden=!goal;if(goal){gEl.classList.toggle("done",gained>=goal);gEl.innerHTML=`<span>Today</span><span class="gbar"><i style="width:${Math.min(100,gained/goal*100)}%"></i></span><b>${gained}/${goal} XP</b>`}}
@@ -1169,6 +1168,37 @@ function quiz(opts){const {title,qs,finish}=opts;panel.classList.remove("wide","
 $("#tracks").addEventListener("click",e=>{const b=e.target.closest(".node");if(!b)return;const tr=T(b.dataset.t),i=+b.dataset.l;
   if(!levelOpen(tr,i)){if(trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1))&&capHit(tr,i)){restPanel(tr);return}toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
   if(LONG_TRACKS.includes(tr.id)&&!(S.diff&&S.diff[tr.id])&&!tr.levels.some((_,l)=>cleared(tr.id,l))){trackPretest(tr,()=>showBrief(tr,i));return}showBrief(tr,i)});
+
+/* ---------- own page per specialized track ---------- */
+var curTrack=null;
+const SPEC_TRACKS=["ib","pe","pm","rx","mc"];
+const TP_COL={blue:"#2448D8",amber:"#E39B0B",green:"#16A06A",violet:"#6B46D8",rose:"#D8456B",teal:"#0E9AA7"};
+const TRACK_GROUPS={
+ ib:[["Technicals","Accounting, valuation and merger math.","blue",[3,7,8,9]],["Recruiting and networking","The calendar, cold emails and the Superday.","amber",[1,2,4]],["Deals and capital markets","How a sell-side process runs and how companies raise money.","green",[5,6]],["Inside the bank","Banks, groups and who does what.","violet",[0]]],
+ pe:[["How PE works","Where the money comes from and how funds earn it.","green",[0,6,7]],["LBO modeling","The math behind every buyout.","blue",[1,2,3,5,8]],["Getting in","Recruiting, diligence and the interview.","amber",[4,9]]],
+ pm:[["The buy side","Hedge funds, strategies and the stock pitch.","violet",[0,1,2,9]],["Risk and portfolio","Sizing, hedging and managing downside.","teal",[3,8]],["Instruments and markets","Options, bonds, rates and trading.","rose",[4,5,6,7]]],
+ rx:[["Why and who gets paid","Why companies break and who is first in line.","rose",[0,1]],["The legal road","Courts, bankruptcy and the alternatives.","amber",[2,3,6,8]],["Deal tools","Liability management, financing and valuing distress.","blue",[4,5,7,9]]],
+ mc:[["Case basics","What consultants do and how a case runs.","teal",[0,1,8]],["Case types","Sizing, profit and entry cases.","blue",[2,3,5,7]],["Delivering","Math, charts, the answer and the fit interview.","amber",[4,6,9]]]};
+function showTrack(id){const tr=T(id);if(!tr)return;curTrack=id;closePanel();showTab("track");renderTrackPage();try{history.replaceState(null,"","#track-"+id)}catch(e){}
+  if(trackUnlocked(tr)&&!(S.diff&&S.diff[id])&&!tr.levels.some((_,l)=>cleared(id,l)))setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),300)}
+function renderTrackPage(){const el=$("#trackPage"),tr=curTrack&&T(curTrack);if(!el||!tr)return;
+  const n=tr.levels.length,c=clearedCount(tr.id),d=DIFFS.find(x=>x[0]===diffOf(tr))[1],used=new Set();
+  const groups=(TRACK_GROUPS[tr.id]||[]).map(g=>({t:g[0],s:g[1],c:TP_COL[g[2]],ix:g[3].filter(i=>i<n)})).filter(g=>g.ix.length);
+  groups.forEach(g=>g.ix.forEach(i=>used.add(i)));const rest=tr.levels.map((_,i)=>i).filter(i=>!used.has(i));
+  if(rest.length)groups.push({t:"More levels",s:"Extra practice for this track.",c:TP_COL.teal,ix:rest});
+  const step=i=>{const lvl=tr.levels[i],b=S.best[lid(tr.id,i)]||0,cl=b>=2,op=levelOpen(tr,i),cls=cl?"cleared":op?"open":"locked";
+    return `<div class="step ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"✓":i+1}</button><div class="nm">${lvl.n}</div><div class="stars">${cl?starStr(b):""}</div></div>`};
+  el.innerHTML=`<button class="tp-back" type="button">← Learn</button>
+  <header class="tp-head"><div><h2>${tr.name}</h2><p>${tr.tag}. ${tr.desc}</p></div><button class="flink tp-diff" type="button">Difficulty: ${d} · change</button></header>
+  <div class="tp-prog"><i style="width:${Math.round(c/n*100)}%"></i></div><div class="tp-sub">${c} of ${n} levels cleared · ${DAILY_CAP} new levels per day</div>
+  <div class="tp-grid">${groups.map(g=>{const done=g.ix.filter(i=>cleared(tr.id,i)).length;return `<section class="tp-card" style="--tc:${g.c}"><div class="tp-card-h"><b>${g.t}</b><span>${done}/${g.ix.length}</span></div><p>${g.s}</p><div class="path-scroll"><div class="path">${g.ix.map(step).join("")}</div></div></section>`}).join("")}</div>`}
+$("#trackPage").addEventListener("click",e=>{const tr=curTrack&&T(curTrack);if(!tr)return;
+  if(e.target.closest(".tp-back")){showTab("learn");return}
+  if(e.target.closest(".tp-diff")){trackPretest(tr,()=>{closePanel();render()});return}
+  const b=e.target.closest(".node");if(!b)return;const i=+b.dataset.l;
+  if(!levelOpen(tr,i)){if(trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1))&&capHit(tr,i)){restPanel(tr);return}toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
+  if(!(S.diff&&S.diff[tr.id])&&!tr.levels.some((_,l)=>cleared(tr.id,l))){trackPretest(tr,()=>showBrief(tr,i));return}showBrief(tr,i)});
+
 function showBrief(tr,i){if(capHit(tr,i)){restPanel(tr);return}const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
   openPanel(`<div class="label">${tr.name} · Level ${i+1} of ${tr.levels.length}</div><h2>${L.n}</h2><p class="sub">${L.sub}</p>
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
@@ -5063,7 +5093,7 @@ function renderFriends(){const el=$("#friendsPage");if(!el)return;
 try{if(S.profile&&S.profile.name&&!myName)myName=S.profile.name}catch(e){}
 /* ---------- boot ---------- */
 checkSeasonRollover();renderNews();renderTape();tickMarket();renderCRM();renderFirms();renderMock();renderFeatures();render();
-const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
+const h=(location.hash||"").slice(1);applySettings();applyProUI();setTimeout(()=>{renderProf();renderPracticeCases();renderCheats();fxIndicators();fxFlipWatch($("#board"),".brow","p");const lc=$("#ladCta");if(lc)lc.onclick=()=>openLadder((typeof prof==="function"&&prof().ladder)||"ib");const rn=$("#rankName");if(rn){rn.tabIndex=0;rn.setAttribute("role","button");rn.onclick=()=>openLadder("you");rn.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openLadder("you")}}}},0);showTab(TABS.includes(h)||TAB_ALIAS[h]?h:(S.settings.start||"home"));if(/^track-(ib|pe|pm|rx|mc)$/.test(h)){curTrack=h.slice(6);showTab("track");renderTrackPage()}const joining=/^join-/.test(h);if(joining)setTimeout(()=>handleJoinHash(h),900);if(h==="wire")toggleWire(true);
 initCompete();
 /* first visit: one thing at a time. Signed-out visitors get no welcome popup (the landing's school-plan card is the welcome);
    signed-in members without a plan still get the 6-question setup once the privacy notice is gone. */

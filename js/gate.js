@@ -8,6 +8,7 @@
    - Session + plan      -> straight to Home.
    While the gate is up, every tab / deep link / feature is blocked (showTab is wrapped, the page behind is inert). */
 (function(){
+  if(!window.maInApp)window.maInApp=()=>/FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|BytedanceWebview|TikTok|Snapchat|\bLine\/|Twitter|LinkedInApp/i.test(navigator.userAgent||"");
   const PEND="ma-pending-plan",WEL="ma-welcome",TOK="sb-nbakxpnhcfzdosbzbupd-auth-token";
   const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
   const ev=n=>{try{window.maEv&&maEv(n)}catch(e){}};
@@ -36,6 +37,8 @@ body.gate-on{overflow:hidden}
 #mkPlan .mp-grid button[aria-pressed=true]{background:var(--cobalt,#2448D8)!important;border-color:var(--cobalt,#2448D8)!important;color:#fff!important;opacity:1!important}
 .mp-go{font:inherit;font-size:17px;font-weight:800;padding:15px;border:0;border-radius:6px;background:var(--cobalt,#2448D8);color:#fff;cursor:pointer;width:100%}
 .mp-go:disabled{opacity:.45;cursor:not-allowed}
+.mp-g{font:inherit;font-size:16px;font-weight:700;padding:13px;border:1px solid var(--rule,#D3D9E4);border-radius:6px;background:#fff;color:var(--ink,#13203B);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:10px}
+.mp-g:disabled{opacity:.5;cursor:wait}
 .mp-msg{min-height:18px;text-align:center;font-size:13.5px;color:#b3261e;margin:-6px 0 -8px}
 .mp-foot{text-align:center;font-size:13px;color:var(--ink-2,#4A5672);margin:16px 0 0}
 .mp-load{text-align:center;color:var(--ink-2,#4A5672);font-size:15px}
@@ -75,7 +78,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
       <div class="mp-top"><div class="mp-brand">M<span>&amp;</span>A Prep</div>${signed?(editing?`<button type="button" class="mp-in" id="mpBack">Back</button>`:""):`<button type="button" class="mp-in" id="mpIn">Sign in</button>`}</div>
       <div class="mp-head"><span class="k">Free · 30 seconds</span><h1 id="mpTitle">${editing?"Edit my plan":"Make my plan"}</h1><p>Your step-by-step path to an offer, built around your school and your year.</p></div>
       <form class="mp-card" id="mpForm" novalidate>
-        <label class="mp-f"><span>Your name</span><input id="mpNm" maxlength="40" placeholder="First and last name" autocomplete="name" value="${esc(name)}"></label>
+        <label class="mp-f"><span>Your name${signed||(window.maInApp&&maInApp())?"":" <small style=\"font-weight:500\">(or use Google)</small>"}</span><input id="mpNm" maxlength="40" placeholder="First and last name" autocomplete="name" value="${esc(name)}"></label>
         <label class="mp-f"><span>School <small style="font-weight:500">(optional)</small></span><input id="mpSch" list="mpSchL" maxlength="80" placeholder="e.g. Ohio State" autocomplete="organization" value="${esc(school)}"></label>
         <datalist id="mpSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
         <div class="mp-f"><span id="mpYl">Year <small style="font-weight:500">(optional)</small></span><div class="mp-grid mp-g5" role="group" aria-labelledby="mpYl">${YEARS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===year}">${y}</button>`).join("")}</div></div>
@@ -83,6 +86,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
         <div class="mp-f"><span id="mpRl">What do you want to pursue?</span><div class="mp-grid mp-g2" role="group" aria-labelledby="mpRl">${ROLES.map(r=>`<button type="button" data-r="${esc(r[0])}" aria-pressed="${r[0]===role}">${esc(r[1])}</button>`).join("")}</div></div>
         <p class="mp-msg" id="mpMsg" role="alert"></p>
         <button type="submit" class="mp-go" id="mpGo">${signed?"Save my plan →":"Save my plan →"}</button>
+        ${signed||(window.maInApp&&maInApp())?"":'<button type="button" class="mp-g" id="mpGg"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.5-4.1 7-10.2 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.8 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continue with Google</button>'}
       </form>
       <p class="mp-foot">${signed?"Saved to your account. You can change it any time.":"Free account. No card. Your plan is saved when you sign up."}</p></div>`;
     const $=s=>root.querySelector(s),msg=$("#mpMsg");
@@ -92,6 +96,17 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
     root.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{role=b.dataset.r;pick("[data-r]","r",role);msg.textContent=""});
     const ib=$("#mpIn");if(ib)ib.onclick=()=>{ev("gate_signin");(window.maOpenAuth||(()=>{}))("in")};
     const bk=$("#mpBack");if(bk)bk.onclick=()=>{editing=false;hide()};
+    /* one tap: same checks as "Save my plan", then straight to Google (the plan waits in localStorage and is saved after sign-in) */
+    const gg=$("#mpGg");if(gg)gg.onclick=async()=>{
+      const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80),nm=okName($("#mpNm").value);
+      if(year==="High school"&&!grade){msg.textContent="Pick your grade.";return}
+      if(!role){msg.textContent="Pick what you want to pursue.";return}
+      const m=sc&&window.maSchoolFind&&maSchoolFind(sc);
+      LS.set(PEND,JSON.stringify({name:nm,school:(m&&m[0])||sc,year,grade:year==="High school"?grade:"",role,at:Date.now()}));
+      ev("gate_plan_saved");ev("gate_google_click");ev("auth_oauth_google");LS.set("ma-gw-from","plan");
+      const sbc=window.MA_AUTH&&MA_AUTH.sb;if(!sbc){msg.textContent="Sign-up is still loading. Try again in a second.";return}
+      gg.disabled=true;const r=await sbc.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/"}});
+      if(r&&r.error){gg.disabled=false;msg.textContent=r.error.message||"Google sign-in failed. Try again."}};
     $("#mpForm").onsubmit=e=>{e.preventDefault();
       const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80);
       const nm=okName($("#mpNm").value);

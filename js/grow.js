@@ -83,7 +83,7 @@
     const E0=x=>String(x).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
     const mk=(src,h,p,btn)=>{const d=document.createElement("div");d.className="gw-cta";d.dataset.cta=src;
       d.innerHTML=`<div><div class="k">Free account</div><div class="h">${h}</div><p>${p}</p></div><a href="${href(src)}">${btn}</a>`;
-      d.querySelector("a").addEventListener("click",()=>{ev("guide_cta_click");flush()});return d};
+      d.querySelector("a").addEventListener("click",()=>{ev("guide_cta_click");ev("guide_cta_"+src+"_click");flush()});return d};
     const place=()=>{if(!guest()||document.querySelector(".gw-cta"))return;
       const main=document.querySelector("main")||document.body;const hs=[...main.querySelectorAll("h2")].filter(h=>!/more free guides/i.test(h.textContent));
       /* A/B test (Nov 21, 2026): half of guests on /guides/ hit a soft gate at the halfway heading: the rest of the
@@ -105,7 +105,7 @@
         const w=document.createElement("div");w.className="gw-pw lock";par.insertBefore(w,mid);
         let n=mid;while(n&&n!==stopAt){const nx=n.nextSibling;w.appendChild(n);n=nx}
         const g=document.createElement("div");g.className="gw-gate";
-        g.innerHTML=`<div class="k">Free account</div><div class="h">Sign up free to read the rest</div><p>Get the full guide, your step-by-step plan and 1,000+ interview questions. Free, no card.</p><a class="go" href="${href("gate")}" data-gate-up>Sign up free to keep reading →</a><button type="button" class="skip" data-gate-in>Already have an account? Sign in</button>`;
+        g.innerHTML=`<div class="k">Free account</div><div class="h">Build your free plan to read the rest</div><p>30 seconds: pick your school and year, get your step-by-step plan, and keep reading. Free, no card.</p><a class="go" href="${href("gate")}" data-gate-up>Build my plan and keep reading →</a><button type="button" class="skip" data-gate-in>Already have an account? Sign in</button>`;
         w.after(g);
         g.querySelector("a").addEventListener("click",e=>{e.preventDefault();ev("guide_gate_click");flush();openAuthLazy("up")});
         g.querySelector(".skip").onclick=()=>{ev("guide_gate_signin");openAuthLazy("in")};
@@ -118,10 +118,23 @@
         if(sm){const school=sm[1].trim();const d=document.createElement("div");d.className="gw-cta";d.dataset.cta="plan";
           d.innerHTML=`<div><div class="k">Free · 30 seconds</div><div class="h">Get this as a step-by-step plan for ${E0(school)}</div><p>Pick your year and see your first steps, built around ${E0(school)}'s own clubs and programs. No account needed to look.</p></div><a href="/?plan=${encodeURIComponent(school)}&utm_source=guide&utm_campaign=${encodeURIComponent(slug)}&cta=plan">See my plan →</a>`;
           d.querySelector("a").addEventListener("click",()=>{ev("guide_plan_click");flush()});mid.parentNode.insertBefore(d,mid);ev("guide_plan_shown")}
-        else mid.parentNode.insertBefore(mk("mid","Practice this, don't just read it","Answer real interview questions in 5-minute levels and track your score. Free, no card.","Start free →"),mid);if(isGuide)ev("guide_ctl_shown")}
+        else mid.parentNode.insertBefore(mk("mid","Get your free step-by-step recruiting plan","Pick your school and year and see your first steps. Takes 30 seconds, no card.","Build my plan →"),mid);if(isGuide)ev("guide_ctl_shown")}
       const more=[...main.querySelectorAll("h2")].find(h=>/more free guides/i.test(h.textContent));
-      if(!document.querySelector(".gw-gate")){const end=mk("end","Save your progress and climb the leaderboard","Make a free account: 1,000+ interview questions, XP and streaks, deal alerts, and a ranking against students from your school.","Create free account →");
+      if(!document.querySelector(".gw-gate")){const end=mk("end","Turn this guide into your plan","Tell us your school and year. We build your step-by-step path to an offer, then save it free so it follows you. 30 seconds, no card.","Build my free plan →");
       if(more)more.parentNode.insertBefore(end,more);else main.appendChild(end);ev("guide_cta_shown")}};
+    /* Nov 26, 2026: most readers never reach the box at the bottom (860 saw it load, 1 clicked), so a slim sticky bar
+       offers the plan (the one thing that converts: ~15 of 22 signups) once they've scrolled a bit or stayed 10s. */
+    const stick=()=>{if(!guest()||SS.get("ma-gw-gbx")||document.querySelector(".gw-sbar"))return;
+      const b=document.createElement("div");b.className="gw-sbar";b.setAttribute("role","region");b.setAttribute("aria-label","Free plan");
+      b.innerHTML=`<span><b>Free plan:</b> your step-by-step path to an offer, in 30 seconds.</span><a href="${href("bar")}">Build my plan →</a><button type="button" aria-label="Dismiss">×</button>`;
+      b.querySelector("a").addEventListener("click",()=>{ev("guide_bar_click");flush()});
+      b.querySelector("button").onclick=()=>{SS.set("ma-gw-gbx","1");ev("guide_bar_dismiss");b.remove()};
+      document.body.appendChild(b);ev("guide_bar_shown")};
+    if(!document.getElementById("gw-sbar-css")){const st=document.createElement("style");st.id="gw-sbar-css";
+      st.textContent=".gw-sbar{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:9000;display:flex;align-items:center;gap:12px;max-width:min(560px,calc(100vw - 24px));padding:10px 10px 10px 16px;background:#13203B;color:#fff;border-radius:999px;box-shadow:0 10px 30px rgba(19,32,59,.35);font:500 14px/1.3 system-ui,sans-serif}.gw-sbar span{flex:1;min-width:0}.gw-sbar a{flex:none;background:#2448D8;color:#fff;font-weight:800;text-decoration:none;padding:9px 16px;border-radius:999px;white-space:nowrap}.gw-sbar button{flex:none;all:unset;cursor:pointer;color:#c9d2e6;font-size:20px;line-height:1;padding:4px 8px}@media(max-width:480px){.gw-sbar{border-radius:16px;font-size:13px;gap:8px;padding:10px 8px 10px 12px}.gw-sbar a{padding:8px 12px}}";
+      document.head.appendChild(st)}
+    {let done=false;const go=()=>{if(done)return;done=true;stick()};
+      addEventListener("scroll",()=>{const h=document.documentElement;if(h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight)>.25)go()},{passive:true});setTimeout(go,10000)}
     if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",place);else place();
     return}
 
@@ -135,14 +148,25 @@
 
   /* ---------- invites: remember ?ref=, credit the inviter once this visitor has a confirmed account ---------- */
   const rf=(q.get("ref")||"").toLowerCase();if(/^[a-z0-9]{4,12}$/.test(rf)&&!LS.get("ma-ref-done")){LS.set("ma-ref",rf);ev("ref_land")}
-  async function claimRef(){const code=LS.get("ma-ref"),A=window.MA_AUTH;if(!code||!A||!A.sb)return;
+  async function claimRef(){const v=LS.get("ma-ref"),A=window.MA_AUTH;if(!v||!A||!A.sb)return;
     try{const s=(await A.sb.auth.getSession()).data.session;if(!s)return;
-      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"claim",code})});
+      const dk=window.maDevKeys?await maDevKeys():{};
+      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"claim",...(v.indexOf("@")>0?{email:v}:{code:v}),...dk})});
       const j=await r.json().catch(()=>({}));
-      if(j&&j.drop){try{localStorage.removeItem("ma-ref")}catch(e){}LS.set("ma-ref-done","1")}
+      /* the server gives the same answer whether or not the name matched anyone, so this message never says who it found */
+      if(j&&j.drop){try{localStorage.removeItem("ma-ref")}catch(e){}LS.set("ma-ref-done","1");
+        if(j.pending){LS.set("ma-ref-pend","1");ev("ref_claimed");try{toast("Thanks! If that checks out, they'll get credit once you clear Level 1.")}catch(e){}setTimeout(settleRef,4000)}}
     }catch(e){}}
+  /* a referral only counts once the friend has a confirmed email and has cleared Level 1 (the server checks both) */
+  async function settleRef(){if(!LS.get("ma-ref-pend"))return;const A=window.MA_AUTH;if(!A||!A.sb)return;
+    try{const s=(await A.sb.auth.getSession()).data.session;if(!s)return;
+      const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"settle"})});
+      const j=await r.json().catch(()=>({}));
+      if(j&&j.drop){try{localStorage.removeItem("ma-ref-pend")}catch(e){}if(j.done)ev("ref_settled")}
+    }catch(e){}}
+  window.maRefSettle=settleRef;
   const hookRef=(n=0)=>{const A=window.MA_AUTH;if(A&&A.sb&&A.ready){A.ready.then(()=>claimRef());try{A.sb.auth.onAuthStateChange(evt=>{if(evt==="SIGNED_IN")setTimeout(claimRef,800)})}catch(e){}}else if(n<40)setTimeout(()=>hookRef(n+1),250)};
-  if(LS.get("ma-ref"))hookRef();
+  hookRef();if(LS.get("ma-ref-pend"))setTimeout(settleRef,4000);
 
   /* ---------- helpers that read the app's state ---------- */
   const xp=()=>{try{return totalXP()}catch(e){return 0}};
@@ -212,10 +236,8 @@
   /* wrap the app's own render functions so the prompts survive every re-render */
   function wrap(name,fn){const o=window[name];if(typeof o!=="function"||o.__gw)return;const w=function(){const r=o.apply(this,arguments);try{fn()}catch(e){}return r};w.__gw=1;window[name]=w}
   const afterPlan=()=>{const hasPlan=typeof S!=="undefined"&&!!S.plan;if(!hasPlan){document.querySelectorAll('.gw-strip[data-gw="plan"]').forEach(x=>x.remove());return}putStrip($1("#planCard"),"afterend","plan","📌 Your plan is saved on this device only. Save it free so it's here tomorrow.","Save my plan")};
-  const afterCompete=()=>{if(!guest())return;
-    const sc=(typeof S!=="undefined"&&S.profile&&S.profile.school)||"";
-    putStrip($1("#gauntlet"),"beforebegin","school",sc?`Join the <b>${E(sc)}</b> board and see how you rank against your school.`:"Pick your school and see how you rank against it.","Join free");
-    putStrip($1("#board"),"beforebegin","lb","<b>You · unranked.</b> Sign up to claim a spot on the leaderboard.","Claim my spot")};
+  /* Nov 26, 2026: the school + leaderboard strips were shown to ~740 visitors in 14 days and got 0 clicks, so they are gone. */
+  const afterCompete=()=>{document.querySelectorAll('.gw-strip[data-gw="school"],.gw-strip[data-gw="lb"]').forEach(x=>x.remove())};
   const afterOpen=()=>{const el=$1("#openings");if(!el||el.dataset.gwo)return;el.dataset.gwo="1";
     el.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".op-add");if(!b||!guest()||b.getAttribute("aria-pressed")==="true")return;
       setTimeout(()=>toastCard("open","🗓️","Added to your calendar <b>on this device</b>. Make a free account so your deadlines follow you.","Save my deadlines"),700)},true)};

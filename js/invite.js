@@ -17,7 +17,7 @@
   async function link(mode){if(mode==="club"&&S.club&&S.club.code)return (typeof SITE_URL!=="undefined"?SITE_URL:"https://mnaprep.com/")+"#join-"+S.club.code;
     if(refUrl)return refUrl;
     try{const A=window.MA_AUTH;const s=A&&A.sb&&(await A.sb.auth.getSession()).data.session;
-      if(s){const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"code"})});
+      if(s){const dk=window.maDevKeys?await maDevKeys():{};const r=await fetch("/.netlify/functions/refer",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+s.access_token},body:JSON.stringify({action:"code",...dk})});
         const j=await r.json().catch(()=>({}));if(j&&j.ok&&j.code){refUrl="https://mnaprep.com/?ref="+j.code;return refUrl}}}catch(e){}
     return "https://mnaprep.com/?utm_source=invite"}
   window.maInvite=async function(o){o=o||{};const mode=o.mode||"friends";
@@ -25,7 +25,7 @@
     const title=o.title||(mode==="club"?`Invite to ${clubName}`:mode==="team"?"Invite friends to your school team":"Invite friends");
     const msg=o.text||(mode==="club"?`Join ${clubName} on M&A Prep. We train for finance interviews together and compete on our own leaderboard:`:"I'm training for finance interviews on M&A Prep. It's free and plays like a game. Join me:");
     openPanel(`<div class="label">${mode==="club"?"Club":"Friends"}</div><h2>${E(title)}</h2>
-      <p class="sub">${mode==="club"?"Anyone with the link joins your club in one tap.":"Copy your link and send it anywhere. Every 3 friends who join earns you a week of Pro."}</p>
+      <p class="sub">${mode==="club"?"Anyone with the link joins your club in one tap.":"Copy your link and send it anywhere, or tell them to type your email when they sign up. Every 3 friends who join and clear Level 1 earns you a week of Pro."}</p>
       <div class="iv2-link"><input id="iv2L" readonly value="Getting your link…" aria-label="Invite link"><button class="btn" id="iv2C">Copy link</button></div>
       <div class="iv2-quick" id="iv2Q"></div>
       <div class="label" style="margin-top:6px">${mode==="club"?"Invite people on M&A Prep":"Add people on M&A Prep"}</div>

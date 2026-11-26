@@ -24,10 +24,11 @@
     if(j.code==="short")T("Add a sentence or two to your review to get your free Pro day.");
     return "no"}
   window.maReward=reward;
+  window.maDevKeys=async()=>({device:devId(),fp:fpr(),fp2:await fp2()}); /* used by the referral program (grow.js, invite.js) */
   /* sign-up: claimed automatically once the account's email is confirmed */
   let tries=0;(async function signup(){const s=await sess();if(!s){if(tries++<20)setTimeout(signup,3000);return}
     if(confirmed(s))reward("signup","🎉 Welcome! 1 free day of Pro added to your account.").catch(()=>{})})();
   /* the sign-up day unlocks once Level 1 is cleared (the server checks the profile): retry after each level */
   (function hookLv(n){const q=window.questEvt;if(typeof q!=="function"){if(n<40)setTimeout(()=>hookLv(n+1),250);return}if(q.__rwc)return;
-    const w=function(k){const r=q.apply(this,arguments);try{if(k==="level"&&!LS.get("ma-rw-signup"))setTimeout(()=>reward("signup","🎉 Level cleared! 1 free day of Pro added to your account.").catch(()=>{}),8000)}catch(e){}return r};w.__rwc=1;window.questEvt=w})(0);
+    const w=function(k){const r=q.apply(this,arguments);try{if(k==="level"&&!LS.get("ma-rw-signup"))setTimeout(()=>reward("signup","🎉 Level cleared! 1 free day of Pro added to your account.").catch(()=>{}),8000)}catch(e){}try{if(k==="level"&&LS.get("ma-ref-pend"))setTimeout(()=>{window.maRefSettle&&maRefSettle()},9000)}catch(e){}return r};w.__rwc=1;window.questEvt=w})(0);
 })();

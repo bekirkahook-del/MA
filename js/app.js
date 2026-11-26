@@ -1217,16 +1217,17 @@ const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 /* Difficulty is chosen per specialized track from a 5-question pre-test (and can be changed any time).
    The scoring bar is the same for everyone: pass at 7 of 10, 3 stars at 8 of 10. Difficulty changes the QUESTIONS:
-   Beginner = core questions, Intermediate = ~30% harder ones, Advanced = ~70% harder ones (harder pools live in
-   window.MA_HARDQ["track-level"], js/hardq.js; a level without one falls back to the core questions).
+   Beginner draws from window.MA_EASYQ["track-level"] (js/easyq.js), Intermediate from the core bank, Advanced from
+   window.MA_HARDQ["track-level"] (js/hardq.js). A pool with too few questions is topped up from the core bank;
+   tools/qcoverage.mjs lists which levels still need writing.
    Stored as strings so cross-device sync keeps the latest choice: S.diff[trackId]={k:"f"|"s"|"a",s:pretest score,d:date}. */
-const DIFFS=[["f","Beginner","Core interview questions. Builds the base."],["s","Intermediate","Core questions plus some harder ones."],["a","Advanced","Mostly harder questions, where we've written them."]];
-const HARD_SHARE={f:0,s:.3,a:.7};
+const DIFFS=[["f","Beginner","Foundational questions. Builds the base."],["s","Intermediate","The core interview questions."],["a","Advanced","Harder, multi-step questions."]];
 const diffOf=tr=>{if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
 const passN=tr=>lvlN(tr)===3?2:7;
 const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;return raw>=8?3:raw>=7?2:raw>=4?1:0};
-function pickQs(tr,i,NQ){const L=tr.levels[i],sh=a=>a.slice().sort(()=>Math.random()-.5),HQ=(window.MA_HARDQ||{})[tr.id+"-"+i],share=HARD_SHARE[diffOf(tr)]||0;
-  if(HQ&&HQ.length&&share&&NQ>3){const nh=Math.min(HQ.length,Math.round(NQ*share));return sh(sh(HQ).slice(0,nh).concat(sh(L.q).slice(0,NQ-nh)))}
+function pickQs(tr,i,NQ){const L=tr.levels[i],sh=a=>a.slice().sort(()=>Math.random()-.5),k=tr.id+"-"+i,d=diffOf(tr);
+  const pool=(d==="f"?(window.MA_EASYQ||{})[k]:d==="a"?(window.MA_HARDQ||{})[k]:null)||[];
+  if(NQ>3&&pool.length){const mine=sh(pool).slice(0,NQ);return mine.length>=NQ?mine:sh(mine.concat(sh(L.q).slice(0,NQ-mine.length)))}
   return L.q.length>NQ?sh(L.q).slice(0,NQ):L.q}
 /* 5-question pre-test spread across the track, then the student picks (we pre-select our recommendation) */
 function trackPretest(tr,after){

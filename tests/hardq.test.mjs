@@ -23,3 +23,9 @@ test("LBO and IRR answers match the arithmetic", () => {
   assert.ok(Math.abs(irr(4, 5) - .32) < .01); assert.equal((10 * 75 - 200) / 200, 2.75); assert.equal((8 * 75 - 200) / 200, 2);
   assert.equal(8 * 60 - 5 * 60, 180);
 });
+
+test("tiers are strict: Beginner/Advanced draw from their own pools, Intermediate from the core bank", () => {
+  const src = fs.readFileSync(new URL("../js/app.js", import.meta.url), "utf8");
+  assert.match(src, /d==="f"\?\(window\.MA_EASYQ\|\|\{\}\)\[k\]:d==="a"\?\(window\.MA_HARDQ\|\|\{\}\)\[k\]:null/);
+  assert.ok(!/HARD_SHARE/.test(src));
+});

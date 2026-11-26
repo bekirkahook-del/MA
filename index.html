@@ -1417,6 +1417,13 @@ html.noexp .panel .why{display:none}
 .tp-card p{margin:6px 0 0;color:var(--ink-2);font-size:14px}
 .tp-card .step.open .node{border-color:var(--tc);color:var(--tc)}.tp-card .step.cleared .node{background:var(--tc);border-color:var(--tc);color:#fff}
 .tp-card .path{flex-wrap:wrap;min-width:0;row-gap:14px}.tp-card .step{width:108px}.tp-card .step::after{display:none}
+.vline{position:relative;max-width:640px;margin:8px 0 24px}
+.vline::before{content:"";position:absolute;left:27px;top:28px;bottom:28px;width:3px;background:var(--rule)}
+.vstep{position:relative;display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:10px 0}
+.vstep .node{position:relative;z-index:1}
+.vstep.cleared .node{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.vtx b{display:block;font-size:17px;color:var(--ink)}.vtx small{display:block;margin-top:2px;font-size:13px;color:var(--ink-2)}
+.vstep.locked .vtx{opacity:.55}.vstep.open .stars{font-size:13px;font-weight:700;color:var(--cobalt)}
 @media(max-width:560px){.tp-head h2{font-size:28px}}
 .ob-plan{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
 .ob-plan li b{font-weight:600}.ob-plan li span{color:var(--ink-2);font-size:13px;margin-left:8px}

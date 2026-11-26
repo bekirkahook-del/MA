@@ -1183,14 +1183,12 @@ function showTrack(id){const tr=T(id);if(!tr)return;curTrack=id;closePanel();sho
   if(trackUnlocked(tr)&&!(S.diff&&S.diff[id])&&!tr.levels.some((_,l)=>cleared(id,l)))setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),300)}
 function renderTrackPage(){const el=$("#trackPage"),tr=curTrack&&T(curTrack);if(!el||!tr)return;
   const n=tr.levels.length,c=clearedCount(tr.id),d=DIFFS.find(x=>x[0]===diffOf(tr))[1],used=new Set();
-  const half=Math.ceil(n/2),parts=TRACK_PARTS[tr.id]||[["Levels","Work through them in order."]],cols=[TP_COL.blue,TP_COL.amber];
-  const groups=parts.map((p,k)=>({t:p[0],s:p[1],c:cols[k%2],ix:tr.levels.map((_,i)=>i).filter(i=>parts.length===1||(k===0?i<half:i>=half))}));
   const step=i=>{const lvl=tr.levels[i],b=S.best[lid(tr.id,i)]||0,cl=b>=2,op=levelOpen(tr,i),cls=cl?"cleared":op?"open":"locked";
-    return `<div class="step ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"✓":i+1}</button><div class="nm">${lvl.n}</div><div class="stars">${cl?starStr(b):""}</div></div>`};
-  el.innerHTML=`<button class="tp-back" type="button">← Learn</button>
-  <header class="tp-head"><div><h2>${tr.name}</h2><p>${tr.tag}. ${tr.desc}</p></div><button class="flink tp-diff" type="button">Difficulty: ${d} · change</button></header>
-  <div class="tp-prog"><i style="width:${Math.round(c/n*100)}%"></i></div><div class="tp-sub">${c} of ${n} levels cleared · ${DAILY_CAP} new levels per day</div>
-  <div class="tp-grid">${groups.map(g=>{const done=g.ix.filter(i=>cleared(tr.id,i)).length;return `<section class="tp-card" style="--tc:${g.c}"><div class="tp-card-h"><b>${g.t}</b><span>${done}/${g.ix.length}</span></div><p>${g.s}</p><div class="path-scroll"><div class="path">${g.ix.map(step).join("")}</div></div></section>`}).join("")}</div>`}
+    return `<div class="vstep ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"\u2713":i+1}</button><div class="vtx"><b>${lvl.n}</b>${lvl.sub?`<small>${lvl.sub}</small>`:""}</div><div class="stars">${cl?starStr(b):cls==="open"?"Start":""}</div></div>`};
+  el.innerHTML=`<button class="tp-back" type="button">\u2190 Learn</button>
+  <header class="tp-head"><div><h2>${tr.name}</h2><p>${tr.tag}. ${tr.desc}</p></div><button class="flink tp-diff" type="button">Difficulty: ${d} \u00b7 change</button></header>
+  <div class="tp-prog"><i style="width:${Math.round(c/n*100)}%"></i></div><div class="tp-sub">${c} of ${n} levels cleared \u00b7 ${DAILY_CAP} new levels per day</div>
+  <div class="vline">${tr.levels.map((_,i)=>step(i)).join("")}</div>`}
 $("#trackPage").addEventListener("click",e=>{const tr=curTrack&&T(curTrack);if(!tr)return;
   if(e.target.closest(".tp-back")){showTab("learn");return}
   if(e.target.closest(".tp-diff")){trackPretest(tr,()=>{closePanel();render()});return}

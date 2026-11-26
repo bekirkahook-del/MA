@@ -4,6 +4,7 @@ import fs from "node:fs";
 globalThis.window = {};
 await import("../js/hardq.js"); await import("../js/easyq.js");
 for (const t of ["ib", "pe", "pm", "rx", "mc"]) { await import("../js/hardq-" + t + ".js"); await import("../js/easyq-" + t + ".js"); }
+await import("../js/easyq-f.js");
 const H = window.MA_HARDQ, E = window.MA_EASYQ;
 test("every Beginner and Advanced question has 4 distinct options, a valid answer and an explanation", () => {
   for (const [k, qs] of [...Object.entries(H), ...Object.entries(E)]) for (const q of qs) {
@@ -20,7 +21,7 @@ test("no duplicate questions inside a pool, and no pool question repeats a core 
 });
 test("hard pool keys point at real levels", () => {
   const src = fs.readFileSync(new URL("../js/app.js", import.meta.url), "utf8");
-  for (const k of [...Object.keys(H), ...Object.keys(E)]) assert.match(k, /^(ib|pe|pm|rx|mc)-\d+$/);
+  for (const k of [...Object.keys(H), ...Object.keys(E)]) assert.match(k, /^(ib|pe|pm|rx|mc|f)-\d+$/);
   assert.match(src, /MA_HARDQ/);
 });
 test("LBO and IRR answers match the arithmetic", () => {

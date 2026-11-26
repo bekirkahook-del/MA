@@ -72,3 +72,5 @@ Lessons: punch/countdown videos need `loudnorm=I=-14:TP=-2,alimiter=limit=0.8` (
 - Queued and already 100/100 with new voices: Hedge DIL (Thu Nov 26 10 AM, Echo), Superday (Fri Nov 27 10 AM, Echo). Re-score them on their day anyway.
 - RANKED series: Ivy is next (Big 12 done Nov 25). Use George.
 - Superday's caption says "DCF" while the voice says "D C F model": fine, but keep captions and voice consistent in new videos.
+- Nov 26 gate: drafted Superday 2-slide TT carousel (83) and Apple bull-case presenter video, all 5 networks (78: old Chatterbox voice, no hook, no cover, no CTA). Apple needs an Echo re-voice + Whisper check before it can return; give it a 6 PM slot.
+- Nov 26 env: tts-env (Kokoro) fails to build on Python 3.13 (spacy/blis). Build it with python3.12 instead. huggingface.co and static.metricool.com are blocked by the network policy, so Whisper/Kokoro models can't download and posted media can't be fetched.

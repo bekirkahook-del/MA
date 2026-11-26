@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T16:50:48Z",
+ "updated": "2026-11-26T16:49:49Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -109,8 +109,8 @@
   ]
  ],
  "RECAP": {
-  "d": "Nov 24",
-  "t": "Nov 24 close (AP): the S&P 500 fell 0.5% for its eighth loss in nine days, the Nasdaq fell 1.5% and the Dow added more than 400 points. Nvidia fell 7.6% a day after soaring 31.5%, and Anthropic fell 9.3% to below its $83 IPO price. The 10-year yield eased to 4.90% from 4.92%. Closing index levels were not available from a source read this run."
+  "d": "Nov 25",
+  "t": "Nov 25 close (CNBC/MarketWatch): the Dow rose 164.25 points, or 0.33%, to 50,182.95, the S&P 500 fell 0.25% to 7,182.78 and the Nasdaq Composite fell 0.62% to 23,585.80. The Russell 2000 rose 0.71% to 2,704.06. The Dow had been down more than 1,100 points at its low and the S&P 500 down 3.2% as AI-linked stocks sold off, before a rebound. US markets are closed Thursday for Thanksgiving."
  },
  "CAL": [
   [
@@ -120,6 +120,33 @@
    [
     "CNBC live updates (Nov 23)",
     "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
+   ]
+  ],
+  [
+   "Tue Dec 1",
+   "ISM manufacturing PMI and JOLTS",
+   "ISM manufacturing PMI and JOLTS job openings at 10:00 a.m. ET. The prior ISM reading was 55.5 and the forecast is 55.2.",
+   [
+    "US Economic Calendar, week of Nov 30",
+    "https://helious.io/calendar/2026-w49"
+   ]
+  ],
+  [
+   "Thu Dec 3",
+   "ISM services PMI",
+   "ISM services PMI at 10:00 a.m. ET; the prior reading was 54.5 and the forecast is 54.5.",
+   [
+    "US Economic Calendar, week of Nov 30",
+    "https://helious.io/calendar/2026-w49"
+   ]
+  ],
+  [
+   "Fri Dec 4",
+   "November jobs report",
+   "Nonfarm payrolls, unemployment and average hourly earnings at 8:30 a.m. ET. October payrolls were up 165K with unemployment at 4.1%.",
+   [
+    "US Economic Calendar, week of Nov 30",
+    "https://helious.io/calendar/2026-w49"
    ]
   ],
   [
@@ -134,34 +161,92 @@
  ],
  "EARN": [
   [
-   "2026-11-25",
-   "DE",
-   "Deere",
-   "BMO",
+   "2026-12-01",
+   "MRVL",
+   "Marvell Technology",
+   "AMC",
+   "$1.10",
+   ""
+  ],
+  [
+   "2026-12-01",
+   "OKTA",
+   "Okta",
+   "AMC",
    "",
+   ""
+  ],
+  [
+   "2026-12-02",
+   "CRM",
+   "Salesforce",
+   "AMC",
+   "$3.45",
    ""
   ]
  ],
  "EARN_SRC": [
   [
-   "TheStreet earnings calendar (week of Nov 23)",
-   "https://pro.thestreet.com/earnings/week/2026-11-23"
+   "TheStreet earnings calendar (week of Nov 30)",
+   "https://pro.thestreet.com/earnings/week/2026-11-30"
   ],
   [
-   "IfYouSpent Thanksgiving-week earnings preview",
-   "https://news.ifyouspent.com/en/news/thanksgiving-week-earnings-dell-workday-zoom-hp-deere-november-2026"
-  ],
-  [
-   "Portfolio Terminal",
-   "https://portfolio-terminal.com/earnings-calendar/november-2026"
-  ],
-  [
-   "Earnings Watcher",
-   "https://earnings-watcher.com/earnings-this-week"
+   "FOREX.com weekly outlook (Nov 30-Dec 4)",
+   "https://www.forex.com/ie/news-and-analysis/weekly-market-outlook-30-november-4-december-2026/"
   ]
  ],
- "NEWS_DATE": "Nov 25, 2026",
+ "NEWS_DATE": "Nov 26, 2026",
  "NEWS": [
+  {
+   "k": "Markets",
+   "d": "Nov 25",
+   "h": "Dow recovers a 1,100-point drop to close up 0.33% as the AI selloff eases; S&P 500 ends down 0.25%",
+   "w": "Per CNBC, the Dow rose 164.25 points to 50,182.95 after falling more than 1,100 points at its low. The Nasdaq Composite fell 0.62% to 23,585.80 and the S&P 500 fell 0.25% to 7,182.78, after being down 3.2% at its low. Materials, energy and real estate rose.",
+   "m": "The Russell 2000 gained 0.71% to 2,704.06 (MarketWatch). Markets are closed Thursday for Thanksgiving.",
+   "a": "Interview point: explain why a big intraday drop that reverses can say more about positioning and sentiment than the closing change does.",
+   "s": [
+    [
+     "CNBC live updates (Nov 25)",
+     "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+    ],
+    [
+     "MarketWatch DJIA (Nov 25)",
+     "https://www.marketwatch.com/investing/index/djia"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 25",
+   "h": "Virbac agrees to buy Paine Schwartz-backed Axiota Animal Health for $315 million in cash",
+   "w": "Virbac signed a definitive agreement to acquire 100% of Axiota, a Paine Schwartz Partners portfolio company, in an all-cash deal valued at $315 million. Axiota adds about $47 million of US revenue and a cattle-health portfolio led by Multimin and Lactipro. Closing is expected by the end of January 2027, subject to HSR antitrust clearance.",
+   "m": "Virbac says the deal should lift its adjusted EBIT margin by about 30 basis points in 2027 and about 50 basis points by 2030.",
+   "a": "Interview point: this is a private equity exit to a strategic buyer. Explain why a sponsor sells a portfolio company to a strategic buyer instead of an IPO.",
+   "s": [
+    [
+     "Virbac press release (Nov 25)",
+     "https://corporate.virbac.com/home/news-media/financial-public-releases/pagecontent/tous-les-communiques-financiers/virbac-to-acquire-axiota-animal-health-inc-creating-a-leading-gl.html"
+    ]
+   ]
+  },
+  {
+   "k": "Earnings",
+   "d": "Nov 26",
+   "h": "Marvell and Salesforce headline a light earnings week as the November jobs report lands Dec 4",
+   "w": "Per FOREX.com, Marvell reports Tuesday Dec 1 after the close against estimates of $1.10 per share on $3.15 billion of revenue, and Salesforce reports Wednesday Dec 2 after the close against $3.45 per share on $11.46 billion. Okta also reports Dec 1 after the close.",
+   "m": "Markets entered the break pricing a quarter-point Fed hike in December, so Friday's jobs report is the main data risk (FOREX.com).",
+   "a": "Interview point: explain why guidance and remaining performance obligations can matter more than the quarterly beat for a software stock.",
+   "s": [
+    [
+     "FOREX.com weekly outlook (Nov 26)",
+     "https://www.forex.com/ie/news-and-analysis/weekly-market-outlook-30-november-4-december-2026/"
+    ],
+    [
+     "TheStreet earnings calendar",
+     "https://pro.thestreet.com/earnings/week/2026-11-30"
+    ]
+   ]
+  },
   {
    "k": "Fed",
    "d": "Nov 25",
@@ -361,91 +446,82 @@
      "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
     ]
    ]
-  },
-  {
-   "k": "M&A",
-   "d": "Nov 23",
-   "h": "AMD acquires AI chip startup Taalas in a deal valued at about $2.9 billion",
-   "w": "Tech.eu reported AMD has acquired Taalas, a Toronto-founded startup that builds chips with AI models embedded in the silicon, for about $2.9 billion. Taalas had raised roughly $220 million from investors including Fidelity. AMD plans to fold the technology into its Instinct accelerator roadmap.",
-   "m": "Chipmakers are buying specialized startups rather than building the same technology in-house, a common reason for a strategic acquisition.",
-   "a": "Interview point: explain the build vs buy decision in a corporate acquisition.",
-   "s": [
-    [
-     "Tech.eu (Nov 23)",
-     "https://tech.eu/2026/11/23/amd-acquires-ai-chip-startup-taalas-for-29b-to-advance-ai-inference-technology/"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 20",
-   "h": "Michigan sentiment rises to 51.5 as one-year inflation expectations fall to 3.7%",
-   "w": "CNBC reported the University of Michigan's November sentiment index rose to 51.5, up 7.3% from a month ago and in line with the consensus estimate. One-year inflation expectations fell a full percentage point to 3.7%, the lowest since March, and the five-year outlook slipped to 3.3%. Markets still strongly expect a quarter-point Fed hike at the Dec. 8-9 meeting.",
-   "m": "Falling inflation expectations matter to the Fed, but Governor Lisa Cook said Friday that waiting longer risks getting behind the curve.",
-   "a": "Interview point: explain why central banks watch inflation expectations, not just current inflation.",
-   "s": [
-    [
-     "CNBC market wrap (Nov 20)",
-     "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html"
-    ]
-   ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 20",
-   "h": "Nasdaq falls 5.28% and the S&P 500 and Dow confirm corrections as the AI selloff deepens",
-   "w": "Final closes Friday: the S&P 500 fell 3.69% to 6,910.39, the Nasdaq Composite fell 5.28% to 22,617.73 and the Dow fell 1.93% to 48,147.33. Reuters said Anthropic's debut fell flat and its shares posted a steep loss Friday. Fed Governor Lisa Cook said the policy rate is not high enough to deal with inflation levels, and CME FedWatch showed a near-certain quarter-point hike at the December meeting.",
-   "m": "A correction means an index is down at least 10% from its high. With rate hikes priced in and AI stocks falling together, valuations are being repriced across the market.",
-   "a": "Interview point: explain why higher rates hit long-duration growth stocks hardest (think of the discount rate in a DCF).",
-   "s": [
-    [
-     "CNBC market wrap (Nov 20 close)",
-     "https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html"
-    ],
-    [
-     "Reuters via MarketScreener (Nov 20 close)",
-     "https://www.marketscreener.com/news/wall-st-ends-sharply-lower-on-ai-selloff-s-p-500-dow-in-correction-ce785ed3dd80f527"
-    ]
-   ]
   }
  ],
  "NEWS_QUIZ": [
   [
-   "October PCE inflation hit 3.8% year over year with core at 3.3%. What does PCE measure?",
+   "The Dow fell more than 1,100 points on Wednesday but closed up 0.33%. What does an intraday reversal like that show?",
    [
-    "Prices consumers pay for goods and services, the Fed's preferred gauge",
-    "Corporate profits",
-    "Employer payroll growth",
-    "Treasury auction demand"
+    "Sellers lost control and buyers stepped in, so the close can differ sharply from the low",
+    "The market was closed",
+    "Stocks are priced only at the open",
+    "Index levels are set by the Fed"
    ],
    0,
-   "Personal consumption expenditures is the price index the Fed watches most closely for inflation."
+   "The closing level reflects where trading ended, which can be far from the day's extremes."
   ],
   [
-   "Deere beat on sales but guided fiscal 2027 net income below estimates. Why can the stock still fall?",
+   "Virbac is buying Axiota from private equity firm Paine Schwartz for $315 million in cash. Who is the seller?",
    [
-    "Markets price future earnings, so weak guidance outweighs a sales beat",
-    "Sales never matter",
-    "Guidance is a tax filing",
-    "Beats are always ignored"
+    "Paine Schwartz Partners, the sponsor that owned Axiota",
+    "Axiota's public shareholders",
+    "The FTC",
+    "Virbac's lenders"
    ],
    0,
-   "Stock prices reflect expected future profits, so a guidance miss can outweigh a quarterly beat."
+   "Axiota was a Paine Schwartz portfolio company, so the sponsor is exiting by selling to a strategic buyer."
   ],
   [
-   "Boehly's Lukoil deal pays with a share swap into escrow. What is an escrow account?",
+   "Salesforce investors will watch remaining performance obligations. What do they measure?",
    [
-    "A neutral account holding assets until deal conditions are met",
-    "A margin loan",
-    "A dividend fund",
-    "A brokerage fee"
+    "Contracted revenue not yet recognized",
+    "Cash on the balance sheet",
+    "Employee headcount",
+    "Share buybacks"
    ],
    0,
-   "Escrow holds assets with a third party until the agreed conditions are satisfied."
+   "RPO is contracted revenue the company has not yet recognized, a gauge of future demand."
   ]
  ],
- "DEALS_DATE": "Nov 25, 2026",
+ "DEALS_DATE": "Nov 26, 2026",
  "DEALS": [
+  {
+   "id": "d57",
+   "buyer": "Virbac",
+   "target": "Axiota Animal Health (from Paine Schwartz Partners)",
+   "value": "$315M (cash)",
+   "usd": 0.315,
+   "date": "Nov 25, 2026",
+   "terms": [
+    "All-cash deal valued at $315 million for 100% of Axiota",
+    "Axiota is a Paine Schwartz Partners portfolio company",
+    "Adds about $47 million of US revenue",
+    "Closing expected by end of January 2027",
+    "Subject to HSR antitrust clearance"
+   ],
+   "what": "Virbac, an animal health company, signed a definitive agreement on Nov 25 to buy Axiota Animal Health, a cattle-health company owned by private equity firm Paine Schwartz Partners, for $315 million in cash.",
+   "why": "Axiota brings Multimin and Lactipro and a US dairy, beef and feedlot sales team, expanding Virbac's North American footprint. Virbac expects about 30 basis points of adjusted EBIT margin improvement in 2027 and about 50 basis points by 2030.",
+   "say": "\"This is a sponsor exit to a strategic buyer: Paine Schwartz sells Axiota to a company that can fold it into an existing sales network.\"",
+   "src": [
+    [
+     "Virbac press release (Nov 25)",
+     "https://corporate.virbac.com/home/news-media/financial-public-releases/pagecontent/tous-les-communiques-financiers/virbac-to-acquire-axiota-animal-health-inc-creating-a-leading-gl.html"
+    ]
+   ],
+   "q": [
+    [
+     "Virbac is buying Axiota from Paine Schwartz Partners. What kind of transaction is this for Paine Schwartz?",
+     [
+      "A private equity exit",
+      "A leveraged recapitalization",
+      "A spin-off",
+      "A tender offer"
+     ],
+     0,
+     "A sponsor selling a portfolio company to a buyer is an exit."
+    ]
+   ]
+  },
   {
    "id": "d56",
    "buyer": "Todd Boehly consortium (with US DFC)",
@@ -1025,56 +1101,6 @@
      ],
      2,
      "Under IFRS 16, store leases are treated like debt, so adding them raises enterprise value; the matching EBITDA is also measured before rent."
-    ]
-   ]
-  },
-  {
-   "id": "d31",
-   "buyer": "Ferring Pharmaceuticals",
-   "target": "Gameto",
-   "value": "Up to ~$1.38B",
-   "usd": 1.3825,
-   "date": "Oct 27, 2026",
-   "terms": [
-    "Up to $1.3825B total",
-    "Part paid only if milestones are hit",
-    "Upfront amount not disclosed"
-   ],
-   "what": "Swiss drugmaker Ferring, a big name in fertility treatments, signed a deal to buy Gameto, a private biotech that uses cell engineering to develop treatments for infertility and other women's reproductive health issues. The deal is worth up to about $1.38 billion, but part of that is only paid if Gameto hits development, regulatory and sales goals.",
-   "why": "Ferring gets a pipeline of new fertility technology, including an egg-maturation program that is still investigational in the U.S., and can use its global sales network to reach more patients. Tying much of the price to milestones protects Ferring if the science or FDA approval doesn't pan out.",
-   "say": "\"Ferring's up-to-$1.38 billion deal for Gameto ties part of the price to future milestones, which is how buyers handle the risk that an unapproved biotech product never makes it to market.\"",
-   "src": [
-    [
-     "Ferring press release",
-     "https://www.ferring.com/ferring-pharmaceuticals-and-gameto-sign-agreement-for-proposed-acquisition/"
-    ],
-    [
-     "PharmaShots",
-     "https://pharmashots.com/36809/ferring-to-acquire-gameto"
-    ]
-   ],
-   "q": [
-    [
-     "Ferring's deal for Gameto is worth 'up to' $1.38B because some payments depend on future milestones. What is that kind of payment called?",
-     [
-      "Contingent consideration paid later if goals are met",
-      "A breakup fee paid if the deal fails to close",
-      "A tender offer made directly to public shareholders",
-      "A dividend recap funded by new debt at the target"
-     ],
-     0,
-     "Milestone payments are contingent consideration: the buyer pays more only if the target reaches set goals."
-    ],
-    [
-     "Gameto's main program is not yet FDA approved. Why does that make milestone payments attractive to Ferring when buying Gameto?",
-     [
-      "They let Ferring avoid any regulatory review of the deal",
-      "They make Gameto's shareholders pay Ferring's legal fees",
-      "They cut what Ferring pays if the product never gets approved",
-      "They guarantee Ferring a fixed return on the whole purchase"
-     ],
-     2,
-     "Paying part of the price only on success shifts the risk of a failed trial or rejection back to the sellers."
     ]
    ]
   }

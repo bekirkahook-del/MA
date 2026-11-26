@@ -1039,7 +1039,15 @@ const clearedCount=t=>T(t).levels.filter((_,i)=>cleared(t,i)).length;
 const BONUS_TRACKS=["t","b","x"];
 TRACKS.forEach(t=>{if(t.id!=="f"&&t.id!=="me"&&!BONUS_TRACKS.includes(t.id))t.req={t:"f",l:T("f").levels.length,why:"Finish Foundations to unlock"}});
 const trackUnlocked=tr=>!tr.req||clearedCount(tr.req.t)>=tr.req.l;
-const levelOpen=(tr,i)=>trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1));
+/* Pacing: a specialized track can't be finished in a day. At most DAILY_CAP NEW levels per track per day
+   (counted from S.clearDates, so levels skipped by placement don't count). Replays and every other mode stay open. */
+const DAILY_CAP=3;
+function clearedToday(tr){const cd=S.clearDates||{};return tr.levels.reduce((n,_,i)=>n+(cd[lid(tr.id,i)]===today()?1:0),0)}
+function capHit(tr,i){return LONG_TRACKS.includes(tr.id)&&!cleared(tr.id,i)&&clearedToday(tr)>=DAILY_CAP}
+function restPanel(tr){openPanel(`<div class="label">${esc(tr.name)} · Daily limit</div><h2>${DAILY_CAP} new levels today. Come back tomorrow.</h2>
+  <p class="sub">Spacing the levels out is what makes them stick. You can still replay any cleared level, work your Review box, or run Rapid Fire today.</p>
+  <div class="actions"><button class="btn" id="restOk">Back to map</button></div>`);$("#restOk").onclick=closePanel}
+const levelOpen=(tr,i)=>trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1))&&!capHit(tr,i);
 const allQs=()=>TRACKS.flatMap(t=>t.levels.flatMap(l=>l.q));
 
 function totalXP(){let x=0;
@@ -1141,9 +1149,9 @@ function quiz(opts){const {title,qs,finish}=opts;panel.classList.remove("wide","
 
 /* ---------- levels ---------- */
 $("#tracks").addEventListener("click",e=>{const b=e.target.closest(".node");if(!b)return;const tr=T(b.dataset.t),i=+b.dataset.l;
-  if(!levelOpen(tr,i)){toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
+  if(!levelOpen(tr,i)){if(trackUnlocked(tr)&&(i===0||cleared(tr.id,i-1))&&capHit(tr,i)){restPanel(tr);return}toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
   if(LONG_TRACKS.includes(tr.id)&&!(S.diff&&S.diff[tr.id])&&!tr.levels.some((_,l)=>cleared(tr.id,l))){trackPretest(tr,()=>showBrief(tr,i));return}showBrief(tr,i)});
-function showBrief(tr,i){const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
+function showBrief(tr,i){if(capHit(tr,i)){restPanel(tr);return}const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
   openPanel(`<div class="label">${tr.name} · Level ${i+1} of ${tr.levels.length}</div><h2>${L.n}</h2><p class="sub">${L.sub}</p>
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
    ${L.ex?`<div class="example">${esc(L.ex)}</div>`:""}
@@ -1208,12 +1216,18 @@ function keyDrill(tr,i){
 const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
 /* Difficulty is chosen per specialized track from a 5-question pre-test (and can be changed any time).
-   Beginner: pass 6/10. Intermediate: pass 7/10 (the original bar). Advanced: pass 8/10, 3 stars only for a perfect 10.
+   The scoring bar is the same for everyone: pass at 7 of 10, 3 stars at 8 of 10. Difficulty changes the QUESTIONS:
+   Beginner = core questions, Intermediate = ~30% harder ones, Advanced = ~70% harder ones (harder pools live in
+   window.MA_HARDQ["track-level"], js/hardq.js; a level without one falls back to the core questions).
    Stored as strings so cross-device sync keeps the latest choice: S.diff[trackId]={k:"f"|"s"|"a",s:pretest score,d:date}. */
-const DIFFS=[["f","Beginner","Pass at 6 of 10. Builds the base."],["s","Intermediate","Pass at 7 of 10. The default bar."],["a","Advanced","Pass at 8 of 10. 3 stars need a perfect 10."]];
+const DIFFS=[["f","Beginner","Core interview questions. Builds the base."],["s","Intermediate","Core questions plus some harder ones."],["a","Advanced","Mostly harder questions, where we've written them."]];
+const HARD_SHARE={f:0,s:.3,a:.7};
 const diffOf=tr=>{if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
-const passN=tr=>{const N=lvlN(tr);if(N===3)return 2;const d=diffOf(tr);return d==="a"?8:d==="f"?6:Math.ceil(N*.7)};
-const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;const d=diffOf(tr);return raw>=(d==="a"?N:N-1)?3:raw>=passN(tr)?2:raw>=(d==="a"?5:d==="f"?3:Math.ceil(N*.4))?1:0};
+const passN=tr=>lvlN(tr)===3?2:7;
+const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;return raw>=8?3:raw>=7?2:raw>=4?1:0};
+function pickQs(tr,i,NQ){const L=tr.levels[i],sh=a=>a.slice().sort(()=>Math.random()-.5),HQ=(window.MA_HARDQ||{})[tr.id+"-"+i],share=HARD_SHARE[diffOf(tr)]||0;
+  if(HQ&&HQ.length&&share&&NQ>3){const nh=Math.min(HQ.length,Math.round(NQ*share));return sh(sh(HQ).slice(0,nh).concat(sh(L.q).slice(0,NQ-nh)))}
+  return L.q.length>NQ?sh(L.q).slice(0,NQ):L.q}
 /* 5-question pre-test spread across the track, then the student picks (we pre-select our recommendation) */
 function trackPretest(tr,after){
   const L=tr.levels,n=Math.min(5,L.length),idx=[...new Set(Array.from({length:n},(_,i)=>n<2?0:Math.round(i*(L.length-1)/(n-1))))];
@@ -1235,17 +1249,17 @@ function trackPretest(tr,after){
     panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{save_(b.dataset.k,right==null?((S.diff[tr.id]||{}).s??null):right);after()});(panel.querySelector(".ob-o.on")||panel.querySelector(".ob-o")).focus()};
   intro()}
 function diffChip(tr){return LONG_TRACKS.includes(tr.id)?`<button class="flink" id="dfChange" type="button">Difficulty: ${DIFFS.find(d=>d[0]===diffOf(tr))[1]} · change</button>`:""}
-function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
-  const QS=L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,MISS=[];
+function runLevel(tr,i){if(capHit(tr,i)){restPanel(tr);return}const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
+  const QS=pickQs(tr,i,NQ),MISS=[];
   quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
     const xp0=totalXP(),r0=rankOf(xp0);try{const lg=(S.lvlLog=S.lvlLog||{}),e=lg[key]||(lg[key]={n:0,f:Math.min(raw,NQ),b:0});e.n++;e.b=Math.max(e.b,Math.min(raw,NQ));e.d=today()}catch(e){}
     if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
     if(c>=2){questEvt("level");sfx("clear")}if(c===3)questEvt("stars3");
-    const nowDone=clearedCount(tr.id)===tr.levels.length,pass=c>=2,hasNext=i+1<tr.levels.length;
+    const nowDone=clearedCount(tr.id)===tr.levels.length,pass=c>=2,hasNext=i+1<tr.levels.length&&!capHit(tr,i+1),capped=i+1<tr.levels.length&&capHit(tr,i+1);
     const unlocked=before.filter(n=>trackUnlocked(TRACKS.find(t=>t.name===n)));
     if(nowDone&&!wasDone)logEvent(`Completed the ${tr.name} track`);if(r1>r0)logEvent(`Was promoted to ${RANKS[r1][0]}`);
-    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":passN(tr)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
+    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."+(capped?` That is ${DAILY_CAP} new levels today in ${tr.name}. The next one opens tomorrow.`:"")):`Need ${lvlN(tr)===3?"2 of 3":passN(tr)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
     setTimeout(()=>{if(window.MAPractice)MAPractice.bindMiss(tr,i);if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#hardBtn"))$("#hardBtn").onclick=()=>MAPractice.hard(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
     return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${Math.min(raw,lvlN(tr))} of ${lvlN(tr)} correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
       <p>${msg}</p>${window.MAPractice?MAPractice.miss(tr,i,MISS):""}${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}

@@ -3,7 +3,7 @@
 > M&A Prep (mnaprep.com) is a free, game-style training site for students preparing for investment banking, private equity, hedge fund, restructuring and consulting careers. It is built for high school students, college students and career switchers, and explains finance in plain English.
 
 What's on the site:
-- Learning tracks with 5-minute levels: Foundations (accounting, valuation basics), Investment Banking, Private Equity, Hedge Funds & Markets, Restructuring and Consulting
+- Learning tracks with 5-minute levels: Foundations (statements, time value, enterprise value, valuation, debt and risk), Investment Banking, Private Equity, Hedge Funds & Markets, Restructuring and Consulting
 - Interview practice: real technical and behavioral questions, AI mock interviews, rapid-fire drills, mental math sprints and brain teasers
 - Cheat sheets with every core formula explained in plain words
 - A searchable database of the most relevant M&A deals of the last 12 months

@@ -23,6 +23,16 @@
       { h: "Quick check", check: ["The coffee shop buys a $15 espresso machine. Which section of the cash flow statement shows it?", ["Operating", "Investing", "Financing"], 1, "Buying long-term equipment (called capital expenditures, or capex) is an investing outflow."] }
     ],
     "f:1": [
+      { h: "A dollar today beats a dollar later",
+        b: "<p>Would you rather have $100 today or $100 in a year? Today, because you could invest it and have more than $100 a year from now. That idea is the <b>time value of money</b>, and it shows up in every track: bankers use it in a DCF, PE funds use it to measure returns, investors use it to price stocks and bonds, and consultants use it to decide whether a project is worth the cost.</p><p>Two moves cover almost everything: <b>compounding</b> (growing money forward) and <b>discounting</b> (shrinking future money back to today).</p>" },
+      { h: "Worked example: growing and shrinking money",
+        ex: "<b>Compounding:</b> $100 at 10% a year for 2 years<br>Year 1: 100 × 1.10 = 110<br>Year 2: 110 × 1.10 = <b>$121</b> (you earned interest on your interest)<br><b>Discounting:</b> $121 arriving in 2 years, 10% rate<br>121 ÷ 1.10 ÷ 1.10 = <b>$100 today</b>",
+        b: "<p>Compounding multiplies by (1 + rate) each year. Discounting divides by the same number. A <b>higher rate</b> makes future money worth <b>less</b> today, which is why a higher discount rate lowers a DCF value.</p>" },
+      { h: "Returns: MOIC and IRR",
+        b: "<ul><li><b>MOIC</b> (multiple on invested capital) = money you get back ÷ money you put in. $100 in, $300 back = <b>3.0x</b>.</li><li><b>IRR</b> (internal rate of return) = the yearly return that turns your money in into your money out. It adds the time, which MOIC ignores.</li><li><b>Rule of thumb:</b> 2x in 5 years is about <b>15%</b> a year. 3x in 5 years is about <b>25%</b>.</li></ul><p><b>Trap:</b> the same MOIC in fewer years is a <b>higher</b> IRR. A 2x in 3 years beats a 2x in 6 years.</p>" },
+      { h: "Quick check", check: ["A fund doubles its money in 5 years. Its yearly return (IRR) is about:", ["10%", "15%", "20%"], 1, "2^(1/5) is about 1.15, so roughly 15% a year. Use the rule of thumb: 2x in 5 years is about 15%."] }
+    ],
+    "ib:7": [
       { h: "The most-asked accounting question",
         b: "<p>\"Depreciation goes up by $10. Walk me through the three statements.\"</p><p>Always answer in the same order: <b>income statement → cash flow statement → balance sheet</b>. The income statement changes net income, the cash flow statement turns that into cash, and the balance sheet has to balance at the end.</p><p>First, the key idea: <b>depreciation</b> spreads the cost of equipment over the years you use it. It counts as an expense on paper, but <b>no cash leaves</b> that year (you paid for the equipment when you bought it).</p><p>Assume a tax rate if none is given (40% keeps the math clean).</p>" },
       { h: "Worked example: depreciation +$10, 40% tax",
@@ -53,6 +63,17 @@
       { h: "Quick check", check: ["Peers trade at 8x EBITDA and the target's EBITDA is $25. Implied enterprise value:", ["$33", "$200", "$250"], 1, "8 × $25 = $200."] }
     ],
     "f:4": [
+      { h: "Two ways to fund a company",
+        b: "<ul><li><b>Debt</b> is borrowed money. The company owes <b>interest</b> and has to pay the original amount back. Lenders are paid first.</li><li><b>Equity</b> is the owners' money. There is no promised payment, but owners keep the upside and are paid <b>last</b>.</li></ul><p>This sits behind PE buyouts (how much debt to use), restructuring (who gets paid when a company can't pay), bank capital markets (raising debt and stock for clients), and consulting (how a client should fund a big project).</p>" },
+      { h: "What each costs: the tax shield",
+        ex: "Debt costs <b>8%</b>, tax rate <b>25%</b><br>Interest is tax deductible, so after-tax cost = 8% × (1 − 25%) = <b>6%</b><br>Equity holders want more, say 10%, because they are paid last<br>Fund 50% each → blended cost = 0.5 × 6% + 0.5 × 10% = <b>8%</b>",
+        b: "<p>That blended number is the <b>cost of capital</b> (WACC). Debt is cheaper than equity for two reasons: lenders take less risk, and the interest lowers your taxes (the <b>tax shield</b>).</p>" },
+      { h: "Leverage cuts both ways",
+        ex: "Buy a $100 asset: $50 debt + $50 your money (ignore interest)<br>Asset +20% → $120. Repay $50 → you hold $70 → <b>+40%</b><br>Asset −20% → $80. Repay $50 → you hold $30 → <b>−40%</b>",
+        b: "<p><b>Leverage</b> means using debt. The same move in the asset becomes a bigger move in your equity. That is why higher risk goes with higher return, and why too much debt is dangerous: interest is due even in a bad year.</p><p><b>Seniority:</b> in a bankruptcy, secured lenders are paid first, then unsecured lenders, then shareholders.</p>" },
+      { h: "Quick check", check: ["You buy a $100 asset with $75 of debt and $25 of your own money. It rises 10%. Your return on equity (ignore interest):", ["10%", "30%", "40%"], 2, "The asset gains $10 and your equity was only $25, so 10 ÷ 25 = 40%."] }
+    ],
+    "ib:8": [
       { h: "Accretive or dilutive?",
         b: "<p>When one company buys another, bankers ask: after the deal, does the buyer's <b>profit per share</b> (earnings per share, or <b>EPS</b>) go up (<b>accretive</b>) or down (<b>dilutive</b>)? Shareholders care because EPS drives the stock price.</p><p>Simple rule: if what the target earns per dollar you pay is <b>more</b> than what that dollar costs you, the deal is accretive.</p>" },
       { h: "What each dollar costs",

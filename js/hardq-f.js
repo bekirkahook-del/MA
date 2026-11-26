@@ -1,0 +1,72 @@
+(function(){"use strict";window.MA_HARDQ=Object.assign(window.MA_HARDQ||{},{
+ "f-0":[
+  ["Revenue is $400, COGS $150, SG&A $100 (it includes D&A), interest expense $20, and the tax rate is 25%. Net income is:",["$97.50","$130","$112.50","$150"],0,"EBIT = 400 − 150 − 100 = 150. Pre-tax income = 150 − 20 = 130. Net income = 130 × 0.75 = 97.5."],
+  ["Net income $80, D&A $20, accounts receivable up $15, accounts payable up $5. Cash from operations is:",["$120","$90","$80","$50"],1,"80 + 20 (non-cash) − 15 (receivables tie up cash) + 5 (payables hold cash) = 90."],
+  ["Net income $100, D&A $20, inventory up $30, accounts payable up $10. Cash from operations is:",["$120","$160","$100","$80"],2,"100 + 20 − 30 + 10 = 100. More inventory uses cash, more payables save cash."],
+  ["A balance sheet shows cash $50, receivables $80, PP&E $200, accounts payable $60 and debt $100. Shareholders' equity must be:",["$170","$330","$270","$490"],0,"Assets = 50 + 80 + 200 = 330. Liabilities = 60 + 100 = 160. Equity = 330 − 160 = 170."],
+  ["A company sells equipment with a book value of $40 for $55 cash. The tax rate is 20%. How much does cash change (including taxes paid on the gain)?",["+$55","+$12","+$40","+$52"],3,"Gain = 55 − 40 = 15. Tax on the gain = 3. Cash = 55 − 3 = 52. Net income only rises by 12, but the full sale price counts as cash."],
+  ["Depreciation rises $50 and the tax rate is 40%. Total assets change by:",["−$50","+$20","−$30","−$20"],2,"Cash rises by the tax saved: 50 × 40% = 20. PP&E falls 50. Net change = 20 − 50 = −30."],
+  ["Retained earnings start at $200. The year's net income is $90, dividends are $25 and a $15 stock buyback happens (recorded in treasury stock). Ending retained earnings:",["$250","$290","$280","$265"],3,"Retained earnings = 200 + 90 − 25 = 265. The buyback reduces equity through treasury stock, not retained earnings."],
+  ["Beginning cash $100. Cash from operations +$80, capex $50, new debt $40 and dividends $20. Ending cash:",["$150","$110","$170","$190"],0,"Investing = −50. Financing = +40 − 20 = +20. Change = 80 − 50 + 20 = 50, so ending cash = 150."],
+  ["A company records $100 of credit sales and pays $60 of COGS in cash. Tax is 25% and paid right away. The change in cash this period is:",["+$40","−$70","−$60","+$30"],1,"Customers haven't paid yet, so no cash in. Cash out = 60 COGS + 10 tax on $40 profit = 70."],
+  ["Customers prepay $120 for a one-year service at the start of the year. After one quarter, the deferred revenue balance is:",["$30","$90","$120","$0"],1,"Revenue earned = 120 ÷ 4 = 30. Deferred revenue = 120 − 30 = 90."],
+  ["A buyer pays $500 for a company whose identifiable net assets are worth $380 at fair value. Goodwill created:",["$500","$380","$880","$120"],3,"Goodwill = price − fair value of net identifiable assets = 500 − 380 = 120."],
+  ["A $60 machine is depreciated straight-line over 5 years. Its net book value at the end of year 2 is:",["$36","$48","$12","$24"],0,"Depreciation = 60 ÷ 5 = 12 a year. After 2 years: 60 − 24 = 36."]
+ ],
+ "f-1":[
+  ["$10,000 earns 6% a year with compounding for 3 years. The ending value is about:",["$11,800","$10,600","$11,910","$12,000"],2,"10,000 × 1.06³ = 11,910.16."],
+  ["$14,641 arrives in 4 years. At a 10% discount rate, its value today is:",["$13,310","$8,784.60","$10,000","$11,000"],2,"14,641 ÷ 1.10⁴ = 10,000. (1.10⁴ = 1.4641.)"],
+  ["An investment gains 50% in year 1 and loses 50% in year 2. $100 invested ends at:",["$75","$100","$125","$50"],0,"100 × 1.5 = 150, then 150 × 0.5 = 75. A 50% loss needs a 100% gain to recover."],
+  ["A fund turns $100 into $300 over 6 years. Its IRR is closest to:",["30%","50%","12%","20%"],3,"3^(1/6) − 1 = 20.1%, so about 20%."],
+  ["Money doubles in 7 years. The annual return is closest to:",["14%","10%","7%","20%"],1,"2^(1/7) − 1 = 10.4%, about 10%. This matches the rule of 72: 72 ÷ 7 ≈ 10."],
+  ["$144 arrives in 2 years and nothing before. At 20% per year, what is it worth today?",["$120","$72","$115.20","$100"],3,"144 ÷ 1.2² = 100."],
+  ["You receive $100 at the end of year 1 and $100 at the end of year 2. At 10%, the present value is:",["$200","$173.55","$190","$181.82"],1,"100 ÷ 1.10 = 90.91 and 100 ÷ 1.21 = 82.64. Total = 173.55."],
+  ["A payment of $50 a year forever, discounted at 10%, is worth:",["$50","$55","$500","$5"],2,"A perpetuity is worth payment ÷ rate = 50 ÷ 0.10 = 500. This is the idea behind a terminal value."],
+  ["Next year's payment is $50 and it grows 2% a year forever. At a 10% discount rate, its value today is:",["$625","$500","$510","$416.67"],0,"Growing perpetuity = 50 ÷ (0.10 − 0.02) = 625."],
+  ["Deal A returns 2.0x in 4 years. Deal B returns 2.5x in 6 years. Which has the higher IRR?",["Deal B, because 2.5x is higher","Deal A, about 19% versus 16%","They are equal","Deal B, because it lasts longer"],1,"2^(1/4) − 1 = 18.9% and 2.5^(1/6) − 1 = 16.5%. A higher multiple over a longer time can still be a lower yearly rate."],
+  ["Using the rule of 72, about how long does it take money to double at 12% a year?",["12 years","8 years","6 years","3 years"],2,"72 ÷ 12 = 6 years."],
+  ["The discount rate rises from 8% to 10%. The present value of $1,000 received in 2 years falls by about:",["$31","$20","$100","$45"],0,"At 8%: 1,000 ÷ 1.1664 = 857.34. At 10%: 1,000 ÷ 1.21 = 826.45. The drop is 30.89."]
+ ],
+ "f-2":[
+  ["A company has 100 basic shares, 20 options with a $15 strike, and the stock trades at $25. Diluted shares by the treasury stock method:",["120","100","112","108"],3,"Options bring in 20 × 15 = 300. That buys back 300 ÷ 25 = 12 shares. Net new shares = 8, so diluted = 108."],
+  ["Diluted shares are 108 and the stock is $25. Equity value is:",["$2,500","$3,000","$2,700","$2,400"],2,"108 × 25 = 2,700."],
+  ["Equity value $2,700, debt $500, preferred stock $100, noncontrolling interest $50, cash $200. Enterprise value:",["$3,000","$3,550","$2,850","$3,150"],3,"2,700 + 500 + 100 + 50 − 200 = 3,150."],
+  ["A company raises $100 of new debt and pays it all out as a special dividend. Enterprise value:",["Is unchanged","Rises $100","Falls $100","Doubles"],0,"Debt rises 100 but equity value falls 100 (cash left the company), so EV is the same."],
+  ["EBITDA is $150, the company trades at 8.0x EV/EBITDA and net debt is $300. Equity value is:",["$1,200","$900","$1,500","$2,400"],1,"EV = 150 × 8 = 1,200. Equity = 1,200 − 300 = 900."],
+  ["EV is $1,000, net debt is $200 and there are 50 diluted shares. The implied price per share is:",["$20","$16","$4","$24"],1,"Equity value = 1,000 − 200 = 800. 800 ÷ 50 = 16."],
+  ["Company A: equity $600, debt $200, cash $100. Company B: equity $500, no debt, cash $50. Both have EBITDA of $100. A's EV/EBITDA is higher than B's by:",["1.0x","0.5x","1.5x","2.5x"],3,"A: (600+200−100) ÷ 100 = 7.0x. B: (500−50) ÷ 100 = 4.5x. Gap = 2.5x."],
+  ["Equity value $800, debt $200, noncontrolling interest $100, cash $50. Enterprise value:",["$1,050","$950","$1,150","$1,000"],0,"800 + 200 + 100 − 50 = 1,050."],
+  ["A convertible bond has a $100 face value and converts at $20 per share. The stock trades at $30, so it is in the money. If-converted, how much is added to equity value instead of debt?",["$100","$250","$150","$50"],2,"100 ÷ 20 = 5 new shares × $30 = 150. The $100 of debt is removed."],
+  ["100 diluted shares at $12, debt $400, cash $150, EBITDA $130. EV/EBITDA is closest to:",["9.2x","12.4x","11.2x","10.0x"],2,"Equity = 1,200. EV = 1,200 + 400 − 150 = 1,450. 1,450 ÷ 130 = 11.15."],
+  ["A target's unaffected price is $12 and a buyer offers $15 a share for 100 shares. Net debt is $200. The offer premium and implied EV are:",["25% premium and $1,700 EV","15% premium and $1,700 EV","25% premium and $1,500 EV","25% premium and $1,300 EV"],0,"15 ÷ 12 − 1 = 25%. Equity = 1,500. EV = 1,500 + 200 = 1,700."],
+  ["A target trades at 9.0x EV/EBITDA with EBITDA $100 and net debt $300. A buyer pays a 30% premium to equity value. The offer's EV/EBITDA is:",["11.7x","9.0x","12.0x","10.8x"],3,"EV = 900, equity = 600. Offer equity = 600 × 1.3 = 780. Offer EV = 1,080. 1,080 ÷ 100 = 10.8x."]
+ ],
+ "f-3":[
+  ["Year 5 free cash flow is $100. Growth is 3% forever and WACC is 11%. Terminal value at the end of year 5 (perpetuity growth) is:",["$1,250","$1,287.50","$735.71","$909.09"],1,"TV = 100 × 1.03 ÷ (0.11 − 0.03) = 1,287.5."],
+  ["A terminal value of $1,610.51 arrives at the end of year 5. With a 10% WACC, its present value is about:",["$1,461","$805","$1,300","$1,000"],3,"1,610.51 ÷ 1.10⁵ = 1,610.51 ÷ 1.61051 = 1,000."],
+  ["FCF is $100 in year 1 and $110 in year 2, and the terminal value at the end of year 2 is $1,320. At a 10% WACC, enterprise value is about:",["$1,530","$1,273","$1,200","$1,430"],1,"PV of year 1 = 90.91. Year 2 FCF + TV = 1,430, and 1,430 ÷ 1.21 = 1,181.82. Total = 1,272.73."],
+  ["An exit multiple gives a terminal value of $1,200. Final-year FCF is $90 and WACC is 10%. The implied perpetuity growth rate is closest to:",["1.0%","3.5%","2.3%","7.5%"],2,"1,200 = 90 × (1 + g) ÷ (0.10 − g). Solving: g = (1,200 × 0.10 − 90) ÷ (1,200 + 90) = 30 ÷ 1,290 = 2.33%."],
+  ["Peers trade at 8x, 10x, 12x, 14x and 30x EBITDA. The target's EBITDA is $80. Using the median multiple, implied EV is:",["$960","$1,184","$800","$2,400"],0,"The median is 12x (the 30x outlier would pull the mean up to 14.8x). 12 × 80 = 960."],
+  ["Equity is 60% of capital at a 10% cost. Debt is 40% at 8% before tax, with a 25% tax rate. WACC is:",["9.2%","8.4%","8.8%","6.0%"],1,"Equity: 0.60 × 10% = 6.0%. Debt: 0.40 × 8% × 0.75 = 2.4%. WACC = 8.4%."],
+  ["CAPM: risk-free rate 4%, beta 1.2, equity risk premium 5%. Cost of equity:",["9%","6%","10%","11%"],2,"4% + 1.2 × 5% = 10%."],
+  ["A stock trades at $20 with 50 shares. A buyer offers a 30% premium. Net debt is $200. The offer's enterprise value is:",["$1,500","$1,200","$1,300","$1,260"],0,"Offer price = 20 × 1.3 = 26. Equity = 26 × 50 = 1,300. EV = 1,300 + 200 = 1,500."],
+  ["WACC rises from 9% to 11% with growth fixed at 3%. The terminal value factor (1 + g) ÷ (WACC − g) falls by about:",["12%","50%","18%","25%"],3,"At 9%: 1.03 ÷ 0.06 = 17.17. At 11%: 1.03 ÷ 0.08 = 12.88. That is 25% lower."],
+  ["The present value of explicit-period cash flows is $400 and the present value of the terminal value is $600. The terminal value share of EV is:",["40%","150%","60%","75%"],2,"600 ÷ (400 + 600) = 60%."],
+  ["DCF enterprise value is $2,000, debt $700, cash $200 and 100 diluted shares. Value per share:",["$13","$20","$17","$15"],3,"Equity = 2,000 − 700 + 200 = 1,500. 1,500 ÷ 100 = 15."],
+  ["A cash flow of $100 arrives mid-year 1 and WACC is 10%. Using the mid-year convention, its present value is about:",["$95.35","$90.91","$100","$110"],0,"Discount for half a year: 100 ÷ 1.10^0.5 = 95.35, a bit higher than the end-of-year value of 90.91."]
+ ],
+ "f-4":[
+  ["You buy a $200 asset with $120 of debt (ignore interest). The asset rises 10%. Your equity return is:",["10%","25%","16.7%","12%"],1,"Asset gain = 20. Your equity is 200 − 120 = 80. 20 ÷ 80 = 25%."],
+  ["Same purchase: a $200 asset with $120 of debt. The asset falls 20%. Your equity falls by:",["20%","50%","33%","60%"],1,"Asset loss = 40 against equity of 80, so equity falls 50%."],
+  ["An asset is funded 70% with debt. How far can the asset's value fall before the equity is wiped out?",["70%","100%","43%","30%"],3,"The asset can lose the equity cushion: 100 − 70 = 30, which is 30% of the asset's value."],
+  ["Debt costs 9% before tax and the tax rate is 35%. After-tax cost of debt:",["5.85%","9%","3.15%","12.15%"],0,"9% × (1 − 0.35) = 5.85%."],
+  ["A company has $500 of debt at 8% and a 25% tax rate. The yearly tax saving from the interest is:",["$40","$125","$10","$30"],2,"Interest = 500 × 8% = 40. Tax saved = 40 × 25% = 10."],
+  ["Equity is 70% of capital at 11%. Debt is 30% at 7% before tax, with a 30% tax rate. WACC is:",["9.8%","8.6%","9.17%","9.00%"],2,"Equity: 0.70 × 11% = 7.70%. Debt: 0.30 × 7% × 0.70 = 1.47%. WACC = 9.17%."],
+  ["EBIT is $100, interest expense $30 and the tax rate 25%. Net income is:",["$52.50","$75","$70","$45"],0,"Pre-tax income = 70. Net income = 70 × 0.75 = 52.5. Without the debt it would be 75."],
+  ["Debt is $480, EBITDA $120 and interest $36. Leverage (debt ÷ EBITDA) and interest coverage (EBITDA ÷ interest) are:",["4.0x and 4.0x","0.3x and 3.3x","3.3x and 4.0x","4.0x and 3.3x"],3,"480 ÷ 120 = 4.0x. 120 ÷ 36 = 3.3x."],
+  ["A company enters bankruptcy worth $500. First-lien debt is $300 and unsecured debt is $400. What share of its claim do unsecured lenders recover?",["0%","50%","100%","25%"],1,"First lien takes 300 first. 200 is left for 400 of unsecured claims: 50%. Shareholders get nothing."],
+  ["A buyout pays $1,000 (10x EBITDA of $100) with $600 of debt. After a few years the company sells for $1,200 and the debt is unchanged. The sponsor's MOIC is:",["1.2x","2.0x","1.0x","1.5x"],3,"Equity in = 1,000 − 600 = 400. Equity out = 1,200 − 600 = 600. 600 ÷ 400 = 1.5x."],
+  ["Same buyout ($1,000 price, $600 debt) but the company only sells for $800. The sponsor's MOIC is:",["0.8x","0.5x","0.0x","1.0x"],1,"Equity out = 800 − 600 = 200 on 400 in. 200 ÷ 400 = 0.5x. A 20% drop in value cost half the equity."],
+  ["Assets of $100 earn 12%. They are funded with $50 of debt at 8% and $50 of equity (no taxes). Return on equity is:",["12%","8%","16%","24%"],2,"Operating profit 12 − interest 4 = 8. 8 ÷ 50 = 16%. Leverage helps because the assets earn more than the debt costs."]
+ ]
+});})();

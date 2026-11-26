@@ -71,7 +71,7 @@ M.lbo={keys:["pe:1","pe:3"],name:"Build an LBO",blurb:"Buy it, pay down debt for
       tip:"Where did the return come from? Debt paydown added "+n(debt0-D[4])+", EBITDA growth added "+n((E[4]-p.e0)*p.m)+" of value. Multiple expansion added 0 because entry and exit are equal. That is the standard conservative assumption."}}};
 
 /* ---------- 3) Merger: accretion / dilution ---------- */
-M.merger={keys:["f:4"],name:"Build a merger model",blurb:"Does the deal raise or lower the buyer's EPS?",
+M.merger={keys:["ib:8"],name:"Build a merger model",blurb:"Does the deal raise or lower the buyer's EPS?",
   gen:()=>({nia:r.s(100,300,50),sha:r.p([50,100]),pa:r.p([20,40,50]),price:r.p([400,500,600]),pct:r.p([50,75]),nit:r.s(20,40,10),d:r.p([5,6,8])}),
   build:p=>{
     const tax=0.25,stock=p.price*p.pct/100,debt=p.price-stock,newSh=stock/p.pa;

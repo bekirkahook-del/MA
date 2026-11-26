@@ -16,6 +16,16 @@ const ADD={
 ["Issuing $100 of new debt changes which cash flow section?",["Financing, +$100","Operations, +$100","Investing, +$100","None"],0,"Raising debt is a financing inflow."],
 ["Goodwill is created when:",["The buyer pays more than the fair value of net identifiable assets","A company beats its forecast","A company issues stock","Assets are depreciated"],0,"Goodwill is the purchase price above the fair value of identifiable net assets."]],
 "f-1":[
+["$1,000 earns 8% a year with compounding. After 2 years you have:",["$1,160","$1,166.40","$1,080","$1,260.40"],1,"1,000 × 1.08 × 1.08 = 1,166.40."],
+["What is $1,210 received in 2 years worth today at a 10% discount rate?",["$1,000.10","$1,100","$968","$1,000"],3,"1,210 ÷ 1.10 ÷ 1.10 = 1,000."],
+["About what yearly return (IRR) is 2.0x over 5 years?",["15%","20%","10%","40%"],0,"2^(1/5) − 1 = 14.9%, so about 15%."],
+["A fund puts in $50 and gets back $200 over 4 years. Its MOIC is:",["2.0x","3.0x","4.0x","150%"],2,"200 ÷ 50 = 4.0x."],
+["A deal returns the same MOIC but the exit happens a year sooner. The IRR:",["Goes down","Stays the same","Goes up","Becomes negative"],2,"The same gain earned over less time is a higher yearly rate."],
+["A higher discount rate does what to the present value of a future cash flow?",["Lowers it","Raises it","Leaves it unchanged","Doubles it"],0,"You divide by a bigger number, so today's value is smaller."],
+["$100 earns 10% a year with compounding for 3 years. Ending value:",["$130","$133","$110","$133.10"],3,"100 × 1.1³ = 133.10. Simple interest would give only $130."],
+["An investment grows from $100 to $144 in 2 years. The annual return is:",["22%","20%","44%","12%"],1,"144 ÷ 100 = 1.44, and the square root is 1.2, so 20% a year."],
+["Why does a PE firm care how fast it exits a deal, even if the MOIC is the same?",["Faster exits raise taxes","Slower exits raise MOIC","Speed doesn't matter","A faster exit means a higher IRR"],3,"IRR is a per-year measure, so time matters."]],
+"ib-7":[
 ["Depreciation rises $10 and the tax rate is 25%. Cash changes by:",["−$10","+$2.50","−$7.50","+$10"],1,"Net income falls $7.50, you add back $10, so cash is up $2.50 from the tax shield."],
 ["A company repays $30 of debt with cash. Total assets change by:",["−$30","+$30","0","−$60"],0,"Cash falls $30 and debt falls $30, so assets fall $30."],
 ["A company issues $40 of stock and keeps the cash. Total assets change by:",["+$40","0","−$40","+$80"],0,"Cash rises $40 and equity rises $40."],
@@ -47,6 +57,16 @@ const ADD={
 ["A football field chart shows:",["Valuation ranges from several methods","Stock price history only","The org chart","The cap table"],0,"Each bar is a method's low-to-high value range."],
 ["Which is the better trading comp?",["Same industry, similar size, growth and margins","Same stock exchange","Same CEO first name","Same year founded"],0,"Comps should have similar business drivers and risk."]],
 "f-4":[
+["A loan costs 10% and the tax rate is 30%. After-tax cost?",["7%","3%","10%","13%"],0,"10% × (1 − 30%) = 7%."],
+["Why does debt usually cost less than equity?",["Debt has no risk","Equity holders are paid first","Lenders are paid first, and interest is tax deductible","Debt is not repaid"],2,"Lower risk and a tax shield both push the cost of debt down."],
+["You buy a $200 asset with $150 of debt. The asset rises 10%. Return on your equity (ignore interest)?",["10%","20%","40%","50%"],2,"Gain = 20 on equity of 50, so 40%."],
+["The same $200 asset, funded with $150 of debt, falls 25%. What happens to your equity?",["It is wiped out","It falls 25%","It falls 50%","It rises"],0,"The asset loses $50, exactly your $50 of equity."],
+["Debt is 40% of capital at 5% after tax and equity is 60% at 10%. WACC is:",["7.5%","10%","6%","8%"],3,"0.40 × 5% + 0.60 × 10% = 8%."],
+["In a bankruptcy, which claim is generally paid first?",["Common stock","First-lien secured debt","Unsecured bonds","Preferred stock"],1,"Secured lenders have a claim on specific assets and sit at the top."],
+["A 'tax shield' from debt is:",["A rule that bans debt","A type of equity","A tax paid by lenders","The tax savings from deducting interest"],3,"Interest lowers taxable income, which lowers the tax bill."],
+["Which banking teams help a client raise debt or equity from investors?",["Compliance and HR","DCM and ECM (capital markets)","Sales and trading only","Research only"],1,"DCM handles bonds and loans. ECM handles stock offerings like IPOs."],
+["In a downturn, a company with a lot of debt compared to one with little is:",["Safer","Exactly as risky","More likely to default","Tax free"],2,"Fixed interest payments still have to be made when profits drop."]],
+"ib-8":[
 ["An all-stock deal is accretive when the acquirer's P/E is:",["Higher than the target's P/E (at the offer price)","Lower than the target's","Always equal","Irrelevant"],0,"You are paying with a richer currency than what you are buying."],
 ["Which financing is usually cheapest after tax?",["Debt","Stock","Preferred","They cost the same"],0,"Interest is tax deductible and debt has lower required returns."],
 ["Synergies in accretion analysis usually change:",["Pro forma net income","Only the share count","Only the share price","Nothing"],0,"Cost or revenue synergies raise combined earnings."],

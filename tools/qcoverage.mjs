@@ -8,17 +8,21 @@ const a = src.indexOf("const TRACKS = ["), b = src.indexOf("\nconst MORE_Q=");
 (0, eval)(src.slice(a, b).replace("const TRACKS", "globalThis.TRACKS"));
 const grab = n => { const i = src.indexOf("const " + n + "="); return i < 0 ? {} : (0, eval)("(" + src.slice(i + n.length + 7, src.indexOf("\n", i)).replace(/;$/, "") + ")"); };
 const more = [grab("MORE_Q"), grab("MORE_Q2"), grab("MORE_Q3")];
-await import("../js/easyq.js"); await import("../js/hardq.js"); for (const t of ["ib", "pe", "pm", "rx", "mc"]) { await import("../js/easyq-" + t + ".js"); await import("../js/hardq-" + t + ".js"); } await import("../js/reps-data.js");
+/* js/more-content.js and js/more-content2.js add questions at load time (deduped by question text); count them too */
+const addOf = f => { const t = fs.readFileSync(new URL("../js/" + f, import.meta.url), "utf8"), a = t.indexOf("const ADD={"), b = t.indexOf("\n};", a); if (a < 0 || b < 0) return {};
+  return (0, eval)("(function(){let n=0;const Q=(t,a,w,e)=>{const p=n++%4,o=w.slice();o.splice(p,0,a);return[t,o,p,e]};return " + t.slice(a + 10, b + 2) + "})()") };
+more.push(addOf("more-content.js"), addOf("more-content2.js"));
+await import("../js/easyq.js"); await import("../js/hardq.js"); for (const t of ["f", "ib", "pe", "pm", "rx", "mc"]) { await import("../js/easyq-" + t + ".js"); await import("../js/hardq-" + t + ".js").catch(() => {}); } await import("../js/reps-data.js");
 /* mini-lessons live in IIFEs that expect a browser; load them in a stubbed sandbox and read window.MA_LESSONS */
 globalThis.localStorage = { getItem() { return null }, setItem() {} }; globalThis.showBrief = () => {}; globalThis.runLevel = () => {};
 globalThis.document = { addEventListener() {}, createElement() { return { style: {} } }, head: { appendChild() {} }, getElementById() { return null }, querySelector() { return null } };
 for (const f of ["lessons.js", "lessons2.js"]) { try { (0, eval)(fs.readFileSync(new URL("../js/" + f, import.meta.url), "utf8")) } catch (e) {} }
 const LES = window.MA_LESSONS || {}, REPS = window.MA_REPS || {};
 const MIN = 10, TARGET_LEVELS = 10, rows = []; let gaps = 0, levelsShort = 0, noLes = 0, noApp = 0;
-for (const id of ["ib", "pe", "pm", "rx", "mc"]) {
+for (const id of ["f", "ib", "pe", "pm", "rx", "mc"]) {
   const tr = TRACKS.find(t => t.id === id);
   tr.levels.forEach((L, i) => {
-    const core = L.q.length + more.reduce((n, m) => n + ((m[id + "-" + i] || []).length), 0);
+    const core = new Set([...L.q, ...more.flatMap(m => m[id + "-" + i] || [])].map(q => q[0])).size;
     const e = (window.MA_EASYQ[id + "-" + i] || []).length, h = (window.MA_HARDQ[id + "-" + i] || []).length;
     const les = (LES[id + ":" + i] || []).length, app = REPS[id + ":" + i] ? 1 : 0;
     rows.push([id, i + 1, L.n, e, core, h, les, app]); gaps += (e < MIN) + (core < MIN) + (h < MIN); noLes += !les; noApp += !app;

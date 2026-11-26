@@ -37,3 +37,14 @@ test("daily pacing: 3 new levels per specialized track per day, enforced in map,
   assert.match(src, /function runLevel\(tr,i\)\{if\(capHit\(tr,i\)\)/);
   assert.match(src, /&&!capHit\(tr,i\);/);
 });
+
+test("Foundations is five general levels with stable keys; IB owns Walk Me Through It and Accretion / Dilution as its last two levels", async () => {
+  const a = src.indexOf("const TRACKS = ["), b = src.indexOf("\nconst MORE_Q=");
+  globalThis.window = globalThis.window || {}; globalThis.document = globalThis.document || {};
+  (0, eval)(src.slice(a, b).replace("const TRACKS", "globalThis.TRACKS"));
+  const f = TRACKS.find(t => t.id === "f"), ib = TRACKS.find(t => t.id === "ib");
+  assert.deepEqual(f.levels.map(l => l.n), ["The Three Statements", "Time Value & Returns", "Enterprise Value", "Valuation Methods", "Debt, Equity & Risk"]);
+  assert.equal(ib.levels.length, 9);
+  assert.deepEqual(ib.levels.slice(7).map(l => l.n), ["Walk Me Through It", "Accretion / Dilution"]);
+  assert.match(src, /clearedCount\("f"\)===5/);
+});

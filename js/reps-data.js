@@ -30,7 +30,14 @@ const depBuild=p=>{const ans=rd(p.d*p.t/100),ni=rd(-p.d*(1-p.t/100));
     steps:[["Pre-tax income falls by the expense",sg(-p.d)],["Taxes fall by "+p.t+"% × "+p.d,sg(rd(p.d*p.t/100))],["Net income",`${sg(ni)}`],["Add back depreciation (non-cash)",`${sg(ni)} + ${p.d} = ${sg(ans)}`]],
     tip:"Cash rises by exactly the tax you save: "+p.t+"% × "+p.d+" = "+n(ans)+"."}};
 const depGen=()=>({d:r.p([10,20,30,40,50]),t:r.p([20,25,30,40])});
-M["f:1"]={gen:depGen,build:depBuild};
+M["ib:7"]={gen:depGen,build:depBuild};
+/* Foundations: time value of money. $100 at 10% for 2 years = $121 (the lesson's worked example). */
+M["f:1"]={
+  gen:()=>({pv:r.s(100,500,100),rate:r.p([10,20])}),
+  build:p=>{const m=1+p.rate/100,y1=rd(p.pv*m),ans=rd(p.pv*m*m);
+    return{given:`You invest <b>${$(p.pv)}</b> at <b>${p.rate}%</b> a year with compounding.`,q:"What is it worth after 2 years?",ans,unit:"$",
+      steps:[["Year 1: grow by "+p.rate+"%",`${p.pv} × ${rd(m)} = ${n(y1)}`],["Year 2: grow again",`${n(y1)} × ${rd(m)} = ${n(ans)}`]],
+      tip:"Interest earns interest. Discounting is the same math in reverse: divide by "+rd(m)+" each year."}}};
 M["t:0"]={gen:depGen,build:depBuild};
 
 const evBuild=p=>{const ans=p.eq+p.debt-p.cash;
@@ -47,12 +54,20 @@ M["f:3"]={
     return{given:`Similar companies trade at <b>${p.m}x</b> EBITDA. The target's EBITDA is <b>${$(p.e)}</b>.`,q:"What is the implied enterprise value?",ans,unit:"$",
       steps:[["EV = EBITDA × multiple",`${p.e} × ${p.m} = ${ans}`]],tip:"Comps: take what the market pays for similar companies and apply it to the target."}}};
 
-M["f:4"]={
+M["ib:8"]={
   gen:()=>({rate:r.p([6,7,8,9,10]),t:r.p([20,25,30])}),
   build:p=>{const ans=rd(p.rate*(1-p.t/100));
     return{given:`New debt costs <b>${p.rate}%</b> interest. The tax rate is <b>${p.t}%</b>.`,q:"What is the after-tax cost of the debt? (in %)",ans,unit:"%",tol:0.05,
       steps:[["Interest is tax deductible",`1 − ${p.t}% = ${rd(1-p.t/100)}`],["After-tax cost",`${p.rate}% × ${rd(1-p.t/100)} = ${pc(ans)}`]],
       tip:"A deal is accretive when what the target earns per dollar beats this cost."}}};
+
+/* Foundations: leverage. $100 asset, $50 debt, +20% -> equity +40% (the lesson's worked example). */
+M["f:4"]={
+  gen:()=>({a:r.p([100,200,400]),d:r.p([50,75]),x:r.p([10,20,25])}),
+  build:p=>{const debt=p.a*p.d/100,eq=p.a-debt,gain=rd(p.a*p.x/100),ans=rd(gain/eq*100);
+    return{given:`You buy a <b>${$(p.a)}</b> asset with <b>${$(debt)}</b> of debt and <b>${$(eq)}</b> of your own money. The asset rises <b>${p.x}%</b>. Ignore interest.`,q:"What is your return on your equity? (in %)",ans,unit:"%",tol:0.05,
+      steps:[["Asset gain",`${p.a} × ${p.x}% = ${n(gain)}`],["Your equity is the part you paid",`${p.a} − ${debt} = ${eq}`],["Return on equity",`${n(gain)} ÷ ${eq} = ${pc(ans)}`]],
+      tip:"Leverage multiplies the move by assets ÷ equity ("+rd(p.a/eq)+"x here). It multiplies losses the same way."}}};
 
 /* ---------- Investment banking ---------- */
 M["ib:3"]={

@@ -103,5 +103,42 @@
   ["What is the 'gross spread' in an offering?",["The underwriters' fee","The stock's daily range","The coupon rate","The tax on the sale"],0,"It is the difference between the price paid to the issuer and the price to investors."],
   ["What is a prospectus?",["A bank's loan form","A tax return","A stock chart","A document that describes the offering to investors"],3,"The prospectus gives investors the key facts and risks."],
   ["In a bankruptcy, who is generally paid first?",["Shareholders before lenders","Everyone equally","Lenders and bondholders before shareholders","Only the CEO"],2,"Debt holders have a higher claim than equity holders."]
+ ],
+ "ib-7":[
+  ["In a 'walk me through it' question, which statement do you usually start with?",["Balance sheet","Cash flow statement","Income statement","Annual report"],2,"Go in order: income statement, then cash flow statement, then balance sheet."],
+  ["Unless told otherwise, what tax rate do you assume in these practice questions?",["0%","10%","100%","40%"],3,"A 40% rate keeps the math clean, so it is the usual assumption."],
+  ["A company's expenses rise by $10 and the tax rate is 40%. Its taxes fall by:",["$4","$10","$6","$0"],0,"Pre-tax income falls 10, so tax falls 40% × 10 = 4."],
+  ["Revenue rises by $50 with no new costs and a 40% tax rate. Net income rises by:",["$50","$30","$20","$0"],1,"Tax is 40% × 50 = 20, so net income is up 50 − 20 = 30."],
+  ["Wages rise by $20 and the tax rate is 40%. Net income falls by:",["$20","$8","$0","$12"],3,"The expense is 20, tax falls 8, so net income falls 20 − 8 = 12."],
+  ["Depreciation rises by $20 and the tax rate is 40%. The tax bill goes down by:",["$8","$20","$12","$0"],0,"40% × 20 = 8. This tax saving is why cash goes up."],
+  ["Depreciation is called a 'non-cash expense' because:",["It is always zero","No cash leaves the company when it is recorded","It only happens in December","It is paid in cash to the IRS"],1,"Depreciation spreads out a past purchase. It lowers profit but no cash goes out."],
+  ["On the cash flow statement, depreciation is:",["Subtracted from net income","Shown under financing","Added back to net income","Ignored"],2,"It reduced net income but no cash left, so we add it back."],
+  ["Depreciation rises by $10. On the balance sheet, PP&E (property, plant and equipment) goes:",["Down by $10","Up by $10","Down by $4","Not change"],0,"Depreciation lowers the value of equipment on the books by the same amount."],
+  ["A company borrows $100 from a bank. Net income changes by:",["+$100","$0","−$100","+$60"],1,"Borrowing is not revenue or an expense. It adds cash and adds debt."],
+  ["A company borrows $100 from a bank. Cash goes up $100. What else changes?",["Revenue goes up $100","PP&E goes up $100","Debt goes up $100","Retained earnings go up $100"],2,"Assets (cash) and liabilities (debt) both rise $100, so the balance sheet still balances."],
+  ["A company buys $50 of equipment with cash. Total assets change by:",["+$50","−$50","+$100","$0"],3,"Cash falls $50 and equipment rises $50, so total assets stay the same."],
+  ["A customer who owed the company $20 (accounts receivable) pays in cash. Total assets change by:",["+$20","$0","−$20","+$40"],1,"Cash rises $20 and receivables fall $20. One asset swaps for another."],
+  ["A company pays a $20 dividend to shareholders in cash. Retained earnings go:",["Up by $20","Down by $8","Down by $20","Not change"],2,"Dividends come out of retained earnings, and cash falls $20 too."],
+  ["A company issues $100 of new stock for cash. Net income changes by:",["+$100","+$60","−$100","$0"],3,"Selling stock is financing, not revenue. It adds cash and equity."],
+  ["After you make a change on all three statements, the balance sheet should:",["Still balance (assets = liabilities + equity)","Show more assets than liabilities and equity","Show zero cash","Match the income statement exactly"],0,"If it doesn't balance, you made a mistake somewhere."]
+ ],
+ "ib-8":[
+  ["A company earns $100 of net income and has 50 shares. Its EPS (earnings per share) is:",["$2","$150","$0.5","$5000"],0,"EPS = net income ÷ shares = 100 ÷ 50 = 2."],
+  ["An 'accretive' deal is one that:",["Lowers the buyer's EPS","Raises the buyer's EPS","Doubles the share price","Cancels the deal"],1,"Accretive means EPS goes up after the deal."],
+  ["A 'dilutive' deal is one that:",["Raises the buyer's EPS","Adds cash to the balance sheet","Lowers the buyer's EPS","Makes the buyer debt-free"],2,"Dilutive means EPS goes down after the deal."],
+  ["The buyer's EPS was $2.00 before a deal and $2.50 after. The deal was:",["Dilutive","Neutral","Impossible to tell","Accretive"],3,"EPS went up, so it is accretive."],
+  ["The buyer's EPS was $3.00 before a deal and $2.70 after. The deal was:",["Accretive","Dilutive","Neutral","Impossible to tell"],1,"EPS went down, so it is dilutive."],
+  ["The buyer's EPS was $2.00 before a deal and $2.00 after. The deal was:",["Accretive","Dilutive","Neutral","A failure"],2,"EPS did not change, so it is neither accretive nor dilutive."],
+  ["After a deal, combined net income is $120 and there are still 50 shares. Pro forma EPS is:",["$2","$170","$6000","$2.4"],3,"120 ÷ 50 = 2.4."],
+  ["'Pro forma' EPS means EPS:",["As if the two companies were already combined","From last year only","Excluding all profits","Before any taxes"],0,"Pro forma shows the combined company's numbers as if the deal had already happened."],
+  ["A buyer issues new shares to pay for a deal. Holding profit the same, EPS tends to:",["Rise, because there are more shares","Stay the same always","Fall, because profit is split over more shares","Turn negative"],2,"More shares means each share gets a smaller slice, unless the target adds enough profit."],
+  ["New debt costs 10% interest and the tax rate is 20%. The after-tax cost of the debt is:",["10%","2%","30%","8%"],3,"10% × (1 − 20%) = 8%. Interest is tax deductible."],
+  ["A buyer's cash earns 5% interest and the tax rate is 20%. Using that cash in a deal costs it, after tax:",["4%","5%","1%","20%"],0,"5% × (1 − 20%) = 4%. That is the interest it no longer earns."],
+  ["The buyer's P/E is 20x. Its earnings yield (1 ÷ P/E), the 'cost' of paying with stock, is:",["20%","5%","10%","100%"],1,"1 ÷ 20 = 0.05 = 5%."],
+  ["Synergies are:",["Fees paid to bankers","New shares issued","The target's debt","Cost savings or extra revenue from combining two companies"],3,"Synergies make the combined company earn more than the two separately."],
+  ["Target earns an 8% return on the price paid. The buyer funds it with 5% after-tax cost debt. Does EPS go up?",["Yes, the target earns more than the funding costs","No, because debt is bad","No, because 8% is below 5%","Can't tell"],0,"Earning 8% on money that costs 5% adds profit, so the deal is accretive."],
+  ["In this deal, who is the 'acquirer' or buyer?",["The company being bought","The company doing the buying","The bank","The shareholders of the target only"],1,"The buyer's EPS is what we test for accretion or dilution."],
+  ["Buyer P/E is 25x and target P/E is 10x in an all-stock deal. The deal is:",["Dilutive","Neutral","Accretive","Impossible"],2,"A high-P/E buyer is buying cheaper earnings with expensive stock."],
+  ["Goodwill is created when a buyer pays:",["More than the fair value of the target's net identifiable assets","Less than book value","Only in cash","Exactly nothing"],0,"Goodwill is the extra amount paid above the net asset value."]
  ]
 });})();

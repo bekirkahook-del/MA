@@ -40,14 +40,18 @@ test("anchors: each generator reproduces the numbers printed in its lesson",()=>
   const A=(k,p)=>REPS[k].build(p).ans;
   /* f:0 coffee-style flow: NI 30, +0 D&A, receivables 10, capex 15, no borrowing -> +5 (lesson "Coffee shop") */
   assert.equal(A("f:0",{ni:30,da:0,ar:10,capex:15,debt:0}),5);
-  /* f:1 depreciation +10 @40% -> cash +4; t:0 @25% -> +2.5 (lessons) */
-  assert.equal(A("f:1",{d:10,t:40}),4);assert.equal(A("t:0",{d:10,t:25}),2.5);
+  /* ib:7 depreciation +10 @40% -> cash +4; t:0 @25% -> +2.5 (lessons) */
+  assert.equal(A("ib:7",{d:10,t:40}),4);assert.equal(A("t:0",{d:10,t:25}),2.5);
+  /* f:1 time value: $100 at 10% for 2 years = 121; $200 at 20% = 288 (lesson worked example) */
+  assert.equal(A("f:1",{pv:100,rate:10}),121);assert.equal(A("f:1",{pv:200,rate:20}),288);
   /* f:2 house: 300 + 200 - 20 = 480; t:1 $1,000 + 300 - 100 = 1,200 */
   assert.equal(A("f:2",{eq:300,debt:200,cash:20}),480);assert.equal(A("t:1",{eq:1000,debt:300,cash:100}),1200);
   /* f:3 comps: 10x * 50 = 500 and 8x * 25 = 200 */
   assert.equal(A("f:3",{e:50,m:10}),500);assert.equal(A("f:3",{e:25,m:8}),200);
-  /* f:4 8% debt at 25% tax = 6% */
-  assert.ok(near(A("f:4",{rate:8,t:25}),6));
+  /* ib:8 8% debt at 25% tax = 6% */
+  assert.ok(near(A("ib:8",{rate:8,t:25}),6));
+  /* f:4 leverage: $100 asset, $50 debt, +20% -> +40% equity; $400 asset, 75% debt, +10% -> +40% */
+  assert.equal(A("f:4",{a:100,d:50,x:20}),40);assert.equal(A("f:4",{a:400,d:75,x:10}),40);
   /* ib:3 same EBITDA 100: 15x vs 8x -> 1,500 - 800 = 700 */
   assert.equal(A("ib:3",{e:100,m1:15,m2:8}),700);
   /* pe:0 $1B fund: 2% fee = 20; $500M profit -> 100 carry */

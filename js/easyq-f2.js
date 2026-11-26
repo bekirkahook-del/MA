@@ -52,9 +52,9 @@
  ],
  "f-8":[
   ["A company's cost of capital is:",["Its tax bill","The return investors require for funding it","Its yearly revenue","Its office rent"],1,"Cost of capital is the return that lenders and shareholders demand."],
-  ["WACC stands for:",["Wealth and cash cost","Weekly average cash count","Working asset cost of cash","Weighted average cost of capital"],3,"WACC blends the cost of equity and the cost of debt."],
+  ["WACC blends the cost of which two things?",["Revenue and profit","Debt and equity","Cash and inventory","Taxes and wages"],1,"WACC is the weighted average of the cost of debt and the cost of equity."],
   ["Which is riskier for the investor?",["Equity","Debt","They are the same","Neither"],0,"Shareholders are paid last, so equity is the riskier claim."],
-  ["Because equity is riskier than debt, its required return is:",["Lower","Exactly the same","Higher","Always zero"],2,"More risk demands more return."],
+  ["A company has $80 of equity and $20 of debt. The equity weight is:",["20%","100%","80%","60%"],2,"80 ÷ (80 + 20) = 80%."],
   ["Debt $50 and equity $50. The debt weight is:",["100%","25%","50%","0%"],2,"50 ÷ 100 = 50%."],
   ["Risk-free rate 3%, beta 1, equity risk premium 5%. Cost of equity is:",["8%","5%","15%","3%"],0,"3% + 1 × 5% = 8%."],
   ["Interest rate 10%, tax rate 30%. After-tax cost of debt is:",["3%","13%","10%","7%"],3,"10% × (1 − 0.30) = 7%."],

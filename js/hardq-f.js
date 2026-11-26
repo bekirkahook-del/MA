@@ -65,8 +65,8 @@
   ["EBIT is $100, interest expense $30 and the tax rate 25%. Net income is:",["$52.50","$75","$70","$45"],0,"Pre-tax income = 70. Net income = 70 × 0.75 = 52.5. Without the debt it would be 75."],
   ["Debt is $480, EBITDA $120 and interest $36. Leverage (debt ÷ EBITDA) and interest coverage (EBITDA ÷ interest) are:",["4.0x and 4.0x","0.3x and 3.3x","3.3x and 4.0x","4.0x and 3.3x"],3,"480 ÷ 120 = 4.0x. 120 ÷ 36 = 3.3x."],
   ["A company enters bankruptcy worth $500. First-lien debt is $300 and unsecured debt is $400. What share of its claim do unsecured lenders recover?",["0%","50%","100%","25%"],1,"First lien takes 300 first. 200 is left for 400 of unsecured claims: 50%. Shareholders get nothing."],
-  ["A buyout pays $1,000 (10x EBITDA of $100) with $600 of debt. After a few years the company sells for $1,200 and the debt is unchanged. The sponsor's MOIC is:",["1.2x","2.0x","1.0x","1.5x"],3,"Equity in = 1,000 − 600 = 400. Equity out = 1,200 − 600 = 600. 600 ÷ 400 = 1.5x."],
-  ["Same buyout ($1,000 price, $600 debt) but the company only sells for $800. The sponsor's MOIC is:",["0.8x","0.5x","0.0x","1.0x"],1,"Equity out = 800 − 600 = 200 on 400 in. 200 ÷ 400 = 0.5x. A 20% drop in value cost half the equity."],
+  ["An investor buys a company for $1,000 (10x EBITDA of $100) with $600 of debt. After a few years the company sells for $1,200 and the debt is unchanged. The investor's MOIC is:",["1.2x","2.0x","1.0x","1.5x"],3,"Equity in = 1,000 − 600 = 400. Equity out = 1,200 − 600 = 600. 600 ÷ 400 = 1.5x."],
+  ["Same purchase ($1,000 price, $600 debt) but the company only sells for $800. The investor's MOIC is:",["0.8x","0.5x","0.0x","1.0x"],1,"Equity out = 800 − 600 = 200 on 400 in. 200 ÷ 400 = 0.5x. A 20% drop in value cost half the equity."],
   ["Assets of $100 earn 12%. They are funded with $50 of debt at 8% and $50 of equity (no taxes). Return on equity is:",["12%","8%","16%","24%"],2,"Operating profit 12 − interest 4 = 8. 8 ÷ 50 = 16%. Leverage helps because the assets earn more than the debt costs."]
  ]
 });})();

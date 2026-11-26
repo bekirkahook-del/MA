@@ -68,7 +68,7 @@ Object.assign(window.MA_REPS,{
         steps:[["Market cap = price × shares",`${p.px} × ${p.sh} = ${n(mc)}`],["EV = market cap + debt − cash",`${n(mc)} + ${p.debt} − ${p.cash} = ${n(ans)}`]],
         tip:"Market cap is the equity value. Add debt and subtract cash to reach enterprise value."}}
     const cpn=p.face*p.cp/100,ans=rd(cpn/p.price*100);
-    return{given:`A bond has a face value of <b>${$(p.face)}</b> and a <b>${p.cp}%</b> coupon. It trades at <b>${$(p.price)}</b>.`,q:"What is the current yield (in %)?",ans,unit:"%",tol:0.05,
+    return{given:`A bond has a face value of <b>${$(p.face)}</b> and a coupon rate of <b>${p.cp}%</b>. It trades at <b>${$(p.price)}</b>.`,q:"What is the current yield (in %)?",ans,unit:"%",tol:0.05,
       steps:[["Annual coupon = rate × face",`${p.cp}% × ${p.face} = ${$(cpn)}`],["Current yield = coupon ÷ price",`${cpn} ÷ ${p.price} = ${pc(ans)}`]],
       tip:"Price below face value pushes the yield above the coupon rate. Price and yield move in opposite directions."}}
  }

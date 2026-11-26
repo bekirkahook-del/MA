@@ -34,7 +34,7 @@
   ["IRR (internal rate of return) is best described as:",["The total profit you made, shown in dollars","The yearly return that turns what you put in into what you got back","The tax rate that gets charged on a deal","The price you pay for one share of stock"],1,"IRR turns a multi-year result into a per-year rate, so deals of different lengths can be compared."],
   ["A stock goes from $50 to $60. The return is:",["10%","60%","20%","16.7%"],2,"(60 − 50) ÷ 50 = 0.20 = 20%."],
   ["Two deals both return 2.0x. Deal A takes 3 years and deal B takes 6 years. Which has the higher yearly return (IRR)?",["Deal A","Deal B","They are the same","You can't tell"],0,"Same multiple in less time means a higher IRR. A is about 26% a year and B is about 12%."],
-  ["Where do bankers use discounting most often?",["To count how many shares a company has","To set the tax rate a company will pay","To decide where to put a new office","In a DCF, to value future cash flows in today's dollars"],3,"A DCF discounts a company's future cash flows back to today."],
+  ["Where is discounting used most often in valuation?",["To count how many shares a company has","To set the tax rate a company will pay","To decide where to put a new office","In a DCF, to value future cash flows in today's dollars"],3,"A DCF discounts a company's future cash flows back to today."],
   ["Two accounts both start with $1,000 for the same time. One pays 5% a year and one pays 8% a year. Which ends with more?",["The 5% account","They end equal","The 8% account","Neither grows"],2,"A higher rate with the same time and starting amount always ends higher."]
  ],
  "f-2":[
@@ -72,7 +72,7 @@
   ["You are valuing a regional coffee chain. Which is the best comparable company?",["A large international airline","A small software startup","Another coffee chain of similar size","A big car maker"],2,"Good comps are in the same industry and similar in size and growth."],
   ["A business will pay $10 a year forever and the discount rate is 10%. It is worth about:",["$10","$1","$20","$100"],3,"A flat cash flow forever is worth cash flow ÷ rate = 10 ÷ 0.10 = 100."],
   ["A control premium is:",["The extra price a buyer pays to take over a company","A fee the company pays to the stock exchange","A tax the government charges on profits","A discount you get for buying in bulk"],0,"Buyers pay above the market price to gain control, so precedent deals include it."],
-  ["Bankers often use more than one valuation method because:",["One of the methods is against the law","The methods always give exactly the same answer","Each method gives a different view, and together they give a range","Clients simply like it when the deck is longer"],2,"Comps, precedents and a DCF can each be off, so the range is more reliable."]
+  ["Analysts often use more than one valuation method because:",["One of the methods is against the law","The methods always give exactly the same answer","Each method gives a different view, and together they give a range","Clients simply like it when the deck is longer"],2,"Comps, precedents and a DCF can each be off, so the range is more reliable."]
  ],
  "f-4":[
   ["Debt is:",["Money that the owners put into the company","A type of profit the company keeps each year","Borrowed money that must be paid back with interest","A refund the company gets from the government"],2,"Lenders give money now and expect it back, plus interest."],
@@ -91,7 +91,7 @@
   ["In a bankruptcy, which holders are usually last in line?",["Secured lenders at the top of the line","Bondholders who own the company's bonds","Shareholders (stock owners)","Banks that made the company a loan"],2,"Equity is paid only after all debt claims are paid in full."],
   ["A company is funded with $60 of debt and $40 of equity. What share of its funding is debt?",["40%","6%","100%","60%"],3,"60 ÷ (60 + 40) = 60%."],
   ["WACC (weighted average cost of capital) is:",["The blended cost of all the money funding a company, debt and equity","The tax rate the company pays on its yearly profit","The price of one share on the stock market","The amount of cash the company has in the bank"],0,"WACC mixes the cost of debt and the cost of equity by how much of each the company uses."],
-  ["Why can a buyout firm like using lots of debt?",["Debt is free, so borrowing never costs anything","It needs less of its own money for the same company, which can boost its return","Lenders never ask to be paid back","It makes the purchase price of the company lower"],1,"A smaller equity check means a gain is a bigger percentage of it. The catch is that losses are bigger too."],
+  ["Why might an investor use borrowed money to buy an asset?",["Debt is free, so borrowing never costs anything","It needs less of its own money for the same asset, which can boost its return","Lenders never ask to be paid back","It makes the price of the asset lower"],1,"A smaller equity check means a gain is a bigger percentage of it. The catch is that losses are bigger too."],
   ["Why can too much debt be dangerous?",["Debt makes profits rise","Interest must be paid even in a bad year","Debt cannot be taxed","Lenders become shareholders right away"],1,"Missing payments can force a company into default or bankruptcy."]
  ]
 });})();

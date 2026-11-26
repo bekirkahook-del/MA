@@ -24,12 +24,12 @@ Object.assign(window.MA_REPS,{
 
  /* t:5 equity value to enterprise value with the treasury stock method */
  "t:5":{
-  gen:()=>{const px=r.p([20,40]);return{px,k:px/2,b:r.s(50,200,10),o:r.p([10,20,30]),debt:r.s(100,500,50),pref:r.p([0,20,50]),cash:r.s(50,200,50)}},
-  build:p=>{const buy=p.o*p.k/p.px,dil=p.b+p.o-buy,eq=dil*p.px,ans=eq+p.debt+p.pref-p.cash;
-    return{given:`Share price <b>${$(p.px)}</b> · <b>${p.b}M</b> basic shares · <b>${p.o}M</b> options with a <b>${$(p.k)}</b> strike · debt <b>${$(p.debt)}M</b> · preferred <b>${$(p.pref)}M</b> · cash <b>${$(p.cash)}M</b>.`,
+  gen:()=>{const px=r.p([20,40]);return{px,k:px/2,b:r.s(50,200,10),o:r.p([10,20,30]),debt:r.s(100,500,50),pref:r.p([0,20,50]),nci:r.p([10,20,30]),cash:r.s(50,200,50)}},
+  build:p=>{const buy=p.o*p.k/p.px,dil=p.b+p.o-buy,eq=dil*p.px,ans=eq+p.debt+p.pref+p.nci-p.cash;
+    return{given:`Share price <b>${$(p.px)}</b> · <b>${p.b}M</b> basic shares · <b>${p.o}M</b> options with a <b>${$(p.k)}</b> strike · debt <b>${$(p.debt)}M</b> · preferred <b>${$(p.pref)}M</b> · non-controlling interest <b>${$(p.nci)}M</b> · cash <b>${$(p.cash)}M</b>.`,
       q:"What is the enterprise value (in $M)?",ans,unit:"$",
-      steps:[["Shares bought back with the option money",`(${p.o} × ${p.k}) ÷ ${p.px} = ${n(buy)}M`],["Diluted shares = basic + options − buyback",`${p.b} + ${p.o} − ${n(buy)} = ${n(dil)}M`],["Equity value = price × diluted shares",`${p.px} × ${n(dil)} = ${n(eq)}`],["EV = equity + debt + preferred − cash",`${n(eq)} + ${p.debt} + ${p.pref} − ${p.cash} = ${n(ans)}`]],
-      tip:"Options only add the shares left after the buyback. Then add debt and preferred, and subtract cash."}}},
+      steps:[["Shares bought back with the option money",`(${p.o} × ${p.k}) ÷ ${p.px} = ${n(buy)}M`],["Diluted shares = basic + options − buyback",`${p.b} + ${p.o} − ${n(buy)} = ${n(dil)}M`],["Equity value = price × diluted shares",`${p.px} × ${n(dil)} = ${n(eq)}`],["EV = equity + debt + preferred + non-controlling − cash",`${n(eq)} + ${p.debt} + ${p.pref} + ${p.nci} − ${p.cash} = ${n(ans)}`]],
+      tip:"Options only add the shares left after the buyback. Then add debt, preferred and non-controlling interest, and subtract cash."}}},
 
  /* t:6 calendarize a fiscal year into calendar-year revenue */
  "t:6":{

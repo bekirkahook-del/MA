@@ -10,7 +10,7 @@
         ex: "<b>Weak:</b> \"My group let me down, so the project went badly.\" (blames others, no lesson)<br><b>Weak:</b> \"I'm a perfectionist.\" (fake failure, dodges the question)<br><b>Strong:</b> \"I missed a deadline on a club budget because I never confirmed details early. I owned it, apologized and fixed it that night. Now I send a checklist two days ahead, and my last three events ran on time.\"",
         b: "<p>The strong answer has four parts: <b>what happened → what you owned → what you changed → proof it worked</b>.</p>" },
       { h: "How to pick and tell your story",
-        b: "<ul><li><b>Pick something real but low-stakes:</b> a missed deadline, a bad study plan, an event that flopped. Never an ethics problem like cheating.</li><li><b>Spend about half your time</b> on the fix and the result, not on how bad it was.</li><li><b>Own your part</b> even if others contributed. Blaming a teammate makes you sound hard to work with.</li><li>Aim for about <b>1.5 to 2 minutes</b>.</li></ul><p><b>Trap:</b> ending on the problem. End on what you do differently now.</p>" },
+        b: "<ul><li><b>Pick something real but low-stakes:</b> a missed deadline, a bad study plan, an event that flopped. Avoid an ethics problem like cheating.</li><li><b>Spend about half your time</b> on the fix and the result, not on how bad it was.</li><li><b>Own your part</b> even if others contributed. Blaming a teammate makes you sound hard to work with.</li><li>A common target is about <b>1.5 to 2 minutes</b>.</li></ul><p><b>Trap:</b> ending on the problem. End on what you do differently now.</p>" },
       { h: "Quick check", check: ["Which failure answer is strongest?", ["\"I have never really failed.\"", "\"I missed a club deadline, owned it, and now I send a checklist two days ahead.\"", "\"My teammates caused the problem.\""], 1, "A real, owned mistake with a concrete fix shows accountability and growth. Denying or blaming looks worse."] }
     ],
     "b:5": [
@@ -28,7 +28,7 @@
         b: "<p>\"What are your strengths?\" and \"What's your biggest weakness?\" test whether you <b>know yourself</b> and are honest about it. Interviewers can tell when an answer is rehearsed to dodge the question.</p><p>The rule for both: <b>specific beats vague</b>. \"I'm a hard worker\" is something everyone says. A short example makes it believable.</p>" },
       { h: "Worked example: both answers",
         ex: "<b>Strength:</b> \"I'm detail-oriented. In my investing club I caught a wrong number in a pitch before we presented.\"<br><b>Weakness:</b> \"I used to hesitate to speak up in groups. I now set a goal to share one idea per meeting, and I'm much more comfortable.\"",
-        b: "<p>Strength: <b>claim + short proof</b>. Weakness: <b>real flaw + what you're doing + progress</b>. Both take about 30 to 60 seconds.</p>" },
+        b: "<p>Strength: <b>claim + short proof</b>. Weakness: <b>real flaw + what you're doing + progress</b>. Both usually take about 30 to 60 seconds.</p>" },
       { h: "Choosing wisely",
         b: "<ul><li><b>Strengths:</b> pick 2 or 3 that fit the job, like attention to detail, learning fast, work ethic.</li><li><b>Weakness:</b> real but fixable and <b>not central</b> to the role. For banking, \"I struggle with deadlines\" or \"I'm not good with numbers\" hits the core of the job.</li><li><b>Avoid:</b> \"I'm a perfectionist\" and \"I work too hard\" (fake), and \"I have no weaknesses\" (not credible).</li></ul><p><b>Trap:</b> naming a weakness and stopping. Always add what you're doing about it.</p>" },
       { h: "Quick check", check: ["Which weakness answer is best?", ["\"I'm a perfectionist.\"", "\"I used to avoid speaking up, so I now share one idea per meeting.\"", "\"I'm not great with deadlines.\""], 1, "It is real, fixable, not a dealbreaker, and shows progress. The others are fake or hit the core of the job."] }
@@ -55,12 +55,12 @@
     ],
     "b:9": [
       { h: "The interview isn't over when you leave",
-        b: "<p>What you do in the next few days is part of the evaluation. A thoughtful follow-up shows professionalism and keeps you fresh in their minds. A careless one can hurt you.</p><p>The basics: <b>send a thank-you within 24 hours</b>, to <b>each person</b> you met, and keep it <b>short</b>.</p>" },
+        b: "<p>What you do in the next few days is part of the evaluation. A thoughtful follow-up shows professionalism and keeps you fresh in their minds. A careless one can hurt you.</p><p>The basics: common advice is to <b>send a thank-you within about a day</b>, to <b>each person</b> you met, and to keep it <b>short</b>.</p>" },
       { h: "Worked example: a good thank-you",
         ex: "<b>Subject:</b> Thank you, Ms. Lee<br>\"Thank you for speaking with me today. I enjoyed hearing about how your team approaches healthcare deals. Our conversation made me even more excited about the role. I look forward to hearing from you.\"",
-        b: "<p>It is <b>3 to 5 sentences</b>, mentions <b>one specific thing</b> from the conversation, and reaffirms interest. Individual notes beat one mass email.</p>" },
+        b: "<p>It is about <b>3 to 5 sentences</b> (a common length), mentions <b>one specific thing</b> from the conversation, and reaffirms interest. Individual notes beat one mass email.</p>" },
       { h: "Rules for follow-up",
-        b: "<ul><li><b>Proofread</b> the person's name and the firm's name. Wrong names signal carelessness.</li><li><b>Clear subject line:</b> \"Thank you, [Name].\"</li><li><b>Respect their timeline.</b> If they said \"by Friday,\" wait until after Friday. If none was given, send <b>one polite check-in after about a week</b>.</li><li><b>Don't ask about pay</b> in a thank-you note. Keep it about gratitude and interest.</li></ul><p><b>Trap:</b> emailing every day. Repeated messages hurt you.</p>" },
+        b: "<ul><li><b>Proofread</b> the person's name and the firm's name. Wrong names signal carelessness.</li><li><b>Clear subject line:</b> \"Thank you, [Name].\"</li><li><b>Respect their timeline.</b> If they said \"by Friday,\" wait until after Friday. If none was given, a common rule of thumb is <b>one polite check-in after about a week</b>.</li><li><b>Don't ask about pay</b> in a thank-you note. Keep it about gratitude and interest.</li></ul><p><b>Trap:</b> emailing every day. Repeated messages hurt you.</p>" },
       { h: "Quick check", check: ["You met three interviewers. What is best?", ["Send one email to the most senior person", "Send each person a short individual note within a day", "Wait a week and send one group email"], 1, "Individual, prompt notes feel personal and show you valued each person's time."] }
     ]
   });

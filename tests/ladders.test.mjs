@@ -46,5 +46,5 @@ test("Foundations is five general levels with stable keys; IB owns Walk Me Throu
   assert.deepEqual(f.levels.map(l => l.n), ["The Three Statements", "Time Value & Returns", "Enterprise Value", "Valuation Methods", "Debt, Equity & Risk"]);
   assert.equal(ib.levels.length, 9);
   assert.deepEqual(ib.levels.slice(7).map(l => l.n), ["Walk Me Through It", "Accretion / Dilution"]);
-  assert.match(src, /clearedCount\("f"\)===5/);
+  assert.match(src, /clearedCount\("f"\)===T\("f"\)\.levels\.length/);
 });

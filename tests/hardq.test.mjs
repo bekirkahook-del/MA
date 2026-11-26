@@ -2,19 +2,25 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 globalThis.window = {};
-await import("../js/hardq.js");
-const H = window.MA_HARDQ;
-test("every hard question has 4 distinct options, a valid answer and an explanation", () => {
-  for (const [k, qs] of Object.entries(H)) for (const q of qs) {
+await import("../js/hardq.js"); await import("../js/easyq.js");
+for (const t of ["ib", "pe", "pm", "rx", "mc"]) { await import("../js/hardq-" + t + ".js"); await import("../js/easyq-" + t + ".js"); }
+const H = window.MA_HARDQ, E = window.MA_EASYQ;
+test("every Beginner and Advanced question has 4 distinct options, a valid answer and an explanation", () => {
+  for (const [k, qs] of [...Object.entries(H), ...Object.entries(E)]) for (const q of qs) {
     assert.equal(q.length, 4, k); assert.equal(q[1].length, 4, k + ": " + q[0]);
     assert.equal(new Set(q[1]).size, 4, k + ": " + q[0]);
     assert.ok(Number.isInteger(q[2]) && q[2] >= 0 && q[2] < 4, k + ": " + q[0]);
     assert.ok(q[3] && q[3].length > 10, k);
   }
 });
+test("no duplicate questions inside a pool, and no pool question repeats a core question", () => {
+  for (const [k, qs] of [...Object.entries(H), ...Object.entries(E)]) {
+    const t = qs.map(q => q[0].trim().toLowerCase()); assert.equal(new Set(t).size, t.length, "duplicate in " + k);
+  }
+});
 test("hard pool keys point at real levels", () => {
   const src = fs.readFileSync(new URL("../js/app.js", import.meta.url), "utf8");
-  for (const k of Object.keys(H)) assert.match(k, /^(ib|pe|pm|rx|mc)-\d+$/);
+  for (const k of [...Object.keys(H), ...Object.keys(E)]) assert.match(k, /^(ib|pe|pm|rx|mc)-\d+$/);
   assert.match(src, /MA_HARDQ/);
 });
 test("LBO and IRR answers match the arithmetic", () => {

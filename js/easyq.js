@@ -3,5 +3,5 @@
    A level with fewer than 10 here is topped up from the core bank; `node tools/qcoverage.mjs` shows the gaps. */
 (function(){
 "use strict";
-window.MA_EASYQ={};
+window.MA_EASYQ=window.MA_EASYQ||{};
 })();

@@ -4,7 +4,7 @@
    falls back to its core questions, so adding a pool is always safe. */
 (function(){
 "use strict";
-window.MA_HARDQ={
+window.MA_HARDQ=Object.assign(window.MA_HARDQ||{},{
  /* Private Equity · IRR & MOIC */
  "pe-2":[
   ["You put in $100 of equity and exit for $300 after 4 years, no interim cash flows. IRR is closest to:",["25%","32%","41%","50%"],1,"3^(1/4) ≈ 1.316, so about 32%."],
@@ -22,5 +22,5 @@ window.MA_HARDQ={
   ["Holding price and everything else equal, raising leverage from 50% to 70% of the purchase price usually:",["Raises IRR and risk","Lowers IRR and risk","Raises IRR and lowers risk","Changes neither"],0,"Less equity buys the same asset, so returns are magnified both up and down. Higher interest also raises default risk."],
   ["You invest $200 of equity and it is worth $800 after 5 years. IRR is closest to:",["25%","32%","40%","60%"],1,"4x over 5 years: 4^(1/5) ≈ 1.32, so about 32%."],
   ["A deal is priced at 8x EBITDA of $60M and financed with 5x leverage. How big is the equity check?",["$120M","$180M","$300M","$480M"],1,"EV = 8 × 60 = $480M. Debt = 5 × 60 = $300M. Equity = 480 − 300 = $180M."]]
-};
+});
 })();

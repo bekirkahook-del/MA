@@ -1,6 +1,8 @@
 /* M&A sign in / sign out UI */
 (function(){
   const A=window.MA_AUTH;if(!A||!A.sb)return;const sb=A.sb;
+  /* Instagram / Facebook / TikTok etc. open links in an embedded browser; Google refuses sign-in there (403 disallowed_useragent). */
+  if(!window.maInApp)window.maInApp=()=>/FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|BytedanceWebview|TikTok|Snapchat|\bLine\/|Twitter|LinkedInApp/i.test(navigator.userAgent||"");
   const st=document.createElement("style");st.textContent=`
 .authbtn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;white-space:nowrap;transition:border-color .2s,background .2s}
 .authbtn:hover{border-color:var(--ink)}
@@ -99,7 +101,7 @@
       ov.querySelector(".auth-x").onclick=()=>ov.remove();
       ov.querySelector("#auEye").onclick=e=>{const s=pi.type==="password";pi.type=s?"text":"password";e.target.textContent=s?"Hide":"Show"};
       ov.querySelector("#auMl").onclick=()=>{email=ei.value.trim();view="magic";draw()};
-      oauthBtns().then(list=>{const box=ov.querySelector("#auO");if(!box||!list.length)return;
+      oauthBtns().then(list=>{list=list.filter(([id])=>!(id==="google"&&window.maInApp&&maInApp()));const box=ov.querySelector("#auO");if(!box||!list.length)return;
         box.innerHTML=list.map(([id,name])=>`<button type="button" class="authbtn auth-o" data-o="${id}">${LOGO[id]||""}<span>Continue with ${name}</span></button>`).join("")+`<div class="auth-or">or use email</div>`;box.style.display="flex";
         box.querySelectorAll("[data-o]").forEach(b=>b.onclick=async()=>{mev("auth_oauth_"+b.dataset.o);b.disabled=true;const {error}=await sb.auth.signInWithOAuth({provider:b.dataset.o,options:{redirectTo:location.origin+"/"}});if(error){b.disabled=false;say(error.message)}})});
       ov.querySelector("#auF").onclick=async()=>{const e=ei.value.trim();if(!okEmail(e)){say("Type your email first, then tap Forgot password.");ei.focus();return}

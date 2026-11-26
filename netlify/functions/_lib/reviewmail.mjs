@@ -12,7 +12,7 @@ export const unsubToken = uid => createHmac("sha256", secret() + "|promo").updat
 export const unsubUrl = uid => `${SITE}/.netlify/functions/promo-unsub?u=${encodeURIComponent(uid)}&t=${unsubToken(uid)}`;
 const esc = s => String(s ?? "").replace(/[<>&"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
 
-async function docs(col, select = "id,data") {
+export async function docs(col, select = "id,data") {
   const out = []; let from = 0;
   for (;;) {
     const r = await fetch(`${SB_URL}/rest/v1/docs?col=eq.${encodeURIComponent(col)}&select=${select}&order=id`, { headers: { ...svc(), Range: `${from}-${from + 999}` } });
@@ -21,7 +21,7 @@ async function docs(col, select = "id,data") {
   }
   return out;
 }
-async function authUsers() {
+export async function authUsers() {
   const out = [];
   for (let page = 1; page < 200; page++) {
     const r = await fetch(`${SB_URL}/auth/v1/admin/users?page=${page}&per_page=1000`, { headers: svc() });

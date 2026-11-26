@@ -783,7 +783,7 @@ const ROAD=[
  {y:"Freshman",items:[
   {id:"fr1",g:"Academics",t:"Keep your GPA high (3.5 is a common screen; higher is safer)"},
   {id:"fr7",g:"Academics",t:"Take intro accounting and finance early. Accounting is the language of every interview"},
-  {id:"fr4",p:["ib","pe","hf","rx"],g:"Skills",t:"Clear the Foundations track",auto:()=>clearedCount("f")===5},
+  {id:"fr4",p:["ib","pe","hf","rx"],g:"Skills",t:"Clear the Foundations track",auto:()=>clearedCount("f")===T("f").levels.length},
   {id:"fr14",p:["mc"],g:"Skills",t:"Clear the Consulting track",auto:()=>trackDone("mc")},
   {id:"fr8",g:"Skills",t:"Hit a 7-day streak on the daily question",auto:()=>streak()>=7||!!(S.badges||{}).streak7},
   {id:"fr9",g:"Skills",t:"Pass 3 weekly news checks",auto:()=>Object.keys(S.newsq||{}).length>=3},
@@ -797,7 +797,7 @@ const ROAD=[
  {y:"Sophomore",items:[
   {id:"so17",g:"Academics",t:"Keep your GPA up. Banks see your grades through junior fall"},
   {id:"so1",p:["ib","rx","pe"],g:"Skills",t:"Clear the Investment Banking track",auto:()=>trackDone("ib")},
-  {id:"so4",g:"Skills",t:"Clear the Behavioral track",auto:()=>clearedCount("b")===4},
+  {id:"so4",g:"Skills",t:"Clear the Behavioral track",auto:()=>clearedCount("b")===T("b").levels.length},
   {id:"so8",g:"Skills",t:"Get your first final-round offer",auto:()=>nCerts()>=1},
   {id:"so9",p:["ib","pe","hf","rx"],g:"Skills",t:"Finish 3 deal breakdowns",auto:()=>nDeals()>=3},
   {id:"so10",p:["ib","pe","hf","rx"],g:"Skills",t:"Solve 4 modeling challenges",auto:()=>nModels()>=4},
@@ -819,7 +819,7 @@ const ROAD=[
   {id:"so16",g:"Recruiting",t:"Track 10 applications in your pipeline",auto:()=>(S.apps||[]).length>=10}]},
  {y:"Junior",items:[
   {id:"ju16",g:"Academics",t:"Finish your major requirements so your senior year is flexible"},
-  {id:"ju4",p:["ib","pe","hf","rx"],g:"Skills",t:"Clear the Excel Shortcuts track",auto:()=>clearedCount("x")===3},
+  {id:"ju4",p:["ib","pe","hf","rx"],g:"Skills",t:"Clear the Excel Shortcuts track",auto:()=>clearedCount("x")===T("x").levels.length},
   {id:"ju15",p:["hf","pe"],g:"Skills",t:"Clear the Public Markets track",auto:()=>trackDone("pm")},
   {id:"ju17",p:["mc"],g:"Skills",t:"Do 30 live cases before your interviews"},
   {id:"ju18",p:["mc"],g:"Skills",t:"Practice market sizing until you can finish one in 5 minutes"},

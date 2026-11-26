@@ -1172,20 +1172,19 @@ $("#tracks").addEventListener("click",e=>{const b=e.target.closest(".node");if(!
 /* ---------- own page per specialized track ---------- */
 var curTrack=null;
 const SPEC_TRACKS=["ib","pe","pm","rx","mc"];
-const TP_COL={blue:"#2448D8",amber:"#E39B0B",green:"#16A06A",violet:"#6B46D8",rose:"#D8456B",teal:"#0E9AA7"};
-const TRACK_GROUPS={
- ib:[["Technicals","Accounting, valuation and merger math.","blue",[3,7,8,9]],["Recruiting and networking","The calendar, cold emails and the Superday.","amber",[1,2,4]],["Deals and capital markets","How a sell-side process runs and how companies raise money.","green",[5,6]],["Inside the bank","Banks, groups and who does what.","violet",[0]]],
- pe:[["How PE works","Where the money comes from and how funds earn it.","green",[0,6,7]],["LBO modeling","The math behind every buyout.","blue",[1,2,3,5,8]],["Getting in","Recruiting, diligence and the interview.","amber",[4,9]]],
- pm:[["The buy side","Hedge funds, strategies and the stock pitch.","violet",[0,1,2,9]],["Risk and portfolio","Sizing, hedging and managing downside.","teal",[3,8]],["Instruments and markets","Options, bonds, rates and trading.","rose",[4,5,6,7]]],
- rx:[["Why and who gets paid","Why companies break and who is first in line.","rose",[0,1]],["The legal road","Courts, bankruptcy and the alternatives.","amber",[2,3,6,8]],["Deal tools","Liability management, financing and valuing distress.","blue",[4,5,7,9]]],
- mc:[["Case basics","What consultants do and how a case runs.","teal",[0,1,8]],["Case types","Sizing, profit and entry cases.","blue",[2,3,5,7]],["Delivering","Math, charts, the answer and the fit interview.","amber",[4,6,9]]]};
+const TP_COL={blue:"#2448D8",amber:"#E39B0B"};
+const TRACK_PARTS={
+ ib:[["Getting in","Banks, the recruiting calendar, networking and the Superday."],["The work and the technicals","Sell-side deals, capital markets, walk-me-throughs and merger math."]],
+ pe:[["PE and LBO basics","How funds make money and how a buyout works."],["Advanced PE","Debt, fund economics, case studies and sourcing deals."]],
+ pm:[["Funds and ideas","Buy side vs. sell side, strategies, pitches, risk and options."],["Markets and portfolio","Bonds, macro, trading, sizing and shorting."]],
+ rx:[["How distress works","Why companies break and who gets paid first."],["Inside a restructuring","Valuing distress, the court process, financing and the interview."]],
+ mc:[["Case fundamentals","What consultants do, sizing, profit cases and recommendations."],["Case mastery","Market entry, math, frameworks, communication and the fit interview."]]};
 function showTrack(id){const tr=T(id);if(!tr)return;curTrack=id;closePanel();showTab("track");renderTrackPage();try{history.replaceState(null,"","#track-"+id)}catch(e){}
   if(trackUnlocked(tr)&&!(S.diff&&S.diff[id])&&!tr.levels.some((_,l)=>cleared(id,l)))setTimeout(()=>trackPretest(tr,()=>{closePanel();render()}),300)}
 function renderTrackPage(){const el=$("#trackPage"),tr=curTrack&&T(curTrack);if(!el||!tr)return;
   const n=tr.levels.length,c=clearedCount(tr.id),d=DIFFS.find(x=>x[0]===diffOf(tr))[1],used=new Set();
-  const groups=(TRACK_GROUPS[tr.id]||[]).map(g=>({t:g[0],s:g[1],c:TP_COL[g[2]],ix:g[3].filter(i=>i<n)})).filter(g=>g.ix.length);
-  groups.forEach(g=>g.ix.forEach(i=>used.add(i)));const rest=tr.levels.map((_,i)=>i).filter(i=>!used.has(i));
-  if(rest.length)groups.push({t:"More levels",s:"Extra practice for this track.",c:TP_COL.teal,ix:rest});
+  const half=Math.ceil(n/2),parts=TRACK_PARTS[tr.id]||[["Levels","Work through them in order."]],cols=[TP_COL.blue,TP_COL.amber];
+  const groups=parts.map((p,k)=>({t:p[0],s:p[1],c:cols[k%2],ix:tr.levels.map((_,i)=>i).filter(i=>parts.length===1||(k===0?i<half:i>=half))}));
   const step=i=>{const lvl=tr.levels[i],b=S.best[lid(tr.id,i)]||0,cl=b>=2,op=levelOpen(tr,i),cls=cl?"cleared":op?"open":"locked";
     return `<div class="step ${cls}"><button class="node" data-t="${tr.id}" data-l="${i}" ${cls==="locked"?'aria-disabled="true"':''} aria-label="Level ${i+1}: ${esc(lvl.n)}, ${cls}">${cl?"✓":i+1}</button><div class="nm">${lvl.n}</div><div class="stars">${cl?starStr(b):""}</div></div>`};
   el.innerHTML=`<button class="tp-back" type="button">← Learn</button>

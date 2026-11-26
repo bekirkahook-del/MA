@@ -24,12 +24,12 @@
   ["A payment of $50 a year forever, discounted at 10%, is worth:",["$50","$55","$500","$5"],2,"A perpetuity is worth payment ÷ rate = 50 ÷ 0.10 = 500. This is the idea behind a terminal value."],
   ["Next year's payment is $50 and it grows 2% a year forever. At a 10% discount rate, its value today is:",["$625","$500","$510","$416.67"],0,"Growing perpetuity = 50 ÷ (0.10 − 0.02) = 625."],
   ["Deal A returns 2.0x in 4 years. Deal B returns 2.5x in 6 years. Which has the higher IRR?",["Deal B, because 2.5x is higher","Deal A, about 19% versus 16%","They are equal","Deal B, because it lasts longer"],1,"2^(1/4) − 1 = 18.9% and 2.5^(1/6) − 1 = 16.5%. A higher multiple over a longer time can still be a lower yearly rate."],
-  ["Using the rule of 72, about how long does it take money to double at 12% a year?",["12 years","8 years","6 years","3 years"],2,"72 ÷ 12 = 6 years."],
+  ["$1,000 grows at 8% a year for 3 years and then at 12% a year for 2 years. The ending value is closest to:",["$1,480","$1,611","$1,580","$1,720"],2,"1,000 × 1.08³ = 1,259.71. Then 1,259.71 × 1.12² = 1,580.2. Averaging the rates to 10% would wrongly give 1,611."],
   ["The discount rate rises from 8% to 10%. The present value of $1,000 received in 2 years falls by about:",["$31","$20","$100","$45"],0,"At 8%: 1,000 ÷ 1.1664 = 857.34. At 10%: 1,000 ÷ 1.21 = 826.45. The drop is 30.89."]
  ],
  "f-2":[
   ["A company has 100 basic shares, 20 options with a $15 strike, and the stock trades at $25. Diluted shares by the treasury stock method:",["120","100","112","108"],3,"Options bring in 20 × 15 = 300. That buys back 300 ÷ 25 = 12 shares. Net new shares = 8, so diluted = 108."],
-  ["Diluted shares are 108 and the stock is $25. Equity value is:",["$2,500","$3,000","$2,700","$2,400"],2,"108 × 25 = 2,700."],
+  ["A company has 200 basic shares, 40 options with a $10 strike and 30 warrants with a $20 strike. The stock trades at $25. Equity value using the treasury stock method is:",["$5,000","$5,500","$6,750","$5,750"],3,"Options: 40 − (40 × 10 ÷ 25) = 24 net new shares. Warrants: 30 − (30 × 20 ÷ 25) = 6 net new shares. Diluted shares = 200 + 24 + 6 = 230. Equity value = 230 × 25 = 5,750."],
   ["Equity value $2,700, debt $500, preferred stock $100, noncontrolling interest $50, cash $200. Enterprise value:",["$3,000","$3,550","$2,850","$3,150"],3,"2,700 + 500 + 100 + 50 − 200 = 3,150."],
   ["A company raises $100 of new debt and pays it all out as a special dividend. Enterprise value:",["Is unchanged","Rises $100","Falls $100","Doubles"],0,"Debt rises 100 but equity value falls 100 (cash left the company), so EV is the same."],
   ["EBITDA is $150, the company trades at 8.0x EV/EBITDA and net debt is $300. Equity value is:",["$1,200","$900","$1,500","$2,400"],1,"EV = 150 × 8 = 1,200. Equity = 1,200 − 300 = 900."],
@@ -51,7 +51,7 @@
   ["CAPM: risk-free rate 4%, beta 1.2, equity risk premium 5%. Cost of equity:",["9%","6%","10%","11%"],2,"4% + 1.2 × 5% = 10%."],
   ["A stock trades at $20 with 50 shares. A buyer offers a 30% premium. Net debt is $200. The offer's enterprise value is:",["$1,500","$1,200","$1,300","$1,260"],0,"Offer price = 20 × 1.3 = 26. Equity = 26 × 50 = 1,300. EV = 1,300 + 200 = 1,500."],
   ["WACC rises from 9% to 11% with growth fixed at 3%. The terminal value factor (1 + g) ÷ (WACC − g) falls by about:",["12%","50%","18%","25%"],3,"At 9%: 1.03 ÷ 0.06 = 17.17. At 11%: 1.03 ÷ 0.08 = 12.88. That is 25% lower."],
-  ["The present value of explicit-period cash flows is $400 and the present value of the terminal value is $600. The terminal value share of EV is:",["40%","150%","60%","75%"],2,"600 ÷ (400 + 600) = 60%."],
+  ["A perpetuity-growth terminal value is $1,287.50 and the final-year EBITDA is $125. The implied exit multiple (terminal value ÷ EBITDA) is:",["8.6x","12.9x","12.0x","10.3x"],3,"1,287.5 ÷ 125 = 10.3x. Dividing by the $100 of free cash flow instead of EBITDA would wrongly give 12.9x."],
   ["DCF enterprise value is $2,000, debt $700, cash $200 and 100 diluted shares. Value per share:",["$13","$20","$17","$15"],3,"Equity = 2,000 − 700 + 200 = 1,500. 1,500 ÷ 100 = 15."],
   ["A cash flow of $100 arrives mid-year 1 and WACC is 10%. Using the mid-year convention, its present value is about:",["$95.35","$90.91","$100","$110"],0,"Discount for half a year: 100 ÷ 1.10^0.5 = 95.35, a bit higher than the end-of-year value of 90.91."]
  ],

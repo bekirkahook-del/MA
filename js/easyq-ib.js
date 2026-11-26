@@ -135,10 +135,10 @@
   ["New debt costs 10% interest and the tax rate is 20%. The after-tax cost of the debt is:",["10%","2%","30%","8%"],3,"10% × (1 − 20%) = 8%. Interest is tax deductible."],
   ["A buyer's cash earns 5% interest and the tax rate is 20%. Using that cash in a deal costs it, after tax:",["4%","5%","1%","20%"],0,"5% × (1 − 20%) = 4%. That is the interest it no longer earns."],
   ["The buyer's P/E is 20x. Its earnings yield (1 ÷ P/E), the 'cost' of paying with stock, is:",["20%","5%","10%","100%"],1,"1 ÷ 20 = 0.05 = 5%."],
-  ["Synergies are:",["Fees paid to bankers","New shares issued","The target's debt","Cost savings or extra revenue from combining two companies"],3,"Synergies make the combined company earn more than the two separately."],
-  ["Target earns an 8% return on the price paid. The buyer funds it with 5% after-tax cost debt. Does EPS go up?",["Yes, the target earns more than the funding costs","No, because debt is bad","No, because 8% is below 5%","Can't tell"],0,"Earning 8% on money that costs 5% adds profit, so the deal is accretive."],
-  ["In this deal, who is the 'acquirer' or buyer?",["The company being bought","The company doing the buying","The bank","The shareholders of the target only"],1,"The buyer's EPS is what we test for accretion or dilution."],
+  ["Synergies are:",["The fees that get paid to the bankers on the deal","The new shares the buyer hands out in the deal","The debt that the target company already owes","Cost savings or extra revenue from combining two companies"],3,"Synergies make the combined company earn more than the two separately."],
+  ["Target earns an 8% return on the price paid. The buyer funds it with 5% after-tax cost debt. Does EPS go up?",["Yes, the target earns more than the funding costs","No, because using any debt always lowers EPS","No, because 8% is a smaller number than 5%","Can't tell without the buyer's share price"],0,"Earning 8% on money that costs 5% adds profit, so the deal is accretive."],
+  ["In an M&A deal, who is the 'acquirer' (the buyer)?",["The company being bought","The company doing the buying","The bank","The shareholders of the target only"],1,"The buyer's EPS is what we test for accretion or dilution."],
   ["Buyer P/E is 25x and target P/E is 10x in an all-stock deal. The deal is:",["Dilutive","Neutral","Accretive","Impossible"],2,"A high-P/E buyer is buying cheaper earnings with expensive stock."],
-  ["Goodwill is created when a buyer pays:",["More than the fair value of the target's net identifiable assets","Less than book value","Only in cash","Exactly nothing"],0,"Goodwill is the extra amount paid above the net asset value."]
+  ["Goodwill is created when a buyer pays:",["More than the fair value of the target's net identifiable assets","Less than the book value of what it buys","Only in cash and never in stock","Exactly zero, because goodwill is always zero"],0,"Goodwill is the extra amount paid above the net asset value."]
  ]
 });})();

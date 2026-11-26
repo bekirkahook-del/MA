@@ -78,7 +78,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
       <div class="mp-top"><div class="mp-brand">M<span>&amp;</span>A Prep</div>${signed?(editing?`<button type="button" class="mp-in" id="mpBack">Back</button>`:""):`<button type="button" class="mp-in" id="mpIn">Sign in</button>`}</div>
       <div class="mp-head"><span class="k">Free · 30 seconds</span><h1 id="mpTitle">${editing?"Edit my plan":"Make my plan"}</h1><p>Your step-by-step path to an offer, built around your school and your year.</p></div>
       <form class="mp-card" id="mpForm" novalidate>
-        <label class="mp-f"><span>Your name${signed?"":" <small style=\"font-weight:500\">(optional)</small>"}</span><input id="mpNm" maxlength="40" placeholder="First and last name" autocomplete="name" value="${esc(name)}"></label>
+        <label class="mp-f"><span>Your name${signed||(window.maInApp&&maInApp())?"":" <small style=\"font-weight:500\">(or use Google)</small>"}</span><input id="mpNm" maxlength="40" placeholder="First and last name" autocomplete="name" value="${esc(name)}"></label>
         <label class="mp-f"><span>School <small style="font-weight:500">(optional)</small></span><input id="mpSch" list="mpSchL" maxlength="80" placeholder="e.g. Ohio State" autocomplete="organization" value="${esc(school)}"></label>
         <datalist id="mpSchL">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
         <div class="mp-f"><span id="mpYl">Year <small style="font-weight:500">(optional)</small></span><div class="mp-grid mp-g5" role="group" aria-labelledby="mpYl">${YEARS.map(y=>`<button type="button" data-y="${y}" aria-pressed="${y===year}">${y}</button>`).join("")}</div></div>
@@ -110,7 +110,7 @@ body.gate-on .gw-tc,body.gate-on .gw-ov,body.gate-on .gw-bar,body.gate-on .ej-g,
     $("#mpForm").onsubmit=e=>{e.preventDefault();
       const sc=$("#mpSch").value.trim().replace(/[<>]/g,"").slice(0,80);
       const nm=okName($("#mpNm").value);
-      if(!nm&&signed){msg.textContent="Add your name.";$("#mpNm").focus();return}
+      if(!nm){msg.textContent="Add your name.";$("#mpNm").focus();return}
       if(year==="High school"&&!grade){msg.textContent="Pick your grade.";return}
       if(!role){msg.textContent="Pick what you want to pursue.";return}
       const m=sc&&window.maSchoolFind&&maSchoolFind(sc);

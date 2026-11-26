@@ -405,6 +405,14 @@ for(const tr of TRACKS)tr.levels.forEach((L,i)=>{const m=MORE_Q3[tr.id+"-"+i];if
 
 
 const RANKS=[["Intern",0],["Summer Analyst",80],["Analyst",220],["Associate",420],["VP",650],["Director",900],["Managing Director",1150]];
+/* Display titles per profession. Same XP steps as RANKS (rewards, leaderboards and saved ranks still key off RANKS),
+   but each path shows the titles that profession really uses. Titles match the pay ladders in COMP. */
+const LADDERS={
+ pe:["Intern","Summer Associate","Associate","Senior Associate","Vice President","Principal","Partner"],
+ hf:["Intern","Summer Analyst","Junior Analyst","Analyst","Senior Analyst","Portfolio Manager","Senior Portfolio Manager"],
+ mc:["Intern","Summer Associate","Business Analyst","Consultant","Engagement Manager","Associate Partner","Partner"]};
+const LADDER_OF={pe:"pe",hf:"hf",er:"hf",mc:"mc"};
+function rankName(r,k){try{k=k||(typeof profKey==="function"?profKey():"all")}catch(e){k="all"}const L=LADDERS[LADDER_OF[k]];return (L||RANKS.map(x=>x[0]))[r]||RANKS[r][0]}
 const BONUS=50;
 
 const DIFF=["","Basic","Intermediate","Advanced"];
@@ -1066,10 +1074,10 @@ $(".tabs").addEventListener("keydown",e=>{if(!["ArrowRight","ArrowLeft"].include
 const OPEN=new Set(),YOPEN=new Set();
 function render(){
   const x=totalXP(),r=rankOf(x),nxt=RANKS[r+1];
-  $("#rankName").textContent=RANKS[r][0];$("#rankName").title="See the full ladder";fxNum($("#xpText"),x," XP");fxRankCheck(r);$("#xpChip").textContent=x+" XP · "+RANKS[r][0];
+  $("#rankName").textContent=rankName(r);$("#rankName").title="See the full ladder";fxNum($("#xpText"),x," XP");fxRankCheck(r);$("#xpChip").textContent=x+" XP · "+rankName(r);
   if(nxt){const lo=RANKS[r][1];$("#xpBar").style.width=((x-lo)/(nxt[1]-lo)*100)+"%";$("#nextText").textContent=(nxt[1]-x)+" XP to "+nxt[0]}
   else{$("#xpBar").style.width="100%";$("#nextText").textContent="Top of the ladder. Keep your streak alive."}
-  $("#ladder").innerHTML=RANKS.map((k,i)=>`<div class="rung ${i<r?'done':i===r?'now':''}" title="${k[0]} · ${k[1]} XP">${k[0].replace("Managing Director","MD").replace("Summer Analyst","Summer")}</div>`).join("");
+  $("#ladder").innerHTML=RANKS.map((k,i)=>`<div class="rung ${i<r?'done':i===r?'now':''}" title="${k[0]} · ${k[1]} XP">${rankName(i).replace("Managing Director","MD").replace("Senior Portfolio Manager","Sr PM").replace("Portfolio Manager","PM").replace("Engagement Manager","EM").replace("Associate Partner","Assoc Partner").replace(/^Summer .+/,"Summer").replace("Senior Associate","Sr Associate").replace("Vice President","VP")}</div>`).join("");
   let lv=0,st=0;for(const tr of TRACKS)tr.levels.forEach((_,i)=>{const b=S.best[lid(tr.id,i)]||0;if(b>=2){lv++;st+=b}});
   fxNum($("#sLevels"),lv);fxNum($("#sStars"),st);fxNum($("#sStreak"),streak());fxNum($("#sRapid"),S.rapid||0);fxFlame();
   /* Foundations first (required), then specialized tracks, then optional bonus tracks (Behavioral, Excel) at the bottom. */
@@ -1203,18 +1211,19 @@ function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr
   const QS=L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,MISS=[];
   quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
     const before=ORDER.map(T).filter(t=>!trackUnlocked(t)).map(t=>t.name);
-    const xp0=totalXP(),r0=rankOf(xp0);if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
+    const xp0=totalXP(),r0=rankOf(xp0);try{const lg=(S.lvlLog=S.lvlLog||{}),e=lg[key]||(lg[key]={n:0,f:Math.min(raw,NQ),b:0});e.n++;e.b=Math.max(e.b,Math.min(raw,NQ));e.d=today()}catch(e){}
+    if(c>prev)S.best[key]=c;if(c>=2&&prev<2){S.clearDates=S.clearDates||{};S.clearDates[key]=today()}save();const xp1=totalXP(),r1=rankOf(xp1),gain=xp1-xp0;
     if(c>=2){questEvt("level");sfx("clear")}if(c===3)questEvt("stars3");
     const nowDone=clearedCount(tr.id)===tr.levels.length,pass=c>=2,hasNext=i+1<tr.levels.length;
     const unlocked=before.filter(n=>trackUnlocked(TRACKS.find(t=>t.name===n)));
     if(nowDone&&!wasDone)logEvent(`Completed the ${tr.name} track`);if(r1>r0)logEvent(`Was promoted to ${RANKS[r1][0]}`);
     const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":Math.ceil(lvlN(tr)*.7)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
-    setTimeout(()=>{if(window.MAPractice)MAPractice.bindMiss(tr,i);if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
+    setTimeout(()=>{if(window.MAPractice)MAPractice.bindMiss(tr,i);if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#hardBtn"))$("#hardBtn").onclick=()=>MAPractice.hard(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
     return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${Math.min(raw,lvlN(tr))} of ${lvlN(tr)} correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
       <p>${msg}</p>${window.MAPractice?MAPractice.miss(tr,i,MISS):""}${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}
-      ${r1>r0?`<p style="font-weight:600;margin-top:12px">Promoted to ${RANKS[r1][0]}.</p>`:""}
+      ${r1>r0?`<p style="font-weight:600;margin-top:12px">Promoted to ${rankName(r1)}.</p>`:""}
       ${unlocked.length?`<p style="margin-top:8px">Unlocked: <b>${unlocked.join(", ")}</b></p>`:""}
-      <div class="actions">${pass&&hasNext?`<button class="btn" id="nextL">Next level</button>`:""}<button class="${pass&&hasNext?'ghost':'btn'}" id="retry">${pass?"Retry for stars":"Try again"}</button><button class="ghost" id="map">Back to map</button></div>`}})}
+      <div class="actions">${pass&&hasNext?`<button class="btn" id="nextL">Next level</button>`:""}${c===3&&window.MAPractice&&MAPractice.hasReps(tr,i)?`<button class="${hasNext?'ghost outline':'btn'}" id="hardBtn">Hard mode · type it</button>`:""}<button class="${pass&&hasNext?'ghost':'btn'}" id="retry">${pass?"Retry for stars":"Try again"}</button><button class="ghost" id="map">Back to map</button></div>`}})}
 
 /* ---------- rapid fire + leaderboard ---------- */
 function rapidPool(){const tk=(typeof prof==="function"&&prof().tracks)||null;const pick=(f)=>{const p=[];for(const tr of TRACKS){if(f&&!f.includes(tr.id))continue;tr.levels.forEach((L,i)=>{if(cleared(tr.id,i))L.q.forEach(q=>p.push(q))})}return p};
@@ -1277,7 +1286,7 @@ function renderCompete(){
   const ranked=players.map(p=>({p,v:mVal(p)})).filter(x=>x.v>=0&&(boardMetric!=="xp"||x.v>0||x.p.id===myId)&&onPath(x)).sort((a,b)=>b.v-a.v);
   const myPos=ranked.findIndex(x=>x.p.id===myId);
   const status=dbState==="off"?"Rankings are available when you sign in. Your progress saves on this device.":dbState==="error"?"Rankings couldn't load right now.":dbState==="readonly"?"You can view the rankings. Posting your stats needs contributor access to this page.":dbState==="loading"?"Loading rankings…":`${players.length} player${players.length===1?"":"s"} on this page.`;
-  $("#cmpMe").innerHTML=`<div class="me-row"><div class="me-id">${avatar(myId||"me",myName||"You",64)}<div><div class="label">Your profile · ${RANKS[r][0]}</div><div class="me-name">${esc(myName||"You")}${S.profile.headline?`<small>${esc(S.profile.headline)}</small>`:""}</div>
+  $("#cmpMe").innerHTML=`<div class="me-row"><div class="me-id">${avatar(myId||"me",myName||"You",64)}<div><div class="label">Your profile · ${rankName(r)}</div><div class="me-name">${esc(myName||"You")}${S.profile.headline?`<small>${esc(S.profile.headline)}</small>`:""}</div>
      <div class="note">${[S.profile.school,S.profile.grad&&("Class of "+S.profile.grad),S.profile.target&&("Targeting "+S.profile.target)].filter(Boolean).map(esc).join(" · ")||"Add your school, experience and skills so others know who they're up against."}</div></div></div>
      <div class="actions" style="margin:0"><button class="ghost" id="viewsBtn">${viewersOf(myId).length} profile view${viewersOf(myId).length===1?"":"s"}</button><button class="ghost" id="shareBtn">Share card</button><button class="ghost" id="viewMe">View public profile</button><button class="btn sm" id="editMe">Edit profile</button></div></div>
    <div class="me-stats">${[["XP",me.xp],["Rank",myPos>=0&&dbState==="on"?"#"+(myPos+1):"–"],["Levels",me.levels],["Rapid best",me.rapid],["Interview avg",me.mockN?me.mockAvg:"–"],["Streak",me.streak]].map(([l,v])=>`<div><b>${v}</b><span>${l}</span></div>`).join("")}</div>
@@ -1746,9 +1755,9 @@ function openLadder(tab){if(tab)ladTab=tab;const x=totalXP(),r=rankOf(x);
   const lab=v=>v>=1000?"$"+(v/1000).toFixed(v%1000?1:0)+"M":"$"+v+"K",rng=a=>a?(a[0]===a[1]?lab(a[0]):lab(a[0])+"–"+lab(a[1])):"";
   const tabs=[["you","Your M&A title"],["ib","Banking pay"],["pe","PE pay"],["hf","Hedge fund pay"],["mc","Consulting pay"]];
   let body="";
-  if(ladTab==="you"){body=`<p class="sub">Earn XP to climb from Intern to Managing Director, the same ladder as a real bank.</p><ol class="lad">${RANKS.map(([n,t],i)=>{const st=i<r?"done":i===r?"now":"next";const nx=RANKS[i+1];const pct=i===r&&nx?Math.round((x-t)/(nx[1]-t)*100):i<r?100:0;
+  if(ladTab==="you"){body=`<p class="sub">Earn XP to climb from Intern to ${rankName(6)}, the same ladder as a real ${({pe:"private equity firm",hf:"hedge fund",er:"research desk",mc:"consulting firm"})[typeof profKey==="function"?profKey():"all"]||"bank"}.</p><ol class="lad">${RANKS.map(([n0,t],i)=>{const n=rankName(i),st=i<r?"done":i===r?"now":"next";const nx=RANKS[i+1];const pct=i===r&&nx?Math.round((x-t)/(nx[1]-t)*100):i<r?100:0;
       return `<li class="lad-i ${st}"><span class="lad-dot">${i<r?"✓":i+1}</span><div class="lad-b"><b>${n}</b><span>${t} XP${i===r?` · you're here, ${x} XP`:i>r?` · ${t-x} XP to go`:""}</span>${i===r&&nx?`<div class="lad-bar"><i style="width:${pct}%"></i></div>`:""}</div></li>`}).join("")}</ol>
-    <p class="note">The real-world version: banks hire interns as summer analysts, then promote analyst → associate → VP → director → MD over roughly 12–15 years. See the pay at each step in the other tabs.</p>`}
+    <p class="note">The real-world version: ${({pe:"firms hire associates out of banking, then promote associate → senior associate → VP → principal → partner.",hf:"funds hire analysts, then promote analyst → senior analyst → portfolio manager as they earn their own capital.",er:"research desks hire analysts, then promote them to senior analyst as they build a track record.",mc:"firms hire business analysts, then promote analyst → consultant → engagement manager → associate partner → partner."})[typeof profKey==="function"?profKey():"all"]||"banks hire interns as summer analysts, then promote analyst → associate → VP → director → MD over roughly 12–15 years."} See the pay at each step in the other tabs.</p>`}
   else{const c=COMP[ladTab];let yrs=0;
     const pre=ladTab==="ib"?[["Summer analyst (intern)",null,null,"10 weeks","Junior-year internship. Paid the analyst base salary, prorated for the summer. A strong summer usually ends in a full-time offer."]]:ladTab==="mc"?[["Summer intern","",null,"~10 weeks","Junior-year internship at the firm. A strong summer usually ends in a full-time business analyst offer."]]:[];
     const rows=pre.concat(c.rows);
@@ -3019,7 +3028,7 @@ function renderProf(){const k=profKey(),p=prof();
     row.querySelectorAll("[data-prof]").forEach(b=>b.onclick=()=>{mn.hidden=true;if(b.dataset.prof!==profKey())setProf(b.dataset.prof)});
   });requestAnimationFrame(scrollProfRows);
   document.querySelectorAll("[data-blurb]").forEach(el=>{const v=el.dataset.blurb;el.textContent=v==="practice"?(p.blurb||"Interview reps, speed drills and modeling."):v==="learn"?(PROF_BLURB.learn||{}).all:(PROF_BLURB[v]||{})[k]||(PROF_BLURB[v]||{}).all||el.textContent});
-  const lc=$("#ladCta");if(lc){const t=lc.querySelector("b");if(t)t.textContent=k==="mc"?"Career ladder: Intern → Partner":"Career ladder: Intern → MD"}
+  const lc=$("#ladCta");if(lc){const t=lc.querySelector("b");if(t)t.textContent="Career ladder: Intern → "+rankName(6,k).replace("Managing Director","MD")}
   const nav=document.querySelector('[data-view="practice"] .subnav');if(!nav)return;
   if(typeof applyGroups==="function"&&typeof GROUPS!=="undefined")applyGroups()}
 const profPacks=()=>{const p=prof();return p.packs?p.packs.map(i=>FIRM_PACKS[i]):FIRM_PACKS};
@@ -3077,7 +3086,7 @@ function drawCard(cv){const c=cv.getContext("2d"),W=1080,H=1350;cv.width=W;cv.he
   c.strokeStyle="rgba(255,255,255,.06)";for(let x=0;x<W;x+=72){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}for(let y=0;y<H;y+=72){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
   c.fillStyle="#fff";c.font="800 64px Archivo, Arial";c.fillText("M&A",80,140);c.fillStyle="#F5C451";c.font="600 26px 'IBM Plex Mono', monospace";c.fillText(seasonOf().toUpperCase(),80,190);
   c.fillStyle=`hsl(${h},40%,48%)`;c.beginPath();c.arc(160,350,80,0,7);c.fill();c.fillStyle="#fff";c.font="600 64px 'IBM Plex Sans', Arial";c.textAlign="center";c.fillText(initials(myName||"You"),160,372);c.textAlign="left";
-  c.font="700 60px 'IBM Plex Sans', Arial";c.fillText((myName||"M&A member").slice(0,22),280,340);c.font="400 32px 'IBM Plex Sans', Arial";c.fillStyle="rgba(255,255,255,.75)";c.fillText([RANKS[me.rank][0],S.settings.noSchool?"":S.profile.school].filter(Boolean).join(" · ").slice(0,40),280,392);
+  c.font="700 60px 'IBM Plex Sans', Arial";c.fillText((myName||"M&A member").slice(0,22),280,340);c.font="400 32px 'IBM Plex Sans', Arial";c.fillStyle="rgba(255,255,255,.75)";c.fillText([rankName(me.rank),S.settings.noSchool?"":S.profile.school].filter(Boolean).join(" · ").slice(0,40),280,392);
   const ranked=PLAYERS.map(p=>p.xp||0).sort((a,b)=>b-a),pos=ranked.findIndex(v=>v<=me.xp),pct=PLAYERS.length>3&&pos>=0?Math.max(1,Math.round((pos+1)/PLAYERS.length*100)):null;
   const tiles=[[me.xp.toLocaleString(),"XP"],[pct?`Top ${pct}%`:"#"+((pos>=0?pos:0)+1),"Overall"],[me.mockN?me.mockAvg.toFixed(1):"–","Interview avg"],[String(me.levels),"Levels cleared"],[String(seasonPts()),"Season pts"],[String(me.streak),"Day streak"]];
   tiles.forEach(([v,l],i)=>{const x=80+(i%2)*470,y=500+Math.floor(i/2)*190;c.fillStyle="rgba(255,255,255,.08)";c.beginPath();c.roundRect(x,y,440,160,24);c.fill();c.fillStyle="#fff";c.font="700 64px 'IBM Plex Sans', Arial";c.fillText(v,x+36,y+92);c.fillStyle="rgba(255,255,255,.7)";c.font="400 26px 'IBM Plex Sans', Arial";c.fillText(l,x+36,y+132)});
@@ -3088,7 +3097,7 @@ function openShare(){openPanel(`<div class="label">Share</div><h2>Your profile c
    <canvas id="shareCv" class="share-cv" aria-label="Profile card image"></canvas>
    <div class="actions"><button class="btn" id="shSave">Save image</button><button class="ghost outline" id="shCopy">Copy caption</button></div><p class="note" id="shNote"></p>`);
   panel.classList.add("wide");const cv=$("#shareCv");(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>drawCard(cv));
-  const me=myStats(),cap=`${RANKS[me.rank][0]} on M&A · ${me.xp} XP${me.mockN?` · ${me.mockAvg.toFixed(1)}/10 interview avg`:""}${Object.keys(S.certs||{}).length?` · Certified in ${Object.keys(S.certs).map(t=>T(t).name).join(", ")}`:""}. Training for high finance recruiting: ${SITE_URL}`;
+  const me=myStats(),cap=`${rankName(me.rank)} on M&A · ${me.xp} XP${me.mockN?` · ${me.mockAvg.toFixed(1)}/10 interview avg`:""}${Object.keys(S.certs||{}).length?` · Certified in ${Object.keys(S.certs).map(t=>T(t).name).join(", ")}`:""}. Training for high finance recruiting: ${SITE_URL}`;
   $("#shCopy").onclick=async()=>{try{await navigator.clipboard.writeText(cap);toast("Caption copied")}catch(e){$("#shNote").textContent=cap}};
   $("#shSave").onclick=async()=>{await dlPromise;if(!DL){$("#shNote").textContent="Saving images isn't available. You can also screenshot the card.";return}
     cv.toBlob(async b=>{try{await DL.save({filename:"ma-profile-card.png",data:b});logEvent("Shared their profile card")}catch(e){$("#shNote").textContent=e&&e.code==="cancelled"?"":"Couldn't save. Try a screenshot instead."}},"image/png")};
@@ -3647,7 +3656,7 @@ function renderDrawerSubs(){const dr=$("#drawer");if(!dr)return;const curV=(docu
   const hs=(S.settings.hideTabs)||{};dr.querySelectorAll(".dr-sec").forEach(s=>s.hidden=!!hs[s.dataset.sec])}
 let drLast=null;
 function openDrawer(){const dr=$("#drawer");if(!dr)return;renderDrawerSubs();
-  const me=$("#drMe");if(me){const x=totalXP(),r=rankOf(x),nx=RANKS[r+1];me.innerHTML=`<div><b>${esc(RANKS[r][0])}</b><span>${x} XP${nx?` · ${nx[1]-x} to ${esc(nx[0])}`:""}</span></div><div class="dr-bar"><i style="width:${nx?Math.round((x-RANKS[r][1])/(nx[1]-RANKS[r][1])*100):100}%"></i></div>`}
+  const me=$("#drMe");if(me){const x=totalXP(),r=rankOf(x),nx=RANKS[r+1];me.innerHTML=`<div><b>${esc(rankName(r))}</b><span>${x} XP${nx?` · ${nx[1]-x} to ${esc(rankName(r+1))}`:""}</span></div><div class="dr-bar"><i style="width:${nx?Math.round((x-RANKS[r][1])/(nx[1]-RANKS[r][1])*100):100}%"></i></div>`}
   drLast=document.activeElement;$("#drScrim").hidden=false;requestAnimationFrame(()=>{dr.classList.add("open");$("#drScrim").classList.add("on")});dr.setAttribute("aria-hidden","false");
   const mb=$("#menuBtn");if(mb)mb.setAttribute("aria-expanded","true");document.body.classList.add("dr-lock");
   setTimeout(()=>{const a=dr.querySelector('.dr-item[aria-selected="true"]')||dr.querySelector(".dr-item");a&&a.focus({preventScroll:true})},60)}

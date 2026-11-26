@@ -125,5 +125,18 @@ window.showBrief=function(tr,i){
     const b=document.createElement("button");b.className="ghost outline";b.id="rpBtn";b.type="button";b.textContent="Number reps";
     b.onclick=()=>openReps(tr,i);(a.querySelector("#lsAgain")||a.querySelector("#go")).after(b)}catch(e){}};
 
-window.MAPractice={mount,openReps,miss,bindMiss,bestCard,parse,closeEnough};
+/* ---------- Hard mode: no answer choices, type the number ----------
+   Offered after a 3-star run on any level that has fresh-number reps. Three right in a row clears it.
+   Logged in S.hard[key] = {n: tries, r: right, w: 1 once cleared}. It never changes XP or stars. */
+const hasReps=(tr,i)=>!!REPS()[kOf(tr,i)];
+function hard(tr,i){
+  const key=kOf(tr,i),lvl=tr.levels[i];if(!REPS()[key])return;
+  openPanel(`<div class="label">${E(tr.name)} · Level ${i+1} · ${E(lvl.n)}</div><div id="rpMount"></div>`);
+  let run=0;
+  const log=ok=>{try{const h=(S.hard=S.hard||{}),e=h[key]||(h[key]={n:0,r:0});e.n++;if(ok)e.r++;run=ok?run+1:0;if(run>=3&&!e.w){e.w=1}save()}catch(x){}};
+  mount(document.getElementById("rpMount"),key,{title:"Hard mode · type it",lead:"No answer choices. Three right in a row clears it.",
+    onResult:ok=>{log(ok);const el=document.querySelector("#rpMount .rp-meta span");if(el&&run>=3)el.textContent="Hard mode cleared. Keep going or head back."},
+    onDone:()=>showBrief(tr,i)})}
+
+window.MAPractice={mount,openReps,miss,bindMiss,bestCard,parse,closeEnough,hasReps,hard};
 })();

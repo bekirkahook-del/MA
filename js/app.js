@@ -1160,7 +1160,7 @@ function showBrief(tr,i){if(capHit(tr,i)){restPanel(tr);return}const L=tr.levels
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
    ${L.ex?`<div class="example">${esc(L.ex)}</div>`:""}
    <div class="actions"><button class="btn" id="go">Start drill · ${lvlN(tr)} questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>lvlN(tr)?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need ${passN(tr)} of ${lvlN(tr)} to clear</span>`}${diffChip(tr)}</div>${briefLinks(tr,i)}`);
-  $("#go").onclick=()=>runLevel(tr,i);if($("#dfChange"))$("#dfChange").onclick=()=>trackPretest(tr,()=>showBrief(tr,i));if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
+  $("#go").onclick=()=>runLevel(tr,i);if($("#dfChange"))$("#dfChange").onclick=()=>{if(tr.id==="f"&&!(S.diff&&S.diff.f)){S.diff=S.diff||{};S.diff.f={k:"f",s:null,d:today()};save()}trackPretest(tr,()=>showBrief(tr,i))};if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
 /* ---------- Excel key drill: press the real keys (Windows Excel) ---------- */
 const KEYDRILL=[
 ["Jump to the edge of the data block, going right","c|ArrowRight","Ctrl + →"],
@@ -1226,12 +1226,12 @@ const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
    tools/qcoverage.mjs lists which levels still need writing.
    Stored as strings so cross-device sync keeps the latest choice: S.diff[trackId]={k:"f"|"s"|"a",s:pretest score,d:date}. */
 const DIFFS=[["f","Beginner","Foundational questions. Builds the base."],["s","Intermediate","The core interview questions."],["a","Advanced","Harder, multi-step questions."]];
-const diffOf=tr=>{if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
+const diffOf=tr=>{if(tr.id==="f"){const k0=S.diff&&S.diff.f&&S.diff.f.k;return k0==="s"||k0==="a"?k0:"f"}if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
 const passN=tr=>lvlN(tr)===3?2:7;
 const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;return raw>=8?3:raw>=7?2:raw>=4?1:0};
 function pickQs(tr,i,NQ){const L=tr.levels[i],sh=a=>a.slice().sort(()=>Math.random()-.5),k=tr.id+"-"+i,d=diffOf(tr);
   const pool=(d==="f"?(window.MA_EASYQ||{})[k]:d==="a"?(window.MA_HARDQ||{})[k]:null)||[];
-  if(NQ>3&&pool.length){const mine=sh(pool).slice(0,NQ);return mine.length>=NQ?mine:sh(mine.concat(sh(L.q).slice(0,NQ-mine.length)))}
+  if((NQ>3||tr.id==="f")&&pool.length){const mine=sh(pool).slice(0,NQ);return mine.length>=NQ?mine:sh(mine.concat(sh(L.q).slice(0,NQ-mine.length)))}
   return L.q.length>NQ?sh(L.q).slice(0,NQ):L.q}
 /* 5-question pre-test spread across the track, then the student picks (we pre-select our recommendation) */
 function trackPretest(tr,after){
@@ -1253,7 +1253,7 @@ function trackPretest(tr,after){
       <div class="ob-opts" style="grid-template-columns:1fr">${DIFFS.map(([k,nm,ds])=>`<button class="ob-o ${k===rec?"on":""}" data-k="${k}"><b>${nm}</b>${k===rec?" · recommended":""}<br><span class="note" style="white-space:normal">${ds}</span></button>`).join("")}</div></div>`);
     panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{save_(b.dataset.k,right==null?((S.diff[tr.id]||{}).s??null):right);after()});(panel.querySelector(".ob-o.on")||panel.querySelector(".ob-o")).focus()};
   intro()}
-function diffChip(tr){return LONG_TRACKS.includes(tr.id)?`<button class="flink" id="dfChange" type="button">Difficulty: ${DIFFS.find(d=>d[0]===diffOf(tr))[1]} · change</button>`:""}
+function diffChip(tr){return LONG_TRACKS.includes(tr.id)||tr.id==="f"?`<button class="flink" id="dfChange" type="button">Difficulty: ${DIFFS.find(d=>d[0]===diffOf(tr))[1]} · change</button>`:""}
 function runLevel(tr,i){if(capHit(tr,i)){restPanel(tr);return}const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
   const QS=pickQs(tr,i,NQ),MISS=[];
   quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;

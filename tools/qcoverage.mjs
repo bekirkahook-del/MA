@@ -8,7 +8,7 @@ const a = src.indexOf("const TRACKS = ["), b = src.indexOf("\nconst MORE_Q=");
 (0, eval)(src.slice(a, b).replace("const TRACKS", "globalThis.TRACKS"));
 const grab = n => { const i = src.indexOf("const " + n + "="); return i < 0 ? {} : (0, eval)("(" + src.slice(i + n.length + 7, src.indexOf("\n", i)).replace(/;$/, "") + ")"); };
 const more = [grab("MORE_Q"), grab("MORE_Q2"), grab("MORE_Q3")];
-await import("../js/easyq.js"); await import("../js/hardq.js"); await import("../js/reps-data.js");
+await import("../js/easyq.js"); await import("../js/hardq.js"); for (const t of ["ib", "pe", "pm", "rx", "mc"]) { await import("../js/easyq-" + t + ".js"); await import("../js/hardq-" + t + ".js"); } await import("../js/reps-data.js");
 /* mini-lessons live in IIFEs that expect a browser; load them in a stubbed sandbox and read window.MA_LESSONS */
 globalThis.localStorage = { getItem() { return null }, setItem() {} }; globalThis.showBrief = () => {}; globalThis.runLevel = () => {};
 globalThis.document = { addEventListener() {}, createElement() { return { style: {} } }, head: { appendChild() {} }, getElementById() { return null }, querySelector() { return null } };

@@ -22,8 +22,8 @@ Object.assign(window.MA_REPS,{
       tip:"The standard lookback is 90 days (one year for insiders). Payments outside it are not preferences."}}},
  /* Level 8: DIP and 13-week cash flow. Smallest DIP draw to hold a minimum cash floor. */
  "rx:7":{
-  gen:()=>{const nets=[-r.s(2,8,1),-r.s(4,10,1),-r.s(4,12,1),-r.s(2,8,1),r.s(-2,6,1)];
-    return{open:r.s(10,30,5),nets,floor:r.s(5,10,5)}},
+  gen:()=>{let p,low;do{const nets=[-r.s(2,8,1),-r.s(4,10,1),-r.s(4,12,1),-r.s(2,8,1),r.s(-2,6,1)];
+    p={open:r.s(10,30,5),nets,floor:r.s(5,10,5)};let c=p.open;low=Math.min(...nets.map(x=>c+=x))}while(low>=p.floor);return p},
   build:p=>{let c=p.open;const run=p.nets.map(x=>c+=x),low=Math.min(...run),ans=Math.max(0,p.floor-low);
     return{given:`Opening cash is <b>${$(p.open)}M</b>. Weekly net cash flows for 5 weeks are <b>${p.nets.map(x=>(x<0?"−":"+")+Math.abs(x)).join(", ")}</b> ($M). Lenders require at least <b>${$(p.floor)}M</b> of cash at all times.`,
       q:"What is the smallest new DIP draw (in $M) that keeps cash at or above the floor?",ans,unit:"$",

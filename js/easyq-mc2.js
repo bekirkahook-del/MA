@@ -115,7 +115,7 @@ window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
 "mc-7":[
  ["What is <b>brainstorming</b> in a case interview?",["Naming one idea only","Memorizing a framework","Telling a joke","Generating a list of ideas, grouped into clear categories"],3,"Good brainstorming is organized, not random."],
  ["Which framework looks at company, customers and competitors?",["The 4 Ps","SWOT","The 3 Cs","Time value of money"],2,"The 3 Cs: company, customers, competitors."],
- ["The 4 Ps in marketing stand for:",["People, profit, plan, power","Product, price, place and promotion","Price, profit, people, planet","Plan, pitch, prepare, polish"],1,"The 4 Ps are a classic way to split up marketing."],
+ ["Which of the 4 Ps is about how much a customer pays?",["Product","Price","Place","Promotion"],1,"The 4 Ps are product, price, place and promotion. Price is the amount the customer pays."],
  ["A <b>profit tree</b> splits profit into:",["Revenue and costs, then deeper parts","Pride and joy","Prices and prizes","Only revenue"],0,"A tree starts with revenue and costs, then splits each further."],
  ["Why not just recite a memorized framework?",["Every case is different and needs a tailored structure","Frameworks are illegal","Interviewers love recitation","They are always wrong"],0,"Customize it to the specific question."],
  ["When brainstorming, you should group ideas into:",["Many random lines","One long list","No buckets","A few clear buckets"],3,"Buckets show structure, which is what interviewers look for."],
@@ -138,7 +138,7 @@ window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
  ["When doing math, you should:",["Stay silent","Hide the numbers","Skip the units","Talk through the steps out loud"],3,"The interviewer wants to follow your reasoning."],
  ["A good answer to a question is usually:",["Long and rambling","Silent","Short and structured","Only one word"],2,"30 to 60 seconds is a good length."],
  ["Which phrase signals a structured answer?",["\"Um, there are things.\"","\"I think... maybe...\"","\"I see three main areas.\"","\"Whatever.\""],2,"Counting your points shows structure."],
- ["The <b>so what</b> of a chart is:",["The title","The insight or takeaway it shows","The color","The date"],1,"Always say what it means for the client."],
+ ["A chart shows costs rising faster than revenue. Which is the best takeaway?",["The bars are blue","Costs are growing faster than revenue, so margins are shrinking","Revenue is a number","The chart has two lines"],1,"A takeaway says what happened and why it matters, not just what the chart looks like."],
  ["If you don't understand a question, you should:",["Ask a clarifying question","Guess silently","Change the topic","Leave"],0,"Clarifying is a strength, not a weakness."],
  ["At the end of an analysis you should:",["Stop talking","Ask for a break","Start a new case","Summarize what you found"],3,"A one-line summary keeps the case on track."],
  ["Which is better: speaking quickly or clearly?",["Quickly","Silently","Loudly","Clearly"],3,"Clarity wins over speed."],
@@ -150,14 +150,14 @@ window.MA_EASYQ=Object.assign(window.MA_EASYQ||{},{
  ["A good fit story should be about:",["Something your friend did","Something you read","Something imaginary","Something you personally did"],3,"Interviewers want to hear about your own actions."],
  ["In a story, use \"I\" more than \"we\" because:",["It sounds fancy","\"We\" is banned","Interviewers want to know your role","It is shorter"],2,"Say what you personally did."],
  ["A common story format is:",["Result only","Jokes only","Situation, action, result","Names only"],2,"This is the classic STAR/SAR flow."],
- ["Why add numbers to your result?",["They look pretty","They show real impact","They are required by law","They make it longer"],1,"Quantified results are more convincing."],
+ ["Which result sounds strongest in a story?",["It went well","Sales rose 20% in two months","Everyone liked it","We tried hard"],1,"A specific number shows real impact. Quantified results are more convincing."],
  ["\"Why consulting?\" should be answered with:",["Genuine reasons like learning, impact and problem solving","Money only","I don't know","Because my friend did"],0,"Reasons should be personal and specific."],
  ["Which is the strongest reason to give for \"Why this firm?\"",["It is famous","It pays well","I applied everywhere","Specific things you learned from its people and work"],3,"Show you did research and talked to people."],
  ["A strong question for the interviewer is:",["How many vacation days?","When can I leave?","Do you like me?","What is the most interesting project you have worked on?"],3,"Curious, thoughtful questions leave a good impression."],
  ["A good failure story ends with:",["Who else was to blame","Why it was not really a failure","What you learned and how you changed","Nothing, you just stop"],2,"Reflection shows maturity."],
- ["How many stories should you prepare?",["One only","Three to five that can be reused","Fifty","None"],1,"A few flexible stories cover most questions."],
+ ["Why prepare a few stories instead of one for every question?",["Interviewers only ask one question","A few flexible stories can be adapted to many questions","Stories are not allowed","It is faster to memorize fifty"],1,"A few flexible stories cover most questions."],
  ["Which trait does a leadership story show?",["Taking charge to get a team result","Doing nothing","Following orders only","Avoiding people"],0,"Leadership means guiding others toward a goal."],
- ["During a PEI, the interviewer will likely:",["Ask follow-up questions to go deeper","Stay silent","Leave","Write your answer for you"],0,"They dig into the details to check the story is real."],
- ["Should you exaggerate your story?",["Yes, always","Only slightly","Only on Fridays","No, because follow-up questions will expose it"],3,"Honest stories hold up under questions."]
+ ["What is the interviewer testing with follow-up questions on your story?",["Whether the story is real and what you personally did","How fast you type","Your knowledge of the stock market","Whether you can recite the story word for word"],0,"They dig into the details to check the story is real and to see your role and judgment."],
+ ["Which is the better way to describe your role in a team project?",["We all kind of did it","The team did it, I was there","Someone had to do it","I wrote the plan and led the weekly check-ins"],3,"Specific actions in the first person show your role. Vague group statements hide it."]
 ]
 });

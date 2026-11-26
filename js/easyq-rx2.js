@@ -59,7 +59,7 @@
   ["Restructuring analysts spend a lot of time in:",["Video editing","Excel, building cash flow models and recovery waterfalls","Sales calls to consumers","Lab experiments"],1,"Modeling is core work: 13-week cash flows, waterfalls and valuation."],
   ["A 'stalking horse' bidder in a 363 sale is:",["An initial bidder who sets a floor price that others must beat","The judge's assistant","A lender's lawyer","A union leader"],0,"The stalking horse gets protections (like a break-up fee) in exchange for setting the minimum bid."],
   ["When are restructuring groups usually busiest?",["During a market boom with cheap loans","Only in summer","Only at tax time","When credit tightens and defaults rise"],3,"Distress rises when debts become hard to refinance."],
-  ["Value is $200M. First lien is owed $150M and second lien $100M. What does the second lien recover?",["100%","25%","50%","75%"],2,"Left after the first lien = 200 - 150 = 50. 50 ÷ 100 = 50%."],
+  ["Value is $220M. First lien is owed $150M and second lien $100M. What does the second lien recover?",["100%","25%","70%","50%"],2,"Left after the first lien = 220 - 150 = 70. 70 ÷ 100 = 70%."],
   ["A 'creditor-side' banker's main goal is usually to:",["Wipe out the lenders","Maximize the recovery of the creditor group they advise","Maximize equity value only","Delay the case forever"],1,"Creditor-side advisors help lenders and bondholders get as much value back as possible."],
   ["In an interview, if you cannot finish a calculation, the best move is to:",["Talk through your steps and assumptions out loud","Stay silent","Guess a random number","Say you refuse to answer"],0,"Interviewers care about your structure and clarity as much as the final number."]
  ]

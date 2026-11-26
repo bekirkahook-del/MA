@@ -1141,13 +1141,14 @@ function quiz(opts){const {title,qs,finish}=opts;panel.classList.remove("wide","
 
 /* ---------- levels ---------- */
 $("#tracks").addEventListener("click",e=>{const b=e.target.closest(".node");if(!b)return;const tr=T(b.dataset.t),i=+b.dataset.l;
-  if(!levelOpen(tr,i)){toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}showBrief(tr,i)});
+  if(!levelOpen(tr,i)){toast(trackUnlocked(tr)?"Clear the previous level first":tr.req.why);return}
+  if(LONG_TRACKS.includes(tr.id)&&!(S.diff&&S.diff[tr.id])&&!tr.levels.some((_,l)=>cleared(tr.id,l))){trackPretest(tr,()=>showBrief(tr,i));return}showBrief(tr,i)});
 function showBrief(tr,i){const L=tr.levels[i],b=S.best[lid(tr.id,i)]||0;
   openPanel(`<div class="label">${tr.name} · Level ${i+1} of ${tr.levels.length}</div><h2>${L.n}</h2><p class="sub">${L.sub}</p>
    <div class="label" style="margin-bottom:10px">Briefing</div><ul class="brief">${L.brief.map(x=>`<li>${x}</li>`).join("")}</ul>
    ${L.ex?`<div class="example">${esc(L.ex)}</div>`:""}
-   <div class="actions"><button class="btn" id="go">Start drill · ${lvlN(tr)} questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>lvlN(tr)?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need 2 of 3 to clear</span>`}</div>${briefLinks(tr,i)}`);
-  $("#go").onclick=()=>runLevel(tr,i);if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
+   <div class="actions"><button class="btn" id="go">Start drill · ${lvlN(tr)} questions</button>${tr.id==="x"?`<button class="btn" id="kd">Key drill · press the real keys</button>`:""}${L.q.length>lvlN(tr)?`<span class="note" style="align-self:center">A fresh mix from ${L.q.length} questions each time</span>`:""}${b?`<span class="label">Best: ${starStr(b)}</span>`:`<span class="label">Need ${passN(tr)} of ${lvlN(tr)} to clear</span>`}${diffChip(tr)}</div>${briefLinks(tr,i)}`);
+  $("#go").onclick=()=>runLevel(tr,i);if($("#dfChange"))$("#dfChange").onclick=()=>trackPretest(tr,()=>showBrief(tr,i));if($("#kd"))$("#kd").onclick=()=>keyDrill(tr,i);bindRel(panel)}
 /* ---------- Excel key drill: press the real keys (Windows Excel) ---------- */
 const KEYDRILL=[
 ["Jump to the edge of the data block, going right","c|ArrowRight","Ctrl + →"],
@@ -1206,7 +1207,34 @@ function keyDrill(tr,i){
 /* specialized tracks take longer: 10 questions a level (pass at 7, 3 stars at 9) instead of 3 */
 const LONG_TRACKS=["ib","pe","pm","rx","mc"],LONG_N=10;
 const lvlN=tr=>LONG_TRACKS.includes(tr.id)?LONG_N:3;
-const lvlStars=(tr,raw)=>lvlN(tr)===3?raw:(raw>=lvlN(tr)-1?3:raw>=Math.ceil(lvlN(tr)*.7)?2:raw>=Math.ceil(lvlN(tr)*.4)?1:0);
+/* Difficulty is chosen per specialized track from a 5-question pre-test (and can be changed any time).
+   Foundation: pass 6/10. Standard: pass 7/10 (the original bar). Advanced: pass 8/10, 3 stars only for a perfect 10.
+   Stored as strings so cross-device sync keeps the latest choice: S.diff[trackId]={k:"f"|"s"|"a",s:pretest score,d:date}. */
+const DIFFS=[["f","Foundation","Pass at 6 of 10. Builds the base."],["s","Standard","Pass at 7 of 10. The default bar."],["a","Advanced","Pass at 8 of 10. 3 stars need a perfect 10."]];
+const diffOf=tr=>{if(!LONG_TRACKS.includes(tr.id))return"s";const k=S.diff&&S.diff[tr.id]&&S.diff[tr.id].k;return k==="f"||k==="a"?k:"s"};
+const passN=tr=>{const N=lvlN(tr);if(N===3)return 2;const d=diffOf(tr);return d==="a"?8:d==="f"?6:Math.ceil(N*.7)};
+const lvlStars=(tr,raw)=>{const N=lvlN(tr);if(N===3)return raw;const d=diffOf(tr);return raw>=(d==="a"?N:N-1)?3:raw>=passN(tr)?2:raw>=(d==="a"?5:d==="f"?3:Math.ceil(N*.4))?1:0};
+/* 5-question pre-test spread across the track, then the student picks (we pre-select our recommendation) */
+function trackPretest(tr,after){
+  const L=tr.levels,n=Math.min(5,L.length),idx=[...new Set(Array.from({length:n},(_,i)=>n<2?0:Math.round(i*(L.length-1)/(n-1))))];
+  const items=idx.map(l=>({l,q:L[l].q[rint(L[l].q.length)]})).filter(x=>x.q);
+  const save_=(k,sc)=>{S.diff=S.diff||{};S.diff[tr.id]={k,s:sc,d:today()};save()};
+  const intro=()=>{openPanel(`<div class="ob"><div class="label">${esc(tr.name)} · Set your difficulty</div><h2>Quick pre-test</h2>
+    <p class="sub">${items.length} questions from across this track. About 2 minutes. Your score picks a starting difficulty, and you can change it any time.</p>
+    <div class="actions"><button class="btn" id="ptGo">Start pre-test</button><button class="ghost" id="ptSkip">${S.diff&&S.diff[tr.id]?"Just pick a difficulty":"Skip, use Standard"}</button></div></div>`);
+    $("#ptGo").onclick=()=>ask(0,[]);$("#ptSkip").onclick=()=>{if(S.diff&&S.diff[tr.id])picker(diffOf(tr),null);else{save_("s",null);after()}};$("#ptGo").focus()};
+  const ask=(i,ans)=>{if(i>=items.length)return result(ans);const q=shuffleOpts(items[i].q);
+    openPanel(`<div class="ob"><div class="ob-dots">${items.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join("")}</div><div class="label">Question ${i+1} of ${items.length}</div><h2 style="font-size:20px;line-height:1.35">${q.q}</h2>
+      <div class="ob-opts" style="grid-template-columns:1fr">${q.o.map((o,j)=>`<button class="ob-o" data-j="${j}">${o}</button>`).join("")}</div>
+      <div class="actions"><button class="ghost" id="ptIdk">I don't know</button></div></div>`);
+    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>ask(i+1,ans.concat(+b.dataset.j===q.a)));$("#ptIdk").onclick=()=>ask(i+1,ans.concat(false));panel.querySelector(".ob-o").focus()};
+  const result=ans=>{const right=ans.filter(Boolean).length,tot=items.length,pct=tot?right/tot:0;picker(pct>=.8?"a":pct>=.4?"s":"f",right,tot)};
+  const picker=(rec,right,tot)=>{
+    openPanel(`<div class="ob"><div class="label">${right==null?"Difficulty":"Your result"}</div><h2>${right==null?"Pick your difficulty":right+" of "+tot+" right"}</h2><p class="sub">${right==null?"Currently":"We recommend"} <b>${DIFFS.find(d=>d[0]===rec)[1]}</b>. Pick the one you want. You can change it later from any level.</p>
+      <div class="ob-opts" style="grid-template-columns:1fr">${DIFFS.map(([k,nm,ds])=>`<button class="ob-o ${k===rec?"on":""}" data-k="${k}"><b>${nm}</b>${k===rec?" · recommended":""}<br><span class="note" style="white-space:normal">${ds}</span></button>`).join("")}</div></div>`);
+    panel.querySelectorAll(".ob-o").forEach(b=>b.onclick=()=>{save_(b.dataset.k,right==null?((S.diff[tr.id]||{}).s??null):right);after()});(panel.querySelector(".ob-o.on")||panel.querySelector(".ob-o")).focus()};
+  intro()}
+function diffChip(tr){return LONG_TRACKS.includes(tr.id)?`<button class="flink" id="dfChange" type="button">Difficulty: ${DIFFS.find(d=>d[0]===diffOf(tr))[1]} · change</button>`:""}
 function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr.id){S.lastTrack=tr.id;save()}}catch(e){}
   const QS=L.q.length>NQ?L.q.slice().sort(()=>Math.random()-.5).slice(0,NQ):L.q,MISS=[];
   quiz({title:L.n,qs:QS,onAnswer:(n,ok)=>{if(!ok)MISS.push(QS[n]);if(window.MASrs)MASrs.record(tr,i,QS[n],ok)},finish:raw=>{const c=lvlStars(tr,Math.min(raw,NQ));const key=lid(tr.id,i),prev=S.best[key]||0,wasDone=clearedCount(tr.id)===tr.levels.length;
@@ -1217,7 +1245,7 @@ function runLevel(tr,i){const L=tr.levels[i],NQ=lvlN(tr);try{if(S.lastTrack!==tr
     const nowDone=clearedCount(tr.id)===tr.levels.length,pass=c>=2,hasNext=i+1<tr.levels.length;
     const unlocked=before.filter(n=>trackUnlocked(TRACKS.find(t=>t.name===n)));
     if(nowDone&&!wasDone)logEvent(`Completed the ${tr.name} track`);if(r1>r0)logEvent(`Was promoted to ${RANKS[r1][0]}`);
-    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":Math.ceil(lvlN(tr)*.7)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
+    const msg=pass?(nowDone&&!wasDone?`Track closed. ${tr.name} complete, +${BONUS} XP bonus.`:"Level cleared."):`Need ${lvlN(tr)===3?"2 of 3":passN(tr)+" of "+lvlN(tr)} to clear. Reread the briefing and try again.`;
     setTimeout(()=>{if(window.MAPractice)MAPractice.bindMiss(tr,i);if($("#nextL"))$("#nextL").onclick=()=>showBrief(tr,i+1);if($("#retry"))$("#retry").onclick=()=>showBrief(tr,i);if($("#hardBtn"))$("#hardBtn").onclick=()=>MAPractice.hard(tr,i);if($("#map"))$("#map").onclick=closePanel;render();const gn=$("#gainN");if(gn&&!fxCalm()){gn._v=0;gn.textContent="+0 XP";setTimeout(()=>fxNum(gn,+gn.dataset.g," XP","+"),700)}if(c===3)setTimeout(()=>fxBurstFrom($(".big-stars"),{n:80,power:8}),750)},0);
     return `<div class="label">${L.n}</div><h2 style="margin:6px 0 0">${Math.min(raw,lvlN(tr))} of ${lvlN(tr)} correct</h2><div class="big-stars">${[0,1,2].map(k=>`<span class="st ${k<c?"":"off"}" style="--i:${k}">★</span>`).join("")}</div>
       <p>${msg}</p>${window.MAPractice?MAPractice.miss(tr,i,MISS):""}${gain?`<div class="gain" id="gainN" data-g="${gain}">+${gain} XP</div>`:prev?`<div class="label">Best stays at ${starStr(prev)}. XP counts your best run.</div>`:""}

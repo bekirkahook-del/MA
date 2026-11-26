@@ -97,18 +97,19 @@ Updated every daily run. Views per post (Nov 17-24 data). Route each new post on
 | 11-21 | NVDA "best quarter, down 48%" | Live market | 150 | 302 | final |
 | 11-21 | Big Ten 2x2 (school vs pipeline) | School rankings | 153 | 66 | final (static 2x2 chart, weak on TT) |
 | 11-21 | SEC: only 6 in top 100 (Vandy #1, Texas sends most) | School rankings | 133 | 374 | final |
-| 11-22 | ACC RANKED (mascots, voice) | School rankings | 786 | 312 | final |
+| 11-22 | ACC RANKED (mascots, voice) | School rankings | 790 | 322 | final (Nov 26 pull) |
 | 11-22 | Intern/Analyst/MD, option $5 trap (video) | Tiered interview Q | 129 | 187 | final |
-| 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | 176 | final |
-| 11-22 | "Jake knew nothing about finance" promo video | Character story (Jake) | 1,605 | 1,508 | final 1,605 IG / 1,508 TT (196 likes). IG partly paid ($35 boost from Nov 22 5:38pm) |
-| 11-23 | Jake vs Chad ($500 course vs $0) | Character story (Jake) | 155 | 192 | 10:10pm Nov 22, at ~34h. 4pm repost: IG 125 / TT 7 (at 16h) |
-| 11-23 | Jake's first coffee chat (mom reply) | Character story (Jake) | 1,216 | 292 | at ~34h (15 TT likes). 4pm repost: IG 1,185 / TT 9 (at 16h). Organic IG |
-| 11-23 | Week ahead (3.5 days, Dell, core PCE) 8am | Live market | 279 | 21 | at ~24h; score Nov 25 |
-| 11-23 | Capital stack: who gets paid ($500M vs $550M) | Tiered interview Q | | | score Nov 25 |
-| 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | 123 | 7 | at ~17h; score Nov 25 |
-| 11-23 | Jensen is back (PS2 news, 11:51am) | Live market + character story | 143 | 14 | at ~20h; score Nov 25 |
-| 11-23 | Day in the life: IB analyst (Jake, 6pm) | Character story (Jake) | 1,302 | 12 | IG 1,302 in ~14h, organic. Score Nov 25 |
-| 11-24 | Day in the life: consultant (Maya, 10am) | Character story | | | score Nov 26 |
+| 11-22 | Thanksgiving week EPS (Dell +176%) | Live market | | 289 | final (Nov 26 pull; was 176 at ~24h) |
+| 11-22 | "Jake knew nothing about finance" promo video | Character story (Jake) | 1,620 | 1,509 | final (Nov 26 pull). IG partly paid ($35 boost from Nov 22 5:38pm) |
+| 11-23 | Jake vs Chad ($500 course vs $0) | Character story (Jake) | 158 | 193 | 10:10pm Nov 22 original, Nov 26 pull. 4pm repost: IG 130 / TT 10 |
+| 11-23 | Jake's first coffee chat (mom reply) | Character story (Jake) | 1,218 | 295 | 10:10pm Nov 22 original, Nov 26 pull. 4pm repost: IG 1,213 / TT 12. Organic IG |
+| 11-23 | Week ahead (3.5 days, Dell, core PCE) 8am | Live market | 320 | 32 | Nov 26 pull (was 279/21 at ~24h) |
+| 11-23 | Capital stack: who gets paid ($500M vs $550M) | Tiered interview Q | | 15 | TikTok only, Nov 26 pull. Loser (under 120) |
+| 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | 124 | 10 | Nov 26 pull. Under ~125 on IG, 10 on TT |
+| 11-23 | Jensen is back (PS2 news, 11:51am) | Live market + character story | 145 | 16 | Nov 26 pull |
+| 11-23 | Day in the life: IB analyst (Jake, 6pm) | Character story (Jake) | 1,406 | 21 | Nov 26 pull, organic IG. Winner |
+| 11-24 | Day in the life: consultant (Maya, 10am) | Character story | 562 | 9 | at ~46h (Nov 26 pull); final score Nov 27 |
+| 11-24 | Monty Hall brainteaser (2:13pm, carousel) | Brainteaser | 121 | 9 | at ~12h (Nov 26 pull); score Nov 27. IG skip rate 86.5% on the Monty Hall post |
 | 11-25 | Day in the life: equity research (Dev, 10am) | Character story | | | score Nov 27 |
 | 11-26 | Day in the life: hedge fund (Sam, 10am) | Character story | | | score Nov 28 |
 | 11-25 | Big 12 BRAWL (RANKED, PS2 fight) | School rankings + character | | | IG/TT/FB only. Score Nov 27 |

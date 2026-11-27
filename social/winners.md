@@ -108,9 +108,11 @@ Updated every daily run. Views per post (Nov 17-24 data). Route each new post on
 | 11-23 | Biggest M&A deals of 2026 (SpaceX twice) | League table twist | 124 | 10 | Nov 26 pull. Under ~125 on IG, 10 on TT |
 | 11-23 | Jensen is back (PS2 news, 11:51am) | Live market + character story | 145 | 16 | Nov 26 pull |
 | 11-23 | Day in the life: IB analyst (Jake, 6pm) | Character story (Jake) | 1,406 | 21 | Nov 26 pull, organic IG. Winner |
-| 11-24 | Day in the life: consultant (Maya, 10am) | Character story | 562 | 9 | at ~46h (Nov 26 pull); final score Nov 27 |
-| 11-24 | Monty Hall brainteaser (2:13pm, carousel) | Brainteaser | 121 | 9 | at ~12h (Nov 26 pull); score Nov 27. IG skip rate 86.5% on the Monty Hall post |
-| 11-25 | Day in the life: equity research (Dev, 10am) | Character story | | | score Nov 27 |
-| 11-26 | Day in the life: hedge fund (Sam, 10am) | Character story | | | score Nov 28 |
-| 11-25 | Big 12 BRAWL (RANKED, PS2 fight) | School rankings + character | | | IG/TT/FB only. Score Nov 27 |
+| 11-24 | Day in the life: consultant (Maya, 10am) | Character story | 562 | 9 | final (Nov 27 pull, ~70h; IG skip 44.8%). Character story, but a mid-tier IG and dead on TT |
+| 11-24 | Monty Hall brainteaser (2:13pm, carousel) | Brainteaser | 121 | 9 | final (Nov 27 pull; IG skip 86.5%). LOSER, 3 brainteasers in a row under ~125 on IG |
+| 11-25 | Day in the life: equity research (Dev, 10am) | Character story | 263 | 400 | Nov 27 8am pull (~46h; IG skip 56.5%; FB/YT not pulled). TT 400 is the best TT DIL so far |
+| 11-26 | Day in the life: hedge fund (Sam, 10am) | Character story | 320 | 22 | ~22h pull (Nov 27 8am), IG skip 55.4%. Score Nov 28 |
+| 11-25 | Big 12 BRAWL (RANKED, PS2 fight) | School rankings + character | 377 | 302 | ~38h pull (Nov 27 8am), IG skip 40.4%. Re-pull Nov 28 for final |
 | 11-27 | Jake's first Superday | Character story (Jake) | | | IG/TT/FB only. Score Nov 29 |
+| 11-25 | Margin/leverage/buyback quiz (Wed 1:58pm, TT) | MC quiz | | 877 | ~42h pull; best TT of the week, a quiz that wins when it has a question with a trap. IG carousel not in reels data |
+| 11-25 | Dice fair price brainteaser (5:22pm) | Brainteaser | 126 | 139 | ~39h pull; IG skip 74% |

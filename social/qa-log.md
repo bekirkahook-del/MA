@@ -44,3 +44,5 @@
 | Nov 27 (daily gate) | Fri 21:16 | Negative EV quiz (IG 3 slides) | 87 | F3 62 min after 20:14 IG reel; F2 no IG first comment | moved to Nov 29 13:08, added first comment (new id 444351456) | 100 (rescheduled) |
 | Nov 27 (daily gate) | Fri 21:16 | Negative EV pin (Pinterest) | 97 | F3 spacing/day load (grouped with TT+IG move) | moved to Nov 29 13:08 (new id 444351529) | 100 (rescheduled) |
 | Nov 27 (daily gate) | Fri 19:21 | Starbucks bull-case (TT/IG x2/YT/FB/Pin) | n/a | already draft:true since Nov 19 (same presenter pipeline as Apple, not re-voiced); not scored, not posting | | draft (not posting) |
+| Nov 27 (daily gate) | Fri 13:08 | Shopping-days pin (Pinterest) | 95 | F2 footer missing; swapped to footer image (c200ed5), un-drafted (new id 444353767) | fixed | 100 |
+| Nov 27 (daily gate) | Fri 20:14 | Markup trap pin (Pinterest) | 95 | F2 footer missing; swapped to footer image (c200ed5), un-drafted (new id 444353838) | fixed | 100 |

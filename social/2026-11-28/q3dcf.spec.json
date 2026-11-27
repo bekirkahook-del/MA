@@ -1,0 +1,20 @@
+{
+ "date": "2026-11-28",
+ "decks": {
+  "q3dcf": {
+   "guide": "https://mnaprep.com/guides/dcf-interview-questions",
+   "ctaHead": "Learn the <em>DCF</em>, free",
+   "ctaSub": "Hundreds more interview questions at mnaprep.com.",
+   "slides": [
+    "<div class=\"kicker\">3-question challenge</div><h1>Intern. Analyst. <em>MD</em>. Valuation edition.</h1><p class=\"lede\">Keep score as you swipe.</p>",
+    "<div class=\"kicker\">Q1 · Intern</div><h2><em>$1,000</em> grows <em>10%</em> a year for <em>2 years</em>. How much?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$1,200</div><div class=\"opt\"><i>B</i>$1,100</div><div class=\"opt\"><i>C</i>$1,210</div><div class=\"opt\"><i>D</i>$1,220</div></div><p class=\"note\">No calculator. Pick, then swipe.</p>",
+    "<div class=\"kicker\">Answer 1</div><div class=\"big\">C. $1,210</div><p class=\"lede\">Year 1: $1,000 × 1.10 = $1,100. Year 2: $1,100 × 1.10 = $1,210. The extra $10 is interest on interest.</p>",
+    "<div class=\"kicker\">Q2 · Analyst</div><h2>Cash flow next year: <em>$100M</em>. WACC <em>10%</em>, growth <em>2%</em> forever. Terminal value?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>$1,250M</div><div class=\"opt\"><i>B</i>$1,000M</div><div class=\"opt\"><i>C</i>$833M</div><div class=\"opt\"><i>D</i>$1,020M</div></div><p class=\"note\">Pick one, then swipe.</p>",
+    "<div class=\"kicker\">Answer 2</div><div class=\"big\">A. $1.25B</div><p class=\"lede\">Gordon growth: cash flow ÷ (WACC − g) = $100M ÷ (10% − 2%) = $100M ÷ 8% = $1,250M, or $1.25B.</p>",
+    "<div class=\"kicker\">Q3 · MD 🔥</div><h2>Growth goes from <em>2%</em> to <em>3%</em>. Same $100M and 10% WACC. How much does the value rise?</h2><div class=\"opts\"><div class=\"opt\"><i>A</i>+10%</div><div class=\"opt\"><i>B</i>+14.3%</div><div class=\"opt\"><i>C</i>+12.5%</div><div class=\"opt\"><i>D</i>+25%</div></div><p class=\"note\">One point of growth…</p>",
+    "<div class=\"kicker\">Answer 3</div><div class=\"big\">B. +14.3%</div><p class=\"lede\">$100M ÷ 7% = $1,429M vs $1,250M. The gap (10% − g) shrank from 8 to 7, so value rose 8 ÷ 7 − 1 = 14.3%. Tiny growth tweaks move a DCF a lot.</p>",
+    "<div class=\"kicker\">Your score</div><table><thead><tr><th>SCORE</th><th>YOU'RE A...</th></tr></thead><tbody><tr><td>3/3</td><td class=\"hot\">MD 🔥</td></tr><tr><td>2/3</td><td>VP</td></tr><tr><td>1/3</td><td>Analyst</td></tr><tr><td>0/3</td><td>Intern</td></tr></tbody></table><p class=\"lede\">Comment your score 👇</p>"
+   ]
+  }
+ }
+}

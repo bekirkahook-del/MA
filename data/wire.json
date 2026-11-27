@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T16:49:49Z",
+ "updated": "2026-11-27T16:50:00Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -114,15 +114,6 @@
  },
  "CAL": [
   [
-   "Thu Nov 26",
-   "Thanksgiving: US markets closed",
-   "Markets are closed Thursday and Friday's session ends at 1 p.m. ET.",
-   [
-    "CNBC live updates (Nov 23)",
-    "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
-   ]
-  ],
-  [
    "Tue Dec 1",
    "ISM manufacturing PMI and JOLTS",
    "ISM manufacturing PMI and JOLTS job openings at 10:00 a.m. ET. The prior ISM reading was 55.5 and the forecast is 55.2.",
@@ -195,7 +186,7 @@
    "https://www.forex.com/ie/news-and-analysis/weekly-market-outlook-30-november-4-december-2026/"
   ]
  ],
- "NEWS_DATE": "Nov 26, 2026",
+ "NEWS_DATE": "Nov 27, 2026",
  "NEWS": [
   {
    "k": "Markets",

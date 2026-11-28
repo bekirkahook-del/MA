@@ -5,6 +5,14 @@ Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip ran
 ## POST COUNT: EXACTLY 6 A DAY PER PLATFORM (Bekir, 2026-11-28: "Cap is 6 and minimum is 6")
 Every day, each platform (TikTok, Instagram and the rest) gets exactly 6 posts: 6 is both the minimum and the maximum. This overrides every other count in this file, the daily run prompts ("max 4 TikToks", "3-4 posts"), QUALITY-NOTES.md and the socials playbook. Fill any day under 6; never schedule more than 6. The 100/100 gate still applies: if a post fails and can't be fixed, replace it with another 100/100 post rather than posting filler, and report any day that still ends under 6.
 
+## PRE-FLIGHT BOTS: run BEFORE scheduling (Nov 28, fix the gate's top fails up front)
+Most Nov 27-28 gate fails were the same 5 things: no mnaprep.com/first comment (F2), posts < 2 h apart (F3), quiet audio (D2), dark first frame (B1), unsourced "most people" claims (A2). Run these on every post before it goes to Metricool:
+1. `python3 social/studio/fix.py <video.mp4> --kind punch|story`: auto-fixes loudness (-14 LUFS, -1.5 dBTP) and dark lead-ins, flags wrong size (rebuild, never upscale) and slow pacing, then runs qa.py. Post the `.fixed.mp4`.
+2. `python3 social/studio/copygate.py posts.json`: post text gate (CTA in last 3 lines, first comment on IG/FB/YT, pin link, crowd claims, AI label) + hook score. Hook must be 4/5+.
+3. `python3 social/studio/slots.py plan.txt`: exactly 6 per platform, 2 h apart, video near 6 PM. Default slots: 12, 14, 16, 18 (video), 20, 22.
+4. Mondays only: `social/SCOUT.md` (trends + outlier hooks, max 2 paid calls/week, log in `social/trends.md`).
+Then score the human items on RUBRIC.md as usual. Safe zone (C2) stays a contact-sheet check.
+
 ## EVERY DAY: 3-4 A+ POSTS TO ALL SOCIALS (Bekir, 2026-11-21: "EVERY DAY 3-4 slides or videos to all socials from now on all A+ content with visuals and interesting financial ideas")
 This overrides the 10/day target and the 50/50 picture/video split below. Every day, 3-4 new posts, each one going to **every connected network**: Instagram, TikTok, Facebook, YouTube Shorts (videos only; brand channel UCecz_zgUGiksG2HpJEt0cTg) and Pinterest (pictures/covers).
 - **Format:** a carousel ("slides") or a short video. Mix them; at least 1 video a day.

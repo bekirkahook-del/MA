@@ -40,6 +40,7 @@ Instagram always gets native 4:5 renders (`H=1350`), Pinterest native 2:3 with t
 
 # THE GATE: 100/100 or it doesn't post (Bekir, Nov 25)
 Every post is scored on `social/RUBRIC.md` (100 points, every item pass/fail) BEFORE it publishes:
+- First the pre-flight bots (DAILY.md "PRE-FLIGHT BOTS"): `social/studio/fix.py` on every video, `copygate.py` on every post text (hook 4/5+), `slots.py` on the day's plan. Mondays: `social/SCOUT.md`.
 - Run `python3 social/studio/qa.py <video>` (or `--slides <platform> <images>`) for the automated items, then score the rest from a contact sheet and the post text.
 - Below 100: fix and re-score. If it can't be fixed before its slot, set it to draft and report it. Never round up.
 - Every day, re-score everything publishing in the next 24 h (even posts that passed before) and log each score in `social/qa-log.md`.

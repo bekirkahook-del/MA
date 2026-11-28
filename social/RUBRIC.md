@@ -5,7 +5,7 @@ Bekir, Nov 25: "Quality check big time every day before post. 100/100 only."
 Every item is **pass/fail** (full points or zero). A post publishes only at **100/100**.
 Anything less: fix it and re-score. If it can't be fixed before its slot, set it to draft (`draft:true`) and say so in the daily summary. Never "round up".
 
-Run `python3 social/studio/qa.py <file>` first: it checks the measurable items (marked 🤖) automatically. Score the rest by looking at the contact sheet and the post text.
+Run the pre-flight bots first (`fix.py`, `copygate.py`, `slots.py`, see DAILY.md), then `python3 social/studio/qa.py <file>`: it checks the measurable items (marked 🤖) automatically. Score the rest by looking at the contact sheet and the post text.
 
 ## A. Truth and compliance (25)
 | # | Item | Pts |

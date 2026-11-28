@@ -10,7 +10,7 @@ Most Nov 27-28 gate fails were the same 5 things: no mnaprep.com/first comment (
 1. `python3 social/studio/fix.py <video.mp4> --kind punch|story`: auto-fixes loudness (-14 LUFS, -1.5 dBTP) and dark lead-ins, flags wrong size (rebuild, never upscale) and slow pacing, then runs qa.py. Post the `.fixed.mp4`.
 2. `python3 social/studio/copygate.py posts.json`: post text gate (CTA in last 3 lines, first comment on IG/FB/YT, pin link, crowd claims, AI label) + hook score. Hook must be 4/5+.
 3. `python3 social/studio/slots.py plan.txt`: exactly 6 per platform, 2 h apart, video near 6 PM. Default slots: 12, 14, 16, 18 (video), 20, 22.
-4. Mondays only: `social/SCOUT.md` (trends + outlier hooks, max 2 paid calls/week, log in `social/trends.md`).
+4. Mondays only: `social/SCOUT.md` (trends + outlier hooks, free web sources only, no vidIQ; log in `social/trends.md`).
 Then score the human items on RUBRIC.md as usual. Safe zone (C2) stays a contact-sheet check.
 
 ## EVERY DAY: 3-4 A+ POSTS TO ALL SOCIALS (Bekir, 2026-11-21: "EVERY DAY 3-4 slides or videos to all socials from now on all A+ content with visuals and interesting financial ideas")

@@ -2,6 +2,9 @@
 
 Goal: each day has **10 posts total, from 12:00pm to 11:00pm ET: 4 Blue Chip rankings + 3 "unexpected interview question" brain teasers + 3 quick quiz/tip posts** (Bekir set this on 2026-11-09; before that it was 3/day). Short and quick to digest. Only make what's missing.
 
+## POST CAP: MAX 6 A DAY PER PLATFORM (Bekir, 2026-11-28)
+Max 6 posts a day on each platform (TikTok, Instagram and the rest). This overrides every other count in this file, the daily run prompts ("max 4 TikToks", "3-4 posts"), QUALITY-NOTES.md and the socials playbook. Never delete or draft posts just to get under 6; a day with 6 or fewer is fine as is.
+
 ## EVERY DAY: 3-4 A+ POSTS TO ALL SOCIALS (Bekir, 2026-11-21: "EVERY DAY 3-4 slides or videos to all socials from now on all A+ content with visuals and interesting financial ideas")
 This overrides the 10/day target and the 50/50 picture/video split below. Every day, 3-4 new posts, each one going to **every connected network**: Instagram, TikTok, Facebook, YouTube Shorts (videos only; brand channel UCecz_zgUGiksG2HpJEt0cTg) and Pinterest (pictures/covers).
 - **Format:** a carousel ("slides") or a short video. Mix them; at least 1 video a day.

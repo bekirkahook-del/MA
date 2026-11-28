@@ -1,36 +1,35 @@
 {
-  "pulled": "2026-11-27",
-  "note": "Metricool brand 7259200. now = Nov 20-26 (sum; followers = Nov 26), prev = Nov 13-19 (followers = Nov 19). Aggregates only.",
+  "pulled": "2026-11-28",
+  "note": "Metricool brand 7259200. now = Nov 21-27 (sum), prev = Nov 14-20. Followers: IG now = Nov 27, prev = Nov 19 (Nov 20 reading was unreliable); TikTok now = Nov 26, prev = Nov 20 (Nov 27 reading of 1528 looks like a Metricool glitch, not used). Aggregates only.",
   "platforms": {
     "instagram": {
       "views": {
-        "now": 13657,
-        "prev": 3562
+        "now": 14550,
+        "prev": 4582
       },
       "reach": {
-        "now": 11119,
-        "prev": 2637
+        "now": 11798,
+        "prev": 3478
       },
       "followers": {
-        "now": 407,
+        "now": 406,
         "prev": 367
       }
     },
     "tiktok": {
       "views": {
-        "now": 7539,
-        "prev": 17192
+        "now": 8528,
+        "prev": 15863
       },
       "followers": {
         "now": 299,
-        "prev": 287
+        "prev": 288
       }
     }
   },
   "daily": {
     "instagram": {
       "views": {
-        "11-13": 292,
         "11-14": 364,
         "11-15": 243,
         "11-16": 337,
@@ -43,25 +42,26 @@
         "11-23": 5253,
         "11-24": 1265,
         "11-25": 1463,
-        "11-26": 1135
+        "11-26": 1202,
+        "11-27": 2138
       }
     },
     "tiktok": {
       "views": {
-        "11-13": 2011,
-        "11-14": 8912,
-        "11-15": 2080,
+        "11-14": 9036,
+        "11-15": 2081,
         "11-16": 614,
-        "11-17": 2223,
-        "11-18": 127,
-        "11-19": 1225,
+        "11-17": 2224,
+        "11-18": 129,
+        "11-19": 1232,
         "11-20": 547,
-        "11-21": 758,
-        "11-22": 2570,
-        "11-23": 894,
-        "11-24": 24,
-        "11-25": 2658,
-        "11-26": 88
+        "11-21": 759,
+        "11-22": 2572,
+        "11-23": 909,
+        "11-24": 32,
+        "11-25": 2908,
+        "11-26": 152,
+        "11-27": 1196
       }
     }
   }

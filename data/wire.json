@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T16:50:00Z",
+ "updated": "2026-11-28T16:51:23Z",
  "TICKER_DATE": "Nov 20",
  "TICKER": [
   [
@@ -109,44 +109,53 @@
   ]
  ],
  "RECAP": {
-  "d": "Nov 25",
-  "t": "Nov 25 close (CNBC/MarketWatch): the Dow rose 164.25 points, or 0.33%, to 50,182.95, the S&P 500 fell 0.25% to 7,182.78 and the Nasdaq Composite fell 0.62% to 23,585.80. The Russell 2000 rose 0.71% to 2,704.06. The Dow had been down more than 1,100 points at its low and the S&P 500 down 3.2% as AI-linked stocks sold off, before a rebound. US markets are closed Thursday for Thanksgiving."
+  "d": "Nov 27",
+  "t": "Nov 27 close (CNBC/Reuters, half-day session ending 1 p.m. ET): the Dow rose 591.99 points, or 1.18%, to 50,774.94, the S&P 500 gained 1.60% to 7,297.49 and the Nasdaq Composite gained 2.31% to 24,129.50. For the week the S&P 500 rose 5.6%, the Nasdaq 6.68% and the Dow 5.46%, as investors returned to battered AI-linked shares after Thanksgiving."
  },
  "CAL": [
   [
    "Tue Dec 1",
    "ISM manufacturing PMI and JOLTS",
-   "ISM manufacturing PMI and JOLTS job openings at 10:00 a.m. ET. The prior ISM reading was 55.5 and the forecast is 55.2.",
+   "ISM manufacturing PMI and JOLTS job openings at 10:00 a.m. ET. The prior ISM reading was 55.5 and the consensus is 55.0; JOLTS is forecast at 7.45 million vs 7.52 million.",
    [
-    "US Economic Calendar, week of Nov 30",
-    "https://helious.io/calendar/2026-w49"
+    "TD Economics (Nov 27)",
+    "https://economics.td.com/domains/economics.td.com/documents/reports/bottom-line/tables/2026-11-27/upcoming.htm"
+   ]
+  ],
+  [
+   "Wed Dec 2",
+   "ADP employment",
+   "ADP November private payrolls at 8:15 a.m. ET; consensus is 80K vs 86K in October.",
+   [
+    "TD Economics (Nov 27)",
+    "https://economics.td.com/domains/economics.td.com/documents/reports/bottom-line/tables/2026-11-27/upcoming.htm"
    ]
   ],
   [
    "Thu Dec 3",
    "ISM services PMI",
-   "ISM services PMI at 10:00 a.m. ET; the prior reading was 54.5 and the forecast is 54.5.",
+   "ISM services PMI at 10:00 a.m. ET; the prior reading was 54.5 and the consensus is 54.5.",
    [
-    "US Economic Calendar, week of Nov 30",
-    "https://helious.io/calendar/2026-w49"
+    "TD Economics (Nov 27)",
+    "https://economics.td.com/domains/economics.td.com/documents/reports/bottom-line/tables/2026-11-27/upcoming.htm"
    ]
   ],
   [
    "Fri Dec 4",
    "November jobs report",
-   "Nonfarm payrolls, unemployment and average hourly earnings at 8:30 a.m. ET. October payrolls were up 165K with unemployment at 4.1%.",
+   "Nonfarm payrolls, unemployment and average hourly earnings at 8:30 a.m. ET. Consensus is about +90K payrolls (vs +165K in October), unemployment 4.1% and hourly earnings +0.3%.",
    [
-    "US Economic Calendar, week of Nov 30",
-    "https://helious.io/calendar/2026-w49"
+    "The Globe and Mail (Nov 27)",
+    "https://www.theglobeandmail.com/investing/markets/inside-the-market/article-calendar-what-investors-need-to-know-for-the-week-ahead-168/"
    ]
   ],
   [
    "Wed Dec 9",
    "Fed rate decision",
-   "The Fed's December decision at 2:00 p.m. ET; investors anticipate another rate increase after October's 25-basis-point hike.",
+   "The Fed's Dec. 8-9 meeting decision; CME FedWatch gave a 99.2% chance of a quarter-point hike to 4.00%-4.25% as of Nov. 27.",
    [
-    "Yahoo Finance (Nov 24)",
-    "https://finance.yahoo.com/markets/stocks/articles/us-stock-futures-mixed-nvidia-101442654.html"
+    "Investing.com (Nov 27)",
+    "https://www.investing.com/analysis/feds-december-rate-hike-is-priced-in-but-january-remains-uncertain-200692473"
    ]
   ]
  ],
@@ -168,11 +177,59 @@
    ""
   ],
   [
+   "2026-12-01",
+   "MDB",
+   "MongoDB",
+   "",
+   "",
+   ""
+  ],
+  [
    "2026-12-02",
    "CRM",
    "Salesforce",
    "AMC",
    "$3.45",
+   ""
+  ],
+  [
+   "2026-12-02",
+   "SNOW",
+   "Snowflake",
+   "",
+   "",
+   ""
+  ],
+  [
+   "2026-12-02",
+   "ZS",
+   "Zscaler",
+   "",
+   "",
+   ""
+  ],
+  [
+   "2026-12-02",
+   "M",
+   "Macy's",
+   "",
+   "",
+   ""
+  ],
+  [
+   "2026-12-03",
+   "RY",
+   "Royal Bank of Canada",
+   "",
+   "",
+   ""
+  ],
+  [
+   "2026-12-03",
+   "TD",
+   "Toronto-Dominion Bank",
+   "",
+   "",
    ""
   ]
  ],
@@ -184,10 +241,82 @@
   [
    "FOREX.com weekly outlook (Nov 30-Dec 4)",
    "https://www.forex.com/ie/news-and-analysis/weekly-market-outlook-30-november-4-december-2026/"
+  ],
+  [
+   "Morningstar, week ahead (Nov 27)",
+   "https://www.morningstar.com/markets/whats-happening-markets-this-week-34"
+  ],
+  [
+   "Screener Charts week ahead",
+   "https://screenercharts.com/us/week-ahead"
   ]
  ],
- "NEWS_DATE": "Nov 27, 2026",
+ "NEWS_DATE": "Nov 28, 2026",
  "NEWS": [
+  {
+   "k": "Markets",
+   "d": "Nov 27",
+   "h": "Dow rallies 592 points on a half-day to end its best week since 2022; Nasdaq jumps 2.31%",
+   "w": "Per CNBC and Reuters, the Dow rose 591.99 points to 50,774.94, the S&P 500 gained 1.60% to 7,297.49 and the Nasdaq Composite gained 2.31% to 24,129.50 in a session that closed at 1 p.m. ET after Thursday's Thanksgiving holiday.",
+   "m": "For the week the S&P 500 gained 5.6%, the Nasdaq 6.68% and the Dow 5.46%, driven by buyers returning to hard-hit AI-linked shares (Reuters).",
+   "a": "Interview point: a 5.6% weekly gain right after a 3.2% intraday S&P drop shows how fast sentiment can swing; be ready to explain what drives that kind of volatility.",
+   "s": [
+    [
+     "CNBC live updates (Nov 27)",
+     "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html"
+    ],
+    [
+     "Reuters via Investing.com (Nov 27)",
+     "https://www.investing.com/news/stock-market-news/wall-st-futures-surge-as-investors-return-from-holiday-5053052"
+    ]
+   ]
+  },
+  {
+   "k": "Fed",
+   "d": "Nov 27",
+   "h": "Fed's December hike is priced in at 99.2% as the blackout period starts; the jobs report is the last big input",
+   "w": "Per Investing.com, CME FedWatch showed a 99.2% chance of a quarter-point hike on Dec. 9, which would lift the target range to 4.00%-4.25%. The Fed's blackout period began Saturday, Nov. 28.",
+   "m": "Futures gave a 60.1% chance of two hikes by the Jan. 27 meeting. Core PCE rose 3.3% in the year to October, above the 3.2% forecast (Investing.com; Yahoo Finance).",
+   "a": "Interview point: explain why a fully priced hike moves markets less than the guidance that comes with it.",
+   "s": [
+    [
+     "Investing.com (Nov 27)",
+     "https://www.investing.com/analysis/feds-december-rate-hike-is-priced-in-but-january-remains-uncertain-200692473"
+    ],
+    [
+     "Yahoo Finance (Nov 25)",
+     "https://finance.yahoo.com/economy/policy/article/pce-inflation-heats-up-solidifying-a-fed-rate-hike-in-december-with-more-likely-next-year-143016844.html"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 27",
+   "h": "Puig to buy 75% of Parfums de Marly owner Artessence from Advent for about EUR 1.2 billion",
+   "w": "Per Reuters, Spanish beauty company Puig agreed to buy a 75% stake in Artessence, owner of Parfums de Marly and Initio Parfums Prives, from private equity group Advent for about EUR 1.2 billion ($1.31 billion).",
+   "m": "The deal values the whole target at $1.9 billion. Advent acquired Parfums de Marly in 2023, and a holding controlled by founder Julien Sprecher keeps the other 25% (Reuters).",
+   "a": "Interview point: this is a sponsor exit with a founder rolling a minority stake, a common structure worth knowing.",
+   "s": [
+    [
+     "Reuters via AOL (Nov 27)",
+     "https://www.aol.com/articles/puig-agrees-buy-75-stake-192221000.html"
+    ]
+   ]
+  },
+  {
+   "k": "M&A",
+   "d": "Nov 26",
+   "h": "Canaccord Genuity agrees to a roughly $1.6 billion take-private by its CEO, alongside a GBP 1.17 billion UK wealth sale to Centerbridge and Mubadala",
+   "w": "Per Lexpert, chairperson and CEO Dan Daviau will take Canaccord private in an all-cash deal reported at about $1.6 billion, or about $15.27 per common share, conditional on the sale of its UK wealth business to a Centerbridge and Mubadala-backed consortium for GBP 1.17 billion.",
+   "m": "A 45-day go-shop runs to Dec. 30, 2026, with a $41.6 million termination fee; closing is expected in the first half of 2027 (Lexpert).",
+   "a": "Interview point: a management buyout with a go-shop is a good example of how boards test whether the price is fair.",
+   "s": [
+    [
+     "Lexpert (Nov 26)",
+     "https://www.lexpert.ca/big-deals/canaccord-genuity-to-go-private-in-16b-deal/394823"
+    ]
+   ]
+  },
   {
    "k": "Markets",
    "d": "Nov 25",
@@ -373,109 +502,156 @@
      "https://www.bostonglobe.com/2026/11/24/business/tech-stocks-tuesday/"
     ]
    ]
-  },
-  {
-   "k": "Markets",
-   "d": "Nov 23",
-   "h": "Stocks close sharply higher Monday as Nvidia reinstates Jensen Huang; Nasdaq up about 6.9%",
-   "w": "Per TipRanks, the Nasdaq Composite closed up 6.92% (1,563 points), the S&P 500 up 5.03% and the Dow up 3.21% (1,556 points), the best day for all three since April 2025. Nvidia rose about 33% after its board reinstated Huang as CEO; Micron rose 19%, CoreWeave 20% and AMD 6%. Markets are closed Thursday for Thanksgiving and Friday's session ends at 1 p.m. ET.",
-   "m": "Friday's close left the S&P 500 and Dow in a correction and the Nasdaq-100 close to a bear market, so a one-day jump this size is partly a bounce from oversold levels. Intraday moves can fade by the close.",
-   "a": "Interview point: explain why one CEO's return can move an entire sector (key-person risk and how it shows up in valuation).",
-   "s": [
-    [
-     "TipRanks (Nov 23)",
-     "https://www.tipranks.com/news/nasdaq-closes-7-higher-after-jensen-huang-returns-as-nvidias-ceo"
-    ],
-    [
-     "CNBC live updates (Nov 23)",
-     "https://www.cnbc.com/2026/11/22/stock-market-today-live-updates.html"
-    ]
-   ]
-  },
-  {
-   "k": "M&A",
-   "d": "Nov 23",
-   "h": "CrowdStrike agrees to buy Zscaler for $43.9 billion in all stock",
-   "w": "CrowdStrike will pay 1.135 of its shares for each Zscaler share, or about $260.41 per Zscaler share, a 34% premium to Zscaler's last close. CrowdStrike holders would own about 84% of the combined company, and closing is expected in the second half of CrowdStrike's fiscal 2028. CNBC said CrowdStrike fell roughly 5% and Zscaler rose more than 20% in early trading.",
-   "m": "In an all-stock deal the buyer pays with its own shares, so the seller's price moves with the buyer's stock. CrowdStrike's drop on the news shows investors weighing the price against the strategic fit.",
-   "a": "Interview point: explain the exchange ratio and why the implied price per share changes as the acquirer's stock moves.",
-   "s": [
-    [
-     "CNBC (Nov 23)",
-     "https://www.cnbc.com/2026/11/23/crowdstrike-zscaler-aquisition-ai-cyberattacks.html"
-    ],
-    [
-     "Reuters via CNBC (Nov 23)",
-     "https://www.cnbc.com/2026/11/23/crowdstrike-to-buy-zscaler.html"
-    ]
-   ]
-  },
-  {
-   "k": "M&A",
-   "d": "Nov 23",
-   "h": "ABB to buy fan maker Ziehl-Abegg at a $2.65 billion enterprise value",
-   "w": "ABB signed an agreement to acquire Ziehl-Abegg, which makes electronically commutated fans and integrated motors, at a $2.65 billion enterprise value and $2.22 billion equity value. ABB said that implies 1.9x EV/Sales and 18.6x EV/EBITDA on 2026 numbers, and expects the EBITDA multiple to fall toward low double digits with synergies. Closing is expected in the second half of 2027.",
-   "m": "The 18.6x multiple looks high until you add the synergies ABB expects, which is why buyers quote a post-synergy multiple.",
-   "a": "Interview point: explain the gap between enterprise value and equity value ($2.65B vs $2.22B).",
-   "s": [
-    [
-     "ABB press release (Nov 23)",
-     "https://new.abb.com/news/detail/140614/abb-to-acquire-ziehl-abegg-expanding-offering-for-hvac-and-industrial-cooling-applications"
-    ]
-   ]
-  },
-  {
-   "k": "M&A",
-   "d": "Nov 23",
-   "h": "Texas Pacific Land to buy EagleRock in an all-stock deal worth about $3.0 billion",
-   "w": "TPL and EagleRock Land announced a definitive agreement under which EagleRock holders get 0.0831 New TPL shares per EagleRock Class A share, about $23.56 per share based on TPL's five-day VWAP as of Nov 20. The implied equity value is about $3.0 billion, and closing is expected in the first half of 2027 pending an EagleRock shareholder vote and HSR clearance.",
-   "m": "A fixed exchange ratio means the value EagleRock holders receive moves with TPL's share price until closing.",
-   "a": "Interview point: explain what a VWAP is and why deal values are often quoted off an average price.",
-   "s": [
-    [
-     "Texas Pacific Land press release (Nov 23)",
-     "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
-    ]
-   ]
   }
  ],
  "NEWS_QUIZ": [
   [
-   "The Dow fell more than 1,100 points on Wednesday but closed up 0.33%. What does an intraday reversal like that show?",
+   "The S&P 500 gained 5.6% in a holiday-shortened week. What does a move like that right after a sharp selloff most likely show?",
    [
-    "Sellers lost control and buyers stepped in, so the close can differ sharply from the low",
-    "The market was closed",
-    "Stocks are priced only at the open",
-    "Index levels are set by the Fed"
+    "Volatility is elevated and sentiment can reverse quickly",
+    "Volatility has disappeared",
+    "Trading volume was zero",
+    "The Fed set index levels"
    ],
    0,
-   "The closing level reflects where trading ended, which can be far from the day's extremes."
+   "Large swings in both directions within days are the signature of high volatility."
   ],
   [
-   "Virbac is buying Axiota from private equity firm Paine Schwartz for $315 million in cash. Who is the seller?",
+   "Puig is buying 75% of Artessence from Advent and the founder keeps 25%. What is the founder's stake called?",
    [
-    "Paine Schwartz Partners, the sponsor that owned Axiota",
-    "Axiota's public shareholders",
-    "The FTC",
-    "Virbac's lenders"
+    "A rollover or retained minority stake",
+    "A leveraged recap",
+    "A tender offer",
+    "A spin-off"
    ],
    0,
-   "Axiota was a Paine Schwartz portfolio company, so the sponsor is exiting by selling to a strategic buyer."
+   "Sellers who keep part of the equity are rolling over, which keeps them aligned with the new owner."
   ],
   [
-   "Salesforce investors will watch remaining performance obligations. What do they measure?",
+   "Canaccord's take-private has a 45-day go-shop. What is its purpose?",
    [
-    "Contracted revenue not yet recognized",
-    "Cash on the balance sheet",
-    "Employee headcount",
-    "Share buybacks"
+    "To let the company solicit competing bids after signing",
+    "To ban other bidders",
+    "To set the Fed rate",
+    "To delist the shares early"
    ],
    0,
-   "RPO is contracted revenue the company has not yet recognized, a gauge of future demand."
+   "A go-shop lets the board test the market for a better offer, which supports the fairness of the price."
   ]
  ],
- "DEALS_DATE": "Nov 26, 2026",
+ "DEALS_DATE": "Nov 28, 2026",
  "DEALS": [
+  {
+   "id": "d60",
+   "buyer": "Brookfield",
+   "target": "PGP Glass (from Blackstone)",
+   "value": "$1.7B",
+   "usd": 1.7,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "$1.7 billion transaction",
+    "Funded by Brookfield Capital Partners and Brookfield Business Corporation",
+    "PGP runs 13 furnaces at three sites in India and Sri Lanka",
+    "Overseas markets are more than 70% of sales",
+    "Closing expected in Q1 2027, subject to approvals"
+   ],
+   "what": "Brookfield agreed to acquire PGP Glass, a specialty glass packaging maker, from funds managed by Blackstone Private Equity in a $1.7 billion transaction.",
+   "why": "PGP serves cosmetics, fragrance, specialty food and beverage and pharmaceutical brands in more than 70 countries, with furnace capacity above 1,800 tonnes a day.",
+   "say": "\"Blackstone is exiting a portfolio company to another financial sponsor, so this is a sponsor-to-sponsor sale rather than a sale to a strategic buyer.\"",
+   "src": [
+    [
+     "Buyout Desk (Nov 23, updated Nov 26)",
+     "https://www.buyoutdesk.com/deals/brookfield-agrees-to-acquire-pgp-glass-from-blackstone-for-2026-11-23"
+    ]
+   ],
+   "q": [
+    [
+     "Brookfield is buying PGP Glass from Blackstone. What type of deal is it?",
+     [
+      "A sponsor-to-sponsor sale",
+      "A public tender offer",
+      "A spin-off",
+      "A merger of equals"
+     ],
+     0,
+     "Both buyer and seller are financial investors, so it is a secondary buyout."
+    ]
+   ]
+  },
+  {
+   "id": "d59",
+   "buyer": "Dan Daviau (CEO)",
+   "target": "Canaccord Genuity Group",
+   "value": "~$1.6B (cash)",
+   "usd": 1.6,
+   "date": "Nov 26, 2026",
+   "terms": [
+    "All-cash take-private reported at about $1.6 billion",
+    "About $15.27 per common share, a 26.7% premium to the Feb 13, 2026 close",
+    "Conditional on the UK wealth sale for GBP 1.17 billion to Centerbridge and Mubadala",
+    "45-day go-shop ending Dec 30, 2026",
+    "$41.6 million termination fee in specified cases",
+    "Closing expected in the first half of 2027"
+   ],
+   "what": "Canaccord Genuity agreed to be taken private by its chairperson and CEO, Dan Daviau, in an all-cash deal, alongside the sale of its UK wealth management business.",
+   "why": "The plan revives a 2023 management-led privatization that fell apart. Shareholders need two-thirds approval plus a majority of the minority, with a special meeting expected in Q1 2027.",
+   "say": "\"It's a management buyout with a go-shop, so the board is explicitly testing the market for a higher bid until Dec. 30.\"",
+   "src": [
+    [
+     "Lexpert (Nov 26)",
+     "https://www.lexpert.ca/big-deals/canaccord-genuity-to-go-private-in-16b-deal/394823"
+    ]
+   ],
+   "q": [
+    [
+     "What does a go-shop period allow?",
+     [
+      "Soliciting competing offers after signing",
+      "Raising the premium automatically",
+      "Delisting immediately",
+      "Skipping shareholder votes"
+     ],
+     0,
+     "A go-shop lets the target look for superior proposals for a fixed time."
+    ]
+   ]
+  },
+  {
+   "id": "d58",
+   "buyer": "Puig",
+   "target": "Artessence (Parfums de Marly owner, from Advent)",
+   "value": "~EUR 1.2B for 75%",
+   "usd": 1.31,
+   "date": "Nov 27, 2026",
+   "terms": [
+    "75% stake for about EUR 1.2 billion ($1.31 billion)",
+    "Values the whole target at $1.9 billion",
+    "Advent bought Parfums de Marly in 2023",
+    "Founder's holding keeps 25%"
+   ],
+   "what": "Spanish beauty company Puig agreed to buy a controlling 75% stake in Artessence, the owner of Parfums de Marly and Initio Parfums Prives, from private equity group Advent.",
+   "why": "Parfums de Marly sells fragrances inspired by 18th-century French perfumery, with bottles generally priced around EUR 250 or more, giving Puig a premium niche brand.",
+   "say": "\"Advent is selling a controlling stake to a strategic buyer and the founder stays in with 25%, so the founder rolls equity alongside Puig.\"",
+   "src": [
+    [
+     "Reuters via AOL (Nov 27)",
+     "https://www.aol.com/articles/puig-agrees-buy-75-stake-192221000.html"
+    ]
+   ],
+   "q": [
+    [
+     "Puig buys 75% and the founder keeps 25%. What is this structure?",
+     [
+      "A control deal with a rollover minority",
+      "A full takeover",
+      "A spin-off",
+      "A merger of equals"
+     ],
+     0,
+     "The buyer takes control while the founder keeps part of the equity."
+    ]
+   ]
+  },
   {
    "id": "d57",
    "buyer": "Virbac",
@@ -594,6 +770,113 @@
    ]
   },
   {
+   "id": "d54",
+   "buyer": "AMD",
+   "target": "Taalas",
+   "value": "~$2.9B",
+   "usd": 2.9,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "Valued at about $2.9B (Tech.eu)",
+    "Taalas raised about $220M from investors including Fidelity",
+    "AMD plans to add the technology to its Instinct accelerator roadmap"
+   ],
+   "what": "AMD acquired Taalas, a startup founded in Toronto in 2023 that builds chips with AI models integrated directly into silicon, in a deal Tech.eu valued at about $2.9 billion, reported November 23.",
+   "why": "Taalas designs chips around specific AI models instead of general-purpose GPUs. AMD plans to use the technology in its Instinct accelerator line.",
+   "say": "\"It's a tech tuck-in: AMD buys specialized chip design talent and IP rather than building it internally.\"",
+   "src": [
+    [
+     "Tech.eu (Nov 23)",
+     "https://tech.eu/2026/11/23/amd-acquires-ai-chip-startup-taalas-for-29b-to-advance-ai-inference-technology/"
+    ]
+   ],
+   "q": [
+    [
+     "AMD buying a startup's technology instead of developing it is an example of which decision?",
+     [
+      "Build vs buy",
+      "Leverage vs equity",
+      "Spin-off vs split-off",
+      "Dividend vs buyback"
+     ],
+     0,
+     "A strategic acquirer weighs building a capability itself against buying a company that already has it."
+    ]
+   ]
+  },
+  {
+   "id": "d53",
+   "buyer": "Texas Pacific Land",
+   "target": "EagleRock Land",
+   "value": "~$3.0B (all stock)",
+   "usd": 3,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "0.0831 New TPL shares per EagleRock Class A share",
+    "About $23.56 per EagleRock share on TPL's five-day VWAP as of Nov 20",
+    "Needs an EagleRock shareholder vote and Hart-Scott-Rodino clearance",
+    "Expected to close in the first half of 2027"
+   ],
+   "what": "Texas Pacific Land and EagleRock Land (NYSE: EROK) announced a definitive agreement for TPL to acquire EagleRock in an all-stock deal with an implied equity value of about $3.0 billion, announced November 23.",
+   "why": "The companies said the deal combines complementary Permian land and water assets, adds New Mexico Delaware Basin and Midland Basin exposure, and gives TPL more water commercialization opportunities.",
+   "say": "\"It's a stock-for-stock merger at a fixed exchange ratio, so the headline value is quoted off TPL's five-day VWAP and will move with TPL's share price.\"",
+   "src": [
+    [
+     "Texas Pacific Land press release (Nov 23)",
+     "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
+    ]
+   ],
+   "q": [
+    [
+     "TPL quotes EagleRock's value using TPL's five-day VWAP. What does VWAP stand for?",
+     [
+      "Volume-weighted average price",
+      "Value-weighted adjusted premium",
+      "Variable warrant asset price",
+      "Verified wholesale acquisition price"
+     ],
+     0,
+     "VWAP weights each trade's price by its size, smoothing out one-day swings."
+    ]
+   ]
+  },
+  {
+   "id": "d52",
+   "buyer": "ABB",
+   "target": "Ziehl-Abegg",
+   "value": "$2.65B EV ($2.22B equity)",
+   "usd": 2.65,
+   "date": "Nov 23, 2026",
+   "terms": [
+    "Enterprise value $2.65B; equity value $2.22B",
+    "1.9x EV/Sales and 18.6x EV/EBITDA on 2026 numbers",
+    "About $1.4B of 2026 revenue, mid-single-digit operational EBITA margin",
+    "Expected to close in the second half of 2027, subject to regulatory approvals"
+   ],
+   "what": "ABB signed an agreement to acquire Ziehl-Abegg, a maker of high-efficiency electronically commutated (EC) fans and integrated motors, at a $2.65 billion enterprise value, announced November 23.",
+   "why": "The fans add to ABB's Motion portfolio of motors and drives and broaden its offering for HVAC, industrial cooling and thermal management. ABB expects the EBITDA multiple to fall toward low double digits with synergies.",
+   "say": "\"The enterprise value is $2.65B but equity is $2.22B; the difference is net debt and similar claims the buyer takes on.\"",
+   "src": [
+    [
+     "ABB press release (Nov 23)",
+     "https://new.abb.com/news/detail/140614/abb-to-acquire-ziehl-abegg-expanding-offering-for-hvac-and-industrial-cooling-applications"
+    ]
+   ],
+   "q": [
+    [
+     "ABB's price is $2.65B enterprise value but $2.22B equity value. What explains the gap?",
+     [
+      "Net debt and other claims ahead of equity holders",
+      "ABB's expected synergies",
+      "The HSR filing fee",
+      "A control premium"
+     ],
+     0,
+     "Enterprise value is equity value plus net debt and similar claims, so it is higher when the target carries net debt."
+    ]
+   ]
+  },
+  {
    "id": "d51",
    "buyer": "CrowdStrike",
    "target": "Zscaler",
@@ -632,6 +915,116 @@
      ],
      0,
      "With a fixed exchange ratio the number of shares is set, so the dollar value moves with the buyer's share price."
+    ]
+   ]
+  },
+  {
+   "id": "d48",
+   "buyer": "MasTec",
+   "target": "Murphy Corporation",
+   "value": "~$1.25B cash (plus earnout)",
+   "usd": 1.25,
+   "date": "Nov 20, 2026",
+   "terms": [
+    "About $1.25B in cash, subject to customary purchase-price adjustments",
+    "Potential earnout based on Murphy's cumulative three-year performance after closing",
+    "Murphy is a mechanical contractor serving mission-critical end markets"
+   ],
+   "what": "Infrastructure contractor MasTec agreed to buy Murphy Corporation, a mechanical contractor serving mission-critical end markets, for about $1.25 billion in cash, announced November 20. Sellers can earn more through an earnout tied to Murphy's performance over the three years after closing.",
+   "why": "MasTec expands its U.S. mechanical contracting work into mission-critical projects. The earnout shares risk: part of the price is only paid if Murphy keeps performing.",
+   "say": "\"An earnout bridges a valuation gap: the seller thinks the business is worth more, the buyer isn't sure, so part of the price depends on future results.\"",
+   "src": [
+    [
+     "MasTec press release (Nov 20)",
+     "https://investors.mastec.com/news-releases/news-release-details/mastec-enters-definitive-agreement-acquire-murphy-corporation"
+    ]
+   ],
+   "q": [
+    [
+     "Part of MasTec's price for Murphy depends on Murphy's results after closing. What is that called?",
+     [
+      "An earnout",
+      "A breakup fee",
+      "A tender offer",
+      "A collar"
+     ],
+     0,
+     "An earnout pays the seller more later if the business hits agreed performance targets."
+    ]
+   ]
+  },
+  {
+   "id": "d47",
+   "buyer": "TPG and Corpay",
+   "target": "BILL Holdings",
+   "value": "$6.0B ($63.25/share cash)",
+   "usd": 6,
+   "date": "Nov 19, 2026",
+   "terms": [
+    "$63.25 per share in cash",
+    "Values BILL at about $6.0 billion",
+    "31% premium to the 60-day VWAP ending Nov 16",
+    "TPG takes a majority stake; Corpay a minority stake",
+    "Largest holder Starboard Value and CEO René Lacerte agreed to vote for it",
+    "Expected to close in the first half of 2027"
+   ],
+   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder René Lacerte stays CEO.",
+   "why": "BILL's stock had fallen far from its highs, so a private-equity buyer could pay a premium and still buy in cheaply. Corpay gets a strategic stake in a business-payments platform. TPG and Corpay used the same playbook to buy AvidXchange in 2025.",
+   "say": "\"It's a take-private: TPG pays a 31% premium in cash for a fallen software stock, with Corpay as a strategic partner, betting the business is worth more out of public markets.\"",
+   "src": [
+    [
+     "BILL Holdings 8-K (SEC)",
+     "https://www.sec.gov/Archives/edgar/data/0001786352/000119312526469396/d176726dex991.htm"
+    ]
+   ],
+   "q": [
+    [
+     "BILL's 31% premium is measured against its 60-day VWAP. Why use an average price instead of the last close?",
+     [
+      "It strips out the jump from leaked deal talks",
+      "It makes the premium look smaller",
+      "Regulators require it",
+      "It includes BILL's debt"
+     ],
+     0,
+     "Shares often jump once talks leak; an average from before the leak shows the real premium over the undisturbed price."
+    ]
+   ]
+  },
+  {
+   "id": "d46",
+   "buyer": "Bending Spoons",
+   "target": "Mailchimp (from Intuit)",
+   "value": "$3.68B (about $368M reinvested in Bending Spoons shares)",
+   "usd": 3.68,
+   "date": "Nov 19, 2026",
+   "terms": [
+    "$3.68B price, subject to cash, debt and working-capital adjustments",
+    "Intuit reinvests about $368M (about 10%) into new Bending Spoons shares",
+    "No financing condition; regulatory approvals required",
+    "Closing expected early 2027",
+    "Intuit agrees to a two-year non-compete after closing"
+   ],
+   "what": "Intuit agreed to sell Mailchimp to Bending Spoons for $3.68 billion, announced Nov 19. About $368 million of the proceeds goes back into newly issued Bending Spoons shares, so Intuit keeps a small stake in the buyer. Closing is expected in early 2027.",
+   "why": "Intuit sheds a non-core unit and keeps some upside; Bending Spoons adds another digital business. Source text is AI-generated, so check figures against the filings.",
+   "say": "\"Intuit gets cash now and keeps some upside by rolling about 10% of the price into the buyer's stock, while Bending Spoons gets a scaled product to run more efficiently.\"",
+   "src": [
+    [
+     "Panabee (Nov 19)",
+     "https://www.panabee.com/news/bending-spoons-agrees-to-buy-mailchimp-for-3-68-billion-with-368-million-intuit-reinvest"
+    ]
+   ],
+   "q": [
+    [
+     "Intuit takes about 10% of the Mailchimp price in the buyer's new shares. What is one effect?",
+     [
+      "Intuit keeps some upside in the buyer",
+      "Intuit pays Bending Spoons",
+      "No regulatory approval is needed",
+      "The price becomes all debt"
+     ],
+     0,
+     "Taking buyer stock means the seller shares in the buyer's future value."
     ]
    ]
   },
@@ -734,369 +1127,9 @@
      "A bridge loan guarantees the cash is there at signing; the buyer usually replaces it with longer-term bonds before or at closing."
     ]
    ]
-  },
-  {
-   "id": "d53",
-   "buyer": "Texas Pacific Land",
-   "target": "EagleRock Land",
-   "value": "~$3.0B (all stock)",
-   "usd": 3,
-   "date": "Nov 23, 2026",
-   "terms": [
-    "0.0831 New TPL shares per EagleRock Class A share",
-    "About $23.56 per EagleRock share on TPL's five-day VWAP as of Nov 20",
-    "Needs an EagleRock shareholder vote and Hart-Scott-Rodino clearance",
-    "Expected to close in the first half of 2027"
-   ],
-   "what": "Texas Pacific Land and EagleRock Land (NYSE: EROK) announced a definitive agreement for TPL to acquire EagleRock in an all-stock deal with an implied equity value of about $3.0 billion, announced November 23.",
-   "why": "The companies said the deal combines complementary Permian land and water assets, adds New Mexico Delaware Basin and Midland Basin exposure, and gives TPL more water commercialization opportunities.",
-   "say": "\"It's a stock-for-stock merger at a fixed exchange ratio, so the headline value is quoted off TPL's five-day VWAP and will move with TPL's share price.\"",
-   "src": [
-    [
-     "Texas Pacific Land press release (Nov 23)",
-     "https://www.texaspacific.com/investors/news-events/press-releases/detail/191/texas-pacific-land-to-acquire-eaglerock-in-all-stock"
-    ]
-   ],
-   "q": [
-    [
-     "TPL quotes EagleRock's value using TPL's five-day VWAP. What does VWAP stand for?",
-     [
-      "Volume-weighted average price",
-      "Value-weighted adjusted premium",
-      "Variable warrant asset price",
-      "Verified wholesale acquisition price"
-     ],
-     0,
-     "VWAP weights each trade's price by its size, smoothing out one-day swings."
-    ]
-   ]
-  },
-  {
-   "id": "d52",
-   "buyer": "ABB",
-   "target": "Ziehl-Abegg",
-   "value": "$2.65B EV ($2.22B equity)",
-   "usd": 2.65,
-   "date": "Nov 23, 2026",
-   "terms": [
-    "Enterprise value $2.65B; equity value $2.22B",
-    "1.9x EV/Sales and 18.6x EV/EBITDA on 2026 numbers",
-    "About $1.4B of 2026 revenue, mid-single-digit operational EBITA margin",
-    "Expected to close in the second half of 2027, subject to regulatory approvals"
-   ],
-   "what": "ABB signed an agreement to acquire Ziehl-Abegg, a maker of high-efficiency electronically commutated (EC) fans and integrated motors, at a $2.65 billion enterprise value, announced November 23.",
-   "why": "The fans add to ABB's Motion portfolio of motors and drives and broaden its offering for HVAC, industrial cooling and thermal management. ABB expects the EBITDA multiple to fall toward low double digits with synergies.",
-   "say": "\"The enterprise value is $2.65B but equity is $2.22B; the difference is net debt and similar claims the buyer takes on.\"",
-   "src": [
-    [
-     "ABB press release (Nov 23)",
-     "https://new.abb.com/news/detail/140614/abb-to-acquire-ziehl-abegg-expanding-offering-for-hvac-and-industrial-cooling-applications"
-    ]
-   ],
-   "q": [
-    [
-     "ABB's price is $2.65B enterprise value but $2.22B equity value. What explains the gap?",
-     [
-      "Net debt and other claims ahead of equity holders",
-      "ABB's expected synergies",
-      "The HSR filing fee",
-      "A control premium"
-     ],
-     0,
-     "Enterprise value is equity value plus net debt and similar claims, so it is higher when the target carries net debt."
-    ]
-   ]
-  },
-  {
-   "id": "d54",
-   "buyer": "AMD",
-   "target": "Taalas",
-   "value": "~$2.9B",
-   "usd": 2.9,
-   "date": "Nov 23, 2026",
-   "terms": [
-    "Valued at about $2.9B (Tech.eu)",
-    "Taalas raised about $220M from investors including Fidelity",
-    "AMD plans to add the technology to its Instinct accelerator roadmap"
-   ],
-   "what": "AMD acquired Taalas, a startup founded in Toronto in 2023 that builds chips with AI models integrated directly into silicon, in a deal Tech.eu valued at about $2.9 billion, reported November 23.",
-   "why": "Taalas designs chips around specific AI models instead of general-purpose GPUs. AMD plans to use the technology in its Instinct accelerator line.",
-   "say": "\"It's a tech tuck-in: AMD buys specialized chip design talent and IP rather than building it internally.\"",
-   "src": [
-    [
-     "Tech.eu (Nov 23)",
-     "https://tech.eu/2026/11/23/amd-acquires-ai-chip-startup-taalas-for-29b-to-advance-ai-inference-technology/"
-    ]
-   ],
-   "q": [
-    [
-     "AMD buying a startup's technology instead of developing it is an example of which decision?",
-     [
-      "Build vs buy",
-      "Leverage vs equity",
-      "Spin-off vs split-off",
-      "Dividend vs buyback"
-     ],
-     0,
-     "A strategic acquirer weighs building a capability itself against buying a company that already has it."
-    ]
-   ]
-  },
-  {
-   "id": "d47",
-   "buyer": "TPG and Corpay",
-   "target": "BILL Holdings",
-   "value": "$6.0B ($63.25/share cash)",
-   "usd": 6,
-   "date": "Nov 19, 2026",
-   "terms": [
-    "$63.25 per share in cash",
-    "Values BILL at about $6.0 billion",
-    "31% premium to the 60-day VWAP ending Nov 16",
-    "TPG takes a majority stake; Corpay a minority stake",
-    "Largest holder Starboard Value and CEO René Lacerte agreed to vote for it",
-    "Expected to close in the first half of 2027"
-   ],
-   "what": "Accounts-payable software company BILL Holdings agreed to be taken private by TPG, partnering with payments company Corpay, for $63.25 a share in cash, valuing BILL at about $6.0 billion. The price is a 31% premium to BILL's 60-day volume-weighted average price before talks leaked. Founder René Lacerte stays CEO.",
-   "why": "BILL's stock had fallen far from its highs, so a private-equity buyer could pay a premium and still buy in cheaply. Corpay gets a strategic stake in a business-payments platform. TPG and Corpay used the same playbook to buy AvidXchange in 2025.",
-   "say": "\"It's a take-private: TPG pays a 31% premium in cash for a fallen software stock, with Corpay as a strategic partner, betting the business is worth more out of public markets.\"",
-   "src": [
-    [
-     "BILL Holdings 8-K (SEC)",
-     "https://www.sec.gov/Archives/edgar/data/0001786352/000119312526469396/d176726dex991.htm"
-    ]
-   ],
-   "q": [
-    [
-     "BILL's 31% premium is measured against its 60-day VWAP. Why use an average price instead of the last close?",
-     [
-      "It strips out the jump from leaked deal talks",
-      "It makes the premium look smaller",
-      "Regulators require it",
-      "It includes BILL's debt"
-     ],
-     0,
-     "Shares often jump once talks leak; an average from before the leak shows the real premium over the undisturbed price."
-    ]
-   ]
-  },
-  {
-   "id": "d46",
-   "buyer": "Bending Spoons",
-   "target": "Mailchimp (from Intuit)",
-   "value": "$3.68B (about $368M reinvested in Bending Spoons shares)",
-   "usd": 3.68,
-   "date": "Nov 19, 2026",
-   "terms": [
-    "$3.68B price, subject to cash, debt and working-capital adjustments",
-    "Intuit reinvests about $368M (about 10%) into new Bending Spoons shares",
-    "No financing condition; regulatory approvals required",
-    "Closing expected early 2027",
-    "Intuit agrees to a two-year non-compete after closing"
-   ],
-   "what": "Intuit agreed to sell Mailchimp to Bending Spoons for $3.68 billion, announced Nov 19. About $368 million of the proceeds goes back into newly issued Bending Spoons shares, so Intuit keeps a small stake in the buyer. Closing is expected in early 2027.",
-   "why": "Intuit sheds a non-core unit and keeps some upside; Bending Spoons adds another digital business. Source text is AI-generated, so check figures against the filings.",
-   "say": "\"Intuit gets cash now and keeps some upside by rolling about 10% of the price into the buyer's stock, while Bending Spoons gets a scaled product to run more efficiently.\"",
-   "src": [
-    [
-     "Panabee (Nov 19)",
-     "https://www.panabee.com/news/bending-spoons-agrees-to-buy-mailchimp-for-3-68-billion-with-368-million-intuit-reinvest"
-    ]
-   ],
-   "q": [
-    [
-     "Intuit takes about 10% of the Mailchimp price in the buyer's new shares. What is one effect?",
-     [
-      "Intuit keeps some upside in the buyer",
-      "Intuit pays Bending Spoons",
-      "No regulatory approval is needed",
-      "The price becomes all debt"
-     ],
-     0,
-     "Taking buyer stock means the seller shares in the buyer's future value."
-    ]
-   ]
-  },
-  {
-   "id": "d48",
-   "buyer": "MasTec",
-   "target": "Murphy Corporation",
-   "value": "~$1.25B cash (plus earnout)",
-   "usd": 1.25,
-   "date": "Nov 20, 2026",
-   "terms": [
-    "About $1.25B in cash, subject to customary purchase-price adjustments",
-    "Potential earnout based on Murphy's cumulative three-year performance after closing",
-    "Murphy is a mechanical contractor serving mission-critical end markets"
-   ],
-   "what": "Infrastructure contractor MasTec agreed to buy Murphy Corporation, a mechanical contractor serving mission-critical end markets, for about $1.25 billion in cash, announced November 20. Sellers can earn more through an earnout tied to Murphy's performance over the three years after closing.",
-   "why": "MasTec expands its U.S. mechanical contracting work into mission-critical projects. The earnout shares risk: part of the price is only paid if Murphy keeps performing.",
-   "say": "\"An earnout bridges a valuation gap: the seller thinks the business is worth more, the buyer isn't sure, so part of the price depends on future results.\"",
-   "src": [
-    [
-     "MasTec press release (Nov 20)",
-     "https://investors.mastec.com/news-releases/news-release-details/mastec-enters-definitive-agreement-acquire-murphy-corporation"
-    ]
-   ],
-   "q": [
-    [
-     "Part of MasTec's price for Murphy depends on Murphy's results after closing. What is that called?",
-     [
-      "An earnout",
-      "A breakup fee",
-      "A tender offer",
-      "A collar"
-     ],
-     0,
-     "An earnout pays the seller more later if the business hits agreed performance targets."
-    ]
-   ]
-  },
-  {
-   "id": "d42",
-   "buyer": "Strathcona Resources",
-   "target": "Greenfire Resources",
-   "value": "~$1.9B",
-   "usd": 1.91,
-   "date": "Nov 8, 2026",
-   "terms": [
-    "Cash or stock election",
-    "C$11.00 cash or 0.25 Strathcona shares per Greenfire share",
-    "~39% premium on the cash option",
-    "Includes ~C$550M net debt"
-   ],
-   "what": "Canadian oil producer Strathcona Resources agreed to buy Alberta oil sands producer Greenfire Resources for about C$2.7 to C$2.9 billion (about $1.91 billion) including debt. Greenfire holders can choose C$11.00 in cash or 0.25 Strathcona shares per share. The deal is expected to close in early 2027.",
-   "why": "Strathcona is expanding in Alberta's oil sands by combining two producers in the same region. Waterous Energy Fund owns about 72% of Greenfire and 57% of Strathcona and supports the deal.",
-   "say": "\"Because Waterous owns most of both companies, this is a related-party deal, so the cash-or-stock election and the roughly 39% cash premium matter for how minority shareholders are treated.\"",
-   "src": [
-    [
-     "BOE Report",
-     "https://boereport.com/2026/11/09/canadas-strathcona-to-buy-greenfire-in-up-to-c2-9-billion-deal/"
-    ]
-   ],
-   "q": [
-    [
-     "Greenfire holders can pick C$11.00 cash or 0.25 Strathcona shares. What is this called?",
-     [
-      "A tender offer only",
-      "A cash-or-stock election",
-      "A leveraged buyout",
-      "A spin-off"
-     ],
-     1,
-     "The target's shareholders choose between cash and buyer shares, which is a cash-or-stock election."
-    ],
-    [
-     "Waterous owns about 72% of Greenfire and 57% of Strathcona. Why does that matter?",
-     [
-      "It makes the deal tax free",
-      "It is a related-party deal with a common controlling holder",
-      "It blocks any premium",
-      "It means no approval is needed"
-     ],
-     1,
-     "One holder sits on both sides, so minority shareholder protections matter."
-    ]
-   ]
-  },
-  {
-   "id": "d37",
-   "buyer": "Affle",
-   "target": "Perion Network",
-   "value": "~$420M",
-   "usd": 0.42,
-   "date": "Nov 1, 2026",
-   "terms": [
-    "$11.70 per share",
-    "All cash, debt-financed by Citibank",
-    "~34.5% premium"
-   ],
-   "what": "Affle, an Indian mobile ad-tech company, agreed to buy Nasdaq-listed Perion for $11.70 per share in cash, valuing Perion's equity at about $420 million. Perion's board backed the deal, which still needs shareholder and U.S. antitrust approval.",
-   "why": "Affle adds Perion's retail media, connected-TV and digital billboard ad tools to its mobile marketing platform, hoping to sell more to the same advertisers. Perion keeps its brand, and its shareholders get a certain cash price.",
-   "say": "\"Affle's all-cash offer for Perion pays a 34.5% premium and includes a 40-day go-shop, which lets Perion's board test the market for a better bid before the deal closes.\"",
-   "src": [
-    [
-     "Perion press release via Yahoo Finance",
-     "https://finance.yahoo.com/markets/stocks/articles/perion-enters-definitive-merger-agreement-103000095.html"
-    ]
-   ],
-   "q": [
-    [
-     "Affle's deal to buy Perion includes a 40-day 'go-shop' period. What does that allow Perion to do?",
-     [
-      "Ask Affle to raise its $11.70 price once each week",
-      "Actively seek competing offers from other buyers",
-      "Let Perion holders swap shares for Affle stock",
-      "Delay its shareholder vote until regulators approve"
-     ],
-     1,
-     "A go-shop lets the target solicit rival bids for a set time after signing, helping the board show it got the best price."
-    ],
-    [
-     "Affle is paying $11.70 per share for Perion, a 34.5% premium to its Oct 30 close. Roughly where did Perion stock close that day?",
-     [
-      "About $8.70, or $11.70 divided by 1.345",
-      "About $7.66, or $11.70 minus 34.5% of it",
-      "About $15.74, or $11.70 times 1.345",
-      "About $11.36, or $11.70 minus $0.345"
-     ],
-     0,
-     "Premium = offer / prior price - 1, so the prior price is $11.70 / 1.345, about $8.70."
-    ]
-   ]
-  },
-  {
-   "id": "d36",
-   "buyer": "Ahold Delhaize",
-   "target": "Tesco Czechia and Slovakia",
-   "value": "~€1.2B (~$1.34B)",
-   "usd": 1.34,
-   "date": "Oct 30, 2026",
-   "terms": [
-    "~€1.2B enterprise value (~€1.7B including leases)",
-    "~7.2x EV/EBITDA, ~5.0x after synergies",
-    "Paid with committed financing and existing resources"
-   ],
-   "what": "Ahold Delhaize, the Dutch owner of Food Lion, Stop & Shop and Albert, agreed to buy Tesco's grocery business in Czechia and Slovakia for an enterprise value of about €1.2 billion. The unit has more than 360 company-run stores plus 100+ franchise stores and about €3.5 billion in sales.",
-   "why": "Combined with its Albert stores, Ahold expects to become the top grocery brand in Czechia and gains a first foothold in Slovakia. Grocery is a scale game, so more stores mean better buying power with suppliers and lower costs per store.",
-   "say": "\"Ahold Delhaize is paying about 7.2 times EBITDA for Tesco's Czech and Slovak stores, but closer to 5 times once you count synergies, which is how a buyer can justify a price that looks higher than it feels.\"",
-   "src": [
-    [
-     "Ahold Delhaize press release",
-     "https://newsroom.aholddelhaize.com/ahold-delhaize-announces-the-acquisition-of-tesco-czechia-and-slovakia-strengthening-its-position-in-europe/"
-    ],
-    [
-     "Pound Sterling Live (EUR/USD rate)",
-     "https://www.poundsterlinglive.com/history/EUR-USD-2026"
-    ]
-   ],
-   "q": [
-    [
-     "Ahold Delhaize says its Tesco Czechia and Slovakia purchase costs about 7.2x EBITDA, or 5.0x 'including synergies.' Why is the second multiple lower?",
-     [
-      "Synergies are added to EBITDA, making the denominator larger",
-      "Synergies cut the purchase price Ahold Delhaize pays Tesco at closing",
-      "The lower multiple leaves out the leases that Tesco's stores carry",
-      "The lower multiple uses Tesco's sales instead of EBITDA as its base"
-     ],
-     0,
-     "Adding expected cost savings to the target's EBITDA makes the denominator bigger, so the price looks cheaper as a multiple."
-    ],
-    [
-     "Ahold Delhaize gives Tesco Czechia and Slovakia two values: ~€1.2B EV and ~€1.7B 'lease-adjusted' EV. What explains the gap?",
-     [
-      "The €0.5B gap is a breakup fee owed if regulators block the deal",
-      "The €0.5B gap is the extra amount Ahold expects to save each year",
-      "The €0.5B gap counts store lease obligations as a form of debt",
-      "The €0.5B gap is the value of Tesco's franchise stores in Slovakia"
-     ],
-     2,
-     "Under IFRS 16, store leases are treated like debt, so adding them raises enterprise value; the matching EBITDA is also measured before rent."
-    ]
-   ]
   }
  ],
- "APP_OPEN_DATE": "Nov 23, 2026",
+ "APP_OPEN_DATE": "Nov 28, 2026",
  "APP_OPEN": [
   [
    "Evercore",
@@ -1247,13 +1280,13 @@
   ],
   [
    "Barclays",
-   "2028 Summer Analyst",
+   "2028 Banking Analyst Summer Internship (Coverage/M&A, New York)",
    "IB",
-   "exp",
-   "2026-11-25",
-   "Late Nov 2026",
+   "open",
+   "2026-11-23",
+   "Opened Nov 23",
    "",
-   ""
+   "Per Superday Room check Nov 26; confirm on the firm's site"
   ],
   [
    "Deutsche Bank",

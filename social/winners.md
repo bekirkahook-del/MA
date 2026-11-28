@@ -121,4 +121,5 @@ Updated every daily run. Views per post (Nov 17-24 data). Route each new post on
 | 11-28 | PE tiered quiz q3lbo (4:00pm) | MC quiz | | | TT/IG/FB/Pin. Score Nov 30. Quiz with a trap won TT 877 on Nov 25 |
 | 11-28 | DCF tiered quiz q3dcf (8:00pm) | MC quiz | | | TT/IG/FB/Pin. Score Nov 30 |
 | 11-28 | Old Pac-12 business schools (10:00pm, punch video) | School rankings | | | TT/IG Reel/FB Reel/Pin. Score Nov 30 |
+| 11-28 | Apple bull case, Echo rebuild (6:00pm, presenter video) | Market/stock story | | | TT/IG Reel/FB Reel/YT Short. Score Nov 30. Old Chatterbox version (Nov 24) never published past draft |
 | 11-26/25 | Views re-pull skipped Nov 28 | n/a | | | getAnalyticsDataByMetrics returns unlabeled rows (no per-post mapping), so Sam (hedge) and Big 12 Brawl finals were NOT updated; no numbers invented |

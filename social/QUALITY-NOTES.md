@@ -33,6 +33,9 @@ Everything learned while building the socials pipeline that a fresh session need
   - "She rechecks the thesis" sounded like "rejects" → "She checks the thesis again".
   - "walk me through a DCF. He nailed it" ran together into "a DC if he" → "walk me through a D C F model".
   - "So who is? The Big 12, ranked." merged into one question → "So who is? Here's the Big 12, ranked."
+  - "Wall Street says buy." heard as "says bye" (Echo) → "Analysts rate the stock a buy." (Nov 28, Apple).
+  - "fifty-seven point six billion last quarter" failed on a lone "dollars" (Whisper writes "$57.6 billion") → say "... billion dollars" in money lines (Nov 28, Apple).
+  - Presenter pipeline (social/gen/presenter/stocks) now runs on Echo: `voice.py story am_echo` → `voicecheck.py story` → `voice_prep_echo.py` → `build.py`. Needs `av<14` in cb-env (av 19 breaks faster-whisper 1.2.1 with "unexpected keyword argument 'metadata_errors'"). Hook number is full-size from frame 0, captions at y=1110 (safe zone).
   - Earlier Chatterbox-era fixes still worth knowing: "cops" → "comp sheet", "Launch" → "lunch", "Deb" → "Dev".
 
 ## Video engine fixes already in place (PS2 engine, /home/user/jake2 = social/studio/ps2)

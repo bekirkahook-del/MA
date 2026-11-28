@@ -116,3 +116,9 @@ Updated every daily run. Views per post (Nov 17-24 data). Route each new post on
 | 11-27 | Jake's first Superday | Character story (Jake) | | | IG/TT/FB only. Score Nov 29 |
 | 11-25 | Margin/leverage/buyback quiz (Wed 1:58pm, TT) | MC quiz | | 877 | ~42h pull; best TT of the week, a quiz that wins when it has a question with a trap. IG carousel not in reels data |
 | 11-25 | Dice fair price brainteaser (5:22pm) | Brainteaser | 126 | 139 | ~39h pull; IG skip 74% |
+| 11-28 | Stock -50% needs +100% (12:00pm, carousel) | Brainteaser | | | TT/IG/FB/Pin. Score Nov 30. Brainteasers have lost on IG 3x, watch it |
+| 11-28 | Intern/Analyst/MD ladder (2:00pm, video, no voice) | Tiered interview Q | | | TT/IG Reel/FB Reel/Pin. Score Nov 30 |
+| 11-28 | PE tiered quiz q3lbo (4:00pm) | MC quiz | | | TT/IG/FB/Pin. Score Nov 30. Quiz with a trap won TT 877 on Nov 25 |
+| 11-28 | DCF tiered quiz q3dcf (8:00pm) | MC quiz | | | TT/IG/FB/Pin. Score Nov 30 |
+| 11-28 | Old Pac-12 business schools (10:00pm, punch video) | School rankings | | | TT/IG Reel/FB Reel/Pin. Score Nov 30 |
+| 11-26/25 | Views re-pull skipped Nov 28 | n/a | | | getAnalyticsDataByMetrics returns unlabeled rows (no per-post mapping), so Sam (hedge) and Big 12 Brawl finals were NOT updated; no numbers invented |

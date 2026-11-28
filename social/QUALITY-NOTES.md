@@ -5,7 +5,7 @@ Everything learned while building the socials pipeline that a fresh session need
 ## Bekir's standing quality rules (his words)
 - Nov 24: "Content wise fuck the analytics we need pristine content." Quality is priority #1. Analytics are light bookkeeping only.
 - Nov 25: "Quality check big time every day before post. 100/100 only." Re-score everything publishing in the next 24 h every day, even posts that passed before. Below 100 = fix, or set to draft and report. Never round up.
-- Quality beats count: never post filler to hit the 3-6/day target.
+- Quality beats count: never post filler to hit the 6/day target: replace a failed post with another 100/100 one.
 - He judges the voice by ear, and his ear wins over any metric. When he says worse, it is worse.
 - He did not want the narration slower. Do not add pauses or slow the pace without asking.
 - He disliked heavily processed audio (EQ/compression/pitch tricks). Keep voice processing light.
@@ -61,7 +61,7 @@ Everything learned while building the socials pipeline that a fresh session need
 Lessons: punch/countdown videos need `loudnorm=I=-14:TP=-2,alimiter=limit=0.8` (single-pass loudnorm alone can overshoot); every post needs the CTA in the text plus an IG/FB/YT first comment; recompute every number in post text.
 
 ## Slot and posting conventions
-- Voiced videos at 10 AM and 6 PM ET. Slides at least 2 h from any other post on the same platform. Max 6 posts/day per platform (Bekir, 2026-11-28; overrides the run prompt's "max 4 TikToks").
+- Voiced videos at 10 AM and 6 PM ET. Slides at least 2 h from any other post on the same platform. Exactly 6 posts/day per platform, min and max (Bekir, 2026-11-28; overrides the run prompt's "max 4 TikToks" and "3-4 posts").
 - Media = commit-pinned raw URLs (`raw.githubusercontent.com/bekirkahook-del/MA/<SHA>/social/...`), never `main` (stale CDN copy).
 - `updateScheduledPost` needs the FULL content and returns a new id (uuid stays).
 - AI labels: TikTok `isAigc`, IG `isAiGenerated`, YT `isAiGeneratedContent` on anything with an AI voice. Music-only videos (punch/countdowns) are not AI-voiced; label false.

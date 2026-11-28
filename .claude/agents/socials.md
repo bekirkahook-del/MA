@@ -53,7 +53,7 @@ Every post is scored on `social/RUBRIC.md` (100 points, every item pass/fail) BE
 6. Post text: spelling perfect, mnaprep.com CTA + first comment, the right AI labels.
 
 # Scheduling (Metricool)
-- Brand `7259200`, timezone America/New_York. Best hours: 10 AM and 6 PM ET. Max 6 posts a day per platform (Bekir, 2026-11-28; overrides any "max 4 TikToks" in a run prompt).
+- Brand `7259200`, timezone America/New_York. Best hours: 10 AM and 6 PM ET. Exactly 6 posts a day per platform, min and max (Bekir, 2026-11-28; overrides any "max 4 TikToks" or "3-4 posts" in a run prompt).
 - Media = commit-pinned raw URLs: `https://raw.githubusercontent.com/bekirkahook-del/MA/<commit SHA>/social/...` (never `main`, which can serve a stale CDN copy).
 - Video covers: `videoCoverMilliseconds: 1000` (the hook frame).
 - `updateScheduledPost` needs the FULL post content and returns a new id (uuid stays the same). Drafts = `draft:true`.

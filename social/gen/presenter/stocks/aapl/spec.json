@@ -1,6 +1,6 @@
 {
  "ticker": "AAPL",
- "date": "11/17/26",
+ "date": "11/27/26",
  "titles": {
   "hook": "APPLE (AAPL)",
   "1": "THE IPHONE",
@@ -31,7 +31,8 @@
     "word": [
      "bullish"
     ]
-   }
+   },
+   "foot": "Apple FY26 8-K \u00b7 Consensus: StockAnalysis, 45 analysts (11/27/26)"
   },
   "1": {
    "type": "stack",
@@ -87,7 +88,7 @@
     {
      "text": "App Store \u00b7 iCloud \u00b7 Music",
      "word": [
-      "app"
+      "services"
      ],
      "color": "GOLD"
     }
@@ -149,7 +150,7 @@
    "lines": [
     {
      "text": "Valuation: ~40x earnings",
-     "sub": "Priced for continued growth",
+     "sub": "P/E 39.9 on 11/27/26 (StockAnalysis)",
      "word": [
       "forty"
      ]
@@ -164,7 +165,7 @@
    "follow_word": [
     "follow"
    ],
-   "foot": "Data: Apple Q4 FY26 results, StockAnalysis (11/13/26)"
+   "foot": "Data: Apple Q4 FY26 8-K, StockAnalysis (11/27/26)"
   }
  },
  "facts": {
@@ -177,9 +178,11 @@
   "$86B": "FY26 buybacks $86,390M",
   "$86.4B": "same",
   "$15.7B": "FY26 dividends $15,721M",
-  "$28B": "Q4 operating cash flow / returned (CFO)",
-  "40x": "P/E 39.67 StockAnalysis 11/13/26",
+  "$28B": "CFO quote Q4 FY26 8-K: $28B OCF, $28B returned",
+  "40x": "P/E 39.93 StockAnalysis 11/27/26",
   "2026": "date",
-  "26": "date"
+  "26": "date",
+  "39.9": "P/E 39.93 StockAnalysis 11/27/26",
+  "45": "StockAnalysis analyst count 11/27/26"
  }
 }

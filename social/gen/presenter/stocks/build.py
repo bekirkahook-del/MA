@@ -66,7 +66,7 @@ for wd in WORDS:
         if cur: cur[-1]=(cur[-1][0],cur[-1][1],wd[2],cur[-1][3],cur[-1][4])
         continue
     trial=" ".join(cap(x[0]) for x in cur+[wd])
-    if cur and (len(cur)>=3 or _m.textlength(trial,font=F(CAPF,"ExtraBold"))>W-110 or cur[-1][0][-1] in ",.?!" or cur[-1][3]!=wd[3]):
+    if cur and ((len(cur)>=3 and not (len(cur)==3 and wd[0][-1] in ",.?!")) or (len(cur)==2 and wd[0].lower() in ("in","of","a","the","to","and","its","at","an")) or _m.textlength(trial,font=F(CAPF,"ExtraBold"))>W-130 or cur[-1][0][-1] in ",.?!" or cur[-1][3]!=wd[3]):
         chunks.append(cur); cur=[]
     cur.append(wd)
 chunks.append(cur)
@@ -234,10 +234,11 @@ def icon(d,name,x,y,s,col):
         d.ellipse([P(70,8),P(110,62)],outline=NAVY,width=max(2,int(5*s)))
 def g_hook(sc,t):
     im=Image.new("RGBA",(GW,GH),(0,0,0,0)); d=ImageDraw.Draw(im); x=since("hook.start_word",t)
-    if x>=0:
-        panel(d,[60,20,940,420]); d.text((100,50),sc["label"],font=F(34,"SemiBold"),fill=MUT)
-        v=countup(0,sc["value"],x/0.9); ctext(d,500,90,fmtv(sc["fmt"],v),F(196),C(sc.get("color","GREEN")))
-        if x>0.6 and sc.get("sub"): ctext(d,500,340,sc["sub"],F(34,"Bold"),WHITE)
+    # cold open: the hook number is fully on screen from frame 0 (no empty panel, no count-up from zero)
+    panel(d,[60,20,940,420]); d.text((100,50),sc["label"],font=F(34,"SemiBold"),fill=MUT)
+    ctext(d,500,90,fmtv(sc["fmt"],sc["value"]),F(196),C(sc.get("color","GREEN")))
+    if sc.get("sub"): ctext(d,500,340,sc["sub"],F(34,"Bold"),WHITE)
+    foot(d,sc.get("foot",""))
     y=since("hook.stamp",t)
     if y>=0:
         s=1+1.4*(1-ease(y/0.16)); st=Image.new("RGBA",(600,120),(0,0,0,0)); sd=ImageDraw.Draw(st)
@@ -474,6 +475,8 @@ for gy in range(0,H,90): bd.line([(0,gy),(W,gy)],fill=(14,30,66),width=1)
 glow=Image.new("L",(W,H),0); ImageDraw.Draw(glow).ellipse([160,1050,920,1900],fill=70); glow=glow.filter(ImageFilter.GaussianBlur(170))
 BG=Image.composite(Image.new("RGB",(W,H),(44,68,130)),BG,glow)
 PS=0.80   # presenter scale (data panels get the top 60% of the screen)
+CAPY=1110   # captions in the safe zone (clear of TikTok/Reels bottom UI), between the data panel and the presenter
+POFF=240
 def frame(i):
     t=i/FPS; im=BG.copy().convert("RGBA"); d=ImageDraw.Draw(im)
     n=seg_at(t); num,title=TITLES[n]; ds=t-seg_start(n); acc=ACC[n]
@@ -492,19 +495,19 @@ def frame(i):
     if 0<=ds<0.32 and n!="hook":
         wx=int(-W+2*W*ease(ds/0.32)); d.rectangle([wx,140,wx+W,1040],fill=acc)
     # graphic
-    g=illus(n,t); sc=max(0.05,back(ds/0.45));
+    g=illus(n,t); sc=1 if n=="hook" else max(0.05,back(ds/0.45));
     if sc!=1: g=g.resize((max(1,int(GW*sc)),max(1,int(GH*sc))),Image.LANCZOS)
     if not (0<=ds<0.16 and n!="hook"): im.alpha_composite(g,(int((W-g.width)/2),int(270+(GH-g.height)/2)))
     # presenter
     fing=num if (n in NUMT) else 0
     ch=presenter(t,i,n,fing); zs=zoom_at(t)*PS; ch=ch.resize((int(CW*zs),int(CHh*zs)),Image.LANCZOS)
-    im.alpha_composite(ch,(int(540-540*zs),int(1000+330*PS-330*zs)))
+    im.alpha_composite(ch,(int(540-540*zs),int(1000+POFF+330*PS-330*zs)))  # presenter framed chest-up, cut by the frame edge
     # captions
     for k_,(c,s0,e0) in enumerate(CH):
         nxt=CH[k_+1][1] if k_+1<len(CH) else e0+0.6
         if s0-0.04<=t<min(e0+0.4,nxt):
             ws=[cap(w[0]) for w in c]; fnt=F(CAPF,"ExtraBold"); x=(W-d.textlength(" ".join(ws),font=fnt))/2
-            pop_=back((t-s0)/0.12); yy=1712+int((1-pop_)*14)
+            pop_=back((t-s0)/0.12); yy=CAPY+int((1-pop_)*14)
             act=None
             for q,wd in enumerate(c):
                 if wd[1]-0.03<=t: act=q
